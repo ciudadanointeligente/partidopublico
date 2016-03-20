@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Partidos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @partidos.each do |partido| %>
+      <tr>
+        <td><%= link_to 'Show', partido %></td>
+        <td><%= link_to 'Edit', edit_partido_path(partido) %></td>
+        <td><%= link_to 'Destroy', partido, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Partido', new_partido_path %>

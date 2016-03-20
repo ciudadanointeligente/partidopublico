@@ -11,9 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20160320180312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "partidos", force: :cascade do |t|
+    t.string   "nombre",          null: false
+    t.string   "sigla",           null: false
+    t.string   "lema",            null: false
+    t.date     "fecha_fundacion"
+    t.text     "texto"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
 
 end
