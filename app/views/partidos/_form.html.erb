@@ -1,4 +1,4 @@
-<%= form_for(@partido) do |f| %>
+<%= simple_form_for(@partido) do |f| %>
   <% if @partido.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@partido.errors.count, "error") %> prohibited this partido from being saved:</h2>
@@ -10,8 +10,15 @@
       </ul>
     </div>
   <% end %>
-
+  <div class="fileds">
+    <%= f.input :nombre %>
+    <%= f.input :sigla %>
+    <%= f.input :lema %>
+    <%= f.input :fecha_fundacion %>
+    <%= f.input :texto %>
+    
+  </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.button :submit %>
   </div>
 <% end %>

@@ -12,6 +12,7 @@
   <tbody>
     <% @partidos.each do |partido| %>
       <tr>
+        <td><%= partido.sigla %></td>
         <td><%= link_to 'Show', partido %></td>
         <td><%= link_to 'Edit', edit_partido_path(partido) %></td>
         <td><%= link_to 'Destroy', partido, method: :delete, data: { confirm: 'Are you sure?' } %></td>
