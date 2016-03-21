@@ -27,7 +27,11 @@ es:
       contact: "Contacto"
       parties: "Los Partidos"
       methodology: "La Metodología"
+      actions: "Acciones"
       admin_login: "Ingresar como Administrador"
+      admin_logout: "Cerrar Sesión"
+      create_party: "Crear Nuevo Partido"
+      admin_party: "Administra Partidos"
       license: "Copyleft"
   welcome:
     index:

@@ -51,11 +51,29 @@
             </div>
             <div class="collapse navbar-collapse signed_user" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+                    
+                    
                     <li><% if current_user%>
-                            <a href=<%= partidos_path %>><%= current_user.email %></a>
+                            <!--<a href=<%= partidos_path %>><%= current_user.email %></a>-->
+                            <!-- Split button -->
+                            <div class="btn-group">
+                              <button type="button" class="btn btn-default"><%= t('.actions') %></button>
+                              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                              </button>
+                            <ul class="dropdown-menu">
+                                <li><a href=<%= new_partido_path%> ><%= t('.create_party') %></a></li>
+                                <li><a href=<%= partidos_path %> ><%= t('.admin_party') %></a></li>
+                                <li role="separator" class="divider"></li>
+                                <li> <%= link_to('Logout', destroy_user_session_path, :method => :delete) %> </li>
+                                <li><a href="#"><%= t('.admin_logout') %></a></li>
+                            </ul>
+                            </div>
                         <% else %>
                             <a href=<%= new_user_session_path %>><%= t('.admin_login') %></a>
                         <% end %>
+                     
                     </li>
                 </ul>
             </div>
