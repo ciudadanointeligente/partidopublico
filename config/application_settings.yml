@@ -1,10 +1,11 @@
 development:
-  BASE_URL: ''
-  SMTP_SETTING_ADDRESS: ''
-  SMTP_SETTING_PORT: ''
-  SMTP_SETTING_USERNAME: ''
-  SMTP_SETTING_PASSWORD: ''
-  MAILER_SENDER: ''
+  BASE_URL: 'papu-test-2-jbci.c9users.io'
+  BASE_URL_PORT: '8080'
+  SMTP_SETTING_ADDRESS: 'smtp.postmarkapp.com'
+  SMTP_SETTING_PORT: '2525'
+  SMTP_SETTING_USERNAME: 'b7cba938-3273-4cc7-98a2-b912ccc97d98'
+  SMTP_SETTING_PASSWORD: 'b7cba938-3273-4cc7-98a2-b912ccc97d98'
+  MAILER_SENDER: 'lab@ciudadanointeligente.org'
 test:
   BASE_URL: ''
   SMTP_SETTING_ADDRESS: ''
