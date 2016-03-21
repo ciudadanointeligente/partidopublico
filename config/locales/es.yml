@@ -22,7 +22,7 @@
 es:
   layouts:
     application:
-      title: "Papu"
+      title: "PArtido Público"
       about: "Acerca de"
       contact: "Contacto"
       license: "Copyleft"
