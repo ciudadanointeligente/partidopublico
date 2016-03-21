@@ -66,8 +66,8 @@
                                 <li><a href=<%= new_partido_path%> ><%= t('.create_party') %></a></li>
                                 <li><a href=<%= partidos_path %> ><%= t('.admin_party') %></a></li>
                                 <li role="separator" class="divider"></li>
-                                <li> <%= link_to('Logout', destroy_user_session_path, :method => :delete) %> </li>
-                                <li><a href="#"><%= t('.admin_logout') %></a></li>
+                                <li> <%= link_to(t('.admin_logout') , destroy_user_session_path, :method => :delete) %> </li>
+                                <!--<li><a href="#"><%= t('.admin_logout') %></a></li>-->
                             </ul>
                             </div>
                         <% else %>
