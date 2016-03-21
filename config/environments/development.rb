@@ -41,4 +41,8 @@ Rails.application.configure do
   
   config.web_console.whiny_requests = false
   # config.web_console.whitelisted_ips = '190.163.154.209'
+  Paperclip.options[:command_path] = "/usr/bin/"
+  
+  config.action_mailer.default_url_options = { host: 'papu-test-2-jbci.c9users.io', port: 8080 }
+  
 end

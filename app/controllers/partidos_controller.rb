@@ -70,6 +70,6 @@ class PartidosController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def partido_params
       # params.fetch(:partido, {:nombre, :sigla, :lema})
-      params.require(:partido).permit(:nombre, :sigla, :lema, :fecha_fundacion, :texto)
+      params.require(:partido).permit(:nombre, :sigla, :lema, :fecha_fundacion, :texto, :logo)
     end
 end
