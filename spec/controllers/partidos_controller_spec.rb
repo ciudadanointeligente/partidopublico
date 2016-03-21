@@ -37,7 +37,7 @@ RSpec.describe PartidosController, type: :controller do
   let(:valid_session) { {} }
 
   describe "GET #index" do
-    it "assigns all partidos as @partidos" do
+    xit "assigns all partidos as @partidos" do
       partido = Partido.create! valid_attributes
       get :index, {}, valid_session
       expect(assigns(:partidos)).to eq([partido])
