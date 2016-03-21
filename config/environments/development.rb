@@ -45,4 +45,15 @@ Rails.application.configure do
   
   config.action_mailer.default_url_options = { host: 'papu-test-2-jbci.c9users.io', port: 8080 }
   
+  config.action_view.raise_on_missing_translations = true
+  config.action_mailer.default_url_options = { host: ENV['BASE_URL'] }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address              => ENV['SMTP_SETTING_ADDRESS'],
+    :port                 => ENV['SMTP_SETTING_PORT'],
+    :user_name            => ENV['SMTP_SETTING_USERNAME'],
+    :password             => ENV['SMTP_SETTING_PASSWORD'],
+    :authentication       => :plain
+  }
+  
 end

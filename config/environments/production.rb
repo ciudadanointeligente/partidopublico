@@ -49,7 +49,7 @@ Rails.application.configure do
   config.log_level = :debug
 
   # Prepend all log lines with the following tags.
-  # config.log_tags = [ :subdomain, :uuid ]
+  config.log_tags = [ :subdomain, :uuid ]
 
   # Use a different logger for distributed setups.
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
@@ -76,4 +76,20 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  
+    #mailing
+  config.action_mailer.default_url_options = { host: ENV['BASE_URL'] }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.default :charset => "utf-8"
+
+  config.action_mailer.smtp_settings = {
+    address: ENV['SMTP_SETTING_ADDRESS'],
+    port: ENV['SMTP_SETTING_PORT'],
+    authentication: "plain",
+    enable_starttls_auto: true,
+    user_name: ENV["SMTP_SETTING_USERNAME"],
+    password: ENV["SMTP_SETTING_PASSWORD"]
+  }
 end
