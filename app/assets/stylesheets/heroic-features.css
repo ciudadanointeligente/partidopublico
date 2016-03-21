@@ -6,6 +6,13 @@
 
 body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    height: 800;
+}
+
+.signed_user {
+    position: absolute;
+    top: 0px;
+    right: 20px;
 }
 
 .hero-spacer {
@@ -18,4 +25,40 @@ body {
 
 footer {
     margin: 50px 0;
+}
+
+.thumbnail {
+    position: relative;
+    height: 350px;
+    width: 250px;
+}
+.thumbnail .logo {
+    position: absolute;
+    top: 5px;
+    height: 40%;
+    width: 100%;
+}
+.thumbnail .logo img {
+  max-width:100%; 
+  max-height:100%;
+  margin:auto;
+  display:block;
+}
+.thumbnail .caption {
+    position: absolute;
+    top: 40%;
+    clear: both;
+    height: auto;
+    width: 100%;
+}
+.thumbnail .buttons {
+    position: absolute;
+    bottom: 20px;
+    height: 20%;
+    width: 100%;
+}
+
+.thumbnail .buttons a {
+    position:relative;
+    top:50%; 
 }

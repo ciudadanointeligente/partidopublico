@@ -22,9 +22,12 @@
 es:
   layouts:
     application:
-      title: "PArtido Público"
+      title: "Partido Público"
       about: "Acerca de"
       contact: "Contacto"
+      parties: "Los Partidos"
+      methodology: "La Metodología"
+      admin_login: "Ingresar como Administrador"
       license: "Copyleft"
   welcome:
     index:
@@ -32,3 +35,5 @@ es:
       welcome_text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat."
       start: "Empezar"
       enrolled_parties: "Partidos que se han unido"
+      details: "Detalles"
+      compare: "Comparar"

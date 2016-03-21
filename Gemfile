@@ -49,6 +49,8 @@ group :development, :test do
   gem 'codeclimate-test-reporter'
   gem 'factory_girl_rails'
   gem 'faker'
+  gem 'pry-rails'
+  gem 'pry-rescue'
 end
 
 group :development do

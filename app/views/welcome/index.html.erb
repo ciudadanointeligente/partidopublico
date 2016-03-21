@@ -11,7 +11,7 @@
 <!-- Title -->
 <div class="row">
     <div class="col-lg-12">
-        <h3><%= t('.enrolled_parties') %></h3>
+        <h3><%= t('.enrolled_parties') %>:</h3>
     </div>
 </div>
 <!-- /.row -->
@@ -19,18 +19,23 @@
 <!-- Page Features -->
 <div class="row text-center">
 
+    <% @partidos.each do |partido| %>
     <div class="col-md-3 col-sm-6 hero-feature">
         <div class="thumbnail">
-            <img src="http://placehold.it/800x500" alt="">
+            <div class="logo">
+                <%= image_tag partido.logo.url(:medium) %>
+            </div>
             <div class="caption">
-                <h3>Feature Label</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                <p>
-                    <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                </p>
+                <h3><%= partido.sigla %></h3>
+                <p><%= partido.lema %></p>
+            </div>
+            <div class="buttons">
+                <a href="<%= partido_path(partido) %>" class="btn btn-primary"><%= t('.details') %></a> <a href="#" class="btn btn-default"><%= t('.compare') %></a>
             </div>
         </div>
     </div>
+    
+    <% end %>
 
     <div class="col-md-3 col-sm-6 hero-feature">
         <div class="thumbnail">
@@ -58,16 +63,4 @@
         </div>
     </div>
 
-    <div class="col-md-3 col-sm-6 hero-feature">
-        <div class="thumbnail">
-            <img src="http://placehold.it/800x500" alt="">
-            <div class="caption">
-                <h3>Feature Label</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                <p>
-                    <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                </p>
-            </div>
-        </div>
-    </div>
 </div>
