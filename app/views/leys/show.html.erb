@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Numero:</strong>
+  <%= @ley.numero %>
+</p>
+
+<p>
+  <strong>Nombre:</strong>
+  <%= @ley.nombre %>
+</p>
+
+<p>
+  <strong>Enlace:</strong>
+  <%= @ley.enlace %>
+</p>
+
+<p>
+  <strong>Tags:</strong>
+  <%= @ley.tags %>
+</p>
+
+<p>
+  <strong>Resumen:</strong>
+  <%= @ley.resumen %>
+</p>
+
+<p>
+  <strong>Marco general:</strong>
+  <%= @ley.marco_general %>
+</p>
+
+<%= link_to 'Edit', edit_ley_path(@ley) %> |
+<%= link_to 'Back', leys_path %>

@@ -1,6 +1,9 @@
 {
   "name": "dsl-generated dependencies",
   "dependencies": {
-    "bootstrap": "latest"
+    "angular": "latest",
+    "angular-bootstrap": "latest",
+    "angular-route": "1.2.21",
+    "angular-clndr": "latest"
   }
 }

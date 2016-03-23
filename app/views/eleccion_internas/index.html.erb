@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Eleccion Internas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Organo interno</th>
+      <th>Fecha eleccion</th>
+      <th>Fecha limite inscripcion</th>
+      <th>Cargo</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @eleccion_internas.each do |eleccion_interna| %>
+      <tr>
+        <td><%= eleccion_interna.organo_interno %></td>
+        <td><%= eleccion_interna.fecha_eleccion %></td>
+        <td><%= eleccion_interna.fecha_limite_inscripcion %></td>
+        <td><%= eleccion_interna.cargo %></td>
+        <td><%= link_to 'Show', eleccion_interna %></td>
+        <td><%= link_to 'Edit', edit_eleccion_interna_path(eleccion_interna) %></td>
+        <td><%= link_to 'Destroy', eleccion_interna, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Eleccion interna', new_eleccion_interna_path %>

@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <%=image_tag @persona.foto.url%>
+</p>
+
+<p>
+  <strong>Genero:</strong>
+  <%= @persona.genero %>
+</p>
+
+<p>
+  <strong>Fecha nacimiento:</strong>
+  <%= @persona.fecha_nacimiento %>
+</p>
+
+<p>
+  <strong>Nivel estudios:</strong>
+  <%= @persona.nivel_estudios %>
+</p>
+
+<p>
+  <strong>Region:</strong>
+  <%= @persona.region %>
+</p>
+
+<p>
+  <strong>Ano inicio militancia:</strong>
+  <%= @persona.ano_inicio_militancia %>
+</p>
+
+<p>
+  <strong>Afiliado:</strong>
+  <%= @persona.afiliado %>
+</p>
+
+<p>
+  <strong>Bio:</strong>
+  <%= @persona.bio %>
+</p>
+
+<%= link_to 'Edit', edit_persona_path(@persona) %> |
+<%= link_to 'Back', personas_path %>

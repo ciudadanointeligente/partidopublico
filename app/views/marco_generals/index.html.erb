@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Marco Generals</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Partido</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @marco_generals.each do |marco_general| %>
+      <tr>
+        <td><%= marco_general.partido %></td>
+        <td><%= link_to 'Show', marco_general %></td>
+        <td><%= link_to 'Edit', edit_marco_general_path(marco_general) %></td>
+        <td><%= link_to 'Destroy', marco_general, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Marco general', new_marco_general_path %>

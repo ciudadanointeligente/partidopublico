@@ -1,0 +1,17 @@
+<%= simple_form_for(@marco_interno) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs boxed_form">
+    <% f.association :partido %>
+    <div class="form-group">
+      <%= f.fields_for :documentos do |builder| %>
+       <%= render 'documento_fields', :f => builder %>
+      <% end %>
+      <%= link_to_add_association 'add document', f, :documentos %>
+    </div
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

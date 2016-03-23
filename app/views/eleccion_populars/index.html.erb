@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Eleccion Populars</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fecha eleccion</th>
+      <th>Dias</th>
+      <th>Cargo</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @eleccion_populars.each do |eleccion_popular| %>
+      <tr>
+        <td><%= eleccion_popular.fecha_eleccion %></td>
+        <td><%= eleccion_popular.dias %></td>
+        <td><%= eleccion_popular.cargo %></td>
+        <td><%= link_to 'Show', eleccion_popular %></td>
+        <td><%= link_to 'Edit', edit_eleccion_popular_path(eleccion_popular) %></td>
+        <td><%= link_to 'Destroy', eleccion_popular, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Eleccion popular', new_eleccion_popular_path %>
