@@ -64,3 +64,7 @@ group :development do
   gem 'spring'
 end
 
+group :development do
+  gem 'rails_12factor'
+  gem 'unicorn'
+end
