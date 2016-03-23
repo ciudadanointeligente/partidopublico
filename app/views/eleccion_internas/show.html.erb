@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Organo interno:</strong>
+  <%= @eleccion_interna.organo_interno %>
+</p>
+
+<p>
+  <strong>Fecha eleccion:</strong>
+  <%= @eleccion_interna.fecha_eleccion %>
+</p>
+
+<p>
+  <strong>Fecha limite inscripcion:</strong>
+  <%= @eleccion_interna.fecha_limite_inscripcion %>
+</p>
+
+<p>
+  <strong>Cargo:</strong>
+  <%= @eleccion_interna.cargo %>
+</p>
+
+<%= link_to 'Edit', edit_eleccion_interna_path(@eleccion_interna) %> |
+<%= link_to 'Back', eleccion_internas_path %>

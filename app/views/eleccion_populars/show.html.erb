@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fecha eleccion:</strong>
+  <%= @eleccion_popular.fecha_eleccion %>
+</p>
+
+<p>
+  <strong>Dias:</strong>
+  <%= @eleccion_popular.dias %>
+</p>
+
+<p>
+  <strong>Cargo:</strong>
+  <%= @eleccion_popular.cargo %>
+</p>
+
+<%= link_to 'Edit', edit_eleccion_popular_path(@eleccion_popular) %> |
+<%= link_to 'Back', eleccion_populars_path %>

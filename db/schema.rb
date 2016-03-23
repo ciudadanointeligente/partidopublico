@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323220338) do
+ActiveRecord::Schema.define(version: 20160323230833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,25 @@ ActiveRecord::Schema.define(version: 20160323220338) do
   end
 
   add_index "documentos", ["documentable_type", "documentable_id"], name: "index_documentos_on_documentable_type_and_documentable_id", using: :btree
+
+  create_table "eleccion_internas", force: :cascade do |t|
+    t.integer  "organo_interno_id"
+    t.date     "fecha_eleccion"
+    t.date     "fecha_limite_inscripcion"
+    t.string   "cargo"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "eleccion_internas", ["organo_interno_id"], name: "index_eleccion_internas_on_organo_interno_id", using: :btree
+
+  create_table "eleccion_populars", force: :cascade do |t|
+    t.date     "fecha_eleccion"
+    t.integer  "dias"
+    t.string   "cargo"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "leys", force: :cascade do |t|
     t.string   "numero"
@@ -110,6 +129,26 @@ ActiveRecord::Schema.define(version: 20160323220338) do
   add_index "personas", ["partido_id"], name: "index_personas_on_partido_id", using: :btree
   add_index "personas", ["personable_type", "personable_id"], name: "index_personas_on_personable_type_and_personable_id", using: :btree
 
+  create_table "procedimientos", force: :cascade do |t|
+    t.string   "descripcion"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "procedimentable_id"
+    t.string   "procedimentable_type"
+  end
+
+  add_index "procedimientos", ["procedimentable_type", "procedimentable_id"], name: "index_procedimentable_type_and_id", using: :btree
+
+  create_table "requisitos", force: :cascade do |t|
+    t.string   "descripcion"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "requisitable_id"
+    t.string   "requisitable_type"
+  end
+
+  add_index "requisitos", ["requisitable_type", "requisitable_id"], name: "index_requisitos_on_requisitable_type_and_requisitable_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -148,6 +187,7 @@ ActiveRecord::Schema.define(version: 20160323220338) do
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
+  add_foreign_key "eleccion_internas", "organo_internos"
   add_foreign_key "leys", "marco_generals"
   add_foreign_key "marco_generals", "partidos"
   add_foreign_key "marco_internos", "partidos"
