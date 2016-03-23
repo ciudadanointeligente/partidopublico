@@ -62,3 +62,19 @@ footer {
     position:relative;
     top:50%; 
 }
+
+.form-inline .control-label-left {
+    margin-bottom: 0;
+    right: 0px;
+  }
+  
+.form-inline .form-control-right {
+    display: inline-block;
+    width: 100%;
+    vertical-align: middle;
+  }  
+
+.boxed_form  {
+    border:1px solid black;
+    display: inline-block;
+}

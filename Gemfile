@@ -41,7 +41,8 @@ gem 'simple_form'
 gem 'paper_trail'
 gem "paperclip"
 gem 'devise'
-# gem 'postmark-rails'
+gem 'angularjs-rails'
+gem "cocoon"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -52,6 +53,7 @@ group :development, :test do
   gem 'faker'
   gem 'pry-rails'
   gem 'pry-rescue'
+  gem 'better_errors'
 end
 
 group :development do

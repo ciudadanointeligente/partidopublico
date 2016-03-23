@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Requisitos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Descripcion</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @requisitos.each do |requisito| %>
+      <tr>
+        <td><%= requisito.descripcion %></td>
+        <td><%= link_to 'Show', requisito %></td>
+        <td><%= link_to 'Edit', edit_requisito_path(requisito) %></td>
+        <td><%= link_to 'Destroy', requisito, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Requisito', new_requisito_path %>

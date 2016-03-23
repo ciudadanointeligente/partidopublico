@@ -9,4 +9,19 @@ class Partido < ActiveRecord::Base
     validates_length_of :lema, :within => 2..200
     
     belongs_to :user
+    has_one :marco_general, dependent: :destroy
+    has_one :marco_interno, dependent: :destroy
+    has_many :organo_internos, dependent: :destroy
+    
+    after_create :initialize_transparency_settings
+    
+    def initialize_transparency_settings
+       self.marco_general = MarcoGeneral.new
+       self.marco_interno = MarcoInterno.new
+       self.organo_internos << OrganoInterno.new(nombre:"Órgano ejecutivo")
+       self.organo_internos << OrganoInterno.new(nombre:"Órgano intermedio colegiado")
+       self.organo_internos << OrganoInterno.new(nombre:"Tribunal supremo")
+       self.save
+    end
+    
 end

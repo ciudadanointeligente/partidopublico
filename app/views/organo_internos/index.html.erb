@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Organo Internos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Funciones</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @organo_internos.each do |organo_interno| %>
+      <tr>
+        <td><%= organo_interno.nombre %></td>
+        <td><%= organo_interno.funciones %></td>
+        <td><%= link_to 'Show', organo_interno %></td>
+        <td><%= link_to 'Edit', edit_organo_interno_path(organo_interno) %></td>
+        <td><%= link_to 'Destroy', organo_interno, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Organo interno', new_organo_interno_path %>

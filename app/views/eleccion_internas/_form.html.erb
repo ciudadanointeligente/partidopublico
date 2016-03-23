@@ -1,0 +1,24 @@
+<%= simple_form_for(@eleccion_interna) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :organo_interno %>
+    <%= f.input :fecha_eleccion %>
+    <%= f.input :fecha_limite_inscripcion %>
+    <%= f.input :cargo %>
+    
+    <%= f.fields_for :requisitos do |builder| %>
+       <%= render 'requisito_fields', :f => builder %>
+    <% end %>
+      <%= link_to_add_association 'add requirement', f, :requisitos %>
+      
+    <%= f.fields_for :procedimientos do |builder| %>
+       <%= render 'procedimiento_fields', :f => builder %>
+    <% end %>
+      <%= link_to_add_association 'add procedure', f, :procedimientos %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

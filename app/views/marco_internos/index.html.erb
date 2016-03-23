@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Marco Internos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Partido</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @marco_internos.each do |marco_interno| %>
+      <tr>
+        <td><%= marco_interno.partido %></td>
+        <td><%= link_to 'Show', marco_interno %></td>
+        <td><%= link_to 'Edit', edit_marco_interno_path(marco_interno) %></td>
+        <td><%= link_to 'Destroy', marco_interno, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Marco interno', new_marco_interno_path %>

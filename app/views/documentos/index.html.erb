@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Documentos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Descripcion</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @documentos.each do |documento| %>
+      <tr>
+        <td><%= documento.descripcion %></td>
+        <td><%= link_to 'Show', documento %></td>
+        <td><%= link_to 'Edit', edit_documento_path(documento) %></td>
+        <td><%= link_to 'Destroy', documento, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Documento', new_documento_path %>
