@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nombre:</strong>
+  <%= @organo_interno.nombre %>
+</p>
+
+<p>
+  <strong>Funciones:</strong>
+  <%= @organo_interno.funciones %>
+</p>
+
+<%= link_to 'Edit', edit_organo_interno_path(@organo_interno) %> |
+<%= link_to 'Back', organo_internos_path %>

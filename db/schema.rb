@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323203922) do
+ActiveRecord::Schema.define(version: 20160323220338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,16 @@ ActiveRecord::Schema.define(version: 20160323203922) do
 
   add_index "marco_internos", ["partido_id"], name: "index_marco_internos_on_partido_id", using: :btree
 
+  create_table "organo_internos", force: :cascade do |t|
+    t.string   "nombre"
+    t.string   "funciones"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "partido_id"
+  end
+
+  add_index "organo_internos", ["partido_id"], name: "index_organo_internos_on_partido_id", using: :btree
+
   create_table "partidos", force: :cascade do |t|
     t.string   "nombre",            null: false
     t.string   "sigla",             null: false
@@ -86,7 +96,19 @@ ActiveRecord::Schema.define(version: 20160323203922) do
     t.text     "bio"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.string   "foto_file_name"
+    t.string   "foto_content_type"
+    t.integer  "foto_file_size"
+    t.datetime "foto_updated_at"
+    t.string   "nombre"
+    t.string   "apellidos"
+    t.integer  "partido_id"
+    t.integer  "personable_id"
+    t.string   "personable_type"
   end
+
+  add_index "personas", ["partido_id"], name: "index_personas_on_partido_id", using: :btree
+  add_index "personas", ["personable_type", "personable_id"], name: "index_personas_on_personable_type_and_personable_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -129,5 +151,7 @@ ActiveRecord::Schema.define(version: 20160323203922) do
   add_foreign_key "leys", "marco_generals"
   add_foreign_key "marco_generals", "partidos"
   add_foreign_key "marco_internos", "partidos"
+  add_foreign_key "organo_internos", "partidos"
   add_foreign_key "partidos", "users"
+  add_foreign_key "personas", "partidos"
 end

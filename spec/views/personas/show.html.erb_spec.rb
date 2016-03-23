@@ -12,7 +12,7 @@ RSpec.describe "personas/show", type: :view do
     ))
   end
 
-  it "renders attributes in <p>" do
+  xit "renders attributes in <p>" do
     render
     expect(rendered).to match(/Genero/)
     expect(rendered).to match(/Nivel Estudios/)

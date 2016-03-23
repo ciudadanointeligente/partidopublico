@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :organo_internos
   resources :personas
   resources :marco_internos
   resources :documentos
