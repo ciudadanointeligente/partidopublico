@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Leys</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Numero</th>
+      <th>Nombre</th>
+      <th>Enlace</th>
+      <th>Tags</th>
+      <th>Resumen</th>
+      <th>Marco general</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @leys.each do |ley| %>
+      <tr>
+        <td><%= ley.numero %></td>
+        <td><%= ley.nombre %></td>
+        <td><%= ley.enlace %></td>
+        <td><%= ley.tags %></td>
+        <td><%= ley.resumen %></td>
+        <td><%= ley.marco_general %></td>
+        <td><%= link_to 'Show', ley %></td>
+        <td><%= link_to 'Edit', edit_ley_path(ley) %></td>
+        <td><%= link_to 'Destroy', ley, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ley', new_ley_path %>

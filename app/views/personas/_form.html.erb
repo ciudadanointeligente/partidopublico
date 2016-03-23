@@ -1,0 +1,17 @@
+<%= simple_form_for(@persona) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :genero %>
+    <%= f.input :fecha_nacimiento %>
+    <%= f.input :nivel_estudios %>
+    <%= f.input :region %>
+    <%= f.input :ano_inicio_militancia %>
+    <%= f.input :afiliado %>
+    <%= f.input :bio %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

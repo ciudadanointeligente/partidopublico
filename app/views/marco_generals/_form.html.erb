@@ -1,0 +1,27 @@
+<div class="container" ng-controller="marcoGeneralCtlr" >
+  
+        <%= simple_form_for(@marco_general) do |f| %>
+          <%= f.error_notification %>
+        
+          <div class="form-inputs">
+            <%= f.association :partido %>
+              <% if @marco_general.leys.any? %>
+              <div class="form-group">
+              <%= f.simple_fields_for :leys, wrapper: :inline_vertical_form do |l| %>
+                <%= l.input :numero %>
+                <%= l.input :nombre %>
+                <%= l.input :enlace %>
+              <% end %>
+              </div>
+            <% end %>
+              
+          </div>
+        
+          <div class="form-actions">
+            <%= button_tag "Añadir Ley", type: 'button', onclick: "add_ley(marco_general)", class: 'btn btn-default' %>
+            <a class="btn btn-default" ng-click="add_ley(ask)">Remove</a></td>
+            <%= f.button :submit %>
+          </div>
+        <% end %>
+
+</div>

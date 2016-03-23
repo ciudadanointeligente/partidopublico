@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :partido do
+  factory :partido, aliases: [:partidoX] do
     nombre Faker::Team.name
     sigla Faker::Lorem.characters(5)
     lema Faker::Lorem.sentence(3, true, 4)

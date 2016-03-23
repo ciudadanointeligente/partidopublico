@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Personas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Genero</th>
+      <th>Fecha nacimiento</th>
+      <th>Nivel estudios</th>
+      <th>Region</th>
+      <th>Ano inicio militancia</th>
+      <th>Afiliado</th>
+      <th>Bio</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @personas.each do |persona| %>
+      <tr>
+        <td><%= persona.genero %></td>
+        <td><%= persona.fecha_nacimiento %></td>
+        <td><%= persona.nivel_estudios %></td>
+        <td><%= persona.region %></td>
+        <td><%= persona.ano_inicio_militancia %></td>
+        <td><%= persona.afiliado %></td>
+        <td><%= persona.bio %></td>
+        <td><%= link_to 'Show', persona %></td>
+        <td><%= link_to 'Edit', edit_persona_path(persona) %></td>
+        <td><%= link_to 'Destroy', persona, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Persona', new_persona_path %>

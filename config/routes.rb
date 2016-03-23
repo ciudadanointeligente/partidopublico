@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :personas
+  resources :marco_internos
+  resources :documentos
+  resources :leys
+  resources :marco_generals
   devise_for :users
   resources :partidos
   # The priority is based upon order of creation: first created -> highest priority.

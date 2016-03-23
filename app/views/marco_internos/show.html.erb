@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Partido:</strong>
+  <%= @marco_interno.partido.sigla %>
+</p>
+  <% if @marco_interno.documentos.any? %>
+    <% @marco_interno.documentos.each do |doc| %>
+      <%= doc.descripcion %>
+      <%= doc.archivo.size %>
+      <%=link_to 'ver', doc.archivo.url %><br>
+    <% end %>
+  <% end %>
+  
+<%= link_to 'Edit', edit_marco_interno_path(@marco_interno) %>
+<%= link_to 'Back', marco_internos_path %>
