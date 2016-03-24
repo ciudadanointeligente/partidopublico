@@ -1,0 +1,6 @@
+datos_basicos
+<% if @partido.logo %>
+    <%= image_tag @partido.logo.url(:thumb) %>
+<% end %>
+<%= render 'partidos/form' %>
+<%= link_to 'skip', next_wizard_path %>

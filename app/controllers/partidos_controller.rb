@@ -34,7 +34,8 @@ class PartidosController < ApplicationController
 
     respond_to do |format|
       if @partido.save
-        format.html { redirect_to @partido, notice: 'Partido was successfully created.' }
+        # format.html { redirect_to @partido, notice: 'Partido was successfully created.' }
+        format.html { redirect_to partido_steps_path, notice: 'Partido was successfully created.' }
         format.json { render :show, status: :created, location: @partido }
       else
         format.html { render :new }

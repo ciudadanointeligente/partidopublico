@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :marco_generals
   devise_for :users
   resources :partidos
+  resources :partido_steps
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
