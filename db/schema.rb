@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160324152104) do
+ActiveRecord::Schema.define(version: 20160324162734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -166,6 +166,28 @@ ActiveRecord::Schema.define(version: 20160324152104) do
 
   add_index "requisitos", ["requisitable_type", "requisitable_id"], name: "index_requisitos_on_requisitable_type_and_requisitable_id", using: :btree
 
+  create_table "sedes", force: :cascade do |t|
+    t.string   "region"
+    t.string   "direccion"
+    t.string   "contacto"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tramites", force: :cascade do |t|
+    t.string   "nombre"
+    t.string   "descripcion"
+    t.integer  "persona_id"
+    t.string   "documento_file_name"
+    t.string   "documento_content_type"
+    t.integer  "documento_file_size"
+    t.datetime "documento_updated_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "tramites", ["persona_id"], name: "index_tramites_on_persona_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -212,4 +234,5 @@ ActiveRecord::Schema.define(version: 20160324152104) do
   add_foreign_key "organo_internos", "partidos"
   add_foreign_key "partidos", "users"
   add_foreign_key "personas", "partidos"
+  add_foreign_key "tramites", "personas"
 end

@@ -1,3 +1,26 @@
+# == Schema Information
+#
+# Table name: acuerdos
+#
+#  id                     :integer          not null, primary key
+#  numero                 :string
+#  fecha                  :date
+#  tipo                   :string
+#  tema                   :string
+#  region                 :string
+#  organo_interno_id      :integer
+#  documento_file_name    :string
+#  documento_content_type :string
+#  documento_file_size    :integer
+#  documento_updated_at   :datetime
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#
+# Indexes
+#
+#  index_acuerdos_on_organo_interno_id  (organo_interno_id)
+#
+
 FactoryGirl.define do
   factory :acuerdo do
     numero "MyString"

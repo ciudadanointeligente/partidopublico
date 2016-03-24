@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :sedes
+  resources :tramites
   resources :acuerdos
   resources :eleccion_populars
   resources :eleccion_internas

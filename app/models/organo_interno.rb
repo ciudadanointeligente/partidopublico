@@ -9,6 +9,10 @@
 #  updated_at :datetime         not null
 #  partido_id :integer
 #
+# Indexes
+#
+#  index_organo_internos_on_partido_id  (partido_id)
+#
 
 class OrganoInterno < ActiveRecord::Base
     belongs_to :partido

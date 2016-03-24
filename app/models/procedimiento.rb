@@ -9,6 +9,10 @@
 #  procedimentable_id   :integer
 #  procedimentable_type :string
 #
+# Indexes
+#
+#  index_procedimentable_type_and_id  (procedimentable_type,procedimentable_id)
+#
 
 class Procedimiento < ActiveRecord::Base
     belongs_to :procedimentable, polymorphic: true

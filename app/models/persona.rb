@@ -22,6 +22,11 @@
 #  personable_id         :integer
 #  personable_type       :string
 #
+# Indexes
+#
+#  index_personas_on_partido_id                         (partido_id)
+#  index_personas_on_personable_type_and_personable_id  (personable_type,personable_id)
+#
 
 class Persona < ActiveRecord::Base
     has_attached_file :foto, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"

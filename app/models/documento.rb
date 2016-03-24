@@ -13,6 +13,10 @@
 #  archivo_file_size    :integer
 #  archivo_updated_at   :datetime
 #
+# Indexes
+#
+#  index_documentos_on_documentable_type_and_documentable_id  (documentable_type,documentable_id)
+#
 
 class Documento < ActiveRecord::Base
     has_attached_file :archivo, styles: { large: "600x600>", medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"

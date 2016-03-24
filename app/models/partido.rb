@@ -16,6 +16,10 @@
 #  logo_updated_at   :datetime
 #  user_id           :integer
 #
+# Indexes
+#
+#  index_partidos_on_user_id  (user_id)
+#
 
 class Partido < ActiveRecord::Base
     has_paper_trail

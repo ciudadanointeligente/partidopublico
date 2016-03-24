@@ -10,6 +10,10 @@
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #
+# Indexes
+#
+#  index_eleccion_internas_on_organo_interno_id  (organo_interno_id)
+#
 
 class EleccionInterna < ActiveRecord::Base
     belongs_to :organo_interno    

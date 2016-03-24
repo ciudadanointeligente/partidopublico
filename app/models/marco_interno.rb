@@ -7,6 +7,10 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+# Indexes
+#
+#  index_marco_internos_on_partido_id  (partido_id)
+#
 
 class MarcoInterno < ActiveRecord::Base
     belongs_to :partido

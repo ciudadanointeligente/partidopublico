@@ -12,6 +12,10 @@
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #
+# Indexes
+#
+#  index_leys_on_marco_general_id  (marco_general_id)
+#
 
 class Ley < ActiveRecord::Base
   belongs_to :marco_general
