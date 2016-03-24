@@ -11,10 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323230833) do
+ActiveRecord::Schema.define(version: 20160324152104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "acuerdos", force: :cascade do |t|
+    t.string   "numero"
+    t.date     "fecha"
+    t.string   "tipo"
+    t.string   "tema"
+    t.string   "region"
+    t.integer  "organo_interno_id"
+    t.string   "documento_file_name"
+    t.string   "documento_content_type"
+    t.integer  "documento_file_size"
+    t.datetime "documento_updated_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "acuerdos", ["organo_interno_id"], name: "index_acuerdos_on_organo_interno_id", using: :btree
 
   create_table "documentos", force: :cascade do |t|
     t.string   "descripcion"
@@ -187,6 +204,7 @@ ActiveRecord::Schema.define(version: 20160323230833) do
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
+  add_foreign_key "acuerdos", "organo_internos"
   add_foreign_key "eleccion_internas", "organo_internos"
   add_foreign_key "leys", "marco_generals"
   add_foreign_key "marco_generals", "partidos"

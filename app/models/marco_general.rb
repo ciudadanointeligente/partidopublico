@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: marco_generals
+#
+#  id         :integer          not null, primary key
+#  partido_id :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class MarcoGeneral < ActiveRecord::Base
   belongs_to :partido
   has_many :leys, dependent: :destroy

@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Acuerdos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Numero</th>
+      <th>Fecha</th>
+      <th>Tipo</th>
+      <th>Tema</th>
+      <th>Region</th>
+      <th>Organo interno</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @acuerdos.each do |acuerdo| %>
+      <tr>
+        <td><%= acuerdo.numero %></td>
+        <td><%= acuerdo.fecha %></td>
+        <td><%= acuerdo.tipo %></td>
+        <td><%= acuerdo.tema %></td>
+        <td><%= acuerdo.region %></td>
+        <td><%= acuerdo.organo_interno %></td>
+        <td><%= link_to 'Show', acuerdo %></td>
+        <td><%= link_to 'Edit', edit_acuerdo_path(acuerdo) %></td>
+        <td><%= link_to 'Destroy', acuerdo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Acuerdo', new_acuerdo_path %>

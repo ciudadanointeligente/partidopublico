@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: partidos
+#
+#  id                :integer          not null, primary key
+#  nombre            :string           not null
+#  sigla             :string           not null
+#  lema              :string           not null
+#  fecha_fundacion   :date
+#  texto             :text
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  logo_file_name    :string
+#  logo_content_type :string
+#  logo_file_size    :integer
+#  logo_updated_at   :datetime
+#  user_id           :integer
+#
+
 class Partido < ActiveRecord::Base
     has_paper_trail
     has_attached_file :logo, styles: { large: "600x600>", medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"

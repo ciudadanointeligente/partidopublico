@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: marco_internos
+#
+#  id         :integer          not null, primary key
+#  partido_id :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class MarcoInterno < ActiveRecord::Base
     belongs_to :partido
     has_many :documentos, as: :documentable

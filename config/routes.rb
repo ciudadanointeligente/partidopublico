@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :acuerdos
   resources :eleccion_populars
   resources :eleccion_internas
   resources :procedimientos
