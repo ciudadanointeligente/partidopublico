@@ -1,0 +1,26 @@
+<%= simple_form_for @partido, url: wizard_path, method: :put do |f| %>
+  <% if @partido.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@partido.errors.count, "error") %> prohibited this partido from being saved:</h2>
+
+      <ul>
+      <% @partido.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="fileds">
+    <%= f.error_notification %>
+    <%= f.input :nombre %>
+    <%= f.input :sigla %>
+    <%= f.input :logo, as: :file %>
+    <%= f.input :lema %>
+    <%= f.input :fecha_fundacion %>
+    <%= f.input :texto %>
+    
+  </div>
+  <div class="actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

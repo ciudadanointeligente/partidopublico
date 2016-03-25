@@ -78,3 +78,37 @@ footer {
     border:1px solid black;
     display: inline-block;
 }
+
+.steps_list {
+    padding: 0;
+}
+
+.steps_list li {
+    display: inline;
+}
+
+.steps_list .unfinished {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px 4px 0 0;
+}
+.steps_list .current {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px 4px 0 0;
+}
+.steps_list .finished {
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px 4px 0 0;
+}
+
+.steps_list li a:hover {
+    background-color: orange;
+}
