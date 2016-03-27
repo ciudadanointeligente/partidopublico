@@ -28,8 +28,24 @@ class PartidoStepsController < ApplicationController
         # Never trust parameters from the scary internet, only allow the white list through.
         def partido_params
           # params.fetch(:partido, {:nombre, :sigla, :lema})
-          params.require(:partido).permit(:nombre, :sigla, :lema, :fecha_fundacion, :texto, :logo,
+          
+          puts 'raw params--------------------->'
+          puts params
+          begin
+            permitted = params.require(:marco_interno).permit(:partido_id, documentos_attributes: [:id, :descripcion, :archivo, :_destroy])
+            m_i_attributes = ActionController::Parameters.new(marco_internos_attributes:permitted)
+          rescue
+          
+          end
+
+          partido_params=  ActionController::Parameters.new(partido:m_i_attributes).merge(params)
+          puts 'partido_params--------------------->'
+          puts partido_params
+          
+          partido_params.require(:partido).permit(:nombre, :sigla, :lema, :fecha_fundacion, :texto, :logo,
           marco_internos_attributes: [:partido_id, documentos_attributes: [:id, :descripcion, :archivo, :_destroy]]
           )
+
+
         end
 end

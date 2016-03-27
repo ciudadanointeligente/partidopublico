@@ -38,7 +38,7 @@ class PartidosController < ApplicationController
         format.html { redirect_to partido_steps_path, notice: 'Partido was successfully created.' }
         format.json { render :show, status: :created, location: @partido }
       else
-        format.html { render :new }
+        # format.html { render :new }
         format.json { render json: @partido.errors, status: :unprocessable_entity }
       end
     end

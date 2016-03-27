@@ -2,5 +2,5 @@
 <% if @partido.logo %>
     <%= image_tag @partido.logo.url(:thumb) %>
 <% end %>
-<%= render 'marco_interno_form' %>
+
 <%= link_to 'skip', next_wizard_path %>

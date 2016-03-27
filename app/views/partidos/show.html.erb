@@ -1,4 +1,8 @@
 <p id="notice"><%= notice %></p>
 <%= image_tag @partido.logo.url(:thumb) %>
 <br>
+<%= @partido.nombre %>
+<br>
+<%= @partido.sigla %>
+<br>
 <%= link_to 'Back', partidos_path %>

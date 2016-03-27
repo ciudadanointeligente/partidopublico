@@ -36,6 +36,8 @@ class Partido < ActiveRecord::Base
     has_one :marco_interno, dependent: :destroy
     has_many :organo_internos, dependent: :destroy
     
+    accepts_nested_attributes_for :marco_interno, allow_destroy: true
+    
     after_create :initialize_transparency_settings
     
     def initialize_transparency_settings
