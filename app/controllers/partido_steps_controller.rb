@@ -38,14 +38,18 @@ class PartidoStepsController < ApplicationController
           
           end
 
-          partido_params=  ActionController::Parameters.new(partido:m_i_attributes).merge(params)
+          all_params=  ActionController::Parameters.new(partido:m_i_attributes).merge(params)
+          puts 'all_params--------------------->'
+          puts all_params
+          
+          partido_params = all_params.require(:partido).permit(:id, :nombre, :sigla, :lema, :fecha_fundacion, :texto, :logo,
+          marco_internos_attributes: [:id, :partido_id, documentos_attributes: [:id, :descripcion, :archivo, :_destroy]]
+          )
+          
           puts 'partido_params--------------------->'
           puts partido_params
           
-          partido_params.require(:partido).permit(:nombre, :sigla, :lema, :fecha_fundacion, :texto, :logo,
-          marco_internos_attributes: [:partido_id, documentos_attributes: [:id, :descripcion, :archivo, :_destroy]]
-          )
-
+          partido_params
 
         end
 end

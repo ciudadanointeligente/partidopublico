@@ -31,7 +31,7 @@ es:
       admin_login: "Ingresar como Administrador"
       admin_logout: "Cerrar Sesión"
       create_party: "Crear Nuevo Partido"
-      admin_party: "Administra Partidos"
+      admin_party: "Administrar Partido"
       license: "Copyleft"
   welcome:
     index:
