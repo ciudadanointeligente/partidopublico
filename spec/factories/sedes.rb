@@ -8,6 +8,11 @@
 #  contacto   :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  partido_id :integer
+#
+# Indexes
+#
+#  index_sedes_on_partido_id  (partido_id)
 #
 
 FactoryGirl.define do

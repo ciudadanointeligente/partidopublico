@@ -36,18 +36,35 @@ class Partido < ActiveRecord::Base
     has_one :marco_general, dependent: :destroy
     has_one :marco_interno, dependent: :destroy
     has_many :organo_internos, dependent: :destroy
+    has_and_belongs_to_many :regions
+    has_many :sedes
+    has_many :afiliacions
     
     accepts_nested_attributes_for :marco_interno, allow_destroy: true
+    accepts_nested_attributes_for :sedes, reject_if: proc { |attributes| attributes['direccion'].blank? }, allow_destroy: true
+    accepts_nested_attributes_for :afiliacions, allow_destroy: true
+    
     
     after_create :initialize_transparency_settings
     
     def initialize_transparency_settings
        self.marco_general = MarcoGeneral.new
        self.marco_interno = MarcoInterno.new
+       self.marco_interno.documentos << Documento.new(descripcion:"Marco Normativo Interno")
+       self.marco_interno.documentos << Documento.new(descripcion:"Código de Ética")
+       self.marco_interno.documentos << Documento.new(descripcion:"Procedimiento de Prevención de la Corrupción")
+       self.marco_interno.documentos << Documento.new(descripcion:"Reseña Histórica")
+       self.marco_interno.documentos << Documento.new(descripcion:"Declaración de Principios")
+       self.marco_interno.documentos << Documento.new(descripcion:"Programa Base")
+       self.marco_interno.documentos << Documento.new(descripcion:"Estructura Orgánica")
        self.organo_internos << OrganoInterno.new(nombre:"Órgano ejecutivo")
        self.organo_internos << OrganoInterno.new(nombre:"Órgano intermedio colegiado")
        self.organo_internos << OrganoInterno.new(nombre:"Tribunal supremo")
        self.save
+    end
+    
+    def to_s
+        self.sigla
     end
     
 end

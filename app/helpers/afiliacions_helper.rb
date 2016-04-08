@@ -1,0 +1,2 @@
+module AfiliacionsHelper
+end

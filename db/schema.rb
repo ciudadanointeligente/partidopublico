@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160324162734) do
+ActiveRecord::Schema.define(version: 20160407205117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,18 @@ ActiveRecord::Schema.define(version: 20160324162734) do
   end
 
   add_index "acuerdos", ["organo_interno_id"], name: "index_acuerdos_on_organo_interno_id", using: :btree
+
+  create_table "afiliacions", force: :cascade do |t|
+    t.integer  "hombres"
+    t.integer  "mujeres"
+    t.string   "rangos"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "partido_id"
+    t.string   "region"
+  end
+
+  add_index "afiliacions", ["partido_id"], name: "index_afiliacions_on_partido_id", using: :btree
 
   create_table "documentos", force: :cascade do |t|
     t.string   "descripcion"
@@ -122,6 +134,14 @@ ActiveRecord::Schema.define(version: 20160324162734) do
 
   add_index "partidos", ["user_id"], name: "index_partidos_on_user_id", using: :btree
 
+  create_table "partidos_regions", id: false, force: :cascade do |t|
+    t.integer "partido_id", null: false
+    t.integer "region_id",  null: false
+  end
+
+  add_index "partidos_regions", ["partido_id", "region_id"], name: "index_partidos_regions_on_partido_id_and_region_id", using: :btree
+  add_index "partidos_regions", ["region_id", "partido_id"], name: "index_partidos_regions_on_region_id_and_partido_id", using: :btree
+
   create_table "personas", force: :cascade do |t|
     t.string   "genero"
     t.date     "fecha_nacimiento"
@@ -156,6 +176,12 @@ ActiveRecord::Schema.define(version: 20160324162734) do
 
   add_index "procedimientos", ["procedimentable_type", "procedimentable_id"], name: "index_procedimentable_type_and_id", using: :btree
 
+  create_table "regions", force: :cascade do |t|
+    t.string   "nombre"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "requisitos", force: :cascade do |t|
     t.string   "descripcion"
     t.datetime "created_at",        null: false
@@ -172,7 +198,10 @@ ActiveRecord::Schema.define(version: 20160324162734) do
     t.string   "contacto"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "partido_id"
   end
+
+  add_index "sedes", ["partido_id"], name: "index_sedes_on_partido_id", using: :btree
 
   create_table "tramites", force: :cascade do |t|
     t.string   "nombre"
@@ -227,6 +256,7 @@ ActiveRecord::Schema.define(version: 20160324162734) do
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
   add_foreign_key "acuerdos", "organo_internos"
+  add_foreign_key "afiliacions", "partidos"
   add_foreign_key "eleccion_internas", "organo_internos"
   add_foreign_key "leys", "marco_generals"
   add_foreign_key "marco_generals", "partidos"
@@ -234,5 +264,6 @@ ActiveRecord::Schema.define(version: 20160324162734) do
   add_foreign_key "organo_internos", "partidos"
   add_foreign_key "partidos", "users"
   add_foreign_key "personas", "partidos"
+  add_foreign_key "sedes", "partidos"
   add_foreign_key "tramites", "personas"
 end

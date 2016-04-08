@@ -18,5 +18,6 @@
 #
 
 class Ley < ActiveRecord::Base
+    has_paper_trail
   belongs_to :marco_general
 end

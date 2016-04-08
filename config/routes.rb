@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :afiliacions
+  resources :regions
   resources :sedes
   resources :tramites
   resources :acuerdos

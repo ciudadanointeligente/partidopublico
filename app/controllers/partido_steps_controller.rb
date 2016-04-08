@@ -4,19 +4,75 @@ class PartidoStepsController < ApplicationController
     
     before_action :set_partido
         
-    steps :datos_basicos, :marco_interno, :postulacion_popular, :postulacion_interna, :acuerdos, :afiliacion, :sedes
+    steps :datos_basicos, :normas_internas, :regiones, :sedes, :num_afiliados, :afiliarse, 
+    
+    :postulacion_popular, :postulacion_interna, :acuerdos, :afiliacion
     
     def show
         @user = current_user
         @partido = Partido.find_by_user_id(current_user.id)
+        puts "----------------->  Show::"+step.to_s
+        case step
+        when :datos_basicos
+            
+        when :normas_internas
+            puts "----------------->  Show::"+step.to_s+"::"+@partido.marco_interno.inspect
+        
+        when :regiones
+            puts "----------------->  Show::"+step.to_s+"::"+@partido.regions.inspect
+            
+        when :sedes
+            @partido.regions.each do |r|
+                if @partido.sedes.find_by_region(r).blank?
+                    @partido.sedes << Sede.new(region:r)
+                end
+            end
+            puts "----------------->  Show::"+step.to_s+"::"+@partido.sedes.inspect
+        
+        when :num_afiliados
+            @partido.regions.each do |r|
+                if @partido.afiliacions.find_by_region(r).blank?
+                    @partido.afiliacions << Afiliacion.new(region:r)
+                end
+            end
+            puts "----------------->  Show::"+step.to_s+"::"+@partido.afiliacions.inspect
+        
+        end
         render_wizard
     end
     
     def update
         # puts params[:partido]
         @partido = Partido.find_by_user_id(current_user.id)
-        @partido.update_attributes(partido_params)
-        render_wizard @partido
+        
+        puts "----------------->  Update::"+step.to_s
+        case step
+        when :datos_basicos
+            @partido.update_attributes(partido_params)
+            render_wizard @partido
+        
+        when :normas_internas
+            puts marco_interno_params.to_yaml
+            @partido.marco_interno.update(marco_interno_params)
+            puts "----------------->  Update::"+step.to_s+"::"+@partido.marco_interno.inspect
+            render_wizard @partido
+        
+        when :regiones
+            @partido.update_attributes(partido_params)
+            
+            render_wizard @partido
+        
+        when :sedes
+            puts "----------------->  Update::"+step.to_s+"::"+@partido.sedes.inspect
+            @partido.update_attributes(partido_params)
+            render_wizard @partido
+        
+        when :num_afiliados
+            puts "----------------->  Update::"+step.to_s+"::"+@partido.sedes.inspect
+            @partido.update_attributes(partido_params)
+            render_wizard @partido
+                
+        end
     end
   
     private
@@ -27,29 +83,14 @@ class PartidoStepsController < ApplicationController
     
         # Never trust parameters from the scary internet, only allow the white list through.
         def partido_params
-          # params.fetch(:partido, {:nombre, :sigla, :lema})
-          
-          puts 'raw params--------------------->'
-          puts params
-          begin
-            permitted = params.require(:marco_interno).permit(:partido_id, documentos_attributes: [:id, :descripcion, :archivo, :_destroy])
-            m_i_attributes = ActionController::Parameters.new(marco_internos_attributes:permitted)
-          rescue
-          
-          end
-
-          all_params=  ActionController::Parameters.new(partido:m_i_attributes).merge(params)
-          puts 'all_params--------------------->'
-          puts all_params
-          
-          partido_params = all_params.require(:partido).permit(:id, :nombre, :sigla, :lema, :fecha_fundacion, :texto, :logo,
-          marco_internos_attributes: [:id, :partido_id, documentos_attributes: [:id, :descripcion, :archivo, :_destroy]]
-          )
-          
-          puts 'partido_params--------------------->'
-          puts partido_params
-          
-          partido_params
-
+          params.require(:partido).permit(:nombre, :sigla, :lema, :fecha_fundacion, :texto, :logo,
+                                                    sedes_attributes: [:id, :region, :direccion, :contacto, :_destroy],
+                                                    afiliacions_attributes: [:id, :region, :hombres, :mujeres, :rangos],
+                                                    region_ids: []
+            )
+        end
+        
+        def marco_interno_params
+          params.require(:marco_interno).permit(:partido_id, documentos_attributes: [:id, :descripcion, :archivo, :_destroy])
         end
 end

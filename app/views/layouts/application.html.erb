@@ -64,7 +64,7 @@
                               </button>
                             <ul class="dropdown-menu">
                                 <!--<li><a href=<%= new_partido_path%> ><%= t('.create_party') %></a></li>-->
-                                <li><a href=<%= partido_steps_path %> ><%= t('.admin_party') %>  <%= current_user.partido.sigla %></a></li>
+                                <li><a href=<%= partido_steps_path %> ><%= t('.admin_party') %>  <%= current_user %></a></li>
                                 <li role="separator" class="divider"></li>
                                 <li> <%= link_to(t('.admin_logout') , destroy_user_session_path, :method => :delete) %> </li>
                                 <!--<li><a href="#"><%= t('.admin_logout') %></a></li>-->

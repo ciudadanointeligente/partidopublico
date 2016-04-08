@@ -2,7 +2,7 @@
   <%= f.error_notification %>
 
   <div class="form-inputs boxed_form">
-    <% f.association :partido %>
+    <%= f.association :partido %>
     <div class="form-group">
       <%= f.fields_for :documentos do |builder| %>
        <%= render 'documento_fields', :f => builder %>
