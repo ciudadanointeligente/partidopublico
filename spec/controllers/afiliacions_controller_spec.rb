@@ -19,7 +19,7 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe AfiliacionsController, type: :controller do
-
+  include Devise::TestHelpers
   # This should return the minimal set of attributes required to create a valid
   # Afiliacion. As you add validations to Afiliacion, be sure to
   # adjust the attributes here as well.

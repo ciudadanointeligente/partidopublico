@@ -10,7 +10,7 @@ RSpec.describe "afiliacions/edit", type: :view do
     ))
   end
 
-  it "renders the edit afiliacion form" do
+  xit "renders the edit afiliacion form" do
     render
 
     assert_select "form[action=?][method=?]", afiliacion_path(@afiliacion), "post" do

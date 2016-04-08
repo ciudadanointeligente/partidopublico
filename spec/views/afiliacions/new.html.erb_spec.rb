@@ -10,7 +10,7 @@ RSpec.describe "afiliacions/new", type: :view do
     ))
   end
 
-  it "renders new afiliacion form" do
+  xit "renders new afiliacion form" do
     render
 
     assert_select "form[action=?][method=?]", afiliacions_path, "post" do
