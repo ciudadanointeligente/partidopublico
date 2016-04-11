@@ -19,6 +19,6 @@ class Sede < ActiveRecord::Base
     has_paper_trail
     belongs_to :partido
         
-    validates_presence_of :direccion
+    validates_presence_of :direccion, :region
         
 end

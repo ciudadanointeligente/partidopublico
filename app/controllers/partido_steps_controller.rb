@@ -23,7 +23,9 @@ class PartidoStepsController < ApplicationController
             
         when :sedes
             @partido.regions.each do |r|
-                if @partido.sedes.find_by_region(r).blank?
+                puts "____________________________________________________>buscando sede de region:"+r.to_s
+                if @partido.sedes.find_by_region(r.to_s).blank?
+                    puts "____________________________________________________>ENCONTRADA sede de region:"+r.to_s
                     @partido.sedes << Sede.new(region:r)
                 end
             end
@@ -63,12 +65,12 @@ class PartidoStepsController < ApplicationController
             render_wizard @partido
         
         when :sedes
-            puts "----------------->  Update::"+step.to_s+"::"+@partido.sedes.inspect
+            puts "----------------->  Update::"+step.to_s+"::"+partido_params.to_yaml
             @partido.update_attributes(partido_params)
             render_wizard @partido
         
         when :num_afiliados
-            puts "----------------->  Update::"+step.to_s+"::"+@partido.sedes.inspect
+            puts "----------------->  Update::"+step.to_s+"::"+@partido.sedes.to_yaml
             @partido.update_attributes(partido_params)
             render_wizard @partido
                 
@@ -85,7 +87,7 @@ class PartidoStepsController < ApplicationController
         def partido_params
           params.require(:partido).permit(:nombre, :sigla, :lema, :fecha_fundacion, :texto, :logo,
                                                     sedes_attributes: [:id, :region, :direccion, :contacto, :_destroy],
-                                                    afiliacions_attributes: [:id, :region, :hombres, :mujeres, :rangos],
+                                                    afiliacions_attributes: [:id, :region, :hombres, :mujeres, :rangos, :_destroy],
                                                     region_ids: []
             )
         end
