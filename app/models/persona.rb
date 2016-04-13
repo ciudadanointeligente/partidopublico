@@ -21,6 +21,15 @@
 #  partido_id            :integer
 #  personable_id         :integer
 #  personable_type       :string
+#  cargo                 :string
+#  distrito              :string
+#  circunscripcion       :string
+#  comuna                :string
+#  telefono              :string
+#  email                 :string
+#  fecha_desde           :date
+#  fecha_hasta           :date
+#  tipo                  :string
 #
 # Indexes
 #
@@ -38,5 +47,13 @@ class Persona < ActiveRecord::Base
     
     belongs_to :partido
     belongs_to :personable, polymorphic: true
-    
+    self.inheritance_column = :tipo
+ 
+    scope :representantes, -> { where(tipo: 'Representante') } 
+    scope :autoridades, -> { where(race: 'Autoridad') } 
+    scope :cargos, -> { where(race: 'Cargo') }
+ 
+    def self.tipos
+      %w(Representante Autoridad Cargo)
+    end
 end

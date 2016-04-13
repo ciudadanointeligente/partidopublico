@@ -21,6 +21,15 @@
 #  partido_id            :integer
 #  personable_id         :integer
 #  personable_type       :string
+#  cargo                 :string
+#  distrito              :string
+#  circunscripcion       :string
+#  comuna                :string
+#  telefono              :string
+#  email                 :string
+#  fecha_desde           :date
+#  fecha_hasta           :date
+#  tipo                  :string
 #
 # Indexes
 #

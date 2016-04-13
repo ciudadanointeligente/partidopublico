@@ -12,9 +12,11 @@
 #  documento_updated_at   :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  partido_id             :integer
 #
 # Indexes
 #
+#  index_tramites_on_partido_id  (partido_id)
 #  index_tramites_on_persona_id  (persona_id)
 #
 

@@ -4,7 +4,7 @@ class PartidoStepsController < ApplicationController
     
     before_action :set_partido
         
-    steps :datos_basicos, :normas_internas, :regiones, :sedes, :num_afiliados, :afiliarse, 
+    steps :datos_basicos, :normas_internas, :regiones, :sedes, :num_afiliados, :tramites, :representantes, :autoridades,
     
     :postulacion_popular, :postulacion_interna, :acuerdos, :afiliacion
     
@@ -39,6 +39,18 @@ class PartidoStepsController < ApplicationController
             end
             puts "----------------->  Show::"+step.to_s+"::"+@partido.afiliacions.inspect
         
+        when :tramites
+            @partido.tramites.each do |tramite|
+                puts tramite.inspect
+                tramite.requisitos.each do |requisito|
+                    puts requisito.inspect
+                end
+                tramite.procedimientos.each do |procedimiento|
+                    puts procedimiento.inspect
+                end
+            end
+            puts "----------------->  Show::"+step.to_s+"::"+@partido.tramites.inspect
+        
         end
         render_wizard
     end
@@ -51,30 +63,38 @@ class PartidoStepsController < ApplicationController
         case step
         when :datos_basicos
             @partido.update_attributes(partido_params)
-            render_wizard @partido
         
         when :normas_internas
             puts marco_interno_params.to_yaml
             @partido.marco_interno.update(marco_interno_params)
             puts "----------------->  Update::"+step.to_s+"::"+@partido.marco_interno.inspect
-            render_wizard @partido
         
         when :regiones
             @partido.update_attributes(partido_params)
-            
-            render_wizard @partido
         
         when :sedes
             puts "----------------->  Update::"+step.to_s+"::"+partido_params.to_yaml
             @partido.update_attributes(partido_params)
-            render_wizard @partido
         
         when :num_afiliados
             puts "----------------->  Update::"+step.to_s+"::"+@partido.sedes.to_yaml
             @partido.update_attributes(partido_params)
-            render_wizard @partido
+                
+        
+        when :tramites
+            puts "----------------->  Update::"+step.to_s+"::"+partido_params.to_yaml
+            @partido.update_attributes(partido_params)
+                
+        when :representantes
+            puts "----------------->  Update::"+step.to_s+"::"+partido_params.to_yaml
+            @partido.update_attributes(partido_params)
+        
+        when :autoridades
+            puts "----------------->  Update::"+step.to_s+"::"+partido_params.to_yaml
+            @partido.update_attributes(partido_params)
                 
         end
+        render_wizard @partido
     end
   
     private
@@ -88,6 +108,10 @@ class PartidoStepsController < ApplicationController
           params.require(:partido).permit(:nombre, :sigla, :lema, :fecha_fundacion, :texto, :logo,
                                                     sedes_attributes: [:id, :region, :direccion, :contacto, :_destroy],
                                                     afiliacions_attributes: [:id, :region, :hombres, :mujeres, :rangos, :_destroy],
+                                                    tramites_attributes: [:id, :nombre, :descripcion, :persona_id, :documento,
+                                                              requisitos_attributes: [:descripcion, :id, :_destroy],
+                                                              procedimientos_attributes: [:descripcion, :id, :_destroy]],
+                                                    representantes_attributes: [:id, :cargo, :nombre, :apellidos, :genero, :fecha_nacimiento, :nivel_estudios, :region, :ano_inicio_militancia, :afiliado, :bio],
                                                     region_ids: []
             )
         end

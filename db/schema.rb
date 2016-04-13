@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160407205117) do
+ActiveRecord::Schema.define(version: 20160412212054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -161,6 +161,15 @@ ActiveRecord::Schema.define(version: 20160407205117) do
     t.integer  "partido_id"
     t.integer  "personable_id"
     t.string   "personable_type"
+    t.string   "cargo"
+    t.string   "distrito"
+    t.string   "circunscripcion"
+    t.string   "comuna"
+    t.string   "telefono"
+    t.string   "email"
+    t.date     "fecha_desde"
+    t.date     "fecha_hasta"
+    t.string   "tipo"
   end
 
   add_index "personas", ["partido_id"], name: "index_personas_on_partido_id", using: :btree
@@ -213,8 +222,10 @@ ActiveRecord::Schema.define(version: 20160407205117) do
     t.datetime "documento_updated_at"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "partido_id"
   end
 
+  add_index "tramites", ["partido_id"], name: "index_tramites_on_partido_id", using: :btree
   add_index "tramites", ["persona_id"], name: "index_tramites_on_persona_id", using: :btree
 
   create_table "users", force: :cascade do |t|
@@ -265,5 +276,6 @@ ActiveRecord::Schema.define(version: 20160407205117) do
   add_foreign_key "partidos", "users"
   add_foreign_key "personas", "partidos"
   add_foreign_key "sedes", "partidos"
+  add_foreign_key "tramites", "partidos"
   add_foreign_key "tramites", "personas"
 end

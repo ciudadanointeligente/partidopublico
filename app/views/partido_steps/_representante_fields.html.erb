@@ -1,0 +1,14 @@
+<div class="form-group boxed_form">
+    <%= f.input :cargo, as: :select, collection: Representante.cargos %>
+    <%= f.input :nombre %>
+    <%= f.input :apellidos %>
+    <%= f.input :genero %>
+    <%= f.input :foto %>
+    <%= f.input :fecha_nacimiento %>
+    <%= f.input :nivel_estudios %>
+    <%= f.input :region %>
+    <%= f.input :ano_inicio_militancia %>
+    <%= f.input :afiliado %>
+    <%= f.input :bio %>
+<%= link_to_remove_association "mark for remove representante", f %>
+</div>

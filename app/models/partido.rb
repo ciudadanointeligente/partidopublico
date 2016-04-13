@@ -39,11 +39,17 @@ class Partido < ActiveRecord::Base
     has_and_belongs_to_many :regions
     has_many :sedes
     has_many :afiliacions
+    has_many :tramites
+    # has_many :personas, as: :personable
+    # delegate :representantes, :meerkats, :wild_boars, to: :personas
+    has_many :representantes, as: :personable
     
     accepts_nested_attributes_for :marco_interno, allow_destroy: true
     accepts_nested_attributes_for :sedes, reject_if: proc { |attributes| attributes['direccion'].blank? }, allow_destroy: true
     accepts_nested_attributes_for :afiliacions, allow_destroy: true
-    
+    accepts_nested_attributes_for :tramites, allow_destroy: true
+    # accepts_nested_attributes_for :personas, allow_destroy: true
+    accepts_nested_attributes_for :representantes, allow_destroy: true
     
     after_create :initialize_transparency_settings
     
