@@ -1,0 +1,434 @@
+
+mysql> select CONCAT('Region.create id:',regiones.region_id,', nombre:"',regiones.region_nombre,'", ordinal:"',regiones.region_ordinal,'"') from regiones 
+INTO OUTFILE '/tmp/regiones.txt';
+
+mysql> select CONCAT('Comuna.create id:',comunas.comuna_id,', nombre:"',comunas.comuna_nombre,'", provincia_id:',comunas.provincia_id) from comunas
+INTO OUTFILE '/tmp/comunas.txt';
+
+mysql> select CONCAT('Provincia.create id:',provincias.provincia_id,', nombre:"',provincias.provincia_nombre,'", region_id:',provincias.region_id) from provincias
+INTO OUTFILE '/tmp/provincias.txt';
+
+Region.delete_all
+Comuna.delete_all
+
+Region.create id:1, nombre:"Arica y Parinacota", ordinal:"XV"
+Region.create id:2, nombre:"Tarapacá", ordinal:"I"
+Region.create id:3, nombre:"Antofagasta", ordinal:"II"
+Region.create id:4, nombre:"Atacama", ordinal:"III"
+Region.create id:5, nombre:"Coquimbo", ordinal:"IV"
+Region.create id:6, nombre:"Valparaiso", ordinal:"V"
+Region.create id:7, nombre:"Metropolitana de Santiago", ordinal:"RM"
+Region.create id:8, nombre:"Libertador General Bernardo O'Higgins", ordinal:"VI"
+Region.create id:9, nombre:"Maule", ordinal:"VII"
+Region.create id:10, nombre:"Biobío", ordinal:"VIII"
+Region.create id:11, nombre:"La Araucanía", ordinal:"IX"
+Region.create id:12, nombre:"Los Ríos", ordinal:"XIV"
+Region.create id:13, nombre:"Los Lagos", ordinal:"X"
+Region.create id:14, nombre:"Aisén del General Carlos Ibáñez del Campo", ordinal:"XI"
+Region.create id:15, nombre:"Magallanes y de la Antártica Chilena", ordinal:"XII"
+
+Provincia.create id:1, nombre:"Arica", region_id:1
+Provincia.create id:2, nombre:"Parinacota", region_id:1
+Provincia.create id:3, nombre:"Iquique", region_id:2
+Provincia.create id:4, nombre:"El Tamarugal", region_id:2
+Provincia.create id:5, nombre:"Antofagasta", region_id:3
+Provincia.create id:6, nombre:"El Loa", region_id:3
+Provincia.create id:7, nombre:"Tocopilla", region_id:3
+Provincia.create id:8, nombre:"Chañaral", region_id:4
+Provincia.create id:9, nombre:"Copiapó", region_id:4
+Provincia.create id:10, nombre:"Huasco", region_id:4
+Provincia.create id:11, nombre:"Choapa", region_id:5
+Provincia.create id:12, nombre:"Elqui", region_id:5
+Provincia.create id:13, nombre:"Limarí", region_id:5
+Provincia.create id:14, nombre:"Isla de Pascua", region_id:6
+Provincia.create id:15, nombre:"Los Andes", region_id:6
+Provincia.create id:16, nombre:"Petorca", region_id:6
+Provincia.create id:17, nombre:"Quillota", region_id:6
+Provincia.create id:18, nombre:"San Antonio", region_id:6
+Provincia.create id:19, nombre:"San Felipe de Aconcagua", region_id:6
+Provincia.create id:20, nombre:"Valparaiso", region_id:6
+Provincia.create id:21, nombre:"Chacabuco", region_id:7
+Provincia.create id:22, nombre:"Cordillera", region_id:7
+Provincia.create id:23, nombre:"Maipo", region_id:7
+Provincia.create id:24, nombre:"Melipilla", region_id:7
+Provincia.create id:25, nombre:"Santiago", region_id:7
+Provincia.create id:26, nombre:"Talagante", region_id:7
+Provincia.create id:27, nombre:"Cachapoal", region_id:8
+Provincia.create id:28, nombre:"Cardenal Caro", region_id:8
+Provincia.create id:29, nombre:"Colchagua", region_id:8
+Provincia.create id:30, nombre:"Cauquenes", region_id:9
+Provincia.create id:31, nombre:"Curicó", region_id:9
+Provincia.create id:32, nombre:"Linares", region_id:9
+Provincia.create id:33, nombre:"Talca", region_id:9
+Provincia.create id:34, nombre:"Arauco", region_id:10
+Provincia.create id:35, nombre:"Bio Bío", region_id:10
+Provincia.create id:36, nombre:"Concepción", region_id:10
+Provincia.create id:37, nombre:"Ñuble", region_id:10
+Provincia.create id:38, nombre:"Cautín", region_id:11
+Provincia.create id:39, nombre:"Malleco", region_id:11
+Provincia.create id:40, nombre:"Valdivia", region_id:12
+Provincia.create id:41, nombre:"Ranco", region_id:12
+Provincia.create id:42, nombre:"Chiloé", region_id:13
+Provincia.create id:43, nombre:"Llanquihue", region_id:13
+Provincia.create id:44, nombre:"Osorno", region_id:13
+Provincia.create id:45, nombre:"Palena", region_id:13
+Provincia.create id:46, nombre:"Aisén", region_id:14
+Provincia.create id:47, nombre:"Capitán Prat", region_id:14
+Provincia.create id:48, nombre:"Coihaique", region_id:14
+Provincia.create id:49, nombre:"General Carrera", region_id:14
+Provincia.create id:50, nombre:"Antártica Chilena", region_id:15
+Provincia.create id:51, nombre:"Magallanes", region_id:15
+Provincia.create id:52, nombre:"Tierra del Fuego", region_id:15
+Provincia.create id:53, nombre:"Última Esperanza", region_id:15
+
+Comuna.create id:1, nombre:"Arica", provincia_id:1
+Comuna.create id:2, nombre:"Camarones", provincia_id:1
+Comuna.create id:3, nombre:"General Lagos", provincia_id:2
+Comuna.create id:4, nombre:"Putre", provincia_id:2
+Comuna.create id:5, nombre:"Alto Hospicio", provincia_id:3
+Comuna.create id:6, nombre:"Iquique", provincia_id:3
+Comuna.create id:7, nombre:"Camiña", provincia_id:4
+Comuna.create id:8, nombre:"Colchane", provincia_id:4
+Comuna.create id:9, nombre:"Huara", provincia_id:4
+Comuna.create id:10, nombre:"Pica", provincia_id:4
+Comuna.create id:11, nombre:"Pozo Almonte", provincia_id:4
+Comuna.create id:12, nombre:"Antofagasta", provincia_id:5
+Comuna.create id:13, nombre:"Mejillones", provincia_id:5
+Comuna.create id:14, nombre:"Sierra Gorda", provincia_id:5
+Comuna.create id:15, nombre:"Taltal", provincia_id:5
+Comuna.create id:16, nombre:"Calama", provincia_id:6
+Comuna.create id:17, nombre:"Ollague", provincia_id:6
+Comuna.create id:18, nombre:"San Pedro de Atacama", provincia_id:6
+Comuna.create id:19, nombre:"María Elena", provincia_id:7
+Comuna.create id:20, nombre:"Tocopilla", provincia_id:7
+Comuna.create id:21, nombre:"Chañaral", provincia_id:8
+Comuna.create id:22, nombre:"Diego de Almagro", provincia_id:8
+Comuna.create id:23, nombre:"Caldera", provincia_id:9
+Comuna.create id:24, nombre:"Copiapó", provincia_id:9
+Comuna.create id:25, nombre:"Tierra Amarilla", provincia_id:9
+Comuna.create id:26, nombre:"Alto del Carmen", provincia_id:10
+Comuna.create id:27, nombre:"Freirina", provincia_id:10
+Comuna.create id:28, nombre:"Huasco", provincia_id:10
+Comuna.create id:29, nombre:"Vallenar", provincia_id:10
+Comuna.create id:30, nombre:"Canela", provincia_id:11
+Comuna.create id:31, nombre:"Illapel", provincia_id:11
+Comuna.create id:32, nombre:"Los Vilos", provincia_id:11
+Comuna.create id:33, nombre:"Salamanca", provincia_id:11
+Comuna.create id:34, nombre:"Andacollo", provincia_id:12
+Comuna.create id:35, nombre:"Coquimbo", provincia_id:12
+Comuna.create id:36, nombre:"La Higuera", provincia_id:12
+Comuna.create id:37, nombre:"La Serena", provincia_id:12
+Comuna.create id:38, nombre:"Paihuaco", provincia_id:12
+Comuna.create id:39, nombre:"Vicuña", provincia_id:12
+Comuna.create id:40, nombre:"Combarbalá", provincia_id:13
+Comuna.create id:41, nombre:"Monte Patria", provincia_id:13
+Comuna.create id:42, nombre:"Ovalle", provincia_id:13
+Comuna.create id:43, nombre:"Punitaqui", provincia_id:13
+Comuna.create id:44, nombre:"Río Hurtado", provincia_id:13
+Comuna.create id:45, nombre:"Isla de Pascua", provincia_id:14
+Comuna.create id:46, nombre:"Calle Larga", provincia_id:15
+Comuna.create id:47, nombre:"Los Andes", provincia_id:15
+Comuna.create id:48, nombre:"Rinconada", provincia_id:15
+Comuna.create id:49, nombre:"San Esteban", provincia_id:15
+Comuna.create id:50, nombre:"La Ligua", provincia_id:16
+Comuna.create id:51, nombre:"Papudo", provincia_id:16
+Comuna.create id:52, nombre:"Petorca", provincia_id:16
+Comuna.create id:53, nombre:"Zapallar", provincia_id:16
+Comuna.create id:54, nombre:"Hijuelas", provincia_id:17
+Comuna.create id:55, nombre:"La Calera", provincia_id:17
+Comuna.create id:56, nombre:"La Cruz", provincia_id:17
+Comuna.create id:57, nombre:"Limache", provincia_id:17
+Comuna.create id:58, nombre:"Nogales", provincia_id:17
+Comuna.create id:59, nombre:"Olmué", provincia_id:17
+Comuna.create id:60, nombre:"Quillota", provincia_id:17
+Comuna.create id:61, nombre:"Algarrobo", provincia_id:18
+Comuna.create id:62, nombre:"Cartagena", provincia_id:18
+Comuna.create id:63, nombre:"El Quisco", provincia_id:18
+Comuna.create id:64, nombre:"El Tabo", provincia_id:18
+Comuna.create id:65, nombre:"San Antonio", provincia_id:18
+Comuna.create id:66, nombre:"Santo Domingo", provincia_id:18
+Comuna.create id:67, nombre:"Catemu", provincia_id:19
+Comuna.create id:68, nombre:"Llaillay", provincia_id:19
+Comuna.create id:69, nombre:"Panquehue", provincia_id:19
+Comuna.create id:70, nombre:"Putaendo", provincia_id:19
+Comuna.create id:71, nombre:"San Felipe", provincia_id:19
+Comuna.create id:72, nombre:"Santa María", provincia_id:19
+Comuna.create id:73, nombre:"Casablanca", provincia_id:20
+Comuna.create id:74, nombre:"Concón", provincia_id:20
+Comuna.create id:75, nombre:"Juan Fernández", provincia_id:20
+Comuna.create id:76, nombre:"Puchuncaví", provincia_id:20
+Comuna.create id:77, nombre:"Quilpué", provincia_id:20
+Comuna.create id:78, nombre:"Quintero", provincia_id:20
+Comuna.create id:79, nombre:"Valparaíso", provincia_id:20
+Comuna.create id:80, nombre:"Villa Alemana", provincia_id:20
+Comuna.create id:81, nombre:"Viña del Mar", provincia_id:20
+Comuna.create id:82, nombre:"Colina", provincia_id:21
+Comuna.create id:83, nombre:"Lampa", provincia_id:21
+Comuna.create id:84, nombre:"Tiltil", provincia_id:21
+Comuna.create id:85, nombre:"Pirque", provincia_id:22
+Comuna.create id:86, nombre:"Puente Alto", provincia_id:22
+Comuna.create id:87, nombre:"San José de Maipo", provincia_id:22
+Comuna.create id:88, nombre:"Buin", provincia_id:23
+Comuna.create id:89, nombre:"Calera de Tango", provincia_id:23
+Comuna.create id:90, nombre:"Paine", provincia_id:23
+Comuna.create id:91, nombre:"San Bernardo", provincia_id:23
+Comuna.create id:92, nombre:"Alhué", provincia_id:24
+Comuna.create id:93, nombre:"Curacaví", provincia_id:24
+Comuna.create id:94, nombre:"María Pinto", provincia_id:24
+Comuna.create id:95, nombre:"Melipilla", provincia_id:24
+Comuna.create id:96, nombre:"San Pedro", provincia_id:24
+Comuna.create id:97, nombre:"Cerrillos", provincia_id:25
+Comuna.create id:98, nombre:"Cerro Navia", provincia_id:25
+Comuna.create id:99, nombre:"Conchalí", provincia_id:25
+Comuna.create id:100, nombre:"El Bosque", provincia_id:25
+Comuna.create id:101, nombre:"Estación Central", provincia_id:25
+Comuna.create id:102, nombre:"Huechuraba", provincia_id:25
+Comuna.create id:103, nombre:"Independencia", provincia_id:25
+Comuna.create id:104, nombre:"La Cisterna", provincia_id:25
+Comuna.create id:105, nombre:"La Granja", provincia_id:25
+Comuna.create id:106, nombre:"La Florida", provincia_id:25
+Comuna.create id:107, nombre:"La Pintana", provincia_id:25
+Comuna.create id:108, nombre:"La Reina", provincia_id:25
+Comuna.create id:109, nombre:"Las Condes", provincia_id:25
+Comuna.create id:110, nombre:"Lo Barnechea", provincia_id:25
+Comuna.create id:111, nombre:"Lo Espejo", provincia_id:25
+Comuna.create id:112, nombre:"Lo Prado", provincia_id:25
+Comuna.create id:113, nombre:"Macul", provincia_id:25
+Comuna.create id:114, nombre:"Maipú", provincia_id:25
+Comuna.create id:115, nombre:"Ñuñoa", provincia_id:25
+Comuna.create id:116, nombre:"Pedro Aguirre Cerda", provincia_id:25
+Comuna.create id:117, nombre:"Peñalolén", provincia_id:25
+Comuna.create id:118, nombre:"Providencia", provincia_id:25
+Comuna.create id:119, nombre:"Pudahuel", provincia_id:25
+Comuna.create id:120, nombre:"Quilicura", provincia_id:25
+Comuna.create id:121, nombre:"Quinta Normal", provincia_id:25
+Comuna.create id:122, nombre:"Recoleta", provincia_id:25
+Comuna.create id:123, nombre:"Renca", provincia_id:25
+Comuna.create id:124, nombre:"San Miguel", provincia_id:25
+Comuna.create id:125, nombre:"San Joaquín", provincia_id:25
+Comuna.create id:126, nombre:"San Ramón", provincia_id:25
+Comuna.create id:127, nombre:"Santiago", provincia_id:25
+Comuna.create id:128, nombre:"Vitacura", provincia_id:25
+Comuna.create id:129, nombre:"El Monte", provincia_id:26
+Comuna.create id:130, nombre:"Isla de Maipo", provincia_id:26
+Comuna.create id:131, nombre:"Padre Hurtado", provincia_id:26
+Comuna.create id:132, nombre:"Peñaflor", provincia_id:26
+Comuna.create id:133, nombre:"Talagante", provincia_id:26
+Comuna.create id:134, nombre:"Codegua", provincia_id:27
+Comuna.create id:135, nombre:"Coínco", provincia_id:27
+Comuna.create id:136, nombre:"Coltauco", provincia_id:27
+Comuna.create id:137, nombre:"Doñihue", provincia_id:27
+Comuna.create id:138, nombre:"Graneros", provincia_id:27
+Comuna.create id:139, nombre:"Las Cabras", provincia_id:27
+Comuna.create id:140, nombre:"Machalí", provincia_id:27
+Comuna.create id:141, nombre:"Malloa", provincia_id:27
+Comuna.create id:142, nombre:"Mostazal", provincia_id:27
+Comuna.create id:143, nombre:"Olivar", provincia_id:27
+Comuna.create id:144, nombre:"Peumo", provincia_id:27
+Comuna.create id:145, nombre:"Pichidegua", provincia_id:27
+Comuna.create id:146, nombre:"Quinta de Tilcoco", provincia_id:27
+Comuna.create id:147, nombre:"Rancagua", provincia_id:27
+Comuna.create id:148, nombre:"Rengo", provincia_id:27
+Comuna.create id:149, nombre:"Requínoa", provincia_id:27
+Comuna.create id:150, nombre:"San Vicente de Tagua Tagua", provincia_id:27
+Comuna.create id:151, nombre:"La Estrella", provincia_id:28
+Comuna.create id:152, nombre:"Litueche", provincia_id:28
+Comuna.create id:153, nombre:"Marchihue", provincia_id:28
+Comuna.create id:154, nombre:"Navidad", provincia_id:28
+Comuna.create id:155, nombre:"Peredones", provincia_id:28
+Comuna.create id:156, nombre:"Pichilemu", provincia_id:28
+Comuna.create id:157, nombre:"Chépica", provincia_id:29
+Comuna.create id:158, nombre:"Chimbarongo", provincia_id:29
+Comuna.create id:159, nombre:"Lolol", provincia_id:29
+Comuna.create id:160, nombre:"Nancagua", provincia_id:29
+Comuna.create id:161, nombre:"Palmilla", provincia_id:29
+Comuna.create id:162, nombre:"Peralillo", provincia_id:29
+Comuna.create id:163, nombre:"Placilla", provincia_id:29
+Comuna.create id:164, nombre:"Pumanque", provincia_id:29
+Comuna.create id:165, nombre:"San Fernando", provincia_id:29
+Comuna.create id:166, nombre:"Santa Cruz", provincia_id:29
+Comuna.create id:167, nombre:"Cauquenes", provincia_id:30
+Comuna.create id:168, nombre:"Chanco", provincia_id:30
+Comuna.create id:169, nombre:"Pelluhue", provincia_id:30
+Comuna.create id:170, nombre:"Curicó", provincia_id:31
+Comuna.create id:171, nombre:"Hualañé", provincia_id:31
+Comuna.create id:172, nombre:"Licantén", provincia_id:31
+Comuna.create id:173, nombre:"Molina", provincia_id:31
+Comuna.create id:174, nombre:"Rauco", provincia_id:31
+Comuna.create id:175, nombre:"Romeral", provincia_id:31
+Comuna.create id:176, nombre:"Sagrada Familia", provincia_id:31
+Comuna.create id:177, nombre:"Teno", provincia_id:31
+Comuna.create id:178, nombre:"Vichuquén", provincia_id:31
+Comuna.create id:179, nombre:"Colbún", provincia_id:32
+Comuna.create id:180, nombre:"Linares", provincia_id:32
+Comuna.create id:181, nombre:"Longaví", provincia_id:32
+Comuna.create id:182, nombre:"Parral", provincia_id:32
+Comuna.create id:183, nombre:"Retiro", provincia_id:32
+Comuna.create id:184, nombre:"San Javier", provincia_id:32
+Comuna.create id:185, nombre:"Villa Alegre", provincia_id:32
+Comuna.create id:186, nombre:"Yerbas Buenas", provincia_id:32
+Comuna.create id:187, nombre:"Constitución", provincia_id:33
+Comuna.create id:188, nombre:"Curepto", provincia_id:33
+Comuna.create id:189, nombre:"Empedrado", provincia_id:33
+Comuna.create id:190, nombre:"Maule", provincia_id:33
+Comuna.create id:191, nombre:"Pelarco", provincia_id:33
+Comuna.create id:192, nombre:"Pencahue", provincia_id:33
+Comuna.create id:193, nombre:"Río Claro", provincia_id:33
+Comuna.create id:194, nombre:"San Clemente", provincia_id:33
+Comuna.create id:195, nombre:"San Rafael", provincia_id:33
+Comuna.create id:196, nombre:"Talca", provincia_id:33
+Comuna.create id:197, nombre:"Arauco", provincia_id:34
+Comuna.create id:198, nombre:"Cañete", provincia_id:34
+Comuna.create id:199, nombre:"Contulmo", provincia_id:34
+Comuna.create id:200, nombre:"Curanilahue", provincia_id:34
+Comuna.create id:201, nombre:"Lebu", provincia_id:34
+Comuna.create id:202, nombre:"Los Álamos", provincia_id:34
+Comuna.create id:203, nombre:"Tirúa", provincia_id:34
+Comuna.create id:204, nombre:"Alto Biobío", provincia_id:35
+Comuna.create id:205, nombre:"Antuco", provincia_id:35
+Comuna.create id:206, nombre:"Cabrero", provincia_id:35
+Comuna.create id:207, nombre:"Laja", provincia_id:35
+Comuna.create id:208, nombre:"Los Ángeles", provincia_id:35
+Comuna.create id:209, nombre:"Mulchén", provincia_id:35
+Comuna.create id:210, nombre:"Nacimiento", provincia_id:35
+Comuna.create id:211, nombre:"Negrete", provincia_id:35
+Comuna.create id:212, nombre:"Quilaco", provincia_id:35
+Comuna.create id:213, nombre:"Quilleco", provincia_id:35
+Comuna.create id:214, nombre:"San Rosendo", provincia_id:35
+Comuna.create id:215, nombre:"Santa Bárbara", provincia_id:35
+
+Comuna.create id:216, nombre:"Tucapel", provincia_id:35
+Comuna.create id:217, nombre:"Yumbel", provincia_id:35
+Comuna.create id:218, nombre:"Chiguayante", provincia_id:36
+Comuna.create id:219, nombre:"Concepción", provincia_id:36
+Comuna.create id:220, nombre:"Coronel", provincia_id:36
+Comuna.create id:221, nombre:"Florida", provincia_id:36
+Comuna.create id:222, nombre:"Hualpén", provincia_id:36
+Comuna.create id:223, nombre:"Hualqui", provincia_id:36
+Comuna.create id:224, nombre:"Lota", provincia_id:36
+Comuna.create id:225, nombre:"Penco", provincia_id:36
+Comuna.create id:226, nombre:"San Pedro de La Paz", provincia_id:36
+Comuna.create id:227, nombre:"Santa Juana", provincia_id:36
+Comuna.create id:228, nombre:"Talcahuano", provincia_id:36
+Comuna.create id:229, nombre:"Tomé", provincia_id:36
+Comuna.create id:230, nombre:"Bulnes", provincia_id:37
+Comuna.create id:231, nombre:"Chillán", provincia_id:37
+Comuna.create id:232, nombre:"Chillán Viejo", provincia_id:37
+Comuna.create id:233, nombre:"Cobquecura", provincia_id:37
+Comuna.create id:234, nombre:"Coelemu", provincia_id:37
+Comuna.create id:235, nombre:"Coihueco", provincia_id:37
+Comuna.create id:236, nombre:"El Carmen", provincia_id:37
+Comuna.create id:237, nombre:"Ninhue", provincia_id:37
+Comuna.create id:238, nombre:"Ñiquen", provincia_id:37
+Comuna.create id:239, nombre:"Pemuco", provincia_id:37
+Comuna.create id:240, nombre:"Pinto", provincia_id:37
+Comuna.create id:241, nombre:"Portezuelo", provincia_id:37
+Comuna.create id:242, nombre:"Quillón", provincia_id:37
+Comuna.create id:243, nombre:"Quirihue", provincia_id:37
+Comuna.create id:244, nombre:"Ránquil", provincia_id:37
+Comuna.create id:245, nombre:"San Carlos", provincia_id:37
+Comuna.create id:246, nombre:"San Fabián", provincia_id:37
+Comuna.create id:247, nombre:"San Ignacio", provincia_id:37
+Comuna.create id:248, nombre:"San Nicolás", provincia_id:37
+Comuna.create id:249, nombre:"Treguaco", provincia_id:37
+Comuna.create id:250, nombre:"Yungay", provincia_id:37
+Comuna.create id:251, nombre:"Carahue", provincia_id:38
+Comuna.create id:252, nombre:"Cholchol", provincia_id:38
+Comuna.create id:253, nombre:"Cunco", provincia_id:38
+Comuna.create id:254, nombre:"Curarrehue", provincia_id:38
+Comuna.create id:255, nombre:"Freire", provincia_id:38
+Comuna.create id:256, nombre:"Galvarino", provincia_id:38
+Comuna.create id:257, nombre:"Gorbea", provincia_id:38
+Comuna.create id:258, nombre:"Lautaro", provincia_id:38
+Comuna.create id:259, nombre:"Loncoche", provincia_id:38
+Comuna.create id:260, nombre:"Melipeuco", provincia_id:38
+Comuna.create id:261, nombre:"Nueva Imperial", provincia_id:38
+Comuna.create id:262, nombre:"Padre Las Casas", provincia_id:38
+Comuna.create id:263, nombre:"Perquenco", provincia_id:38
+Comuna.create id:264, nombre:"Pitrufquén", provincia_id:38
+Comuna.create id:265, nombre:"Pucón", provincia_id:38
+Comuna.create id:266, nombre:"Saavedra", provincia_id:38
+Comuna.create id:267, nombre:"Temuco", provincia_id:38
+Comuna.create id:268, nombre:"Teodoro Schmidt", provincia_id:38
+Comuna.create id:269, nombre:"Toltén", provincia_id:38
+Comuna.create id:270, nombre:"Vilcún", provincia_id:38
+Comuna.create id:271, nombre:"Villarrica", provincia_id:38
+Comuna.create id:272, nombre:"Angol", provincia_id:39
+Comuna.create id:273, nombre:"Collipulli", provincia_id:39
+Comuna.create id:274, nombre:"Curacautín", provincia_id:39
+Comuna.create id:275, nombre:"Ercilla", provincia_id:39
+Comuna.create id:276, nombre:"Lonquimay", provincia_id:39
+Comuna.create id:277, nombre:"Los Sauces", provincia_id:39
+Comuna.create id:278, nombre:"Lumaco", provincia_id:39
+Comuna.create id:279, nombre:"Purén", provincia_id:39
+Comuna.create id:280, nombre:"Renaico", provincia_id:39
+Comuna.create id:281, nombre:"Traiguén", provincia_id:39
+Comuna.create id:282, nombre:"Victoria", provincia_id:39
+Comuna.create id:283, nombre:"Corral", provincia_id:40
+Comuna.create id:284, nombre:"Lanco", provincia_id:40
+Comuna.create id:285, nombre:"Los Lagos", provincia_id:40
+Comuna.create id:286, nombre:"Máfil", provincia_id:40
+Comuna.create id:287, nombre:"Mariquina", provincia_id:40
+Comuna.create id:288, nombre:"Paillaco", provincia_id:40
+Comuna.create id:289, nombre:"Panguipulli", provincia_id:40
+Comuna.create id:290, nombre:"Valdivia", provincia_id:40
+Comuna.create id:291, nombre:"Futrono", provincia_id:41
+Comuna.create id:292, nombre:"La Unión", provincia_id:41
+Comuna.create id:293, nombre:"Lago Ranco", provincia_id:41
+Comuna.create id:294, nombre:"Río Bueno", provincia_id:41
+Comuna.create id:295, nombre:"Ancud", provincia_id:42
+Comuna.create id:296, nombre:"Castro", provincia_id:42
+Comuna.create id:297, nombre:"Chonchi", provincia_id:42
+Comuna.create id:298, nombre:"Curaco de Vélez", provincia_id:42
+Comuna.create id:299, nombre:"Dalcahue", provincia_id:42
+Comuna.create id:300, nombre:"Puqueldón", provincia_id:42
+Comuna.create id:301, nombre:"Queilén", provincia_id:42
+Comuna.create id:302, nombre:"Quemchi", provincia_id:42
+Comuna.create id:303, nombre:"Quellón", provincia_id:42
+Comuna.create id:304, nombre:"Quinchao", provincia_id:42
+Comuna.create id:305, nombre:"Calbuco", provincia_id:43
+Comuna.create id:306, nombre:"Cochamó", provincia_id:43
+Comuna.create id:307, nombre:"Fresia", provincia_id:43
+Comuna.create id:308, nombre:"Frutillar", provincia_id:43
+Comuna.create id:309, nombre:"Llanquihue", provincia_id:43
+Comuna.create id:310, nombre:"Los Muermos", provincia_id:43
+Comuna.create id:311, nombre:"Maullín", provincia_id:43
+Comuna.create id:312, nombre:"Puerto Montt", provincia_id:43
+Comuna.create id:313, nombre:"Puerto Varas", provincia_id:43
+Comuna.create id:314, nombre:"Osorno", provincia_id:44
+Comuna.create id:315, nombre:"Puero Octay", provincia_id:44
+Comuna.create id:316, nombre:"Purranque", provincia_id:44
+Comuna.create id:317, nombre:"Puyehue", provincia_id:44
+Comuna.create id:318, nombre:"Río Negro", provincia_id:44
+Comuna.create id:319, nombre:"San Juan de la Costa", provincia_id:44
+Comuna.create id:320, nombre:"San Pablo", provincia_id:44
+Comuna.create id:321, nombre:"Chaitén", provincia_id:45
+Comuna.create id:322, nombre:"Futaleufú", provincia_id:45
+Comuna.create id:323, nombre:"Hualaihué", provincia_id:45
+Comuna.create id:324, nombre:"Palena", provincia_id:45
+Comuna.create id:325, nombre:"Aisén", provincia_id:46
+Comuna.create id:326, nombre:"Cisnes", provincia_id:46
+Comuna.create id:327, nombre:"Guaitecas", provincia_id:46
+Comuna.create id:328, nombre:"Cochrane", provincia_id:47
+Comuna.create id:329, nombre:"O'higgins", provincia_id:47
+Comuna.create id:330, nombre:"Tortel", provincia_id:47
+Comuna.create id:331, nombre:"Coihaique", provincia_id:48
+Comuna.create id:332, nombre:"Lago Verde", provincia_id:48
+Comuna.create id:333, nombre:"Chile Chico", provincia_id:49
+Comuna.create id:334, nombre:"Río Ibáñez", provincia_id:49
+Comuna.create id:335, nombre:"Antártica", provincia_id:50
+Comuna.create id:336, nombre:"Cabo de Hornos", provincia_id:50
+Comuna.create id:337, nombre:"Laguna Blanca", provincia_id:51
+Comuna.create id:338, nombre:"Punta Arenas", provincia_id:51
+Comuna.create id:339, nombre:"Río Verde", provincia_id:51
+Comuna.create id:340, nombre:"San Gregorio", provincia_id:51
+Comuna.create id:341, nombre:"Porvenir", provincia_id:52
+Comuna.create id:342, nombre:"Primavera", provincia_id:52
+Comuna.create id:343, nombre:"Timaukel", provincia_id:52
+Comuna.create id:344, nombre:"Natales", provincia_id:53
+Comuna.create id:345, nombre:"Torres del Paine", provincia_id:53
+
+User.create!([
+  {email: "jbari@votainteligente.cl", encrypted_password: "$2a$10$5NRjnzww3lc60VTe4pwQtO2WoBxGwqD4pftkDhz3Scs1krAjqjeg6", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: "2016-04-13 11:32:53", sign_in_count: 10, current_sign_in_at: "2016-04-13 11:32:53", last_sign_in_at: "2016-04-12 19:13:57", current_sign_in_ip: "186.107.111.213", last_sign_in_ip: "186.107.112.80", confirmation_token: "YVRF3orxPveT2vLuwX-K", confirmed_at: "2016-03-23 14:00:26", confirmation_sent_at: "2016-03-23 14:00:10", unconfirmed_email: nil, failed_attempts: 0, unlock_token: nil, locked_at: nil}
+])
+

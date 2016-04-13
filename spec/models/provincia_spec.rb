@@ -1,16 +1,20 @@
 # == Schema Information
 #
-# Table name: regions
+# Table name: provincias
 #
 #  id         :integer          not null, primary key
 #  nombre     :string
+#  region_id  :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  ordinal    :string
+#
+# Indexes
+#
+#  index_provincias_on_region_id  (region_id)
 #
 
 require 'rails_helper'
 
-RSpec.describe Region, type: :model do
+RSpec.describe Provincia, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"
 end

@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   devise_for :users
   resources :partidos
   resources :partido_steps
+  get 'formulario/update_comunas', as: 'update_comunas'
+  # get 'partido_steps/update_comunas', as: 'update_comunas'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

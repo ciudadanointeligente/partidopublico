@@ -28,7 +28,7 @@ class Partido < ActiveRecord::Base
         content_type: { content_type:  /\Aimage\/.*\Z/ },
         size: { in: 0..500.kilobytes }
     validates_presence_of :nombre, :sigla, :lema, :message => "debe rellenar"
-    validates_uniqueness_of :nombre, :sigla, :lema, :user, :message => "already exists"
+    validates_uniqueness_of :nombre, :sigla, :lema, :message => "already exists"
     validates_uniqueness_of :user, :message => "already has a party"
     validates_length_of :lema, :within => 2..200
     

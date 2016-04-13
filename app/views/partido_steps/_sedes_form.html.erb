@@ -1,4 +1,4 @@
-<%= simple_form_for @partido, url: wizard_path, method: :put do |f| %>
+<%= simple_form_for @partido, url: wizard_path, method: :put, remote: true do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs boxed_form">

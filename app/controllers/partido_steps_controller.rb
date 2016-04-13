@@ -9,8 +9,8 @@ class PartidoStepsController < ApplicationController
     :postulacion_popular, :postulacion_interna, :acuerdos, :afiliacion
     
     def show
-        @user = current_user
-        @partido = Partido.find_by_user_id(current_user.id)
+        # @user = current_user
+        # @partido = Partido.find_by_user_id(current_user.id)
         puts "----------------->  Show::"+step.to_s
         case step
         when :datos_basicos
@@ -33,7 +33,7 @@ class PartidoStepsController < ApplicationController
         
         when :num_afiliados
             @partido.regions.each do |r|
-                if @partido.afiliacions.find_by_region(r).blank?
+                if @partido.afiliacions.find_by_region(r.to_s).blank?
                     @partido.afiliacions << Afiliacion.new(region:r)
                 end
             end
@@ -57,7 +57,7 @@ class PartidoStepsController < ApplicationController
     
     def update
         # puts params[:partido]
-        @partido = Partido.find_by_user_id(current_user.id)
+        # @partido = Partido.find_by_user_id(current_user.id)
         
         puts "----------------->  Update::"+step.to_s
         case step
@@ -100,7 +100,7 @@ class PartidoStepsController < ApplicationController
     private
         # Use callbacks to share common setup or constraints between actions.
         def set_partido
-          @partido = Partido.find_by_user_id(current_user.id)
+          @partido = Partido.first
         end
     
         # Never trust parameters from the scary internet, only allow the white list through.

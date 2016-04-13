@@ -4,7 +4,7 @@ class PartidosController < ApplicationController
   # GET /partidos
   # GET /partidos.json
   def index
-    @partidos = Partido.where(user_id: current_user.id)
+    @partidos = Partido.all
   end
 
   # GET /partidos/1
@@ -30,7 +30,7 @@ class PartidosController < ApplicationController
   # POST /partidos.json
   def create
     @partido = Partido.new(partido_params)
-    @partido.user = current_user
+    # @partido.user = current_user
 
     respond_to do |format|
       if @partido.save

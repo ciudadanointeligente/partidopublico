@@ -55,6 +55,8 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-rescue'
   gem 'better_errors'
+  gem 'seed_dump'
+  gem 'quiet_assets'
 end
 
 group :development do

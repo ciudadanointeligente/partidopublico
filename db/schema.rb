@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160412212054) do
+ActiveRecord::Schema.define(version: 20160413184626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,33 @@ ActiveRecord::Schema.define(version: 20160412212054) do
   end
 
   add_index "afiliacions", ["partido_id"], name: "index_afiliacions_on_partido_id", using: :btree
+
+  create_table "circunscripcions", force: :cascade do |t|
+    t.integer  "region_id"
+    t.string   "nombre"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "circunscripcions", ["region_id"], name: "index_circunscripcions_on_region_id", using: :btree
+
+  create_table "comunas", force: :cascade do |t|
+    t.integer  "provincia_id"
+    t.string   "nombre"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "comunas", ["provincia_id"], name: "index_comunas_on_provincia_id", using: :btree
+
+  create_table "distritos", force: :cascade do |t|
+    t.integer  "region_id"
+    t.string   "nombre"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "distritos", ["region_id"], name: "index_distritos_on_region_id", using: :btree
 
   create_table "documentos", force: :cascade do |t|
     t.string   "descripcion"
@@ -185,10 +212,20 @@ ActiveRecord::Schema.define(version: 20160412212054) do
 
   add_index "procedimientos", ["procedimentable_type", "procedimentable_id"], name: "index_procedimentable_type_and_id", using: :btree
 
+  create_table "provincias", force: :cascade do |t|
+    t.string   "nombre"
+    t.integer  "region_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "provincias", ["region_id"], name: "index_provincias_on_region_id", using: :btree
+
   create_table "regions", force: :cascade do |t|
     t.string   "nombre"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "ordinal"
   end
 
   create_table "requisitos", force: :cascade do |t|
@@ -268,6 +305,9 @@ ActiveRecord::Schema.define(version: 20160412212054) do
 
   add_foreign_key "acuerdos", "organo_internos"
   add_foreign_key "afiliacions", "partidos"
+  add_foreign_key "circunscripcions", "regions"
+  add_foreign_key "comunas", "provincias"
+  add_foreign_key "distritos", "regions"
   add_foreign_key "eleccion_internas", "organo_internos"
   add_foreign_key "leys", "marco_generals"
   add_foreign_key "marco_generals", "partidos"
@@ -275,6 +315,7 @@ ActiveRecord::Schema.define(version: 20160412212054) do
   add_foreign_key "organo_internos", "partidos"
   add_foreign_key "partidos", "users"
   add_foreign_key "personas", "partidos"
+  add_foreign_key "provincias", "regions"
   add_foreign_key "sedes", "partidos"
   add_foreign_key "tramites", "partidos"
   add_foreign_key "tramites", "personas"
