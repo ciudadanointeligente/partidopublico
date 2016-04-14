@@ -2,15 +2,15 @@
 #
 # Table name: distritos
 #
-#  id         :integer          not null, primary key
-#  region_id  :integer
-#  nombre     :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                 :integer          not null, primary key
+#  circunscripcion_id :integer
+#  nombre             :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
 #
 # Indexes
 #
-#  index_distritos_on_region_id  (region_id)
+#  index_distritos_on_circunscripcion_id  (circunscripcion_id)
 #
 
 FactoryGirl.define do

@@ -1,3 +1,8 @@
+rake db:seed:dump
+
+User.create!([
+  {email: "jbari@votainteligente.cl", encrypted_password: "$2a$10$5NRjnzww3lc60VTe4pwQtO2WoBxGwqD4pftkDhz3Scs1krAjqjeg6", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: "2016-04-13 11:32:53", sign_in_count: 10, current_sign_in_at: "2016-04-13 11:32:53", last_sign_in_at: "2016-04-12 19:13:57", current_sign_in_ip: "186.107.111.213", last_sign_in_ip: "186.107.112.80", confirmation_token: "YVRF3orxPveT2vLuwX-K", confirmed_at: "2016-03-23 14:00:26", confirmation_sent_at: "2016-03-23 14:00:10", unconfirmed_email: nil, failed_attempts: 0, unlock_token: nil, locked_at: nil}
+])
 
 mysql> select CONCAT('Region.create id:',regiones.region_id,', nombre:"',regiones.region_nombre,'", ordinal:"',regiones.region_ordinal,'"') from regiones 
 INTO OUTFILE '/tmp/regiones.txt';
@@ -10,6 +15,8 @@ INTO OUTFILE '/tmp/provincias.txt';
 
 Region.delete_all
 Comuna.delete_all
+Circunscripcion.delete_all
+Distrito.delete_all
 
 Region.create id:1, nombre:"Arica y Parinacota", ordinal:"XV"
 Region.create id:2, nombre:"Tarapacá", ordinal:"I"
@@ -428,7 +435,105 @@ Comuna.create id:343, nombre:"Timaukel", provincia_id:52
 Comuna.create id:344, nombre:"Natales", provincia_id:53
 Comuna.create id:345, nombre:"Torres del Paine", provincia_id:53
 
-User.create!([
-  {email: "jbari@votainteligente.cl", encrypted_password: "$2a$10$5NRjnzww3lc60VTe4pwQtO2WoBxGwqD4pftkDhz3Scs1krAjqjeg6", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: "2016-04-13 11:32:53", sign_in_count: 10, current_sign_in_at: "2016-04-13 11:32:53", last_sign_in_at: "2016-04-12 19:13:57", current_sign_in_ip: "186.107.111.213", last_sign_in_ip: "186.107.112.80", confirmation_token: "YVRF3orxPveT2vLuwX-K", confirmed_at: "2016-03-23 14:00:26", confirmation_sent_at: "2016-03-23 14:00:10", unconfirmed_email: nil, failed_attempts: 0, unlock_token: nil, locked_at: nil}
-])
+Circunscripcion.create nombre: "", id: 
+Distrito.create nombre: , circunscripcion_id:
+
+Circunscripcion.create nombre: "I Tarapacá", id: 1
+Distrito.create nombre: 1, circunscripcion_id:1
+Distrito.create nombre: 2, circunscripcion_id:1
+
+Circunscripcion.create nombre: "II Antofagasta", id: 2
+Distrito.create nombre: 3, circunscripcion_id:2
+Distrito.create nombre: 4, circunscripcion_id:2
+
+Circunscripcion.create nombre: "III Atacama", id: 3
+Distrito.create nombre: 5, circunscripcion_id:3
+Distrito.create nombre: 6, circunscripcion_id:3
+
+Circunscripcion.create nombre: "IV Coquimbo", id: 4
+Distrito.create nombre: 7, circunscripcion_id:4
+Distrito.create nombre: 8, circunscripcion_id:4
+Distrito.create nombre: 9, circunscripcion_id:4
+
+Circunscripcion.create nombre: "V Valparaíso Cordillera", id: 5
+Distrito.create nombre: 10, circunscripcion_id:5
+Distrito.create nombre: 11, circunscripcion_id:5
+Distrito.create nombre: 12, circunscripcion_id:5
+
+Circunscripcion.create nombre: "VI Valparaíso Costa", id: 6
+Distrito.create nombre: 13, circunscripcion_id:6
+Distrito.create nombre: 14, circunscripcion_id:6
+Distrito.create nombre: 15, circunscripcion_id:6
+
+Circunscripcion.create nombre: "VII Santiago Poniente", id: 7
+Distrito.create nombre: 16, circunscripcion_id:7
+Distrito.create nombre: 17, circunscripcion_id:7
+Distrito.create nombre: 18, circunscripcion_id:7
+Distrito.create nombre: 19, circunscripcion_id:7
+Distrito.create nombre: 20, circunscripcion_id:7
+Distrito.create nombre: 22, circunscripcion_id:7
+Distrito.create nombre: 30, circunscripcion_id:7
+Distrito.create nombre: 31, circunscripcion_id:7
+
+Circunscripcion.create nombre: "VIII Santiago Oriente", id: 8
+Distrito.create nombre: 21, circunscripcion_id:8
+Distrito.create nombre: 23, circunscripcion_id:8
+Distrito.create nombre: 24, circunscripcion_id:8
+Distrito.create nombre: 25, circunscripcion_id:8
+Distrito.create nombre: 26, circunscripcion_id:8
+Distrito.create nombre: 27, circunscripcion_id:8
+Distrito.create nombre: 28, circunscripcion_id:8
+Distrito.create nombre: 29, circunscripcion_id:8
+
+Circunscripcion.create nombre: "IX O'Higgins", id: 9
+Distrito.create nombre: 32, circunscripcion_id:9
+Distrito.create nombre: 33, circunscripcion_id:9
+Distrito.create nombre: 34, circunscripcion_id:9
+Distrito.create nombre: 35, circunscripcion_id:9
+
+Circunscripcion.create nombre: "X Maule Norte", id: 10
+Distrito.create nombre: 36, circunscripcion_id:10
+Distrito.create nombre: 37, circunscripcion_id:10
+Distrito.create nombre: 38, circunscripcion_id:10
+
+Circunscripcion.create nombre: "XI Maule Sur", id: 11
+Distrito.create nombre: 39, circunscripcion_id:11
+Distrito.create nombre: 40, circunscripcion_id:11
+
+Circunscripcion.create nombre: "XII Biobío Costa", id: 12
+Distrito.create nombre: 42, circunscripcion_id:12
+Distrito.create nombre: 43, circunscripcion_id:12
+Distrito.create nombre: 44, circunscripcion_id:12
+Distrito.create nombre: 45, circunscripcion_id:12
+
+Circunscripcion.create nombre: "XIII Biobío Cordillera", id: 13
+Distrito.create nombre: 41, circunscripcion_id:13
+Distrito.create nombre: 46, circunscripcion_id:13
+Distrito.create nombre: 47, circunscripcion_id:13
+
+Circunscripcion.create nombre: "XIV Araucanía Norte", id: 14
+Distrito.create nombre: 48, circunscripcion_id:14
+Distrito.create nombre: 49, circunscripcion_id:14
+
+Circunscripcion.create nombre: "XV Araucanía Sur", id: 15
+Distrito.create nombre: 50, circunscripcion_id:15
+Distrito.create nombre: 51, circunscripcion_id:15
+Distrito.create nombre: 52, circunscripcion_id:15
+
+Circunscripcion.create nombre: "XVI Los Ríos", id: 16
+Distrito.create nombre: 53, circunscripcion_id:16
+Distrito.create nombre: 54, circunscripcion_id:16
+
+Circunscripcion.create nombre: "XVII Los Lagos", id: 17
+Distrito.create nombre: 55, circunscripcion_id:17
+Distrito.create nombre: 56, circunscripcion_id:17
+Distrito.create nombre: 57, circunscripcion_id:17
+Distrito.create nombre: 58, circunscripcion_id:17
+
+Circunscripcion.create nombre: "XVIII Aysén", id: 18
+Distrito.create nombre: 59, circunscripcion_id:18
+
+Circunscripcion.create nombre: "XIX Magallanes", id: 19
+Distrito.create nombre: 60, circunscripcion_id:19
+
 

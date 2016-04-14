@@ -111,7 +111,8 @@ class PartidoStepsController < ApplicationController
                                                     tramites_attributes: [:id, :nombre, :descripcion, :persona_id, :documento,
                                                               requisitos_attributes: [:descripcion, :id, :_destroy],
                                                               procedimientos_attributes: [:descripcion, :id, :_destroy]],
-                                                    representantes_attributes: [:id, :cargo, :nombre, :apellidos, :genero, :fecha_nacimiento, :nivel_estudios, :region, :ano_inicio_militancia, :afiliado, :bio],
+                                                    representantes_attributes: [:id, :cargo, :nombre, :apellidos, :genero, :fecha_nacimiento, :nivel_estudios,
+                                                                :region, :comuna, :circunscripcion, :distrito, :ano_inicio_militancia, :afiliado, :bio, :_destroy],
                                                     region_ids: []
             )
         end

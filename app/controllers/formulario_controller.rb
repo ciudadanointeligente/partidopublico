@@ -7,11 +7,18 @@ class FormularioController < ApplicationController
     @element_id = params[:element_id]
     @comunas = []
     provincias.each do |p|
-      @comunas.append p.comunas
+      @comunas =@comunas + p.comunas
     end
-    
     respond_to do |format|
       format.js
     end
   end
+  
+  def update_distritos
+    @distritos = Distrito.where "circunscripcion_id = ?", params[:circunscripcion_id]
+    respond_to do |format|
+      format.js
+    end
+  end
+  
 end

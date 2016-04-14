@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160413184626) do
+ActiveRecord::Schema.define(version: 20160414214947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,13 +46,10 @@ ActiveRecord::Schema.define(version: 20160413184626) do
   add_index "afiliacions", ["partido_id"], name: "index_afiliacions_on_partido_id", using: :btree
 
   create_table "circunscripcions", force: :cascade do |t|
-    t.integer  "region_id"
     t.string   "nombre"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  add_index "circunscripcions", ["region_id"], name: "index_circunscripcions_on_region_id", using: :btree
 
   create_table "comunas", force: :cascade do |t|
     t.integer  "provincia_id"
@@ -64,13 +61,13 @@ ActiveRecord::Schema.define(version: 20160413184626) do
   add_index "comunas", ["provincia_id"], name: "index_comunas_on_provincia_id", using: :btree
 
   create_table "distritos", force: :cascade do |t|
-    t.integer  "region_id"
+    t.integer  "circunscripcion_id"
     t.string   "nombre"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
-  add_index "distritos", ["region_id"], name: "index_distritos_on_region_id", using: :btree
+  add_index "distritos", ["circunscripcion_id"], name: "index_distritos_on_circunscripcion_id", using: :btree
 
   create_table "documentos", force: :cascade do |t|
     t.string   "descripcion"
@@ -305,9 +302,8 @@ ActiveRecord::Schema.define(version: 20160413184626) do
 
   add_foreign_key "acuerdos", "organo_internos"
   add_foreign_key "afiliacions", "partidos"
-  add_foreign_key "circunscripcions", "regions"
   add_foreign_key "comunas", "provincias"
-  add_foreign_key "distritos", "regions"
+  add_foreign_key "distritos", "circunscripcions"
   add_foreign_key "eleccion_internas", "organo_internos"
   add_foreign_key "leys", "marco_generals"
   add_foreign_key "marco_generals", "partidos"
