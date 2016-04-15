@@ -16,6 +16,7 @@ class FormularioController < ApplicationController
   
   def update_distritos
     @distritos = Distrito.where "circunscripcion_id = ?", params[:circunscripcion_id]
+    @element_id = params[:element_id]
     respond_to do |format|
       format.js
     end

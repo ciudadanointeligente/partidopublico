@@ -3,30 +3,30 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
+  show_sibling = (elem, sib_class, show) ->
+    if show
+      elem.parent().siblings(sib_class).removeClass 'escondido'
+      elem.parent().siblings(sib_class).addClass 'mostrable'
+    else
+      elem.parent().siblings(sib_class).removeClass 'mostrable'
+      elem.parent().siblings(sib_class).addClass 'escondido'
     
   ready = ->
-    console.log $(".cargo")
     $(".cargo").each ->
       id = $(@).attr("id")
-      # console.log id 
       cargo_value = $(@).val()
-      # console.log cargo_value
-      main_parent = $(@).parent().parent()
       console.dir $(@).parent().siblings(".region")
       switch cargo_value
         when "Alcalde", "Concejal"
-          $(@).parent().siblings(".region").removeClass 'escondido'
-          $(@).parent().siblings(".comuna").removeClass 'escondido'  
-          $(@).parent().siblings(".region").addClass 'mostrable'
-          $(@).parent().siblings(".comuna").addClass 'mostrable'  
+          show_sibling $(@), ".region", true
+          show_sibling $(@), ".comuna", true
+        when "Consejero Regional"
+          show_sibling $(@), ".region", true
         when "Senador"
-          $(@).parent().siblings(".circunscripcion").removeClass 'escondido'
-          $(@).parent().siblings(".circunscripcion").addClass 'mostrable'
+          show_sibling $(@), ".circunscripcion", true
         when "Diputado"
-          $(@).parent().siblings(".circunscripcion").removeClass 'escondido'
-          $(@).parent().siblings(".circunscripcion").addClass 'mostrable'
-          $(@).parent().siblings(".distrito").removeClass 'escondido'
-          $(@).parent().siblings(".distrito").addClass 'mostrable'
+          show_sibling $(@), ".circunscripcion", true
+          show_sibling $(@), ".distrito", true
         else console.log cargo_value
       
   $(document).on 'page:change', ready
@@ -44,7 +44,7 @@ $ ->
       error: (jqXHR, textStatus, errorThrown) ->
         console.log("AJAX Error: #{textStatus}")
       success: (data, textStatus, jqXHR) ->
-        console.log("comunas select OK!")
+        console.log("update_distritos select OK!")
         
     return
   
@@ -69,32 +69,30 @@ $ ->
     cargo_value = $(this).val()
     switch cargo_value
       when "Alcalde", "Concejal"
-        $(@).parent().siblings(".region").removeClass 'escondido'
-        $(@).parent().siblings(".comuna").removeClass 'escondido'  
-        $(@).parent().siblings(".region").addClass 'mostrable'
-        $(@).parent().siblings(".comuna").addClass 'mostrable'  
-        $(@).parent().siblings(".circunscripcion").removeClass 'mostrable'
-        $(@).parent().siblings(".circunscripcion").addClass 'escondido'
-        $(@).parent().siblings(".distrito").removeClass 'mostrable'
-        $(@).parent().siblings(".distrito").addClass 'escondido'
+        show_sibling $(@), ".region", true
+        show_sibling $(@), ".comuna", true
+        show_sibling $(@), ".circunscripcion", false
+        show_sibling $(@), ".distrito", false
+      when "Consejero Regional"
+        show_sibling $(@), ".region", true
+        show_sibling $(@), ".comuna", false
+        show_sibling $(@), ".circunscripcion", false
+        show_sibling $(@), ".distrito", false
       when "Senador"
-        $(@).parent().siblings(".circunscripcion").removeClass 'escondido'
-        $(@).parent().siblings(".circunscripcion").addClass 'mostrable'
-        $(@).parent().siblings(".distrito").removeClass 'mostrable'
-        $(@).parent().siblings(".distrito").addClass 'escondido'
-        $(@).parent().siblings(".region").removeClass 'mostrable'
-        $(@).parent().siblings(".comuna").removeClass 'mostrable'  
-        $(@).parent().siblings(".region").addClass 'escondido'
-        $(@).parent().siblings(".comuna").addClass 'escondido'  
+        show_sibling $(@), ".region", false
+        show_sibling $(@), ".comuna", false
+        show_sibling $(@), ".circunscripcion", true
+        show_sibling $(@), ".distrito", false
       when "Diputado"
-        $(@).parent().siblings(".circunscripcion").removeClass 'escondido'
-        $(@).parent().siblings(".circunscripcion").addClass 'mostrable'
-        $(@).parent().siblings(".distrito").removeClass 'escondido'
-        $(@).parent().siblings(".distrito").addClass 'mostrable'
-        $(@).parent().siblings(".region").removeClass 'mostrable'
-        $(@).parent().siblings(".comuna").removeClass 'mostrable'  
-        $(@).parent().siblings(".region").addClass 'escondido'
-        $(@).parent().siblings(".comuna").addClass 'escondido'
+        show_sibling $(@), ".region", false
+        show_sibling $(@), ".comuna", false
+        show_sibling $(@), ".circunscripcion", true
+        show_sibling $(@), ".distrito", true
+      when "Presidente"
+        show_sibling $(@), ".region", false
+        show_sibling $(@), ".comuna", false
+        show_sibling $(@), ".circunscripcion", false
+        show_sibling $(@), ".distrito", false
       else console.log cargo_value
     return
   return

@@ -43,6 +43,8 @@ class Partido < ActiveRecord::Base
     # has_many :personas, as: :personable
     # delegate :representantes, :meerkats, :wild_boars, to: :personas
     has_many :representantes, as: :personable
+    has_many :autoridads, as: :personable
+    
     
     accepts_nested_attributes_for :marco_interno, allow_destroy: true
     accepts_nested_attributes_for :sedes, reject_if: proc { |attributes| attributes['direccion'].blank? }, allow_destroy: true
@@ -50,6 +52,7 @@ class Partido < ActiveRecord::Base
     accepts_nested_attributes_for :tramites, allow_destroy: true
     # accepts_nested_attributes_for :personas, allow_destroy: true
     accepts_nested_attributes_for :representantes, allow_destroy: true
+    accepts_nested_attributes_for :autoridads, allow_destroy: true
     
     after_create :initialize_transparency_settings
     
@@ -66,6 +69,8 @@ class Partido < ActiveRecord::Base
        self.organo_internos << OrganoInterno.new(nombre:"Órgano ejecutivo")
        self.organo_internos << OrganoInterno.new(nombre:"Órgano intermedio colegiado")
        self.organo_internos << OrganoInterno.new(nombre:"Tribunal supremo")
+       self.tramites << Tramite.new(nombre:"Afiliación")
+       self.tramites << Tramite.new(nombre:"Desfiliación")
        self.save
     end
     

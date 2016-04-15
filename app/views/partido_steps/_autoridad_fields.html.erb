@@ -1,0 +1,17 @@
+<div class="form-group boxed_form">
+    <%= f.input :nombre %>
+    <%= f.input :apellidos %>
+    <%= f.input :cargo, as: :select, collection: Autoridad.designaciones.sort, input_html: { class: 'cargo' } %>
+    <%= f.input :fecha_desde %>
+    <%= f.input :fecha_hasta %>
+    <%= f.input :email %>
+    <%= f.input :telefono %>
+    <%= f.input :genero %>
+    <%= f.input :foto %>
+    <%= f.input :fecha_nacimiento %>
+    <%= f.input :nivel_estudios %>
+    <%= f.input :ano_inicio_militancia %>
+    <%= f.input :afiliado %>
+    <%= f.input :bio %>
+<%= link_to_remove_association "mark for remove autoridad", f %>
+</div>
