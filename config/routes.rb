@@ -14,7 +14,6 @@ Rails.application.routes.draw do
   resources :documentos
   resources :leys
   resources :marco_generals
-  devise_for :users
   resources :partidos
   resources :partido_steps
   get 'formulario/update_comunas', as: 'update_comunas'

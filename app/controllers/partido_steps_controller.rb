@@ -53,7 +53,7 @@ class PartidoStepsController < ApplicationController
     def update
         # puts params[:partido]
         # @partido = Partido.find_by_user_id(current_user.id)
-        uts "----------------->  Update::"+step.to_s
+        puts "----------------->  Update::"+step.to_s
         case step
         when :datos_basicos
             @partido.update_attributes(partido_params)

@@ -20,10 +20,10 @@ class PartidosController < ApplicationController
   # GET /partidos/1/edit
   def edit
     @partido = Partido.find_by id: params[:id]
-    unless @partido.user == current_user
-      flash[:notice] = "Not allowed to update partido " + @partido.nombre
-      redirect_to root_path
-    end
+    # unless @partido.user == current_user
+    #   flash[:notice] = "Not allowed to update partido " + @partido.nombre
+    #   redirect_to root_path
+    # end
   end
 
   # POST /partidos

@@ -40,7 +40,6 @@ gem "bower-rails"
 gem 'simple_form'
 gem 'paper_trail'
 gem "paperclip"
-gem 'devise'
 gem 'angularjs-rails'
 gem "cocoon"
 gem 'wicked'

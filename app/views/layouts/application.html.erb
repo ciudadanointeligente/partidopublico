@@ -53,26 +53,22 @@
                 <ul class="nav navbar-nav">
                     
                     
-                    <li><% if current_user%>
-                            <!--<a href=<%= partidos_path %>><%= current_user.email %> <%= t('.actions') %></a>-->
-                            <!-- Split button -->
+                    <li>
                             <div class="btn-group">
-                              <button type="button" class="btn btn-default"><%= current_user.email %></button>
+                              <button type="button" class="btn btn-default">User here</button>
                               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="caret"></span>
                                 <span class="sr-only">Toggle Dropdown</span>
                               </button>
                             <ul class="dropdown-menu">
                                 <!--<li><a href=<%= new_partido_path%> ><%= t('.create_party') %></a></li>-->
-                                <li><a href=<%= partido_steps_path %> ><%= t('.admin_party') %>  <%= current_user %></a></li>
+                                <li><a href=<%= partido_steps_path %> ><%= t('.admin_party') %>  </a></li>
                                 <li role="separator" class="divider"></li>
-                                <li> <%= link_to(t('.admin_logout') , destroy_user_session_path, :method => :delete) %> </li>
+                                <li> logout here </li>
                                 <!--<li><a href="#"><%= t('.admin_logout') %></a></li>-->
                             </ul>
                             </div>
-                        <% else %>
-                            <a href=<%= new_user_session_path %>><%= t('.admin_login') %></a>
-                        <% end %>
+                        
                      
                     </li>
                 </ul>

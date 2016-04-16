@@ -14,11 +14,6 @@
 #  logo_content_type :string
 #  logo_file_size    :integer
 #  logo_updated_at   :datetime
-#  user_id           :integer
-#
-# Indexes
-#
-#  index_partidos_on_user_id  (user_id)
 #
 
 class Partido < ActiveRecord::Base
@@ -29,10 +24,9 @@ class Partido < ActiveRecord::Base
         size: { in: 0..500.kilobytes }
     validates_presence_of :nombre, :sigla, :lema, :message => "debe rellenar"
     validates_uniqueness_of :nombre, :sigla, :lema, :message => "already exists"
-    validates_uniqueness_of :user, :message => "already has a party"
     validates_length_of :lema, :within => 2..200
     
-    belongs_to :user
+
     has_one :marco_general, dependent: :destroy
     has_one :marco_interno, dependent: :destroy
     has_many :organo_internos, dependent: :destroy
