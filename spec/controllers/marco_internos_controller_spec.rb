@@ -19,7 +19,6 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe MarcoInternosController, type: :controller do
-  include Devise::TestHelpers
   # This should return the minimal set of attributes required to create a valid
   # MarcoInterno. As you add validations to MarcoInterno, be sure to
   # adjust the attributes here as well.

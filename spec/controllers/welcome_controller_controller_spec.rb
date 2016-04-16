@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe WelcomeController, type: :controller do
-  include Devise::TestHelpers
     describe "GET index" do
     
     it "renders the index template" do
