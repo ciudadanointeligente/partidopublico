@@ -31,9 +31,9 @@ class Partido < ActiveRecord::Base
     has_one :marco_interno, dependent: :destroy
     has_many :organo_internos, dependent: :destroy
     has_and_belongs_to_many :regions
-    has_many :sedes
-    has_many :afiliacions
-    has_many :tramites
+    has_many :sedes, dependent: :destroy
+    has_many :afiliacions, dependent: :destroy
+    has_many :tramites, dependent: :destroy
     # has_many :personas, as: :personable
     # delegate :representantes, :meerkats, :wild_boars, to: :personas
     has_many :representantes, as: :personable

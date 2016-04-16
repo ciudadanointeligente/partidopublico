@@ -15,7 +15,10 @@ Rails.application.routes.draw do
   resources :leys
   resources :marco_generals
   resources :partidos
-  resources :partido_steps
+  scope "partido/:partido_id" do
+    resources :partido_steps
+  end
+  # resources :partido_steps
   get 'formulario/update_comunas', as: 'update_comunas'
   get 'formulario/update_distritos', as: 'update_distritos'
   # get 'partido_steps/update_comunas', as: 'update_comunas'
