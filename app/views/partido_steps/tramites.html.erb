@@ -1,6 +1,9 @@
-<%= tutorial_progress_bar %>
-<% if @partido.logo %>
-    <%= image_tag @partido.logo.url(:thumb) %>
+<%= render :layout => 'form' do |f| %>
+
+        <%= f.fields_for :tramites do |ff| %>
+            <%= render 'tramite_fields', :f => ff %>
+        <% end %>
+        <br>
+      <%= link_to_add_association 'add tramite', f, :tramites %>
+      
 <% end %>
-<%= render 'tramites_form' %>
-<%= link_to 'skip', next_wizard_path %>

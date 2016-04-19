@@ -1,0 +1,9 @@
+<%= render :layout => 'form' do |f| %>
+
+<%= f.fields_for :organo_internos do |builder| %>
+    <%= render 'organo_interno_fields', :f => builder %>
+<% end %>
+<br>
+<%= link_to_add_association 'add organo interno', f, :organo_internos %>
+
+<% end %>

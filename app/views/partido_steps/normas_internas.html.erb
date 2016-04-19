@@ -1,22 +1,3 @@
-<%= tutorial_progress_bar %>
-<% if @partido.logo %>
-    <%= image_tag @partido.logo.url(:thumb) %>
-<% end %>
+
 <%= render 'normas_internas_form' %>
-<%= link_to 'skip', next_wizard_path %>
-<br>
-<% @partido.marco_interno.versions.each do |v| %>
-    <%=v.created_at %><br>
-    <%=v.whodunnit %><br>
-    <%=v.event %><br>
-    <%=v.object %><br>
-<% end %>
-<br>
-<% @partido.marco_interno.documentos.each do |doc| %>
-    <% doc.versions.each do |v| %>
-        <%=v.created_at %><br>
-        <%=v.whodunnit %><br>
-        <%=v.event %><br>
-        <%=v.object %><br>
-    <% end %>
-<% end %>
+

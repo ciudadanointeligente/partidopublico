@@ -85,30 +85,45 @@ footer {
 
 .steps_list li {
     display: inline;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px 4px 0 0;
 }
 
 .steps_list .unfinished {
     background-color: red;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 4px 4px 0 0;
 }
 .steps_list .current {
     background-color: black;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 4px 4px 0 0;
 }
 .steps_list .finished {
     background-color: blue;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 4px 4px 0 0;
 }
 
 .steps_list li a:hover {
     background-color: orange;
+}
+
+.main_steps_list {
+    padding: 0;
+}
+
+.main_steps_list li {
+    display: inline;
+    color: white;
+    padding: 10px 3px;
+    text-decoration: none;
+    border-radius: 4px 4px 0 0;
+    word-break: keep-all;
+}
+.main_steps_list .unfinished {
+    background-color: red;
+}
+.main_steps_list .current {
+    background-color: black;
+}
+
+.navigator {
+    width: 100%;
 }

@@ -1,4 +1,3 @@
-<div class="form-group boxed_form">
     <%= f.input :nombre %>
     <%= f.input :apellidos %>
     <%= f.input :cargo, as: :select, collection: Representante.cargos, input_html: { class: 'cargo' } %>
@@ -18,4 +17,3 @@
     <%= f.input :afiliado %>
     <%= f.input :bio %>
 <%= link_to_remove_association "mark for remove representante", f %>
-</div>

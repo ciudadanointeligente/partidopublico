@@ -36,17 +36,22 @@ class Partido < ActiveRecord::Base
     has_many :tramites, dependent: :destroy
     # has_many :personas, as: :personable
     # delegate :representantes, :meerkats, :wild_boars, to: :personas
-    has_many :representantes, as: :personable
-    has_many :autoridads, as: :personable
+    has_many :representantes, as: :personable, dependent: :destroy
+    has_many :autoridads, as: :personable, dependent: :destroy
+    has_many :eleccion_populars, dependent: :destroy
+    has_many :eleccion_internas, dependent: :destroy
     
     
     accepts_nested_attributes_for :marco_interno, allow_destroy: true
+    accepts_nested_attributes_for :organo_internos, allow_destroy: true
     accepts_nested_attributes_for :sedes, reject_if: proc { |attributes| attributes['direccion'].blank? }, allow_destroy: true
     accepts_nested_attributes_for :afiliacions, allow_destroy: true
     accepts_nested_attributes_for :tramites, allow_destroy: true
     # accepts_nested_attributes_for :personas, allow_destroy: true
     accepts_nested_attributes_for :representantes, allow_destroy: true
     accepts_nested_attributes_for :autoridads, allow_destroy: true
+    accepts_nested_attributes_for :eleccion_populars, allow_destroy: true
+    accepts_nested_attributes_for :eleccion_internas, allow_destroy: true
     
     after_create :initialize_transparency_settings
     

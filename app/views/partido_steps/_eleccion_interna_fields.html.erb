@@ -1,0 +1,14 @@
+<%= f.association :organo_interno, as: :select, collection: OrganoInterno.where(partido_id: f.object.partido_id) %>
+<%= f.input :fecha_eleccion %>
+<%= f.input :fecha_limite_inscripcion %>
+<%= f.input :cargo %>
+
+<%= f.fields_for :requisitos do |builder| %>
+    <%= render 'requisito_fields', :f => builder %>
+<% end %>
+<%= link_to_add_association 'add requirement', f, :requisitos %>
+
+<%= f.fields_for :procedimientos do |builder| %>
+    <%= render 'procedimiento_fields', :f => builder %>
+<% end %>
+<%= link_to_add_association 'add procedure', f, :procedimientos %>

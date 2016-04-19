@@ -1,6 +1,8 @@
-<%= tutorial_progress_bar %>
-<% if @partido.logo %>
-    <%= image_tag @partido.logo.url(:thumb) %>
+<%= render :layout => 'form' do |f| %>
+
+<%= f.fields_for :autoridads do |builder| %>
+    <%= render 'autoridad_fields', :f => builder %>
 <% end %>
-<%= render 'autoridades_form' %>
-<%= link_to 'skip', next_wizard_path %>
+<%= link_to_add_association 'add autoridad', f, :autoridads %>
+
+<% end %>

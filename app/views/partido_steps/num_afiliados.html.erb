@@ -1,6 +1,10 @@
-<%= tutorial_progress_bar %>
-<% if @partido.logo %>
-    <%= image_tag @partido.logo.url(:thumb) %>
+
+<%= render :layout => 'form' do |f| %>
+
+<%= f.fields_for :afiliacions do |ff| %>
+    <%= render 'afiliacion_fields', :f => ff %>
 <% end %>
-<%= render 'num_afiliados_form' %>
-<%= link_to 'skip', next_wizard_path %>
+<br>
+<%= link_to_add_association 'add num_afiliados', f, :afiliacions %>
+
+<% end %>

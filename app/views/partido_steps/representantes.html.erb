@@ -1,6 +1,8 @@
-<%= tutorial_progress_bar %>
-<% if @partido.logo %>
-    <%= image_tag @partido.logo.url(:thumb) %>
+<%= render :layout => 'form' do |f| %>
+
+<%= f.fields_for :representantes do |rep| %>
+   <%= render 'representante_fields', :f => rep %>
 <% end %>
-<%= render 'representantes_form' %>
-<%= link_to 'skip', next_wizard_path %>
+<%= link_to_add_association 'add representante', f, :representantes %>
+
+<% end %>

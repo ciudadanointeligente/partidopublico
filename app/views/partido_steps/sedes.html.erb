@@ -1,6 +1,9 @@
-<%= tutorial_progress_bar %>
-<% if @partido.logo %>
-    <%= image_tag @partido.logo.url(:thumb) %>
+
+<%= render :layout => 'form' do |f| %>
+
+<%= f.fields_for :sedes do |ff| %>
+    <%= render 'sede_fields', :f => ff %>
 <% end %>
-<%= render 'sedes_form' %>
-<%= link_to 'skip', next_wizard_path %>
+<%= link_to_add_association 'add sede', f, :sedes %>
+
+<% end %>

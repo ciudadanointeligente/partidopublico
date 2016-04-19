@@ -1,15 +1,5 @@
-<%= tutorial_progress_bar %>
-<% if @partido.logo %>
-    <%= image_tag @partido.logo.url(:thumb) %>
-<% end %>
-<%= render 'regiones_form' %>
-<%= link_to 'skip', next_wizard_path %>
-<br>
-<% @partido.regions.each do |r| %>
-    <% r.versions.each do |v| %>
-        <%=v.created_at %><br>
-        <%=v.whodunnit %><br>
-        <%=v.event %><br>
-        <%=v.object %><br>
-    <% end %>
+<%= render :layout => 'form' do |f| %>
+
+<%= f.association :regions, as: :check_boxes, collection: Region.all.sort, :selected => @partido.regions, :label => "Regiones"  %>
+
 <% end %>

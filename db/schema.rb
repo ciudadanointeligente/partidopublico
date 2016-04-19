@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414214947) do
+ActiveRecord::Schema.define(version: 20160418215214) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,9 +90,11 @@ ActiveRecord::Schema.define(version: 20160414214947) do
     t.string   "cargo"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "partido_id"
   end
 
   add_index "eleccion_internas", ["organo_interno_id"], name: "index_eleccion_internas_on_organo_interno_id", using: :btree
+  add_index "eleccion_internas", ["partido_id"], name: "index_eleccion_internas_on_partido_id", using: :btree
 
   create_table "eleccion_populars", force: :cascade do |t|
     t.date     "fecha_eleccion"
@@ -100,7 +102,10 @@ ActiveRecord::Schema.define(version: 20160414214947) do
     t.string   "cargo"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "partido_id"
   end
+
+  add_index "eleccion_populars", ["partido_id"], name: "index_eleccion_populars_on_partido_id", using: :btree
 
   create_table "leys", force: :cascade do |t|
     t.string   "numero"
@@ -275,6 +280,8 @@ ActiveRecord::Schema.define(version: 20160414214947) do
   add_foreign_key "comunas", "provincias"
   add_foreign_key "distritos", "circunscripcions"
   add_foreign_key "eleccion_internas", "organo_internos"
+  add_foreign_key "eleccion_internas", "partidos"
+  add_foreign_key "eleccion_populars", "partidos"
   add_foreign_key "leys", "marco_generals"
   add_foreign_key "marco_generals", "partidos"
   add_foreign_key "marco_internos", "partidos"
