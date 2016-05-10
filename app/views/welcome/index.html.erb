@@ -30,7 +30,7 @@
                 <p><%= partido.lema %></p>
             </div>
             <div class="buttons">
-                <a href="<%= partido_path(partido) %>" class="btn btn-primary"><%= t('.details') %></a> <a href="#" class="btn btn-default"><%= t('.compare') %></a>
+                <a href="<%= partido_path(partido) %>" class="btn btn-primary"><%= t('.details') %></a> <a href="<%= partido_steps_path(partido)%>" class="btn btn-default"><%= t('.compare') %></a>
             </div>
         </div>
     </div>

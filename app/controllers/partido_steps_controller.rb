@@ -123,7 +123,7 @@ class PartidoStepsController < ApplicationController
                                                     organo_internos_attributes: [:nombre, :funciones, :id, :_destroy,
                                                                 requisitos_attributes: [:descripcion, :id, :_destroy],
                                                                 procedimientos_attributes: [:descripcion, :id, :_destroy]],
-                                                    eleccion_internas_attributes:[:organo_interno_id, :fecha_eleccion, :fecha_limite_inscripcion, :cargo,
+                                                    eleccion_internas_attributes:[:id, :organo_interno_id, :fecha_eleccion, :fecha_limite_inscripcion, :cargo, :_destroy,
                                                                 requisitos_attributes: [:descripcion, :id, :_destroy],
                                                                 procedimientos_attributes: [:descripcion, :id, :_destroy]],
                                                     region_ids: []
