@@ -18,7 +18,7 @@
 
 class Partido < ActiveRecord::Base
     has_paper_trail
-    has_attached_file :logo, styles: { large: "600x600>", medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
+    has_attached_file :logo, styles: { large: "600x600>", medium: "300x300>", thumb: "100x100>" }, default_url: "/resources/missing.png"
     validates_attachment :logo,
         content_type: { content_type:  /\Aimage\/.*\Z/ },
         size: { in: 0..500.kilobytes }
@@ -38,8 +38,13 @@ class Partido < ActiveRecord::Base
     # delegate :representantes, :meerkats, :wild_boars, to: :personas
     has_many :representantes, as: :personable, dependent: :destroy
     has_many :autoridads, as: :personable, dependent: :destroy
+    has_many :candidatos, as: :personable, dependent: :destroy
     has_many :eleccion_populars, dependent: :destroy
     has_many :eleccion_internas, dependent: :destroy
+    has_many :actividad_publicas, dependent: :destroy
+    has_many :acuerdos, dependent: :destroy
+    has_many :participacion_entidads, dependent: :destroy
+    has_and_belongs_to_many :pacto_electorals
     
     
     accepts_nested_attributes_for :marco_interno, allow_destroy: true
@@ -50,8 +55,13 @@ class Partido < ActiveRecord::Base
     # accepts_nested_attributes_for :personas, allow_destroy: true
     accepts_nested_attributes_for :representantes, allow_destroy: true
     accepts_nested_attributes_for :autoridads, allow_destroy: true
+    accepts_nested_attributes_for :candidatos, allow_destroy: true
     accepts_nested_attributes_for :eleccion_populars, allow_destroy: true
     accepts_nested_attributes_for :eleccion_internas, allow_destroy: true
+    accepts_nested_attributes_for :actividad_publicas, allow_destroy: true
+    accepts_nested_attributes_for :acuerdos, allow_destroy: true
+    accepts_nested_attributes_for :participacion_entidads, allow_destroy: true
+    accepts_nested_attributes_for :pacto_electorals, allow_destroy: true
     
     after_create :initialize_transparency_settings
     

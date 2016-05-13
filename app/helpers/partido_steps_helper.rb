@@ -10,7 +10,7 @@ module PartidoStepsHelper
                             step_categories[1] => ["normas_internas"], 
                             step_categories[2] => ["regiones", "sedes", "num_afiliados", "tramites", "representantes", "autoridades" ],
                             step_categories[3] => ["postulacion_popular", "organos_internos", "postulacion_interna", "agenda_presidente", "actividades_publicas" ],
-                            step_categories[4] => ["publicacion_candidatos", "acuerdos_organos", "resultados_elecciones_internas"],
+                            step_categories[4] => ["candidatos", "acuerdos_organos", "resultados_elecciones_internas"],
                             step_categories[5] => ["entidades_participadas", "pactos_electorales", "interes_patrimonio"], 
                             step_categories[6] => ["linea_denuncia", "sanciones"],
                             step_categories[7] => ["a","b"]}
@@ -24,7 +24,7 @@ module PartidoStepsHelper
       
       content_tag(:section, class: "content") do
         content_tag(:div, class: "navigator") do        
-          content_tag(:ol, class: "main_steps_list") do
+          content_tag(:ol, class: "steps_list") do
             values.each do |sub_step|
               class_str = "unfinished"
               class_str = "current"  if sub_step == step.to_s

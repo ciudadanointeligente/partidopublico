@@ -1,0 +1,8 @@
+<%= render :layout => 'form' do |f| %>
+
+<%= f.fields_for :participacion_entidads do |builder| %>
+    <%= render 'participacion_entidad_fields', :f => builder %>
+<% end %>
+<%= link_to_add_association 'add entidad', f, :participacion_entidads %>
+
+<% end %>

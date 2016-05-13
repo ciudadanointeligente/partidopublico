@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160418215214) do
+ActiveRecord::Schema.define(version: 20160513152441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "actividad_publicas", force: :cascade do |t|
+    t.date     "fecha"
+    t.string   "descripcion"
+    t.string   "link"
+    t.string   "lugar"
+    t.integer  "partido_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "actividad_publicas", ["partido_id"], name: "index_actividad_publicas_on_partido_id", using: :btree
 
   create_table "acuerdos", force: :cascade do |t|
     t.string   "numero"
@@ -29,9 +41,11 @@ ActiveRecord::Schema.define(version: 20160418215214) do
     t.datetime "documento_updated_at"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "partido_id"
   end
 
   add_index "acuerdos", ["organo_interno_id"], name: "index_acuerdos_on_organo_interno_id", using: :btree
+  add_index "acuerdos", ["partido_id"], name: "index_acuerdos_on_partido_id", using: :btree
 
   create_table "afiliacions", force: :cascade do |t|
     t.integer  "hombres"
@@ -145,6 +159,33 @@ ActiveRecord::Schema.define(version: 20160418215214) do
   end
 
   add_index "organo_internos", ["partido_id"], name: "index_organo_internos_on_partido_id", using: :btree
+
+  create_table "pacto_electorals", force: :cascade do |t|
+    t.integer  "ano_eleccion"
+    t.string   "nombre_pacto"
+    t.string   "descripcion"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "pacto_electorals_partidos", id: false, force: :cascade do |t|
+    t.integer "pacto_electoral_id", null: false
+    t.integer "partido_id",         null: false
+  end
+
+  create_table "participacion_entidads", force: :cascade do |t|
+    t.string   "entidad"
+    t.string   "descripcion"
+    t.string   "documento_file_name"
+    t.string   "documento_content_type"
+    t.integer  "documento_file_size"
+    t.datetime "documento_updated_at"
+    t.integer  "partido_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "participacion_entidads", ["partido_id"], name: "index_participacion_entidads_on_partido_id", using: :btree
 
   create_table "partidos", force: :cascade do |t|
     t.string   "nombre",            null: false
@@ -275,7 +316,9 @@ ActiveRecord::Schema.define(version: 20160418215214) do
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
+  add_foreign_key "actividad_publicas", "partidos"
   add_foreign_key "acuerdos", "organo_internos"
+  add_foreign_key "acuerdos", "partidos"
   add_foreign_key "afiliacions", "partidos"
   add_foreign_key "comunas", "provincias"
   add_foreign_key "distritos", "circunscripcions"
@@ -286,6 +329,7 @@ ActiveRecord::Schema.define(version: 20160418215214) do
   add_foreign_key "marco_generals", "partidos"
   add_foreign_key "marco_internos", "partidos"
   add_foreign_key "organo_internos", "partidos"
+  add_foreign_key "participacion_entidads", "partidos"
   add_foreign_key "personas", "partidos"
   add_foreign_key "provincias", "regions"
   add_foreign_key "sedes", "partidos"

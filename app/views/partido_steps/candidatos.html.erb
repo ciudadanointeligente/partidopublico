@@ -1,0 +1,8 @@
+<%= render :layout => 'form' do |f| %>
+
+<%= f.fields_for :candidatos do |rep| %>
+   <%= render 'candidato_fields', :f => rep %>
+<% end %>
+<%= link_to_add_association 'add candidato', f, :candidatos %>
+
+<% end %>

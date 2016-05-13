@@ -1,0 +1,8 @@
+<%= render :layout => 'form' do |f| %>
+
+<%= f.fields_for :actividad_publicas do |builder| %>
+    <%= render 'actividad_publica_fields', :f => builder %>
+<% end %>
+<%= link_to_add_association 'add actividad publica', f, :actividad_publicas %>
+
+<% end %>

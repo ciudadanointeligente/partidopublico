@@ -15,10 +15,12 @@
 #  documento_updated_at   :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  partido_id             :integer
 #
 # Indexes
 #
 #  index_acuerdos_on_organo_interno_id  (organo_interno_id)
+#  index_acuerdos_on_partido_id         (partido_id)
 #
 
 FactoryGirl.define do

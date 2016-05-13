@@ -37,23 +37,9 @@
 #  index_personas_on_personable_type_and_personable_id  (personable_type,personable_id)
 #
 
-class Persona < ActiveRecord::Base
-    has_paper_trail
-    has_attached_file :foto, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/resources/missing.png"
-    validates_attachment :foto,
-        content_type: { content_type:  /\Aimage\/.*\Z/ },
-        size: { in: 0..500.kilobytes }
-    validates_presence_of :nombre, :apellidos, :message => "debe rellenar"
+class Candidato < Persona
     
-    belongs_to :partido
-    belongs_to :personable, polymorphic: true
-    self.inheritance_column = :tipo
- 
-    scope :representantes, -> { where(tipo: 'Representante') } 
-    scope :autoridades, -> { where(race: 'Autoridad') } 
-    scope :cargos, -> { where(race: 'Cargo') }
- 
-    def self.tipos
-      %w(Representante Autoridad Cargo)
+    def self.cargos
+      %w(Presidente Senador Diputado Consejero\ Regional Alcalde Concejal)
     end
 end

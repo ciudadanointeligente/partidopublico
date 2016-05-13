@@ -7,14 +7,11 @@ class PartidoStepsController < ApplicationController
     
         
     steps   :datos_basicos, 
-    
             :normas_internas, 
-    
             :regiones, :sedes, :num_afiliados, :tramites, :representantes, :autoridades,
-            
             :postulacion_popular, :organos_internos, :postulacion_interna, :agenda_presidente, :actividades_publicas,
             
-            :publicacion_candidatos, :acuerdos_organos, :resultados_elecciones_internas,
+            :candidatos, :acuerdos_organos, :resultados_elecciones_internas,
             
             :entidades_participadas, :pactos_electorales, :interes_patrimonio,
             
@@ -58,6 +55,7 @@ class PartidoStepsController < ApplicationController
     end
     
     def update
+        
         # puts params[:partido]
         # @partido = Partido.find_by_user_id(current_user.id)
         puts "----------------->  Update::"+step.to_s
@@ -66,8 +64,6 @@ class PartidoStepsController < ApplicationController
         #     @partido.update_attributes(partido_params)
         
         when :normas_internas
-            puts @partido.marco_interno.to_yaml
-            puts marco_interno_params.to_yaml
             @partido.marco_interno.update(marco_interno_params)
         
         # when :regiones
@@ -94,7 +90,12 @@ class PartidoStepsController < ApplicationController
         else
             @partido.update_attributes(partido_params)
         end
-        render_wizard @partido
+        if request.xhr?
+            puts "AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST "
+            @partido.save
+        else
+            render_wizard @partido
+        end
     end
   
     private
@@ -114,6 +115,9 @@ class PartidoStepsController < ApplicationController
                                                     representantes_attributes: [:id, :cargo, :nombre, :apellidos, :genero, :fecha_nacimiento, :nivel_estudios,
                                                                 :fecha_desde, :fecha_hasta, :email, :telefono,
                                                                 :region, :comuna, :circunscripcion, :distrito, :ano_inicio_militancia, :afiliado, :bio, :_destroy],
+                                                    candidatos_attributes: [:id, :cargo, :nombre, :apellidos, :genero, :fecha_nacimiento, :nivel_estudios,
+                                                                :fecha_desde, :fecha_hasta, :email, :telefono,
+                                                                :region, :comuna, :circunscripcion, :distrito, :ano_inicio_militancia, :afiliado, :bio, :_destroy],
                                                     autoridads_attributes: [:id, :cargo, :nombre, :apellidos, :genero, :fecha_nacimiento, :nivel_estudios,
                                                                 :fecha_desde, :fecha_hasta, :email, :telefono,
                                                                 :region, :comuna, :circunscripcion, :distrito, :ano_inicio_militancia, :afiliado, :bio, :_destroy],
@@ -123,9 +127,13 @@ class PartidoStepsController < ApplicationController
                                                     organo_internos_attributes: [:nombre, :funciones, :id, :_destroy,
                                                                 requisitos_attributes: [:descripcion, :id, :_destroy],
                                                                 procedimientos_attributes: [:descripcion, :id, :_destroy]],
-                                                    eleccion_internas_attributes:[:id, :organo_interno_id, :fecha_eleccion, :fecha_limite_inscripcion, :cargo, :_destroy,
+                                                    eleccion_internas_attributes: [:id, :organo_interno_id, :fecha_eleccion, :fecha_limite_inscripcion, :cargo, :_destroy,
                                                                 requisitos_attributes: [:descripcion, :id, :_destroy],
                                                                 procedimientos_attributes: [:descripcion, :id, :_destroy]],
+                                                    actividad_publicas_attributes: [:id, :fecha, :descripcion, :link, :_destroy],
+                                                    acuerdos_attributes: [:id, :numero, :fecha, :tipo, :tema, :region, :organo_interno_id, :documento, :_destroy],
+                                                    participacion_entidads_attributes: [:id, :entidad, :documento, :descripcion, :_destroy],
+                                                    pacto_electorals_attributes: [:id, :nombre_pacto, :ano_eleccion, :descripcion, :_destroy, :partido_ids => []],
                                                     region_ids: []
             )
         end

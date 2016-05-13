@@ -1,0 +1,7 @@
+<%= f.input :nombre_pacto %>
+<%= f.input :ano_eleccion %>
+<%= f.input :descripcion %>
+<%= f.association :partidos %>
+
+<br>
+<%= link_to_remove_association "mark for remove pacto", f %>
