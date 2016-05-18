@@ -39,8 +39,7 @@
 #  index_personas_on_personable_type_and_personable_id  (personable_type,personable_id)
 #
 
-require 'rails_helper'
-
-RSpec.describe Persona, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+class ResponsableDenuncia< Persona
+    
+    
 end

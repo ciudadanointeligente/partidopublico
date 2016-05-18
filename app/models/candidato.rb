@@ -30,6 +30,8 @@
 #  fecha_desde           :date
 #  fecha_hasta           :date
 #  tipo                  :string
+#  intereses             :string
+#  patrimonio            :string
 #
 # Indexes
 #

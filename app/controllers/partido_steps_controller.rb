@@ -13,7 +13,7 @@ class PartidoStepsController < ApplicationController
             
             :candidatos, :acuerdos_organos, :resultados_elecciones_internas,
             
-            :entidades_participadas, :pactos_electorales, :interes_patrimonio,
+            :entidades_participadas, :pactos_electorales,
             
             :linea_denuncia, :sanciones
     
@@ -114,13 +114,16 @@ class PartidoStepsController < ApplicationController
                                                               procedimientos_attributes: [:descripcion, :id, :_destroy]],
                                                     representantes_attributes: [:id, :cargo, :nombre, :apellidos, :genero, :fecha_nacimiento, :nivel_estudios,
                                                                 :fecha_desde, :fecha_hasta, :email, :telefono,
-                                                                :region, :comuna, :circunscripcion, :distrito, :ano_inicio_militancia, :afiliado, :bio, :_destroy],
+                                                                :region, :comuna, :circunscripcion, :distrito, :ano_inicio_militancia, :afiliado, :bio, :intereses, :patrimonio, :_destroy],
                                                     candidatos_attributes: [:id, :cargo, :nombre, :apellidos, :genero, :fecha_nacimiento, :nivel_estudios,
                                                                 :fecha_desde, :fecha_hasta, :email, :telefono,
-                                                                :region, :comuna, :circunscripcion, :distrito, :ano_inicio_militancia, :afiliado, :bio, :_destroy],
+                                                                :region, :comuna, :circunscripcion, :distrito, :ano_inicio_militancia, :afiliado, :bio, :intereses, :patrimonio, :_destroy],
                                                     autoridads_attributes: [:id, :cargo, :nombre, :apellidos, :genero, :fecha_nacimiento, :nivel_estudios,
                                                                 :fecha_desde, :fecha_hasta, :email, :telefono,
-                                                                :region, :comuna, :circunscripcion, :distrito, :ano_inicio_militancia, :afiliado, :bio, :_destroy],
+                                                                :region, :comuna, :circunscripcion, :distrito, :ano_inicio_militancia, :afiliado, :bio, :intereses, :patrimonio, :_destroy],
+                                                    responsable_denuncias_attributes: [:id, :cargo, :nombre, :apellidos, :genero, :fecha_nacimiento, :nivel_estudios,
+                                                                :fecha_desde, :fecha_hasta, :email, :telefono,
+                                                                :region, :comuna, :circunscripcion, :distrito, :ano_inicio_militancia, :afiliado, :bio, :intereses, :patrimonio, :_destroy],
                                                     eleccion_populars_attributes: [:id, :fecha_eleccion, :dias, :cargo, :_destroy,
                                                                 requisitos_attributes: [:descripcion, :id, :_destroy],
                                                                 procedimientos_attributes: [:descripcion, :id, :_destroy]],
@@ -134,6 +137,7 @@ class PartidoStepsController < ApplicationController
                                                     acuerdos_attributes: [:id, :numero, :fecha, :tipo, :tema, :region, :organo_interno_id, :documento, :_destroy],
                                                     participacion_entidads_attributes: [:id, :entidad, :documento, :descripcion, :_destroy],
                                                     pacto_electorals_attributes: [:id, :nombre_pacto, :ano_eleccion, :descripcion, :_destroy, :partido_ids => []],
+                                                    sancions_attributes: [:id, :descripcion, :institucion, :fecha, :documento, :_destroy],
                                                     region_ids: []
             )
         end

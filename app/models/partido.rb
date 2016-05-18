@@ -45,7 +45,8 @@ class Partido < ActiveRecord::Base
     has_many :acuerdos, dependent: :destroy
     has_many :participacion_entidads, dependent: :destroy
     has_and_belongs_to_many :pacto_electorals
-    
+    has_many :responsable_denuncias, as: :personable, dependent: :destroy
+    has_many :sancions, dependent: :destroy
     
     accepts_nested_attributes_for :marco_interno, allow_destroy: true
     accepts_nested_attributes_for :organo_internos, allow_destroy: true
@@ -62,6 +63,8 @@ class Partido < ActiveRecord::Base
     accepts_nested_attributes_for :acuerdos, allow_destroy: true
     accepts_nested_attributes_for :participacion_entidads, allow_destroy: true
     accepts_nested_attributes_for :pacto_electorals, allow_destroy: true
+    accepts_nested_attributes_for :responsable_denuncias, allow_destroy: true
+    accepts_nested_attributes_for :sancions, allow_destroy: true
     
     after_create :initialize_transparency_settings
     

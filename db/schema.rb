@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160513152441) do
+ActiveRecord::Schema.define(version: 20160518002815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -237,6 +237,8 @@ ActiveRecord::Schema.define(version: 20160513152441) do
     t.date     "fecha_desde"
     t.date     "fecha_hasta"
     t.string   "tipo"
+    t.string   "intereses"
+    t.string   "patrimonio"
   end
 
   add_index "personas", ["partido_id"], name: "index_personas_on_partido_id", using: :btree
@@ -277,6 +279,21 @@ ActiveRecord::Schema.define(version: 20160513152441) do
   end
 
   add_index "requisitos", ["requisitable_type", "requisitable_id"], name: "index_requisitos_on_requisitable_type_and_requisitable_id", using: :btree
+
+  create_table "sancions", force: :cascade do |t|
+    t.string   "descripcion"
+    t.string   "institucion"
+    t.date     "fecha"
+    t.string   "documento_file_name"
+    t.string   "documento_content_type"
+    t.integer  "documento_file_size"
+    t.datetime "documento_updated_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "partido_id"
+  end
+
+  add_index "sancions", ["partido_id"], name: "index_sancions_on_partido_id", using: :btree
 
   create_table "sedes", force: :cascade do |t|
     t.string   "region"
@@ -332,6 +349,7 @@ ActiveRecord::Schema.define(version: 20160513152441) do
   add_foreign_key "participacion_entidads", "partidos"
   add_foreign_key "personas", "partidos"
   add_foreign_key "provincias", "regions"
+  add_foreign_key "sancions", "partidos"
   add_foreign_key "sedes", "partidos"
   add_foreign_key "tramites", "partidos"
   add_foreign_key "tramites", "personas"
