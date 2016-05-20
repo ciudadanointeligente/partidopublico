@@ -19,6 +19,7 @@
   <tbody>
     <% @personas.each do |persona| %>
       <tr>
+        <td><%= persona.tipo %></td>
         <td><%= persona.genero %></td>
         <td><%= persona.fecha_nacimiento %></td>
         <td><%= persona.nivel_estudios %></td>
@@ -26,9 +27,6 @@
         <td><%= persona.ano_inicio_militancia %></td>
         <td><%= persona.afiliado %></td>
         <td><%= persona.bio %></td>
-        <td><%= link_to 'Show', persona %></td>
-        <td><%= link_to 'Edit', edit_persona_path(persona) %></td>
-        <td><%= link_to 'Destroy', persona, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
