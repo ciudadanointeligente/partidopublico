@@ -71,6 +71,8 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     concurrent-ruby (1.0.1)
+    datagrid (1.4.3)
+      rails (>= 3.2.22.2)
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
     docile (1.1.5)
@@ -97,6 +99,9 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.3)
+    kaminari (0.16.3)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -252,11 +257,13 @@ DEPENDENCIES
   cocoon
   codeclimate-test-reporter
   coffee-rails (~> 4.1.0)
+  datagrid
   factory_girl_rails
   faker
   font-awesome-sass (~> 4.6.2)
   jbuilder (~> 2.0)
   jquery-rails
+  kaminari
   paper_trail
   paperclip
   pg (~> 0.15)
