@@ -15,8 +15,8 @@ class PersonasGrid
   filter(:circunscripcion, :enum, :select => Circunscripcion.all.order(:nombre).map {|r| [r.nombre, r.id]})
   filter(:distrito, :enum, :select => Distrito.all.map {|r| [r.nombre, r.id]})
   
-  filter(:condition, :dynamic, :header => "Dynamic condition")
-  column_names_filter(:header => "Extra Columns", checkboxes: true)
+  filter(:condition, :dynamic, :header => "Condición")
+  column_names_filter(:header => "Más Columnas", checkboxes: true)
   
   #filter(:created_at, :date, :range => true)
 

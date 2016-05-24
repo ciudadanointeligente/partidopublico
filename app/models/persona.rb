@@ -52,8 +52,10 @@ class Persona < ActiveRecord::Base
     self.inheritance_column = :tipo
  
     scope :representantes, -> { where(tipo: 'Representante') } 
-    scope :autoridades, -> { where(race: 'Autoridad') } 
-    scope :cargos, -> { where(race: 'Cargo') }
+    scope :autoridades, -> { where(tipo: 'Autoridad') } 
+    scope :cargos, -> { where(tipo: 'Cargo') }
+    
+    
  
     def self.tipos
       %w(Representante Autoridad Candidato Responsable Cargo)
