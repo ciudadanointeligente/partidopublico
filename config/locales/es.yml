@@ -41,3 +41,11 @@ es:
       enrolled_parties: "Partidos que se han unido"
       details: "Detalles"
       edit: "Editar"
+  datagrid:
+    form:
+      reset: "Limpiar"
+      search: "Filtrar"
+    table: 
+      order: 
+        asc: "↑"
+        desc: "↓"

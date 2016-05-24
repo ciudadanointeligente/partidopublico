@@ -56,6 +56,6 @@ class Persona < ActiveRecord::Base
     scope :cargos, -> { where(race: 'Cargo') }
  
     def self.tipos
-      %w(Representante Autoridad Cargo)
+      %w(Representante Autoridad Candidato Responsable Cargo)
     end
 end
