@@ -46,6 +46,8 @@ gem 'wicked'
 gem 'responders'
 
 gem 'font-awesome-sass', '~> 4.6.2'
+gem "datagrid"
+gem "kaminari"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -59,6 +61,7 @@ group :development, :test do
   gem 'better_errors'
   gem 'seed_dump'
   gem 'quiet_assets'
+  gem "rails-erd"
 end
 
 group :development do
