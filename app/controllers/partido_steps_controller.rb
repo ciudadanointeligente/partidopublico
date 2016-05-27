@@ -26,7 +26,7 @@ class PartidoStepsController < ApplicationController
 
         when :personas
           @grid = PersonasGrid.new(params[:personas_grid]) do |scope|
-            scope.page(params[:page])
+            scope.where(:partido_id => @partido.id ).page(params[:page])
           end
 
         when :normas_internas

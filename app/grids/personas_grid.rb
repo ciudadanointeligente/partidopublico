@@ -3,6 +3,7 @@ class PersonasGrid
   include Datagrid
 
   scope do
+    #puts request
     Persona
   end
 
@@ -14,10 +15,10 @@ class PersonasGrid
   filter(:comuna, :enum, :select => Comuna.all.order(:nombre).map {|r| [r.nombre, r.id]})
   filter(:circunscripcion, :enum, :select => Circunscripcion.all.order(:nombre).map {|r| [r.nombre, r.id]})
   filter(:distrito, :enum, :select => Distrito.all.map {|r| [r.nombre, r.id]})
-  
+
   filter(:condition, :dynamic, :header => "Condición")
   column_names_filter(:header => "Más Columnas", checkboxes: true)
-  
+
   #filter(:created_at, :date, :range => true)
 
   column(:id)
@@ -49,7 +50,7 @@ class PersonasGrid
   column(:email)
   column(:intereses)
   column(:patrimonio)
-  
+
   column(:created_at) do |model|
     model.created_at.to_date
   end

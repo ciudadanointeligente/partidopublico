@@ -42,6 +42,7 @@ es:
       details: "Detalles"
       edit: "Editar"
   datagrid:
+    no_results: "Sin Resultados"
     form:
       reset: "Limpiar"
       search: "Filtrar"
@@ -52,8 +53,8 @@ es:
           "=~": "similar"
           ">=": "mayor o igual"
           "<=": "menor o igual"
-    table: 
-      order: 
+    table:
+      order:
         asc: "↑"
         desc: "↓"
   views:
