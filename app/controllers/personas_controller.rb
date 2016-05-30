@@ -6,7 +6,7 @@ class PersonasController < ApplicationController
   # def index
   #   @personas = Persona.all
   # end
-  
+
   def index
     @grid = PersonasGrid.new(params[:personas_grid]) do |scope|
       scope.page(params[:page])

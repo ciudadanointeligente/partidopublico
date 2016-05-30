@@ -1,5 +1,5 @@
 <%= render :layout => 'form' do |f| %>
-
+<%= f.object.id %>
 <%= f.fields_for :representantes do |rep| %>
    <%= render 'representante_fields', :f => rep %>
 <% end %>

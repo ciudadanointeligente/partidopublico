@@ -45,18 +45,16 @@ class Persona < ActiveRecord::Base
     validates_attachment :foto,
         content_type: { content_type:  /\Aimage\/.*\Z/ },
         size: { in: 0..500.kilobytes }
-    validates_presence_of :nombre, :apellidos, :message => "debe rellenar"
-    
+    validates_presence_of :nombre, :apellidos, :partido_id, :message => "debe rellenar"
+
     belongs_to :partido
     belongs_to :personable, polymorphic: true
     self.inheritance_column = :tipo
- 
-    scope :representantes, -> { where(tipo: 'Representante') } 
-    scope :autoridades, -> { where(tipo: 'Autoridad') } 
+
+    scope :representantes, -> { where(tipo: 'Representante') }
+    scope :autoridades, -> { where(tipo: 'Autoridad') }
     scope :cargos, -> { where(tipo: 'Cargo') }
     
-    
- 
     def self.tipos
       %w(Representante Autoridad Candidato Responsable Cargo)
     end

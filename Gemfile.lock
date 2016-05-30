@@ -103,6 +103,7 @@ GEM
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    libv8 (3.16.14.15)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -181,6 +182,7 @@ GEM
     rake (11.1.1)
     rdoc (4.2.2)
       json (~> 1.4)
+    ref (2.0.0)
     request_store (1.3.0)
     responders (2.1.1)
       railties (>= 4.2.0, < 5.1)
@@ -232,6 +234,9 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    therubyracer (0.12.2)
+      libv8 (~> 3.16.14.0)
+      ref
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.2)
@@ -289,10 +294,14 @@ DEPENDENCIES
   seed_dump
   simple_form
   spring
+  therubyracer
   turbolinks
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
   wicked
 
+RUBY VERSION
+   ruby 2.3.0p0
+
 BUNDLED WITH
-   1.11.2
+   1.12.5
