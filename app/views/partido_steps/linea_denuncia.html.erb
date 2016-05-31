@@ -1,0 +1,8 @@
+<%= render :layout => 'form' do |f| %>
+
+<%= f.fields_for :responsable_denuncias do |rep| %>
+   <%= render 'responsable_denuncia_fields', :f => rep %>
+<% end %>
+<%= link_to_add_association 'add responsable_denuncia', f, :responsable_denuncias %>
+
+<% end %>

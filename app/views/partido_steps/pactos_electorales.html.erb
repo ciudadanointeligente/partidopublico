@@ -1,0 +1,8 @@
+<%= render :layout => 'form' do |f| %>
+
+<%= f.fields_for :pacto_electorals do |builder| %>
+    <%= render 'pacto_electoral_fields', :f => builder %>
+<% end %>
+<%= link_to_add_association 'add pacto', f, :pacto_electorals %>
+
+<% end %>

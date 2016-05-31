@@ -1,0 +1,9 @@
+<%= render :layout => 'form' do |f| %>
+
+        <%= f.fields_for :tramites do |ff| %>
+            <%= render 'tramite_fields', :f => ff %>
+        <% end %>
+        <br>
+      <%= link_to_add_association 'add tramite', f, :tramites %>
+      
+<% end %>

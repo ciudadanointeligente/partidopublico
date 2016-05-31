@@ -19,7 +19,6 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe EleccionInternasController, type: :controller do
-  include Devise::TestHelpers
   # This should return the minimal set of attributes required to create a valid
   # EleccionInterna. As you add validations to EleccionInterna, be sure to
   # adjust the attributes here as well.

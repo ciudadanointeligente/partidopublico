@@ -3,10 +3,23 @@
  * Code licensed under the Apache License v2.0.
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
-
-body {
+html{
+    height:100%; 
+}
+body{ 
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-    height: 800;
+    min-height:100%; 
+    padding:0;
+    margin:0; 
+    position:relative; 
+    background-color: #E7E7E7 !important;
+    font-family: 'Karla', sans-serif !important;
+}
+
+body:after{ 
+    content:''; 
+    display:block; 
+    height:100px; 
 }
 
 .signed_user {
@@ -25,6 +38,7 @@ body {
 
 footer {
     margin: 50px 0;
+    background-color: #CFCFCF;
 }
 
 .thumbnail {
@@ -77,4 +91,153 @@ footer {
 .boxed_form  {
     border:1px solid black;
     display: inline-block;
+}
+
+.steps_list {
+    padding: 0;
+}
+
+.steps_list li {
+    display: inline-block;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px 4px 0 0;
+}
+
+.steps_list .unfinished {
+    background-color: #373737;
+}
+.steps_list .current {
+    background-color: #070707;
+}
+.steps_list .finished {
+    background-color: #373737;
+}
+
+.steps_list li a:hover {
+    background-color: orange;
+}
+
+.main_steps_list {
+    padding: 0;
+}
+
+.main_steps_list li {
+    display: inline-block;
+    color: white !important;
+    padding: 10px 3px;
+    text-decoration: none;
+    border-radius: 4px 4px 0 0;
+    word-break: keep-all;
+}
+.main_steps_list .unfinished {
+    background-color: #676767;
+}
+.main_steps_list .current {
+    background-color: #a7a7a7;
+}
+
+.steps_list li a:visited {
+    background-color: orange;
+}
+
+
+.navigator {
+    width: 100%;
+}
+
+#cabecera {
+   background-color: #fff;
+   border-color: #fff
+}
+
+#contenedor {
+   height:100%;
+   display: block;
+   width: 100%;
+   padding-top:20px;
+   padding-right: 15px;
+   padding-left: 15px;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+#pie_pagina {
+   background-color: #cfcfcf;
+   border-color: #cfcfcf;
+   min-height: 60px;
+   width: 100%;
+   position: absolute;
+   bottom: 0;
+}
+
+#cabecera_partido {
+    width: 50%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.partido_logo {
+    display: block;
+    width: 150px;
+    height: auto;
+    
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.partido_nombre {
+    font-size: 200%;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+.partido_lema {
+    font-size: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+.area_partido{
+    width: 25%;
+}
+
+.cabecera_area_partido{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    background-color:#0DB0B7;
+    color: #fff;
+}
+.sub_area_partido{
+    margin-top: 5px;
+    height: 35px;
+    background-color:#fff;
+    display: flex;
+    align-items: center;
+}
+.titulo_sub_area{
+    padding-left: 15px;
+}
+.icono_visualizacion{
+    padding-right: 10px;
+}
+.box {
+    border: 1px;
+}
+
+hr { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: solid4;
+    border-width: 2px;
 }

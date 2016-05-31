@@ -1,0 +1,18 @@
+<div class="form-inputs boxed_form">
+<%= f.input :descripcion %>
+
+<% if f.object.archivo %>
+    <% tmp_url = f.object.archivo.url == "/system/resources/missing_32.png" ? "" : f.object.archivo.url %>
+    <div class="boxed_form">
+    <%= link_to tmp_url, :target => "_blank" do %>
+      <%= image_tag f.object.archivo.url(:thumb) %>     
+    <% end %>
+    </div>
+    
+<% end %>
+
+<%= f.input :archivo, as: :file %>
+
+<%= link_to_remove_association "mark for remove document", f %>
+</div>
+<br>

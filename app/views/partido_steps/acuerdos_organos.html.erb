@@ -1,0 +1,8 @@
+<%= render :layout => 'form' do |f| %>
+
+<%= f.fields_for :acuerdos do |acuerdo| %>
+   <%= render 'acuerdo_fields', :f => acuerdo %>
+<% end %>
+<%= link_to_add_association 'add acuerdo', f, :acuerdos %>
+
+<% end %>

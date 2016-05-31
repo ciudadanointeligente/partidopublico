@@ -1,0 +1,7 @@
+<%= f.input :numero %>
+<%= f.input :fecha %>
+<%= f.input :tipo, as: :select, collection: Acuerdo.tipos %>
+<%= f.input :tema %>
+<%= f.input :region, as: :select, collection: Region.all.sort %>
+<%= f.association :organo_interno, as: :select, collection: OrganoInterno.where(partido_id: f.object.partido_id) %>
+<%= f.input :documento %>

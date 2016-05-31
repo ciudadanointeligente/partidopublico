@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Region:</strong>
+  <%= @sede.region %>
+</p>
+
+<p>
+  <strong>Direccion:</strong>
+  <%= @sede.direccion %>
+</p>
+
+<p>
+  <strong>Contacto:</strong>
+  <%= @sede.contacto %>
+</p>
+
+<%= link_to 'Edit', edit_sede_path(@sede) %> |
+<%= link_to 'Back', sedes_path %>

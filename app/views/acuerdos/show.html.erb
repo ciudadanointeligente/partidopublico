@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Numero:</strong>
+  <%= @acuerdo.numero %>
+</p>
+
+<p>
+  <strong>Fecha:</strong>
+  <%= @acuerdo.fecha %>
+</p>
+
+<p>
+  <strong>Tipo:</strong>
+  <%= @acuerdo.tipo %>
+</p>
+
+<p>
+  <strong>Tema:</strong>
+  <%= @acuerdo.tema %>
+</p>
+
+<p>
+  <strong>Region:</strong>
+  <%= @acuerdo.region %>
+</p>
+
+<p>
+  <strong>Organo interno:</strong>
+  <%= @acuerdo.organo_interno %>
+</p>
+
+<%= link_to 'Edit', edit_acuerdo_path(@acuerdo) %> |
+<%= link_to 'Back', acuerdos_path %>

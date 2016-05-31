@@ -1,0 +1,9 @@
+
+<%= render :layout => 'form' do |f| %>
+
+<%= f.fields_for :sedes do |ff| %>
+    <%= render 'sede_fields', :f => ff %>
+<% end %>
+<%= link_to_add_association 'add sede', f, :sedes %>
+
+<% end %>

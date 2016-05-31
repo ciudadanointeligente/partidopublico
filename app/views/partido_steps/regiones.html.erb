@@ -1,0 +1,5 @@
+<%= render :layout => 'form' do |f| %>
+
+<%= f.association :regions, as: :check_boxes, collection: Region.all.sort, :selected => @partido.regions, :label => "Regiones"  %>
+
+<% end %>

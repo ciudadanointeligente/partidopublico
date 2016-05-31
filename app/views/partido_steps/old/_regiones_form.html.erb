@@ -1,0 +1,11 @@
+<%= simple_form_for@partido, url: wizard_path, method: :put do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs boxed_form">
+    <%= f.association :regions, as: :check_boxes, collection: Region.all.sort, :selected => @partido.regions, :label => "Regiones"  %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

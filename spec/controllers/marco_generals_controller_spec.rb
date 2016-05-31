@@ -19,7 +19,6 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe MarcoGeneralsController, type: :controller do
-  include Devise::TestHelpers
   # This should return the minimal set of attributes required to create a valid
   # MarcoGeneral. As you add validations to MarcoGeneral, be sure to
   # adjust the attributes here as well.

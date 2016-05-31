@@ -1,4 +1,31 @@
 <p id="notice"><%= notice %></p>
-<%= image_tag @partido.logo.url(:thumb) %>
-<br>
-<%= link_to 'Back', partidos_path %>
+<div id="cabecera_partido">
+    <div class="partido_nombre">
+        <%= @partido.nombre %>
+    </div>
+
+    
+    <%= image_tag @partido.logo.url(:thumb), :class => "partido_logo" %>
+    <br>
+
+    <div class="partido_lema">
+        <%= @partido.lema %>
+    </div>
+</div>
+<div class="datos_partido">
+    <div class="area_partido">
+        <div class="cabecera_area_partido">
+            NORMAS INTERNAS Y PENSAMIENTO
+        </div>
+        <div class="sub_area_partido">
+            <div class="titulo_sub_area">
+                Marco Normativo Interno
+            </div>
+            <div class="icono_visualizacion">
+                <%= icon('file-text', id: 'my-icon', class: 'icono_visualizacion') %>
+            </div>
+        </div>
+    </div>
+    
+</div>
+

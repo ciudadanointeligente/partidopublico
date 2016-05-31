@@ -1,0 +1,11 @@
+<%= steps_progress_bar %>
+<%= substeps_progress_bar %>
+ 
+<% if @partido.logo %>
+    <%= image_tag @partido.logo.url(:thumb) %>
+<% end %>
+
+<%= yield %>
+
+
+<% parent_layout "application" %>

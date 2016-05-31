@@ -1,0 +1,8 @@
+<%= render :layout => 'form' do |f| %>
+
+<%= f.fields_for :eleccion_internas do |builder| %>
+    <%= render 'eleccion_interna_fields', :f => builder %>
+<% end %>
+<%= link_to_add_association 'add eleccion interna', f, :eleccion_internas %>
+
+<% end %>

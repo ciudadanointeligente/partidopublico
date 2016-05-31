@@ -1,0 +1,9 @@
+
+<%= render :layout => 'form' do |f| %>
+
+<%= f.fields_for :sancions do |ff| %>
+    <%= render 'sancion_fields', :f => ff %>
+<% end %>
+<%= link_to_add_association 'add sancion', f, :sancions %>
+
+<% end %>

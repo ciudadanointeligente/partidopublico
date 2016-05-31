@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :personas
+  resources :afiliacions
+  resources :regions
+  resources :sedes
+  resources :tramites
+  resources :acuerdos
   resources :eleccion_populars
   resources :eleccion_internas
   resources :procedimientos
@@ -9,8 +15,14 @@ Rails.application.routes.draw do
   resources :documentos
   resources :leys
   resources :marco_generals
-  devise_for :users
   resources :partidos
+  scope "partido/:partido_id" do
+    resources :partido_steps
+  end
+  # resources :partido_steps
+  get 'formulario/update_comunas', as: 'update_comunas'
+  get 'formulario/update_distritos', as: 'update_distritos'
+  # get 'partido_steps/update_comunas', as: 'update_comunas'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,0 +1,8 @@
+<%= f.input :nombre %>
+<%= f.input :funciones %>
+<%= f.fields_for :personas do |builder| %>
+   <%= render 'persona_fields', :f => builder %>
+<% end %>
+  <%= link_to_add_association 'add person', f, :personas %>
+  <br>
+<%= link_to_remove_association "mark for remove organo interno", f %>  

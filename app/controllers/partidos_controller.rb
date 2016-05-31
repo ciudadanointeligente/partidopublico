@@ -4,7 +4,7 @@ class PartidosController < ApplicationController
   # GET /partidos
   # GET /partidos.json
   def index
-    @partidos = Partido.where(user_id: current_user.id)
+    @partidos = Partido.all
   end
 
   # GET /partidos/1
@@ -20,21 +20,22 @@ class PartidosController < ApplicationController
   # GET /partidos/1/edit
   def edit
     @partido = Partido.find_by id: params[:id]
-    unless @partido.user == current_user
-      flash[:notice] = "Not allowed to update partido " + @partido.nombre
-      redirect_to root_path
-    end
+    # unless @partido.user == current_user
+    #   flash[:notice] = "Not allowed to update partido " + @partido.nombre
+    #   redirect_to root_path
+    # end
   end
 
   # POST /partidos
   # POST /partidos.json
   def create
     @partido = Partido.new(partido_params)
-    @partido.user = current_user
+    # @partido.user = current_user
 
     respond_to do |format|
       if @partido.save
-        format.html { redirect_to @partido, notice: 'Partido was successfully created.' }
+        # format.html { redirect_to @partido, notice: 'Partido was successfully created.' }
+        format.html { redirect_to partido_steps_path(@partido),  notice: 'Partido was successfully created.' }
         format.json { render :show, status: :created, location: @partido }
       else
         format.html { render :new }

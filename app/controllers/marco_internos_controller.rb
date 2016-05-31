@@ -42,6 +42,8 @@ class MarcoInternosController < ApplicationController
   # PATCH/PUT /marco_internos/1.json
   def update
     respond_to do |format|
+      puts marco_interno_params.to_yaml
+      
       if @marco_interno.update(marco_interno_params)
         format.html { redirect_to @marco_interno, notice: 'Marco interno was successfully updated.' }
         format.json { render :show, status: :ok, location: @marco_interno }
@@ -70,6 +72,6 @@ class MarcoInternosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def marco_interno_params
-      params.require(:marco_interno).permit(:partido_id, documentos_attributes: [:id, :descripcion, :archivo, :_destroy])
+      params.require(:marco_interno).permit(:id, :partido_id, documentos_attributes: [:id, :descripcion, :archivo, :_destroy])
     end
 end

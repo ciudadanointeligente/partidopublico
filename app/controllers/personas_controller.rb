@@ -3,8 +3,14 @@ class PersonasController < ApplicationController
 
   # GET /personas
   # GET /personas.json
+  # def index
+  #   @personas = Persona.all
+  # end
+
   def index
-    @personas = Persona.all
+    @grid = PersonasGrid.new(params[:personas_grid]) do |scope|
+      scope.page(params[:page])
+    end
   end
 
   # GET /personas/1
@@ -69,6 +75,6 @@ class PersonasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def persona_params
-      params.require(:persona).permit(:genero, :fecha_nacimiento, :nivel_estudios, :region, :ano_inicio_militancia, :afiliado, :bio)
+      params.require(:persona).permit(:nombre, :apellidos, :genero, :fecha_nacimiento, :nivel_estudios, :region, :ano_inicio_militancia, :afiliado, :bio)
     end
 end

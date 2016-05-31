@@ -1,0 +1,8 @@
+<%= render :layout => 'form' do |f| %>
+
+<%= f.fields_for :autoridads do |builder| %>
+    <%= render 'autoridad_fields', :f => builder %>
+<% end %>
+<%= link_to_add_association 'add autoridad', f, :autoridads %>
+
+<% end %>

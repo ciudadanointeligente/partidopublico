@@ -31,7 +31,7 @@ es:
       admin_login: "Ingresar como Administrador"
       admin_logout: "Cerrar Sesión"
       create_party: "Crear Nuevo Partido"
-      admin_party: "Administra Partidos"
+      admin_party: "Administrar Partido"
       license: "Copyleft"
   welcome:
     index:
@@ -40,4 +40,26 @@ es:
       start: "Empezar"
       enrolled_parties: "Partidos que se han unido"
       details: "Detalles"
-      compare: "Comparar"
+      edit: "Editar"
+  datagrid:
+    no_results: "Sin Resultados"
+    form:
+      reset: "Limpiar"
+      search: "Filtrar"
+    filters:
+      dynamic:
+        operations:
+          "=": "igual"
+          "=~": "similar"
+          ">=": "mayor o igual"
+          "<=": "menor o igual"
+    table:
+      order:
+        asc: "↑"
+        desc: "↓"
+  views:
+    pagination:
+      next: "Siguiente"
+      previous: "Anterior"
+      last: "Fin"
+      first: "Inicio"

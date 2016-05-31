@@ -1,0 +1,6 @@
+<%= tutorial_progress_bar %>
+<% if @partido.logo %>
+    <%= image_tag @partido.logo.url(:thumb) %>
+<% end %>
+
+<%= link_to 'skip', next_wizard_path %>

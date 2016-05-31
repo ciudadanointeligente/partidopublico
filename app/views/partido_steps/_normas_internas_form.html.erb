@@ -1,0 +1,14 @@
+<%= simple_form_for @partido.marco_interno, url: wizard_path, method: :put do |f| %>
+  <%= f.error_notification %>
+
+    <div class="form-group">
+      <%= f.fields_for :documentos do |builder| %>
+       <%= render 'documento_fields', :f => builder %>
+      <% end %>
+      <%= link_to_add_association 'add document', f, :documentos %>
+    </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

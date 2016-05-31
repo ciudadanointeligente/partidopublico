@@ -1,0 +1,8 @@
+<%= render :layout => 'form' do |f| %>
+<%= f.object.id %>
+<%= f.fields_for :representantes do |rep| %>
+   <%= render 'representante_fields', :f => rep %>
+<% end %>
+<%= link_to_add_association 'add representante', f, :representantes %>
+
+<% end %>

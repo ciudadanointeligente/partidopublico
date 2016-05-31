@@ -19,7 +19,6 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe PersonasController, type: :controller do
-  include Devise::TestHelpers
   # This should return the minimal set of attributes required to create a valid
   # Persona. As you add validations to Persona, be sure to
   # adjust the attributes here as well.
