@@ -5,5 +5,5 @@
     <%= datagrid_table @grid %>
     <div class='total'>Total: <%= @grid.assets.total_count %></div>
     <%= paginate(@grid.assets) %>
-
+    <%= link_to "Get CSV", url_for(format: 'csv', personas_grid: params[:personas_grid]) %>
 </div>

@@ -16,7 +16,9 @@ Rails.application.routes.draw do
   resources :leys
   resources :marco_generals
   resources :partidos
+  
   scope "partido/:partido_id" do
+    get 'export_personas', to: 'partido_steps#export_personas'
     resources :partido_steps
   end
   # resources :partido_steps

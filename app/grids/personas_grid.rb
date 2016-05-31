@@ -7,7 +7,7 @@ class PersonasGrid
     Persona
   end
 
-  filter(:id, :integer)
+  #filter(:id, :integer)
   filter(:tipo, :enum, :select => Persona.tipos.map {|r| [r.humanize, r]})
   filter(:nombre, :string)
   filter(:apellidos, :string)
@@ -16,8 +16,8 @@ class PersonasGrid
   filter(:circunscripcion, :enum, :select => Circunscripcion.all.order(:nombre).map {|r| [r.nombre, r.id]})
   filter(:distrito, :enum, :select => Distrito.all.map {|r| [r.nombre, r.id]})
 
-  filter(:condition, :dynamic, :header => "Condición")
-  column_names_filter(:header => "Más Columnas", checkboxes: true)
+  #filter(:condition, :dynamic, :header => "Condición")
+  #column_names_filter(:header => "&nbsp", checkboxes: true)
 
   #filter(:created_at, :date, :range => true)
 
@@ -26,8 +26,8 @@ class PersonasGrid
   column(:nombre, :mandatory => true)
   column(:apellidos, :mandatory => true)
   column(:fecha_nacimiento)
-  column(:tipo, :mandatory => true)
-  column(:cargo, :mandatory => true)
+  column(:tipo)
+  column(:cargo)
   column(:afiliado) do
     afiliado? ? "Si" : "No"
   end
@@ -41,15 +41,14 @@ class PersonasGrid
     record.circunscripcion.present? ? Circunscripcion.find(record.circunscripcion) : ""
   end
   column(:distrito) do |record|
-    Distrito.find record
     record.distrito.present? ? Distrito.find(record.distrito) : ""
   end
   column(:fecha_desde)
   column(:fecha_hasta)
-  column(:telefono)
-  column(:email)
-  column(:intereses)
-  column(:patrimonio)
+  column(:telefono, :mandatory => true)
+  column(:email, :mandatory => true)
+  column(:intereses, :mandatory => true)
+  column(:patrimonio, :mandatory => true)
 
   column(:created_at) do |model|
     model.created_at.to_date

@@ -5,6 +5,7 @@ Local variables:
 * options - passed options Hash
 %>
 <% if grid.html_columns(*options[:columns]).any? %>
+<%= link_to "Exportar CSV", url_for(action: 'export_personas', controller: 'partido_steps', format: 'csv', personas_grid: params[:personas_grid]) %>
   <%= content_tag :table, options[:html] do %>
     <thead>
       <%= datagrid_header(grid, options) %>
@@ -17,6 +18,7 @@ Local variables:
       <% end %>
     </tbody>
   <% end %>
+  <%= link_to "Exportar CSV", url_for(action: 'export_personas', controller: 'partido_steps', format: 'csv', personas_grid: params[:personas_grid]) %>
 <% else -%>
   <%= I18n.t("datagrid.table.no_columns").html_safe %>
 <% end %>

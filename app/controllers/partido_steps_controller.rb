@@ -2,6 +2,8 @@ class PartidoStepsController < ApplicationController
     include Wicked::Wizard
     helper  :all
 
+    respond_to :html, :json, :csv
+
     before_action :set_partido
 
     steps   :datos_basicos, :personas,
@@ -12,6 +14,23 @@ class PartidoStepsController < ApplicationController
             :entidades_participadas, :pactos_electorales,
             :linea_denuncia, :sanciones
 
+    def export_personas
+      @grid = PersonasGrid.new(params[:personas_grid])
+      respond_to do |f|
+        f.html do
+          @grid.scope {|scope| scope.page(params[:page]) }
+        end
+        f.csv do
+          puts "__________________________________________________AAAAAAAAAAAAAXX"
+          send_data @grid.to_csv,
+            type: "text/csv",
+            disposition: 'inline',
+            filename: "personas-#{Time.now.to_s}.csv"
+        end
+      end
+      #return
+    end
+
     def show
         # @user = current_user
         # @partido = Partido.find_by_user_id(current_user.id)
@@ -20,9 +39,8 @@ class PartidoStepsController < ApplicationController
         when :datos_basicos
 
         when :personas
-          @grid = PersonasGrid.new(params[:personas_grid]) do |scope|
-            scope.where(:partido_id => @partido.id ).page(params[:page])
-          end
+          @grid = PersonasGrid.new(params[:personas_grid])
+          @grid.scope {|scope| scope.page(params[:page]) }
 
         when :normas_internas
 
@@ -87,6 +105,21 @@ class PartidoStepsController < ApplicationController
         # when :postulacion_popular
         #     @partido.update_attributes(partido_params)
 
+        when :personas
+          @grid = PersonasGrid.new(params[:personas_grid])
+          respond_to do |f|
+            f.html do
+              @grid.scope {|scope| scope.page(params[:page]) }
+            end
+            f.csv do
+              puts "__________________________________________________AAAAAAAAAAAAAXX"
+              send_data @grid.to_csv,
+                type: "text/csv",
+                disposition: 'inline',
+                filename: "personas-#{Time.now.to_s}.csv"
+            end
+          end
+          return
         else
             @partido.update_attributes(partido_params)
         end
@@ -94,7 +127,7 @@ class PartidoStepsController < ApplicationController
             puts "AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST "
             @partido.save
         else
-            render_wizard @partido
+          #render_wizard @partido
         end
     end
 
