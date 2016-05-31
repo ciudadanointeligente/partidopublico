@@ -25,7 +25,7 @@ class Partido < ActiveRecord::Base
     validates_presence_of :nombre, :sigla, :lema, :message => "debe rellenar"
     validates_uniqueness_of :nombre, :sigla, :lema, :message => "already exists"
     validates_length_of :lema, :within => 2..200
-    
+
 
     has_one :marco_general, dependent: :destroy
     has_one :marco_interno, dependent: :destroy
@@ -47,7 +47,7 @@ class Partido < ActiveRecord::Base
     has_and_belongs_to_many :pacto_electorals
     has_many :responsable_denuncias, as: :personable, dependent: :destroy
     has_many :sancions, dependent: :destroy
-    
+
     accepts_nested_attributes_for :marco_interno, allow_destroy: true
     accepts_nested_attributes_for :organo_internos, allow_destroy: true
     accepts_nested_attributes_for :sedes, reject_if: proc { |attributes| attributes['direccion'].blank? }, allow_destroy: true
@@ -65,9 +65,9 @@ class Partido < ActiveRecord::Base
     accepts_nested_attributes_for :pacto_electorals, allow_destroy: true
     accepts_nested_attributes_for :responsable_denuncias, allow_destroy: true
     accepts_nested_attributes_for :sancions, allow_destroy: true
-    
+
     after_create :initialize_transparency_settings
-    
+
     def initialize_transparency_settings
        self.marco_general = MarcoGeneral.new
        self.marco_interno = MarcoInterno.new
@@ -85,9 +85,9 @@ class Partido < ActiveRecord::Base
        self.tramites << Tramite.new(nombre:"Desfiliación")
        self.save
     end
-    
+
     def to_s
         self.sigla
     end
-    
+
 end

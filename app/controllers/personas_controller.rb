@@ -7,9 +7,24 @@ class PersonasController < ApplicationController
   #   @personas = Persona.all
   # end
 
+  # def index
+  #   @grid = PersonasGrid.new(params[:personas_grid]) do |scope|
+  #     scope.page(params[:page])
+  #   end
+  # end
+
   def index
-    @grid = PersonasGrid.new(params[:personas_grid]) do |scope|
-      scope.page(params[:page])
+    @grid = PersonasGrid.new(params[:personas_grid])
+    respond_to do |f|
+      f.html do
+        @grid.scope {|scope| scope.page(params[:page]) }
+      end
+      f.csv do
+        send_data @grid.to_csv,
+          type: "text/csv",
+          disposition: 'inline',
+          filename: "personas-#{Time.now.to_s}.csv"
+      end
     end
   end
 
