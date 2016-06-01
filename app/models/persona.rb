@@ -51,10 +51,12 @@ class Persona < ActiveRecord::Base
     belongs_to :personable, polymorphic: true
     self.inheritance_column = :tipo
 
+    has_many :cargos
+    has_many :tipo_cargos, through: :cargos
+
     scope :representantes, -> { where(tipo: 'Representante') }
     scope :autoridades, -> { where(tipo: 'Autoridad') }
-    scope :cargos, -> { where(tipo: 'Cargo') }
-    
+
     def self.tipos
       %w(Representante Autoridad Candidato Responsable Cargo)
     end
