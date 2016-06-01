@@ -12,13 +12,15 @@ Rails.application.routes.draw do
   resources :procedimientos
   resources :requisitos
   resources :organo_internos
-  resources :personas
+  resources :personas do
+    collection { post :import_personas }
+  end
   resources :marco_internos
   resources :documentos
   resources :leys
   resources :marco_generals
   resources :partidos
-  
+
   scope "partido/:partido_id" do
     get 'export_personas', to: 'partido_steps#export_personas'
     resources :partido_steps

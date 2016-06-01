@@ -82,6 +82,15 @@ class PersonasController < ApplicationController
     end
   end
 
+  def import_personas
+    puts "import_personas import_personas import_personasimport_personasimport_personasimport_personas import_personas "
+    puts params.to_yaml
+    Persona.import(params[:file], params[:partido_id])
+
+    # after the import, redirect and let us know the method worked!
+    redirect_to root_url, notice: "Personas importadas!"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_persona
