@@ -2,6 +2,11 @@
   <div class="row">
     <div class="col-md-3" id="row">
       <%= datagrid_form_for @grid, :method => :get, :url => wizard_path %>
+      <%= form_tag import_personas_personas_path,  multipart: true do %>
+        <%= hidden_field_tag :partido_id, @partido.id %>
+        <%= file_field_tag :file %>
+        <%= submit_tag "Import CSV" %>
+      <% end %>
     </div>
     <div class="col-md-9">
       <%= paginate(@grid.assets) %>

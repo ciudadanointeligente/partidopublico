@@ -21,11 +21,17 @@ class PartidoStepsController < ApplicationController
           @grid.scope {|scope| scope.page(params[:page]) }
         end
         f.csv do
-          puts "__________________________________________________AAAAAAAAAAAAAXX"
-          send_data @grid.to_csv,
+          puts "__________________________________________________export_personas"
+          columns = @grid.columns_array.map {|item| item.to_s.parameterize.underscore.to_sym}
+          puts columns
+
+
+
+          puts "__________________________________________________export_personas"
+          send_data @grid.to_csv(:rut, :nombre, :apellidos, :genero, :telefono, :email, :intereses, :patrimonio, :fecha_nacimiento, :nivel_estudios, :afiliado, :ano_inicio_militancia, :bio),
             type: "text/csv",
             disposition: 'inline',
-            filename: "personas-#{Time.now.to_s}.csv"
+            filename: "personas-partido-#{@partido.sigla}-#{Time.now.to_s}.csv"
         end
       end
       #return

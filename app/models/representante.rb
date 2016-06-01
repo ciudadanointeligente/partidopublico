@@ -32,6 +32,7 @@
 #  tipo                  :string
 #  intereses             :string
 #  patrimonio            :string
+#  rut                   :string
 #
 # Indexes
 #
