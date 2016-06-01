@@ -1,0 +1,13 @@
+<%= simple_form_for(@cargo) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :persona %>
+    <%= f.association :cargo %>
+    <%= f.association :partido %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

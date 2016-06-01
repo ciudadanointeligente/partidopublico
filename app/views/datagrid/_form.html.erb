@@ -1,5 +1,4 @@
-<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#filter_form">Búsqueda</button>
-<div id="filter_form" class="collapse">
+<div id="filter_form">
   <%= form_for grid, options do |f| -%>
     <% grid.filters.each do |filter| %>
       <div class="datagrid-filter filter">

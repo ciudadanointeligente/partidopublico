@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160518002815) do
+ActiveRecord::Schema.define(version: 20160601150828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,28 @@ ActiveRecord::Schema.define(version: 20160518002815) do
   end
 
   add_index "afiliacions", ["partido_id"], name: "index_afiliacions_on_partido_id", using: :btree
+
+  create_table "cargos", force: :cascade do |t|
+    t.integer  "persona_id"
+    t.integer  "tipo_cargo_id"
+    t.integer  "partido_id"
+    t.integer  "region_id"
+    t.integer  "comuna_id"
+    t.integer  "circunscripcion_id"
+    t.integer  "distrito_id"
+    t.date     "fecha_desde"
+    t.date     "fecha_hasta"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "cargos", ["circunscripcion_id"], name: "index_cargos_on_circunscripcion_id", using: :btree
+  add_index "cargos", ["comuna_id"], name: "index_cargos_on_comuna_id", using: :btree
+  add_index "cargos", ["distrito_id"], name: "index_cargos_on_distrito_id", using: :btree
+  add_index "cargos", ["partido_id"], name: "index_cargos_on_partido_id", using: :btree
+  add_index "cargos", ["persona_id"], name: "index_cargos_on_persona_id", using: :btree
+  add_index "cargos", ["region_id"], name: "index_cargos_on_region_id", using: :btree
+  add_index "cargos", ["tipo_cargo_id"], name: "index_cargos_on_tipo_cargo_id", using: :btree
 
   create_table "circunscripcions", force: :cascade do |t|
     t.string   "nombre"
@@ -239,6 +261,7 @@ ActiveRecord::Schema.define(version: 20160518002815) do
     t.string   "tipo"
     t.string   "intereses"
     t.string   "patrimonio"
+    t.string   "rut"
   end
 
   add_index "personas", ["partido_id"], name: "index_personas_on_partido_id", using: :btree
@@ -306,6 +329,12 @@ ActiveRecord::Schema.define(version: 20160518002815) do
 
   add_index "sedes", ["partido_id"], name: "index_sedes_on_partido_id", using: :btree
 
+  create_table "tipo_cargos", force: :cascade do |t|
+    t.string   "titulo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tramites", force: :cascade do |t|
     t.string   "nombre"
     t.string   "descripcion"
@@ -337,6 +366,13 @@ ActiveRecord::Schema.define(version: 20160518002815) do
   add_foreign_key "acuerdos", "organo_internos"
   add_foreign_key "acuerdos", "partidos"
   add_foreign_key "afiliacions", "partidos"
+  add_foreign_key "cargos", "circunscripcions"
+  add_foreign_key "cargos", "comunas"
+  add_foreign_key "cargos", "distritos"
+  add_foreign_key "cargos", "partidos"
+  add_foreign_key "cargos", "personas"
+  add_foreign_key "cargos", "regions"
+  add_foreign_key "cargos", "tipo_cargos"
   add_foreign_key "comunas", "provincias"
   add_foreign_key "distritos", "circunscripcions"
   add_foreign_key "eleccion_internas", "organo_internos"
