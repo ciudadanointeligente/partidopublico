@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :cargos
+  resources :tipo_cargos
   resources :personas
   resources :afiliacions
   resources :regions
