@@ -6,7 +6,7 @@ class PartidoStepsController < ApplicationController
 
     before_action :set_partido
 
-    steps   :datos_basicos, :personas,
+    steps   :datos_basicos, :personas, :cargos,
             :normas_internas,
             :regiones, :sedes, :num_afiliados, :tramites, :representantes, :autoridades,
             :postulacion_popular, :organos_internos, :postulacion_interna, :agenda_presidente, :actividades_publicas,

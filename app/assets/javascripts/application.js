@@ -12,12 +12,18 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require angular
-//= require angular-bootstrap/ui-bootstrap-tpls.min
-//= require angular-route/angular-route
-//= require angular/angular_app
-//= require angular/angular_forms
-//= require turbolinks
+//= require jquery.remotipart
+//= require chosen-jquery
+//= require angular/angular
 //= require bootstrap-sprockets
+//= require ng-rails-csrf
+//= require angular-bootstrap/ui-bootstrap-tpls
+//= require angular-route/angular-route
+//= require ng-flow/dist/ng-flow-standalone
+//= require flow.js/dist/flow
+//= require ng-flow/dist/ng-flow
+//= require turbolinks
 //= require cocoon
 //= require_tree .
+//= require angular-aside/dist/js/angular-aside
+//= require angular/angular_app

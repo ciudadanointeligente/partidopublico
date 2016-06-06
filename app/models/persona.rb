@@ -90,4 +90,8 @@ class Persona < ActiveRecord::Base
         u.save
       end
     end
+
+    def to_s
+      self.nombre + " " + self.apellidos + " " + self.rut
+    end
 end

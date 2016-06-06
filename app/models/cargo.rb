@@ -31,9 +31,16 @@ class Cargo < ActiveRecord::Base
   belongs_to :tipo_cargo
   belongs_to :partido
 
-  has_one :region
-  has_one :comuna
-  has_one :circunscripcion
-  has_one :distrito
+  belongs_to :region
+  belongs_to :comuna
+  belongs_to :circunscripcion
+  belongs_to :distrito
 
+  def lugar
+    if !self.comuna.blank? || !self.distrito.blank?
+      return self.comuna.to_s + self.distrito.to_s
+    else !self.region.blank? || !self.circunscripcion.blank?
+      return self.region.to_s + self.circunscripcion.to_s
+    end
+  end
 end

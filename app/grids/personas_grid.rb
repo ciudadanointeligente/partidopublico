@@ -21,24 +21,26 @@ class PersonasGrid
   #column_names_filter(:header => "&nbsp", checkboxes: true)
 
   #filter(:created_at, :date, :range => true)
-
+  column(:actions, :html => true, :mandatory => true) do |record|
+    link_to "Editar", "#", 'ng-click' => 'getPersonaModal('+record.id.to_s+')'
+  end
 #column(:id)
   column(:genero, :mandatory => true)
   column(:rut, :mandatory => true)
   column(:nombre, :mandatory => true)
   column(:apellidos, :mandatory => true)
-  column(:telefono, :mandatory => true)
+  column(:telefono, :mandatory => false)
   column(:email, :mandatory => true)
-  column(:intereses, :mandatory => true)
-  column(:patrimonio, :mandatory => true)
+  column(:intereses, :mandatory => false)
+  column(:patrimonio, :mandatory => false)
 
-  column(:fecha_nacimiento, :mandatory => true)
-  column(:nivel_estudios, :mandatory => true)
-  column(:afiliado, :mandatory => true) do
+  column(:fecha_nacimiento, :mandatory => false)
+  column(:nivel_estudios, :mandatory => false)
+  column(:afiliado, :mandatory => false) do
     afiliado? ? "Si" : "No"
   end
-  column(:ano_inicio_militancia, :mandatory => true)
-  column(:bio, :mandatory => true)
+  column(:ano_inicio_militancia, :mandatory => false)
+  column(:bio, :mandatory => false)
 
 
   # column(:region) do |record|

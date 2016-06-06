@@ -10,8 +10,9 @@ $ ->
     else
       elem.parent().siblings(sib_class).removeClass 'mostrable'
       elem.parent().siblings(sib_class).addClass 'escondido'
-    
+
   ready = ->
+    #alert "ready"
     $(".cargo").each ->
       id = $(@).attr("id")
       cargo_value = $(@).val()
@@ -28,7 +29,13 @@ $ ->
           show_sibling $(@), ".circunscripcion", true
           show_sibling $(@), ".distrito", true
         else console.log cargo_value
-      
+
+  load = ->
+    #alert "load"
+    $('.chosen-select').chosen();
+
+  $(document).on 'load', load
+
   $(document).on 'page:change', ready
 
   $(document).on 'change', '.circunscripcion', (evt) ->
@@ -45,9 +52,9 @@ $ ->
         console.log("AJAX Error: #{textStatus}")
       success: (data, textStatus, jqXHR) ->
         console.log("update_distritos select OK!")
-        
+
     return
-  
+
   $(document).on 'change', '.region', (evt) ->
     fired_element_id = evt.target.id
     target_element_id = fired_element_id.replace 'region', 'comuna'
@@ -62,9 +69,9 @@ $ ->
         console.log("AJAX Error: #{textStatus}")
       success: (data, textStatus, jqXHR) ->
         console.log("comunas select OK!")
-        
+
     return
-  
+
   $(document).on 'change', '.cargo', (evt) ->
     cargo_value = $(this).val()
     switch cargo_value
@@ -96,4 +103,3 @@ $ ->
       else console.log cargo_value
     return
   return
-     

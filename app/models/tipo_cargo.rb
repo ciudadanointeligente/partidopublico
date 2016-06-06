@@ -11,4 +11,8 @@
 class TipoCargo < ActiveRecord::Base
   has_many :cargos
   has_many :personas, through: :cargos
+
+  def to_s
+    self.titulo
+  end
 end

@@ -3,7 +3,8 @@
   "dependencies": {
     "angular": "latest",
     "angular-bootstrap": "latest",
-    "angular-route": "1.2.21",
-    "angular-clndr": "latest"
+    "angular-route": "latest",
+    "angular-aside": "latest",
+    "ng-flow": "latest"
   }
 }

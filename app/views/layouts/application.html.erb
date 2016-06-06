@@ -10,9 +10,9 @@
     <meta name="author" content="">
 
     <title><%= t('.title') %></title>
-      <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-      <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-      
+      <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => false %>
+      <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
+
       <%= csrf_meta_tags %>
 
 </head>
@@ -51,8 +51,8 @@
             </div>
             <div class="collapse navbar-collapse signed_user" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    
-                    
+
+
                     <li>
                             <div class="btn-group">
                               <button type="button" class="btn btn-default">User here</button>
@@ -68,8 +68,8 @@
                                 <!--<li><a href="#"><%= t('.admin_logout') %></a></li>-->
                             </ul>
                             </div>
-                        
-                     
+
+
                     </li>
                 </ul>
             </div>
@@ -93,8 +93,8 @@
         <div id="pie_pagina">
             <p></p>
         </div>
-    </footer>   
-    
+    </footer>
+
 </body>
 
 </html>

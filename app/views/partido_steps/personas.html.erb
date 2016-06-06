@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" ng-controller="personasController">
   <div class="row">
     <div class="col-md-3" id="row">
       <%= datagrid_form_for @grid, :method => :get, :url => wizard_path %>
@@ -15,4 +15,5 @@
       <%= paginate(@grid.assets) %>
     </div>
   </div>
+  <%= render 'personas/persona_modal' %>
 </div>

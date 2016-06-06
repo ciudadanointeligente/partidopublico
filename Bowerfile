@@ -5,5 +5,6 @@
 
 asset 'angular'
 asset 'angular-bootstrap'
-asset 'angular-route', '1.2.21'
-asset 'angular-clndr'
+asset 'angular-route'
+asset 'angular-aside'
+asset 'ng-flow'

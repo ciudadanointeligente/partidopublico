@@ -47,6 +47,8 @@ class Partido < ActiveRecord::Base
     has_and_belongs_to_many :pacto_electorals
     has_many :responsable_denuncias, as: :personable, dependent: :destroy
     has_many :sancions, dependent: :destroy
+    has_many :personas, dependent: :destroy
+    has_many :cargos, dependent: :destroy
 
     accepts_nested_attributes_for :marco_interno, allow_destroy: true
     accepts_nested_attributes_for :organo_internos, allow_destroy: true

@@ -40,7 +40,7 @@ gem "bower-rails"
 gem 'simple_form'
 gem 'paper_trail'
 gem "paperclip"
-gem 'angularjs-rails'
+
 gem "cocoon"
 gem 'wicked'
 gem 'responders'
@@ -48,6 +48,10 @@ gem 'responders'
 gem 'font-awesome-sass', '~> 4.6.2'
 gem "datagrid"
 gem "kaminari"
+gem 'ng-rails-csrf'
+gem 'remotipart'
+gem 'compass-rails'
+gem 'chosen-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
