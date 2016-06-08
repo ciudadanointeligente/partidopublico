@@ -1,0 +1,34 @@
+<script type="text/ng-template" id="persona_modal_aside.html">
+  <div class="modal-header">
+    <h3>Datos Persona {{ persona.id }}</h3>
+  </div>
+  <div class="modal-body">
+
+      <%= simple_form_for :persona, :multipart => true , :remote => true do |f| %>
+        <%= f.input :nombre, input_html: { 'ng-model': "persona.nombre", 'placeholder': "Nombre persona" } %>
+        <%= f.input :apellidos, as: :string, input_html: { 'ng-model': "persona.apellidos", 'placeholder': "Apellido Apellido" } %>
+        <%= f.input :fecha_nacimiento, input_html: { 'ng-model': "persona.fecha_nacimiento", 'placeholder': "fecha_nacimiento" } %>
+        <%= f.input :nivel_estudios, input_html: { 'ng-model': "persona.nivel_estudios", 'placeholder': "nivel_estudios" } %>
+        <%= f.input :region, input_html: { 'ng-model': "persona.region", 'placeholder': "region persona" } %>
+        <%= f.input :ano_inicio_militancia, input_html: { 'ng-model': "persona.ano_inicio_militancia", 'placeholder': "ano_inicio_militancia persona" } %>
+        <%= f.input :afiliado, input_html: { 'ng-model': "persona.afiliado", 'placeholder': "afiliado persona" } %>
+        <%= f.input :bio , input_html: { 'ng-model': "persona.bio", 'placeholder': "bio persona" } %>
+        <%= f.input :foto, as: :file , input_html: { 'ng-model': "persona.foto" } %>
+      <% end %>
+
+    <div flow-init="{target: '/personas/7/foto_upload', method:post}"
+     flow-files-submitted="$flow.upload()"
+     flow-file-success="$file.msg = $message">
+
+      <input type="file" flow-btn/>
+      Input OR Other element as upload button
+      <span class="btn" flow-btn>Upload File</span>
+
+    </div>
+    
+    <div class="modal-footer">
+      <button class="btn btn-primary" ng-click="save($event)">guardar</button>
+      <button class="btn btn-warning" ng-click="cancel($event)">cancelar</button>
+    </div>
+  </div>
+</script>

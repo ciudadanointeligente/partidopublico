@@ -1,3 +1,14 @@
-# confirm file called
-console.log("create.js.erb file");
-alert("update");
+$('#flash_message')[0].innerHTML="";
+$('#flash_message').removeClass("hidden alert-danger alert-success")
+$('#flash_message').attr('style','display:block')
+<% if @errors.any? %>
+  $('#flash_message').addClass("alert-danger")
+  $('#flash_message').append("<p> Hay errores: </p>")
+  <% @errors.each do |e| %>
+    $('#flash_message').append("<p> Revise campo <%= e.to_s %>. </p>")
+  <% end %>
+<% else %>
+  $('#flash_message').addClass("alert-success")
+  $('#flash_message').append("<p>  Datos Guardados correctamente </p>")
+<% end %>
+$('#flash_message').fadeOut(5000)
