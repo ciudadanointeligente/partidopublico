@@ -1,18 +1,68 @@
 <div class="container" ng-controller="personasController">
   <div class="row">
     <div class="col-md-3" id="row">
-      <%= datagrid_form_for @grid, :method => :get, :url => wizard_path %>
-      <%= form_tag import_personas_personas_path,  multipart: true do %>
-        <%= hidden_field_tag :partido_id, @partido.id %>
-        <%= file_field_tag :file %>
-        <%= submit_tag "Import CSV" %>
-      <% end %>
+      <table>
+        <tr>
+          <td>
+            <input type="text" ng-model="filtro_personas" placeholder="Filtrar">
+          <td>
+        </tr>
+        <tr>
+          <td>
+            Nueva Persona <i class="fa fa-plus-square-o" ng-click="getPersonaModal(null)" title="Editar"></i>
+          <td>
+        </tr>
+        <tr>
+          <td>
+            <%= link_to "Exportar CSV", url_for(action: 'export_personas', controller: 'partido_steps', format: 'csv'), :target => "_self" %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= form_tag import_personas_personas_path,  multipart: true do %>
+              <%= hidden_field_tag :partido_id, @partido.id %>
+              <%= file_field_tag :file%>
+              <%= submit_tag "Import CSV",:id =>"personas_file_submit", :disabled =>true %>
+            <% end %>
+          <td>
+        </tr>
+      </table>
+
+
     </div>
     <div class="col-md-9">
-      <%= paginate(@grid.assets) %>
-      <%= datagrid_table @grid %>
-      <div class='total'>Total: <%= @grid.assets.total_count %></div>
-      <%= paginate(@grid.assets) %>
+      <div class="form-inline text-right" >
+        <div class="form-group">
+          <label for="pagesize"> Resultados por página: </label>
+          <select name="pagesize" id="pagesize" class="form-control" ng-model="pageSize">
+            <option value="5" ng-selected="true" >5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
+        </div>
+      </div>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Email</th>
+            <th>Rut</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr dir-paginate="persona in personas | filter: filtro_personas | itemsPerPage: pageSize">
+            <td> {{persona.nombre}} </td>
+            <td> {{persona.apellidos}} </td>
+            <td> {{persona.email}} </td>
+            <td> {{persona.rut}} </td>
+            <td> <i class="fa fa-pencil-square-o" ng-click="getPersonaModal(persona.id)" title="Editar"></i> </td>
+          </tr>
+        </tbody>
+      </table>
+      <dir-pagination-controls template-url="/assets/angular-utils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
     </div>
   </div>
   <%= render 'personas/persona_modal' %>

@@ -46,8 +46,8 @@ gem 'wicked'
 gem 'responders'
 
 gem 'font-awesome-sass', '~> 4.6.2'
-gem "datagrid"
-gem "kaminari"
+#gem "datagrid"
+#gem "kaminari"
 gem 'ng-rails-csrf'
 gem 'remotipart'
 gem 'compass-rails'

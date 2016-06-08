@@ -24,7 +24,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="cargo in cargos | filter: filtro_cargos">
+          <tr ng-repeat="cargo in cargos | orderBy:'persona.apellidos + persona.nombre' | filter: filtro_cargos">
             <td> {{cargo.persona.nombre}} </td>
             <td> {{cargo.persona.apellidos}} </td>
             <td> {{cargo.tipo_cargo.titulo}} </td>

@@ -5,6 +5,7 @@
     "angular-bootstrap": "latest",
     "angular-route": "latest",
     "angular-aside": "latest",
-    "ng-flow": "latest"
+    "ng-flow": "latest",
+    "angular-utils-pagination": "latest"
   }
 }

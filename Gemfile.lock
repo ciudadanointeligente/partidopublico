@@ -92,8 +92,6 @@ GEM
       sass-rails (< 5.1)
       sprockets (< 4.0)
     concurrent-ruby (1.0.1)
-    datagrid (1.4.3)
-      rails (>= 3.2.22.2)
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
     docile (1.1.5)
@@ -121,9 +119,6 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.3)
-    kaminari (0.16.3)
-      actionpack (>= 3.0.0)
-      activesupport (>= 3.0.0)
     libv8 (3.16.14.15)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
@@ -296,13 +291,11 @@ DEPENDENCIES
   codeclimate-test-reporter
   coffee-rails (~> 4.1.0)
   compass-rails
-  datagrid
   factory_girl_rails
   faker
   font-awesome-sass (~> 4.6.2)
   jbuilder (~> 2.0)
   jquery-rails
-  kaminari
   ng-rails-csrf
   paper_trail
   paperclip

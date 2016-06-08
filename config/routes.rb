@@ -16,6 +16,11 @@ Rails.application.routes.draw do
     collection { post :import_personas}
     collection { get :upload_foto }
   end
+  resources :regions
+  resources :comunas
+  resources :distritos
+  resources :circunscripcions
+  
   resources :marco_internos
   resources :documentos
   resources :leys
@@ -26,6 +31,8 @@ Rails.application.routes.draw do
     resources :tipo_cargos
     resources :regions
     resources :comunas
+    resources :distritos
+    resources :circunscripcions
   end
 
   scope "partido/:partido_id" do

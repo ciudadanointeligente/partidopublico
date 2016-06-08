@@ -86,8 +86,21 @@ class Persona < ActiveRecord::Base
         else
           puts "persona actualizadaaaaaaaaaaaaaaa"
           u.update_attributes(row.to_hash)
+          u.partido = partido
         end
         u.save
+      end
+    end
+
+    def self.to_csv
+      attributes = %w{rut nombre apellidos genero telefono email intereses patrimonio fecha_nacimiento nivel_estudios afiliado ano_inicio_militancia bio}
+
+      CSV.generate(headers: true) do |csv|
+        csv << attributes
+
+        all.each do |persona|
+          csv << attributes.map{|attr| persona.send(attr)}
+        end
       end
     end
 

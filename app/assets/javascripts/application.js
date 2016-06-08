@@ -24,6 +24,7 @@
 //= require ng-flow/dist/ng-flow
 //= require turbolinks
 //= require cocoon
-//= require_tree .
 //= require angular-aside/dist/js/angular-aside
+//= require angular-utils-pagination/dirPagination
 //= require angular/angular_app
+//= require_tree .

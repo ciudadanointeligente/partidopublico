@@ -1,0 +1,11 @@
+<%= render :layout => 'form' do |f| %>
+
+<%= f.error_notification %>
+<%= f.input :nombre %>
+<%= f.input :sigla %>
+<%= f.input :logo, as: :file %>
+<%= f.input :lema %>
+<%= f.input :fecha_fundacion %>
+<%= f.input :texto %>
+
+<% end %>

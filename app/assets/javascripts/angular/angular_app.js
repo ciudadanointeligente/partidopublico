@@ -1,4 +1,4 @@
-var app = angular.module("papuApp",[ "ui.bootstrap", 'ng-rails-csrf',, 'ngRoute', 'ngAside', 'flow']);
+var app = angular.module("papuApp",[ "ui.bootstrap", 'ng-rails-csrf',, 'ngRoute', 'ngAside', 'flow', 'angularUtils.directives.dirPagination']);
 
 app.config(['$routeProvider', '$locationProvider', function AppConfig($routeProvider, $locationProvider) {
  $locationProvider.html5Mode(true);
@@ -6,6 +6,9 @@ app.config(['$routeProvider', '$locationProvider', function AppConfig($routeProv
 
 app.controller("personasController",["$scope","$http","$location","$aside","$attrs",  function($scope,$http,$location,$aside,$attrs){
   $scope.persona = {};
+  $scope.personas = [];
+  $scope.partido_id = $location.path().split("/")[2];
+  $scope.pageSize = 5;
 
   var save_or_update_persona = function() {
     if($scope.persona.id) {
@@ -30,11 +33,20 @@ app.controller("personasController",["$scope","$http","$location","$aside","$att
     }
   }
 
+  function getPersonasByPartido(partido_id) {
+    $http.get('partidos/'+partido_id+'/personas')
+      .success( function(data){
+        $scope.personas = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
   function getPersonaInfo(persona_id) {
     $http.get('personas/'+persona_id+'.json')
       .success( function(data){
         $scope.persona = data;
-        console.log(data)
       })
       .error( function(error_data){
         $scope.messages = {response: false, message: error_data}
@@ -63,10 +75,11 @@ app.controller("personasController",["$scope","$http","$location","$aside","$att
     });
   }
 
+  getPersonasByPartido($scope.partido_id);
 }]);
 
 app.controller("cargosController",["$scope","$http","$location","$aside","$attrs",  function($scope,$http,$location,$aside,$attrs){
-  $scope.cargos = {};
+  $scope.cargos = [];
   $scope.partido_id = $location.path().split("/")[2];
 
   var save_or_update_cargo = function() {
@@ -83,7 +96,6 @@ app.controller("cargosController",["$scope","$http","$location","$aside","$attrs
     else {
       $http.post('/cargos/', $scope.cargo)
         .success(function(data){
-          console.log(data)
           getCargosByPartido($scope.partido_id);
         })
         .error(function (){
@@ -97,7 +109,6 @@ app.controller("cargosController",["$scope","$http","$location","$aside","$attrs
     $http.get('partidos/'+$scope.partido_id+'/regions')
       .success( function(data){
         $scope.regions = data;
-        console.log(data)
       })
       .error( function(error_data){
         $scope.messages = {response: false, message: error_data}
@@ -108,7 +119,6 @@ app.controller("cargosController",["$scope","$http","$location","$aside","$attrs
     $http.get('partidos/'+$scope.partido_id+'/comunas')
       .success( function(data){
         $scope.comunas = data;
-        console.log(data)
       })
       .error( function(error_data){
         $scope.messages = {response: false, message: error_data}
@@ -119,7 +129,6 @@ app.controller("cargosController",["$scope","$http","$location","$aside","$attrs
     $http.get('partidos/'+partido_id+'/cargos')
       .success( function(data){
         $scope.cargos = data;
-        console.log(data)
       })
       .error( function(error_data){
         $scope.messages = {response: false, message: error_data}
@@ -130,7 +139,6 @@ app.controller("cargosController",["$scope","$http","$location","$aside","$attrs
     $http.get('partidos/'+partido_id+'/tipo_cargos')
       .success( function(data){
         $scope.tipo_cargos = data;
-        console.log(data)
       })
       .error( function(error_data){
         $scope.messages = {response: false, message: error_data}
@@ -141,8 +149,6 @@ app.controller("cargosController",["$scope","$http","$location","$aside","$attrs
     $http.get('partidos/'+partido_id+'/personas')
       .success( function(data){
         $scope.personas = data;
-        console.log("get Personas by partido");
-        console.log(data);
       })
       .error( function(error_data){
         $scope.messages = {response: false, message: error_data}
@@ -157,7 +163,6 @@ app.controller("cargosController",["$scope","$http","$location","$aside","$attrs
         fecha_desde_array = data.fecha_desde.split('-')
         $scope.cargo.fecha_hasta = new Date(fecha_hasta_array[0],fecha_hasta_array[1]-1,fecha_hasta_array[2])
         $scope.cargo.fecha_desde = new Date(fecha_desde_array[0],fecha_desde_array[1]-1,fecha_desde_array[2])
-        console.log(data.fecha_hasta)
       })
       .error( function(error_data){
         $scope.messages = {response: false, message: error_data}
