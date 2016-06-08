@@ -1,6 +1,6 @@
 class PersonasController < ApplicationController
   before_action :set_persona, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_partido, only: [:index]
   # GET /personas
   # GET /personas.json
   # def index
@@ -14,18 +14,22 @@ class PersonasController < ApplicationController
   # end
 
   def index
-    @grid = PersonasGrid.new(params[:personas_grid])
-    respond_to do |f|
-      f.html do
-        @grid.scope {|scope| scope.page(params[:page]) }
-      end
-      f.csv do
-        send_data @grid.to_csv,
-          type: "text/csv",
-          disposition: 'inline',
-          filename: "personas-#{Time.now.to_s}.csv"
+    @personas = Persona.where partido: @partido
+  end
+
+  def foto_upload
+    if remotipart_submitted?
+      p "remotipart_submitted! remotipart_submitted! remotipart_submitted! remotipart_submitted! remotipart_submitted! "
+    end
+    respond_to do |format|
+
+      if @persona.update(persona_params)
+        format.js
       end
     end
+
+    puts params.to_yaml
+    file = params[:file]
   end
 
   # GET /personas/1
@@ -61,6 +65,9 @@ class PersonasController < ApplicationController
   # PATCH/PUT /personas/1
   # PATCH/PUT /personas/1.json
   def update
+    if remotipart_submitted?
+      p "remotipart_submitted! remotipart_submitted! remotipart_submitted! remotipart_submitted! remotipart_submitted! "
+    end
     respond_to do |format|
       if @persona.update(persona_params)
         format.html { redirect_to @persona, notice: 'Persona was successfully updated.' }
@@ -83,12 +90,8 @@ class PersonasController < ApplicationController
   end
 
   def import_personas
-    puts "import_personas import_personas import_personasimport_personasimport_personasimport_personas import_personas "
-    puts params.to_yaml
     Persona.import(params[:file], params[:partido_id])
-
-    # after the import, redirect and let us know the method worked!
-    redirect_to root_url, notice: "Personas importadas!"
+    return
   end
 
   private
@@ -97,8 +100,12 @@ class PersonasController < ApplicationController
       @persona = Persona.find(params[:id])
     end
 
+    def set_partido
+      @partido = Partido.find(params[:partido_id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def persona_params
-      params.require(:persona).permit(:nombre, :apellidos, :genero, :fecha_nacimiento, :nivel_estudios, :region, :ano_inicio_militancia, :afiliado, :bio)
+      params.require(:persona).permit(:id, :nombre, :apellidos, :genero, :fecha_nacimiento, :nivel_estudios, :region, :ano_inicio_militancia, :afiliado, :bio, :telefono, :email, :intereses, :patrimonio, :rut, :foto)
     end
 end

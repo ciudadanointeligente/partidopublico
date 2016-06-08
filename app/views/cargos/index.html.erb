@@ -16,7 +16,7 @@
     <% @cargos.each do |cargo| %>
       <tr>
         <td><%= cargo.persona %></td>
-        <td><%= cargo.cargo %></td>
+        <td><%= cargo.tipo_cargo %></td>
         <td><%= cargo.partido %></td>
         <td><%= link_to 'Show', cargo %></td>
         <td><%= link_to 'Edit', edit_cargo_path(cargo) %></td>

@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Comunas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @comunas.each do |comuna| %>
+      <tr>
+        <td><%= link_to 'Show', comuna %></td>
+        <td><%= link_to 'Edit', edit_comuna_path(comuna) %></td>
+        <td><%= link_to 'Destroy', comuna, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Comuna', new_comuna_path %>

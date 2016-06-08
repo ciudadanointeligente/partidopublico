@@ -6,7 +6,7 @@ class PartidoStepsController < ApplicationController
 
     before_action :set_partido
 
-    steps   :datos_basicos, :personas,
+    steps   :datos_basicos, :personas, :cargos,
             :normas_internas,
             :regiones, :sedes, :num_afiliados, :tramites, :representantes, :autoridades,
             :postulacion_popular, :organos_internos, :postulacion_interna, :agenda_presidente, :actividades_publicas,
@@ -15,20 +15,10 @@ class PartidoStepsController < ApplicationController
             :linea_denuncia, :sanciones
 
     def export_personas
-      @grid = PersonasGrid.new(params[:personas_grid])
+      @personas = Persona.where partido: @partido
       respond_to do |f|
-        f.html do
-          @grid.scope {|scope| scope.page(params[:page]) }
-        end
         f.csv do
-          puts "__________________________________________________export_personas"
-          columns = @grid.columns_array.map {|item| item.to_s.parameterize.underscore.to_sym}
-          puts columns
-
-
-
-          puts "__________________________________________________export_personas"
-          send_data @grid.to_csv(:rut, :nombre, :apellidos, :genero, :telefono, :email, :intereses, :patrimonio, :fecha_nacimiento, :nivel_estudios, :afiliado, :ano_inicio_militancia, :bio),
+          send_data @personas.to_csv,
             type: "text/csv",
             disposition: 'inline',
             filename: "personas-partido-#{@partido.sigla}-#{Time.now.to_s}.csv"
@@ -45,8 +35,6 @@ class PartidoStepsController < ApplicationController
         when :datos_basicos
 
         when :personas
-          @grid = PersonasGrid.new(params[:personas_grid])
-          @grid.scope {|scope| scope.page(params[:page]) }
 
         when :normas_internas
 
@@ -112,26 +100,19 @@ class PartidoStepsController < ApplicationController
         #     @partido.update_attributes(partido_params)
 
         when :personas
-          @grid = PersonasGrid.new(params[:personas_grid])
-          respond_to do |f|
-            f.html do
-              @grid.scope {|scope| scope.page(params[:page]) }
-            end
-            f.csv do
-              puts "__________________________________________________AAAAAAAAAAAAAXX"
-              send_data @grid.to_csv,
-                type: "text/csv",
-                disposition: 'inline',
-                filename: "personas-#{Time.now.to_s}.csv"
-            end
-          end
-          return
+
         else
             @partido.update_attributes(partido_params)
         end
         if request.xhr?
-            puts "AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST "
+
             @partido.save
+            @errors = @partido.errors
+            puts "AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST "
+            @errors.full_messages.each do |message|
+              puts message
+            end
+            puts "AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST "
         else
           #render_wizard @partido
         end
