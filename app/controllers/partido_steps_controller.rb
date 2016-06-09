@@ -41,11 +41,11 @@ class PartidoStepsController < ApplicationController
         when :regiones
 
         when :sedes
-            @partido.regions.each do |r|
-                if @partido.sedes.find_by_region(r.to_s).blank?
-                    @partido.sedes << Sede.new(region:r)
-                end
-            end
+            # @partido.regions.each do |r|
+            #     if @partido.sedes.find_by_region(r.to_s).blank?
+            #         @partido.sedes << Sede.new(region:r)
+            #     end
+            # end
 
         when :num_afiliados
             @partido.regions.each do |r|

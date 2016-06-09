@@ -8,8 +8,6 @@
           </div>
           <div class="col-md-10">
 
-
-
               <%= f.error_notification %>
               <%= f.input :nombre, inline_label: true %>
               <%= f.input :sigla, inline_label: true  %>
@@ -19,7 +17,6 @@
 
               <%= f.input :logo, as: :file, inline_label: true, wrapper: :horizontal_form  %>
 
-
           </div>
         </div>
         <div class="row">
@@ -28,6 +25,11 @@
           </div>
         </div>
         <% end %>
+        <div class="row">
+          <div class="col-md-12">
+            <%= render 'sedes' %>
+          </div>
+        </div>
     </div>
     <div class="col-md-3">
         <div class="row">

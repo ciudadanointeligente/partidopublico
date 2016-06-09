@@ -203,3 +203,103 @@ app.controller("cargosController",["$scope","$http","$location","$aside","$attrs
   getRegions();
   getComunas();
 }]);
+
+app.controller("sedesController",["$scope","$http","$location","$aside","$attrs",  function($scope,$http,$location,$aside,$attrs){
+  $scope.sedes = [];
+  $scope.partido_id = $location.path().split("/")[2];
+
+  var save_or_update_sede = function() {
+    if($scope.sede.id) {
+      $http.put('/sedes/'+$scope.sede.id, $scope.sede)
+        .success(function(data){
+          getSedesByPartido($scope.partido_id);
+        })
+        .error(function (){
+          $scope.messages = { response: false, message: $attrs.errorupdatingask }
+          scroll_to_top();
+        });
+    }
+    else {
+      $http.post('/sedes/', $scope.sede)
+        .success(function(data){
+          getSedesByPartido($scope.partido_id);
+        })
+        .error(function (){
+          $scope.messages = { response: false, message: $attrs.errorcreatingask }
+          scroll_to_top();
+        });
+    }
+  }
+
+  function getRegions() {
+    $http.get('partidos/'+$scope.partido_id+'/regions')
+      .success( function(data){
+        $scope.regions = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
+  function getComunas() {
+    $http.get('partidos/'+$scope.partido_id+'/comunas')
+      .success( function(data){
+        $scope.comunas = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
+  function getSedesByPartido(partido_id) {
+    $http.get('/sedes')
+      .success( function(data){
+        $scope.sedes = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
+  function getSedeInfo(sede_id) {
+    $http.get('sedes/'+sede_id+'.json')
+      .success( function(data){
+        $scope.sede = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
+  $scope.getSedeModal = function(sede_id){
+    if(sede_id) {
+      getSedeInfo(sede_id);
+    } else {
+      $scope.sede = {
+        partido_id: $scope.partido_id
+      };
+    }
+    $aside.open({
+      templateUrl: 'sede_modal_aside.html',
+      scope: $scope,
+      placement: 'left',
+      size: 'lg',
+      backdrop: true,
+      controller: function($scope,$uibModalInstance){
+        $scope.save = function(e) {
+          save_or_update_sede();
+          $uibModalInstance.close();
+          e.stopPropagation();
+        };
+        $scope.cancel = function(e) {
+          $uibModalInstance.close();
+          e.stopPropagation();
+        };
+      }
+    });
+  }
+
+  getSedesByPartido($scope.partido_id);
+  getRegions();
+  getComunas();
+}]);

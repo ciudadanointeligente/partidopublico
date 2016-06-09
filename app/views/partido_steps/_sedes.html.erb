@@ -1,9 +1,9 @@
-<div class="row" ng-controller="actividad_publicasController">
+<div class="row" ng-controller="sedesController">
   <div class="col-md-3" id="row">
     <table>
       <tr>
         <td>
-          <input type="text" ng-model="filtro_actividad_publicas" placeholder="Filtrar">
+          <input type="text" ng-model="filtro_sedes" placeholder="Filtrar">
         <td>
       </tr>
       <tr>
@@ -30,22 +30,22 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th>Fecha</th>
-          <th>Descripción</th>
-          <th>Link</th>
+          <th>Region</th>
+          <th>Dirección</th>
+          <th>Contact</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr dir-paginate="actividad_publica in actividad_publicas | filter: filtro_actividad_publicas | itemsPerPage: pageSize">
-          <td> {{actividad_publica.fecha}} </td>
-          <td> {{actividad_publica.descripcion}} </td>
-          <td> {{actividad_publica.link}} </td>
-          <td> <i class="fa fa-pencil-square-o" ng-click="getSedeModal(actividad_publica.id)" title="Editar"></i> </td>
+        <tr dir-paginate="sede in sedes | filter: filtro_sedes | itemsPerPage: pageSize">
+          <td> {{sede.region.nombre}} </td>
+          <td> {{sede.direccion}} </td>
+          <td> {{sede.contacto}} </td>
+          <td> <i class="fa fa-pencil-square-o" ng-click="getSedeModal(sede.id)" title="Editar"></i> </td>
         </tr>
       </tbody>
     </table>
     <dir-pagination-controls template-url="/assets/angular-utils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
   </div>
-  <%= render 'actividad_publicas/actividad_publica_modal' %>
+  <%= render 'sedes/sede_modal' %>
 </div>
