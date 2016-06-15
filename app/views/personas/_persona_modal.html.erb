@@ -5,8 +5,11 @@
   <div class="modal-body">
 
       <%= simple_form_for :persona, :multipart => true , :remote => true do |f| %>
+         
+        <%=f.hidden_field :partido_id, :value => @partido.id%>
         <%= f.input :nombre, input_html: { 'ng-model': "persona.nombre", 'placeholder': "Nombre persona" } %>
         <%= f.input :apellidos, as: :string, input_html: { 'ng-model': "persona.apellidos", 'placeholder': "Apellido Apellido" } %>
+        <%= f.input :rut, as: :string, input_html: { 'ng-model': "persona.rut", 'placeholder': "Rut" } %>
         <%= f.input :fecha_nacimiento, input_html: { 'ng-model': "persona.fecha_nacimiento", 'placeholder': "fecha_nacimiento" } %>
         <%= f.input :nivel_estudios, input_html: { 'ng-model': "persona.nivel_estudios", 'placeholder': "nivel_estudios" } %>
         <%= f.input :region, input_html: { 'ng-model': "persona.region", 'placeholder': "region persona" } %>
@@ -25,7 +28,7 @@
       <span class="btn" flow-btn>Upload File</span>
 
     </div>
-    
+
     <div class="modal-footer">
       <button class="btn btn-primary" ng-click="save($event)">guardar</button>
       <button class="btn btn-warning" ng-click="cancel($event)">cancelar</button>

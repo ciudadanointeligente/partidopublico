@@ -48,7 +48,7 @@ class Persona < ActiveRecord::Base
     validates_attachment :foto,
         content_type: { content_type:  /\Aimage\/.*\Z/ },
         size: { in: 0..500.kilobytes }
-    validates_presence_of :nombre, :apellidos, :partido_id, :message => "debe rellenar"
+    validates_presence_of :nombre, :apellidos, :partido_id,:rut, :message => "No puede estar vacío"
     validates_uniqueness_of :rut
 
     belongs_to :partido
@@ -58,21 +58,25 @@ class Persona < ActiveRecord::Base
     has_many :cargos
     has_many :tipo_cargos, through: :cargos
 
-    scope :representantes, -> { where(tipo: 'Representante') }
-    scope :autoridades, -> { where(tipo: 'Autoridad') }
-
-    def self.tipos
-      %w(Representante Autoridad Candidato Responsable Cargo)
-    end
+    # scope :representantes, -> { where(tipo: 'Representante') }
+    # scope :autoridades, -> { where(tipo: 'Autoridad') }
+    #
+    # def self.tipos
+    #   %w(Representante Autoridad Candidato Responsable Cargo)
+    # end
 
     # a class method import, with file passed through as an argument
     def self.import(file, partido_id)
       partido = Partido.find partido_id
+      personas_creadas = 0
+      personas_actualizadas = 0
       # a block that runs through a loop in our CSV data
       CSV.foreach(file.path, headers: true) do |row|
         # creates a user for each row in the CSV file
         new_row = {}
-
+        p row
+        p row.to_hash
+        p "persona row"
         #h.keys.each { |k| h[k[1, k.length - 1]] = h[k]; h.delete(k) }
         row.to_hash.each {|key,value| row[key.parameterize.underscore] = value ; row.delete(key)}
         puts row.to_hash
@@ -83,13 +87,16 @@ class Persona < ActiveRecord::Base
           puts "persona nuevaaaaaaaaaaaaaaaa"
           u = Persona.new row.to_hash
           u.partido = partido
+          personas_creadas = personas_creadas + 1
         else
           puts "persona actualizadaaaaaaaaaaaaaaa"
           u.update_attributes(row.to_hash)
           u.partido = partido
+          personas_actualizadas = personas_actualizadas + 1
         end
         u.save
       end
+
     end
 
     def self.to_csv

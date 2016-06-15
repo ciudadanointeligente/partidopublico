@@ -11,6 +11,7 @@ app.controller("personasController",["$scope","$http","$location","$aside","$att
   $scope.pageSize = 5;
 
   var save_or_update_persona = function() {
+    $scope.persona.partido_id = $scope.partido_id
     if($scope.persona.id) {
       $http.put('/personas/'+$scope.persona.id, $scope.persona)
         .success(function(data){
@@ -22,7 +23,7 @@ app.controller("personasController",["$scope","$http","$location","$aside","$att
         });
     }
     else {
-      $http.post('/personas/'+$scope.persona.id, $scope.persona)
+      $http.post('/personas/', $scope.persona)
         .success(function(data){
           $scope.persona = data;
         })
@@ -31,6 +32,7 @@ app.controller("personasController",["$scope","$http","$location","$aside","$att
           scroll_to_top();
         });
     }
+    getPersonasByPartido($scope.partido_id)
   }
 
   function getPersonasByPartido(partido_id) {
@@ -44,13 +46,15 @@ app.controller("personasController",["$scope","$http","$location","$aside","$att
   }
 
   function getPersonaInfo(persona_id) {
-    $http.get('personas/'+persona_id+'.json')
-      .success( function(data){
-        $scope.persona = data;
-      })
-      .error( function(error_data){
-        $scope.messages = {response: false, message: error_data}
-      })
+    if(persona_id) {
+      $http.get('personas/'+persona_id+'.json')
+        .success( function(data){
+          $scope.persona = data;
+        })
+        .error( function(error_data){
+          $scope.messages = {response: false, message: error_data}
+        })
+    }
   }
 
   $scope.getPersonaModal = function(persona_id){
@@ -252,7 +256,7 @@ app.controller("sedesController",["$scope","$http","$location","$aside","$attrs"
   }
 
   function getSedesByPartido(partido_id) {
-    $http.get('/sedes')
+    $http.get('partidos/'+partido_id+'/sedes')
       .success( function(data){
         $scope.sedes = data;
       })
@@ -302,4 +306,84 @@ app.controller("sedesController",["$scope","$http","$location","$aside","$attrs"
   getSedesByPartido($scope.partido_id);
   getRegions();
   getComunas();
+}]);
+
+app.controller("actividad_publicasController",["$scope","$http","$location","$aside","$attrs",  function($scope,$http,$location,$aside,$attrs){
+  $scope.actividad_publicas = [];
+  $scope.partido_id = $location.path().split("/")[2];
+
+  var save_or_update_actividad_publica = function() {
+    if($scope.actividad_publica.id) {
+      $http.put('/actividad_publicas/'+$scope.actividad_publica.id, $scope.actividad_publica)
+        .success(function(data){
+          getActividadesPublicassByPartido($scope.partido_id);
+        })
+        .error(function (){
+          $scope.messages = { response: false, message: $attrs.errorupdatingask }
+          scroll_to_top();
+        });
+    }
+    else {
+      console.log($scope.actividad_publica)
+      $http.post('/actividad_publicas/', $scope.actividad_publica)
+        .success(function(data){
+          getActividadesPublicassByPartido($scope.partido_id);
+        })
+        .error(function (){
+          $scope.messages = { response: false, message: $attrs.errorcreatingask }
+          scroll_to_top();
+        });
+    }
+  }
+
+  function getActividadesPublicassByPartido(partido_id) {
+    $http.get('partidos/'+partido_id+'/actividad_publicas')
+      .success( function(data){
+        console.log(data);
+        $scope.actividad_publicas = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
+  function getActividadPublicaInfo(actividad_publica_id) {
+    $http.get('actividad_publicas/'+actividad_publica_id+'.json')
+      .success( function(data){
+        $scope.actividad_publica = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
+  $scope.getActividadPublicaModal = function(actividad_publica_id){
+    if(actividad_publica_id) {
+      getActividadPublicaInfo(actividad_publica_id);
+    } else {
+      $scope.actividad_publica = {
+        partido_id: $scope.partido_id
+      };
+    }
+    $aside.open({
+      templateUrl: 'actividad_publica_modal_aside.html',
+      scope: $scope,
+      placement: 'left',
+      size: 'lg',
+      backdrop: true,
+      controller: function($scope,$uibModalInstance){
+        $scope.save = function(e) {
+          save_or_update_actividad_publica();
+          $uibModalInstance.close();
+          e.stopPropagation();
+        };
+        $scope.cancel = function(e) {
+          $uibModalInstance.close();
+          e.stopPropagation();
+        };
+      }
+    });
+  }
+
+  getActividadesPublicassByPartido($scope.partido_id);
 }]);

@@ -1,10 +1,10 @@
 class ActividadPublicasController < ApplicationController
   before_action :set_actividad_publica, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_partido, only: [:index]
   # GET /actividad_publicas
   # GET /actividad_publicas.json
   def index
-    @actividad_publicas = ActividadPublica.all
+    @actividad_publicas = ActividadPublica.where partido: @partido
   end
 
   # GET /actividad_publicas/1
@@ -67,8 +67,12 @@ class ActividadPublicasController < ApplicationController
       @actividad_publica = ActividadPublica.find(params[:id])
     end
 
+    def set_partido
+      @partido = Partido.find(params[:partido_id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def actividad_publica_params
-      params.fetch(:actividad_publica, {})
+      params.require(:actividad_publica).permit(:id, :partido_id, :fecha, :descripcion, :link)
     end
 end

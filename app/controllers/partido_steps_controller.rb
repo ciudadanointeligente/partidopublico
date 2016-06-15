@@ -8,9 +8,9 @@ class PartidoStepsController < ApplicationController
 
     steps   :datos_basicos, :personas, :cargos,
             :normas_internas,
-            :regiones, :sedes, :num_afiliados, :tramites, :representantes, :autoridades,
+            :num_afiliados, :tramites,
             :postulacion_popular, :organos_internos, :postulacion_interna, :agenda_presidente, :actividades_publicas,
-            :candidatos, :acuerdos_organos, :resultados_elecciones_internas,
+            :acuerdos_organos, :resultados_elecciones_internas,
             :entidades_participadas, :pactos_electorales,
             :linea_denuncia, :sanciones
 
@@ -76,7 +76,9 @@ class PartidoStepsController < ApplicationController
         #     @partido.update_attributes(partido_params)
 
         when :normas_internas
-            @partido.marco_interno.update(marco_interno_params)
+
+            @partido.marco_interno.update_attributes(marco_interno_params)
+            @partido.marco_interno.save
 
         # when :regiones
         #     @partido.update_attributes(partido_params)
@@ -114,7 +116,7 @@ class PartidoStepsController < ApplicationController
             end
             puts "AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST "
         else
-          #render_wizard @partido
+          render_wizard @partido
         end
     end
 
@@ -163,6 +165,7 @@ class PartidoStepsController < ApplicationController
         end
 
         def marco_interno_params
+
           params.require(:marco_interno).permit(:partido_id, documentos_attributes: [:id, :descripcion, :archivo, :_destroy])
         end
 end

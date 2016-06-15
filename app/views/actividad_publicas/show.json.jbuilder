@@ -1,1 +1,1 @@
-json.extract! @actividad_publica, :id, :created_at, :updated_at
+json.merge! @actividad_publica.attributes

@@ -69,6 +69,6 @@ class DocumentosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def documento_params
-      params.require(:documento).permit(:descripcion)
+      params.require(:documento).permit(:id, :descripcion, :archivo)
     end
 end

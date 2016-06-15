@@ -1,16 +1,16 @@
 module PartidoStepsHelper
 
     def main_menu
-      step_categories = ["inicio", "normas internas y pensamiento", "presencia nacional", "cómo participar", "últimas decisiones", "vínculos e intereses", "denuncias y sanciones", "finanzas"]
+      step_categories = ["inicio", "normas internas", "presencia nacional", "cómo participar", "últimas decisiones", "vínculos e intereses", "denuncias y sanciones", "finanzas"]
     end
 
     def sub_menu
       step_categories = main_menu
       step_organisation = { step_categories[0] => ["datos_basicos", "personas", "cargos"],
                             step_categories[1] => ["normas_internas"],
-                            step_categories[2] => ["regiones", "sedes", "num_afiliados", "tramites", "representantes", "autoridades" ],
+                            step_categories[2] => ["num_afiliados", "tramites"],
                             step_categories[3] => ["postulacion_popular", "organos_internos", "postulacion_interna", "agenda_presidente", "actividades_publicas" ],
-                            step_categories[4] => ["candidatos", "acuerdos_organos", "resultados_elecciones_internas"],
+                            step_categories[4] => ["acuerdos_organos", "resultados_elecciones_internas"],
                             step_categories[5] => ["entidades_participadas", "pactos_electorales"],
                             step_categories[6] => ["linea_denuncia", "sanciones"],
                             step_categories[7] => ["a","b"]}
@@ -79,4 +79,25 @@ module PartidoStepsHelper
       end
     end
 
+    def icono(documento)
+      p documento.archivo_content_type
+
+      case documento.archivo_content_type
+
+      when "application/pdf"
+        return icon('file-pdf-o', id: '', class: 'fa-3x text-danger')
+      when "application/vnd.oasis.opendocument.spreadsheet"
+        return icon('file-excel-o', id: '', class: 'fa-3x text-success')
+      when "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        icon('file-excel-o', id: '', class: 'fa-3x text-success')
+      when "application/msword"
+        icon('file-word-o', id: '', class: 'fa-3x')
+      when "application/vnd.ms-excel"
+        icon('file-excel-o', id: '', class: 'fa-3x text-success')
+      when "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        icon('file-word-o', id: '', class: 'fa-3x')
+      else
+        icon('file-o', id: '', class: 'fa-3x')
+      end
+    end
 end
