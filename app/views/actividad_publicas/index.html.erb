@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Actividad Publicas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @actividad_publicas.each do |actividad_publica| %>
+      <tr>
+        <td><%= link_to 'Show', actividad_publica %></td>
+        <td><%= link_to 'Edit', edit_actividad_publica_path(actividad_publica) %></td>
+        <td><%= link_to 'Destroy', actividad_publica, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Actividad publica', new_actividad_publica_path %>

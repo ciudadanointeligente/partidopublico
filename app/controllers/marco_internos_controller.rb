@@ -29,10 +29,10 @@ class MarcoInternosController < ApplicationController
 
     respond_to do |format|
       if @marco_interno.save
-        format.html { redirect_to @marco_interno, notice: 'Marco interno was successfully created.' }
+        # format.html { redirect_to @marco_interno, notice: 'Marco interno was successfully created.' }
         format.json { render :show, status: :created, location: @marco_interno }
       else
-        format.html { render :new }
+        # format.html { render :new }
         format.json { render json: @marco_interno.errors, status: :unprocessable_entity }
       end
     end
@@ -43,12 +43,13 @@ class MarcoInternosController < ApplicationController
   def update
     respond_to do |format|
       puts marco_interno_params.to_yaml
-      
+
       if @marco_interno.update(marco_interno_params)
-        format.html { redirect_to @marco_interno, notice: 'Marco interno was successfully updated.' }
+        # return
+        # format.html { redirect_to @marco_interno, notice: 'Marco interno was successfully updated.' }
         format.json { render :show, status: :ok, location: @marco_interno }
       else
-        format.html { render :edit }
+        # format.html { render :edit }
         format.json { render json: @marco_interno.errors, status: :unprocessable_entity }
       end
     end

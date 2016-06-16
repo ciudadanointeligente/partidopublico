@@ -90,8 +90,11 @@ class PersonasController < ApplicationController
   end
 
   def import_personas
+
     Persona.import(params[:file], params[:partido_id])
-    return
+    #return
+    #render :text => params[:partido_id]
+    redirect_to partido_steps_path(params[:partido_id], :personas)
   end
 
   private
@@ -106,6 +109,6 @@ class PersonasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def persona_params
-      params.require(:persona).permit(:id, :nombre, :apellidos, :genero, :fecha_nacimiento, :nivel_estudios, :region, :ano_inicio_militancia, :afiliado, :bio, :telefono, :email, :intereses, :patrimonio, :rut, :foto)
+      params.require(:persona).permit(:id, :partido_id, :nombre, :apellidos, :genero, :fecha_nacimiento, :nivel_estudios, :region, :ano_inicio_militancia, :afiliado, :bio, :telefono, :email, :intereses, :patrimonio, :rut, :foto)
     end
 end

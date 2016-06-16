@@ -92,4 +92,40 @@ class Partido < ActiveRecord::Base
         self.sigla
     end
 
+    def completed_percentage
+      total = 0
+
+      if self.nombre
+        total = total + 2
+      end
+      if self.sigla
+        total = total + 2
+      end
+      if self.lema
+        total = total + 2
+      end
+      if self.fecha_fundacion
+        total = total + 2
+      end
+
+      if self.personas.any?
+        total = total + 2
+      end
+      if self.cargos.any?
+        total = total + 2
+      end
+      if self.sedes.any?
+        total = total + 2
+      end
+      if self.regions.any?
+        total = total + 2
+      end
+      if self.organo_internos.any?
+        total = total + 2
+      end
+      if self.afiliacions.any?
+        total = total + 2
+      end
+    end
+
 end

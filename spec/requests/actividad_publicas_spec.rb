@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe "Sedes", type: :request do
-  describe "GET /sedes" do
+RSpec.describe "ActividadPublicas", type: :request do
+  describe "GET /actividad_publicas" do
     xit "works! (now write some real specs)" do
-      get sedes_path
+      get actividad_publicas_path
       expect(response).to have_http_status(200)
     end
   end

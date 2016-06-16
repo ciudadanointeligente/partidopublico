@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   resources :tipo_cargos
   resources :personas
   resources :afiliacions
-  resources :regions
   resources :sedes
   resources :tramites
   resources :acuerdos
@@ -20,7 +19,8 @@ Rails.application.routes.draw do
   resources :comunas
   resources :distritos
   resources :circunscripcions
-  
+  resources :actividad_publicas
+
   resources :marco_internos
   resources :documentos
   resources :leys
@@ -33,6 +33,8 @@ Rails.application.routes.draw do
     resources :comunas
     resources :distritos
     resources :circunscripcions
+    resources :actividad_publicas
+    resources :sedes
   end
 
   scope "partido/:partido_id" do
