@@ -21,12 +21,15 @@
         </div>
         <div class="row">
           <div class="col-md-12">
+            <hr>
               <%= f.association :regions, as: :check_boxes, collection: Region.all.sort, :selected => @partido.regions, :label => "Regiones", wrapper: :horizontal_inline_li_checkboxes,item_wrapper_tag: :li, item_wrapper_class: "col-md-4"  %>
           </div>
+
         </div>
         <% end %>
         <div class="row">
           <div class="col-md-12">
+          <hr>
             <%= render 'sedes' %>
           </div>
         </div>

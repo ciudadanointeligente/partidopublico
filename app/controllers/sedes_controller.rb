@@ -1,10 +1,11 @@
 class SedesController < ApplicationController
   before_action :set_sede, only: [:show, :edit, :update, :destroy]
+  before_action :set_partido, only: [:index]
 
   # GET /sedes
   # GET /sedes.json
   def index
-    @sedes = Sede.all
+    @sedes = Sede.where partido: @partido
   end
 
   # GET /sedes/1
@@ -67,6 +68,9 @@ class SedesController < ApplicationController
       @sede = Sede.find(params[:id])
     end
 
+    def set_partido
+      @partido = Partido.find(params[:partido_id])
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def sede_params
       params.require(:sede).permit(:region_id, :direccion, :contacto, :partido_id)

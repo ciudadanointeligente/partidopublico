@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160609025714) do
+ActiveRecord::Schema.define(version: 20160610182026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,15 @@ ActiveRecord::Schema.define(version: 20160609025714) do
   add_index "cargos", ["region_id"], name: "index_cargos_on_region_id", using: :btree
   add_index "cargos", ["tipo_cargo_id"], name: "index_cargos_on_tipo_cargo_id", using: :btree
 
+  create_table "categoria_financieras", force: :cascade do |t|
+    t.integer  "partido_id"
+    t.integer  "documento_id"
+    t.date     "fecha"
+    t.string   "titulo"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   create_table "circunscripcions", force: :cascade do |t|
     t.string   "nombre"
     t.datetime "created_at", null: false
@@ -142,6 +151,16 @@ ActiveRecord::Schema.define(version: 20160609025714) do
   end
 
   add_index "eleccion_populars", ["partido_id"], name: "index_eleccion_populars_on_partido_id", using: :btree
+
+  create_table "item_contables", force: :cascade do |t|
+    t.integer  "categoria_financiera_id"
+    t.string   "concepto"
+    t.boolean  "dinero_publico"
+    t.integer  "importe"
+    t.integer  "partido_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
   create_table "leys", force: :cascade do |t|
     t.string   "numero"

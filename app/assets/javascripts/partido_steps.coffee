@@ -14,6 +14,14 @@ $ ->
       console.log status
       #$("#partido_steps_form").append "<p>ERROR</p>"
 
+
+
+    $('.upload-file').on 'click', ->
+      id = $(this).data('file-id')
+      $('#hidden_file_input_' + id).click();
+      $('#file_label_' + id)[0].innerHTML = "Archivo listo."
+      return
+
   load = ->
     #alert "load"
     $('.chosen-select').chosen();
