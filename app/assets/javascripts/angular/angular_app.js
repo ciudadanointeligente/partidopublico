@@ -36,6 +36,7 @@ app.controller("personasController",["$scope","$http","$location","$aside","$att
   }
 
   function getPersonasByPartido(partido_id) {
+    //alert("geting personas");
     $http.get('partidos/'+partido_id+'/personas')
       .success( function(data){
         $scope.personas = data;

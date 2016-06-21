@@ -1,10 +1,11 @@
 class CargosController < ApplicationController
   before_action :set_cargo, only: [:show, :edit, :update, :destroy]
+  before_action :set_partido, only: [:index]
 
   # GET /cargos
   # GET /cargos.json
   def index
-    @cargos = Cargo.all
+    @cargos = Cargo.where partido: @partido
   end
 
   # GET /cargos/1
@@ -67,6 +68,10 @@ class CargosController < ApplicationController
       @cargo = Cargo.find(params[:id])
     end
 
+
+    def set_partido
+      @partido = Partido.find(params[:partido_id])
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def cargo_params
       params.require(:cargo).permit(:id, :persona_id, :tipo_cargo_id, :partido_id, :fecha_desde, :fecha_hasta, :comuna_id, :region_id, :circunscripcion_id, :distrito_id)
