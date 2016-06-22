@@ -14,3 +14,4 @@
 /tmp
 /public/*
 !/public/resources/*
+*.swp
