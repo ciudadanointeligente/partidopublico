@@ -25,3 +25,23 @@ To setup an environment for running the papu_rails app following steps are neede
 
     + restart database with command: sudo service postgresql restart
 
+## Installation
+### RVM
+
+First you need to have [RVM](https://rvm.io/) installed in your machine.
+
+### Bundler
+
+Then you need to have installed [bundler](http://bundler.io/).
+
+```
+gem install bundler
+```
+
+
+### The rest of the gems
+
+```
+bundle install
+```
+
