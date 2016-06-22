@@ -26,6 +26,8 @@ class Partido < ActiveRecord::Base
     validates_uniqueness_of :nombre, :sigla, :lema, :message => "already exists"
     validates_length_of :lema, :within => 2..200
 
+    has_many :admins, through: :permissions
+    has_many :permissions, dependent: :destroy
 
     has_one :marco_general, dependent: :destroy
     has_one :marco_interno, dependent: :destroy

@@ -1,0 +1,21 @@
+<%= link_to('Logout', destroy_admin_session_path, :method => :delete) %> 
+<p id="notice"><%= notice %></p>
+
+<h1>Partidos que puedes editar</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @partidos.each do |partido| %>
+      <tr>
+        <td><%= link_to partido.sigla, partido_steps_path(partido) %></td>
+        <td><%= link_to 'Eliminar', partido, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
