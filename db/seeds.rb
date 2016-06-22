@@ -441,6 +441,7 @@ Comuna.create!([
   {provincia_id: 53, nombre: "Natales"},
   {provincia_id: 53, nombre: "Torres del Paine"}
 ])
+
 Distrito.create!([
   {circunscripcion_id: 1, nombre: "1"},
   {circunscripcion_id: 1, nombre: "2"},
@@ -502,4 +503,18 @@ Distrito.create!([
   {circunscripcion_id: 17, nombre: "58"},
   {circunscripcion_id: 18, nombre: "59"},
   {circunscripcion_id: 19, nombre: "60"}
+])
+
+Admin.create!([
+  {email: "papu@ciudadanointeligente.org", password: "xxxxxxxx", password_confirmation: "xxxxxxxx"}
+])
+
+Partido.create!([
+  {nombre: "Partido Demócrata Cristiano", sigla: "PDC", lema: "Partido Demócrata Cristiano"},
+  {nombre: "Partido Revolución Democrática", sigla: "PRD", lema: "Partido Revolución Democrática"},
+  {nombre: "Partido Liberal", sigla: "PL", lema: "Partido Liberal"},
+  {nombre: "Partido Por la Democracia", sigla: "PPD", lema: "Partido Por la Democracia"},
+  {nombre: "Partido Comunista de Chile", sigla: "PCC", lema: "Partido Comunista de Chile"},
+  {nombre: "Partido Amplitud", sigla: "PA", lema: "Partido Amplitud"},
+  {nombre: "Partido Ciudadanos", sigla: "PC", lema: "Partido Ciudadanos"},
 ])
