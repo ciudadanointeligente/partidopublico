@@ -83,6 +83,6 @@ test:
 #
 production:
   <<: *default
-  database: papu_production
-  username: papu
-  password: <%= ENV['PAPU_DATABASE_PASSWORD'] %>
+  database: <%= ENV['DATABASE_NAME'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
