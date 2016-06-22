@@ -45,3 +45,19 @@ gem install bundler
 bundle install
 ```
 
+## Testing
+
+We have found that it is the safest to test against PostgreSQL, so the first thing you need to do is get postgres running.
+
+Our default testing configurations is as follow:
+
+```
+host: 127.0.0.1
+user: postgres
+password: a
+database_name: papu_test
+```
+
+```
+psql -c 'create database papu_test;' -U postgres --host=127.0.0.1 --password
+```
