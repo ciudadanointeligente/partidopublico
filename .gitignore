@@ -12,6 +12,7 @@
 /log/*
 !/log/.keep
 /tmp
-/public/*
-!/public/resources/*
+!/public/system/resources/
+/public/system/*
+
 *.swp
