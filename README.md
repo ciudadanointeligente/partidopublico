@@ -25,3 +25,39 @@ To setup an environment for running the papu_rails app following steps are neede
 
     + restart database with command: sudo service postgresql restart
 
+## Installation
+### RVM
+
+First you need to have [RVM](https://rvm.io/) installed in your machine.
+
+### Bundler
+
+Then you need to have installed [bundler](http://bundler.io/).
+
+```
+gem install bundler
+```
+
+
+### The rest of the gems
+
+```
+bundle install
+```
+
+## Testing
+
+We have found that it is the safest to test against PostgreSQL, so the first thing you need to do is get postgres running.
+
+Our default testing configurations is as follow:
+
+```
+host: 127.0.0.1
+user: postgres
+password: a
+database_name: papu_test
+```
+
+```
+psql -c 'create database papu_test;' -U postgres --host=127.0.0.1 --password
+```
