@@ -7,11 +7,11 @@ default: &default
 
 development:
   <<: *default
-  database: papu_development
+  database: db_development
 
 test:
   <<: *default
-  database: papu_test
+  database: db_test
 
 production:
   <<: *default
