@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  devise_for :admins
+  get 'admin', to: 'partidos#admin'
+
   resources :cargos
   resources :tipo_cargos
   resources :personas

@@ -38,13 +38,13 @@ Rails.application.configure do
 
   # Raises error for missing translations
   config.action_view.raise_on_missing_translations = true
-  
+
   config.web_console.whiny_requests = false
   # config.web_console.whitelisted_ips = '190.163.154.209'
   Paperclip.options[:command_path] = "/usr/bin/"
-  
+
   config.action_mailer.default_url_options = { host: ENV['BASE_URL'] , port: ENV['BASE_URL_PORT'] }
-  
+
   config.action_view.raise_on_missing_translations = true
   # config.action_mailer.default_url_options = { host: ENV['BASE_URL'] }
   config.action_mailer.delivery_method = :smtp
@@ -54,5 +54,8 @@ Rails.application.configure do
     :user_name            => ENV['SMTP_SETTING_USERNAME'],
     :password             => ENV['SMTP_SETTING_PASSWORD'],
     :authentication       => :plain  }
+
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
   
 end

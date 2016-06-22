@@ -7,6 +7,14 @@ class PartidosController < ApplicationController
     @partidos = Partido.all
   end
 
+  def admin
+    if admin_signed_in?
+      @partidos = current_admin.partidos
+    else
+      redirect_to new_admin_session_path
+    end
+  end
+
   # GET /partidos/1
   # GET /partidos/1.json
   def show

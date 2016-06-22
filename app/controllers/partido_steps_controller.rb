@@ -1,10 +1,12 @@
 class PartidoStepsController < ApplicationController
     include Wicked::Wizard
+    before_action :authenticate_admin!
     helper  :all
 
     respond_to :html, :json, :csv
 
     before_action :set_partido
+    before_action :admin_allowed
 
     steps   :datos_basicos, :personas, :cargos,
             :normas_internas,
@@ -28,8 +30,11 @@ class PartidoStepsController < ApplicationController
     end
 
     def show
+
         # @user = current_user
         # @partido = Partido.find_by_user_id(current_user.id)
+
+        puts "----------------->  Show::"+current_admin.email
         puts "----------------->  Show::"+step.to_s
         case step
         when :datos_basicos
@@ -126,6 +131,13 @@ class PartidoStepsController < ApplicationController
           @partido = Partido.find params[:partido_id]
         end
 
+        def admin_allowed
+          if  !@partido.admins.include?(current_admin)
+            puts "admin not allowed admin not allowed admin not allowed admin not allowed admin not allowed "
+            redirect_to root_path
+          end
+        end
+
         # Never trust parameters from the scary internet, only allow the white list through.
         def partido_params
           params.require(:partido).permit(:nombre, :sigla, :lema, :fecha_fundacion, :texto, :logo,
@@ -165,7 +177,6 @@ class PartidoStepsController < ApplicationController
         end
 
         def marco_interno_params
-
           params.require(:marco_interno).permit(:partido_id, documentos_attributes: [:id, :descripcion, :archivo, :_destroy])
         end
 end

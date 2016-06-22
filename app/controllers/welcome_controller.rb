@@ -1,5 +1,7 @@
 class WelcomeController < ApplicationController
     def index
-       @partidos = Partido.all 
+       @partidos = Partido.all
     end
+
+
 end
