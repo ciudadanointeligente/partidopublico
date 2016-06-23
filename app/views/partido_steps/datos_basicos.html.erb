@@ -4,7 +4,9 @@
         <%= render :layout => 'form' do |f| %>
         <div class="row">
           <div class="col-md-2">
-            <img src="<%= @partido.logo.url %>" class="img-responsive" alt="">
+            <% if !@partido.logo.blank? %>
+            <img src="<%= @partido.logo.url %>" class="img-responsive" alt="<%= @partido.nombre %> - <%= @partido.lema %>">
+            <% end %>
           </div>
           <div class="col-md-10">
 

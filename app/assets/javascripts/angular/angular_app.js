@@ -212,6 +212,7 @@ app.controller("cargosController",["$scope","$http","$location","$aside","$attrs
 app.controller("sedesController",["$scope","$http","$location","$aside","$attrs",  function($scope,$http,$location,$aside,$attrs){
   $scope.sedes = [];
   $scope.partido_id = $location.path().split("/")[2];
+  $scope.pageSize = 5;
 
   var save_or_update_sede = function() {
     if($scope.sede.id) {

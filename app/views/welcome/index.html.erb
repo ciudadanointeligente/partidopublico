@@ -12,9 +12,11 @@
     <% @partidos.each do |partido| %>
     <div class="col-md-3 col-sm-6 hero-feature">
         <div class="thumbnail">
+            <% if !partido.logo.blank? %>
             <div class="logo">
-                <%= image_tag partido.logo.url(:medium) %>
+                <%= image_tag partido.logo.url(:medium), :class => "img-responsive", :alt => partido.nombre + ' - ' + partido.lema %>
             </div>
+            <% end %>
             <div class="caption">
                 <h3><%= partido.sigla %></h3>
                 <p><%= partido.nombre %></p>
@@ -27,31 +29,5 @@
     </div>
 
     <% end %>
-
-    <div class="col-md-3 col-sm-6 hero-feature">
-        <div class="thumbnail">
-            <img src="" alt="">
-            <div class="caption">
-                <h3>Feature Label</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                <p>
-                    <a href="#" class="btn btn-primary">Buy Now!</a>
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3 col-sm-6 hero-feature">
-        <div class="thumbnail">
-            <img src="" alt="">
-            <div class="caption">
-                <h3>Feature Label</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                <p>
-                    <a href="#" class="btn btn-primary">Buy Now!</a> 
-                </p>
-            </div>
-        </div>
-    </div>
 
 </div>
