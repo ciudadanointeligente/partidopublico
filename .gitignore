@@ -15,6 +15,7 @@
 !/log/.keep
 /tmp
 !/public/system/resources/
+/public/assets/*
 /public/system/*
 
 *.swp
