@@ -1,10 +1,13 @@
-var app = angular.module("papuApp",[ "ui.bootstrap", 'ng-rails-csrf',, 'ngRoute', 'ngAside', 'flow', 'angularUtils.directives.dirPagination']);
+var app = angular.module('papuApp',[ 'ui.bootstrap', 'ng-rails-csrf', 'ngRoute', 'ngAside', 'flow', 'angularUtils.directives.dirPagination']);
 
 app.config(['$routeProvider', '$locationProvider', function AppConfig($routeProvider, $locationProvider) {
  $locationProvider.html5Mode(true);
 }]);
 
-app.controller("personasController",["$scope","$http","$location","$aside","$attrs",  function($scope,$http,$location,$aside,$attrs){
+app.controller("personasController",personasController);
+personasController.$inject = ["$scope","$http","$location","$aside","$attrs"];
+
+function personasController($scope,$http,$location,$aside,$attrs){
   $scope.persona = {};
   $scope.personas = [];
   $scope.partido_id = $location.path().split("/")[2];
@@ -81,9 +84,12 @@ app.controller("personasController",["$scope","$http","$location","$aside","$att
   }
 
   getPersonasByPartido($scope.partido_id);
-}]);
+};
 
-app.controller("cargosController",["$scope","$http","$location","$aside","$attrs",  function($scope,$http,$location,$aside,$attrs){
+app.controller("cargosController",cargosController);
+cargosController.$inject = ["$scope","$http","$location","$aside","$attrs"];
+
+function cargosController($scope,$http,$location,$aside,$attrs){
   $scope.cargos = [];
   $scope.partido_id = $location.path().split("/")[2];
 
@@ -207,9 +213,12 @@ app.controller("cargosController",["$scope","$http","$location","$aside","$attrs
   getTipoCargos($scope.partido_id);
   getRegions();
   getComunas();
-}]);
+};
 
-app.controller("sedesController",["$scope","$http","$location","$aside","$attrs",  function($scope,$http,$location,$aside,$attrs){
+app.controller("sedesController",sedesController);
+sedesController.$inject = ['$scope','$http','$location','$aside','$attrs'];
+
+function sedesController($scope,$http,$location,$aside,$attrs){
   $scope.sedes = [];
   $scope.partido_id = $location.path().split("/")[2];
   $scope.pageSize = 5;
@@ -308,9 +317,12 @@ app.controller("sedesController",["$scope","$http","$location","$aside","$attrs"
   getSedesByPartido($scope.partido_id);
   getRegions();
   getComunas();
-}]);
+};
 
-app.controller("actividad_publicasController",["$scope","$http","$location","$aside","$attrs",  function($scope,$http,$location,$aside,$attrs){
+app.controller("actividad_publicasController",actividad_publicasController);
+actividad_publicasController.$inject = ["$scope","$http","$location","$aside","$attrs"];
+
+function actividad_publicasController($scope,$http,$location,$aside,$attrs){
   $scope.actividad_publicas = [];
   $scope.partido_id = $location.path().split("/")[2];
 
@@ -388,4 +400,4 @@ app.controller("actividad_publicasController",["$scope","$http","$location","$as
   }
 
   getActividadesPublicassByPartido($scope.partido_id);
-}]);
+};
