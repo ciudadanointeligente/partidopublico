@@ -8,7 +8,7 @@ class PartidoStepsController < ApplicationController
     before_action :set_partido
     before_action :admin_allowed
 
-    steps   :datos_basicos, :personas, :cargos,
+    steps   :datos_basicos, :personas, :cargos, :administradores,
             :normas_internas,
             :num_afiliados, :tramites,
             :postulacion_popular, :organos_internos, :postulacion_interna, :agenda_presidente, :actividades_publicas,
@@ -67,6 +67,8 @@ class PartidoStepsController < ApplicationController
                 end
             end
 
+        when :administradores
+          @admins = @partido.admins
         end
         render_wizard
     end
