@@ -6,7 +6,7 @@ module PartidoStepsHelper
 
     def sub_menu
       step_categories = main_menu
-      step_organisation = { step_categories[0] => ["datos_basicos", "personas", "cargos"],
+      step_organisation = { step_categories[0] => ["datos_basicos", "personas", "cargos", "administradores"],
                             step_categories[1] => ["normas_internas"],
                             step_categories[2] => ["num_afiliados", "tramites"],
                             step_categories[3] => ["postulacion_popular", "organos_internos", "postulacion_interna", "agenda_presidente", "actividades_publicas" ],

@@ -1,0 +1,33 @@
+<div class="container" ng-controller="cargosController">
+  <div class="row">
+    <div class="col-md-2" id="row">
+      <table>
+        <tr>
+
+        </tr>
+      </table>
+    </div>
+    <div class="col-md-10">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Fecha Creacion</th>
+            <th>Fecha Ultimo Login</th>
+            <th>IP Ultimo Login</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @admins.each do |admin| %>
+          <tr>
+            <td> <%= admin.email %> </td>
+            <td> <%= admin.created_at %> </td>
+            <td> <%= admin.last_sign_in_at %> </td>
+            <td> <%= admin.last_sign_in_ip %> </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
