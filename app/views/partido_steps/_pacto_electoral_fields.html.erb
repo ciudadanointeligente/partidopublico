@@ -1,7 +1,53 @@
-<%= f.input :nombre_pacto %>
-<%= f.input :ano_eleccion %>
-<%= f.input :descripcion %>
-<%= f.association :partidos %>
 
-<br>
-<%= link_to_remove_association "mark for remove pacto", f %>
+
+
+<div class="col-sm-8 col-md-8">
+
+<div class="panel panel-default ">
+<div class="panel-heading">
+
+Pacto:  <%= f.object.nombre_pacto %>
+
+
+</div>
+
+<div class="panel-body">
+
+<div class="row">
+  <div class="col-sm-3 col-md-3">
+  </div>
+
+  <div class="col-sm-9 col-md-9">
+
+    <% if f.object.id.nil? %>
+      <%= f.input :nombre_pacto %>
+      <%= f.input :ano_eleccion %>
+      <%= f.input :descripcion %>
+      <%= f.association :partidos %>
+    <% else %>
+      <%= f.object.nombre_pacto %>
+      <%= f.object.ano_eleccion %>
+      <%= f.object.descripcion %>
+      <% f.object.partidos.each do |p| %>
+        <%= p %>
+      <% end %>
+
+      <%= f.input :id, as: :hidden %>
+    <% end %>
+
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-sm-3 col-md-3">
+    <%= link_to_remove_association "mark for remove pacto", f %>
+  </div>
+  <div class="col-sm-9 col-md-9">
+
+  </div>
+</div>
+
+
+</div>
+</div>
+</div>

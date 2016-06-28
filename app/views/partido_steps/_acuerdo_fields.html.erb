@@ -1,7 +1,54 @@
-<%= f.input :numero %>
-<%= f.input :fecha %>
-<%= f.input :tipo, as: :select, collection: Acuerdo.tipos %>
-<%= f.input :tema %>
-<%= f.input :region, as: :select, collection: Region.all.sort %>
-<%= f.association :organo_interno, as: :select, collection: OrganoInterno.where(partido_id: f.object.partido_id) %>
-<%= f.input :documento %>
+
+
+<div class="col-sm-8 col-md-8">
+
+<div class="panel panel-default ">
+<div class="panel-heading">
+
+Acuerdo:  <%= f.object.numero %>  <%= f.object.tipo %>
+
+
+</div>
+
+<div class="panel-body">
+
+<div class="row">
+  <div class="col-sm-3 col-md-3">
+  </div>
+
+  <div class="col-sm-9 col-md-9">
+
+    <% if f.object.id.nil? %>
+      <%= f.input :numero %>
+      <%= f.input :fecha %>
+      <%= f.input :tipo, as: :select, collection: Acuerdo.tipos %>
+      <%= f.input :tema %>
+      <%= f.input :region, as: :select, collection: Region.all.sort %>
+      <%= f.association :organo_interno, as: :select, collection: OrganoInterno.where(partido_id: f.object.partido_id) %>
+      <%= f.input :documento %>
+    <% else %>
+      <%= f.object.numero %>
+      <%= f.object.tipo %>
+      <%= f.object.tema %>
+      <%= f.object.fecha %>
+      <%= f.object.organo_interno %>
+      <%= f.object.region %>
+      <%= f.input :id, as: :hidden %>
+    <% end %>
+
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-sm-3 col-md-3">
+    <%= link_to_remove_association "mark for remove acuerdo", f %>
+  </div>
+  <div class="col-sm-9 col-md-9">
+
+  </div>
+</div>
+
+
+</div>
+</div>
+</div>

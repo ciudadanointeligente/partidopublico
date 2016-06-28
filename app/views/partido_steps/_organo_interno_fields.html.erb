@@ -1,8 +1,35 @@
-<%= f.input :nombre %>
-<%= f.input :funciones %>
-<%= f.fields_for :personas do |builder| %>
-   <%= render 'persona_fields', :f => builder %>
-<% end %>
-  <%= link_to_add_association 'add person', f, :personas %>
-  <br>
-<%= link_to_remove_association "mark for remove organo interno", f %>  
+
+
+<div class="col-sm-8 col-md-8">
+
+  <div class="panel panel-default ">
+    <div class="panel-heading">
+      Organismo Interno: <%= f.object.nombre %>
+    </div>
+
+    <div class="panel-body">
+
+      <div class="row">
+        <div class="col-sm-3 col-md-3">
+        </div>
+
+        <div class="col-sm-9 col-md-9">
+
+          <% if f.object.id.nil? %>
+            <%= f.input :nombre  %>
+            <%= f.input :funciones  %>
+
+          <% else %>
+           <%= f.object.funciones %>
+            <%= f.input :id, as: :hidden %>
+            <%= f.input :nombre %>
+            <%= f.input :funciones %>
+            <%= link_to_remove_association "mark for remove organo interno", f %>
+          <% end %>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,16 +1,89 @@
-<%= f.association :organo_interno, as: :select, collection: OrganoInterno.where(partido_id: f.object.partido_id) %>
-<%= f.input :fecha_eleccion %>
-<%= f.input :fecha_limite_inscripcion %>
-<%= f.input :cargo %>
+<div class="col-sm-8 col-md-8">
 
-<%= f.fields_for :requisitos do |builder| %>
-    <%= render 'requisito_fields', :f => builder %>
-<% end %>
-<%= link_to_add_association 'add requirement', f, :requisitos %>
+<div class="panel panel-default ">
+<div class="panel-heading">
 
-<%= f.fields_for :procedimientos do |builder| %>
-    <%= render 'procedimiento_fields', :f => builder %>
-<% end %>
-<%= link_to_add_association 'add procedure', f, :procedimientos %>
-<br>
-<%= link_to_remove_association "mark for remove postulacion interna", f %>
+Elección Interna:  <%= f.object.cargo %>  <%= f.object.fecha_eleccion %>
+
+
+</div>
+
+<div class="panel-body">
+
+<div class="row">
+  <div class="col-sm-3 col-md-3">
+  </div>
+
+  <div class="col-sm-9 col-md-9">
+
+    <% if f.object.id.nil? %>
+      <%= f.association :organo_interno, as: :select, collection: OrganoInterno.where(partido_id: f.object.partido_id) %>
+      <%= f.input :fecha_eleccion %>
+      <%= f.input :fecha_limite_inscripcion %>
+      <%= f.input :cargo %>
+    <% else %>
+      <%= f.object.organo_interno %>
+      <%= f.object.cargo %>
+      <%= f.object.fecha_eleccion %>
+      <%= f.object.fecha_limite_inscripcion %>
+      <%= f.input :id, as: :hidden %>
+    <% end %>
+
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-sm-3 col-md-3">
+  </div>
+  <div class="col-sm-9 col-md-9">
+    <div class="panel panel-default ">
+      <div class="panel-heading">
+        Procedimientos
+        </div>
+
+      <div class="panel-body">
+        <%= f.fields_for :procedimientos do |procedimiento| %>
+           <%= render 'procedimiento_fields', :f => procedimiento %>
+        <% end %>
+          <%= link_to_add_association 'add procedure', f, :procedimientos %>
+        </div>
+    </div>
+
+
+
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-3 col-md-3">
+  </div>
+  <div class="col-sm-9 col-md-9">
+    <div class="panel panel-default ">
+      <div class="panel-heading">
+        Requisitos
+        </div>
+
+      <div class="panel-body">
+        <%= f.fields_for :requisitos do |requisito| %>
+           <%= render 'requisito_fields', :f => requisito %>
+        <% end %>
+          <%= link_to_add_association 'add requirement', f, :requisitos %>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-3 col-md-3">
+    <%= link_to_remove_association "mark for remove postulacion interna", f %>
+  </div>
+  <div class="col-sm-9 col-md-9">
+
+  </div>
+</div>
+
+
+</div>
+</div>
+</div>
