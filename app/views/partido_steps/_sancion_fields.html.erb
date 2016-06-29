@@ -1,4 +1,51 @@
-<%= f.input :descripcion %>
-<%= f.input :institucion %>
-<%= f.input :fecha %>
-<%= f.input :documento %>
+
+
+
+
+<div class="col-sm-8 col-md-8">
+
+<div class="panel panel-default ">
+<div class="panel-heading">
+
+Sanción:  <%= f.object.fecha  %> <%= f.object.institucion  %>
+
+
+</div>
+
+<div class="panel-body">
+
+<div class="row">
+  <div class="col-sm-3 col-md-3">
+  </div>
+
+  <div class="col-sm-9 col-md-9">
+
+    <% if f.object.id.nil? %>
+      <%= f.input :descripcion %>
+      <%= f.input :institucion %>
+      <%= f.input :fecha %>
+      <%= f.input :documento %>
+
+    <% else %>
+      <%= f.object.descripcion %>
+      <%= f.object.institucion %>
+      <%= f.object.fecha %>
+      <%= f.input :id, as: :hidden %>
+    <% end %>
+
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-sm-3 col-md-3">
+    <%= link_to_remove_association "mark for remove pacto", f %>
+  </div>
+  <div class="col-sm-9 col-md-9">
+
+  </div>
+</div>
+
+
+</div>
+</div>
+</div>
