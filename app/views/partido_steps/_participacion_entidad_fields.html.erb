@@ -1,5 +1,45 @@
-<%= f.input :entidad %>
-<%= f.input :descripcion %>
-<%= f.input :documento %>
-<br>
-<%= link_to_remove_association "mark for remove entidad", f %>
+<div class="col-sm-8 col-md-8">
+
+<div class="panel panel-default ">
+<div class="panel-heading">
+
+Participación:  <%= f.object.entidad %>
+
+
+</div>
+
+<div class="panel-body">
+
+<div class="row">
+  <div class="col-sm-3 col-md-3">
+      <%=number_to_human_size f.object.documento.size %>
+  </div>
+
+  <div class="col-sm-9 col-md-9">
+
+    <% if f.object.id.nil? %>
+      <%= f.input :entidad %>
+      <%= f.input :descripcion %>
+      <%= f.input :documento %>
+    <% else %>
+      <%= f.object.entidad %>
+      <%= f.object.descripcion %>
+      <%= f.input :id, as: :hidden %>
+    <% end %>
+
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-sm-3 col-md-3">
+    <%= link_to_remove_association "mark for remove entidad", f %>
+  </div>
+  <div class="col-sm-9 col-md-9">
+
+  </div>
+</div>
+
+
+</div>
+</div>
+</div>

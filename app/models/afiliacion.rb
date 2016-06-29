@@ -17,17 +17,18 @@
 #
 
 class Afiliacion < ActiveRecord::Base
-    has_paper_trail
+  has_paper_trail
   belongs_to :partido
-  
+
   after_initialize :default_afiliados
-  
+
   def default_afiliados
      self.hombres ||= 0
      self.mujeres ||= 0
   end
-  
+
   def total
-     self.hombres + self.mujeres 
+     self.hombres + self.mujeres
   end
+
 end

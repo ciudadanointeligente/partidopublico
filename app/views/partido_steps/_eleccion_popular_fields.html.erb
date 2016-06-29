@@ -1,15 +1,88 @@
-<%= f.input :fecha_eleccion %>
-<%= f.input :dias %>
-<%= f.input :cargo, as: :select, collection: Representante.cargos, input_html: { class: 'cargo' } %>
+      <div class="col-sm-8 col-md-8">
 
-<%= f.fields_for :requisitos do |builder| %>
-   <%= render 'requisito_fields', :f => builder %>
-<% end %>
-  <%= link_to_add_association 'add requirement', f, :requisitos %>
-  
-<%= f.fields_for :procedimientos do |builder| %>
-   <%= render 'procedimiento_fields', :f => builder %>
-<% end %>
-  <%= link_to_add_association 'add procedure', f, :procedimientos %>
-  <br>
-<%= link_to_remove_association "mark for remove postulacion popular", f %>
+      <div class="panel panel-default ">
+      <div class="panel-heading">
+
+      Elección Popular:  <%= f.object.cargo %>  <%= f.object.fecha_eleccion %>
+
+
+      </div>
+
+      <div class="panel-body">
+
+      <div class="row">
+        <div class="col-sm-3 col-md-3">
+        </div>
+
+        <div class="col-sm-9 col-md-9">
+
+          <% if f.object.id.nil? %>
+            <%= f.input :fecha_eleccion %>
+            <%= f.input :dias %>
+            <%= f.input :cargo, as: :select, collection: Representante.cargos, input_html: { class: 'cargo' } %>
+
+          <% else %>
+            <%= f.object.fecha_eleccion %>
+            <%= f.object.dias %> antes
+            <%= f.object.cargo %>
+            <%= f.input :id, as: :hidden %>
+          <% end %>
+
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-sm-3 col-md-3">
+        </div>
+        <div class="col-sm-9 col-md-9">
+          <div class="panel panel-default ">
+            <div class="panel-heading">
+              Procedimientos
+              </div>
+
+            <div class="panel-body">
+              <%= f.fields_for :procedimientos do |procedimiento| %>
+                 <%= render 'procedimiento_fields', :f => procedimiento %>
+              <% end %>
+                <%= link_to_add_association 'add procedure', f, :procedimientos %>
+              </div>
+          </div>
+
+
+
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3 col-md-3">
+        </div>
+        <div class="col-sm-9 col-md-9">
+          <div class="panel panel-default ">
+            <div class="panel-heading">
+              Requisitos
+              </div>
+
+            <div class="panel-body">
+              <%= f.fields_for :requisitos do |requisito| %>
+                 <%= render 'requisito_fields', :f => requisito %>
+              <% end %>
+                <%= link_to_add_association 'add requirement', f, :requisitos %>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3 col-md-3">
+          <%= link_to_remove_association "mark for remove postulacion popular", f %>
+        </div>
+        <div class="col-sm-9 col-md-9">
+
+        </div>
+      </div>
+
+
+      </div>
+      </div>
+      </div>
