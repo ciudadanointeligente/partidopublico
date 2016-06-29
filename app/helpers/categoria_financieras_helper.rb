@@ -1,0 +1,2 @@
+module CategoriaFinancierasHelper
+end

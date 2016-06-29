@@ -18,7 +18,6 @@ function personasController($scope,$http,$location,$aside,$attrs){
     if($scope.persona.id) {
       $http.put('/personas/'+$scope.persona.id, $scope.persona)
         .success(function(data){
-          console.log("persona update ok")
         })
         .error(function (){
           $scope.messages = { response: false, message: $attrs.errorupdatingask }
@@ -338,7 +337,6 @@ function actividad_publicasController($scope,$http,$location,$aside,$attrs){
         });
     }
     else {
-      console.log($scope.actividad_publica)
       $http.post('/actividad_publicas/', $scope.actividad_publica)
         .success(function(data){
           getActividadesPublicassByPartido($scope.partido_id);
@@ -353,7 +351,6 @@ function actividad_publicasController($scope,$http,$location,$aside,$attrs){
   function getActividadesPublicassByPartido(partido_id) {
     $http.get('partidos/'+partido_id+'/actividad_publicas')
       .success( function(data){
-        console.log(data);
         $scope.actividad_publicas = data;
       })
       .error( function(error_data){
@@ -401,3 +398,103 @@ function actividad_publicasController($scope,$http,$location,$aside,$attrs){
 
   getActividadesPublicassByPartido($scope.partido_id);
 };
+
+app.controller("finanzasController",finanzasController);
+finanzasController.$inject = ["$scope","$http","$location","$aside","$attrs"];
+function finanzasController($scope, $http, $location, $aside, $attrs){
+  $scope.items_contables = [];
+  $scope.item_contable = [];
+  $scope.categorias_financieras = [];
+  $scope.partido_id = $location.path().split("/")[2];
+
+  function get_categorias_financieras(partido_id) {
+    $http.get('partidos/'+partido_id+'/categoria_financieras')
+      .success( function(data){
+        $scope.categorias_financieras = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+  get_categorias_financieras($scope.partido_id)
+
+  function get_items_contables(partido_id) {
+    $http.get('partidos/'+partido_id+'/item_contables')
+      .success( function(data){
+        $scope.items_contables = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+  get_items_contables($scope.partido_id)
+
+  function getItemContable(item_contable) {
+    $scope.partido_id = $location.path().split("/")[2];
+    $http.get('partidos/'+$scope.partido_id+'/item_contables/'+item_contable.id)
+      .success( function(data){
+        $scope.item_contable = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
+  $scope.modalItemContable = function(item_contable){
+    $scope.select_categoria_fianciera = '';
+
+    if(item_contable)
+      getItemContable(item_contable);
+
+    $scope.item_contable = {};
+
+    $aside.open({
+      templateUrl: 'item_financiero_modal_aside.html',
+      scope: $scope,
+      placement: 'left',
+      size: 'lg',
+      backdrop: true,
+      controller: function($scope,$uibModalInstance){
+        $scope.save = function(e) {
+          save_or_update_item_contable();
+          $uibModalInstance.close();
+          e.stopPropagation();
+        };
+        $scope.cancel = function(e) {
+          $uibModalInstance.close();
+          e.stopPropagation();
+        };
+      }
+    });
+  }
+
+  var save_or_update_item_contable = function() {
+    if($scope.item_contable.id) {
+      $http.put('/partidos/'+$scope.partido_id+'/item_contables/'+$scope.item_contable.id, $scope.item_contable)
+        .success(function(data){
+          get_items_contables($scope.partido_id)
+        })
+        .error(function (){
+          $scope.messages = { response: false, message: $attrs.errorupdatingask }
+          scroll_to_top();
+        });
+    }
+    else {
+      $http.post('/partidos/'+$scope.partido_id+'/item_contables/', $scope.item_contable)
+        .success(function(data){
+          get_items_contables($scope.partido_id);
+        })
+        .error(function (){
+          $scope.messages = { response: false, message: $attrs.errorcreatingask }
+          scroll_to_top();
+        });
+    }
+  }
+
+  $scope.deleteItemContable = function (item_contable) {
+    if (confirm('Seguro desea eliminar este Item Contable?')) {
+      $http.delete('/partidos/' + $scope.partido_id + '/item_contables/' + item_contable.id);
+      $scope.items_contables.splice($scope.items_contables.indexOf(item_contable), 1);
+    }
+  }
+}

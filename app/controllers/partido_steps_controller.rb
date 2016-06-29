@@ -14,7 +14,8 @@ class PartidoStepsController < ApplicationController
             :postulacion_popular, :organos_internos, :postulacion_interna, :agenda_presidente, :actividades_publicas,
             :acuerdos_organos, :resultados_elecciones_internas,
             :entidades_participadas, :pactos_electorales,
-            :linea_denuncia, :sanciones
+            :linea_denuncia, :sanciones,
+            :finanzas
 
     def export_personas
       @personas = Persona.where partido: @partido
@@ -38,27 +39,16 @@ class PartidoStepsController < ApplicationController
         puts "----------------->  Show::"+step.to_s
         case step
         when :datos_basicos
-
         when :personas
-
         when :normas_internas
-
         when :regiones
-
         when :sedes
-            # @partido.regions.each do |r|
-            #     if @partido.sedes.find_by_region(r.to_s).blank?
-            #         @partido.sedes << Sede.new(region:r)
-            #     end
-            # end
-
         when :num_afiliados
             @partido.regions.each do |r|
                 if @partido.afiliacions.find_by_region(r.to_s).blank?
                     @partido.afiliacions << Afiliacion.new(region:r)
                 end
             end
-
         when :tramites
             @partido.tramites.each do |tramite|
                 tramite.requisitos.each do |requisito|
@@ -66,53 +56,22 @@ class PartidoStepsController < ApplicationController
                 tramite.procedimientos.each do |procedimiento|
                 end
             end
-
         end
         render_wizard
     end
 
     def update
-
-        # puts params[:partido]
-        # @partido = Partido.find_by_user_id(current_user.id)
         puts "----------------->  Update::"+step.to_s
         case step
-        # when :datos_basicos
-        #     @partido.update_attributes(partido_params)
-
         when :normas_internas
-
             @partido.marco_interno.update_attributes(marco_interno_params)
             @partido.marco_interno.save
-
-        # when :regiones
-        #     @partido.update_attributes(partido_params)
-
-        # when :sedes
-        #     @partido.update_attributes(partido_params)
-
-        # when :num_afiliados
-        #     @partido.update_attributes(partido_params)
-
-        # when :tramites
-        #     @partido.update_attributes(partido_params)
-
-        # when :representantes
-        #     @partido.update_attributes(partido_params)
-
-        # when :autoridades
-        #     @partido.update_attributes(partido_params)
-
-        # when :postulacion_popular
-        #     @partido.update_attributes(partido_params)
-
         when :personas
-
         else
             @partido.update_attributes(partido_params)
         end
-        if request.xhr?
 
+        if request.xhr?
             @partido.save
             @errors = @partido.errors
             puts "AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST "

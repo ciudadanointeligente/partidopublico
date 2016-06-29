@@ -13,7 +13,7 @@ module PartidoStepsHelper
                             step_categories[4] => ["acuerdos_organos", "resultados_elecciones_internas"],
                             step_categories[5] => ["entidades_participadas", "pactos_electorales"],
                             step_categories[6] => ["linea_denuncia", "sanciones"],
-                            step_categories[7] => ["a","b"]}
+                            step_categories[7] => ["finanzas"]}
     end
 
     def substeps_progress_bar

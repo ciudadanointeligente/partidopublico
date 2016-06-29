@@ -51,6 +51,8 @@ class Partido < ActiveRecord::Base
     has_many :sancions, dependent: :destroy
     has_many :personas, dependent: :destroy
     has_many :cargos, dependent: :destroy
+    has_many :item_contables, dependent: :destroy
+    has_many :categoria_financieras, dependent: :destroy
 
     accepts_nested_attributes_for :marco_interno, allow_destroy: true
     accepts_nested_attributes_for :organo_internos, allow_destroy: true

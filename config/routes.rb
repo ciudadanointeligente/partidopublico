@@ -38,6 +38,8 @@ Rails.application.routes.draw do
     resources :circunscripcions
     resources :actividad_publicas
     resources :sedes
+    resources :item_contables
+    resources :categoria_financieras
   end
 
   scope "partido/:partido_id" do
