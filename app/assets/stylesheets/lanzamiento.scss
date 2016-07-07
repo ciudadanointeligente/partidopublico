@@ -1,0 +1,57 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import url(https://fonts.googleapis.com/css?family=Karla:400,700);
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+
+$nude: #E9DEDF;
+$nude-light: #F4F2F2;
+$nude-dark: #C5C0C0;
+$orange: #F28269;
+$orange-light: #FAC5BE;
+$orange-dark: #E85D34;
+$green: #7AC9BB;
+$green-light: #B1DED7;
+$green-dark: #30B79E;
+$sky: #64C7CD;
+$sky-light: #A0D8DD;
+$sky-dark: #06B9BF;
+$blue: #0A3451;
+$blue-light: #23526E;
+$blue-dark: #012639;
+
+
+
+/*HEADER*/
+body {
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-shadow: rgba(0,0,0,.01) 0 0 1px;
+  text-shadow: rgba(0,0,0,.01) 0 0 1px;
+  font-family: 'Karla', sans-serif;
+}
+
+/*SECTIONS*/
+.section{
+	&.sky-dark{
+		background-color: $sky-dark;
+	}
+	&.nude{
+		background-color: $nude;
+	}
+	&.orange{
+		background-color: $orange;
+	}
+	&.blue-dark{
+		background-color: $blue-dark;
+	}
+}
+
+/*HEADINGS*/
+h1, h2 , h3, h4, h5{
+	font-family: 'Karla', sans-serif;
+}
+
+h2{
+	font-size: 30px;
+}

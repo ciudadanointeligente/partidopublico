@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html ng-app="papuApp">
+
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Partidos Públicos</title>
+      <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+      <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+      <%= csrf_meta_tags %>
+
+</head>
+
+<body>
+<!-- Navigation -->
+<header>
+	<nav class="navbar navbar-default navbar-fixed-top">
+	  <div class="container">
+	    <div class="navbar-header">
+	      <div class="brand">
+	        <a class="site-title" href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/img/logo.png"></a>
+	        <div class="sub-brand"><a href="http://ciudadanointeligente.org" target="_blank">de CiudadanoInteligente.org</a>
+	        </div>
+	      </div>
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	    </div>
+
+	    <div id="navbar" class="navbar-collapse collapse">
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><a href="">¿Qué es?</a></li>
+	        <li><a href="">Partidos que se han sumado</a></li>
+	        <li><a href="">Infórmate</a></li>
+	        <li><a href="">Lanzamiento</a></li>
+	      </ul>
+	    </div><!--/.nav-collapse -->
+	  </div>
+	</nav>
+</header>
+
+<!-- Page Content -->
+<div class="jumbotron">
+</div>
+
+<div class="section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+			<h2 class="text-center">¿Qué es?</h2>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="section nude" id="manual">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+			<h2 class="text-center">Algo sobre el manual</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<a class="btn btn-default" href="#" role="button">Link</a>
+			</div>
+			<div class="col-md-4">
+				<a class="btn btn-default" href="#" role="button">Link</a>
+			</div>
+			<div class="col-md-4">
+				<a class="btn btn-default" href="#" role="button">Link</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="section sky-dark" id="partidos-adheridos">
+	<div class="container">
+		<div class="panel panel-default">
+  			<div class="panel-body">
+			<h2 class="text-center">Partidos que se han sumado a la plataforma</h2>
+				<div class="container">
+					<div class="row">
+						<div class="col-md-4">
+							Partido 1
+						</div>
+						<div class="col-md-4">
+							Partido 2
+						</div>
+						<div class="col-md-4">
+							Partido 3
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							Partido 4
+						</div>
+						<div class="col-md-4">
+							Partido 5
+						</div>
+						<div class="col-md-4">
+							Partido 6
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							Partido 7
+						</div>
+						<div class="col-md-4">
+							Partido 8
+						</div>
+						<div class="col-md-4">
+							Partido 9
+						</div>
+					</div>
+		  		</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="section orange" id="lanzamiento">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+			<h2 class="text-center">Bienvenido a la cancha que observamos todos y todas!</h2>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="section blue-dark" id="undef-cht">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+			<h2 class="text-center">Bienvenido a la cancha que observamos todos y todas!</h2>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Footer -->
+<footer>
+	<div id="pie_pagina">
+	    <p></p>
+	</div>
+</footer>
+
+</body>
+
+</html>
