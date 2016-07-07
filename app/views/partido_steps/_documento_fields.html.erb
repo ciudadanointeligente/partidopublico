@@ -1,53 +1,44 @@
 <div class="col-sm-4 col-md-4">
+  <div class="panel panel-default ">
+    <div class="panel-heading">
+      <%= f.object.descripcion %>
 
-<div class="panel panel-default ">
-<div class="panel-heading">
+      <% if f.object.id.nil? %>
+        <%= f.input :descripcion  %>
 
-  <%= f.object.descripcion %>
-
-  <% if f.object.id.nil? %>
-    <%= f.input :descripcion  %>
-
-  <% else %>
-    <%= f.input :descripcion, as: :hidden  %>
-  <% end %>
-
-</div>
-
-<div class="panel-body">
-
-<div class="row">
-  <div class="col-sm-3 col-md-3">
-
-<% if f.object.archivo %>
-    <% has_file = f.object.archivo.url != "/system/resources/missing_32.png" %>
-    <% if has_file %>
-      <%= link_to f.object.archivo.url, :target => "_blank" do %>
-        <%= icono(f.object) %>
+      <% else %>
+        <%= f.input :descripcion, as: :hidden  %>
       <% end %>
-    <% else %>
-      <%= icon('file-o', id: '', class: 'fa-3x') %>
-    <% end %>
-<% end %>
-</div>
-<div class="col-sm-9 col-md-9">
+    </div>
 
-  <%=number_to_human_size f.object.archivo.size %>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-3 col-md-3">
+          <% if f.object.archivo %>
+            <% has_file = f.object.archivo.url != "/system/resources/missing_32.png" %>
+            <% if has_file %>
+              <%= link_to f.object.archivo.url, :target => "_blank" do %>
+                <%= icono(f.object) %>
+              <% end %>
+            <% else %>
+              <%= icon('file-o', id: '', class: 'fa-3x') %>
+            <% end %>
+          <% end %>
+        </div>
 
-  <p id="file_label_<%= f.object.id.to_s %>"></p>
-  <% if f.object.id.nil? %>
-    <%= f.input :archivo, as: :file, label: false, input_html: { id: "hidden_file_input_" + f.object.id.to_s } %>
-  <% else %>
-    <%= f.input :archivo, as: :file, label: false, input_html: { class: 'hidden', id: "hidden_file_input_" + f.object.id.to_s } %>
-    <a class="upload-file" data-file-id="<%= f.object.id.to_s %>"><i class="fa fa-upload"></i></a>
-  <% end %>
+        <div class="col-sm-9 col-md-9">
+          <%=number_to_human_size f.object.archivo.size %>
 
-
-
-</div>
-
-</div>
-<% link_to_remove_association "mark for remove document", f %>
-</div>
-</div>
+          <p id="file_label_<%= f.object.id.to_s %>"></p>
+          <% if f.object.id.nil? %>
+            <%= f.input :archivo, as: :file, label: false, input_html: { id: "hidden_file_input_" + f.object.id.to_s } %>
+          <% else %>
+            <%= f.input :archivo, as: :file, label: false, input_html: { class: 'hidden', id: "hidden_file_input_" + f.object.id.to_s } %>
+            <a class="upload-file btn btn-default" data-file-id="<%= f.object.id.to_s %>"><i class="fa fa-upload"></i> Cargar archivo</a>
+          <% end %>
+        </div>
+      </div>
+      <% link_to_remove_association "marcar para remover el documento", f %>
+    </div>
+  </div>
 </div>
