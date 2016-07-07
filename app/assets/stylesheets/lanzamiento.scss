@@ -31,8 +31,13 @@ body {
   font-family: 'Karla', sans-serif;
 }
 
+p{
+	font-family: 'Karla', sans-serif;
+}
+
 /*SECTIONS*/
 .section{
+	padding: 40px 0 50px;
 	&.sky-dark{
 		background-color: $sky-dark;
 	}
@@ -53,7 +58,7 @@ h1, h2 , h3, h4, h5{
 }
 
 h2{
-	font-size: 30px;
+	font-size: 26px;
 	&.orange{
 		color: $orange;
 	}
@@ -66,4 +71,25 @@ h2{
 	&.sky-dark{
 		color: $sky-dark;
 	}
+}
+
+/*BUTTONS*/
+.btn{
+	text-transform: uppercase;
+	background-color: transparent;
+	border-radius: 0;
+	border: 3px solid white;
+	font-family: 'Karla', sans-serif;
+	font-weight: 700;
+	font-size: 14px;
+	padding: 20px;
+	color: $blue-dark;
+	margin: 30px 0 30px;
+}
+
+.btn:hover{
+	background-color: $blue-dark;
+	color: white;
+	border-radius: 0;
+	border: 3px solid $blue-dark;
 }
