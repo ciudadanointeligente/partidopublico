@@ -54,4 +54,16 @@ h1, h2 , h3, h4, h5{
 
 h2{
 	font-size: 30px;
+	&.orange{
+		color: $orange;
+	}
+	&.white{
+		color: white;
+	}
+	&.blue-dark{
+		color: $blue-dark;
+	}
+	&.sky-dark{
+		color: $sky-dark;
+	}
 }
