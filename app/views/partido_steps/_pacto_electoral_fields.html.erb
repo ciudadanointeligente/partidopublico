@@ -1,53 +1,42 @@
-
-
-
-<div class="col-sm-8 col-md-8">
-
-<div class="panel panel-default ">
-<div class="panel-heading">
-
-Pacto:  <%= f.object.nombre_pacto %>
-
-
-</div>
-
-<div class="panel-body">
-
-<div class="row">
-  <div class="col-sm-3 col-md-3">
-  </div>
-
-  <div class="col-sm-9 col-md-9">
-
-    <% if f.object.id.nil? %>
-      <%= f.input :nombre_pacto %>
-      <%= f.input :ano_eleccion %>
-      <%= f.input :descripcion %>
-      <%= f.association :partidos %>
-    <% else %>
-      <%= f.object.nombre_pacto %>
-      <%= f.object.ano_eleccion %>
-      <%= f.object.descripcion %>
-      <% f.object.partidos.each do |p| %>
-        <%= p %>
+<div class="col-md-4">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <% if f.object.id.nil? %>
+        Nuevo pacto
+      <% else %>
+        Pacto: <%= f.object.nombre_pacto %>
+      <% end %>
+    </div>
+    <div class="panel-body">
+      <% if f.object.id.nil? %>
+        <%= f.input :nombre_pacto %>
+        <%= f.input :ano_eleccion, as: :date %>
+        <%= f.input :descripcion %>
+        <%= f.association :partidos %>
+      <% else %>
+        <ul>
+          <li><%= f.object.nombre_pacto %></li>
+          <li><%= f.object.ano_eleccion %></li>
+          <li><%= f.object.descripcion %></li>
+          <li>Alianza:
+            <ul>
+              <% f.object.partidos.each do |p| %>
+                <li><%= p %></li>
+              <% end %>
+            </ul>
+          </li>
+        </ul>
+        <%= f.input :id, as: :hidden %>
       <% end %>
 
-      <%= f.input :id, as: :hidden %>
-    <% end %>
+      <div class="row">
+        <div class="col-md-12">
+          <%= link_to_remove_association f, class: 'btn btn-default' do %>
+            <i class="fa fa-trash"></i> Marcar para eliminar
+          <% end %>
+        </div>
+      </div>
 
+    </div>
   </div>
-
-</div>
-<div class="row">
-  <div class="col-sm-3 col-md-3">
-    <%= link_to_remove_association "mark for remove pacto", f %>
-  </div>
-  <div class="col-sm-9 col-md-9">
-
-  </div>
-</div>
-
-
-</div>
-</div>
 </div>
