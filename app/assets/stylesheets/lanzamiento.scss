@@ -35,9 +35,56 @@ p{
 	font-family: 'Karla', sans-serif;
 }
 
+/*HEADER*/
+.navbar-default{
+	background-color: $blue;
+	font-family: 'Karla', sans-serif;
+	height: 75px;
+	border: none;
+}
+
+.navbar-default .navbar-nav > li > a{
+	color: white;
+	font-family: 'Karla', sans-serif;
+	text-transform: uppercase;
+	font-size: 12px;
+	font-weight: 700;
+	:hover{
+		color: $orange;
+	}
+}
+
+.navbar-default .navbar-nav > li > a:hover{
+	color: $orange;
+}
+
+.navbar-nav > li > a{
+	padding-top: 28px;
+}
+
+.brand{
+	margin-top: 15px;
+}
+
+.sub-brand{
+	position: relative;
+	left: 124px;
+	top: -17px;
+}
+
+.sub-brand a:visited{
+	color: white;
+}
+
+.sub-brand a:hover{
+	color: $orange;
+	text-decoration: none;
+	background-color: transparent;
+}
+
 /*SECTIONS*/
 .section{
-	padding: 40px 0 50px;
+	padding: 80px 0 80px;
 	&.sky-dark{
 		background-color: $sky-dark;
 	}
@@ -85,6 +132,13 @@ h2{
 	padding: 20px;
 	color: $blue-dark;
 	margin: 30px 0 30px;
+	&.orange{
+		border: 3px solid $orange;
+	}
+}
+
+.btn:visited{
+	color: $blue-dark;
 }
 
 .btn:hover{
