@@ -4,7 +4,6 @@
 @import "font-awesome-sprockets";
 @import "font-awesome";
 
-
 $nude: #E9DEDF;
 $nude-light: #F4F2F2;
 $nude-dark: #C5C0C0;
@@ -72,14 +71,15 @@ p{
 	top: -17px;
 }
 
-.sub-brand a:visited{
-	color: white;
-}
-
-.sub-brand a:hover{
+.sub-brand a{
+	&:visited{
+		color: white;
+	}
+	&:hover{
 	color: $orange;
 	text-decoration: none;
 	background-color: transparent;
+	}
 }
 
 /*SECTIONS*/
