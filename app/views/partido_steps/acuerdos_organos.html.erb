@@ -1,8 +1,20 @@
-<%= render :layout => 'form' do |f| %>
+<div class="container">
+  <h2 class="page-header">Acuerdos</h2>
 
-<%= f.fields_for :acuerdos do |acuerdo| %>
-   <%= render 'acuerdo_fields', :f => acuerdo %>
-<% end %>
-<%= link_to_add_association 'add acuerdo', f, :acuerdos %>
+  <%= render :layout => 'form' do |f| %>
+    <div class="row">
+      <%= f.fields_for :acuerdos do |acuerdo| %>
+         <%= render 'acuerdo_fields', :f => acuerdo %>
+      <% end %>
+    </div>
 
-<% end %>
+    <div class="row">
+      <div class="col-md-12">
+        <%= link_to_add_association f, :acuerdos, class: 'btn btn-default' do %>
+          <i class="fa fa-plus"></i> Agregar acuerdos
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+</div>

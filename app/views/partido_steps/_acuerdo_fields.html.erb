@@ -1,54 +1,40 @@
+<div class="col-md-4">
+  <div class="panel panel-default ">
+    <div class="panel-heading">
+      <% if f.object.id.nil? %>
+        Nuevo acuerdo
+      <% else %>
+        Acuerdo: <%= f.object.tema %> (<%= f.object.tipo %>)
+      <% end %>
+    </div>
+    <div class="panel-body">
+      <% if f.object.id.nil? %>
+        <%= f.input :numero %>
+        <%= f.input :fecha, as: :date %>
+        <%= f.input :tipo, as: :select, collection: Acuerdo.tipos %>
+        <%= f.input :tema %>
+        <%= f.input :region, as: :select, collection: Region.all.sort %>
+        <%= f.association :organo_interno, as: :select, collection: OrganoInterno.where(partido_id: f.object.partido_id) %>
+        <%= f.input :documento %>
+      <% else %>
+        <ul>
+          <li><b>Nro:</b> <%= f.object.numero %></li>
+          <li><b>Tipo:</b> <%= f.object.tipo %></li>
+          <li><b>Tema:</b> <%= f.object.tema %></li>
+          <li><b>Fecha:</b> <%= f.object.fecha %></li>
+          <li><b>Org Interno:</b> <%= f.object.organo_interno %></li>
+          <li><b>Region:</b> <%= f.object.region %></li>
+        </ul>
+        <%= f.input :id, as: :hidden %>
+      <% end %>
 
-
-<div class="col-sm-8 col-md-8">
-
-<div class="panel panel-default ">
-<div class="panel-heading">
-
-Acuerdo:  <%= f.object.numero %>  <%= f.object.tipo %>
-
-
-</div>
-
-<div class="panel-body">
-
-<div class="row">
-  <div class="col-sm-3 col-md-3">
+      <div class="row">
+        <div class="col-md-12">
+          <%= link_to_remove_association f, class: 'btn btn-default' do %>
+           <i class="fa fa-trash"></i> Marcar para eliminar
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="col-sm-9 col-md-9">
-
-    <% if f.object.id.nil? %>
-      <%= f.input :numero %>
-      <%= f.input :fecha %>
-      <%= f.input :tipo, as: :select, collection: Acuerdo.tipos %>
-      <%= f.input :tema %>
-      <%= f.input :region, as: :select, collection: Region.all.sort %>
-      <%= f.association :organo_interno, as: :select, collection: OrganoInterno.where(partido_id: f.object.partido_id) %>
-      <%= f.input :documento %>
-    <% else %>
-      <%= f.object.numero %>
-      <%= f.object.tipo %>
-      <%= f.object.tema %>
-      <%= f.object.fecha %>
-      <%= f.object.organo_interno %>
-      <%= f.object.region %>
-      <%= f.input :id, as: :hidden %>
-    <% end %>
-
-  </div>
-
-</div>
-<div class="row">
-  <div class="col-sm-3 col-md-3">
-    <%= link_to_remove_association "mark for remove acuerdo", f %>
-  </div>
-  <div class="col-sm-9 col-md-9">
-
-  </div>
-</div>
-
-
-</div>
-</div>
 </div>
