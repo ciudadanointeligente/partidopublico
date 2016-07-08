@@ -1,4 +1,6 @@
 <div class="form-group">
   <%= f.input :descripcion, label: false %>
-  <%= link_to_remove_association "Eliminar procedimiento", f %>
+  <%= link_to_remove_association f, class: 'btn btn-default' do %>
+    <i class="fa fa-minus"></i> Eliminar procedimiento
+  <% end %>
 </div>
