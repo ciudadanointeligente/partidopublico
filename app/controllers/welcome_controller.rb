@@ -3,5 +3,8 @@ class WelcomeController < ApplicationController
        @partidos = Partido.all
     end
 
+    def logo
+		render layout: "logo"
+	end
 
 end

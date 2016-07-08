@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="papuApp">
+
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>lanzamiento papu</title>
+      <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+      <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+      <%= csrf_meta_tags %>
+
+</head>
+
+<body style="background-color:#012639;">
+
+    <!-- Navigation -->
+
+
+
+
+    <!-- Page Content -->
+    <div id="container" >
+
+             <p class="notice"><%= notice %></p>
+             <p class="alert"><%= alert %></p>
+
+        <%= yield %>
+
+    </div>
+
+        <!-- Footer -->
+    <footer>
+        <div id="pie_pagina">
+            <p></p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
