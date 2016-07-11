@@ -1,8 +1,16 @@
-<div class="form-group boxed_form">
-<%= f.input :region, disabled: true %>    
-<%= f.input :hombres %>
-<%= f.input :mujeres %>
-<!--<%= f.input :rangos %>-->
-<%= f.input :total, disabled: true %> 
-<%= link_to_remove_association "mark for remove num_afiliados", f %>
+<div class="col-md-4">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <%= f.object.region %>
+    </div>
+    <div class="panel-body">
+      <%= f.input :hombres %>
+      <%= f.input :mujeres %>
+      <div class="form-group">
+        <%= f.label :total %>
+        <%= f.object.total %>
+      </div>
+      <%= link_to_remove_association "marcar para eliminar", f, target: '_self' %>
+    </div>
+  </div>
 </div>

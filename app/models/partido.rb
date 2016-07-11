@@ -73,21 +73,27 @@ class Partido < ActiveRecord::Base
     after_create :initialize_transparency_settings
 
     def initialize_transparency_settings
-       self.marco_general = MarcoGeneral.new
-       self.marco_interno = MarcoInterno.new
-       self.marco_interno.documentos << Documento.new(descripcion:"Marco Normativo Interno")
-       self.marco_interno.documentos << Documento.new(descripcion:"Código de Ética")
-       self.marco_interno.documentos << Documento.new(descripcion:"Procedimiento de Prevención de la Corrupción")
-       self.marco_interno.documentos << Documento.new(descripcion:"Reseña Histórica")
-       self.marco_interno.documentos << Documento.new(descripcion:"Declaración de Principios")
-       self.marco_interno.documentos << Documento.new(descripcion:"Programa Base")
-       self.marco_interno.documentos << Documento.new(descripcion:"Estructura Orgánica")
-       self.organo_internos << OrganoInterno.new(nombre:"Órgano ejecutivo")
-       self.organo_internos << OrganoInterno.new(nombre:"Órgano intermedio colegiado")
-       self.organo_internos << OrganoInterno.new(nombre:"Tribunal supremo")
-       self.tramites << Tramite.new(nombre:"Afiliación")
-       self.tramites << Tramite.new(nombre:"Desfiliación")
-       self.save
+
+      superadmins = Admin.where is_superadmin: true
+      superadmins.each do |admin|
+        self.admins << admin
+      end
+
+      self.marco_general = MarcoGeneral.new
+      self.marco_interno = MarcoInterno.new
+      self.marco_interno.documentos << Documento.new(descripcion:"Marco Normativo Interno")
+      self.marco_interno.documentos << Documento.new(descripcion:"Código de Ética")
+      self.marco_interno.documentos << Documento.new(descripcion:"Procedimiento de Prevención de la Corrupción")
+      self.marco_interno.documentos << Documento.new(descripcion:"Reseña Histórica")
+      self.marco_interno.documentos << Documento.new(descripcion:"Declaración de Principios")
+      self.marco_interno.documentos << Documento.new(descripcion:"Programa Base")
+      self.marco_interno.documentos << Documento.new(descripcion:"Estructura Orgánica")
+      self.organo_internos << OrganoInterno.new(nombre:"Órgano ejecutivo")
+      self.organo_internos << OrganoInterno.new(nombre:"Órgano intermedio colegiado")
+      self.organo_internos << OrganoInterno.new(nombre:"Tribunal supremo")
+      self.tramites << Tramite.new(nombre:"Afiliación")
+      self.tramites << Tramite.new(nombre:"Desfiliación")
+      self.save
     end
 
     def to_s

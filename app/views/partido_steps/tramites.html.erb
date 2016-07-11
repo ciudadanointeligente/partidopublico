@@ -1,9 +1,15 @@
-<%= render :layout => 'form' do |f| %>
+<div class="container">
+  <h2 class="page-header">Tramites</h2>
 
-        <%= f.fields_for :tramites do |ff| %>
-            <%= render 'tramite_fields', :f => ff %>
-        <% end %>
-        <br>
-      <%= link_to_add_association 'add tramite', f, :tramites %>
-      
-<% end %>
+  <div class="row">
+    <%= render :layout => 'form' do |f| %>
+      <%= f.fields_for :tramites do |ff| %>
+        <%= render 'tramite_fields', :f => ff %>
+      <% end %>
+
+      <div class="col-md-12">
+        <%= link_to_add_association 'Agregar tramite', f, :tramites %>
+      </div>
+    <% end %>
+  </div>
+</div>

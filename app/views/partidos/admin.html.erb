@@ -1,21 +1,32 @@
-<%= link_to('Logout', destroy_admin_session_path, :method => :delete) %> 
-<p id="notice"><%= notice %></p>
+<div class="container">
 
-<h1>Partidos que puedes editar</h1>
+  <p id="notice"><%= notice %></p>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
+  <h1>Partidos que puedes editar</h1>
 
-  <tbody>
-    <% @partidos.each do |partido| %>
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= link_to partido.sigla, partido_steps_path(partido) %></td>
-        <td><%= link_to 'Eliminar', partido, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Partido</th>
+        <th>Acciones</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @partidos.each do |partido| %>
+        <tr>
+          <td><%= link_to partido.sigla, partido_steps_path(partido), target: '_self' %></td>
+          <td>
+            <%= link_to partido_steps_path(partido), target: '_self' do %>
+              <div class="fa fa-edit"></div>
+            <% end %>
+            <%= link_to partido, method: :delete, data: { confirm: 'Are you sure?' } do %>
+              <div class="fa fa-trash"></div>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to('Salir', destroy_admin_session_path, :method => :delete) %>
+</div>

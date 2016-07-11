@@ -1,50 +1,44 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-9">
-        <%= render :layout => 'form' do |f| %>
+    <div class="col-md-12">
+      <h2 class="page-header">Datos Básicos</h2>
+      <%= render :layout => 'form' do |f| %>
         <div class="row">
-          <div class="col-md-2">
+          <div class="col-md-12">
+            <%= f.error_notification %>
+            <%= f.input :nombre, inline_label: true, placeholder: 'Nombre del partido' %>
+            <%= f.input :sigla, inline_label: true, placeholder: 'Sigla del partido' %>
+            <%= f.input :lema, inline_label: true, placeholder: 'Lema del partido' %>
+            <%= f.input :fecha_fundacion, as: :date, inline_label: true, html5: true, wrapper: :horizontal_form, :label => 'Fecha de fundación' %>
+            <%= f.input :texto, inline_label: true  %>
+            <%= f.input :logo, as: :file, inline_label: true, wrapper: :horizontal_form  %>
             <% if !@partido.logo.blank? %>
-            <img src="<%= @partido.logo.url %>" class="img-responsive" alt="<%= @partido.nombre %> - <%= @partido.lema %>">
+            <img src="<%= @partido.logo.url(:thumb) %>" class="img-responsive" alt="<%= @partido.nombre %> - <%= @partido.lema %>">
             <% end %>
           </div>
-          <div class="col-md-10">
-
-              <%= f.error_notification %>
-              <%= f.input :nombre, inline_label: true %>
-              <%= f.input :sigla, inline_label: true  %>
-              <%= f.input :lema, inline_label: true  %>
-              <%= f.input :fecha_fundacion, as: :date, inline_label: true, html5: true, wrapper: :horizontal_form  %>
-              <%= f.input :texto, inline_label: true  %>
-
-              <%= f.input :logo, as: :file, inline_label: true, wrapper: :horizontal_form  %>
-
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <h2 class="page-header">Regiones</h2>
+            <%= f.association :regions, as: :check_boxes, collection: Region.all.sort, :selected => @partido.regions, :label => "", wrapper: :horizontal_inline_li_checkboxes,item_wrapper_tag: :li  %>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <hr>
-              <%= f.association :regions, as: :check_boxes, collection: Region.all.sort, :selected => @partido.regions, :label => "Regiones", wrapper: :horizontal_inline_li_checkboxes,item_wrapper_tag: :li, item_wrapper_class: "col-md-4"  %>
-          </div>
-
-        </div>
-        <% end %>
-        <div class="row">
-          <div class="col-md-12">
-          <hr>
+            <h2 class="page-header">Sedes</h2>
             <%= render 'sedes' %>
           </div>
         </div>
+      <% end %>
     </div>
-    <div class="col-md-3">
-        <div class="row">
-          <div class="col-md-12">
-            <p>
-              Graficoak
-            </p>
-          </div>
+    <!-- <div class="col-md-3">
+      <div class="row">
+        <div class="col-md-12">
+          <p>
+            Graficoak
+          </p>
         </div>
-
-    </div>
+      </div>
+    </div> -->
   </div>
 </div>

@@ -8,7 +8,7 @@ class PartidoStepsController < ApplicationController
     before_action :set_partido
     before_action :admin_allowed
 
-    steps   :datos_basicos, :personas, :cargos,
+    steps   :datos_basicos, :personas, :cargos, :administradores,
             :normas_internas,
             :num_afiliados, :tramites,
             :postulacion_popular, :organos_internos, :postulacion_interna, :agenda_presidente, :actividades_publicas,
@@ -67,6 +67,8 @@ class PartidoStepsController < ApplicationController
                 end
             end
 
+        when :administradores
+          @admins = @partido.admins
         end
         render_wizard
     end
@@ -81,7 +83,7 @@ class PartidoStepsController < ApplicationController
         #     @partido.update_attributes(partido_params)
 
         when :normas_internas
-
+            PaperTrail.whodunnit = current_admin.email
             @partido.marco_interno.update_attributes(marco_interno_params)
             @partido.marco_interno.save
 
@@ -109,10 +111,11 @@ class PartidoStepsController < ApplicationController
         when :personas
 
         else
+            PaperTrail.whodunnit = current_admin.email
             @partido.update_attributes(partido_params)
         end
         if request.xhr?
-
+            PaperTrail.whodunnit = current_admin.email
             @partido.save
             @errors = @partido.errors
             puts "AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST "
@@ -143,7 +146,7 @@ class PartidoStepsController < ApplicationController
           params.require(:partido).permit(:nombre, :sigla, :lema, :fecha_fundacion, :texto, :logo,
                                                     sedes_attributes: [:id, :region, :direccion, :contacto, :_destroy],
                                                     afiliacions_attributes: [:id, :region, :hombres, :mujeres, :rangos, :_destroy],
-                                                    tramites_attributes: [:id, :nombre, :descripcion, :persona_id, :documento,
+                                                    tramites_attributes: [:id, :nombre, :descripcion, :persona_id, :documento, :_destroy,
                                                               requisitos_attributes: [:descripcion, :id, :_destroy],
                                                               procedimientos_attributes: [:descripcion, :id, :_destroy]],
                                                     representantes_attributes: [:id, :cargo, :nombre, :apellidos, :genero, :fecha_nacimiento, :nivel_estudios,

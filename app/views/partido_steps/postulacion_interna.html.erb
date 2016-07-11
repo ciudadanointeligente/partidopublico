@@ -1,8 +1,21 @@
-<%= render :layout => 'form' do |f| %>
+<div class="container">
+  <h2 class="page-header">Postulacion Interna</h2>
 
-<%= f.fields_for :eleccion_internas do |builder| %>
-    <%= render 'eleccion_interna_fields', :f => builder %>
-<% end %>
-<%= link_to_add_association 'add eleccion interna', f, :eleccion_internas %>
+  <%= render :layout => 'form' do |f| %>
 
-<% end %>
+    <div class="row">
+      <%= f.fields_for :eleccion_internas do |builder| %>
+        <%= render 'eleccion_interna_fields', :f => builder %>
+      <% end %>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <%= link_to_add_association f, :eleccion_internas, class: 'btn btn-default' do %>
+          <i class="fa fa-plus"></i> Agregar eleccion interna
+        <% end %>
+      </div>
+    </div>
+
+  <% end %>
+</div>

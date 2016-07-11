@@ -1,0 +1,17 @@
+    <%= f.input :id, as: :hidden %>
+    <%= f.input :nombre %>
+    <%= f.input :descripcion %>
+    <% if f.object.documento %>
+      <%= link_to (image_tag f.object.documento.url(:thumb)), f.object.documento.url  %>
+    <% end %>
+    <%= f.input :documento %>
+    
+    <%= f.fields_for :requisitos do |requisito| %>
+       <%= render 'requisito_fields', :f => requisito %>
+    <% end %>
+      <%= link_to_add_association 'add requirement', f, :requisitos %>
+      
+    <%= f.fields_for :procedimientos do |procedimiento| %>
+       <%= render 'procedimiento_fields', :f => procedimiento %>
+    <% end %>
+      <%= link_to_add_association 'add procedure', f, :procedimientos %>

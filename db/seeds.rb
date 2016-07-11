@@ -506,7 +506,7 @@ Distrito.create!([
 ])
 
 Admin.create!([
-  {email: "papu@ciudadanointeligente.org", password: "xxxxxxxx", password_confirmation: "xxxxxxxx"}
+  {email: "papu@ciudadanointeligente.org", password: "xxxxxxxx", password_confirmation: "xxxxxxxx", is_superadmin: true}
 ])
 
 Partido.create!([
