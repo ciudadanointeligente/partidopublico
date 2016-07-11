@@ -112,8 +112,10 @@ a{
 }
 
 .jumbotron h1 {
-  color: white;
+  color: $blue-dark;
   font-size: 50px;
+  text-shadow: -3px 3px 0px white;
+  font-weight: 700;
 }
 
 .jumbotron p {
