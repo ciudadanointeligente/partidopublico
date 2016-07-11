@@ -69,6 +69,6 @@ class AfiliacionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def afiliacion_params
-      params.require(:afiliacion).permit(:region_id, :hombres, :mujeres, :rangos)
+      params.require(:afiliacion).permit(:region, :hombres, :mujeres, :rangos)
     end
 end

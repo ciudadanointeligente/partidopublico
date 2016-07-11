@@ -1,5 +1,5 @@
 <div class="container" ng-controller="actividad_publicasController">
-  <h2 class="page-header">Actividades Publicas</h2>
+  <h2 class="page-header">Actividades Públicas</h2>
 
   <div class="row">
     <div class="col-md-4">
@@ -8,7 +8,12 @@
       </button>
     </div>
     <div class="col-md-4">
-      <input type="text" ng-model="filtro_actividad_publicas" placeholder="Buscar">
+      <div class="form-inline">
+        <div class="input-group">
+          <input type="text" ng-model="filtro_actividad_publicas" class="form-control" placeholder="Buscar actividad" id="filtro_personas" aria-describedby="search-addon">
+          <span class="input-group-addon" id="search-addon"><i class="fa fa-search"></i></span>
+        </div>
+      </div>
     </div>
     <div class="col-md-4 form-inline">
       <div class="form-group">

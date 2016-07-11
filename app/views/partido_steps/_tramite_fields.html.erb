@@ -14,8 +14,13 @@
         <%= f.input :descripcion  %>
         <%= f.input :documento  %>
       <% else %>
-        <%= f.object.descripcion %>
+        <p><%= f.object.descripcion %></p>
         <%= f.input :descripcion, as: :hidden  %>
+        <% if f.object.documento %>
+          <%= link_to f.object.documento.url do %>
+            <i class="fa fa-download"></i> <%= f.object.documento_file_name %>
+          <% end %>
+        <% end %>
         <%= f.input :id, as: :hidden %>
       <% end %>
 

@@ -1,5 +1,5 @@
 <div class="col-md-4">
-  <div class="panel panel-default ">
+  <div class="panel panel-default">
     <div class="panel-heading">
       Elección Interna: <%= f.object.cargo %>
     </div>
@@ -29,6 +29,8 @@
           <%= f.fields_for :procedimientos do |procedimiento| %>
             <%= render 'procedimiento_fields', :f => procedimiento %>
           <% end %>
+        </div>
+        <div class="panel-footer">
           <%= link_to_add_association f, :procedimientos, class: 'btn btn-default' do %>
             <i class="fa fa-plus"></i> Agregar procedimiento
           <% end %>
@@ -43,20 +45,18 @@
           <%= f.fields_for :requisitos do |requisito| %>
             <%= render 'requisito_fields', :f => requisito %>
           <% end %>
+        </div>
+        <div class="panel-footer">
           <%= link_to_add_association f, :requisitos, class: 'btn btn-default' do %>
             <i class="fa fa-plus"></i> Agregar requerimiento
           <% end %>
         </div>
       </div>
-
-      <div class="row">
-        <div class="col-md-12">
-          <%= link_to_remove_association f, class: 'btn btn-default' do %>
-            <i class="fa fa-trash"></i> Marcar para eliminar
-          <% end %>
-        </div>
-      </div>
-
+    </div>
+    <div class="panel-footer">
+      <%= link_to_remove_association f, class: 'btn btn-danger' do %>
+        <i class="fa fa-trash"></i> Marcar para eliminar
+      <% end %>
     </div>
   </div>
 </div>

@@ -1,16 +1,23 @@
 <div class="col-md-4">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <%= f.object.region %>
+      <% if f.object.id.nil? %>
+        <%= f.collection_select(:region, @partido.regions, :nombre, :nombre) %>
+      <% else %>
+        <%= f.object.region %>
+      <% end %>
     </div>
     <div class="panel-body">
       <%= f.input :hombres %>
       <%= f.input :mujeres %>
+      <%= f.input :rangos %>
       <div class="form-group">
         <%= f.label :total %>
         <%= f.object.total %>
       </div>
-      <%= link_to_remove_association f, target: '_self' do %>
+    </div>
+    <div class="panel-footer">
+      <%= link_to_remove_association f, target: '_self', class: 'btn btn-danger' do %>
         <i class="fa fa-trash"></i> Marcar para eliminar
       <% end %>
     </div>

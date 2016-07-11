@@ -2,15 +2,20 @@
   <h2 class="page-header">Afiliados</h2>
 
   <%= render :layout => 'form' do |f| %>
+    <div class="row btn-add-action">
+      <div class="col-md-12">
+        <%= link_to_add_association f, :afiliacions, class: 'btn btn-default' do %>
+          <i class="fa fa-plus"></i> Agregar afiliados
+        <% end %>
+      </div>
+    </div>
+
     <div class="row">
       <%= f.fields_for :afiliacions do |ff| %>
         <%= render 'afiliacion_fields', :f => ff %>
       <% end %>
     </div>
 
-    <%= link_to_add_association f, :afiliacions, class: 'btn btn-default' do %>
-      <i class="fa fa-plus"></i> Agregar afiliados
-    <% end %>
   <% end %>
 
 </div>
