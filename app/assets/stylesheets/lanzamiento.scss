@@ -231,6 +231,24 @@ img {
 	top: 80px;
 }
 
+/*FOOTER*/
+
+footer {
+  background: white;
+  color: $blue-dark;
+  padding: 75px 0 50px;
+  position: relative;
+  img{
+  	max-width: 220px;
+  }
+  a{
+  	color: $orange;
+  	&:hover{
+  		color: $blue-dark;
+  	}
+  }
+}
+
 @media screen and (max-width: 1000px) {
 
 .navbar-toggle{
@@ -246,3 +264,4 @@ img {
 	border: none;
 }
 }
+
