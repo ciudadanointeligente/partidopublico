@@ -32,6 +32,9 @@ body {
 
 p{
 	font-family: 'Karla', sans-serif;
+	&.blue-dark{
+		color: $blue-dark;
+	}
 }
 
 a{
@@ -172,10 +175,26 @@ h4{
 }
 
 
-/**
- * Images
- */
+/*IMAGES*/
 img {
     max-width: 100%;
     vertical-align: middle;
 }
+
+/*MODALS*/
+.modal-content{
+	background-color: $orange;
+	border: none;
+	border-radius: 0;
+	box-shadow: -5px 5px 0px $nude-light;
+}
+
+.modal-header{
+	border: none;
+}
+
+.modal{
+	top: 80px;
+}
+
+
