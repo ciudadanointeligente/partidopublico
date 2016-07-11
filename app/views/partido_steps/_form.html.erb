@@ -18,7 +18,12 @@
   <div class="fields">
       <%= yield f %>
   </div>
-  <div class="actions">
-    <%= f.button :submit %> or <%= link_to 'skip', next_wizard_path %>
+  <div class="row" style="padding-top: 15px;">
+    <div class="col-md-12">
+      <%= f.button :submit, class:'btn btn-success' %>
+      <%= link_to next_wizard_path, class: 'btn btn-default' do %>
+        Siguiente
+      <% end %>
+    </div>
   </div>
 <% end %>

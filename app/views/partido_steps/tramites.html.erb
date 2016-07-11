@@ -1,5 +1,5 @@
 <div class="container">
-  <h2 class="page-header">Tramites</h2>
+  <h2 class="page-header">Trámites</h2>
 
   <div class="row">
     <%= render :layout => 'form' do |f| %>
@@ -8,7 +8,9 @@
       <% end %>
 
       <div class="col-md-12">
-        <%= link_to_add_association 'Agregar tramite', f, :tramites %>
+        <%= link_to_add_association f, :tramites, class: 'btn btn-default' do %>
+          <i class="fa fa-plus"></i> Agregar trámite
+        <% end %>
       </div>
     <% end %>
   </div>

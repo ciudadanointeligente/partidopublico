@@ -10,7 +10,9 @@
         <%= f.label :total %>
         <%= f.object.total %>
       </div>
-      <%= link_to_remove_association "marcar para eliminar", f, target: '_self' %>
+      <%= link_to_remove_association f, target: '_self' do %>
+        <i class="fa fa-trash"></i> Marcar para eliminar
+      <% end %>
     </div>
   </div>
 </div>
