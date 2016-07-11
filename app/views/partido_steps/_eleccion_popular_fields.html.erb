@@ -1,88 +1,60 @@
-      <div class="col-sm-8 col-md-8">
+<div class="col-md-4">
 
-      <div class="panel panel-default ">
-      <div class="panel-heading">
+  <div class="panel panel-default ">
+    <div class="panel-heading">
+      Elección Popular: <%= f.object.cargo %>
+    </div>
+    <div class="panel-body">
 
-      Elección Popular:  <%= f.object.cargo %>  <%= f.object.fecha_eleccion %>
+      <% if f.object.id.nil? %>
+        <%= f.input :fecha_eleccion %>
+        <%= f.input :dias %>
+        <%= f.input :cargo, as: :select, collection: Representante.cargos, input_html: { class: 'cargo' } %>
+      <% else %>
+        <ul>
+          <li><i class="fa fa-calendar"></i> <%= f.object.fecha_eleccion %></li>
+          <li><i class="fa fa-clock-o"></i> <%= f.object.dias %> dia(s) antes</li>
+          <li><i class="fa fa-user"></i> <%= f.object.cargo %></li>
+          <%= f.input :id, as: :hidden %>
+        </ul>
+      <% end %>
 
-
-      </div>
-
-      <div class="panel-body">
-
-      <div class="row">
-        <div class="col-sm-3 col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Procedimientos
         </div>
-
-        <div class="col-sm-9 col-md-9">
-
-          <% if f.object.id.nil? %>
-            <%= f.input :fecha_eleccion %>
-            <%= f.input :dias %>
-            <%= f.input :cargo, as: :select, collection: Representante.cargos, input_html: { class: 'cargo' } %>
-
-          <% else %>
-            <%= f.object.fecha_eleccion %>
-            <%= f.object.dias %> antes
-            <%= f.object.cargo %>
-            <%= f.input :id, as: :hidden %>
+        <div class="panel-body">
+          <%= f.fields_for :procedimientos do |procedimiento| %>
+            <%= render 'procedimiento_fields', :f => procedimiento %>
           <% end %>
-
+          <%= link_to_add_association f, :procedimientos, class: 'btn btn-default' do %>
+            <i class="fa fa-plus"></i> Agregar procedimiento
+          <% end %>
         </div>
-
       </div>
-      <div class="row">
-        <div class="col-sm-3 col-md-3">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Requisitos
         </div>
-        <div class="col-sm-9 col-md-9">
-          <div class="panel panel-default ">
-            <div class="panel-heading">
-              Procedimientos
-              </div>
-
-            <div class="panel-body">
-              <%= f.fields_for :procedimientos do |procedimiento| %>
-                 <%= render 'procedimiento_fields', :f => procedimiento %>
-              <% end %>
-                <%= link_to_add_association 'add procedure', f, :procedimientos %>
-              </div>
-          </div>
-
-
-
-
+        <div class="panel-body">
+          <%= f.fields_for :requisitos do |requisito| %>
+            <%= render 'requisito_fields', :f => requisito %>
+          <% end %>
+          <%= link_to_add_association f, :requisitos, class: 'btn btn-default' do %>
+            <i class="fa fa-plus"></i> Agregar requisito
+          <% end %>
         </div>
       </div>
 
       <div class="row">
-        <div class="col-sm-3 col-md-3">
-        </div>
-        <div class="col-sm-9 col-md-9">
-          <div class="panel panel-default ">
-            <div class="panel-heading">
-              Requisitos
-              </div>
-
-            <div class="panel-body">
-              <%= f.fields_for :requisitos do |requisito| %>
-                 <%= render 'requisito_fields', :f => requisito %>
-              <% end %>
-                <%= link_to_add_association 'add requirement', f, :requisitos %>
-              </div>
-          </div>
+        <div class="col-md-12">
+          <%= link_to_remove_association f, class: 'btn btn-default' do %>
+            <i class="fa fa-trash"></i> Marcar para eliminar
+          <% end %>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-sm-3 col-md-3">
-          <%= link_to_remove_association "mark for remove postulacion popular", f %>
-        </div>
-        <div class="col-sm-9 col-md-9">
-
-        </div>
-      </div>
-
-
-      </div>
-      </div>
-      </div>
+    </div>
+  </div>
+</div>

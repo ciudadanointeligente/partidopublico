@@ -1,9 +1,19 @@
+<div class="container">
+  <h2 class="page-header">Sanciones</h2>
 
-<%= render :layout => 'form' do |f| %>
+  <%= render :layout => 'form' do |f| %>
+    <div class="row">
+      <%= f.fields_for :sancions do |ff| %>
+        <%= render 'sancion_fields', :f => ff %>
+      <% end %>
+    </div>
 
-<%= f.fields_for :sancions do |ff| %>
-    <%= render 'sancion_fields', :f => ff %>
-<% end %>
-<%= link_to_add_association 'add sancion', f, :sancions %>
-
-<% end %>
+    <div class="row">
+      <div class="col-md-12">
+        <%= link_to_add_association f, :sancions, class: 'btn btn-default' do %>
+          <i class="fa fa-plus"></i> Agregar sanción
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

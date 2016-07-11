@@ -1,16 +1,35 @@
 <div class="container" ng-controller="cargosController">
+  <h2 class="page-header">Cargos</h2>
   <div class="row">
-    <div class="col-md-2" id="row">
-      <table>
-        <tr>
-          <td> Nuevo Cargo <i class="fa fa-plus-square-o" ng-click="getCargoModal(null)" title="Editar"></i> <td>
-        </tr>
-        <tr>
-          <td> <input type="text" ng-model="filtro_cargos" placeholder="Filtrar"> <td>
-        </tr>
-      </table>
+    <div class="col-md-4">
+      <button class="btn btn-default" ng-click="getCargoModal(null)">
+        <i class="fa fa-plus-square-o"></i> Nuevo Cargo
+      </button>
     </div>
-    <div class="col-md-10">
+    <div class="col-md-4">
+      <div class="form-inline">
+        <div class="input-group">
+          <input type="text" ng-model="filtro_cargos" placeholder="Filtrar" class="form-control">
+          <span class="input-group-addon" id="search-addon"><i class="fa fa-search"></i></span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-inline">
+        <div class="form-group">
+          <label for="pagesize"> Resultados por página: </label>
+          <select name="pagesize" id="pagesize" class="form-control" ng-model="pageSize">
+            <option value="5" ng-selected="true" >5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row cargos-list">
+    <div class="col-md-12">
       <table class="table">
         <thead>
           <tr>
@@ -35,6 +54,7 @@
           </tr>
         </tbody>
       </table>
+      <dir-pagination-controls template-url="/assets/angular-utils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
     </div>
   </div>
   <%= render 'cargos/cargo_modal' %>

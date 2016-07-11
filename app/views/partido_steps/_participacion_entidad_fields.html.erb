@@ -1,45 +1,35 @@
-<div class="col-sm-8 col-md-8">
+<div class="col-md-4">
+  <div class="panel panel-default ">
+    <div class="panel-heading">
+      <% if f.object.id.nil? %>
+        Nueva Participación
+      <% else %>
+        Participación:  <%= f.object.entidad %>
+      <% end %>
+    </div>
+    <div class="panel-body">
 
-<div class="panel panel-default ">
-<div class="panel-heading">
+      <% if f.object.id.nil? %>
+        <%= f.input :entidad %>
+        <%= f.input :descripcion %>
+        <%= f.input :documento %>
+      <% else %>
+        <ul>
+          <li><%= f.object.entidad %></li>
+          <li><%= f.object.descripcion %></li>
+          <li><%= number_to_human_size f.object.documento.size %></li>
+        </ul>
+        <%= f.input :id, as: :hidden %>
+      <% end %>
 
-Participación:  <%= f.object.entidad %>
+      <div class="row">
+        <div class="col-md-12">
+          <%= link_to_remove_association f, class: 'btn btn-default' do %>
+            <i class="fa fa-trash"></i> Marcar para eliminar
+          <% end %>
+        </div>
+      </div>
 
-
-</div>
-
-<div class="panel-body">
-
-<div class="row">
-  <div class="col-sm-3 col-md-3">
-      <%=number_to_human_size f.object.documento.size %>
+    </div>
   </div>
-
-  <div class="col-sm-9 col-md-9">
-
-    <% if f.object.id.nil? %>
-      <%= f.input :entidad %>
-      <%= f.input :descripcion %>
-      <%= f.input :documento %>
-    <% else %>
-      <%= f.object.entidad %>
-      <%= f.object.descripcion %>
-      <%= f.input :id, as: :hidden %>
-    <% end %>
-
-  </div>
-
-</div>
-<div class="row">
-  <div class="col-sm-3 col-md-3">
-    <%= link_to_remove_association "mark for remove entidad", f %>
-  </div>
-  <div class="col-sm-9 col-md-9">
-
-  </div>
-</div>
-
-
-</div>
-</div>
 </div>

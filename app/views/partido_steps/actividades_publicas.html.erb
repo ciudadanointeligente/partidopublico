@@ -1,58 +1,53 @@
-<div class="row">
-  <div class="col-md-9">
-    <div class="row" ng-controller="actividad_publicasController">
-      <div class="col-md-3" id="row">
-        <table>
-          <tr>
-            <td>
-              <input type="text" ng-model="filtro_actividad_publicas" placeholder="Filtrar">
-            <td>
-          </tr>
-          <tr>
-            <td>
-              Nueva Actividad <i class="fa fa-plus-square-o" ng-click="getActividadPublicaModal(null)" title="Editar"></i>
-            <td>
-          </tr>
-        </table>
+<div class="container" ng-controller="actividad_publicasController">
+  <h2 class="page-header">Actividades Publicas</h2>
 
-
+  <div class="row">
+    <div class="col-md-4">
+      <button class="btn btn-default" ng-click="getActividadPublicaModal(null)">
+        <i class="fa fa-plus-square-o"></i> Nueva Actividad
+      </button>
+    </div>
+    <div class="col-md-4">
+      <input type="text" ng-model="filtro_actividad_publicas" placeholder="Buscar">
+    </div>
+    <div class="col-md-4 form-inline">
+      <div class="form-group">
+        <label for="pagesize">Resultados por página: </label>
+        <select name="pagesize" id="pagesize" class="form-control" ng-model="pageSize">
+          <option value="5" ng-selected="true" >5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
       </div>
-      <div class="col-md-9">
-        <div class="form-inline text-right" >
-          <div class="form-group">
-            <label for="pagesize"> Resultados por página: </label>
-            <select name="pagesize" id="pagesize" class="form-control" ng-model="pageSize">
-              <option value="5" ng-selected="true" >5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="20">20</option>
-            </select>
-          </div>
-        </div>
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th>Fecha</th>
-              <th>Descripción</th>
-              <th>Link</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr dir-paginate="actividad_publica in actividad_publicas | filter: filtro_actividad_publicas | itemsPerPage: pageSize">
-              <td> {{actividad_publica.fecha}} </td>
-              <td> {{actividad_publica.descripcion}} </td>
-              <td> {{actividad_publica.link}} </td>
-              <td> <i class="fa fa-pencil-square-o" ng-click="getActividadPublicaModal(actividad_publica.id)" title="Editar"></i> </td>
-            </tr>
-          </tbody>
-        </table>
-        <dir-pagination-controls template-url="/assets/angular-utils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
-      </div>
-      <%= render 'actividad_publicas/actividad_publica_modal' %>
     </div>
   </div>
-  <div class="col-md-3">
 
+  <div class="row">
+    <div class="col-md-12">
+
+      <table class="table table-stripped">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Descripción</th>
+            <th>Link</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr dir-paginate="actividad_publica in actividad_publicas | filter: filtro_actividad_publicas | itemsPerPage: pageSize">
+            <td> {{actividad_publica.fecha}} </td>
+            <td> {{actividad_publica.descripcion}} </td>
+            <td> {{actividad_publica.link}} </td>
+            <td> <i class="fa fa-pencil-square-o" ng-click="getActividadPublicaModal(actividad_publica.id)" title="Editar"></i> </td>
+          </tr>
+        </tbody>
+      </table>
+      <dir-pagination-controls template-url="/assets/angular-utils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+    </div>
   </div>
+
+  <%= render 'actividad_publicas/actividad_publica_modal' %>
+
 </div>

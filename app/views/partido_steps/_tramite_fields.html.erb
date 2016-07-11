@@ -1,91 +1,61 @@
+<div class="col-md-6">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <%= f.object.nombre %>
+    </div>
+    <div class="panel-body">
 
-
-
-      <div class="col-sm-8 col-md-8">
-
-      <div class="panel panel-default ">
-      <div class="panel-heading">
-
-      Trámite:  <%= f.object.nombre %>
-
-
-      </div>
-
-      <div class="panel-body">
-
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-sm-3 col-md-3">
           <%=number_to_human_size f.object.documento.size %>
         </div>
-
         <div class="col-sm-9 col-md-9">
-
           <% if f.object.id.nil? %>
             <%= f.input :nombre  %>
             <%= f.input :descripcion  %>
             <%= f.input :documento  %>
-
           <% else %>
-           <%= f.object.descripcion %>
+            <%= f.object.descripcion %>
             <%= f.input :descripcion, as: :hidden  %>
             <%= f.input :id, as: :hidden %>
           <% end %>
-
         </div>
+      </div> -->
 
-      </div>
-      <div class="row">
-        <div class="col-sm-3 col-md-3">
+
+      <div class="panel panel-default ">
+        <div class="panel-heading">
+          Procedimientos
         </div>
-        <div class="col-sm-9 col-md-9">
-          <div class="panel panel-default ">
-            <div class="panel-heading">
-              Procedimientos
-              </div>
-
-            <div class="panel-body">
-              <%= f.fields_for :procedimientos do |procedimiento| %>
-                 <%= render 'procedimiento_fields', :f => procedimiento %>
-              <% end %>
-                <%= link_to_add_association 'add procedure', f, :procedimientos %>
-              </div>
-          </div>
-
-
-
-
+        <div class="panel-body">
+          <%= f.fields_for :procedimientos do |procedimiento| %>
+            <%= render 'procedimiento_fields', :f => procedimiento %>
+          <% end %>
+          <%= link_to_add_association f, :procedimientos, class: 'btn btn-default' do %>
+            <i class="fa fa-plus"></i> Agregar procedimiento
+          <% end %>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-sm-3 col-md-3">
+      <div class="panel panel-default ">
+        <div class="panel-heading">
+          Requisitos
         </div>
-        <div class="col-sm-9 col-md-9">
-          <div class="panel panel-default ">
-            <div class="panel-heading">
-              Requisitos
-              </div>
-
-            <div class="panel-body">
-              <%= f.fields_for :requisitos do |requisito| %>
-                 <%= render 'requisito_fields', :f => requisito %>
-              <% end %>
-                <%= link_to_add_association 'add requirement', f, :requisitos %>
-              </div>
-          </div>
+        <div class="panel-body">
+          <%= f.fields_for :requisitos do |requisito| %>
+            <%= render 'requisito_fields', :f => requisito %>
+          <% end %>
+          <%= link_to_add_association f, :requisitos, class: 'btn btn-default' do %>
+            <i class="fa fa-plus"></i> Agregar requisito
+          <% end %>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-sm-3 col-md-3">
-          <%= link_to_remove_association "mark for remove tramite", f %>
-        </div>
-        <div class="col-sm-9 col-md-9">
-
-        </div>
+      <div>
+        <%= link_to_remove_association "Marcar para eliminar", f %>
       </div>
 
+    </div>
+  </div>
 
-      </div>
-      </div>
-      </div>
+</div>

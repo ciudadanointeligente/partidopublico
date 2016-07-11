@@ -1,35 +1,24 @@
-
-
-<div class="col-sm-8 col-md-8">
-
-  <div class="panel panel-default ">
+<div class="col-md-4">
+  <div class="panel panel-default">
     <div class="panel-heading">
-      Organismo Interno: <%= f.object.nombre %>
+      <%= f.object.nombre %>
     </div>
-
     <div class="panel-body">
 
-      <div class="row">
-        <div class="col-sm-3 col-md-3">
-        </div>
+      <% if f.object.id.nil? %>
+        <%= f.input :nombre  %>
+        <%= f.input :funciones  %>
+      <% else %>
+        <!-- <%= f.object.funciones %> -->
+        <%= f.input :id, as: :hidden %>
+        <%= f.input :nombre %>
+        <%= f.input :funciones %>
 
-        <div class="col-sm-9 col-md-9">
+        <%= link_to_remove_association f, class: 'btn btn-default' do %>
+          <i class="fa fa-trash"></i> Marcar para eliminar
+        <% end %>
+      <% end %>
 
-          <% if f.object.id.nil? %>
-            <%= f.input :nombre  %>
-            <%= f.input :funciones  %>
-
-          <% else %>
-           <%= f.object.funciones %>
-            <%= f.input :id, as: :hidden %>
-            <%= f.input :nombre %>
-            <%= f.input :funciones %>
-            <%= link_to_remove_association "mark for remove organo interno", f %>
-          <% end %>
-
-        </div>
-
-      </div>
     </div>
   </div>
 </div>

@@ -1,41 +1,42 @@
 <div class="container" ng-controller="personasController">
+  <h2 class="page-header">Personas</h2>
+
   <div class="row">
-    <div class="col-md-3" id="row">
-      <table>
-        <tr>
-          <td>
-            <input type="text" ng-model="filtro_personas" placeholder="Filtrar">
-          <td>
-        </tr>
-        <tr>
-          <td>
-            Nueva Persona <i class="fa fa-plus-square-o" ng-click="getPersonaModal(null)" title="Editar"></i>
-          <td>
-        </tr>
-        <tr>
-          <td>
-            <%= link_to "Exportar CSV", url_for(action: 'export_personas', controller: 'partido_steps', format: 'csv'), :target => "_self" %>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <%= form_tag import_personas_personas_path,  multipart: true do %>
-              <%= hidden_field_tag :partido_id, @partido.id %>
-              <%= file_field_tag :file%>
-              <%= submit_tag "Import CSV",:id =>"personas_file_submit", :disabled =>true %>
-            <% end %>
-          <td>
-        </tr>
-      </table>
-
-
-    </div>
-    <div class="col-md-9">
+    <div class="col-md-12">
       <div id="flash_message" class="hidden alert alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-
       </div>
-      <div class="form-inline text-right" >
+    </div>
+  </div>
+  <div class="row">
+
+    <div class="col-md-5">
+      <div class="form-inline">
+        <div class="form-group">
+          <%= link_to url_for(action: 'export_personas', controller: 'partido_steps', format: 'csv'), :target => "_self", :class => 'btn btn-default' do %>
+            <i class="fa fa-file-excel-o"></i> Exportar CSV
+          <% end %>
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-default" ng-click="getPersonaModal(null)">
+            <i class="fa fa-user-plus"></i> Agregar persona
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 center-block">
+      <div class="form-inline">
+        <div class="input-group">
+          <input type="text" ng-model="filtro_personas" class="form-control" placeholder="Buscar persona" id="filtro_personas" aria-describedby="search-addon">
+          <span class="input-group-addon" id="search-addon"><i class="fa fa-search"></i></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 text-right">
+      <div class="form-inline">
         <div class="form-group">
           <label for="pagesize"> Resultados por página: </label>
           <select name="pagesize" id="pagesize" class="form-control" ng-model="pageSize">
@@ -46,6 +47,11 @@
           </select>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="row user-list">
+    <div class="col-md-12">
       <table class="table table-hover">
         <thead>
           <tr>
@@ -68,6 +74,15 @@
       </table>
       <dir-pagination-controls template-url="/assets/angular-utils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
     </div>
+  </div>
+  <div>
+    <%= form_tag import_personas_personas_path,  multipart: true, class: 'form-inline' do %>
+      <div class="form-group">
+        <%= hidden_field_tag :partido_id, @partido.id %>
+        <%= file_field_tag :file, class: 'form-inline' %>
+      </div>
+      <%= submit_tag "Import CSV",:id =>"personas_file_submit", :disabled =>true %>
+    <% end %>
   </div>
   <%= render 'personas/persona_modal' %>
 </div>
