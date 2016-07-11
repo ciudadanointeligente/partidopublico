@@ -78,8 +78,8 @@ a{
 
 .sub-brand{
 	position: relative;
-	left: 124px;
-	top: -17px;
+	left: 101px;
+	top: -14px;
 }
 
 .sub-brand a{
@@ -231,4 +231,18 @@ img {
 	top: 80px;
 }
 
+@media screen and (max-width: 1000px) {
 
+.navbar-toggle{
+	margin-top: -49px;
+}
+
+.navbar-nav{
+	margin-top: 0;
+	background-color: $blue;
+}
+
+.navbar-collapse{
+	border: none;
+}
+}
