@@ -1,7 +1,7 @@
 class WelcomeController < ApplicationController
     def index
        @partidos = Partido.all
-       render layout: 'nueva-ley-de-partidos-politicos'
+       render layout: 'entra-a-la-cancha'
     end
 
 

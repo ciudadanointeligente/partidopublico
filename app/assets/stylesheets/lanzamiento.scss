@@ -169,6 +169,11 @@ h2{
 	}
 }
 
+h3{
+	font-weight: 700;
+	color: $blue-dark;
+}
+
 h4{
 	margin: 30px 0 10px 0;
 	&.white{
@@ -223,9 +228,19 @@ h5{
 	&.shadow-orange{
 		box-shadow: -5px 5px 0px $orange-dark;
 	}
+	&.shadow-white{
+		box-shadow: -5px 5px 0px white;
+		.panel-body{
+			padding: 0px;
+		}
+	}
 	&.shadow-sky-card{
 		box-shadow: -5px 5px 0px $sky-dark;
 		min-height: 400px;
+	}
+	&.shadow-orange-card{
+		box-shadow: -5px 5px 0px $orange-dark;
+		min-height: 445px;
 	}
 	&.green{
 		background-color: $green-dark;
@@ -299,10 +314,20 @@ footer {
 @media screen and (max-width: 991px) {
 
 /*PANELS*/
-.panel{
-	&.shadow-sky-card{
-		min-height: inherit;
+	.panel{
+		&.shadow-sky-card{
+			min-height: inherit;
+		}
 	}
+
 }
 
+@media screen and (max-width: 767px) {
+
+/*PANELS*/
+	.panel{
+		&.shadow-orange-card{
+			min-height: inherit;
+		}
+	}
 }
