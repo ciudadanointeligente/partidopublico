@@ -314,6 +314,13 @@ function sedesController($scope,$http,$location,$aside,$attrs){
     });
   }
 
+  $scope.removeSede = function (sede) {
+    if (confirm('Seguro desea eliminar esta Sede?')) {
+      $http.delete('/partidos/' + $scope.partido_id + '/sedes/' + sede.id);
+      $scope.sedes.splice($scope.sedes.indexOf(sede), 1);
+    }
+}
+
   getSedesByPartido($scope.partido_id);
   getRegions();
   getComunas();

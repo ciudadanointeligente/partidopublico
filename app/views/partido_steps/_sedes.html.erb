@@ -39,7 +39,10 @@
             <td> {{sede.region.nombre}} </td>
             <td> {{sede.direccion}} </td>
             <td> {{sede.contacto}} </td>
-            <td> <i class="fa fa-pencil-square-o" ng-click="getSedeModal(sede.id)" title="Editar"></i> </td>
+            <td>
+              <i class="fa fa-pencil-square-o" ng-click="getSedeModal(sede.id)"></i>
+              <i class="fa fa-trash" ng-click="removeSede(sede)"></i>
+            </td>
           </tr>
         </tbody>
       </table>
