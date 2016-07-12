@@ -38,6 +38,10 @@ p{
 	&.white{
 		color: white;
 	}
+	&.destacado{
+		font-size: 16px;
+		line-height: 24px;
+	}
 }
 
 a{
@@ -60,7 +64,7 @@ a{
 	color: white;
 	font-family: 'Karla', sans-serif;
 	text-transform: uppercase;
-	font-size: 12px;
+	font-size: 11px;
 	font-weight: 700;
 	:hover{
 		color: $orange;
@@ -112,23 +116,21 @@ a{
     background-blend-mode: multiply;
     min-height: 600px;
     padding-top: 120px;
+    margin-bottom: 0px;
+    h1{
+	  color: $blue-dark;
+	  font-size: 50px;
+	  text-shadow: -3px 3px 0px white;
+	  font-weight: 700;
+    }
+    p{
+	  color: white;
+	  font-size: 18px;
+	  line-height: 1.3;
+	  margin-bottom: 80px;
+	  font-weight: 400;  	
+    }
 }
-
-.jumbotron h1 {
-  color: $blue-dark;
-  font-size: 50px;
-  text-shadow: -3px 3px 0px white;
-  font-weight: 700;
-}
-
-.jumbotron p {
-  color: white;
-  font-size: 18px;
-  line-height: 1.3;
-  margin-bottom: 80px;
-  font-weight: 400;
-}
-
 
 /*SECTIONS*/
 .section{
@@ -141,6 +143,13 @@ a{
 	}
 	&.orange{
 		background-color: $orange;
+		&.hand{
+			background-image: url("../img/hand.png");
+	        background-repeat: no-repeat;
+	        background-position-x:90%;
+	        background-position-y: 170px;
+	        min-height: 410px;
+		}
 	}
 	&.blue-dark{
 		background-color: $blue-dark;
@@ -265,6 +274,13 @@ img {
 	border: none;
 	border-radius: 0;
 	box-shadow: -5px 5px 0px $nude-light;
+	&.hand{
+			background-image: url("../img/hand.png");
+	        background-repeat: no-repeat;
+	        background-position-x:90%;
+	        background-position-y: 170px;
+	        min-height: 410px;
+	}	
 }
 
 .modal-header{
@@ -274,6 +290,8 @@ img {
 .modal{
 	top: 80px;
 }
+
+
 
 /*FOOTER*/
 
