@@ -5,8 +5,10 @@
   <div class="modal-body">
     <%= simple_form_for :sede, :multipart => true , :remote => true do |f| %>
       <%= f.input :partido_id, as: :hidden, :value => @partido.id, input_html: { 'ng-model': "sede.partido_id"} %>
-      <!--<select name="region_id" ng-options="region.id as region.nombre for region in regions" ng-model="sede.region_id" class="form-control chosen-select"></select>-->
-      <%= f.collection_select(:region_id, @partido.regions, :id, :nombre, {}, {class: 'form-control', 'ng-model': 'sede.region_id'}) %>
+      <div class="form-group">
+        <label for="sede_region_id">Región</label>
+        <%= f.collection_select(:region_id, @partido.regions, :id, :nombre, {}, {label: 'region', class: 'form-control', 'ng-model': 'sede.region_id'}) %>
+      </div>
       <%= f.input :direccion, input_html: { 'ng-model': "sede.direccion", 'placeholder': "Dirección sede" } %>
       <%= f.input :contacto, input_html: { 'ng-model': "sede.contacto", 'placeholder': "Contacto sede" } %>
     <% end %>
