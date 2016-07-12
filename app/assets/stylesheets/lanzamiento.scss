@@ -220,8 +220,14 @@ h5{
 	&.shadow-green{
 		box-shadow: -5px 5px 0px $green-dark;
 	}
+	&.shadow-orange{
+		box-shadow: -5px 5px 0px $orange-dark;
+	}
 	&.green{
 		background-color: $green-dark;
+	}
+	&.orange{
+		background-color: $orange-dark;
 	}
 }
 
