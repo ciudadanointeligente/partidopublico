@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html ng-app="papuApp">
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Partidos Públicos</title>
+      <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+      <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+      <%= csrf_meta_tags %>
+
+</head>
+
+<body>
+<header>
+	<nav class="navbar navbar-default navbar-fixed-top">
+	  <div class="container">
+	    <div class="navbar-header">
+	      <div class="brand">
+	        <a class="site-title" href="{{ site.baseurl }}/"><img src="/img/logo.png"></a>
+	        <div class="sub-brand"><a href="http://ciudadanointeligente.org" target="_blank">de CiudadanoInteligente.org</a>
+	        </div>
+	      </div>
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	    </div>
+
+	    <div id="navbar" class="navbar-collapse collapse">
+	      <ul class="nav navbar-nav navbar-right">
+	        <li class="hidden"><a href="#manual">La transparencia que queremos</a></li>
+	        <li><a href="#que-es">¿Qué es?</a></li>
+	        <li><a href="#partidos-adheridos">Partidos que participan</a></li>
+	        <li><a href="#lanzamiento">Lanzamiento</a></li>
+	      </ul>
+	    </div><!--/.nav-collapse -->
+	  </div>
+	</nav>
+</header>
+
+<div class="section nude">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<h2 class="blue-dark text-center">¿Los partidos políticos son organizaciones públicas o privadas?</h2>
+				<p>Aunque los partidos políticos no son órganos del Estado y tienen independencia de este para tomar decisiones y participar en la política nacional, son agrupaciones que tienen una responsabilidad pública importante para el correcto ejercicio de la democracia. Por lo anterior, los partidos están sujetos a la regulación y escrutinio público y deben cumplir con estándares de transparencia y democracia interna definidos por las leyes vigentes. En definitiva, tienen algunas características privadas y otras públicas.</p>
+			</div>
+		</div>	
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<div class="panel panel-default sky">
+		  			<div class="panel-body">
+						<div class="row">
+							<div class="col-md-8">
+								<h2 class="blue-dark">¿Qué ha pasado en Chile?</h2>
+								<p class="white">A fines de enero de 2016 se aprobaron las modificaciones a la Ley 18.603 que aumentará la regulación del funcionamiento de los partidos políticos en Chile. El objetivo de la nueva regulación es hacer de los partidos instituciones más públicas, transparentes y democráticas. Todas las disposiciones de la nueva ley terminan de entrar en vigencia el 12 de octubre del 2016.</p>
+							</div>
+							<div class="col-md-4 text-center">
+								<img src="img/m03-ley.png">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<h2 class="blue-dark text-center">¿Cuáles son las mejoras más importantes de la nueva legislación?</h2>
+		<div class="row">
+			<div class="col-md-4 text-center">
+				<div class="panel panel-default shadow-sky-card">
+					<div class="panel-body">
+						<h5 class="text-center">Derecho público</h5>
+						<img src="img/m03-publico.png">
+						<p>Los partidos políticos dejan de ser agrupaciones regidas por derecho privado y pasan a ser asociaciones voluntarias regidas por el derecho público. Es decir, se deben a Chile y a sus ciudadanos y ciudadanas, no a sus intereses particulares.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 text-center">
+				<div class="panel panel-default shadow-sky-card">
+					<div class="panel-body">
+						<h5 class="text-center">Democratización interna</h5>
+						<img src="img/m03-democratizacion.png">
+						<p>Se democratiza la elección de dirigentes exigiendo al menos un proceso electoral donde cada militante tenga derecho a votar.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 text-center">
+				<div class="panel panel-default shadow-sky-card">
+					<div class="panel-body">
+						<h5 class="text-center">Financiamiento</h5>
+						<img src="img/m03-financiamiento.png">
+						<p>Se prohíbe que sean financiados por empresas y se limita el financiamiento por particulares. Además, se establece un financiamiento público a los partidos, en función de su presencia nacional y votación. Este financiamiento se puede utilizar solo en ciertas actividades y viene acompañado de nuevas exigencias de transparencia.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 col-md-offset-2 text-center">
+				<div class="panel panel-default shadow-sky-card">
+					<div class="panel-body">
+						<h5 class="text-center">Cuota de género</h5>
+						<img src="img/m03-genero.png">
+						<p>Se incorporan cuotas de género para las dirigencias de los partidos.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 text-center">
+				<div class="panel panel-default shadow-sky-card">
+					<div class="panel-body">
+						<h5 class="text-center">Normas de transparencia</h5>
+						<img src="img/m03-normas.png">
+						<p>Se establecen normas de transparencia y rendición de cuentas hacia sus afiliados y la ciudadanía en general.</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div><!-- Container -->
+
+</div><!-- Section -->
+
+
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <ul class="list-unstyled">
+          <li><a href="mailto:info@ciudadanointeligente.org?Subject=Semaforo%20electoral%20FCI" class="email-prensa" target="_top"><i class="fa fa-envelope-o" aria-hidden="true"></i> Mándanos un correo</a></li>
+          <li><a href="//github.com/ciudadanointeligente" target="_blank"><i class="fa fa-github-alt" aria-hidden="true"></i> Revisa nuestro código</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <ul class="list-unstyled">
+          <li>
+            Un proyecto de <a href="//ciudadanointeligente.org" target="_blank"><img src="img/fci-azul.png" title="Fundación Ciudadano Inteligente" data-pin-nopin="true"></a>
+          </li>
+      </ul></div>
+      <div class="col-md-4"></div>
+        <ul class="list-unstyled text-right">
+          <li><a href="https://twitter.com/ciudadanoi" target="blank"><i class="fa fa-twitter" aria-hidden="true"></i> @Ciudadanoi</a></li>
+          <li><a href="https://www.facebook.com/ciudadanointeligente" target="blank"><i class="fa  fa-facebook" aria-hidden="true"></i> Ciudadano Inteligente</a></li>
+        </ul>
+      </div>
+    </div>
+</footer>
+
+</body>
+</html>

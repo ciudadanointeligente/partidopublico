@@ -223,11 +223,18 @@ h5{
 	&.shadow-orange{
 		box-shadow: -5px 5px 0px $orange-dark;
 	}
+	&.shadow-sky-card{
+		box-shadow: -5px 5px 0px $sky-dark;
+		min-height: 400px;
+	}
 	&.green{
 		background-color: $green-dark;
 	}
 	&.orange{
 		background-color: $orange-dark;
+	}
+	&.sky{
+		background-color: $sky-dark;
 	}
 }
 
@@ -286,5 +293,16 @@ footer {
 .navbar-collapse{
 	border: none;
 }
+
 }
 
+@media screen and (max-width: 991px) {
+
+/*PANELS*/
+.panel{
+	&.shadow-sky-card{
+		min-height: inherit;
+	}
+}
+
+}
