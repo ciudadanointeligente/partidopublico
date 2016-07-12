@@ -1,7 +1,7 @@
 class WelcomeController < ApplicationController
     def index
        @partidos = Partido.all
-       render layout: 'lanzamiento'
+       render layout: 'transparencia'
     end
 
 

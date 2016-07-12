@@ -35,6 +35,9 @@ p{
 	&.blue-dark{
 		color: $blue-dark;
 	}
+	&.white{
+		color: white;
+	}
 }
 
 a{
@@ -173,6 +176,11 @@ h4{
 	}
 }
 
+h5{
+	text-transform: uppercase;
+	font-weight: 700;
+}
+
 /*BUTTONS*/
 .btn{
 	text-transform: uppercase;
@@ -205,7 +213,16 @@ h4{
 .panel{
 	border: none;
 	border-radius: 0;
-	box-shadow: -5px 5px 0px $sky-dark;
+	margin-top: 30px;
+	&.shadow-sky{
+		box-shadow: -5px 5px 0px $sky-dark;
+	}
+	&.shadow-green{
+		box-shadow: -5px 5px 0px $green-dark;
+	}
+	&.green{
+		background-color: $green-dark;
+	}
 }
 
 
