@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html ng-app="papuApp">
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Partidos Públicos</title>
+      <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+      <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+      <%= csrf_meta_tags %>
+
+</head>
+
+<body>
+<header>
+	<nav class="navbar navbar-default navbar-fixed-top">
+	  <div class="container">
+	    <div class="navbar-header">
+	      <div class="brand">
+	        <a class="site-title" href="{{ site.baseurl }}/"><img src="/img/logo.png"></a>
+	        <div class="sub-brand"><a href="http://ciudadanointeligente.org" target="_blank">de CiudadanoInteligente.org</a>
+	        </div>
+	      </div>
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	    </div>
+
+	    <div id="navbar" class="navbar-collapse collapse">
+	      <ul class="nav navbar-nav navbar-right">
+	        <li class="hidden"><a href="#manual">La transparencia que queremos</a></li>
+	        <li><a href="#que-es">¿Qué es?</a></li>
+	        <li><a href="#partidos-adheridos">Partidos que participan</a></li>
+	        <li><a href="#lanzamiento">Lanzamiento</a></li>
+	      </ul>
+	    </div><!--/.nav-collapse -->
+	  </div>
+	</nav>
+</header>
+
+<div class="section nude">
+	<div class="container">
+		<div class="row">
+			<div class="panel panel-default shadow-white">
+				<div class="panel-body">
+					<img src="img/header.png" class="img-responsive">
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container">
+		<h2 class="text-center blue-dark">¿Cuáles son las funcionalidades de Partidos Públicos?</h2>
+		<p>Entrar a la cancha de Partidos Públicos es ser espectador y partícipe de todo lo que hacen los partidos políticos. Aquí encontrarás una lista de las funcionalidades que estarán disponibles en la plataforma partidospublicos.cl a partir del 8 de septiembre.</p>
+		<div class="row">
+				<div class="panel panel-default shadow-orange">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-1">
+								<h3>1</h3>
+							</div>
+							<div class="col-md-2">
+								<img src="img/m04-01.png">
+							</div>
+							<div class="col-md-2">
+								<h5>Comparación de información entre partidos políticos</h5>
+							</div>
+							<div class="col-md-5">
+						<p>En un solo lugar tendrás la posibilidad de comparar información relevante entre los partidos suscritos a la plataforma.</p>
+							</div>
+					</div>
+				</div>
+			</div>
+			
+	</div>
+	</div><!-- Container -->
+
+</div><!-- Section -->
+
+
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <ul class="list-unstyled">
+          <li><a href="mailto:info@ciudadanointeligente.org?Subject=Semaforo%20electoral%20FCI" class="email-prensa" target="_top"><i class="fa fa-envelope-o" aria-hidden="true"></i> Mándanos un correo</a></li>
+          <li><a href="//github.com/ciudadanointeligente" target="_blank"><i class="fa fa-github-alt" aria-hidden="true"></i> Revisa nuestro código</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <ul class="list-unstyled">
+          <li>
+            Un proyecto de <a href="//ciudadanointeligente.org" target="_blank"><img src="img/fci-azul.png" title="Fundación Ciudadano Inteligente" data-pin-nopin="true"></a>
+          </li>
+      </ul></div>
+      <div class="col-md-4"></div>
+        <ul class="list-unstyled text-right">
+          <li><a href="https://twitter.com/ciudadanoi" target="blank"><i class="fa fa-twitter" aria-hidden="true"></i> @Ciudadanoi</a></li>
+          <li><a href="https://www.facebook.com/ciudadanointeligente" target="blank"><i class="fa  fa-facebook" aria-hidden="true"></i> Ciudadano Inteligente</a></li>
+        </ul>
+      </div>
+    </div>
+</footer>
+
+</body>
+</html>
