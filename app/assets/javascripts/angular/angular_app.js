@@ -1,3 +1,9 @@
+function scroll_to_top() {
+    $('html, body').animate({
+        scrollTop: $('#container').offset().top
+    }, 500);
+}
+
 var app = angular.module('papuApp',[ 'ui.bootstrap', 'ng-rails-csrf', 'ngRoute', 'ngAside', 'flow', 'angularUtils.directives.dirPagination']);
 
 app.config(['$routeProvider', '$locationProvider', function AppConfig($routeProvider, $locationProvider) {
@@ -14,11 +20,12 @@ function personasController($scope,$http,$location,$aside,$attrs){
   $scope.pageSize = 5;
 
   var save_or_update_persona = function() {
-    $scope.persona.partido_id = $scope.partido_id
     if($scope.persona.id) {
+      $scope.persona.partido_id = $scope.partido_id
       $http.put('/personas/'+$scope.persona.id, $scope.persona)
         .success(function(data){
-          console.log("persona update ok")
+          getPersonasByPartido($scope.partido_id)
+          scroll_to_top();
         })
         .error(function (){
           $scope.messages = { response: false, message: $attrs.errorupdatingask }
@@ -26,20 +33,20 @@ function personasController($scope,$http,$location,$aside,$attrs){
         });
     }
     else {
-      $http.post('/personas/', $scope.persona)
+      $http.post('/partidos/'+$scope.partido_id+'/personas/', $scope.persona)
         .success(function(data){
           $scope.persona = data;
+          getPersonasByPartido($scope.partido_id)
+          scroll_to_top();
         })
         .error(function (){
           $scope.messages = { response: false, message: $attrs.errorcreatingask }
           scroll_to_top();
         });
     }
-    getPersonasByPartido($scope.partido_id)
   }
 
   function getPersonasByPartido(partido_id) {
-    //alert("geting personas");
     $http.get('partidos/'+partido_id+'/personas')
       .success( function(data){
         $scope.personas = data;
@@ -50,6 +57,7 @@ function personasController($scope,$http,$location,$aside,$attrs){
   }
 
   function getPersonaInfo(persona_id) {
+    $scope.persona = {};
     if(persona_id) {
       $http.get('personas/'+persona_id+'.json')
         .success( function(data){
@@ -81,6 +89,13 @@ function personasController($scope,$http,$location,$aside,$attrs){
         };
       }
     });
+  }
+
+  $scope.removePersona = function (persona) {
+    if (confirm('Seguro desea eliminar esta Persona?')) {
+      $http.delete('/partidos/' + $scope.partido_id + '/personas/' + persona.id);
+      $scope.personas.splice($scope.personas.indexOf(persona), 1);
+    }
   }
 
   getPersonasByPartido($scope.partido_id);

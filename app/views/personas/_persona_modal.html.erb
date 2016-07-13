@@ -5,21 +5,36 @@
   <div class="modal-body">
 
       <%= simple_form_for :persona, :multipart => true , :remote => true do |f| %>
-         
-        <%=f.hidden_field :partido_id, :value => @partido.id%>
-        <%= f.input :nombre, input_html: { 'ng-model': "persona.nombre", 'placeholder': "Nombre persona" } %>
-        <%= f.input :apellidos, as: :string, input_html: { 'ng-model': "persona.apellidos", 'placeholder': "Apellido Apellido" } %>
+        <!-- required -->
+        <%= f.input :nombre, input_html: { 'ng-model': "persona.nombre", 'placeholder': "Nombre" } %>
+        <%= f.input :apellidos, as: :string, input_html: { 'ng-model': "persona.apellidos", 'placeholder': "Apellido" } %>
+        <!-- uniq -->
         <%= f.input :rut, as: :string, input_html: { 'ng-model': "persona.rut", 'placeholder': "Rut" } %>
-        <%= f.input :fecha_nacimiento, input_html: { 'ng-model': "persona.fecha_nacimiento", 'placeholder': "fecha_nacimiento" } %>
-        <%= f.input :nivel_estudios, input_html: { 'ng-model': "persona.nivel_estudios", 'placeholder': "nivel_estudios" } %>
-        <%= f.input :region, input_html: { 'ng-model': "persona.region", 'placeholder': "region persona" } %>
-        <%= f.input :ano_inicio_militancia, input_html: { 'ng-model': "persona.ano_inicio_militancia", 'placeholder': "ano_inicio_militancia persona" } %>
-        <%= f.input :afiliado, input_html: { 'ng-model': "persona.afiliado", 'placeholder': "afiliado persona" } %>
-        <%= f.input :bio , input_html: { 'ng-model': "persona.bio", 'placeholder': "bio persona" } %>
-        <%= f.input :foto, as: :file , input_html: { 'ng-model': "persona.foto" } %>
+        <!-- uniq -->
+        <!-- end of required -->
+
+        <%= f.input :email, required: false, as: :string, input_html: { 'ng-model': "persona.email", 'placeholder': "usuario@compañia.com" } %>
+        <%= f.input :fecha_nacimiento, required: false, as: :date, html5: true, input_html: { 'ng-model': "persona.fecha_nacimiento", 'placeholder': "Fecha de nacimiento" } %>
+        <%= f.input :nivel_estudios, required: false, input_html: { 'ng-model': "persona.nivel_estudios", 'placeholder': "Nivel de estudios" } %>
+        <div class="form-group">
+          <label for="">Región</label>
+          <%= f.collection_select(:region_id, @partido.regions, :id, :nombre, {prompt: 'Seleccione región'}, {'class' => 'form-control', 'ng-model' => "persona.region"}) %>
+        </div>
+        <%= f.input :ano_inicio_militancia, required: false, as: :integer, input_html: { 'ng-model': "persona.ano_inicio_militancia", 'placeholder': "Año militancia persona" } %>
+        <div class="form-group">
+          <label for="afiliado">Afiliado</label>
+          <select name="afiliado" id="afiliado" ng-model="persona.afiliado" class="form-control">
+            <option value="">Se encuentra afiliada al partido?</option>
+            <option value="0">No</option>
+            <option value="1">Si</option>
+          </select>
+        </div>
+        <%= f.input :bio, required: false, as: :text, input_html: { 'ng-model': "persona.bio", 'placeholder': "Biografía" } %>
+        <!--<%= f.input :foto, required: false, as: :file , input_html: { 'ng-model': "persona.foto" } %>-->
+        <%= f.hidden_field :partido_id, :value => @partido.id %>
       <% end %>
 
-    <div flow-init="{target: '/personas/7/foto_upload', method:post}"
+    <!--<div flow-init="{target: '/personas/7/foto_upload', method:post}"
      flow-files-submitted="$flow.upload()"
      flow-file-success="$file.msg = $message">
 
@@ -27,11 +42,11 @@
       Input OR Other element as upload button
       <span class="btn" flow-btn>Upload File</span>
 
-    </div>
+    </div>-->
 
-    <div class="modal-footer">
-      <button class="btn btn-primary" ng-click="save($event)">guardar</button>
-      <button class="btn btn-warning" ng-click="cancel($event)">cancelar</button>
-    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save($event)">guardar</button>
+    <button class="btn btn-warning" ng-click="cancel($event)">cancelar</button>
   </div>
 </script>

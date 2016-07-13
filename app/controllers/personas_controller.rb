@@ -1,6 +1,6 @@
 class PersonasController < ApplicationController
   before_action :set_persona, only: [:show, :edit, :update, :destroy]
-  before_action :set_partido, only: [:index]
+  before_action :set_partido, only: [:index, :create]
   # GET /personas
   # GET /personas.json
   # def index
@@ -50,6 +50,7 @@ class PersonasController < ApplicationController
   # POST /personas.json
   def create
     @persona = Persona.new(persona_params)
+    @persona.partido = @partido
 
     respond_to do |format|
       if @persona.save

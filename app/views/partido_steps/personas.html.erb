@@ -68,7 +68,10 @@
             <td> {{persona.apellidos}} </td>
             <td> {{persona.email}} </td>
             <td> {{persona.rut}} </td>
-            <td> <i class="fa fa-pencil-square-o" ng-click="getPersonaModal(persona.id)" title="Editar"></i> </td>
+            <td>
+              <i class="fa fa-pencil-square-o" ng-click="getPersonaModal(persona.id)" title="Editar"></i>
+              <i class="fa fa-trash" ng-click="removePersona(persona)"></i>
+            </td>
           </tr>
         </tbody>
       </table>
