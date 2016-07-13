@@ -43,18 +43,21 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="cargo in cargos | orderBy:'persona.apellidos + persona.nombre' | filter: filtro_cargos">
+          <tr dir-paginate="cargo in cargos | orderBy:'persona.apellidos + persona.nombre' | filter: filtro_cargos | itemsPerPage: pageSize">
             <td> {{cargo.persona.nombre}} </td>
             <td> {{cargo.persona.apellidos}} </td>
             <td> {{cargo.tipo_cargo.titulo}} </td>
             <td> {{cargo.lugar}} </td>
             <td> {{cargo.fecha_desde}} </td>
             <td> {{cargo.fecha_hasta}} </td>
-            <td> <i class="fa fa-pencil-square-o" ng-click="getCargoModal(cargo.id)" title="Editar"></i> </td>
+            <td>
+              <i class="fa fa-pencil-square-o" ng-click="getCargoModal(cargo.id)" title="Editar"></i>
+              <i class="fa fa-trash" ng-click="removeCargo(cargo)"></i>
+            </td>
           </tr>
         </tbody>
       </table>
-      <dir-pagination-controls template-url="/assets/angular-utils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+      <dir-pagination-controls template-url="/angular_tpl/dirPagination.tpl.html"></dir-pagination-controls>
     </div>
   </div>
   <%= render 'cargos/cargo_modal' %>

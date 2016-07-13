@@ -106,7 +106,9 @@ cargosController.$inject = ["$scope","$http","$location","$aside","$attrs"];
 
 function cargosController($scope,$http,$location,$aside,$attrs){
   $scope.cargos = [];
+  $scope.personas = [];
   $scope.partido_id = $location.path().split("/")[2];
+  $scope.pageSize = 5;
 
   var save_or_update_cargo = function() {
     if($scope.cargo.id) {
@@ -185,10 +187,8 @@ function cargosController($scope,$http,$location,$aside,$attrs){
     $http.get('cargos/'+cargo_id+'.json')
       .success( function(data){
         $scope.cargo = data;
-        fecha_hasta_array = data.fecha_hasta.split('-')
-        fecha_desde_array = data.fecha_desde.split('-')
-        $scope.cargo.fecha_hasta = new Date(fecha_hasta_array[0],fecha_hasta_array[1]-1,fecha_hasta_array[2])
-        $scope.cargo.fecha_desde = new Date(fecha_desde_array[0],fecha_desde_array[1]-1,fecha_desde_array[2])
+        $scope.cargo.fecha_desde = new Date(data.fecha_desde);
+        $scope.cargo.fecha_hasta = new Date(data.fecha_hasta);
       })
       .error( function(error_data){
         $scope.messages = {response: false, message: error_data}
@@ -221,6 +221,13 @@ function cargosController($scope,$http,$location,$aside,$attrs){
         };
       }
     });
+  }
+
+  $scope.removeCargo = function(cargo) {
+    if (confirm('Seguro desea eliminar este Cargo?')) {
+      $http.delete('/partidos/' + $scope.partido_id + '/cargos/' + cargo.id);
+      $scope.cargos.splice($scope.cargos.indexOf(cargo), 1);
+    }
   }
 
   getCargosByPartido($scope.partido_id);

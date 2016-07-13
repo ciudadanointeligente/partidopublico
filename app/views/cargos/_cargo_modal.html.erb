@@ -1,29 +1,34 @@
 <script type="text/ng-template" id="cargo_modal_aside.html">
   <div class="modal-header">
-    <h3>Cargos de {{ persona.id }}</h3>
+    <h3>Cargos</h3>
   </div>
   <div class="modal-body">
+    <%= simple_form_for :cargo, :multipart => true , :remote => true do |f| %>
+      <div class="form-group">
+        <label for="persona_id">Postulante</label>
+        <select name="persona_id" id="persona_id" class="form-control chosen-select" ng-model="cargo.persona_id" ng-init="cargo.persona_id" ng-options="p.id as (p.nombre+' '+p.apellidos) for p in personas"></select>
+      </div>
 
-      <%= simple_form_for :cargo, :multipart => true , :remote => true do |f| %>
-        <select name="persona_id" ng-options="persona.id as persona.nombre +' ' + persona.apellidos +' ' + persona.rut for persona in personas" ng-model="cargo.persona_id" class="form-control chosen-select"></select>
+      <div class="form-group">
+        <label for="tipo_cargo_id">Cargo</label>
+        <select name="tipo_cargo_id" id="tipo_cargo_id" class="form-control chosen-select" ng-model="cargo.tipo_cargo_id" ng-init="cargo.tipo_cargo_id" ng-options="c.id as c.titulo for c in tipo_cargos"></select>
+      </div>
 
-        <select name="tipo_cargo_id" ng-options="tipo_cargo.id as tipo_cargo.titulo for tipo_cargo in tipo_cargos" ng-model="cargo.tipo_cargo_id" class="form-control chosen-select"></select>
+      <div class="form-group">
+        <label for="region_id">Región</label>
+        <select name="region_id" id="region_id" class="form-control chosen-select" ng-model="cargo.region_id" ng-init="cargo.region_id" ng-options="r.id as r.nombre for r in regions"></select>
+      </div>
 
-        <select name="region_id" ng-options="region.id as region.nombre for region in regions" ng-model="cargo.region_id" class="form-control chosen-select"></select>
-
-        <select name="comuna_id" ng-options="comuna.id as comuna.nombre for comuna in comunas" ng-model="cargo.comuna_id" class="form-control chosen-select"></select>
-
-
-
-        <input name="fecha_desde" id="fecha_desde" type="date" ng-model="cargo.fecha_desde">
-
-        <input name="fecha_hasta" id="fecha_hasta" type="date" ng-model="cargo.fecha_hasta">
-
-      <% end %>
-
-    <div class="modal-footer">
-      <button class="btn btn-primary" ng-click="save($event)">guardar</button>
-      <button class="btn btn-warning" ng-click="cancel($event)">cancelar</button>
-    </div>
+      <div class="form-group">
+        <label for="comuna_id">Comuna</label>
+        <select name="comuna_id" id="comuna_id" class="form-control chosen-select" ng-model="cargo.comuna_id" ng-init="cargo.comuna_id" ng-options="comuna.id as comuna.nombre for comuna in comunas"></select>
+      </div>
+      <%= f.input :fecha_desde, as: :date, html5: true, required: false, input_html: {class: 'form-control', 'ng-model': 'cargo.fecha_desde'} %>
+      <%= f.input :fecha_hasta, as: :date, html5: true, required: false, input_html: {class: 'form-control', 'ng-model': 'cargo.fecha_hasta'} %>
+    <% end %>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save($event)">Guardar</button>
+    <button class="btn btn-warning" ng-click="cancel($event)">Cancelar</button>
   </div>
 </script>
