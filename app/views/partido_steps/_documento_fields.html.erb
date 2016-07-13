@@ -38,7 +38,11 @@
           <% end %>
         </div>
       </div>
-      <% link_to_remove_association "marcar para remover el documento", f %>
+    </div>
+    <div class="panel-footer">
+      <%= link_to_remove_association f, class: 'btn btn-default' do %>
+        <i class="fa fa-trash"></i> Marcar para eliminar
+      <% end %>
     </div>
   </div>
 </div>
