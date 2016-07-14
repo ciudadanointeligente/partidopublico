@@ -7,7 +7,7 @@
     <div class="panel-body">
 
       <% if f.object.id.nil? %>
-        <%= f.input :fecha_eleccion %>
+        <%= f.input :fecha_eleccion, as: :date, html5: true %>
         <%= f.input :dias %>
         <%= f.input :cargo, as: :select, collection: Representante.cargos, input_html: { class: 'cargo' } %>
       <% else %>
