@@ -23,13 +23,8 @@
             <%= f.association :regions, as: :check_boxes, collection: Region.all.sort, :selected => @partido.regions, :label => "", wrapper: :horizontal_inline_li_checkboxes,item_wrapper_tag: :li  %>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <h2 class="page-header">Sedes</h2>
-            <%= render 'sedes' %>
-          </div>
-        </div>
       <% end %>
+
     </div>
     <!-- <div class="col-md-3">
       <div class="row">

@@ -1,7 +1,7 @@
 <div ng-controller="sedesController">
   <div class="row">
     <div class="col-md-6">
-      <button class="btn btn-default" ng-click="getSedeModal(null)">
+      <button class="btn btn-default" ng-click="getSedeModal(null); $event.stopPropagation();">
         <i class="fa fa-plus-square-o"></i> Nueva Sede
       </button>
     </div>
