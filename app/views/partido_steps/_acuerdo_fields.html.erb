@@ -25,7 +25,7 @@
           <li><b>Org Interno:</b> <%= f.object.organo_interno %></li>
           <li><b>Region:</b> <%= f.object.region %></li>
           <% if !f.object.documento_file_name.blank? %>
-          <li><b>Documento asociado:</b> <a href="<%= f.object.documento.url %>"><i class="fa fa-file-text-o"></i> <%= f.object.documento_file_name %></a></li>
+          <li><b>Documento asociado:</b> <a href="<%= f.object.documento.url %>" target="_blank"><i class="fa fa-file-text-o"></i> <%= f.object.documento_file_name %></a></li>
           <% end %>
         </ul>
         <%= f.input :id, as: :hidden %>

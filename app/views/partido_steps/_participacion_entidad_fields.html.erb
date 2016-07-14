@@ -17,19 +17,18 @@
         <ul>
           <li><%= f.object.entidad %></li>
           <li><%= f.object.descripcion %></li>
-          <li><%= number_to_human_size f.object.documento.size %></li>
+          <% if !f.object.documento_file_name.blank? %>
+          <li><a href="<%= f.object.documento.url %>" target="_blank"><i class="fa fa-file-text-o"></i> <%= f.object.documento_file_name %></a> (<%= number_to_human_size f.object.documento.size %>)</li>
+          <% end %>
         </ul>
         <%= f.input :id, as: :hidden %>
       <% end %>
 
-      <div class="row">
-        <div class="col-md-12">
-          <%= link_to_remove_association f, class: 'btn btn-default' do %>
-            <i class="fa fa-trash"></i> Marcar para eliminar
-          <% end %>
-        </div>
-      </div>
-
+    </div>
+    <div class="panel-footer">
+      <%= link_to_remove_association f, class: 'btn btn-danger' do %>
+        <i class="fa fa-trash"></i> Marcar para eliminar
+      <% end %>
     </div>
   </div>
 </div>

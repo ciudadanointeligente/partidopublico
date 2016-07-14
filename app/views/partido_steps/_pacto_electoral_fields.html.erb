@@ -10,8 +10,8 @@
     <div class="panel-body">
       <% if f.object.id.nil? %>
         <%= f.input :nombre_pacto %>
-        <%= f.input :ano_eleccion, as: :date %>
-        <%= f.input :descripcion %>
+        <%= f.input :ano_eleccion, as: :date, html5: true, label: 'Año del pacto' %>
+        <%= f.input :descripcion, as: :text %>
         <%= f.association :partidos %>
       <% else %>
         <ul>
@@ -29,14 +29,11 @@
         <%= f.input :id, as: :hidden %>
       <% end %>
 
-      <div class="row">
-        <div class="col-md-12">
-          <%= link_to_remove_association f, class: 'btn btn-default' do %>
-            <i class="fa fa-trash"></i> Marcar para eliminar
-          <% end %>
-        </div>
-      </div>
-
+    </div>
+    <div class="panel-footer">
+      <%= link_to_remove_association f, class: 'btn btn-danger' do %>
+        <i class="fa fa-trash"></i> Marcar para eliminar
+      <% end %>
     </div>
   </div>
 </div>
