@@ -84,7 +84,7 @@
         <%= hidden_field_tag :partido_id, @partido.id %>
         <%= file_field_tag :file, class: 'form-inline' %>
       </div>
-      <%= submit_tag "Import CSV",:id =>"personas_file_submit", :disabled =>true %>
+      <%= submit_tag "Import CSV",:id =>"personas_file_submit", class: 'btn btn-default', :disabled =>true %>
     <% end %>
   </div>
   <%= render 'personas/persona_modal' %>

@@ -1,6 +1,6 @@
 class RegionsController < ApplicationController
   before_action :set_region, only: [:show, :edit, :update, :destroy]
-  before_action :set_partido, only: [:index]
+  before_action :set_partido
 
   # GET /regions
   # GET /regions.json

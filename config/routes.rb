@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     collection { post :import_personas}
     collection { get :upload_foto }
   end
-  resources :regions
+  #resources :regions
   resources :comunas
   resources :distritos
   resources :circunscripcions
@@ -32,8 +32,9 @@ Rails.application.routes.draw do
     resources :cargos
     resources :personas
     resources :tipo_cargos
-    resources :regions
-    resources :comunas
+    resources :regions do
+      resources :comunas
+    end
     resources :distritos
     resources :circunscripcions
     resources :actividad_publicas
