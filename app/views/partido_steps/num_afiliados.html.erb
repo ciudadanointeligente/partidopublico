@@ -1,9 +1,8 @@
+<%= render 'datos_afiliacion' %>
 
 <%= render :layout => 'form' do |f| %>
 
-<%= f.fields_for :afiliacions do |ff| %>
-    <%= render 'afiliacion_fields', :f => ff %>
-<% end %>
+
 <br>
 <%= link_to_add_association 'add num_afiliados', f, :afiliacions %>
 

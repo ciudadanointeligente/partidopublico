@@ -53,11 +53,11 @@ class PartidoStepsController < ApplicationController
             # end
 
         when :num_afiliados
-            @partido.regions.each do |r|
-                if @partido.afiliacions.find_by_region(r.to_s).blank?
-                    @partido.afiliacions << Afiliacion.new(region:r)
-                end
-            end
+            # @partido.regions.each do |r|
+            #     if @partido.afiliacions.find_by_region(r.to_s).blank?
+            #         @partido.afiliacions << Afiliacion.new(region:r)
+            #     end
+            # end
 
         when :tramites
             @partido.tramites.each do |tramite|
@@ -145,7 +145,7 @@ class PartidoStepsController < ApplicationController
         def partido_params
           params.require(:partido).permit(:nombre, :sigla, :lema, :fecha_fundacion, :texto, :logo,
                                                     sedes_attributes: [:id, :region, :direccion, :contacto, :_destroy],
-                                                    afiliacions_attributes: [:id, :region, :hombres, :mujeres, :rangos, :_destroy],
+                                                    afiliacions_attributes: [:id, :region_id, :hombres, :mujeres, :otros, :fecha_datos, :ano_nacimiento, :_destroy],
                                                     tramites_attributes: [:id, :nombre, :descripcion, :persona_id, :documento, :_destroy,
                                                               requisitos_attributes: [:descripcion, :id, :_destroy],
                                                               procedimientos_attributes: [:descripcion, :id, :_destroy]],

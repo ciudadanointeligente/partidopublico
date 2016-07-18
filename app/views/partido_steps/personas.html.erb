@@ -19,7 +19,7 @@
         </tr>
         <tr>
           <td>
-            <%= form_tag import_personas_personas_path,  multipart: true do %>
+            <%= form_tag import_persona_personas_path,  multipart: true do %>
               <%= hidden_field_tag :partido_id, @partido.id %>
               <%= file_field_tag :file%>
               <%= submit_tag "Import CSV",:id =>"personas_file_submit", :disabled =>true %>
