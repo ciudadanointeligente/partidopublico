@@ -1,0 +1,55 @@
+<div class="row" ng-controller="afiliacionsController">
+  <div class="col-md-3" id="row">
+    <table>
+      <tr>
+        <td>
+          <input type="text" ng-model="filtro_afiliacion" placeholder="Filtrar">
+        <td>
+      </tr>
+      <tr>
+        <td>
+          <%= form_tag import_afiliacion_afiliacions_path,  multipart: true do %>
+            <%= hidden_field_tag :partido_id, @partido.id %>
+            <%= file_field_tag :file%>
+            <%= submit_tag "Import CSV",:id =>"personas_file_submit", :disabled =>true %>
+          <% end %>
+        <td>
+      </tr>
+    </table>
+
+
+  </div>
+  <div class="col-md-9">
+    <div class="form-inline text-right" >
+      <div class="form-group">
+        <label for="pagesize"> Resultados por página: </label>
+        <select name="pagesize" id="pagesize" class="form-control" ng-model="pageSize">
+          <option value="5" ng-selected="true" >5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
+      </div>
+    </div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Año - Mes</th>
+          <th>Número de Regiones</th>
+          <th>Total de afiliados</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr dir-paginate="dato in datos_afiliacion | orderBy:'fecha_datos' | filter: filtro_sedes | itemsPerPage: pageSize">
+          <td> {{dato.fecha_datos}} </td>
+          <td> {{dato.count_regiones}} </td>
+          <td> {{dato.total_afiliados}} </td>
+          <td> <i class="fa fa-trash-o" ng-click="postEliminarDatosAfiliacion(dato.fecha_datos)" title="Eliminar"></i> </td>
+        </tr>
+      </tbody>
+    </table>
+    <dir-pagination-controls template-url="/angular_tpl/dirPagination.tpl.html"></dir-pagination-controls>
+  </div>
+  <%= render 'sedes/sede_modal' %>
+</div>
