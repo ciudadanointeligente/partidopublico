@@ -25,7 +25,6 @@
         </div>
       </div>
     </div>
-
     <div class="col-md-3 center-block">
       <div class="form-inline">
         <div class="input-group">
@@ -79,7 +78,7 @@
     </div>
   </div>
   <div>
-    <%= form_tag import_personas_personas_path,  multipart: true, class: 'form-inline' do %>
+    <%= form_tag import_persona_personas_path,  multipart: true, class: 'form-inline' do %>
       <div class="form-group">
         <%= hidden_field_tag :partido_id, @partido.id %>
         <%= file_field_tag :file, class: 'form-inline' %>

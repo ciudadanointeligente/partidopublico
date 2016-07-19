@@ -6,7 +6,8 @@ RSpec.describe "afiliacions/show", type: :view do
       :region => nil,
       :hombres => 1,
       :mujeres => 2,
-      :rangos => "Rangos"
+      :otros => 1,
+      :fecha_datos => '2016-01-01'
     ))
   end
 
@@ -15,6 +16,5 @@ RSpec.describe "afiliacions/show", type: :view do
     expect(rendered).to match(//)
     expect(rendered).to match(/1/)
     expect(rendered).to match(/2/)
-    expect(rendered).to match(/Rangos/)
   end
 end
