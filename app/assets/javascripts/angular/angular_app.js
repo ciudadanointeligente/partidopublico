@@ -430,3 +430,36 @@ function actividad_publicasController($scope,$http,$location,$aside,$attrs){
 
   getActividadesPublicassByPartido($scope.partido_id);
 };
+
+app.controller("afiliacionsController", afiliacionsController);
+afiliacionsController.$inject = ["$scope","$http","$location","$aside","$attrs"];
+
+function afiliacionsController($scope,$http,$location,$aside,$attrs){
+  $scope.actividad_publicas = [];
+  $scope.partido_id = $location.path().split("/")[2];
+
+  function getDatosAgregadosByPartido(partido_id) {
+    $http.get('partidos/'+partido_id+'/afiliacions/aggregate')
+      .success( function(data){
+        $scope.datos_afiliacion = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
+  $scope.postEliminarDatosAfiliacion = function(fecha_datos){
+    fecha_eliminacion = {fecha_datos}
+    $http.post('partidos/'+$scope.partido_id+'/afiliacions/eliminar', fecha_eliminacion)
+      .success( function(data){
+        $scope.datos_eliminacion = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
+
+  getDatosAgregadosByPartido($scope.partido_id);
+
+}
