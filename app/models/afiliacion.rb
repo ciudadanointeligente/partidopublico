@@ -46,8 +46,8 @@ class Afiliacion < ActiveRecord::Base
   # a class method import, with file passed through as an argument
   def self.import(file, partido_id)
     partido = Partido.find partido_id
-
-    # a block that runs through a loop in our CSV data
+    filas_importadas = 0
+    filas_erroneas = 0
     CSV.foreach(file.path, headers: true) do |row|
       new_row_hash = row.to_hash
       new_row_hash['region_id'] = new_row_hash['region']
@@ -59,8 +59,9 @@ class Afiliacion < ActiveRecord::Base
       dato = Afiliacion.new new_row_hash
       dato.partido = partido
       dato.save
+      filas_importadas = filas_importadas + 1
     end
-
+    return_values = { :filas_importadas => filas_importadas, :filas_erroneas => filas_erroneas }
   end
 
   def self.to_csv

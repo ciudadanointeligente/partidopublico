@@ -9,8 +9,8 @@ module PartidoStepsHelper
       step_organisation = { step_categories[0] => ["datos_basicos", "sedes", "personas", "cargos", "administradores"],
                             step_categories[1] => ["normas_internas"],
                             step_categories[2] => ["num_afiliados", "tramites"],
-                            step_categories[3] => ["postulacion_popular", "organos_internos", "postulacion_interna", "agenda_presidente", "actividades_publicas" ],
-                            step_categories[4] => ["acuerdos_organos", "resultados_elecciones_internas"],
+                            step_categories[3] => ["postulacion_popular", "organos_internos", "postulacion_interna" ],
+                            step_categories[4] => ["acuerdos_organos"],
                             step_categories[5] => ["entidades_participadas", "pactos_electorales"],
                             step_categories[6] => ["linea_denuncia", "sanciones"],
                             step_categories[7] => ["a","b"]}

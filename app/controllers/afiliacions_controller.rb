@@ -83,13 +83,12 @@ class AfiliacionsController < ApplicationController
     render plain: "OK"
   end
 
-  def import_afiliacion
-
-    Afiliacion.import(params[:file], params[:partido_id])
-    #return
-    #render :text => params[:partido_id]
-    #redirect_to partido_steps_path(params[:partido_id], :personas)
-    render plain: "OK"
+  def import_afiliacion    
+    return_values = Afiliacion.import(params[:file], params[:partido_id])
+    respond_to do |format|
+      #format.any { render json: return_values, content_type: 'application/json' }
+      format.any { render file: "partido_steps/import_response.js.erb", content_type: "application/js" , :locals => { :return_values => return_values }}
+    end
   end
 
   private

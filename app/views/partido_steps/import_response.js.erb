@@ -1,0 +1,10 @@
+$('#flash_message')[0].innerHTML="";
+$('#flash_message').removeClass("hidden alert-danger alert-success")
+$('#flash_message').attr('style','display:block')
+$('#flash_message').addClass("alert-success")
+<% return_values.each do |indicador| %>
+$('#flash_message').append("<p> <%= indicador.to_s %> </p>")
+<% end %>
+$('#flash_message').fadeOut(5000, function(){
+    location.reload(true);
+});

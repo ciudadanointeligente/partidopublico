@@ -93,11 +93,12 @@ class PersonasController < ApplicationController
   def import_personas
 
     return_values = Persona.import(params[:file], params[:partido_id])
-    puts return_values
-    puts return_values
-    puts return_values
+    respond_to do |format|
+      #format.any { render json: return_values, content_type: 'application/json' }
+      format.any { render file: "partido_steps/import_response.js.erb", content_type: "application/js" , :locals => { :return_values => return_values }}
+    end
 
-    return
+    #return
     #render :text => params[:partido_id]
     #redirect_to partido_steps_path(params[:partido_id], :personas)
 
