@@ -92,10 +92,16 @@ class PersonasController < ApplicationController
 
   def import_personas
 
-    Persona.import(params[:file], params[:partido_id])
-    #return
+    return_values = Persona.import(params[:file], params[:partido_id])
+    puts return_values
+    puts return_values
+    puts return_values
+
+    return
     #render :text => params[:partido_id]
-    redirect_to partido_steps_path(params[:partido_id], :personas)
+    #redirect_to partido_steps_path(params[:partido_id], :personas)
+
+    #redirect_to partido_steps_path(:personas, params[:partido_id])
   end
 
   private

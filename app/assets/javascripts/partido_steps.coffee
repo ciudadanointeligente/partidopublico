@@ -6,6 +6,7 @@ $ ->
   ready = ->
     $('input:file').on 'change', () ->
       $('#personas_file_submit').prop 'disabled', !$(this).val()
+      $('#afiliacion_file_submit').prop 'disabled', !$(this).val()
     $('#partido_steps_form').on("ajax:success", (e, data, status, xhr) ->
       scroll_to_top();
       #$("#partido_steps_form").append xhr.responseText

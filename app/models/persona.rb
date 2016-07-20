@@ -96,7 +96,7 @@ class Persona < ActiveRecord::Base
         end
         u.save
       end
-
+      return_values = { :personas_creadas => personas_creadas, :personas_actualizadas => personas_actualizadas }
     end
 
     def self.to_csv
