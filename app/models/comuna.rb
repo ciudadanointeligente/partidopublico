@@ -15,7 +15,8 @@
 
 class Comuna < ActiveRecord::Base
   belongs_to :provincia
-  
+  has_many :sede
+
     def to_s
         self.nombre
     end

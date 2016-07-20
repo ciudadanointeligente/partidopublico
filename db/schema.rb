@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160627093931) do
+ActiveRecord::Schema.define(version: 20160719181421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -373,8 +373,10 @@ ActiveRecord::Schema.define(version: 20160627093931) do
     t.datetime "updated_at", null: false
     t.integer  "partido_id"
     t.integer  "region_id"
+    t.integer  "comuna_id"
   end
 
+  add_index "sedes", ["comuna_id"], name: "index_sedes_on_comuna_id", using: :btree
   add_index "sedes", ["partido_id"], name: "index_sedes_on_partido_id", using: :btree
 
   create_table "tipo_cargos", force: :cascade do |t|
@@ -436,6 +438,7 @@ ActiveRecord::Schema.define(version: 20160627093931) do
   add_foreign_key "personas", "partidos"
   add_foreign_key "provincias", "regions"
   add_foreign_key "sancions", "partidos"
+  add_foreign_key "sedes", "comunas"
   add_foreign_key "sedes", "partidos"
   add_foreign_key "tramites", "partidos"
   add_foreign_key "tramites", "personas"

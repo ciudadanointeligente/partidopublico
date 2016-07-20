@@ -1,10 +1,17 @@
 class ComunasController < ApplicationController
   before_action :set_comuna, only: [:show, :edit, :update, :destroy]
+  #before_action :set_partido, only: [:index]
+  before_action :set_region, only: [:index]
 
   # GET /comunas
   # GET /comunas.json
   def index
-    @comunas = Comuna.all
+    @comunas = []
+    @region.provincias.each do |p|
+      p.comunas.each do |c|
+        @comunas << {id: c.id, nombre: c.nombre, provincia_id: c.provincia_id}
+      end
+    end
   end
 
   # GET /comunas/1
@@ -63,6 +70,10 @@ class ComunasController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_region
+      @region = Region.find(params[:region_id])
+    end
+
     def set_comuna
       @comuna = Comuna.find(params[:id])
     end

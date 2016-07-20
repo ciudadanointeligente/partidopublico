@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     collection { get :upload_foto }
   end
   #resources :regions
-  resources :comunas
+  #resources :comunas
   resources :distritos
   resources :circunscripcions
   resources :actividad_publicas

@@ -9,9 +9,11 @@
 #  updated_at :datetime         not null
 #  partido_id :integer
 #  region_id  :integer
+#  comuna_id  :integer
 #
 # Indexes
 #
+#  index_sedes_on_comuna_id   (comuna_id)
 #  index_sedes_on_partido_id  (partido_id)
 #
 

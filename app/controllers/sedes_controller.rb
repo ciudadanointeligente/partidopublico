@@ -73,6 +73,6 @@ class SedesController < ApplicationController
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def sede_params
-      params.require(:sede).permit(:region_id, :direccion, :contacto, :partido_id)
+      params.require(:sede).permit(:region_id, :direccion, :contacto, :partido_id, :comuna_id)
     end
 end

@@ -7,7 +7,11 @@
       <%= f.input :partido_id, as: :hidden, :value => @partido.id, input_html: { 'ng-model': "sede.partido_id"} %>
       <div class="form-group">
         <label for="sede_region_id">Región</label>
-        <select name="region_id" id="region_id" ng-model="sede.region_id" ng-init="sede.region_id" ng-options="r.id as r.nombre for r in regions" class="form-control chosen-select"></select>
+        <select name="region_id" id="region_id" ng-model="sede.region_id" ng-init="sede.region_id" ng-options="r.id as r.nombre for r in regions" class="form-control chosen-select" ng-change="getComunas(sede.partido_id, sede.region_id)"></select>
+      </div>
+      <div class="form-group">
+        <label for="sede_comuna_id">Comuna</label>
+        <select name="comuna_id" id="comuna_id" ng-model="sede.comuna_id" ng-init="sede.comuna_id" ng-options="c.id as c.nombre for c in comunas" class="form-control chosen-select"></select>
       </div>
       <%= f.input :direccion, input_html: { 'ng-model': "sede.direccion", 'placeholder': "Dirección sede" } %>
       <%= f.input :contacto, input_html: { 'ng-model': "sede.contacto", 'placeholder': "Contacto sede" } %>
