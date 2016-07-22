@@ -278,8 +278,8 @@ function sedesController($scope,$http,$location,$aside,$attrs){
       })
   }
 
-  function getComunas() {
-    $http.get('partidos/'+$scope.partido_id+'/comunas')
+  $scope.getComunas = function(partido_id, region_id) {
+    $http.get('partidos/'+partido_id+'/regions/'+region_id+'/comunas')
       .success( function(data){
         $scope.comunas = data;
       })
@@ -302,6 +302,9 @@ function sedesController($scope,$http,$location,$aside,$attrs){
     $http.get('sedes/'+sede_id+'.json')
       .success( function(data){
         $scope.sede = data;
+        if (data.region_id) {
+          $scope.getComunas(data.partido_id, data.region_id)
+        }
       })
       .error( function(error_data){
         $scope.messages = {response: false, message: error_data}
@@ -345,7 +348,7 @@ function sedesController($scope,$http,$location,$aside,$attrs){
 
   getSedesByPartido($scope.partido_id);
   getRegions();
-  getComunas();
+  //getComunas();
 };
 
 app.controller("actividad_publicasController",actividad_publicasController);

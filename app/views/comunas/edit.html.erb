@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @comuna %> |
-<%= link_to 'Back', comunas_path %>
+<%= link_to 'Show', partido_region_comuna_path(@partido,@region,@comuna) %> |
+<%= link_to 'Back', partido_region_comunas_path(@partido,@region) %>

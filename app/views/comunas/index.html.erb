@@ -12,9 +12,10 @@
   <tbody>
     <% @comunas.each do |comuna| %>
       <tr>
-        <td><%= link_to 'Show', comuna %></td>
-        <td><%= link_to 'Edit', edit_comuna_path(comuna) %></td>
-        <td><%= link_to 'Destroy', comuna, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= comuna %></td>
+        <td><%= link_to 'Show', partido_region_comuna_path(@partido, @region, comuna) %></td>
+        <td><%= link_to 'Edit', edit_partido_region_comuna_path(@partido, @region, comuna) %></td>
+        <td><%= link_to 'Destroy', partido_region_comuna_path(@partido, @region, comuna), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -22,4 +23,4 @@
 
 <br>
 
-<%= link_to 'New Comuna', new_comuna_path %>
+<%= link_to 'New Comuna', new_partido_region_comuna_path(@partido,@region) %>
