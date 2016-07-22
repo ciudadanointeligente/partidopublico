@@ -47,21 +47,26 @@ class Afiliacion < ActiveRecord::Base
   def self.import(file, partido_id)
     partido = Partido.find partido_id
     filas_importadas = 0
-    filas_erroneas = 0
+    errores = 0
     CSV.foreach(file.path, headers: true) do |row|
-      new_row_hash = row.to_hash
-      new_row_hash['region_id'] = new_row_hash['region']
-      new_row_hash.delete('region')
-      new_row_hash['fecha_datos'] = Date.new(new_row_hash['ano_datos'].to_i, new_row_hash['mes_datos'].to_i, 01)
-      new_row_hash.delete('ano_datos')
-      new_row_hash.delete('mes_datos')
+      begin
+        new_row_hash = row.to_hash
+        new_row_hash['region_id'] = new_row_hash['region']
+        new_row_hash.delete('region')
+        new_row_hash['fecha_datos'] = Date.new(new_row_hash['ano_datos'].to_i, new_row_hash['mes_datos'].to_i, 01)
+        new_row_hash.delete('ano_datos')
+        new_row_hash.delete('mes_datos')
 
-      dato = Afiliacion.new new_row_hash
-      dato.partido = partido
-      dato.save
-      filas_importadas = filas_importadas + 1
+        dato = Afiliacion.new new_row_hash
+        dato.partido = partido
+        dato.save
+        filas_importadas = filas_importadas + 1
+      rescue
+        errores = errores + 1
+      end
+
     end
-    return_values = { :filas_importadas => filas_importadas, :filas_erroneas => filas_erroneas }
+    return_values = { :errores => errores, :filas_importadas => filas_importadas }
   end
 
   def self.to_csv

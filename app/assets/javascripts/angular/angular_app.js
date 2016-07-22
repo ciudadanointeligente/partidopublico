@@ -341,7 +341,7 @@ function sedesController($scope,$http,$location,$aside,$attrs){
       $http.delete('/partidos/' + $scope.partido_id + '/sedes/' + sede.id);
       $scope.sedes.splice($scope.sedes.indexOf(sede), 1);
     }
-}
+  }
 
   getSedesByPartido($scope.partido_id);
   getRegions();
@@ -461,5 +461,97 @@ function afiliacionsController($scope,$http,$location,$aside,$attrs){
 
 
   getDatosAgregadosByPartido($scope.partido_id);
+
+}
+
+app.controller("tipoCargosController", tipoCargosController);
+tipoCargosController.$inject = ["$scope","$http","$location","$aside","$attrs"];
+
+function tipoCargosController($scope,$http,$location,$aside,$attrs){
+  $scope.tipo_cargos = [];
+  $scope.partido_id = $location.path().split("/")[2];
+
+  function getTipoCargosByPartido(partido_id) {
+    $http.get('partidos/'+partido_id+'/tipo_cargos')
+      .success( function(data){
+        $scope.tipo_cargos = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
+  function getTipoCargoInfo(tipo_cargo_id) {
+    $http.get('tipo_cargos/'+tipo_cargo_id+'.json')
+      .success( function(data){
+        $scope.tipo_cargo = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
+  var save_or_update_tipo_cargo = function() {
+    if($scope.tipo_cargo.id) {
+      $http.put('/tipo_cargos/'+$scope.tipo_cargo.id, $scope.tipo_cargo)
+        .success(function(data){
+          getTipoCargosByPartido($scope.partido_id);
+        })
+        .error(function (){
+          $scope.messages = { response: false, message: $attrs.errorupdatingask }
+          scroll_to_top();
+        });
+    }
+    else {
+      $scope.tipo_cargo.partido_id = $scope.partido_id
+      $http.post('/tipo_cargos/', $scope.tipo_cargo)
+        .success(function(data){
+          getTipoCargosByPartido($scope.partido_id);
+        })
+        .error(function (){
+          $scope.messages = { response: false, message: $attrs.errorcreatingask }
+          scroll_to_top();
+        });
+    }
+  }
+
+  $scope.getTipoCargoModal = function(tipo_cargo_id){
+    if(tipo_cargo_id) {
+      console.log($scope.tipo_cargos)
+      getTipoCargoInfo(tipo_cargo_id);
+    } else {
+      $scope.tipo_cargo = {
+        partido_id: $scope.partido_id
+      };
+    }
+    $aside.open({
+      templateUrl: 'tipo_cargo_modal_aside.html',
+      scope: $scope,
+      placement: 'left',
+      size: 'lg',
+      backdrop: true,
+      controller: function($scope,$uibModalInstance){
+        $scope.save = function(e) {
+          save_or_update_tipo_cargo();
+          $uibModalInstance.close();
+          e.stopPropagation();
+        };
+        $scope.cancel = function(e) {
+          $uibModalInstance.close();
+          e.stopPropagation();
+        };
+      }
+    });
+  }
+
+  $scope.removeTipoCargo = function (tipo_cargo) {
+    if (confirm('Seguro desea eliminar este tipo de cargo?')) {
+      $http.delete('/partidos/' + $scope.partido_id + '/tipo_cargos/' + tipo_cargo.id);
+      $scope.tipo_cargos.splice($scope.tipo_cargos.indexOf(tipo_cargo), 1);
+    }
+  }
+
+
+  getTipoCargosByPartido($scope.partido_id);
 
 }

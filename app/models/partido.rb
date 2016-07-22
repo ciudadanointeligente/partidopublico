@@ -22,9 +22,8 @@ class Partido < ActiveRecord::Base
     validates_attachment :logo,
         content_type: { content_type:  /\Aimage\/.*\Z/ },
         size: { in: 0..500.kilobytes }
-    validates_presence_of :nombre, :sigla, :lema, :message => "debe rellenar"
-    validates_uniqueness_of :nombre, :sigla, :lema, :message => "already exists"
-    validates_length_of :lema, :within => 2..200
+    validates_presence_of :nombre, :sigla, :message => "debe rellenar"
+    validates_uniqueness_of :nombre, :sigla, :message => "already exists"
 
     has_many :admins, through: :permissions
     has_many :permissions, dependent: :destroy
@@ -51,6 +50,7 @@ class Partido < ActiveRecord::Base
     has_many :sancions, dependent: :destroy
     has_many :personas, dependent: :destroy
     has_many :cargos, dependent: :destroy
+    has_many :tipo_cargos, dependent: :destroy
 
     accepts_nested_attributes_for :marco_interno, allow_destroy: true
     accepts_nested_attributes_for :organo_internos, allow_destroy: true
@@ -79,7 +79,7 @@ class Partido < ActiveRecord::Base
         self.admins << admin
       end
 
-      self.marco_general = MarcoGeneral.new
+      #self.marco_general = MarcoGeneral.new
       self.marco_interno = MarcoInterno.new
       self.marco_interno.documentos << Documento.new(descripcion:"Marco Normativo Interno")
       self.marco_interno.documentos << Documento.new(descripcion:"Código de Ética")
@@ -93,6 +93,21 @@ class Partido < ActiveRecord::Base
       self.organo_internos << OrganoInterno.new(nombre:"Tribunal supremo")
       self.tramites << Tramite.new(nombre:"Afiliación")
       self.tramites << Tramite.new(nombre:"Desfiliación")
+      self.personas << Persona.new( rut:"14132725-"+self.id.to_s,
+                                    nombre:"Ejemplo",
+                                    apellidos:"Ejemplo Ejemplo",
+                                    genero:"Otro",
+                                    telefono:"+56912345678",
+                                    email:"ejemplo@ejemplo.com",
+                                    intereses:"http://www.servel.cl/intereses",
+                                    patrimonio:"http://www.servel.cl/patrimonio",
+                                    fecha_nacimiento:Date.new(1900, 01, 01),
+                                    nivel_estudios:"Ejemplo",
+                                    afiliado:true,
+                                    ano_inicio_militancia:"1950",
+                                    bio:"Ejemplo Biografía"
+                                    )
+      self.tipo_cargos << TipoCargo.new(titulo:"Ejemplo Alcalde")
       self.save
     end
 

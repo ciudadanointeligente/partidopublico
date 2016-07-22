@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713195359) do
+ActiveRecord::Schema.define(version: 20160721153021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -352,7 +352,7 @@ ActiveRecord::Schema.define(version: 20160713195359) do
     t.string   "requisitable_type"
   end
 
-  add_index "requisitos", ["requisitable_type", "requisitable_id"], name: "index_requisitable_type_and_id", using: :btree
+  add_index "requisitos", ["requisitable_type", "requisitable_id"], name: "index_requisitos_on_requisitable_type_and_requisitable_id", using: :btree
 
   create_table "sancions", force: :cascade do |t|
     t.string   "descripcion"
@@ -384,7 +384,10 @@ ActiveRecord::Schema.define(version: 20160713195359) do
     t.string   "titulo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "partido_id"
   end
+
+  add_index "tipo_cargos", ["partido_id"], name: "index_tipo_cargos_on_partido_id", using: :btree
 
   create_table "tramites", force: :cascade do |t|
     t.string   "nombre"
@@ -425,8 +428,8 @@ ActiveRecord::Schema.define(version: 20160713195359) do
   add_foreign_key "cargos", "personas"
   add_foreign_key "cargos", "regions"
   add_foreign_key "cargos", "tipo_cargos"
-  add_foreign_key "comunas", "regions", column: "provincia_id"
-  add_foreign_key "distritos", "regions", column: "circunscripcion_id"
+  add_foreign_key "comunas", "provincias"
+  add_foreign_key "distritos", "circunscripcions"
   add_foreign_key "eleccion_internas", "organo_internos"
   add_foreign_key "eleccion_internas", "partidos"
   add_foreign_key "eleccion_populars", "partidos"
@@ -441,6 +444,7 @@ ActiveRecord::Schema.define(version: 20160713195359) do
   add_foreign_key "provincias", "regions"
   add_foreign_key "sancions", "partidos"
   add_foreign_key "sedes", "partidos"
+  add_foreign_key "tipo_cargos", "partidos"
   add_foreign_key "tramites", "partidos"
   add_foreign_key "tramites", "personas"
 end
