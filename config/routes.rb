@@ -5,7 +5,10 @@ Rails.application.routes.draw do
   resources :cargos
   resources :tipo_cargos
   resources :personas
-  resources :afiliacions
+  resources :afiliacions do
+    collection { post :import_afiliacion}
+    collection { get :aggregate }
+  end
   resources :sedes
   resources :tramites
   resources :acuerdos
@@ -15,7 +18,7 @@ Rails.application.routes.draw do
   resources :requisitos
   resources :organo_internos
   resources :personas do
-    collection { post :import_personas}
+    collection { post :import_persona}
     collection { get :upload_foto }
   end
   #resources :regions
@@ -39,6 +42,10 @@ Rails.application.routes.draw do
     resources :circunscripcions
     resources :actividad_publicas
     resources :sedes
+    resources :afiliacions do
+      collection { get :aggregate }
+      collection { post :eliminar }
+    end
   end
 
   scope "partido/:partido_id" do
