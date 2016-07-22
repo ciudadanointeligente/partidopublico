@@ -449,16 +449,18 @@ function afiliacionsController($scope,$http,$location,$aside,$attrs){
   }
 
   $scope.postEliminarDatosAfiliacion = function(fecha_datos){
-    fecha_eliminacion = {fecha_datos}
-    $http.post('partidos/'+$scope.partido_id+'/afiliacions/eliminar', fecha_eliminacion)
-      .success( function(data){
-        $scope.datos_eliminacion = data;
-      })
-      .error( function(error_data){
-        $scope.messages = {response: false, message: error_data}
-      })
+    if (confirm('Seguro desea eliminar los datos con fecha ' + fecha_datos + '?')) {
+      fecha_eliminacion = {fecha_datos}
+      $http.post('partidos/'+$scope.partido_id+'/afiliacions/eliminar', fecha_eliminacion)
+        .success( function(data){
+          $scope.datos_eliminacion = data;
+          getDatosAgregadosByPartido($scope.partido_id);
+        })
+        .error( function(error_data){
+          $scope.messages = {response: false, message: error_data}
+        })
+      }
   }
-
 
   getDatosAgregadosByPartido($scope.partido_id);
 
