@@ -1,4 +1,4 @@
-<%= simple_form_for(@partido, @region, @comuna) do |f| %>
+<%= simple_form_for([@partido, @region, @comuna]) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">

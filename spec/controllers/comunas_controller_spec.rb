@@ -43,17 +43,11 @@ RSpec.describe ComunasController, type: :controller do
       provincia = create(:provincia)
       comuna = create(:comuna)
 
-      region.provincias << provincia
-      region.save
-
-      comuna.provincia = provincia
-      comuna.save
-
       partido.regions << region
       partido.save
 
       get :index, {partido_id: partido.id, region_id: region.id}, valid_session
-      expect(assigns(:comunas)).to eq([comuna])
+      expect(assigns(:comunas)).to eq(region.comunas)
     end
   end
 
@@ -68,9 +62,10 @@ RSpec.describe ComunasController, type: :controller do
   describe "GET #new" do
     it "assigns a new comuna as @comuna" do
       partido = create(:partido)
+      region = create(:region)
       comuna = create(:comuna)
 
-      get :new, {partido_id: partido.id, comuna_id: comuna.id}, valid_session
+      get :new, {partido_id: partido.id, region_id: region.id}, valid_session
       expect(assigns(:comuna)).to be_a_new(Comuna)
     end
   end

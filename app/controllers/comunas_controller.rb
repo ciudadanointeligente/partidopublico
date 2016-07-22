@@ -1,17 +1,12 @@
 class ComunasController < ApplicationController
   before_action :set_comuna, only: [:show, :edit, :update, :destroy]
-  #before_action :set_partido, only: [:index]
-  before_action :set_region, only: [:index]
+  before_action :set_partido
+  before_action :set_region
 
   # GET /comunas
   # GET /comunas.json
   def index
-    @comunas = []
-    @region.provincias.each do |p|
-      p.comunas.each do |c|
-        @comunas << {id: c.id, nombre: c.nombre, provincia_id: c.provincia_id}
-      end
-    end
+    @comunas = @region.comunas
   end
 
   # GET /comunas/1
@@ -35,7 +30,7 @@ class ComunasController < ApplicationController
 
     respond_to do |format|
       if @comuna.save
-        format.html { redirect_to @comuna, notice: 'Comuna was successfully created.' }
+        format.html { redirect_to partido_region_comunas_path(@partido, @region), notice: 'Comuna was successfully created.' }
         format.json { render :show, status: :created, location: @comuna }
       else
         format.html { render :new }
@@ -49,7 +44,7 @@ class ComunasController < ApplicationController
   def update
     respond_to do |format|
       if @comuna.update(comuna_params)
-        format.html { redirect_to @comuna, notice: 'Comuna was successfully updated.' }
+        format.html { redirect_to partido_region_comuna_path(@partido, @region, @comuna), notice: 'Comuna was successfully updated.' }
         format.json { render :show, status: :ok, location: @comuna }
       else
         format.html { render :edit }
@@ -63,13 +58,17 @@ class ComunasController < ApplicationController
   def destroy
     @comuna.destroy
     respond_to do |format|
-      format.html { redirect_to comunas_url, notice: 'Comuna was successfully destroyed.' }
+      format.html { redirect_to partido_region_comunas_url, notice: 'Comuna was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_partido
+      @partido = Partido.find(params[:partido_id])
+    end
+
     def set_region
       @region = Region.find(params[:region_id])
     end
