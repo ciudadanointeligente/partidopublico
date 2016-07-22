@@ -15,7 +15,6 @@
 
 FactoryGirl.define do
   factory :comuna do
-    region nil
     nombre "MyString"
   end
 end

@@ -1,3 +1,3 @@
 json.array!(@comunas) do |comuna|
-  json.merge! comuna.attributes
+  json.extract! comuna, :id, :nombre, :provincia_id
 end

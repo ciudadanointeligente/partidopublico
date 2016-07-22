@@ -28,6 +28,7 @@
       <table class="table table-striped">
         <thead>
           <tr>
+            <th>Comuna</th>
             <th>Región</th>
             <th>Dirección</th>
             <th>Contacto</th>
@@ -36,6 +37,7 @@
         </thead>
         <tbody>
           <tr dir-paginate="sede in sedes | filter: filtro_sedes | itemsPerPage: pageSize">
+            <td> {{sede.comuna.nombre }} </td>
             <td> {{sede.region.nombre}} </td>
             <td> {{sede.direccion}} </td>
             <td> {{sede.contacto}} </td>

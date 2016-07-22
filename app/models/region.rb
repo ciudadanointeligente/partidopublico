@@ -16,7 +16,7 @@ class Region < ActiveRecord::Base
     has_many :comunas, through: :provincias
     has_many :distritos
     has_many :circunscripcions
-    
+
     def to_s
         self.nombre
     end
