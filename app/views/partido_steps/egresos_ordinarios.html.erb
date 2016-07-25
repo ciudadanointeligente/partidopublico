@@ -1,5 +1,7 @@
-<div class="container" ng-controller="afiliacionsController">
-  <h2 class="page-header">Número de Afiliados</h2>
+<div class="container" ng-controller="finanzas2Controller">
+
+  <h2 class="page-header">Egresos Ordinarios</h2>
+
   <div class="row">
     <div class="col-md-12">
       <div id="flash_message" class="hidden alert alert-dismissible" role="alert">
@@ -12,7 +14,7 @@
     <div class="col-md-7">
 
       <div>
-        <%= form_tag import_afiliacion_afiliacions_path, remote: true,  multipart: true, class: 'form-inline' do %>
+        <%= form_tag import_egresos_ordinarios_egreso_ordinarios_path, remote: true,  multipart: true, class: 'form-inline' do %>
           <div class="form-group">
             <%= hidden_field_tag :partido_id, @partido.id %>
             <%= file_field_tag :file, class: 'form-inline' %>
@@ -43,17 +45,17 @@
         <thead>
           <tr>
             <th>Año - Mes</th>
-            <th>Número de Regiones</th>
-            <th>Total de afiliados</th>
+            <th>Total Privado </th>
+            <th>Total Público </th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          <tr dir-paginate="dato in datos_afiliacion | orderBy:'fecha_datos' | filter: filtro_sedes | itemsPerPage: pageSize">
+          <tr dir-paginate="dato in datos_egresos_ordinarios | orderBy:'fecha_datos' | filter: filtro_sedes | itemsPerPage: pageSize">
             <td> {{dato.fecha_datos}} </td>
-            <td> {{dato.count_regiones}} </td>
-            <td> {{dato.total_afiliados}} </td>
-            <td> <i class="fa fa-trash-o" ng-click="postEliminarDatosAfiliacion(dato.fecha_datos)" title="Eliminar"></i> </td>
+            <td> {{dato.total_privado}} </td>
+            <td> {{dato.total_publico}} </td>
+            <td> <i class="fa fa-trash-o" ng-click="postEliminarDatosEgresosOrdinarios(dato.fecha_datos)" title="Eliminar"></i> </td>
           </tr>
         </tbody>
       </table>

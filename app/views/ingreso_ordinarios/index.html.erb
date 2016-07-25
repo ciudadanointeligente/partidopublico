@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Ingreso Ordinarios</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ingreso_ordinarios.each do |ingreso_ordinario| %>
+      <tr>
+        <td><%= link_to 'Show', ingreso_ordinario %></td>
+        <td><%= link_to 'Edit', edit_ingreso_ordinario_path(ingreso_ordinario) %></td>
+        <td><%= link_to 'Destroy', ingreso_ordinario, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ingreso ordinario', new_ingreso_ordinario_path %>

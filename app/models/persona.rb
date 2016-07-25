@@ -78,6 +78,7 @@ class Persona < ActiveRecord::Base
 
         begin
           u = Persona.find_by_rut row.to_hash['rut']
+          PaperTrail.whodunnit = current_admin.email
           if u.blank?
             u = Persona.new row.to_hash
             u.partido = partido

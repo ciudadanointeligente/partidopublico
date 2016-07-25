@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Partido:</strong>
+  <%= @egreso_ordinario.partido %>
+</p>
+
+<p>
+  <strong>Fecha datos:</strong>
+  <%= @egreso_ordinario.fecha_datos %>
+</p>
+
+<p>
+  <strong>Concepto:</strong>
+  <%= @egreso_ordinario.concepto %>
+</p>
+
+<p>
+  <strong>Privado:</strong>
+  <%= @egreso_ordinario.privado %>
+</p>
+
+<p>
+  <strong>Publico:</strong>
+  <%= @egreso_ordinario.publico %>
+</p>
+
+<%= link_to 'Edit', edit_egreso_ordinario_path(@egreso_ordinario) %> |
+<%= link_to 'Back', egreso_ordinarios_path %>

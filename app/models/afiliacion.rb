@@ -57,6 +57,8 @@ class Afiliacion < ActiveRecord::Base
         new_row_hash.delete('ano_datos')
         new_row_hash.delete('mes_datos')
 
+        PaperTrail.whodunnit = current_admin.email
+
         dato = Afiliacion.new new_row_hash
         dato.partido = partido
         dato.save
