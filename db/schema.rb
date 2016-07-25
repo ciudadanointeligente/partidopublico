@@ -352,7 +352,7 @@ ActiveRecord::Schema.define(version: 20160719181421) do
     t.string   "requisitable_type"
   end
 
-  add_index "requisitos", ["requisitable_type", "requisitable_id"], name: "index_requisitable_type_and_id", using: :btree
+  add_index "requisitos", ["requisitable_type", "requisitable_id"], name: "index_requisitos_on_requisitable_type_and_requisitable_id", using: :btree
 
   create_table "sancions", force: :cascade do |t|
     t.string   "descripcion"
@@ -427,8 +427,8 @@ ActiveRecord::Schema.define(version: 20160719181421) do
   add_foreign_key "cargos", "personas"
   add_foreign_key "cargos", "regions"
   add_foreign_key "cargos", "tipo_cargos"
-  add_foreign_key "comunas", "regions", column: "provincia_id"
-  add_foreign_key "distritos", "regions", column: "circunscripcion_id"
+  add_foreign_key "comunas", "provincias"
+  add_foreign_key "distritos", "circunscripcions"
   add_foreign_key "eleccion_internas", "organo_internos"
   add_foreign_key "eleccion_internas", "partidos"
   add_foreign_key "eleccion_populars", "partidos"
