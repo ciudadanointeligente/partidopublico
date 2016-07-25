@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   resources :requisitos
   resources :organo_internos
   resources :personas do
-    collection { post :import_persona}
+    collection { post :import_personas}
     collection { get :upload_foto }
   end
   #resources :regions

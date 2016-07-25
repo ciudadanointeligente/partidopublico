@@ -1,10 +1,11 @@
 class TipoCargosController < ApplicationController
   before_action :set_tipo_cargo, only: [:show, :edit, :update, :destroy]
+  before_action :set_partido, only: [:index, :create]
 
   # GET /tipo_cargos
   # GET /tipo_cargos.json
   def index
-    @tipo_cargos = TipoCargo.all
+    @tipo_cargos = TipoCargo.where partido: @partido
   end
 
   # GET /tipo_cargos/1
@@ -67,8 +68,12 @@ class TipoCargosController < ApplicationController
       @tipo_cargo = TipoCargo.find(params[:id])
     end
 
+    def set_partido
+      @partido = Partido.find(params[:partido_id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def tipo_cargo_params
-      params.require(:tipo_cargo).permit(:titulo)
+      params.require(:tipo_cargo).permit(:titulo, :partido_id)
     end
 end

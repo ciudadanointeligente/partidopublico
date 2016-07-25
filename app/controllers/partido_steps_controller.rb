@@ -8,11 +8,11 @@ class PartidoStepsController < ApplicationController
     before_action :set_partido
     before_action :admin_allowed
 
-    steps   :datos_basicos, :sedes, :personas, :cargos, :administradores,
+    steps   :datos_basicos, :sedes, :personas, :tipo_cargos, :cargos, :administradores,
             :normas_internas,
             :num_afiliados, :tramites,
-            :postulacion_popular, :organos_internos, :postulacion_interna, :agenda_presidente, :actividades_publicas,
-            :acuerdos_organos, :resultados_elecciones_internas,
+            :postulacion_popular, :organos_internos, :postulacion_interna,
+            :acuerdos_organos,
             :entidades_participadas, :pactos_electorales,
             :linea_denuncia, :sanciones
 
