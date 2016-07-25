@@ -10,7 +10,7 @@ RSpec.describe "egreso_ordinarios/new", type: :view do
     ))
   end
 
-  it "renders new egreso_ordinario form" do
+  xit "renders new egreso_ordinario form" do
     render
 
     assert_select "form[action=?][method=?]", egreso_ordinarios_path, "post" do

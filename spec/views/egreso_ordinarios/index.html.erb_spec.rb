@@ -18,7 +18,7 @@ RSpec.describe "egreso_ordinarios/index", type: :view do
     ])
   end
 
-  it "renders a list of egreso_ordinarios" do
+  xit "renders a list of egreso_ordinarios" do
     render
     assert_select "tr>td", :text => nil.to_s, :count => 2
     assert_select "tr>td", :text => "Concepto".to_s, :count => 2
