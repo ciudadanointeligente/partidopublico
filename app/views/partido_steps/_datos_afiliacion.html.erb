@@ -9,7 +9,10 @@
   </div>
 
   <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-3">
+      <%= link_to 'Descargar Modelo Fichero CSV', 'system/resources/modelo_num_afiliados_x_region.csv', download: 'datos_afiliacion.csv', class: "btn btn-default", target: "_blank"%>
+    </div>
+    <div class="col-md-5">
 
       <div>
         <%= form_tag import_afiliacion_afiliacions_path, remote: true,  multipart: true, class: 'form-inline' do %>
@@ -22,7 +25,7 @@
       </div>
 
     </div>
-    <div class="col-md-5">
+    <div class="col-md-4">
       <div class="form-inline text-right" >
         <div class="form-group">
           <label for="pagesize"> Resultados por página: </label>
