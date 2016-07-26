@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Partido:</strong>
+  <%= @balance_anual.partido %>
+</p>
+
+<p>
+  <strong>Fecha datos:</strong>
+  <%= @balance_anual.fecha_datos %>
+</p>
+
+<p>
+  <strong>Concepto:</strong>
+  <%= @balance_anual.concepto %>
+</p>
+
+<p>
+  <strong>Tipo:</strong>
+  <%= @balance_anual.tipo %>
+</p>
+
+<p>
+  <strong>Importe:</strong>
+  <%= @balance_anual.importe %>
+</p>
+
+<%= link_to 'Edit', edit_balance_anual_path(@balance_anual) %> |
+<%= link_to 'Back', balance_anuals_path %>

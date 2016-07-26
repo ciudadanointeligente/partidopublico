@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160721153021) do
+ActiveRecord::Schema.define(version: 20160726144339) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,18 @@ ActiveRecord::Schema.define(version: 20160721153021) do
 
   add_index "afiliacions", ["partido_id"], name: "index_afiliacions_on_partido_id", using: :btree
   add_index "afiliacions", ["region_id"], name: "index_afiliacions_on_region_id", using: :btree
+
+  create_table "balance_anuals", force: :cascade do |t|
+    t.integer  "partido_id"
+    t.date     "fecha_datos"
+    t.string   "concepto"
+    t.string   "tipo"
+    t.integer  "importe",     limit: 8
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "balance_anuals", ["partido_id"], name: "index_balance_anuals_on_partido_id", using: :btree
 
   create_table "cargos", force: :cascade do |t|
     t.integer  "persona_id"
@@ -150,6 +162,18 @@ ActiveRecord::Schema.define(version: 20160721153021) do
 
   add_index "documentos", ["documentable_type", "documentable_id"], name: "index_documentos_on_documentable_type_and_documentable_id", using: :btree
 
+  create_table "egreso_ordinarios", force: :cascade do |t|
+    t.integer  "partido_id"
+    t.date     "fecha_datos"
+    t.string   "concepto"
+    t.integer  "privado"
+    t.integer  "publico"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "egreso_ordinarios", ["partido_id"], name: "index_egreso_ordinarios_on_partido_id", using: :btree
+
   create_table "eleccion_internas", force: :cascade do |t|
     t.integer  "organo_interno_id"
     t.date     "fecha_eleccion"
@@ -174,6 +198,17 @@ ActiveRecord::Schema.define(version: 20160721153021) do
 
   add_index "eleccion_populars", ["partido_id"], name: "index_eleccion_populars_on_partido_id", using: :btree
 
+  create_table "ingreso_ordinarios", force: :cascade do |t|
+    t.date     "fecha_datos"
+    t.string   "concepto"
+    t.integer  "importe"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "partido_id"
+  end
+
+  add_index "ingreso_ordinarios", ["partido_id"], name: "index_ingreso_ordinarios_on_partido_id", using: :btree
+
   create_table "item_contables", force: :cascade do |t|
     t.integer  "categoria_financiera_id"
     t.string   "concepto"
@@ -182,6 +217,7 @@ ActiveRecord::Schema.define(version: 20160721153021) do
     t.integer  "partido_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.date     "fecha_datos"
   end
 
   create_table "leys", force: :cascade do |t|
@@ -423,6 +459,7 @@ ActiveRecord::Schema.define(version: 20160721153021) do
   add_foreign_key "acuerdos", "partidos"
   add_foreign_key "afiliacions", "partidos"
   add_foreign_key "afiliacions", "regions"
+  add_foreign_key "balance_anuals", "partidos"
   add_foreign_key "cargos", "circunscripcions"
   add_foreign_key "cargos", "comunas"
   add_foreign_key "cargos", "distritos"
@@ -432,9 +469,11 @@ ActiveRecord::Schema.define(version: 20160721153021) do
   add_foreign_key "cargos", "tipo_cargos"
   add_foreign_key "comunas", "provincias"
   add_foreign_key "distritos", "circunscripcions"
+  add_foreign_key "egreso_ordinarios", "partidos"
   add_foreign_key "eleccion_internas", "organo_internos"
   add_foreign_key "eleccion_internas", "partidos"
   add_foreign_key "eleccion_populars", "partidos"
+  add_foreign_key "ingreso_ordinarios", "partidos"
   add_foreign_key "leys", "marco_generals"
   add_foreign_key "marco_generals", "partidos"
   add_foreign_key "marco_internos", "partidos"

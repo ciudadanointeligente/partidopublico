@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :balance_anuals
+  resources :egreso_ordinarios
+  resources :ingreso_ordinarios
   devise_for :admins
   get 'admin', to: 'partidos#admin'
 
@@ -20,6 +23,15 @@ Rails.application.routes.draw do
   resources :personas do
     collection { post :import_personas}
     collection { get :upload_foto }
+  end
+  resources :ingreso_ordinarios do
+    collection {post :import_ingresos_ordinarios}
+  end
+  resources :egreso_ordinarios do
+    collection {post :import_egresos_ordinarios}
+  end
+  resources :balance_anuals do
+    collection {post :import_balance_anual}
   end
   #resources :regions
   #resources :comunas
@@ -44,6 +56,18 @@ Rails.application.routes.draw do
     resources :sedes
     resources :afiliacions do
       collection { get :aggregate }
+      collection { post :eliminar }
+    end
+    resources :ingreso_ordinarios do
+      collection { get :aggregate_ingresos_ordinarios }
+      collection { post :eliminar }
+    end
+    resources :egreso_ordinarios do
+      collection { get :aggregate_egresos_ordinarios }
+      collection { post :eliminar }
+    end
+    resources :balance_anuals do
+      collection { get :aggregate_balance_anual }
       collection { post :eliminar }
     end
   end

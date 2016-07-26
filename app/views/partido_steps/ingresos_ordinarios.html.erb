@@ -1,0 +1,69 @@
+<div class="container" ng-controller="finanzas1Controller">
+
+  <h2 class="page-header">Ingresos Ordinarios</h2>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div id="flash_message" class="hidden alert alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <%= link_to 'Descargar Modelo Fichero CSV', 'system/resources/modelo_ingresos_ordinarios.csv', download: 'datos_ingresos_ordinarios.csv', class: "btn btn-default", target: "_blank"%>
+    </div>
+
+    <div class="col-md-5">
+
+      <div>
+        <%= form_tag import_ingresos_ordinarios_ingreso_ordinarios_path, remote: true,  multipart: true, class: 'form-inline' do %>
+          <div class="form-group">
+            <%= hidden_field_tag :partido_id, @partido.id %>
+            <%= file_field_tag :file, class: 'form-inline' %>
+          </div>
+          <%= submit_tag "Import CSV",:id =>"afiliacion_file_submit", class: 'btn btn-default', :disabled =>true %>
+        <% end %>
+      </div>
+
+    </div>
+    <div class="col-md-4">
+      <div class="form-inline text-right" >
+        <div class="form-group">
+          <label for="pagesize"> Resultados por página: </label>
+          <select name="pagesize" id="pagesize" class="form-control" ng-model="pageSize">
+            <option value="5" ng-selected="true" >5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Año - Mes</th>
+            <th>Total </th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr dir-paginate="dato in datos_ingresos_ordinarios | orderBy:'fecha_datos' | filter: filtro_sedes | itemsPerPage: pageSize">
+            <td> {{dato.fecha_datos}} </td>
+            <td> {{dato.total}} </td>
+            <td> <i class="fa fa-trash-o" ng-click="postEliminarDatosIngresosOrdinarios(dato.fecha_datos)" title="Eliminar"></i> </td>
+          </tr>
+        </tbody>
+      </table>
+      <dir-pagination-controls template-url="/angular_tpl/dirPagination.tpl.html"></dir-pagination-controls>
+    </div>
+  </div>
+
+
+</div>

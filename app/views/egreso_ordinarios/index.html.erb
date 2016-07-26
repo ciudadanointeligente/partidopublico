@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Egreso Ordinarios</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Partido</th>
+      <th>Fecha datos</th>
+      <th>Concepto</th>
+      <th>Privado</th>
+      <th>Publico</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @egreso_ordinarios.each do |egreso_ordinario| %>
+      <tr>
+        <td><%= egreso_ordinario.partido %></td>
+        <td><%= egreso_ordinario.fecha_datos %></td>
+        <td><%= egreso_ordinario.concepto %></td>
+        <td><%= egreso_ordinario.privado %></td>
+        <td><%= egreso_ordinario.publico %></td>
+        <td><%= link_to 'Show', egreso_ordinario %></td>
+        <td><%= link_to 'Edit', edit_egreso_ordinario_path(egreso_ordinario) %></td>
+        <td><%= link_to 'Destroy', egreso_ordinario, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Egreso ordinario', new_egreso_ordinario_path %>

@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Balance Anuals</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Partido</th>
+      <th>Fecha datos</th>
+      <th>Concepto</th>
+      <th>Tipo</th>
+      <th>Importe</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @balance_anuals.each do |balance_anual| %>
+      <tr>
+        <td><%= balance_anual.partido %></td>
+        <td><%= balance_anual.fecha_datos %></td>
+        <td><%= balance_anual.concepto %></td>
+        <td><%= balance_anual.tipo %></td>
+        <td><%= balance_anual.importe %></td>
+        <td><%= link_to 'Show', balance_anual %></td>
+        <td><%= link_to 'Edit', edit_balance_anual_path(balance_anual) %></td>
+        <td><%= link_to 'Destroy', balance_anual, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Balance anual', new_balance_anual_path %>

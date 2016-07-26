@@ -1,4 +1,6 @@
 class AfiliacionsController < ApplicationController
+  
+  before_action :authenticate_admin!
   before_action :set_afiliacion, only: [:show, :edit, :update, :destroy]
   before_action :set_partido, only: [:index, :aggregate, :eliminar]
 
@@ -83,8 +85,8 @@ class AfiliacionsController < ApplicationController
     render plain: "OK"
   end
 
-  def import_afiliacion    
-    return_values = Afiliacion.import(params[:file], params[:partido_id])
+  def import_afiliacion
+    return_values = Afiliacion.import(params[:file], params[:partido_id],PaperTrail.whodunnit = current_admin.email)
     respond_to do |format|
       #format.any { render json: return_values, content_type: 'application/json' }
       format.any { render file: "partido_steps/import_response.js.erb", content_type: "application/js" , :locals => { :return_values => return_values }}

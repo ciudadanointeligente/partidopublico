@@ -35,39 +35,29 @@ class Partido < ActiveRecord::Base
     has_many :sedes, dependent: :destroy
     has_many :afiliacions, dependent: :destroy
     has_many :tramites, dependent: :destroy
-    # has_many :personas, as: :personable
-    # delegate :representantes, :meerkats, :wild_boars, to: :personas
-    #has_many :representantes, as: :personable, dependent: :destroy
-    #has_many :autoridads, as: :personable, dependent: :destroy
-    #has_many :candidatos, as: :personable, dependent: :destroy
     has_many :eleccion_populars, dependent: :destroy
     has_many :eleccion_internas, dependent: :destroy
     has_many :actividad_publicas, dependent: :destroy
     has_many :acuerdos, dependent: :destroy
     has_many :participacion_entidads, dependent: :destroy
     has_and_belongs_to_many :pacto_electorals
-    #has_many :responsable_denuncias, as: :personable, dependent: :destroy
     has_many :sancions, dependent: :destroy
     has_many :personas, dependent: :destroy
     has_many :cargos, dependent: :destroy
     has_many :tipo_cargos, dependent: :destroy
+    has_many :ingreso_ordinarios, dependent: :destroy
 
     accepts_nested_attributes_for :marco_interno, allow_destroy: true
     accepts_nested_attributes_for :organo_internos, allow_destroy: true
     accepts_nested_attributes_for :sedes, reject_if: proc { |attributes| attributes['direccion'].blank? }, allow_destroy: true
     accepts_nested_attributes_for :afiliacions, allow_destroy: true
     accepts_nested_attributes_for :tramites, allow_destroy: true
-    # accepts_nested_attributes_for :personas, allow_destroy: true
-    # accepts_nested_attributes_for :representantes, allow_destroy: true
-    # accepts_nested_attributes_for :autoridads, allow_destroy: true
-    # accepts_nested_attributes_for :candidatos, allow_destroy: true
     accepts_nested_attributes_for :eleccion_populars, allow_destroy: true
     accepts_nested_attributes_for :eleccion_internas, allow_destroy: true
     accepts_nested_attributes_for :actividad_publicas, allow_destroy: true
     accepts_nested_attributes_for :acuerdos, allow_destroy: true
     accepts_nested_attributes_for :participacion_entidads, allow_destroy: true
     accepts_nested_attributes_for :pacto_electorals, allow_destroy: true
-    # accepts_nested_attributes_for :responsable_denuncias, allow_destroy: true
     accepts_nested_attributes_for :sancions, allow_destroy: true
 
     after_create :initialize_transparency_settings

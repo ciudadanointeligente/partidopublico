@@ -44,7 +44,7 @@ class Afiliacion < ActiveRecord::Base
   end
 
   # a class method import, with file passed through as an argument
-  def self.import(file, partido_id)
+  def self.import(file, partido_id, email)
     partido = Partido.find partido_id
     filas_importadas = 0
     errores = 0
@@ -56,6 +56,8 @@ class Afiliacion < ActiveRecord::Base
         new_row_hash['fecha_datos'] = Date.new(new_row_hash['ano_datos'].to_i, new_row_hash['mes_datos'].to_i, 01)
         new_row_hash.delete('ano_datos')
         new_row_hash.delete('mes_datos')
+
+        PaperTrail.whodunnit = email
 
         dato = Afiliacion.new new_row_hash
         dato.partido = partido

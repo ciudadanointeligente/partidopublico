@@ -1,7 +1,5 @@
 <div class="container" ng-controller="afiliacionsController">
-
-  <h2 class="page-header">Afiliados</h2>
-
+  <h2 class="page-header">Número de Afiliados</h2>
   <div class="row">
     <div class="col-md-12">
       <div id="flash_message" class="hidden alert alert-dismissible" role="alert">
@@ -11,15 +9,22 @@
   </div>
 
   <div class="row">
-  <div class="col-md-4"></div>
-  <div class="col-md-4">
-    <div class="form-inline">
-      <div class="input-group">
-        <input type="text" ng-model="filtro_afiliados" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Buscar" id="filtro_afiliados" aria-describedby="search-addon">
-        <span class="input-group-addon" id="search-addon"><i class="fa fa-search"></i></span>
-      </div>
+    <div class="col-md-3">
+      <%= link_to 'Descargar Modelo Fichero CSV', 'system/resources/modelo_num_afiliados_x_region.csv', download: 'datos_afiliacion.csv', class: "btn btn-default", target: "_blank"%>
     </div>
-  </div>
+    <div class="col-md-5">
+
+      <div>
+        <%= form_tag import_afiliacion_afiliacions_path, remote: true,  multipart: true, class: 'form-inline' do %>
+          <div class="form-group">
+            <%= hidden_field_tag :partido_id, @partido.id %>
+            <%= file_field_tag :file, class: 'form-inline' %>
+          </div>
+          <%= submit_tag "Import CSV",:id =>"afiliacion_file_submit", class: 'btn btn-default', :disabled =>true %>
+        <% end %>
+      </div>
+
+    </div>
     <div class="col-md-4">
       <div class="form-inline text-right" >
         <div class="form-group">
@@ -37,7 +42,6 @@
 
   <div class="row">
     <div class="col-md-12">
-
       <table class="table table-hover">
         <thead>
           <tr>
@@ -60,17 +64,5 @@
     </div>
   </div>
 
-  <div class="row">
 
-    <div>
-      <%= form_tag import_afiliacion_afiliacions_path, remote: true,  multipart: true, class: 'form-inline' do %>
-        <div class="form-group">
-          <%= hidden_field_tag :partido_id, @partido.id %>
-          <%= file_field_tag :file, class: 'form-inline' %>
-        </div>
-        <%= submit_tag "Import CSV",:id =>"afiliacion_file_submit", class: 'btn btn-default', :disabled =>true %>
-      <% end %>
-    </div>
-
-  </div>
 </div>

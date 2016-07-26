@@ -1,0 +1,15 @@
+<%= simple_form_for(@egreso_ordinario) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :partido %>
+    <%= f.input :fecha_datos %>
+    <%= f.input :concepto %>
+    <%= f.input :privado %>
+    <%= f.input :publico %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

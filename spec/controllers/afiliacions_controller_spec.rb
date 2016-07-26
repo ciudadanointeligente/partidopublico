@@ -52,7 +52,7 @@ RSpec.describe AfiliacionsController, type: :controller do
   end
 
   describe "GET #new" do
-    it "assigns a new afiliacion as @afiliacion" do
+    xit "assigns a new afiliacion as @afiliacion" do
       get :new, {}, valid_session
       expect(assigns(:afiliacion)).to be_a_new(Afiliacion)
     end

@@ -14,7 +14,8 @@ class PartidoStepsController < ApplicationController
             :postulacion_popular, :organos_internos, :postulacion_interna,
             :acuerdos_organos,
             :entidades_participadas, :pactos_electorales,
-            :linea_denuncia, :sanciones
+            :linea_denuncia, :sanciones,
+            :ingresos_ordinarios, :egresos_ordinarios, :balance_anual, :contrataciones_20utm, :fondos_publicos, :ingresos_campana, :egresos_campana
 
     def export_personas
       @personas = Persona.where partido: @partido
