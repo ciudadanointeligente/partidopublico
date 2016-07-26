@@ -143,8 +143,8 @@ function cargosController($scope,$http,$location,$aside,$attrs){
       })
   }
 
-  function getComunas() {
-    $http.get('partidos/'+$scope.partido_id+'/comunas')
+  $scope.getComunas = function(partido_id, region_id) {
+    $http.get('partidos/'+partido_id+'/regions/'+region_id+'/comunas')
       .success( function(data){
         $scope.comunas = data;
       })
@@ -234,7 +234,7 @@ function cargosController($scope,$http,$location,$aside,$attrs){
   getPersonasByPartido($scope.partido_id);
   getTipoCargos($scope.partido_id);
   getRegions();
-  getComunas();
+  //getComunas();
 };
 
 app.controller("sedesController",sedesController);
@@ -311,9 +311,9 @@ function sedesController($scope,$http,$location,$aside,$attrs){
       })
   }
 
-  $scope.getSedeModal = function(sede_id){
-    if(sede_id) {
-      getSedeInfo(sede_id);
+  $scope.getSedeModal = function(sede){
+    if(sede) {
+      getSedeInfo(sede.id);
     } else {
       $scope.sede = {
         partido_id: $scope.partido_id
