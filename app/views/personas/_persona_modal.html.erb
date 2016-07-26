@@ -46,7 +46,7 @@
 
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="save($event)">guardar</button>
-    <button class="btn btn-warning" ng-click="cancel($event)">cancelar</button>
+    <button class="btn btn-primary" ng-disabled="(persona.nombre && persona.apellidos && persona.rut) ? '' : 'disabled'" ng-click="save($event)" ng-class="{ 'btn-primary-save' : (persona.nombre && persona.apellidos && persona.rut) }">Guardar</button>
+    <button class="btn btn-danger" ng-click="cancel($event)">Cancelar</button>
   </div>
 </script>

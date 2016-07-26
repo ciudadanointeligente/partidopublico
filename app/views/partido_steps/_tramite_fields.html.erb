@@ -29,14 +29,14 @@
         <div class="panel-heading">
           Procedimientos
         </div>
-        <div class="panel-body">
+        <div class="panel-body procedimientos">
           <%= f.fields_for :procedimientos do |procedimiento| %>
             <%= render 'procedimiento_fields', :f => procedimiento %>
           <% end %>
 
         </div>
         <div class="panel-footer">
-          <%= link_to_add_association f, :procedimientos, class: 'btn btn-default' do %>
+          <%= link_to_add_association f, :procedimientos, class: 'btn btn-default', data: { 'association-insertion-method': 'append', 'association-insertion-node': '.procedimientos' } do %>
             <i class="fa fa-plus"></i> Agregar procedimiento
           <% end %>
         </div>
@@ -46,13 +46,13 @@
         <div class="panel-heading">
           Requisitos
         </div>
-        <div class="panel-body">
+        <div class="panel-body requisitos">
           <%= f.fields_for :requisitos do |requisito| %>
             <%= render 'requisito_fields', :f => requisito %>
           <% end %>
         </div>
         <div class="panel-footer">
-          <%= link_to_add_association f, :requisitos, class: 'btn btn-default' do %>
+          <%= link_to_add_association f, :requisitos, class: 'btn btn-default', data: { 'association-insertion-method': 'append', 'association-insertion-node': '.requisitos' } do %>
             <i class="fa fa-plus"></i> Agregar requisito
           <% end %>
         </div>
@@ -61,7 +61,7 @@
 
     </div>
     <div class="panel-footer">
-      <%= link_to_remove_association f, class: 'btn btn-danger' do %>
+      <%= link_to_remove_association f, class: 'btn btn-danger checkForDelete' do %>
         <i class="fa fa-trash"></i> Marcar para eliminar
       <% end %>
     </div>

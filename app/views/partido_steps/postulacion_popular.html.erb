@@ -2,19 +2,24 @@
   <h2 class="page-header">Postulación Popular</h2>
 
   <%= render :layout => 'form' do |f| %>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-inline">
+          <div class="form-group">
+            <%= link_to_add_association f, :eleccion_populars, class: 'btn btn-success form-control', 'data-association-insertion-method': 'append', 'data-association-insertion-node': '#nueva-postulacion' do %>
+              <i class="fa fa-plus"></i> Agregar eleccion popular
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" id="nueva-postulacion"></div>
 
     <div class="row">
       <%= f.fields_for :eleccion_populars do |builder| %>
         <%= render 'eleccion_popular_fields', :f => builder %>
       <% end %>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12">
-        <%= link_to_add_association f, :eleccion_populars, class: 'btn btn-default' do %>
-          <i class="fa fa-plus"></i> Agregar eleccion popular
-        <% end %>
-      </div>
     </div>
 
   <% end %>

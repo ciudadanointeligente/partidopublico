@@ -8,7 +8,7 @@
     <% end %>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="save($event)">Guardar</button>
-    <button class="btn btn-warning" ng-click="cancel($event)">Cancelar</button>
+    <button class="btn btn-primary" ng-click="save($event)" ng-disabled="(tipo_cargo.titulo) ? '' : 'disabled'" ng-class="{ 'btn-primary-save' : (tipo_cargo.titulo) }">Guardar</button>
+    <button class="btn btn-danger" ng-click="cancel($event)">Cancelar</button>
   </div>
 </script>

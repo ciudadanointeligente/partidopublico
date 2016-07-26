@@ -1,4 +1,4 @@
-<div class="col-sm-4 col-md-4">
+<div class="col-xs-4 col-sm-4 col-md-4">
   <div class="panel panel-default ">
     <div class="panel-heading">
       <%= f.object.descripcion %>
@@ -39,8 +39,8 @@
         </div>
       </div>
     </div>
-    <div class="panel-footer">
-      <%= link_to_remove_association f, class: 'btn btn-danger' do %>
+    <div class="panel-footer normas-internas">
+      <%= link_to_remove_association f, class: 'btn btn-danger checkForDelete' do %>
         <i class="fa fa-trash"></i> Marcar para eliminar
       <% end %>
     </div>

@@ -2,18 +2,26 @@
   <h2 class="page-header">Sanciones</h2>
 
   <%= render :layout => 'form' do |f| %>
+
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-inline">
+          <div class="form-group">
+            <%= link_to_add_association f, :sancions, class: 'btn btn-success form-control', data: { 'association-insertion-method': 'append', 'association-insertion-node': '.nueva-sancion' } do %>
+              <i class="fa fa-plus"></i> Agregar sanción
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row nueva-sancion"></div>
+
     <div class="row">
       <%= f.fields_for :sancions do |ff| %>
         <%= render 'sancion_fields', :f => ff %>
       <% end %>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12">
-        <%= link_to_add_association f, :sancions, class: 'btn btn-default' do %>
-          <i class="fa fa-plus"></i> Agregar sanción
-        <% end %>
-      </div>
     </div>
   <% end %>
 </div>

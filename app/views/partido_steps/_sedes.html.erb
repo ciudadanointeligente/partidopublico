@@ -1,18 +1,26 @@
 <div ng-controller="sedesController">
   <div class="row">
-    <div class="col-md-6">
-      <button class="btn btn-default" ng-click="getSedeModal(null); $event.stopPropagation();">
-        <i class="fa fa-plus-square-o"></i> Nueva Sede
-      </button>
-    </div>
-    <div class="col-md-6">
-      <div class="form-inline text-right">
+    <div class="col-sm-12 col-md-4">
+      <div class="form-inline">
         <div class="form-group">
-          <label for="filtro_sedes">Búsqueda</label>
-          <input type="text" id="filtro_sedes" class="form-control" ng-model="filtro_sedes" placeholder="Filtrar">
+          <button class="btn btn-success form-control" ng-click="getSedeModal(null); $event.stopPropagation();">
+            <i class="fa fa-plus-square-o"></i> Nueva Sede
+          </button>
         </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-4">
+      <div class="form-inline">
+        <div class="input-group">
+          <input type="text" ng-model="filtro_sedes" placeholder="Filtrar" class="form-control">
+          <span class="input-group-addon" id="search-addon"><i class="fa fa-search"></i></span>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-4">
+      <div class="form-inline">
         <div class="form-group">
-          <label for="pagesize">Resultados por página: </label>
+          <label for="pagesize"> Resultados por página: </label>
           <select name="pagesize" id="pagesize" class="form-control" ng-model="pageSize">
             <option value="5" ng-selected="true" >5</option>
             <option value="10">10</option>
@@ -23,6 +31,7 @@
       </div>
     </div>
   </div>
+
   <div class="row">
     <div class="col-md-12">
       <table class="table table-striped">
@@ -42,7 +51,7 @@
             <td> {{sede.direccion}} </td>
             <td> {{sede.contacto}} </td>
             <td>
-              <i class="fa fa-pencil-square-o" ng-click="getSedeModal(sede.id)"></i>
+              <i class="fa fa-pencil-square-o" ng-click="getSedeModal(sede)"></i>
               <i class="fa fa-trash" ng-click="removeSede(sede)"></i>
             </td>
           </tr>

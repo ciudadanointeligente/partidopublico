@@ -23,7 +23,7 @@ module PartidoStepsHelper
       key = step_organisation.select{|k,v| v.include? step.to_s}.keys.first
       values = step_organisation.select{|k,v| v.include? step.to_s}.values.first
 
-        content_tag(:div, class: "navigator container") do
+        content_tag(:div, class: "navigator container submenu") do
           content_tag(:ul, class: "nav nav-pills list-inline") do
             values.each do |sub_step|
               class_str = "unfinished"

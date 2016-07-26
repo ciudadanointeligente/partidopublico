@@ -1,5 +1,7 @@
 <div class="container" ng-controller="afiliacionsController">
 
+  <h2 class="page-header">Afiliados</h2>
+
   <div class="row">
     <div class="col-md-12">
       <div id="flash_message" class="hidden alert alert-dismissible" role="alert">
@@ -9,7 +11,16 @@
   </div>
 
   <div class="row">
-    <div class="col-md-5">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <div class="form-inline">
+      <div class="input-group">
+        <input type="text" ng-model="filtro_afiliados" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Buscar" id="filtro_afiliados" aria-describedby="search-addon">
+        <span class="input-group-addon" id="search-addon"><i class="fa fa-search"></i></span>
+      </div>
+    </div>
+  </div>
+    <div class="col-md-4">
       <div class="form-inline text-right" >
         <div class="form-group">
           <label for="pagesize"> Resultados por página: </label>
@@ -37,7 +48,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr dir-paginate="dato in datos_afiliacion | orderBy:'fecha_datos' | filter: filtro_sedes | itemsPerPage: pageSize">
+          <tr dir-paginate="dato in datos_afiliacion | orderBy:'fecha_datos' | filter: filtro_afiliados | itemsPerPage: pageSize">
             <td> {{dato.fecha_datos}} </td>
             <td> {{dato.count_regiones}} </td>
             <td> {{dato.total_afiliados}} </td>

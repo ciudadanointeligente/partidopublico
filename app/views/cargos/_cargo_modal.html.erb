@@ -16,7 +16,7 @@
 
       <div class="form-group">
         <label for="region_id">Región</label>
-        <select name="region_id" id="region_id" class="form-control chosen-select" ng-model="cargo.region_id" ng-init="cargo.region_id" ng-options="r.id as r.nombre for r in regions"></select>
+        <select name="region_id" id="region_id" class="form-control chosen-select" ng-model="cargo.region_id" ng-init="cargo.region_id" ng-options="r.id as r.nombre for r in regions" ng-change="getComunas(partido_id, cargo.region_id)"></select>
       </div>
 
       <div class="form-group">
@@ -28,7 +28,7 @@
     <% end %>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="save($event)">Guardar</button>
-    <button class="btn btn-warning" ng-click="cancel($event)">Cancelar</button>
+    <button class="btn btn-primary" ng-click="save($event)" ng-disabled="(cargo.persona_id && cargo.tipo_cargo_id && cargo.fecha_desde && cargo.fecha_hasta) ? '' : 'disabled'" ng-class="{ 'btn-primary-save' : (cargo.persona_id && cargo.tipo_cargo_id && cargo.fecha_desde && cargo.fecha_hasta) }">Guardar</button>
+    <button class="btn btn-danger" ng-click="cancel($event)">Cancelar</button>
   </div>
 </script>

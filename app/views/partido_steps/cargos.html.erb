@@ -1,12 +1,16 @@
 <div class="container" ng-controller="cargosController">
   <h2 class="page-header">Cargos</h2>
   <div class="row">
-    <div class="col-md-4">
-      <button class="btn btn-default" ng-click="getCargoModal(null)">
-        <i class="fa fa-plus-square-o"></i> Nuevo Cargo
-      </button>
+    <div class="col-sm-12 col-md-4">
+      <div class="form-inline">
+        <div class="form-group">
+          <button class="btn btn-success form-control" ng-click="getCargoModal(null)">
+            <i class="fa fa-plus-square-o"></i> Nuevo Cargo
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-sm-12 col-md-4">
       <div class="form-inline">
         <div class="input-group">
           <input type="text" ng-model="filtro_cargos" placeholder="Filtrar" class="form-control">
@@ -14,7 +18,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-sm-12 col-md-4">
       <div class="form-inline">
         <div class="form-group">
           <label for="pagesize"> Resultados por página: </label>

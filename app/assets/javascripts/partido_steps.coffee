@@ -4,6 +4,13 @@
 
 $ ->
   ready = ->
+    $('.checkForDelete').on 'click', ->
+      el = $(this)
+      el.removeClass('btn-danger').addClass('btn-success');
+
+      child = el.children()
+      child.addClass('fa-check').removeClass 'fa-trash'
+      return
     $('input:file').on 'change', () ->
       $('#personas_file_submit').prop 'disabled', !$(this).val()
       $('#afiliacion_file_submit').prop 'disabled', !$(this).val()
