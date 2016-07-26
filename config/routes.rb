@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :balance_anuals
   resources :egreso_ordinarios
   resources :ingreso_ordinarios
   devise_for :admins
@@ -28,6 +29,9 @@ Rails.application.routes.draw do
   end
   resources :egreso_ordinarios do
     collection {post :import_egresos_ordinarios}
+  end
+  resources :balance_anuals do
+    collection {post :import_balance_anual}
   end
   #resources :regions
   #resources :comunas
@@ -60,6 +64,10 @@ Rails.application.routes.draw do
     end
     resources :egreso_ordinarios do
       collection { get :aggregate_egresos_ordinarios }
+      collection { post :eliminar }
+    end
+    resources :balance_anuals do
+      collection { get :aggregate_balance_anual }
       collection { post :eliminar }
     end
   end

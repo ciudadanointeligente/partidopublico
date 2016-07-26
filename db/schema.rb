@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160725150138) do
+ActiveRecord::Schema.define(version: 20160726144339) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,18 @@ ActiveRecord::Schema.define(version: 20160725150138) do
 
   add_index "afiliacions", ["partido_id"], name: "index_afiliacions_on_partido_id", using: :btree
   add_index "afiliacions", ["region_id"], name: "index_afiliacions_on_region_id", using: :btree
+
+  create_table "balance_anuals", force: :cascade do |t|
+    t.integer  "partido_id"
+    t.date     "fecha_datos"
+    t.string   "concepto"
+    t.string   "tipo"
+    t.integer  "importe",     limit: 8
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "balance_anuals", ["partido_id"], name: "index_balance_anuals_on_partido_id", using: :btree
 
   create_table "cargos", force: :cascade do |t|
     t.integer  "persona_id"
@@ -447,6 +459,7 @@ ActiveRecord::Schema.define(version: 20160725150138) do
   add_foreign_key "acuerdos", "partidos"
   add_foreign_key "afiliacions", "partidos"
   add_foreign_key "afiliacions", "regions"
+  add_foreign_key "balance_anuals", "partidos"
   add_foreign_key "cargos", "circunscripcions"
   add_foreign_key "cargos", "comunas"
   add_foreign_key "cargos", "distritos"

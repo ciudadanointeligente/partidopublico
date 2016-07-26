@@ -630,3 +630,38 @@ function finanzas2Controller($scope,$http,$location,$aside,$attrs){
   getDatosEgresosOrdinariosAgregadosByPartido($scope.partido_id);
 
 }
+
+app.controller("finanzas3Controller", finanzas3Controller);
+finanzas3Controller.$inject = ["$scope","$http","$location","$aside","$attrs"];
+
+function finanzas3Controller($scope,$http,$location,$aside,$attrs){
+
+  $scope.partido_id = $location.path().split("/")[2];
+
+  function getDatosBalanceAnualAgregadosByPartido(partido_id) {
+    $http.get('partidos/'+partido_id+'/balance_anuals/aggregate_balance_anual')
+      .success( function(data){
+        $scope.datos_balance_anual = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
+  $scope.postEliminarDatosBalanceAnual = function(fecha_datos){
+    if (confirm('Seguro desea eliminar los datos con fecha ' + fecha_datos + '?')) {
+      fecha_eliminacion = {fecha_datos}
+      $http.post('partidos/'+$scope.partido_id+'/balance_anuals/eliminar', fecha_eliminacion)
+        .success( function(data){
+          $scope.datos_eliminacion = data;
+          getDatosBalanceAnualAgregadosByPartido($scope.partido_id);
+        })
+        .error( function(error_data){
+          $scope.messages = {response: false, message: error_data}
+        })
+      }
+  }
+
+  getDatosBalanceAnualAgregadosByPartido($scope.partido_id);
+
+}

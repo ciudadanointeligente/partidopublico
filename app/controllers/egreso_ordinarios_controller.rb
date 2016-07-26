@@ -10,11 +10,6 @@ class EgresoOrdinariosController < ApplicationController
   end
 
   def aggregate_egresos_ordinarios
-    puts "aggregate_egresos_ordinarios"
-      puts "aggregate_egresos_ordinarios"
-        puts "aggregate_egresos_ordinarios"
-          puts "aggregate_egresos_ordinarios"
-            puts "aggregate_egresos_ordinarios"
     datos_by_partido = EgresoOrdinario.where partido: @partido
     fechas_distintas = datos_by_partido.uniq.pluck(:fecha_datos)
     @datos = []
@@ -108,7 +103,7 @@ class EgresoOrdinariosController < ApplicationController
     def set_partido
       @partido = Partido.find(params[:partido_id])
     end
-    
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def egreso_ordinario_params
       params.require(:egreso_ordinario).permit(:partido_id, :fecha_datos, :concepto, :privado, :publico)

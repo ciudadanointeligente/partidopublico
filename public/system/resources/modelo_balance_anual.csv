@@ -1,11 +1,11 @@
-concepto,ano_datos,importe
-Caja,2016,198435
-Activo Fijo,2016,198435
-Bienes Raíces,2016,198435
-Inversiones renta fija,2016,198435
-Inversiones fondos mutuos,2016,198435
-Créditos corto plazo,2016,198435
-Créditos largo plazo,2016,198435
-Deudas RRHH,2016,198435
-Depreciación Acumulada,2016,198435
-Superavit Acumulado,2016,198435
+"tipo","concepto","ano_datos","importe"
+"activo","Caja",2016,198435
+"activo","Activo Fijo",2016,198435
+"activo","Bienes Raíces",2016,198435
+"activo","Inversiones renta fija",2016,198435
+"activo","Inversiones fondos mutuos",2016,198435
+"pasivo","Créditos corto plazo",2016,198435
+"pasivo","Créditos largo plazo",2016,198435
+"pasivo","Deudas RRHH",2016,198435
+"pasivo","Depreciación Acumulada",2016,198435
+"pasivo","Superavit Acumulado",2016,198435
