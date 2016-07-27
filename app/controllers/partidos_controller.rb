@@ -18,6 +18,40 @@ class PartidosController < ApplicationController
   # GET /partidos/1
   # GET /partidos/1.json
   def show
+
+    @datos_region = []
+    @datos_sedes = []
+    @datos_cargos = []
+    region = {}
+
+    @partido.regions.each do |r|
+      afiliados = Afiliacion.where(partido_id: @partido, region_id: r)
+
+      h = 0
+      m = 0
+      afiliados.each do |a|
+        h = h + a.hombres
+        m = m + a.mujeres
+      end
+      region = { 'region' => r.nombre, 'hombres' => h, 'mujeres' => m }
+      @datos_region.push region
+
+      sedes = @partido.sedes.where(region_id: r)
+      all_sedes = []
+      sedes.each do |s|
+        all_sedes.push( { 'direccion' => s.direccion, 'contacto' => s.contacto, 'comuna' => s.comuna.nombre } )
+      end
+      @datos_sedes.push( {'region' => r.nombre, 'sedes' => all_sedes} )
+
+      cargos = @partido.cargos.where(region_id: r)
+      all_cargos = []
+      cargos.each do |c|
+        all_cargos.push( { 'persona' => c.persona.nombre, 'cargo' => c.tipo_cargo.titulo, 'comuna' => c.comuna.nombre } )
+      end
+      @datos_cargos.push( {'region' => r.nombre, 'cargos' => all_cargos} )
+    end
+
+
   end
 
   # GET /partidos/new

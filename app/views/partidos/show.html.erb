@@ -1,31 +1,214 @@
-<p id="notice"><%= notice %></p>
-<div id="cabecera_partido">
-    <div class="partido_nombre">
-        <%= @partido.nombre %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-4">
+      <h1><%= @partido.nombre %></h1>
+      <%= image_tag @partido.logo.url(:thumb), :class => "img-responsive img-circle" %>
+      <blockquote><%= @partido.lema %></blockquote>
     </div>
-
-    
-    <%= image_tag @partido.logo.url(:thumb), :class => "partido_logo" %>
-    <br>
-
-    <div class="partido_lema">
-        <%= @partido.lema %>
-    </div>
+  </div>
 </div>
-<div class="datos_partido">
-    <div class="area_partido">
-        <div class="cabecera_area_partido">
-            NORMAS INTERNAS Y PENSAMIENTO
+<!--
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading ">
+          Normas Internas y Pensamiento
         </div>
-        <div class="sub_area_partido">
-            <div class="titulo_sub_area">
-                Marco Normativo Interno
-            </div>
-            <div class="icono_visualizacion">
-                <%= icon('file-text', id: 'my-icon', class: 'icono_visualizacion') %>
-            </div>
+        <div class="panel-body">
+          <ul>
+            <% @partido.marco_interno.documentos.each do |mi| %>
+              <li>
+                <%= link_to mi.archivo.url do %>
+                  <%= mi.descripcion %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
         </div>
+      </div>
     </div>
-    
-</div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading ">
+          Presencia Nacional
+        </div>
+        <div class="panel-body">
 
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading ">
+          Cómo Participar
+        </div>
+        <div class="panel-body">
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading ">
+          Vínculos e Intereses
+        </div>
+        <div class="panel-body">
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading ">
+          Finanzas
+        </div>
+        <div class="panel-body">
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading ">
+          Últimas Decisiones
+        </div>
+        <div class="panel-body">
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading ">
+          Denuncias y Sanciones
+        </div>
+        <div class="panel-body">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-4">
+      <ul>
+        <li>
+          <a href="#normas-internas" data-toggle="pill" aria-controls="normas-internas" role="tab">Normas Internas y Pensamiento</a>
+        </li>
+        <li>
+          Presencia Nacional
+          <ul>
+            <li>
+              <a href="#regiones-constituido" data-toggle="pill" aria-controls="regiones-constituido" role="tab">Regiones constituido</a>
+            </li>
+            <li>
+              <a href="#numero-de-afiliados" data-toggle="pill" aria-controls="numero-de-afiliados" role="tab">Número de afiliados</a>
+            </li>
+            <li>
+              <a href="#afiliacion" data-toggle="pill" aria-controls="afiliacion" role="tab">Afiliación y desafiliación</a>
+            </li>
+            <li>
+              <a href="#sedes" data-toggle="pill" aria-controls="sedes" role="tab">Domicilio y sedes de contacto</a>
+            </li>
+            <li>
+              <a href="#representantes" data-toggle="pill" aria-controls="representates" role="tab">Representantes</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-8">
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane" id="normas-internas">NI</div>
+        <div role="tabpanel" class="tab-pane active" id="regiones-constituido">
+          <h3 class="page-header">Regiones constituido</h3>
+          <ul>
+            <% @partido.regions.each do |r| %>
+            <li>
+                <%= r.nombre %>
+            </li>
+            <% end %>
+          </ul>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="numero-de-afiliados">
+          <h3 class="page-header">Número de afiliados</h3>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Región</th>
+                <th>Hombres</th>
+                <th>Mujeres</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @datos_region.each do |r| %>
+              <tr>
+                <td><%= r["region"] %></td>
+                <td><%= r["hombres"] %></td>
+                <td><%= r["mujeres"] %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <div class="tab-pane" id="afiliacion" role="tabpanel"></div>
+        <div class="tab-pane" id="sedes" role="tabpanel">
+          <h3 class="page-header">Domicilio y sedes de contacto</h3>
+          <% @datos_sedes.each do |r| %>
+            <h4 class="page-header"><%= r["region"] %></h4>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Direccion</th>
+                  <th>Contacto</th>
+                  <th>Comuna</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% r["sedes"].each do |s| %>
+                <tr>
+                  <td><%= s["direccion"] %></td>
+                  <td><%= s["contacto"] %></td>
+                  <td><%= s["comuna"] %></td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% end %>
+        </div>
+        <div class="tab-pane" id="representantes">
+          <h3 class="page-header">Representantes</h3>
+          <% @datos_cargos.each do |r| %>
+          <h4 class="page-header"><%= r['region'] %></h4>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Cargo</th>
+                <th>Comuna</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% r['cargos'].each do |c| %>
+              <tr>
+                <td><%= c['persona'] %></td>
+                <td><%= c['cargo'] %></td>
+                <td><%= c['comuna'] %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
