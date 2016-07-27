@@ -1,5 +1,5 @@
 class AfiliacionsController < ApplicationController
-  
+
   before_action :authenticate_admin!
   before_action :set_afiliacion, only: [:show, :edit, :update, :destroy]
   before_action :set_partido, only: [:index, :aggregate, :eliminar]
@@ -15,11 +15,13 @@ class AfiliacionsController < ApplicationController
     fechas_distintas = datos_by_partido.uniq.pluck(:fecha_datos)
     @datos = []
     fechas_distintas.each do |fecha|
-      datos_by_date = datos_by_partido.where("fecha_datos=to_date('" + fecha.to_s + "','YYYY-MM-DD')")
-      count_regiones = datos_by_date.count(:region_id).to_json
-      total_afiliados = datos_by_date.sum(:hombres) + datos_by_date.sum(:mujeres) + datos_by_date.sum(:otros)
-      line={:fecha_datos => fecha.strftime("%Y - %m"), :count_regiones => count_regiones, :total_afiliados => total_afiliados}
-      @datos << line
+      if(!fecha.blank?)
+        datos_by_date = datos_by_partido.where("fecha_datos=to_date('" + fecha.to_s + "','YYYY-MM-DD')")
+        count_regiones = datos_by_date.count(:region_id).to_json
+        total_afiliados = datos_by_date.sum(:hombres) + datos_by_date.sum(:mujeres) + datos_by_date.sum(:otros)
+        line={:fecha_datos => fecha.strftime("%Y - %m"), :count_regiones => count_regiones, :total_afiliados => total_afiliados}
+        @datos << line
+      end
     end
   end
 
