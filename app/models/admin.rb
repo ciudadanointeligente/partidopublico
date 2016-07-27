@@ -31,4 +31,10 @@ class Admin < ActiveRecord::Base
 
   has_many :partidos, through: :permissions
   has_many :permissions, dependent: :destroy
+
+  def after_database_authentication
+    puts "DateTime.now : " + DateTime.now.to_s
+    AdminLogin.create(:fecha => DateTime.now, :ip => $request.remote_ip, :admin_id => self.id)
+  end
+
 end
