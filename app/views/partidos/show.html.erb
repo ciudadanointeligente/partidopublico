@@ -121,6 +121,24 @@
             </li>
           </ul>
         </li>
+        <li>
+          Cómo participar
+          <ul>
+            <li><a href="#cargo-popular" data-toggle="pill" aria-controls="cargo-popular" role="tab">Postular a cargo popular</a></li>
+            <li><a href="#cargo-interno" data-toggle="pill" aria-controls="cargo-interno" role="tab">Postular a cargo de dirección interna</a></li>
+          </ul>
+        </li>
+        <li>
+          Vínculos e Intereses
+          <ul>
+            <li>
+              <a href="#vinculo-interes-entidad" data-toggle="pill" aria-controls="vinculo-interes-entidad" role="tab">Entidades en que se tenga participación</a>
+            </li>
+            <li>
+              <a href="#pactos-electorales" data-toggle="pill" aria-controls="pactos-electorales" role="tab">Pactos electorales que integra</a>
+            </li>
+          </ul>
+        </li>
       </ul>
     </div>
 
@@ -183,30 +201,130 @@
             </table>
           <% end %>
         </div>
-        <div class="tab-pane" id="representantes">
+        <div class="tab-pane" id="representantes" role="tabpanel">
           <h3 class="page-header">Representantes</h3>
-          <% @datos_cargos.each do |r| %>
-          <h4 class="page-header"><%= r['region'] %></h4>
+
+            <% @datos_cargos.each do |r| %>
+            <h4 class="page-header"><%= r['region'] %></h4>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Cargo</th>
+                  <th>Comuna</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% r['cargos'].each do |c| %>
+                <tr>
+                  <td><%= c['persona'] %></td>
+                  <td><%= c['cargo'] %></td>
+                  <td><%= c['comuna'] %></td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <% end %>
+
+        </div>
+        <div class="tab-pane" id="cargo-popular" role="tabpanel">
+          <h3 class="page-header">Postular a Cargo Popular</h3>
           <table class="table table-striped">
             <thead>
               <tr>
-                <th>Nombre</th>
-                <th>Cargo</th>
-                <th>Comuna</th>
+                <th>Fecha elección</th>
+                <th>días antes</th>
+                <th>Cargo postulación</th>
               </tr>
             </thead>
             <tbody>
-              <% r['cargos'].each do |c| %>
+              <% @partido.eleccion_populars.each do |e| %>
               <tr>
-                <td><%= c['persona'] %></td>
-                <td><%= c['cargo'] %></td>
-                <td><%= c['comuna'] %></td>
+                <td><%= e.fecha_eleccion %></td>
+                <td><%= e.dias %></td>
+                <td><%= e.cargo %></td>
               </tr>
               <% end %>
             </tbody>
           </table>
-          <% end %>
+        </div>
 
+        <div class="tab-pane" id="cargo-interno" role="tabpanel">
+          <h3 class="page-header">Postular a Cargo de Dirección Interna</h3>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Fecha elección</th>
+                <th>días antes</th>
+                <th>Cargo postulación</th>
+                <th>Organo Interno</th>
+                <th>Funciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @partido.eleccion_internas.each do |e| %>
+              <tr>
+                <td><%= e.fecha_eleccion %></td>
+                <td><%= e.fecha_limite_inscripcion %></td>
+                <td><%= e.cargo %></td>
+                <td><%= e.organo_interno.nombre %></td>
+                <td><%= e.organo_interno.funciones %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tab-pane" id="vinculo-interes-entidad" role="tabpanel">
+          <h3 class="page-header">Entidades en que se tenga participación</h3>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Entidad</th>
+                <th>Descripción</th>
+                <th>Documento</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @partido.participacion_entidads.each do |e| %>
+              <tr>
+                <td><%= e.entidad %></td>
+                <td><%= e.descripcion %></td>
+                <td><%= e.documento_file_name %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tab-pane" id="pactos-electorales" role="tabpanel">
+          <h3 class="page-header">Pactos Electorales</h3>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Pacto</th>
+                <th>Descripción</th>
+                <th>Año</th>
+                <th>Partidos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @partido.pacto_electorals.each do |p| %>
+              <tr>
+                <td><%= p.nombre_pacto %></td>
+                <td><%= p.descripcion %></td>
+                <td><%= p.ano_eleccion %></td>
+                <td>
+                  <ul>
+                    <% p.partidos.each do |p| %>
+                      <li><%= p.nombre %></li>
+                    <% end %>
+                  </ul>
+                  </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
