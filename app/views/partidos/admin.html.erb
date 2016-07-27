@@ -2,6 +2,46 @@
 
   <p id="notice"><%= notice %></p>
 
+  <h1>Últimos Accesos : </h1>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Cuenta</th>
+        <th>Accesos(3 Últimos)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @login_data.each do |line| %>
+        <tr>
+          <td><%= line[:email] %></td>
+          <td><%= line[:login_count] %></td>
+          <td>
+          <% if line[:logins].any? %>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>IP</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% line[:logins].each do |login| %>
+                  <tr>
+                    <td> <%= login[:fecha] %> </td>
+                    <td> <%= login[:ip] %> </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
   <h1>Partidos que puedes editar</h1>
 
   <table class="table">
@@ -28,5 +68,4 @@
     </tbody>
   </table>
 
-  <%= link_to('Salir', destroy_admin_session_path, :method => :delete) %>
 </div>

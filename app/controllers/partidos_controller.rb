@@ -10,6 +10,19 @@ class PartidosController < ApplicationController
   def admin
     if admin_signed_in?
       @partidos = current_admin.partidos
+      if current_admin.is_superadmin?
+        @login_data = []
+
+        Admin.all.each do |admin|
+          admin_logins = AdminLogin.where admin: admin
+          logins = []
+          admin_logins.order(fecha: :desc).limit(3).each do |login|
+            logins << {fecha: login.fecha, ip: login.ip}
+          end
+          @login_data << {email: admin.email, login_count: admin_logins.count, logins: logins}
+        end
+        puts @login_data
+      end
     else
       redirect_to new_admin_session_path
     end
