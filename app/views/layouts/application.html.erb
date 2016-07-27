@@ -15,6 +15,19 @@
   <body>
     <!-- Navigation -->
     <!-- Page Content -->
+    <% if !current_admin.nil? %>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12"></div>
+        </div>
+        <div class="row">
+          <div class="col-md-9"></div>
+          <div class="col-md-2 text-right"><%= current_admin.email %></div>
+          <div class="col-md-1 text-right"><%= link_to('Salir', destroy_admin_session_path, :method => :delete) %></div>
+        </div>
+      </div>
+    <% end %>
+
     <div id="container">
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
