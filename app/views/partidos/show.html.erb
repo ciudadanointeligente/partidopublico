@@ -139,6 +139,14 @@
             </li>
           </ul>
         </li>
+        <li>
+          Últimas decisiones
+          <ul>
+            <li>
+              <a href="#acuerdos" data-toggle="pill" aria-controls="acuerdos" role="tab">Acuerdos</a>
+            </li>
+          </ul>
+        </li>
       </ul>
     </div>
 
@@ -321,6 +329,33 @@
                     <% end %>
                   </ul>
                   </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tab-pane" id="acuerdos" role="tabpanel">
+          <h3 class="page-header">Acuerdos</h3>
+
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Tipo</th>
+                <th>Tema</th>
+                <th>Región</th>
+                <th>Organo Interno</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @partido.acuerdos.each do |a| %>
+              <tr>
+                <td><%= a.fecha %></td>
+                <td><%= a.tipo %></td>
+                <td><%= a.tema %></td>
+                <td><%= a.region %></td>
+                <td><%= a.organo_interno.nombre %></td>
               </tr>
               <% end %>
             </tbody>
