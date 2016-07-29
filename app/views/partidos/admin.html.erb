@@ -2,45 +2,49 @@
 
   <p id="notice"><%= notice %></p>
 
-  <h1>Últimos Accesos : </h1>
+  <% if admin_signed_in? && current_admin.is_superadmin?%>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Email</th>
-        <th>Cuenta</th>
-        <th>Accesos(3 Últimos)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @login_data.each do |line| %>
+    <h1>Últimos Accesos : </h1>
+
+    <table class="table">
+      <thead>
         <tr>
-          <td><%= line[:email] %></td>
-          <td><%= line[:login_count] %></td>
-          <td>
-          <% if line[:logins].any? %>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Fecha</th>
-                  <th>IP</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% line[:logins].each do |login| %>
-                  <tr>
-                    <td> <%= login[:fecha] %> </td>
-                    <td> <%= login[:ip] %> </td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          <% end %>
-          </td>
+          <th>Email</th>
+          <th>Cuenta</th>
+          <th>Accesos(3 Últimos)</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @login_data.each do |line| %>
+          <tr>
+            <td><%= line[:email] %></td>
+            <td><%= line[:login_count] %></td>
+            <td>
+            <% if line[:logins].any? %>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>IP</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% line[:logins].each do |login| %>
+                    <tr>
+                      <td> <%= login[:fecha] %> </td>
+                      <td> <%= login[:ip] %> </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  <% end %>
 
   <h1>Partidos que puedes editar</h1>
 

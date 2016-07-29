@@ -13,6 +13,8 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  partido_id             :integer
+#  tipo_sancion           :string
+#  tipo_infraccion        :string
 #
 # Indexes
 #
@@ -22,8 +24,13 @@
 class Sancion < ActiveRecord::Base
     has_paper_trail
     has_attached_file :documento, styles: { large: "600x600>", medium: "300x300>", :thumb => ["40x40>", :png] }, default_url: "/system/resources/missing_32.png"
-    validates_attachment :documento, 
+    validates_attachment :documento,
         content_type: { content_type: "application/pdf" },
         size: { in: 0..5000.kilobytes }
     validates_presence_of :descripcion
+
+    def self.tipos_sancion
+      %w(Amonestación Multa Comisión Disolución Otro)
+    end
+
 end

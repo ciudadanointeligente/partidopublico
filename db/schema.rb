@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160728162144) do
+ActiveRecord::Schema.define(version: 20160729143258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -296,6 +296,9 @@ ActiveRecord::Schema.define(version: 20160728162144) do
     t.integer  "partido_id"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "tipo_vinculo"
+    t.date     "fecha_inicio"
+    t.date     "fecha_fin"
   end
 
   add_index "participacion_entidads", ["partido_id"], name: "index_participacion_entidads_on_partido_id", using: :btree
@@ -415,6 +418,8 @@ ActiveRecord::Schema.define(version: 20160728162144) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "partido_id"
+    t.string   "tipo_sancion"
+    t.string   "tipo_infraccion"
   end
 
   add_index "sancions", ["partido_id"], name: "index_sancions_on_partido_id", using: :btree
