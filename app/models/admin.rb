@@ -32,9 +32,22 @@ class Admin < ActiveRecord::Base
   has_many :partidos, through: :permissions
   has_many :permissions, dependent: :destroy
 
+  after_create :initialize_permissions
+
   def after_database_authentication
     puts "DateTime.now : " + DateTime.now.to_s
     AdminLogin.create(:fecha => DateTime.now, :ip => $request.remote_ip, :admin_id => self.id)
   end
+
+  def initialize_permissions
+    puts self.email
+    if self.is_superadmin?
+      Partido.each do |p|
+        puts p
+        p.admins << self
+      end
+    end
+  end
+
 
 end
