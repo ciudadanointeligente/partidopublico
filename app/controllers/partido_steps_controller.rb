@@ -165,7 +165,7 @@ class PartidoStepsController < ApplicationController
                                                     eleccion_populars_attributes: [:id, :fecha_eleccion, :dias, :cargo, :_destroy,
                                                                 requisitos_attributes: [:descripcion, :id, :_destroy],
                                                                 procedimientos_attributes: [:descripcion, :id, :_destroy]],
-                                                    organo_internos_attributes: [:nombre, :funciones, :id, :_destroy,
+                                                    organo_internos_attributes: [:nombre, :funciones, :id, :contacto, :num_integrantes, :_destroy,
                                                                 requisitos_attributes: [:descripcion, :id, :_destroy],
                                                                 procedimientos_attributes: [:descripcion, :id, :_destroy]],
                                                     eleccion_internas_attributes: [:id, :organo_interno_id, :fecha_eleccion, :fecha_limite_inscripcion, :cargo, :_destroy,
@@ -181,6 +181,6 @@ class PartidoStepsController < ApplicationController
         end
 
         def marco_interno_params
-          params.require(:marco_interno).permit(:partido_id, documentos_attributes: [:id, :descripcion, :archivo, :_destroy])
+          params.require(:marco_interno).permit(:partido_id, documentos_attributes: [:id, :descripcion, :explicacion, :obligatorio, :archivo, :_destroy])
         end
 end

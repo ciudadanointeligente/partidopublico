@@ -2,12 +2,14 @@
 #
 # Table name: organo_internos
 #
-#  id         :integer          not null, primary key
-#  nombre     :string
-#  funciones  :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  partido_id :integer
+#  id              :integer          not null, primary key
+#  nombre          :string
+#  funciones       :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  partido_id      :integer
+#  contacto        :string
+#  num_integrantes :integer
 #
 # Indexes
 #
