@@ -12,11 +12,15 @@
       <% if f.object.id.nil? %>
         <%= f.input :nombre  %>
         <%= f.input :funciones  %>
+        <%= f.input :contacto  %>
+        <%= f.input :num_integrantes  %>
       <% else %>
         <!-- <%= f.object.funciones %> -->
         <%= f.input :id, as: :hidden %>
         <%= f.input :nombre %>
         <%= f.input :funciones %>
+        <%= f.input :contacto  %>
+        <%= f.input :num_integrantes  %>
       <% end %>
     </div>
     <div class="panel-footer org-interno">

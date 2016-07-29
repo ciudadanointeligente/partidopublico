@@ -12,6 +12,8 @@
 #  archivo_content_type :string
 #  archivo_file_size    :integer
 #  archivo_updated_at   :datetime
+#  obligatorio          :boolean
+#  explicacion          :string
 #
 # Indexes
 #
