@@ -42,11 +42,16 @@ class PartidosController < ApplicationController
 
       h = 0
       m = 0
+      ph = 0
+      pm = 0
       afiliados.each do |a|
         h = h + a.hombres
         m = m + a.mujeres
+        total = h+m
+        ph = (h*100)/total
+        pm = (m*100)/total
       end
-      region = { 'region' => r.nombre, 'hombres' => h, 'mujeres' => m }
+      region = { 'region' => r.nombre, 'ordinal' => r.ordinal, 'hombres' => h, 'porcentaje_hombres' => ph, 'mujeres' => m, 'porcentaje_mujeres' => pm }
       @datos_region.push region
 
       sedes = @partido.sedes.where(region_id: r)
