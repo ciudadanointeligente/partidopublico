@@ -12,6 +12,9 @@
 #  partido_id             :integer
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  tipo_vinculo           :string
+#  fecha_inicio           :date
+#  fecha_fin              :date
 #
 # Indexes
 #

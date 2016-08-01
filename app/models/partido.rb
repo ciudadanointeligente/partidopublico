@@ -71,13 +71,13 @@ class Partido < ActiveRecord::Base
 
       #self.marco_general = MarcoGeneral.new
       self.marco_interno = MarcoInterno.new
-      self.marco_interno.documentos << Documento.new(descripcion:"Marco Normativo Interno")
-      self.marco_interno.documentos << Documento.new(descripcion:"Código de Ética")
-      self.marco_interno.documentos << Documento.new(descripcion:"Procedimiento de Prevención de la Corrupción")
-      self.marco_interno.documentos << Documento.new(descripcion:"Reseña Histórica")
-      self.marco_interno.documentos << Documento.new(descripcion:"Declaración de Principios")
-      self.marco_interno.documentos << Documento.new(descripcion:"Programa Base")
-      self.marco_interno.documentos << Documento.new(descripcion:"Estructura Orgánica")
+      self.marco_interno.documentos << Documento.new(descripcion:"Marco Normativo Interno", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Código de Ética", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Procedimiento de Prevención de la Corrupción", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Reseña Histórica", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Declaración de Principios", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Programa Base", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Estructura Orgánica", obligatorio: true)
       self.organo_internos << OrganoInterno.new(nombre:"Órgano ejecutivo")
       self.organo_internos << OrganoInterno.new(nombre:"Órgano intermedio colegiado")
       self.organo_internos << OrganoInterno.new(nombre:"Tribunal supremo")

@@ -13,6 +13,8 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  partido_id             :integer
+#  tipo_sancion           :string
+#  tipo_infraccion        :string
 #
 # Indexes
 #

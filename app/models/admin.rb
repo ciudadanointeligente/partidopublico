@@ -25,16 +25,29 @@
 
 class Admin < ActiveRecord::Base
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
+  # :confirmable, :lockable,  and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, :timeoutable
 
   has_many :partidos, through: :permissions
   has_many :permissions, dependent: :destroy
+
+  after_create :initialize_permissions
 
   def after_database_authentication
     puts "DateTime.now : " + DateTime.now.to_s
     AdminLogin.create(:fecha => DateTime.now, :ip => $request.remote_ip, :admin_id => self.id)
   end
+
+  def initialize_permissions
+    puts self.email
+    if self.is_superadmin?
+      Partido.each do |p|
+        puts p
+        p.admins << self
+      end
+    end
+  end
+
 
 end
