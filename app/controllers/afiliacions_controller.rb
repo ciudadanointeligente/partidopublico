@@ -17,7 +17,7 @@ class AfiliacionsController < ApplicationController
     fechas_distintas.each do |fecha|
       if(!fecha.blank?)
         datos_by_date = datos_by_partido.where("fecha_datos=to_date('" + fecha.to_s + "','YYYY-MM-DD')")
-        count_regiones = datos_by_date.count(:region_id).to_json
+        count_regiones = datos_by_date.uniq.pluck(:region_id).count.to_json
         total_afiliados = datos_by_date.sum(:hombres) + datos_by_date.sum(:mujeres) + datos_by_date.sum(:otros)
         line={:fecha_datos => fecha.strftime("%Y - %m"), :count_regiones => count_regiones, :total_afiliados => total_afiliados}
         @datos << line

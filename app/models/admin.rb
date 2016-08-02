@@ -42,7 +42,7 @@ class Admin < ActiveRecord::Base
   def initialize_permissions
     puts self.email
     if self.is_superadmin?
-      Partido.each do |p|
+      Partido.all.each do |p|
         puts p
         p.admins << self
       end
