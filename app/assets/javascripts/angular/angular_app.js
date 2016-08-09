@@ -683,13 +683,13 @@ function finanzas4Controller($scope,$http,$location,$aside,$attrs){
       })
   }
 
-  $scope.postEliminarDatosBalanceAnual = function(fecha_datos){
+  $scope.postEliminarDatosContrataciones = function(fecha_datos){
     if (confirm('Seguro desea eliminar los datos con fecha ' + fecha_datos + '?')) {
       fecha_eliminacion = {fecha_datos}
       $http.post('partidos/'+$scope.partido_id+'/contratacions/eliminar', fecha_eliminacion)
         .success( function(data){
           $scope.datos_eliminacion = data;
-          getDatosBalanceAnualAgregadosByPartido($scope.partido_id);
+          getDatosContratacioneAgregadosByPartido($scope.partido_id);
         })
         .error( function(error_data){
           $scope.messages = {response: false, message: error_data}

@@ -1,7 +1,7 @@
 class ContratacionsController < ApplicationController
   before_action :authenticate_admin!
   before_action :set_contratacion, only: [:show, :edit, :update, :destroy]
-  before_action :set_partido, only: [:aggregate_balance_anual, :eliminar]
+  before_action :set_partido, only: [:aggregate_contrataciones, :eliminar]
 
   # GET /contratacions
   # GET /contratacions.json
@@ -16,7 +16,7 @@ class ContratacionsController < ApplicationController
     fechas_distintas.each do |fecha|
       datos_by_date = datos_by_partido.where("fecha_datos=to_date('" + fecha.to_s + "','YYYY-MM-DD')")
       count = datos_by_date.count
-      total = datos_pasivos.sum(:monto)
+      total = datos_by_date.sum(:monto)
       line={:fecha_datos => fecha.strftime("%Y - %m"), :count => count, :total => total}
       @datos << line
     end
@@ -96,6 +96,11 @@ class ContratacionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_contratacion
       @contratacion = Contratacion.find(params[:id])
+    end
+
+
+    def set_partido
+      @partido = Partido.find(params[:partido_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
