@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :contratacions
+  resources :contratacions
   resources :balance_anuals
   resources :egreso_ordinarios
   resources :ingreso_ordinarios
@@ -32,6 +34,9 @@ Rails.application.routes.draw do
   end
   resources :balance_anuals do
     collection {post :import_balance_anual}
+  end
+  resources :contratacions do
+    collection {post :import_contrataciones}
   end
   #resources :regions
   #resources :comunas
@@ -68,6 +73,10 @@ Rails.application.routes.draw do
     end
     resources :balance_anuals do
       collection { get :aggregate_balance_anual }
+      collection { post :eliminar }
+    end
+    resources :contratacions do
+      collection { get :aggregate_contrataciones }
       collection { post :eliminar }
     end
   end
