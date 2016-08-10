@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160809153251) do
+ActiveRecord::Schema.define(version: 20160810154643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -481,6 +481,24 @@ ActiveRecord::Schema.define(version: 20160809153251) do
   add_index "tramites", ["partido_id"], name: "index_tramites_on_partido_id", using: :btree
   add_index "tramites", ["persona_id"], name: "index_tramites_on_persona_id", using: :btree
 
+  create_table "transferencias", force: :cascade do |t|
+    t.integer  "partido_id"
+    t.date     "fecha_datos"
+    t.string   "numero"
+    t.string   "razon_social"
+    t.string   "rut"
+    t.integer  "region_id"
+    t.string   "descripcion"
+    t.integer  "monto"
+    t.string   "categoria"
+    t.date     "fecha"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "transferencias", ["partido_id"], name: "index_transferencias_on_partido_id", using: :btree
+  add_index "transferencias", ["region_id"], name: "index_transferencias_on_region_id", using: :btree
+
   create_table "versions", force: :cascade do |t|
     t.string   "item_type",  null: false
     t.integer  "item_id",    null: false
@@ -529,4 +547,6 @@ ActiveRecord::Schema.define(version: 20160809153251) do
   add_foreign_key "tipo_cargos", "partidos"
   add_foreign_key "tramites", "partidos"
   add_foreign_key "tramites", "personas"
+  add_foreign_key "transferencias", "partidos"
+  add_foreign_key "transferencias", "regions"
 end

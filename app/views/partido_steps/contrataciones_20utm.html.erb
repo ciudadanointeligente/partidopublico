@@ -55,7 +55,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr dir-paginate="dato in datos_balance_anual | orderBy:'fecha_datos' | filter: filtro_sedes | itemsPerPage: pageSize">
+          <tr dir-paginate="dato in datos_contrataciones_20utm | orderBy:'fecha_datos' | filter: filtro_sedes | itemsPerPage: pageSize">
             <td> {{dato.fecha_datos}} </td>
             <td> {{dato.count}} </td>
             <td> {{dato.total}} </td>

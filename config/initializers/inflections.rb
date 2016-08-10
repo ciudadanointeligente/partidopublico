@@ -16,5 +16,7 @@
 # end
 ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'provincia', 'provincias'
+  inflect.irregular 'transferencia', 'transferencias'
+
 #   inflect.irregular 'autoridad', 'autoridades'
 end

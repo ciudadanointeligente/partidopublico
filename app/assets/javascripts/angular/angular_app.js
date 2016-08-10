@@ -676,7 +676,7 @@ function finanzas4Controller($scope,$http,$location,$aside,$attrs){
   function getDatosContratacioneAgregadosByPartido(partido_id) {
     $http.get('partidos/'+partido_id+'/contratacions/aggregate_contrataciones')
       .success( function(data){
-        $scope.datos_balance_anual = data;
+        $scope.datos_contrataciones_20utm = data;
       })
       .error( function(error_data){
         $scope.messages = {response: false, message: error_data}
@@ -698,5 +698,40 @@ function finanzas4Controller($scope,$http,$location,$aside,$attrs){
   }
 
   getDatosContratacioneAgregadosByPartido($scope.partido_id);
+
+}
+
+app.controller("finanzas5Controller", finanzas5Controller);
+finanzas5Controller.$inject = ["$scope","$http","$location","$aside","$attrs"];
+
+function finanzas5Controller($scope,$http,$location,$aside,$attrs){
+
+  $scope.partido_id = $location.path().split("/")[2];
+
+  function getDatosTransferenciasAgregadosByPartido(partido_id) {
+    $http.get('partidos/'+partido_id+'/transferencias/aggregate_transferencias')
+      .success( function(data){
+        $scope.datos_transferencias = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
+  $scope.postEliminarDatosTransferencias = function(fecha_datos){
+    if (confirm('Seguro desea eliminar los datos con fecha ' + fecha_datos + '?')) {
+      fecha_eliminacion = {fecha_datos}
+      $http.post('partidos/'+$scope.partido_id+'/transferencias/eliminar', fecha_eliminacion)
+        .success( function(data){
+          $scope.datos_eliminacion = data;
+          getDatosTransferenciasAgregadosByPartido($scope.partido_id);
+        })
+        .error( function(error_data){
+          $scope.messages = {response: false, message: error_data}
+        })
+      }
+  }
+
+  getDatosTransferenciasAgregadosByPartido($scope.partido_id);
 
 }

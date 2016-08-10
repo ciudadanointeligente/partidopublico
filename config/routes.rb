@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :transferencias
+  resources :transferencia
   resources :contratacions
   resources :contratacions
   resources :balance_anuals
@@ -37,6 +39,9 @@ Rails.application.routes.draw do
   end
   resources :contratacions do
     collection {post :import_contrataciones}
+  end
+  resources :transferencias do
+    collection {post :import_transferencias}
   end
   #resources :regions
   #resources :comunas
@@ -77,6 +82,10 @@ Rails.application.routes.draw do
     end
     resources :contratacions do
       collection { get :aggregate_contrataciones }
+      collection { post :eliminar }
+    end
+    resources :transferencias do
+      collection { get :aggregate_transferencias }
       collection { post :eliminar }
     end
   end
