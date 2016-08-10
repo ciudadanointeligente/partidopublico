@@ -1,0 +1,74 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Partido:</strong>
+  <%= @egreso_campana.partido %>
+</p>
+
+<p>
+  <strong>Fecha datos:</strong>
+  <%= @egreso_campana.fecha_datos %>
+</p>
+
+<p>
+  <strong>Fecha eleccion:</strong>
+  <%= @egreso_campana.fecha_eleccion %>
+</p>
+
+<p>
+  <strong>Rut candidato:</strong>
+  <%= @egreso_campana.rut_candidato %>
+</p>
+
+<p>
+  <strong>Rut proveedor:</strong>
+  <%= @egreso_campana.rut_proveedor %>
+</p>
+
+<p>
+  <strong>Nombre:</strong>
+  <%= @egreso_campana.nombre %>
+</p>
+
+<p>
+  <strong>Proveedor:</strong>
+  <%= @egreso_campana.proveedor %>
+</p>
+
+<p>
+  <strong>Fecha documento:</strong>
+  <%= @egreso_campana.fecha_documento %>
+</p>
+
+<p>
+  <strong>Tipo documento:</strong>
+  <%= @egreso_campana.tipo_documento %>
+</p>
+
+<p>
+  <strong>Numero documento:</strong>
+  <%= @egreso_campana.numero_documento %>
+</p>
+
+<p>
+  <strong>Numero cuenta:</strong>
+  <%= @egreso_campana.numero_cuenta %>
+</p>
+
+<p>
+  <strong>P o c:</strong>
+  <%= @egreso_campana.p_o_c %>
+</p>
+
+<p>
+  <strong>Glosa:</strong>
+  <%= @egreso_campana.glosa %>
+</p>
+
+<p>
+  <strong>Monto:</strong>
+  <%= @egreso_campana.monto %>
+</p>
+
+<%= link_to 'Edit', edit_egreso_campana_path(@egreso_campana) %> |
+<%= link_to 'Back', egreso_campanas_path %>

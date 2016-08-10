@@ -1,0 +1,22 @@
+<%= simple_form_for(@contratacion) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :partido %>
+    <%= f.input :fecha_datos %>
+    <%= f.input :numero %>
+    <%= f.input :individualizacion %>
+    <%= f.input :razon_social %>
+    <%= f.input :rut %>
+    <%= f.input :titulares %>
+    <%= f.input :descripcion %>
+    <%= f.input :monto %>
+    <%= f.input :fecha_inicio %>
+    <%= f.input :fecha_termino %>
+    <%= f.input :link %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

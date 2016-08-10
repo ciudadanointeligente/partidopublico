@@ -13,7 +13,7 @@ class PartidosController < ApplicationController
       if current_admin.is_superadmin?
         @login_data = []
 
-        Admin.all.each do |admin|
+        Admin.order(last_sign_in_at: :desc).each do |admin|
           admin_logins = AdminLogin.where admin: admin
           logins = []
           admin_logins.order(fecha: :desc).limit(3).each do |login|
