@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810211308) do
+ActiveRecord::Schema.define(version: 20160810234517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -192,6 +192,26 @@ ActiveRecord::Schema.define(version: 20160810211308) do
   end
 
   add_index "documentos", ["documentable_type", "documentable_id"], name: "index_documentos_on_documentable_type_and_documentable_id", using: :btree
+
+  create_table "egreso_campanas", force: :cascade do |t|
+    t.integer  "partido_id"
+    t.date     "fecha_datos"
+    t.date     "fecha_eleccion"
+    t.string   "rut_candidato"
+    t.string   "rut_proveedor"
+    t.string   "nombre_proveedor"
+    t.date     "fecha_documento"
+    t.string   "tipo_documento"
+    t.string   "numero_documento"
+    t.string   "numero_cuenta"
+    t.string   "p_o_c"
+    t.string   "glosa"
+    t.integer  "monto"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "egreso_campanas", ["partido_id"], name: "index_egreso_campanas_on_partido_id", using: :btree
 
   create_table "egreso_ordinarios", force: :cascade do |t|
     t.integer  "partido_id"
@@ -546,6 +566,7 @@ ActiveRecord::Schema.define(version: 20160810211308) do
   add_foreign_key "comunas", "provincias"
   add_foreign_key "contratacions", "partidos"
   add_foreign_key "distritos", "circunscripcions"
+  add_foreign_key "egreso_campanas", "partidos"
   add_foreign_key "egreso_ordinarios", "partidos"
   add_foreign_key "eleccion_internas", "organo_internos"
   add_foreign_key "eleccion_internas", "partidos"
