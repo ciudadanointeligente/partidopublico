@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810154643) do
+ActiveRecord::Schema.define(version: 20160810211308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -228,6 +228,25 @@ ActiveRecord::Schema.define(version: 20160810154643) do
   end
 
   add_index "eleccion_populars", ["partido_id"], name: "index_eleccion_populars_on_partido_id", using: :btree
+
+  create_table "ingreso_campanas", force: :cascade do |t|
+    t.integer  "partido_id"
+    t.date     "fecha_datos"
+    t.date     "fecha_eleccion"
+    t.string   "rut_candidato"
+    t.string   "rut_donante"
+    t.string   "nombre_donante"
+    t.date     "fecha_documento"
+    t.string   "tipo_documento"
+    t.string   "numero_documento"
+    t.string   "numero_cuenta"
+    t.string   "glosa"
+    t.integer  "monto"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "ingreso_campanas", ["partido_id"], name: "index_ingreso_campanas_on_partido_id", using: :btree
 
   create_table "ingreso_ordinarios", force: :cascade do |t|
     t.date     "fecha_datos"
@@ -531,6 +550,7 @@ ActiveRecord::Schema.define(version: 20160810154643) do
   add_foreign_key "eleccion_internas", "organo_internos"
   add_foreign_key "eleccion_internas", "partidos"
   add_foreign_key "eleccion_populars", "partidos"
+  add_foreign_key "ingreso_campanas", "partidos"
   add_foreign_key "ingreso_ordinarios", "partidos"
   add_foreign_key "leys", "marco_generals"
   add_foreign_key "marco_generals", "partidos"

@@ -5,6 +5,7 @@ $('#flash_message').addClass("alert-success")
 <% return_values.each do |indicador| %>
 $('#flash_message').append("<p> <%= indicador.to_s %> </p>")
 <% end %>
+$('#flash_message').append("<p>La página se recargará automaticamente </p>")
 $('#flash_message').fadeOut(5000, function(){
     location.reload(true);
 });

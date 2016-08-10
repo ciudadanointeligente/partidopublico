@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :ingreso_campanas
   resources :transferencias
   resources :transferencia
   resources :contratacions
@@ -43,6 +44,9 @@ Rails.application.routes.draw do
   resources :transferencias do
     collection {post :import_transferencias}
   end
+  resources :ingreso_campanas do
+    collection {post :import_ingresos_campanas}
+  end
   #resources :regions
   #resources :comunas
   resources :distritos
@@ -86,6 +90,10 @@ Rails.application.routes.draw do
     end
     resources :transferencias do
       collection { get :aggregate_transferencias }
+      collection { post :eliminar }
+    end
+    resources :ingreso_campanas do
+      collection { get :aggregate_ingresos_campanas }
       collection { post :eliminar }
     end
   end

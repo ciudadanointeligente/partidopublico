@@ -735,3 +735,73 @@ function finanzas5Controller($scope,$http,$location,$aside,$attrs){
   getDatosTransferenciasAgregadosByPartido($scope.partido_id);
 
 }
+
+app.controller("finanzas6Controller", finanzas6Controller);
+finanzas6Controller.$inject = ["$scope","$http","$location","$aside","$attrs"];
+
+function finanzas6Controller($scope,$http,$location,$aside,$attrs){
+
+  $scope.partido_id = $location.path().split("/")[2];
+
+  function getDatosIngresosCampanaAgregadosByPartido(partido_id) {
+    $http.get('partidos/'+partido_id+'/ingreso_campanas/aggregate_ingresos_campanas')
+      .success( function(data){
+        $scope.datos_ingresos_campana = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
+  $scope.postEliminarDatosIngresosCampana = function(fecha_datos){
+    if (confirm('Seguro desea eliminar los datos con fecha ' + fecha_datos + '?')) {
+      fecha_eliminacion = {fecha_datos}
+      $http.post('partidos/'+$scope.partido_id+'/ingreso_campanas/eliminar', fecha_eliminacion)
+        .success( function(data){
+          $scope.datos_eliminacion = data;
+          getDatosIngresosCampanaAgregadosByPartido($scope.partido_id);
+        })
+        .error( function(error_data){
+          $scope.messages = {response: false, message: error_data}
+        })
+      }
+  }
+
+  getDatosIngresosCampanaAgregadosByPartido($scope.partido_id);
+
+}
+
+app.controller("finanzas7Controller", finanzas7Controller);
+finanzas7Controller.$inject = ["$scope","$http","$location","$aside","$attrs"];
+
+function finanzas7Controller($scope,$http,$location,$aside,$attrs){
+
+  $scope.partido_id = $location.path().split("/")[2];
+
+  function getDatosGastosCampanaAgregadosByPartido(partido_id) {
+    $http.get('partidos/'+partido_id+'/egreso_campanas/aggregate_egresos_campanas')
+      .success( function(data){
+        $scope.datos_gastos_campana = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
+  $scope.postEliminarDatosGastosCampana = function(fecha_datos){
+    if (confirm('Seguro desea eliminar los datos con fecha ' + fecha_datos + '?')) {
+      fecha_eliminacion = {fecha_datos}
+      $http.post('partidos/'+$scope.partido_id+'/egreso_campanas/eliminar', fecha_eliminacion)
+        .success( function(data){
+          $scope.datos_eliminacion = data;
+          getDatosGastosCampanaAgregadosByPartido($scope.partido_id);
+        })
+        .error( function(error_data){
+          $scope.messages = {response: false, message: error_data}
+        })
+      }
+  }
+
+  getDatosGastosCampanaAgregadosByPartido($scope.partido_id);
+
+}
