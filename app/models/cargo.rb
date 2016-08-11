@@ -43,4 +43,5 @@ class Cargo < ActiveRecord::Base
       return self.region.to_s + self.circunscripcion.to_s
     end
   end
+
 end

@@ -522,7 +522,6 @@ function tipoCargosController($scope,$http,$location,$aside,$attrs){
 
   $scope.getTipoCargoModal = function(tipo_cargo_id){
     if(tipo_cargo_id) {
-      console.log($scope.tipo_cargos)
       getTipoCargoInfo(tipo_cargo_id);
     } else {
       $scope.tipo_cargo = {

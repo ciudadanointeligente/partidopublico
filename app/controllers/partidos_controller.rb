@@ -1,4 +1,5 @@
 class PartidosController < ApplicationController
+  before_action :authenticate_admin!, except: [:show]
   before_action :set_partido, only: [:show, :edit, :update, :destroy]
 
   # GET /partidos
