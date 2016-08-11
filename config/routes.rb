@@ -44,6 +44,13 @@ Rails.application.routes.draw do
   resources :leys
   resources :marco_generals
   resources :partidos do
+    get "/normas_internas", to: 'partidos#normas_internas'
+    get "/regiones", to: 'partidos#regiones'
+    get "/sedes", to: 'partidos#sedes'
+    get "/autoridades", to: 'partidos#autoridades'
+    get "/vinculos_e_intereses", to: 'partidos#vinculos_intereses'
+    get "/pactos", to: 'partidos#pactos'
+    get "/sanciones", to: 'partidos#sanciones'
     resources :cargos
     resources :personas
     resources :tipo_cargos

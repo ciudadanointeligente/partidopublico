@@ -1,0 +1,11 @@
+<% @sanciones.each do |s| %>
+  <ul>
+    <li><%= s.descripcion %></li>
+    <li><%= s.institucion %></li>
+    <li><%= s.tipo_sancion %></li>
+    <li><%= s.tipo_infraccion %></li>
+    <% if !s.documento_file_name.nil? %>
+      <li><%= link_to s.documento_file_name, s.documento.url %></li>
+    <% end %>
+  </ul>
+<% end %>

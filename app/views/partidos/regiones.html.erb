@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-md-4">
+    <%= render 'svg_map' %>
+  </div>
+  <div class="col-md-8">
+    <ul>
+      <% @datos_region.each do |r| %>
+      <li><%= r['region'] %> h: <%= r['hombres'] %> (<%= r['porcentaje_hombres'] %>%) m: <%= r['mujeres'] %> (<%= r['porcentaje_mujeres'] %>%)</li>
+      <% end %>
+    </ul>
+  </div>
+</div>

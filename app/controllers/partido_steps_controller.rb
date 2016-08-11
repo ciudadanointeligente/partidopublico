@@ -69,12 +69,12 @@ class PartidoStepsController < ApplicationController
             end
 
         when :linea_denuncia
-          tribunal_supremo = @partido.organo_internos.where nombre: "Tribunal Supremo"
+          tribunal_supremo = @partido.organo_internos.where('lower(nombre) = ?', "Tribunal Supremo".downcase)
           if tribunal_supremo.any?
             if tribunal_supremo.first.contacto.nil?
               @message =  "Por favor rellene el campo contacto del Órgano Interno: Tribunal Supremo."
             else
-              @message =  "Las denuncias serán enviadas al contacto del Órgano Interno: Tribunal Supremo."
+              @message =  "Las denuncias serán enviadas al contacto del Órgano Interno: Tribunal Supremo. ("+tribunal_supremo.first.contacto+")"
             end
           else
             @message =  "Debe existir un Órgano Interno con nombre \"Tribunal Supremo\"."
