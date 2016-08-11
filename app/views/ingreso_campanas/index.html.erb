@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Ingreso Campanas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Partido</th>
+      <th>Fecha datos</th>
+      <th>Fecha eleccion</th>
+      <th>Rut candidato</th>
+      <th>Rut donante</th>
+      <th>Nombre donante</th>
+      <th>Fecha documento</th>
+      <th>Tipo documento</th>
+      <th>Numero documento</th>
+      <th>Numero cuenta</th>
+      <th>Glosa</th>
+      <th>Monto</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ingreso_campanas.each do |ingreso_campana| %>
+      <tr>
+        <td><%= ingreso_campana.partido %></td>
+        <td><%= ingreso_campana.fecha_datos %></td>
+        <td><%= ingreso_campana.fecha_eleccion %></td>
+        <td><%= ingreso_campana.rut_candidato %></td>
+        <td><%= ingreso_campana.rut_donante %></td>
+        <td><%= ingreso_campana.nombre_donante %></td>
+        <td><%= ingreso_campana.fecha_documento %></td>
+        <td><%= ingreso_campana.tipo_documento %></td>
+        <td><%= ingreso_campana.numero_documento %></td>
+        <td><%= ingreso_campana.numero_cuenta %></td>
+        <td><%= ingreso_campana.glosa %></td>
+        <td><%= ingreso_campana.monto %></td>
+        <td><%= link_to 'Show', ingreso_campana %></td>
+        <td><%= link_to 'Edit', edit_ingreso_campana_path(ingreso_campana) %></td>
+        <td><%= link_to 'Destroy', ingreso_campana, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ingreso campana', new_ingreso_campana_path %>

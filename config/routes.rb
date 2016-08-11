@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :egreso_campanas
+  resources :ingreso_campanas
+  resources :transferencias
+  resources :transferencia
+  resources :contratacions
+  resources :contratacions
   resources :balance_anuals
   resources :egreso_ordinarios
   resources :ingreso_ordinarios
@@ -32,6 +38,18 @@ Rails.application.routes.draw do
   end
   resources :balance_anuals do
     collection {post :import_balance_anual}
+  end
+  resources :contratacions do
+    collection {post :import_contrataciones}
+  end
+  resources :transferencias do
+    collection {post :import_transferencias}
+  end
+  resources :ingreso_campanas do
+    collection {post :import_ingresos_campanas}
+  end
+  resources :egreso_campanas do
+    collection {post :import_egresos_campanas}
   end
   #resources :regions
   #resources :comunas
@@ -75,6 +93,22 @@ Rails.application.routes.draw do
     end
     resources :balance_anuals do
       collection { get :aggregate_balance_anual }
+      collection { post :eliminar }
+    end
+    resources :contratacions do
+      collection { get :aggregate_contrataciones }
+      collection { post :eliminar }
+    end
+    resources :transferencias do
+      collection { get :aggregate_transferencias }
+      collection { post :eliminar }
+    end
+    resources :ingreso_campanas do
+      collection { get :aggregate_ingresos_campanas }
+      collection { post :eliminar }
+    end
+    resources :egreso_campanas do
+      collection { get :aggregate_egresos_campanas }
       collection { post :eliminar }
     end
   end

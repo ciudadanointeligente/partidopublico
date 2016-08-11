@@ -45,4 +45,5 @@ class BalanceAnual < ActiveRecord::Base
     end
     return_values = { :errores => errores, :filas_importadas => filas_importadas }
   end
+
 end

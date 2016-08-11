@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Partido:</strong>
+  <%= @ingreso_campana.partido %>
+</p>
+
+<p>
+  <strong>Fecha datos:</strong>
+  <%= @ingreso_campana.fecha_datos %>
+</p>
+
+<p>
+  <strong>Fecha eleccion:</strong>
+  <%= @ingreso_campana.fecha_eleccion %>
+</p>
+
+<p>
+  <strong>Rut candidato:</strong>
+  <%= @ingreso_campana.rut_candidato %>
+</p>
+
+<p>
+  <strong>Rut donante:</strong>
+  <%= @ingreso_campana.rut_donante %>
+</p>
+
+<p>
+  <strong>Nombre donante:</strong>
+  <%= @ingreso_campana.nombre_donante %>
+</p>
+
+<p>
+  <strong>Fecha documento:</strong>
+  <%= @ingreso_campana.fecha_documento %>
+</p>
+
+<p>
+  <strong>Tipo documento:</strong>
+  <%= @ingreso_campana.tipo_documento %>
+</p>
+
+<p>
+  <strong>Numero documento:</strong>
+  <%= @ingreso_campana.numero_documento %>
+</p>
+
+<p>
+  <strong>Numero cuenta:</strong>
+  <%= @ingreso_campana.numero_cuenta %>
+</p>
+
+<p>
+  <strong>Glosa:</strong>
+  <%= @ingreso_campana.glosa %>
+</p>
+
+<p>
+  <strong>Monto:</strong>
+  <%= @ingreso_campana.monto %>
+</p>
+
+<%= link_to 'Edit', edit_ingreso_campana_path(@ingreso_campana) %> |
+<%= link_to 'Back', ingreso_campanas_path %>

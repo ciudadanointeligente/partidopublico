@@ -1,0 +1,24 @@
+<%= simple_form_for(@egreso_campana) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :partido %>
+    <%= f.input :fecha_datos %>
+    <%= f.input :fecha_eleccion %>
+    <%= f.input :rut_candidato %>
+    <%= f.input :rut_proveedor %>
+    <%= f.input :nombre %>
+    <%= f.input :proveedor %>
+    <%= f.input :fecha_documento %>
+    <%= f.input :tipo_documento %>
+    <%= f.input :numero_documento %>
+    <%= f.input :numero_cuenta %>
+    <%= f.input :p_o_c %>
+    <%= f.input :glosa %>
+    <%= f.input :monto %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

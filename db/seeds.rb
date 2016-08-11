@@ -21,21 +21,21 @@ Circunscripcion.create!([
 ])
 
 Region.create!([
-  {nombre: "Arica y Parinacota", ordinal: "XV"},
-  {nombre: "Tarapacá", ordinal: "I"},
-  {nombre: "Antofagasta", ordinal: "II"},
-  {nombre: "Atacama", ordinal: "III"},
-  {nombre: "Coquimbo", ordinal: "IV"},
-  {nombre: "Valparaiso", ordinal: "V"},
-  {nombre: "Metropolitana de Santiago", ordinal: "RM"},
-  {nombre: "Libertador General Bernardo O'Higgins", ordinal: "VI"},
-  {nombre: "Maule", ordinal: "VII"},
-  {nombre: "Biobío", ordinal: "VIII"},
-  {nombre: "La Araucanía", ordinal: "IX"},
-  {nombre: "Los Ríos", ordinal: "XIV"},
-  {nombre: "Los Lagos", ordinal: "X"},
-  {nombre: "Aisén del General Carlos Ibáñez del Campo", ordinal: "XI"},
-  {nombre: "Magallanes y de la Antártica Chilena", ordinal: "XII"}
+  {nombre: "Arica y Parinacota", ordinal: "15"},
+  {nombre: "Tarapacá", ordinal: "1"},
+  {nombre: "Antofagasta", ordinal: "2"},
+  {nombre: "Atacama", ordinal: "3"},
+  {nombre: "Coquimbo", ordinal: "4"},
+  {nombre: "Valparaiso", ordinal: "5"},
+  {nombre: "Metropolitana de Santiago", ordinal: "13"},
+  {nombre: "Libertador General Bernardo O'Higgins", ordinal: "6"},
+  {nombre: "Maule", ordinal: "7"},
+  {nombre: "Biobío", ordinal: "8"},
+  {nombre: "La Araucanía", ordinal: "9"},
+  {nombre: "Los Ríos", ordinal: "14"},
+  {nombre: "Los Lagos", ordinal: "10"},
+  {nombre: "Aisén del General Carlos Ibáñez del Campo", ordinal: "11"},
+  {nombre: "Magallanes y de la Antártica Chilena", ordinal: "12"}
 ])
 
 Provincia.create!([

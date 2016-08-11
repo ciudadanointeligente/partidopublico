@@ -2,11 +2,14 @@
 #
 # Table name: tipo_cargos
 #
-#  id         :integer          not null, primary key
-#  titulo     :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  partido_id :integer
+#  id            :integer          not null, primary key
+#  titulo        :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  partido_id    :integer
+#  cargo_interno :boolean
+#  representante :boolean
+#  autoridad     :boolean
 #
 # Indexes
 #

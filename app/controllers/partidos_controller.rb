@@ -1,4 +1,5 @@
 class PartidosController < ApplicationController
+  before_action :authenticate_admin!, except: [:show]
   before_action :set_partido, only: [:show, :edit, :update, :destroy, :normas_internas, :regiones, :sedes, :autoridades, :vinculos_intereses, :pactos, :sanciones]
   layout "frontend", only: [:normas_internas, :regiones, :sedes, :autoridades, :vinculos_intereses, :pactos, :sanciones]
 
@@ -14,7 +15,7 @@ class PartidosController < ApplicationController
       if current_admin.is_superadmin?
         @login_data = []
 
-        Admin.all.each do |admin|
+        Admin.order(last_sign_in_at: :desc).each do |admin|
           admin_logins = AdminLogin.where admin: admin
           logins = []
           admin_logins.order(fecha: :desc).limit(3).each do |login|
