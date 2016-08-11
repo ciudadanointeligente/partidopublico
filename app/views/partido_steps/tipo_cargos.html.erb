@@ -38,6 +38,9 @@
         <thead>
           <tr>
             <th>Titulo</th>
+            <th>Representante</th>
+            <th>Autoridad</th>
+            <th>Cargo Interno</th>
             <th>Fecha Creacion</th>
             <th>Acciones</th>
           </tr>
@@ -45,7 +48,10 @@
         <tbody>
           <tr dir-paginate="tipo_cargo in tipo_cargos | orderBy:'titulo' | filter: filtro_tipo_cargos | itemsPerPage: pageSize">
             <td> {{tipo_cargo.titulo}} </td>
-            <td> {{tipo_cargo.created_at}} </td>
+            <td> <i class="fa" ng-class="tipo_cargo.representante ? 'fa-check' : ''"></i> </td>
+            <td> <i class="fa" ng-class="tipo_cargo.autoridad ? 'fa-check' : ''"></i> </td>
+            <td> <i class="fa" ng-class="tipo_cargo.cargo_interno ? 'fa-check' : ''"></i> </td>
+            <td> {{tipo_cargo.created_at | date :  "yyyy-MM-dd"}} </td>
             <td>
               <i class="fa fa-pencil-square-o" ng-click="getTipoCargoModal(tipo_cargo.id)" title="Editar"></i>
               <i class="fa fa-trash" ng-click="removeTipoCargo(tipo_cargo)"></i>

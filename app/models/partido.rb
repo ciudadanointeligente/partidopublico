@@ -62,6 +62,41 @@ class Partido < ActiveRecord::Base
 
     after_create :initialize_transparency_settings
 
+    #scope :representantes, -> { cargos.where(tipo_cargo.representante: true) }
+
+    def representantes
+      cargos = Cargo.where partido: self.id
+      representantes = []
+      cargos.each do |c|
+        if c.tipo_cargo.representante
+          representantes << c
+        end
+      end
+      return representantes
+    end
+
+    def autoridades
+      cargos = Cargo.where partido: self.id
+      autoridades = []
+      cargos.each do |c|
+        if c.tipo_cargo.autoridad
+          autoridades << c
+        end
+      end
+      return autoridades
+    end
+
+    def cargos_internos
+      cargos = Cargo.where partido: self.id
+      cargos_internos = []
+      cargos.each do |c|
+        if c.tipo_cargo.cargo_interno
+          cargos_internos << c
+        end
+      end
+      return cargos_internos
+    end
+
     def initialize_transparency_settings
 
       superadmins = Admin.where is_superadmin: true
