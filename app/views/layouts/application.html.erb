@@ -1,46 +1,40 @@
 <!DOCTYPE html>
-<html ng-app="papuApp">
-
-<head>
+<html lang="es" ng-app="papuApp">
+  <head>
     <base href="/">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title><%= t('.title') %></title>
-      <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-      <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-
-      <%= csrf_meta_tags %>
-
-</head>
-
-<body>
-
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
     <!-- Navigation -->
-
-
-
-
     <!-- Page Content -->
-    <div id="container" >
+    <% if !current_admin.nil? %>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12"></div>
+        </div>
+        <div class="row">
+          <div class="col-md-9"></div>
+          <div class="col-md-2 text-right"><%= current_admin.email %></div>
+          <div class="col-md-1 text-right"><%= link_to('Salir', destroy_admin_session_path, :method => :delete) %></div>
+        </div>
+      </div>
+    <% end %>
 
-             <p class="notice"><%= notice %></p>
-             <p class="alert"><%= alert %></p>
-
-        <%= yield %>
-
+    <div id="container">
+      <!-- <p class="notice"><%= notice %></p> -->
+      <p class="alert"><%= alert %></p>
     </div>
 
-        <!-- Footer -->
-    <footer>
-        <div id="pie_pagina">
-            <p></p>
-        </div>
-    </footer>
-
-</body>
-
+    <%= yield %>
+    <!-- Footer -->
+    <footer></footer>
+  </body>
 </html>

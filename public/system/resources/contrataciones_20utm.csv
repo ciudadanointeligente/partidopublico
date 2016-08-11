@@ -1,0 +1,5 @@
+"ano_datos","mes_datos","numero","individualizacion","razon_social","rut","titulares","descripcion","monto","fecha_inicio","fecha_termino","link"
+2016,7,1,"alquiler smokin","tienda",234323,"antu perez, pepe juan","alquiler smokin",432,"2016-03-02","2016-03-05","www.link.cl"
+2016,7,21,"catering evento","tienda2",2343,"ramon nomar","catering evento",432,"2016-03-03","2016-03-05","www.link.cl"
+2016,6,7,"reformas sede","tienda",24323,"antu perez, pepe juan","reformas sede",42,"2016-03-04","2016-03-05","www.link.cl"
+2016,6,9,"impresion targetas","Tienda 3",23323,"eusebio trompas","impresion targetas",43,"2016-03-05","2016-03-05","www.link.cl"

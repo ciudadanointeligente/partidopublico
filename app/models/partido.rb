@@ -22,9 +22,8 @@ class Partido < ActiveRecord::Base
     validates_attachment :logo,
         content_type: { content_type:  /\Aimage\/.*\Z/ },
         size: { in: 0..500.kilobytes }
-    validates_presence_of :nombre, :sigla, :lema, :message => "debe rellenar"
-    validates_uniqueness_of :nombre, :sigla, :lema, :message => "already exists"
-    validates_length_of :lema, :within => 2..200
+    validates_presence_of :nombre, :sigla, :message => "debe rellenar"
+    validates_uniqueness_of :nombre, :sigla, :message => "already exists"
 
     has_many :admins, through: :permissions
     has_many :permissions, dependent: :destroy
@@ -36,58 +35,105 @@ class Partido < ActiveRecord::Base
     has_many :sedes, dependent: :destroy
     has_many :afiliacions, dependent: :destroy
     has_many :tramites, dependent: :destroy
-    # has_many :personas, as: :personable
-    # delegate :representantes, :meerkats, :wild_boars, to: :personas
-    #has_many :representantes, as: :personable, dependent: :destroy
-    #has_many :autoridads, as: :personable, dependent: :destroy
-    #has_many :candidatos, as: :personable, dependent: :destroy
     has_many :eleccion_populars, dependent: :destroy
     has_many :eleccion_internas, dependent: :destroy
     has_many :actividad_publicas, dependent: :destroy
     has_many :acuerdos, dependent: :destroy
     has_many :participacion_entidads, dependent: :destroy
     has_and_belongs_to_many :pacto_electorals
-    #has_many :responsable_denuncias, as: :personable, dependent: :destroy
     has_many :sancions, dependent: :destroy
     has_many :personas, dependent: :destroy
     has_many :cargos, dependent: :destroy
+    has_many :tipo_cargos, dependent: :destroy
+    has_many :ingreso_ordinarios, dependent: :destroy
 
     accepts_nested_attributes_for :marco_interno, allow_destroy: true
     accepts_nested_attributes_for :organo_internos, allow_destroy: true
     accepts_nested_attributes_for :sedes, reject_if: proc { |attributes| attributes['direccion'].blank? }, allow_destroy: true
     accepts_nested_attributes_for :afiliacions, allow_destroy: true
     accepts_nested_attributes_for :tramites, allow_destroy: true
-    # accepts_nested_attributes_for :personas, allow_destroy: true
-    # accepts_nested_attributes_for :representantes, allow_destroy: true
-    # accepts_nested_attributes_for :autoridads, allow_destroy: true
-    # accepts_nested_attributes_for :candidatos, allow_destroy: true
     accepts_nested_attributes_for :eleccion_populars, allow_destroy: true
     accepts_nested_attributes_for :eleccion_internas, allow_destroy: true
     accepts_nested_attributes_for :actividad_publicas, allow_destroy: true
     accepts_nested_attributes_for :acuerdos, allow_destroy: true
     accepts_nested_attributes_for :participacion_entidads, allow_destroy: true
     accepts_nested_attributes_for :pacto_electorals, allow_destroy: true
-    # accepts_nested_attributes_for :responsable_denuncias, allow_destroy: true
     accepts_nested_attributes_for :sancions, allow_destroy: true
 
     after_create :initialize_transparency_settings
 
+    #scope :representantes, -> { cargos.where(tipo_cargo.representante: true) }
+
+    def representantes
+      cargos = Cargo.where partido: self.id
+      representantes = []
+      cargos.each do |c|
+        if c.tipo_cargo.representante
+          representantes << c
+        end
+      end
+      return representantes
+    end
+
+    def autoridades
+      cargos = Cargo.where partido: self.id
+      autoridades = []
+      cargos.each do |c|
+        if c.tipo_cargo.autoridad
+          autoridades << c
+        end
+      end
+      return autoridades
+    end
+
+    def cargos_internos
+      cargos = Cargo.where partido: self.id
+      cargos_internos = []
+      cargos.each do |c|
+        if c.tipo_cargo.cargo_interno
+          cargos_internos << c
+        end
+      end
+      return cargos_internos
+    end
+
     def initialize_transparency_settings
-       self.marco_general = MarcoGeneral.new
-       self.marco_interno = MarcoInterno.new
-       self.marco_interno.documentos << Documento.new(descripcion:"Marco Normativo Interno")
-       self.marco_interno.documentos << Documento.new(descripcion:"Código de Ética")
-       self.marco_interno.documentos << Documento.new(descripcion:"Procedimiento de Prevención de la Corrupción")
-       self.marco_interno.documentos << Documento.new(descripcion:"Reseña Histórica")
-       self.marco_interno.documentos << Documento.new(descripcion:"Declaración de Principios")
-       self.marco_interno.documentos << Documento.new(descripcion:"Programa Base")
-       self.marco_interno.documentos << Documento.new(descripcion:"Estructura Orgánica")
-       self.organo_internos << OrganoInterno.new(nombre:"Órgano ejecutivo")
-       self.organo_internos << OrganoInterno.new(nombre:"Órgano intermedio colegiado")
-       self.organo_internos << OrganoInterno.new(nombre:"Tribunal supremo")
-       self.tramites << Tramite.new(nombre:"Afiliación")
-       self.tramites << Tramite.new(nombre:"Desfiliación")
-       self.save
+
+      superadmins = Admin.where is_superadmin: true
+      superadmins.each do |admin|
+        self.admins << admin
+      end
+
+      #self.marco_general = MarcoGeneral.new
+      self.marco_interno = MarcoInterno.new
+      self.marco_interno.documentos << Documento.new(descripcion:"Marco Normativo Interno", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Código de Ética", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Procedimiento de Prevención de la Corrupción", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Reseña Histórica", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Declaración de Principios", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Programa Base", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Estructura Orgánica", obligatorio: true)
+      self.organo_internos << OrganoInterno.new(nombre:"Órgano ejecutivo")
+      self.organo_internos << OrganoInterno.new(nombre:"Órgano intermedio colegiado")
+      self.organo_internos << OrganoInterno.new(nombre:"Tribunal supremo")
+      self.tramites << Tramite.new(nombre:"Afiliación")
+      self.tramites << Tramite.new(nombre:"Desfiliación")
+      self.personas << Persona.new( rut:"14132725-"+self.id.to_s,
+                                    nombre:"Ejemplo",
+                                    apellidos:"Ejemplo Ejemplo",
+                                    genero:"Otro",
+                                    telefono:"+56912345678",
+                                    email:"ejemplo@ejemplo.com",
+                                    intereses:"http://www.servel.cl/intereses",
+                                    patrimonio:"http://www.servel.cl/patrimonio",
+                                    fecha_nacimiento:Date.new(1900, 01, 01),
+                                    nivel_estudios:"Ejemplo",
+                                    afiliado:true,
+                                    ano_inicio_militancia:"1950",
+                                    bio:"Ejemplo Biografía"
+                                    )
+      self.tipo_cargos << TipoCargo.new(titulo:"Ejemplo Alcalde")
+      self.save
     end
 
     def to_s

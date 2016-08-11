@@ -1,5 +1,34 @@
-<%= f.input :entidad %>
-<%= f.input :descripcion %>
-<%= f.input :documento %>
-<br>
-<%= link_to_remove_association "mark for remove entidad", f %>
+<div class="col-md-4">
+  <div class="panel panel-default ">
+    <div class="panel-heading">
+      <% if f.object.id.nil? %>
+        Nueva Participación
+      <% else %>
+        Participación:  <%= f.object.entidad %>
+      <% end %>
+    </div>
+    <div class="panel-body">
+
+      <% if f.object.id.nil? %>
+        <%= f.input :entidad %>
+        <%= f.input :descripcion %>
+        <%= f.input :documento %>
+      <% else %>
+        <ul>
+          <li><%= f.object.entidad %></li>
+          <li><%= f.object.descripcion %></li>
+          <% if !f.object.documento_file_name.blank? %>
+          <li><a href="<%= f.object.documento.url %>" target="_blank"><i class="fa fa-file-text-o"></i> <%= f.object.documento_file_name %></a> (<%= number_to_human_size f.object.documento.size %>)</li>
+          <% end %>
+        </ul>
+        <%= f.input :id, as: :hidden %>
+      <% end %>
+
+    </div>
+    <div class="panel-footer">
+      <%= link_to_remove_association f, class: 'btn btn-danger checkForDelete' do %>
+        <i class="fa fa-trash"></i> Marcar para eliminar
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,8 +1,23 @@
-<%= render :layout => 'form' do |f| %>
+<div class="container">
+  <h2 class="page-header">Postulación Interna</h2>
 
-<%= f.fields_for :eleccion_internas do |builder| %>
-    <%= render 'eleccion_interna_fields', :f => builder %>
-<% end %>
-<%= link_to_add_association 'add eleccion interna', f, :eleccion_internas %>
+  <%= render :layout => 'form' do |f| %>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-4">
+        <div class="form-inline">
+          <%= link_to_add_association f, :eleccion_internas, class: 'btn btn-success form-control', data: { 'association-insertion-method': 'append', 'association-insertion-node': '.postulacion-interna' } do %>
+            <i class="fa fa-plus"></i> Agregar postulación interna
+          <% end %>
+        </div>
+      </div>
+    </div>
 
-<% end %>
+    <div class="row postulacion-interna"></div>
+
+    <div class="row">
+      <%= f.fields_for :eleccion_internas do |builder| %>
+        <%= render 'eleccion_interna_fields', :f => builder %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

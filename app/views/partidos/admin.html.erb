@@ -1,21 +1,75 @@
-<%= link_to('Logout', destroy_admin_session_path, :method => :delete) %> 
-<p id="notice"><%= notice %></p>
+<div class="container">
 
-<h1>Partidos que puedes editar</h1>
+  <p id="notice"><%= notice %></p>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
+  <% if admin_signed_in? && current_admin.is_superadmin?%>
 
-  <tbody>
-    <% @partidos.each do |partido| %>
+    <h1>Últimos Accesos : </h1>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Cuenta</th>
+          <th>Accesos(3 Últimos)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @login_data.each do |line| %>
+          <tr>
+            <td><%= line[:email] %></td>
+            <td><%= line[:login_count] %></td>
+            <td>
+            <% if line[:logins].any? %>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>IP</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% line[:logins].each do |login| %>
+                    <tr>
+                      <td> <%= login[:fecha] %> </td>
+                      <td> <%= login[:ip] %> </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  <% end %>
+
+  <h1>Partidos que puedes editar</h1>
+
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= link_to partido.sigla, partido_steps_path(partido) %></td>
-        <td><%= link_to 'Eliminar', partido, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Partido</th>
+        <th>Acciones</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @partidos.each do |partido| %>
+        <tr>
+          <td><%= link_to partido.sigla, partido_steps_path(partido), target: '_self' %></td>
+          <td>
+            <%= link_to partido_steps_path(partido), target: '_self' do %>
+              <div class="fa fa-edit"></div>
+            <% end %>
+            <%= link_to partido, method: :delete, data: { confirm: 'Are you sure?' } do %>
+              <div class="fa fa-trash"></div>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>

@@ -1,4 +1,3 @@
 json.array!(@afiliacions) do |afiliacion|
-  json.extract! afiliacion, :id, :region_id, :hombres, :mujeres, :rangos
-  json.url afiliacion_url(afiliacion, format: :json)
+  json.extract! afiliacion, :id, :region, :hombres, :mujeres, :otros, :ano_nacimiento, :fecha_datos
 end

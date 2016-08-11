@@ -14,9 +14,9 @@
     <% @regions.each do |region| %>
       <tr>
         <td><%= region.nombre %></td>
-        <td><%= link_to 'Show', region %></td>
-        <td><%= link_to 'Edit', edit_region_path(region) %></td>
-        <td><%= link_to 'Destroy', region, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', partido_region_path(@partido, region) %></td>
+        <td><%= link_to 'Edit', edit_partido_region_path(@partido, region) %></td>
+        <td><%= link_to 'Destroy', partido_region_path(@partido, region), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -24,4 +24,4 @@
 
 <br>
 
-<%= link_to 'New Region', new_region_path %>
+<%= link_to 'New Region', new_partido_region_path(@partido) %>

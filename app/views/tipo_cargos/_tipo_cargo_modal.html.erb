@@ -1,0 +1,17 @@
+<script type="text/ng-template" id="tipo_cargo_modal_aside.html">
+  <div class="modal-header">
+    <h3>Tipo de Cargo</h3>
+  </div>
+  <div class="modal-body">
+    <%= simple_form_for :tipo_cargo, :multipart => true , :remote => true do |f| %>
+      <%= f.input :titulo, required: true, as: :string, input_html: { 'ng-model': "tipo_cargo.titulo", 'placeholder': "Tipo de Cargo" } %>
+      <%= f.input :representante, as: :boolean, label: "Representante Electo", input_html: { 'ng-model': "tipo_cargo.representante" } %>
+      <%= f.input :autoridad, as: :boolean, label: "Autoridad Designada", input_html: { 'ng-model': "tipo_cargo.autoridad" } %>
+      <%= f.input :cargo_interno, as: :boolean, label: "Cargo Interno del Partido", input_html: { 'ng-model': "tipo_cargo.cargo_interno" } %>
+    <% end %>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save($event)" ng-disabled="(tipo_cargo.titulo) ? '' : 'disabled'" ng-class="{ 'btn-primary-save' : (tipo_cargo.titulo) }">Guardar</button>
+    <button class="btn btn-danger" ng-click="cancel($event)">Cancelar</button>
+  </div>
+</script>

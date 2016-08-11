@@ -7,8 +7,12 @@ $('#flash_message').attr('style','display:block')
   <% @errors.each do |e| %>
     $('#flash_message').append("<p> Revise campo <%= e.to_s %>. </p>")
   <% end %>
+  $('#flash_message').fadeOut(5000)
 <% else %>
   $('#flash_message').addClass("alert-success")
-  $('#flash_message').append("<p>  Datos Guardados correctamente </p>")
+  $('#flash_message').append("<p>Datos Guardados correctamente </p>")
+  $('#flash_message').append("<p>La página se recargará automaticamente </p>")
+  $('#flash_message').fadeOut(3000, function(){
+      location.reload(true);
+  });
 <% end %>
-$('#flash_message').fadeOut(5000)

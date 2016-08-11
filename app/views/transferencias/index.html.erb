@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Transferencias</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Partido</th>
+      <th>Fecha datos</th>
+      <th>Numero</th>
+      <th>Razon social</th>
+      <th>Rut</th>
+      <th>Region</th>
+      <th>Descripcion</th>
+      <th>Monto</th>
+      <th>Categoria</th>
+      <th>Fecha</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @transferencias.each do |transferencia| %>
+      <tr>
+        <td><%= transferencia.partido %></td>
+        <td><%= transferencia.fecha_datos %></td>
+        <td><%= transferencia.numero %></td>
+        <td><%= transferencia.razon_social %></td>
+        <td><%= transferencia.rut %></td>
+        <td><%= transferencia.region %></td>
+        <td><%= transferencia.descripcion %></td>
+        <td><%= transferencia.monto %></td>
+        <td><%= transferencia.categoria %></td>
+        <td><%= transferencia.fecha %></td>
+        <td><%= link_to 'Show', transferencia %></td>
+        <td><%= link_to 'Edit', edit_transferencia_path(transferencia) %></td>
+        <td><%= link_to 'Destroy', transferencia, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Transferencia', new_transferencia_path %>

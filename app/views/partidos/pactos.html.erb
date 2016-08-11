@@ -1,0 +1,14 @@
+<% @pactos.each do |p| %>
+<ul>
+  <li><%= p.nombre_pacto %></li>
+  <li><%= p.descripcion %></li>
+  <li><%= p.ano_eleccion %></li>
+  <li>Partidos:
+    <ul>
+      <% p.partidos.each do |partido| %>
+      <li><%= partido.nombre %></li>
+      <% end %>
+    </ul>
+  </li>
+</ul>
+<% end %>

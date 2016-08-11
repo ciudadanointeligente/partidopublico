@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Egreso Campanas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Partido</th>
+      <th>Fecha datos</th>
+      <th>Fecha eleccion</th>
+      <th>Rut candidato</th>
+      <th>Rut proveedor</th>
+      <th>Nombre</th>
+      <th>Proveedor</th>
+      <th>Fecha documento</th>
+      <th>Tipo documento</th>
+      <th>Numero documento</th>
+      <th>Numero cuenta</th>
+      <th>P o c</th>
+      <th>Glosa</th>
+      <th>Monto</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @egreso_campanas.each do |egreso_campana| %>
+      <tr>
+        <td><%= egreso_campana.partido %></td>
+        <td><%= egreso_campana.fecha_datos %></td>
+        <td><%= egreso_campana.fecha_eleccion %></td>
+        <td><%= egreso_campana.rut_candidato %></td>
+        <td><%= egreso_campana.rut_proveedor %></td>
+        <td><%= egreso_campana.nombre %></td>
+        <td><%= egreso_campana.proveedor %></td>
+        <td><%= egreso_campana.fecha_documento %></td>
+        <td><%= egreso_campana.tipo_documento %></td>
+        <td><%= egreso_campana.numero_documento %></td>
+        <td><%= egreso_campana.numero_cuenta %></td>
+        <td><%= egreso_campana.p_o_c %></td>
+        <td><%= egreso_campana.glosa %></td>
+        <td><%= egreso_campana.monto %></td>
+        <td><%= link_to 'Show', egreso_campana %></td>
+        <td><%= link_to 'Edit', edit_egreso_campana_path(egreso_campana) %></td>
+        <td><%= link_to 'Destroy', egreso_campana, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Egreso campana', new_egreso_campana_path %>

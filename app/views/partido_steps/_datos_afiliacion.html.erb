@@ -1,0 +1,75 @@
+<div class="container" ng-controller="afiliacionsController">
+  <h2 class="page-header">Número de Afiliados</h2>
+  <div class="row">
+    <div class="col-md-12">
+      <div id="flash_message" class="hidden alert alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <%= link_to 'system/resources/modelo_num_afiliados_x_region.csv', download: 'datos_afiliacion.csv', class: "btn btn-warning", target: "_blank" do %>
+      <i class="fa fa-download"></i> Descargar Modelo Fichero CSV
+      <% end %>
+    </div>
+    <div class="col-md-4">
+      <div class="form-inline">
+        <div class="input-group">
+          <input type="text" ng-model="filtro_afiliados" class="form-control" placeholder="Buscar" id="filtro_afiliados" aria-describedby="search-addon">
+          <span class="input-group-addon" id="search-addon"><i class="fa fa-search"></i></span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-inline text-right">
+        <div class="form-group">
+          <label for="pagesize"> Resultados por página: </label>
+          <select name="pagesize" id="pagesize" class="form-control" ng-model="pageSize">
+            <option value="5" ng-selected="true" >5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Año - Mes</th>
+            <th>Region</th>
+            <th>Total de afiliados</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr dir-paginate="dato in datos_afiliacion | orderBy:'fecha_datos' | filter: filtro_afiliados | itemsPerPage: pageSize">
+            <td> {{dato.fecha_datos}} </td>
+            <td> {{dato.count_regiones}} </td>
+            <td> {{dato.total_afiliados}} </td>
+            <td> <i class="fa fa-trash-o" ng-click="postEliminarDatosAfiliacion(dato.fecha_datos)" title="Eliminar"></i> </td>
+          </tr>
+        </tbody>
+      </table>
+      <dir-pagination-controls template-url="/angular_tpl/dirPagination.tpl.html"></dir-pagination-controls>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <%= form_tag import_afiliacion_afiliacions_path, remote: true,  multipart: true, class: 'form-inline' do %>
+        <div class="form-group">
+          <%= hidden_field_tag :partido_id, @partido.id %>
+          <%= file_field_tag :file, class: 'form-inline' %>
+        </div>
+        <%= submit_tag "Import CSV",:id =>"afiliacion_file_submit", class: 'btn btn-default', :disabled =>true %>
+      <% end %>
+    </div>
+  </div>
+</div>

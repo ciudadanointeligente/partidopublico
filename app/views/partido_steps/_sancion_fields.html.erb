@@ -1,4 +1,40 @@
-<%= f.input :descripcion %>
-<%= f.input :institucion %>
-<%= f.input :fecha %>
-<%= f.input :documento %>
+<div class="col-md-4">
+  <div class="panel panel-default ">
+    <div class="panel-heading">
+      <% if f.object.id.nil? %>
+        Nueva sanción
+      <% else %>
+        Sanción: <%= f.object.descripcion %>
+      <% end %>
+    </div>
+    <div class="panel-body">
+
+      <% if f.object.id.nil? %>
+        <%= f.input :descripcion, as: :text %>
+        <%= f.input :institucion %>
+        <%= f.input :tipo_infraccion %>
+        <%= f.input :tipo_sancion, as: :select, collection: Sancion.tipos_sancion.sort %>
+        <%= f.input :fecha, as: :date, html5: true %>
+        <%= f.input :documento %>
+      <% else %>
+        <ul>
+          <li><%= f.object.descripcion %></li>
+          <li><%= f.object.tipo_sancion %></li>
+          <li><%= f.object.tipo_infraccion %></li>
+          <li><i class="fa fa-building"></i> <%= f.object.institucion %></li>
+          <li><i class="fa fa-calendar"></i> <%= f.object.fecha %></li>
+          <% if !f.object.documento_file_name.blank? %>
+          <li><a href="<%= f.object.documento.url %>"><i class="fa fa-file-text-o"></i> <%= f.object.documento_file_name %> (<%= number_to_human_size f.object.documento.size %>)</a></li>
+          <% end %>
+        </ul>
+        <%= f.input :id, as: :hidden %>
+      <% end %>
+
+    </div>
+    <div class="panel-footer">
+      <%= link_to_remove_association f, class: 'btn btn-danger checkForDelete' do %>
+        <i class="fa fa-trash"></i> Marcar para eliminar
+      <% end %>
+    </div>
+  </div>
+</div>

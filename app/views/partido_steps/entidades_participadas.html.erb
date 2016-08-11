@@ -1,8 +1,26 @@
-<%= render :layout => 'form' do |f| %>
+<div class="container">
+  <h2 class="page-header">Entidades</h2>
 
-<%= f.fields_for :participacion_entidads do |builder| %>
-    <%= render 'participacion_entidad_fields', :f => builder %>
-<% end %>
-<%= link_to_add_association 'add entidad', f, :participacion_entidads %>
+  <%= render :layout => 'form' do |f| %>
 
-<% end %>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-inline">
+          <div class="form-group">
+            <%= link_to_add_association f, :participacion_entidads, class: 'btn btn-success form-control', data: { 'association-insertion-method': 'append', 'association-insertion-node': '.nueva-entidad' } do %>
+              <i class="fa fa-plus"></i> Agregar entidad
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row nueva-entidad"></div>
+
+    <div class="row">
+      <%= f.fields_for :participacion_entidads do |builder| %>
+        <%= render 'participacion_entidad_fields', :f => builder %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

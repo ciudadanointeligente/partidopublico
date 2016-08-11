@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @region %> |
-<%= link_to 'Back', regions_path %>
+<%= link_to 'Show', [@partido,@region] %> |
+<%= link_to 'Back', partido_regions_path(@partido) %>

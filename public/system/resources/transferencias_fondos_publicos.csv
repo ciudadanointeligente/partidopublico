@@ -1,0 +1,22 @@
+"ano_datos","mes_datos","numero","razon_social","rut","region","descripcion","monto","categoria","fecha"
+2016,7,1,"Nombre 1","rut1",13,"Descripcion servicio 1",300,"Gastos de Personal, contratada o a honorarios",2016-07-03
+2016,7,2,"Nombre 2","rut2",13,"Descripcion servicio 2",301,"Gastos de adquisición de bienes y servicios",2016-07-04
+2016,7,3,"Nombre 3","rut3",13,"Descripcion servicio 3",302,"Gastos en Asesorías",2016-07-05
+2016,7,4,"Nombre 4","rut4",13,"Descripcion servicio 4",303,"Gastos en Marketing y Publicidad",2016-07-06
+2016,7,5,"Nombre 5","rut5",13,"Descripcion servicio 5",304,"Gasto en Relaciones Públicas y Comunicaciones",2016-07-07
+2016,7,6,"Nombre 6","rut6",13,"Descripcion servicio 6",305,"Gastos en Transporte y Viajes",2016-07-08
+2016,7,7,"Nombre 7","rut7",13,"Descripcion servicio 7",306,"Gasto de arriendo",2016-07-09
+2016,7,8,"Nombre 8","rut8",13,"Descripcion servicio 8",307,"Gastos financieros por préstamos de corto plazo",2016-07-10
+2016,7,9,"Nombre 9","rut9",13,"Descripcion servicio 9",308,"Gastos financieros por préstamos de largo plazo",2016-07-11
+2016,7,10,"Nombre 10","rut10",13,"Descripcion servicio 10",309,"Otros gastos de administración",2016-07-12
+2016,7,11,"Nombre 11","rut11",13,"Descripcion servicio 11",310,"Gastos de actividades de investigación",2016-07-13
+2016,7,12,"Nombre 12","rut12",13,"Descripcion servicio 12",311,"Gastos de actividades de educación cívica",2016-07-14
+2016,7,13,"Nombre 13","rut13",13,"Descripcion servicio 13",312,"Gastos de actividades de fomento a la participación femenina",2016-07-15
+2016,7,14,"Nombre 14","rut14",13,"Descripcion servicio 14",313,"Gastos de actividades de fomento a la participación de los jóvenes",2016-07-16
+2016,7,15,"Nombre 15","rut15",2,"Descripcion servicio 15",314,"Gastos de las actividades de preparación de candidatos a cargos de elección popular",2016-07-17
+2016,7,16,"Nombre 16","rut16",2,"Descripcion servicio 16",315,"Gastos de las actividades de formación de militantes",2016-07-18
+2016,7,17,"Nombre 17","rut17",5,"Descripcion servicio 17",316,"Gasto por crédito de corto plazo otorgado",2016-07-19
+2016,7,18,"Nombre 18","rut18",5,"Descripcion servicio 18",317,"Gasto por crédito de largo plazo otorgado",2016-07-20
+2016,7,19,"Nombre 19","rut19",5,"Descripcion servicio 19",318,"Gasto por inversiones",2016-07-21
+2016,7,20,"Nombre 20","rut20",7,"Descripcion servicio 20",319,"Gastos destinados a campañas electorales",2016-07-22
+2016,7,21,"Nombre 21","rut21",7,"Descripcion servicio 21",320,"Gastos destinados a candidatos",2016-07-23

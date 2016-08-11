@@ -1,8 +1,28 @@
-<%= render :layout => 'form' do |f| %>
+<div class="container">
+  <h2 class="page-header">Pactos</h2>
 
-<%= f.fields_for :pacto_electorals do |builder| %>
-    <%= render 'pacto_electoral_fields', :f => builder %>
-<% end %>
-<%= link_to_add_association 'add pacto', f, :pacto_electorals %>
+  <%= render :layout => 'form' do |f| %>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-inline">
+          <div class="form-group">
+            <%= link_to_add_association f, :pacto_electorals, class: 'btn btn-success form-control', data: { 'association-insertion-method': 'append', 'association-insertion-node': '.nuevo-pacto' } do %>
+              <i class="fa fa-plus"></i> Agregar pacto
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<% end %>
+    <div class="row nuevo-pacto"></div>
+
+    <div class="row">
+      <%= f.fields_for :pacto_electorals do |builder| %>
+        <%= render 'pacto_electoral_fields', :f => builder %>
+      <% end %>
+    </div>
+
+
+
+  <% end %>
+</div>

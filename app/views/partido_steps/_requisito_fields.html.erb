@@ -1,4 +1,6 @@
-<div class="form-group boxed_form">
-<%= f.input :descripcion %>
-<%= link_to_remove_association "mark for remove requisito", f %>
+<div class="form-group">
+  <%= f.input :descripcion, label: false %>
+  <%= link_to_remove_association f, class: 'btn btn-default' do %>
+    <i class="fa fa-minus"></i> Eliminar requisito
+  <% end %>
 </div>

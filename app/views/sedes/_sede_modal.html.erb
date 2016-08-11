@@ -3,18 +3,22 @@
     <h3>Datos Sede</h3>
   </div>
   <div class="modal-body">
-
-      <%= simple_form_for :sede, :multipart => true , :remote => true do |f| %>
-
-        <%= f.input :partido_id, as: :hidden, :value => @partido.id, input_html: { 'ng-model': "sede.partido_id"} %>
-        <select name="region_id" ng-options="region.id as region.nombre for region in regions" ng-model="sede.region_id" class="form-control chosen-select"></select>
-        <%= f.input :direccion, input_html: { 'ng-model': "sede.direccion", 'placeholder': "Dirección sede" } %>
-        <%= f.input :contacto, input_html: { 'ng-model': "sede.contacto", 'placeholder': "Contacto sede" } %>
-      <% end %>
-
-    <div class="modal-footer">
-      <button class="btn btn-primary" ng-click="save($event)">guardar</button>
-      <button class="btn btn-warning" ng-click="cancel($event)">cancelar</button>
-    </div>
+    <%= simple_form_for :sede, :multipart => true , :remote => true do |f| %>
+      <%= f.input :partido_id, as: :hidden, :value => @partido.id, input_html: { 'ng-model': "sede.partido_id"} %>
+      <div class="form-group">
+        <label for="sede_region_id">Región</label>
+        <select name="region_id" id="region_id" ng-model="sede.region_id" ng-init="sede.region_id" ng-options="r.id as r.nombre for r in regions" class="form-control chosen-select" ng-change="getComunas(sede.partido_id, sede.region_id)"></select>
+      </div>
+      <div class="form-group">
+        <label for="sede_comuna_id">Comuna</label>
+        <select name="comuna_id" id="comuna_id" ng-model="sede.comuna_id" ng-init="sede.comuna_id" ng-options="c.id as c.nombre for c in comunas" class="form-control chosen-select"></select>
+      </div>
+      <%= f.input :direccion, input_html: { 'ng-model': "sede.direccion", 'placeholder': "Dirección sede" } %>
+      <%= f.input :contacto, input_html: { 'ng-model': "sede.contacto", 'placeholder': "Contacto sede" } %>
+    <% end %>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-disabled="(sede.region_id && sede.comuna_id && sede.direccion) ? '' : 'disabled'" ng-click="save($event)" ng-class="{ 'btn-primary-save' : (sede.region_id && sede.comuna_id && sede.direccion) }">Guardar</button>
+    <button class="btn btn-danger" ng-click="cancel($event)">Cancelar</button>
   </div>
 </script>

@@ -1,5 +1,7 @@
 class PartidosController < ApplicationController
-  before_action :set_partido, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_admin!, except: [:show]
+  before_action :set_partido, only: [:show, :edit, :update, :destroy, :normas_internas, :regiones, :sedes, :autoridades, :vinculos_intereses, :pactos, :sanciones]
+  layout "frontend", only: [:normas_internas, :regiones, :sedes, :autoridades, :vinculos_intereses, :pactos, :sanciones]
 
   # GET /partidos
   # GET /partidos.json
@@ -10,6 +12,19 @@ class PartidosController < ApplicationController
   def admin
     if admin_signed_in?
       @partidos = current_admin.partidos
+      if current_admin.is_superadmin?
+        @login_data = []
+
+        Admin.order(last_sign_in_at: :desc).each do |admin|
+          admin_logins = AdminLogin.where admin: admin
+          logins = []
+          admin_logins.order(fecha: :desc).limit(3).each do |login|
+            logins << {fecha: login.fecha, ip: login.ip}
+          end
+          @login_data << {email: admin.email, login_count: admin_logins.count, logins: logins}
+        end
+        puts @login_data
+      end
     else
       redirect_to new_admin_session_path
     end
@@ -18,6 +33,45 @@ class PartidosController < ApplicationController
   # GET /partidos/1
   # GET /partidos/1.json
   def show
+
+    @datos_region = []
+    @datos_sedes = []
+    @datos_cargos = []
+    region = {}
+
+    @partido.regions.each do |r|
+      afiliados = Afiliacion.where(partido_id: @partido, region_id: r)
+
+      h = 0
+      m = 0
+      ph = 0
+      pm = 0
+      afiliados.each do |a|
+        h = h + a.hombres
+        m = m + a.mujeres
+        total = h+m
+        ph = (h*100)/total
+        pm = (m*100)/total
+      end
+      region = { 'region' => r.nombre, 'ordinal' => r.ordinal, 'hombres' => h, 'porcentaje_hombres' => ph, 'mujeres' => m, 'porcentaje_mujeres' => pm }
+      @datos_region.push region
+
+      sedes = @partido.sedes.where(region_id: r)
+      all_sedes = []
+      sedes.each do |s|
+        all_sedes.push( { 'direccion' => s.direccion, 'contacto' => s.contacto, 'comuna' => s.comuna.nombre } )
+      end
+      @datos_sedes.push( {'region' => r.nombre, 'sedes' => all_sedes} )
+
+      cargos = @partido.cargos.where(region_id: r)
+      all_cargos = []
+      cargos.each do |c|
+        all_cargos.push( { 'persona' => c.persona.nombre, 'cargo' => c.tipo_cargo.titulo, 'comuna' => c.comuna.nombre } )
+      end
+      @datos_cargos.push( {'region' => r.nombre, 'cargos' => all_cargos} )
+    end
+
+
   end
 
   # GET /partidos/new
@@ -76,10 +130,87 @@ class PartidosController < ApplicationController
     end
   end
 
+  def normas_internas
+    @normas_internas = []
+    @partido.marco_interno.documentos.each do |d|
+      if !d.archivo_file_name.nil?
+        @normas_internas.push d
+      end
+    end
+  end
+
+  def regiones
+    @datos_region = []
+    @partido.regions.each do |r|
+      #@regiones.push r
+      afiliados = Afiliacion.where(partido_id: @partido, region_id: r)
+
+      h = 0
+      m = 0
+      ph = 0
+      pm = 0
+      afiliados.each do |a|
+        h = h + a.hombres
+        m = m + a.mujeres
+        total = h+m
+        ph = (h*100)/total
+        pm = (m*100)/total
+      end
+      region = { 'region' => r.nombre, 'ordinal' => r.ordinal, 'hombres' => h, 'porcentaje_hombres' => ph, 'mujeres' => m, 'porcentaje_mujeres' => pm }
+      @datos_region.push region
+    end
+  end
+
+  def sedes
+    @datos_sedes = []
+    @partido.regions.each do |r|
+      sedes = @partido.sedes.where(region_id: r)
+      all_sedes = []
+      sedes.each do |s|
+        all_sedes.push( { 'direccion' => s.direccion, 'contacto' => s.contacto, 'comuna' => s.comuna.nombre } )
+      end
+      @datos_sedes.push( {'region' => r.nombre, 'sedes' => all_sedes} )
+    end
+  end
+
+  def autoridades
+    @datos_cargos = []
+    @partido.regions.each do |r|
+      cargos = @partido.cargos.where(region_id: r)
+      all_cargos = []
+      cargos.each do |c|
+        all_cargos.push( { 'persona' => c.persona.nombre, 'cargo' => c.tipo_cargo.titulo, 'comuna' => c.comuna.nombre } )
+      end
+      @datos_cargos.push( {'region' => r.nombre, 'cargos' => all_cargos} )
+    end
+  end
+
+  def vinculos_intereses
+    @entidades = []
+    @partido.participacion_entidads.each do |p|
+      @entidades.push p
+    end
+  end
+
+  def pactos
+    @pactos = []
+    @partido.pacto_electorals.each do |p|
+      @pactos.push p
+    end
+  end
+
+  def sanciones
+    @sanciones = []
+    @partido.sancions.each do |s|
+      @sanciones.push s
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_partido
-      @partido = Partido.find(params[:id])
+      partido_id = params[:id] || params[:partido_id]
+      @partido = Partido.find(partido_id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

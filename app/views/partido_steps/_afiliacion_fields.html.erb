@@ -1,8 +1,9 @@
 <div class="form-group boxed_form">
-<%= f.input :region, disabled: true %>    
+<%= f.input :fecha_datos %>
+<%= f.input :region_id, as: :select, collection: Region.all.sort %>
+<%= f.input :ano_nacimiento %>
 <%= f.input :hombres %>
 <%= f.input :mujeres %>
-<!--<%= f.input :rangos %>-->
-<%= f.input :total, disabled: true %> 
+<%= f.input :otros %>
 <%= link_to_remove_association "mark for remove num_afiliados", f %>
 </div>

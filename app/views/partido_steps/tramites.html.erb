@@ -1,9 +1,23 @@
-<%= render :layout => 'form' do |f| %>
+<div class="container">
+  <h2 class="page-header">Trámites</h2>
 
-        <%= f.fields_for :tramites do |ff| %>
-            <%= render 'tramite_fields', :f => ff %>
-        <% end %>
-        <br>
-      <%= link_to_add_association 'add tramite', f, :tramites %>
-      
-<% end %>
+  <%= render :layout => 'form' do |f| %>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-4">
+        <div class="form-inline">
+          <%= link_to_add_association f, :tramites, class: 'btn btn-success form-control', data: { 'association-insertion-method': 'append', 'association-insertion-node': '.nuevo-tramite' } do %>
+            <i class="fa fa-plus"></i> Agregar trámite
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row nuevo-tramite"></div>
+
+    <div class="row">
+      <%= f.fields_for :tramites do |ff| %>
+        <%= render 'tramite_fields', :f => ff %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

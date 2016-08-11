@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "regions/index", type: :view do
   before(:each) do
+    @partido = assign(:partido, create(:partido))
     assign(:regions, [
       Region.create!(
         :nombre => "Nombre"

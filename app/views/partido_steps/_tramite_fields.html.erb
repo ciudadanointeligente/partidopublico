@@ -1,17 +1,70 @@
-    <%= f.input :id, as: :hidden %>
-    <%= f.input :nombre %>
-    <%= f.input :descripcion %>
-    <% if f.object.documento %>
-      <%= link_to (image_tag f.object.documento.url(:thumb)), f.object.documento.url  %>
-    <% end %>
-    <%= f.input :documento %>
-    
-    <%= f.fields_for :requisitos do |requisito| %>
-       <%= render 'requisito_fields', :f => requisito %>
-    <% end %>
-      <%= link_to_add_association 'add requirement', f, :requisitos %>
-      
-    <%= f.fields_for :procedimientos do |procedimiento| %>
-       <%= render 'procedimiento_fields', :f => procedimiento %>
-    <% end %>
-      <%= link_to_add_association 'add procedure', f, :procedimientos %>
+<div class="col-md-6">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <% if f.object.id.nil? %>
+        Nuevo trámite
+      <% else %>
+        <%= f.object.nombre %>
+      <% end %>
+    </div>
+    <div class="panel-body">
+
+      <% if f.object.id.nil? %>
+        <%= f.input :nombre  %>
+        <%= f.input :descripcion  %>
+        <%= f.input :documento  %>
+      <% else %>
+        <p><%= f.object.descripcion %></p>
+        <%= f.input :descripcion, as: :hidden  %>
+        <% if f.object.documento %>
+          <%= link_to f.object.documento.url do %>
+            <i class="fa fa-file-text-o"></i> <%= f.object.documento_file_name %>
+          <% end %>
+        <% end %>
+        <%= f.input :id, as: :hidden %>
+      <% end %>
+
+
+      <div class="panel panel-default ">
+        <div class="panel-heading">
+          Procedimientos
+        </div>
+        <div class="panel-body procedimientos">
+          <%= f.fields_for :procedimientos do |procedimiento| %>
+            <%= render 'procedimiento_fields', :f => procedimiento %>
+          <% end %>
+
+        </div>
+        <div class="panel-footer">
+          <%= link_to_add_association f, :procedimientos, class: 'btn btn-default', data: { 'association-insertion-method': 'append', 'association-insertion-node': '.procedimientos' } do %>
+            <i class="fa fa-plus"></i> Agregar procedimiento
+          <% end %>
+        </div>
+      </div>
+
+      <div class="panel panel-default ">
+        <div class="panel-heading">
+          Requisitos
+        </div>
+        <div class="panel-body requisitos">
+          <%= f.fields_for :requisitos do |requisito| %>
+            <%= render 'requisito_fields', :f => requisito %>
+          <% end %>
+        </div>
+        <div class="panel-footer">
+          <%= link_to_add_association f, :requisitos, class: 'btn btn-default', data: { 'association-insertion-method': 'append', 'association-insertion-node': '.requisitos' } do %>
+            <i class="fa fa-plus"></i> Agregar requisito
+          <% end %>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="panel-footer">
+      <%= link_to_remove_association f, class: 'btn btn-danger checkForDelete' do %>
+        <i class="fa fa-trash"></i> Marcar para eliminar
+      <% end %>
+    </div>
+  </div>
+
+</div>

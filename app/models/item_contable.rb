@@ -10,6 +10,7 @@
 #  partido_id              :integer
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
+#  fecha_datos             :date
 #
 
 class ItemContable < ActiveRecord::Base

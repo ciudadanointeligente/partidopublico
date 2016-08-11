@@ -1,0 +1,9 @@
+<% @entidades.each do |e| %>
+<ul>
+  <li><%= e.entidad %></li>
+  <li><%= e.descripcion %></li>
+  <% if !e.documento_file_name.nil? %>
+    <li><%= link_to e.documento_file_name, e.documento.url %></li>
+  <% end %>
+</ul>
+  <% end %>

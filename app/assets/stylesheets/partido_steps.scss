@@ -9,3 +9,58 @@
 .mostrable {
     display: block !important;
 }
+
+@keyframes vibrate {
+  0% {
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    transform: rotate(2deg)
+  }
+  10% { transform: rotate(-2deg) }
+  20% { transform: rotate(2deg) }
+  30% { transform: rotate(-2deg) }
+  40% { transform: rotate(2deg) }
+  50% { transform: rotate(-2deg) }
+  60% { transform: rotate(2deg) }
+  70% { transform: rotate(-2deg) }
+  80% { transform: rotate(2deg) }
+  90% { transform: rotate(-2deg) }
+  100% {
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    transform: rotate(2deg)
+  }
+}
+
+.btn-primary-save {
+    animation-name: vibrate;
+    animation-duration: 500ms;
+    background-color: #5cb85c !important;
+    border-color: #4cae4c !important;
+    transition: all 1s ease;
+}
+
+
+.panel-footer .btn-danger:visited {
+    color: #FFF;
+  }
+.panel-footer .btn-danger:hover {
+    animation-name: vibrate;
+    animation-duration: 500ms;
+    background-color: #5cb85c !important;
+    border-color: #4cae4c !important;
+    transition: all 1s ease;
+  }
+
+
+.submenu .nav-pills li.active a {
+  border-bottom: 5px solid #d9534f;
+}
+
+.btn-success:visited {
+  color: #FFF;
+}
+
+.btn-danger:visited {
+  color: #FFF;
+}

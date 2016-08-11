@@ -35,10 +35,14 @@ RSpec.describe RegionsController, type: :controller do
   # RegionsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
+  before(:each) do
+    @partido = create(:partido)
+  end
+
   describe "GET #index" do
     it "assigns all regions as @regions" do
       region = Region.create! valid_attributes
-      get :index, {}, valid_session
+      get :index, {partido_id: @partido}, valid_session
       expect(assigns(:regions)).to eq([region])
     end
   end
@@ -46,14 +50,14 @@ RSpec.describe RegionsController, type: :controller do
   describe "GET #show" do
     it "assigns the requested region as @region" do
       region = Region.create! valid_attributes
-      get :show, {:id => region.to_param}, valid_session
+      get :show, {partido_id: @partido, :id => region.to_param}, valid_session
       expect(assigns(:region)).to eq(region)
     end
   end
 
   describe "GET #new" do
     it "assigns a new region as @region" do
-      get :new, {}, valid_session
+      get :new, {partido_id: @partido}, valid_session
       expect(assigns(:region)).to be_a_new(Region)
     end
   end
@@ -61,7 +65,7 @@ RSpec.describe RegionsController, type: :controller do
   describe "GET #edit" do
     it "assigns the requested region as @region" do
       region = Region.create! valid_attributes
-      get :edit, {:id => region.to_param}, valid_session
+      get :edit, {partido_id: @partido, :id => region.to_param}, valid_session
       expect(assigns(:region)).to eq(region)
     end
   end

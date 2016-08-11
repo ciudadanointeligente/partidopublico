@@ -33,6 +33,8 @@ es:
       create_party: "Crear Nuevo Partido"
       admin_party: "Administrar Partido"
       license: "Copyleft"
+    frontend:
+      title: "Partidos Públicos"
   welcome:
     index:
       welcome: "Bienvenido"

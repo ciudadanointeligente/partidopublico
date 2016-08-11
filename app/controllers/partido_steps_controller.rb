@@ -8,13 +8,14 @@ class PartidoStepsController < ApplicationController
     before_action :set_partido
     before_action :admin_allowed
 
-    steps   :datos_basicos, :personas, :cargos,
+    steps   :datos_basicos, :sedes, :personas, :tipo_cargos, :cargos, :administradores,
             :normas_internas,
             :num_afiliados, :tramites,
-            :postulacion_popular, :organos_internos, :postulacion_interna, :agenda_presidente, :actividades_publicas,
-            :acuerdos_organos, :resultados_elecciones_internas,
+            :postulacion_popular, :organos_internos, :postulacion_interna,
+            :acuerdos_organos,
             :entidades_participadas, :pactos_electorales,
-            :linea_denuncia, :sanciones
+            :linea_denuncia, :sanciones,
+            :ingresos_ordinarios, :egresos_ordinarios, :balance_anual, :contrataciones_20utm, :fondos_publicos, :ingresos_campana, :egresos_campana
 
     def export_personas
       @personas = Persona.where partido: @partido
@@ -53,11 +54,11 @@ class PartidoStepsController < ApplicationController
             # end
 
         when :num_afiliados
-            @partido.regions.each do |r|
-                if @partido.afiliacions.find_by_region(r.to_s).blank?
-                    @partido.afiliacions << Afiliacion.new(region:r)
-                end
-            end
+            # @partido.regions.each do |r|
+            #     if @partido.afiliacions.find_by_region(r.to_s).blank?
+            #         @partido.afiliacions << Afiliacion.new(region:r)
+            #     end
+            # end
 
         when :tramites
             @partido.tramites.each do |tramite|
@@ -67,6 +68,20 @@ class PartidoStepsController < ApplicationController
                 end
             end
 
+        when :linea_denuncia
+          tribunal_supremo = @partido.organo_internos.where('lower(nombre) = ?', "Tribunal Supremo".downcase)
+          if tribunal_supremo.any?
+            if tribunal_supremo.first.contacto.nil?
+              @message =  "Por favor rellene el campo contacto del Órgano Interno: Tribunal Supremo."
+            else
+              @message =  "Las denuncias serán enviadas al contacto del Órgano Interno: Tribunal Supremo. ("+tribunal_supremo.first.contacto+")"
+            end
+          else
+            @message =  "Debe existir un Órgano Interno con nombre \"Tribunal Supremo\"."
+          end
+
+        when :administradores
+          @admins = @partido.admins
         end
         render_wizard
     end
@@ -81,7 +96,7 @@ class PartidoStepsController < ApplicationController
         #     @partido.update_attributes(partido_params)
 
         when :normas_internas
-
+            PaperTrail.whodunnit = current_admin.email
             @partido.marco_interno.update_attributes(marco_interno_params)
             @partido.marco_interno.save
 
@@ -109,10 +124,11 @@ class PartidoStepsController < ApplicationController
         when :personas
 
         else
+            PaperTrail.whodunnit = current_admin.email
             @partido.update_attributes(partido_params)
         end
         if request.xhr?
-
+            PaperTrail.whodunnit = current_admin.email
             @partido.save
             @errors = @partido.errors
             puts "AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST "
@@ -142,8 +158,8 @@ class PartidoStepsController < ApplicationController
         def partido_params
           params.require(:partido).permit(:nombre, :sigla, :lema, :fecha_fundacion, :texto, :logo,
                                                     sedes_attributes: [:id, :region, :direccion, :contacto, :_destroy],
-                                                    afiliacions_attributes: [:id, :region, :hombres, :mujeres, :rangos, :_destroy],
-                                                    tramites_attributes: [:id, :nombre, :descripcion, :persona_id, :documento,
+                                                    afiliacions_attributes: [:id, :region_id, :hombres, :mujeres, :otros, :fecha_datos, :ano_nacimiento, :_destroy],
+                                                    tramites_attributes: [:id, :nombre, :descripcion, :persona_id, :documento, :_destroy,
                                                               requisitos_attributes: [:descripcion, :id, :_destroy],
                                                               procedimientos_attributes: [:descripcion, :id, :_destroy]],
                                                     representantes_attributes: [:id, :cargo, :nombre, :apellidos, :genero, :fecha_nacimiento, :nivel_estudios,
@@ -161,7 +177,7 @@ class PartidoStepsController < ApplicationController
                                                     eleccion_populars_attributes: [:id, :fecha_eleccion, :dias, :cargo, :_destroy,
                                                                 requisitos_attributes: [:descripcion, :id, :_destroy],
                                                                 procedimientos_attributes: [:descripcion, :id, :_destroy]],
-                                                    organo_internos_attributes: [:nombre, :funciones, :id, :_destroy,
+                                                    organo_internos_attributes: [:nombre, :funciones, :id, :contacto, :num_integrantes, :_destroy,
                                                                 requisitos_attributes: [:descripcion, :id, :_destroy],
                                                                 procedimientos_attributes: [:descripcion, :id, :_destroy]],
                                                     eleccion_internas_attributes: [:id, :organo_interno_id, :fecha_eleccion, :fecha_limite_inscripcion, :cargo, :_destroy,
@@ -169,14 +185,14 @@ class PartidoStepsController < ApplicationController
                                                                 procedimientos_attributes: [:descripcion, :id, :_destroy]],
                                                     actividad_publicas_attributes: [:id, :fecha, :descripcion, :link, :_destroy],
                                                     acuerdos_attributes: [:id, :numero, :fecha, :tipo, :tema, :region, :organo_interno_id, :documento, :_destroy],
-                                                    participacion_entidads_attributes: [:id, :entidad, :documento, :descripcion, :_destroy],
+                                                    participacion_entidads_attributes: [:id, :entidad, :documento, :tipo_vinculo, :descripcion, :_destroy],
                                                     pacto_electorals_attributes: [:id, :nombre_pacto, :ano_eleccion, :descripcion, :_destroy, :partido_ids => []],
-                                                    sancions_attributes: [:id, :descripcion, :institucion, :fecha, :documento, :_destroy],
+                                                    sancions_attributes: [:id, :descripcion, :institucion, :tipo_sancion, :tipo_infraccion, :fecha, :documento, :_destroy],
                                                     region_ids: []
             )
         end
 
         def marco_interno_params
-          params.require(:marco_interno).permit(:partido_id, documentos_attributes: [:id, :descripcion, :archivo, :_destroy])
+          params.require(:marco_interno).permit(:partido_id, documentos_attributes: [:id, :descripcion, :explicacion, :obligatorio, :archivo, :_destroy])
         end
 end

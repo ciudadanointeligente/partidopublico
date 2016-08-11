@@ -1,9 +1,23 @@
-<%= render :layout => 'form' do |f| %>
+<div class="container">
+  <h2 class="page-header">Órganos Internos</h2>
 
-<%= f.fields_for :organo_internos do |builder| %>
-    <%= render 'organo_interno_fields', :f => builder %>
-<% end %>
-<br>
-<%= link_to_add_association 'add organo interno', f, :organo_internos %>
+  <%= render :layout => 'form' do |f| %>
+    <div class="row tools-header">
+      <div class="col-xs-12 col-sm-12 col-md-4">
+        <div class="form-group">
+          <%= link_to_add_association f, :organo_internos, class: 'btn btn-success form-control', data: { 'association-insertion-method': 'append', 'association-insertion-node': '.nuevo-org-interno' } do %>
+            <i class="fa fa-plus"></i> Agregar órgano interno
+          <% end %>
+        </div>
+      </div>
+    </div>
 
-<% end %>
+    <div class="row nuevo-org-interno"></div>
+
+    <div class="row">
+      <%= f.fields_for :organo_internos do |builder| %>
+        <%= render 'organo_interno_fields', :f => builder %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

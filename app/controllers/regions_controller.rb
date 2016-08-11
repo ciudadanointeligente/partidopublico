@@ -1,10 +1,11 @@
 class RegionsController < ApplicationController
   before_action :set_region, only: [:show, :edit, :update, :destroy]
+  before_action :set_partido
 
   # GET /regions
   # GET /regions.json
   def index
-    @regions = Region.all
+    @regions = @partido.regions
   end
 
   # GET /regions/1
@@ -63,6 +64,10 @@ class RegionsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_partido
+      @partido = Partido.find(params[:partido_id])
+    end
+
     def set_region
       @region = Region.find(params[:id])
     end

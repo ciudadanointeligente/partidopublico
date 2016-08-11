@@ -1,6 +1,6 @@
 class PersonasController < ApplicationController
   before_action :set_persona, only: [:show, :edit, :update, :destroy]
-  before_action :set_partido, only: [:index]
+  before_action :set_partido, only: [:index, :create]
   # GET /personas
   # GET /personas.json
   # def index
@@ -50,6 +50,7 @@ class PersonasController < ApplicationController
   # POST /personas.json
   def create
     @persona = Persona.new(persona_params)
+    @persona.partido = @partido
 
     respond_to do |format|
       if @persona.save
@@ -91,10 +92,17 @@ class PersonasController < ApplicationController
 
   def import_personas
 
-    Persona.import(params[:file], params[:partido_id])
+    return_values = Persona.import(params[:file], params[:partido_id])
+    respond_to do |format|
+      #format.any { render json: return_values, content_type: 'application/json' }
+      format.any { render file: "partido_steps/import_response.js.erb", content_type: "application/js" , :locals => { :return_values => return_values }}
+    end
+
     #return
     #render :text => params[:partido_id]
-    redirect_to partido_steps_path(params[:partido_id], :personas)
+    #redirect_to partido_steps_path(params[:partido_id], :personas)
+
+    #redirect_to partido_steps_path(:personas, params[:partido_id])
   end
 
   private

@@ -1,0 +1,23 @@
+<% @datos_cargos.each do |r| %>
+  <% if r['cargos'].any? %>
+  <h3><%= r['region'] %></h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Comuna</th>
+        <th>Persona</th>
+        <th>Cargo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% r['cargos'].each do |s| %>
+      <tr>
+        <td><%= s['comuna'] %></td>
+        <td><%= s['persona'] %></td>
+        <td><%= s['cargo'] %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% end %>
+<% end %>

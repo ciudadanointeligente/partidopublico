@@ -1,0 +1,5 @@
+"ano_datos","mes_datos","fecha_eleccion","rut_candidato","rut_donante","nombre_donante","fecha_documento","tipo_documento","numero_documento","numero_cuenta","glosa","monto"
+2016,7,2016-08-23,1111111,2222222.2,"pedro antonio juan",2016-05-02,"boleta",12345,12346567,"descripcion",100000
+2016,7,2016-08-23,1111111,3333322.2," antonio pedro juan",2016-07-03,"boleta",12346,12346567,"descripcion",100000
+2016,7,2016-08-23,1111111,4442222.2," Juan pedro antonio",2016-06-04,"boleta",12347,12346567,"descripcion",100000
+2016,7,2016-08-23,1111111,5555222.2," juan  juan  juan",2016-05-05,"boleta",12348,12346567,"descripcion",100000

@@ -1,19 +1,19 @@
 <script type="text/ng-template" id="actividad_publica_modal_aside.html">
   <div class="modal-header">
-    <h3>Actividad Pública |<%= @partido.id %>|</h3>
+    <h3>Actividad Pública <%= @partido.sigla %></h3>
   </div>
   <div class="modal-body">
 
       <%= simple_form_for :actividad_publica, :remote => true do |f| %>
-      <%= f.input :partido_id, as: :hidden, :value => @partido.id, input_html: { 'ng-model': "actividad_publica.partido_id"} %>
-      <input name="fecha" id="fecha" type="date" ng-model="actividad_publica.fecha">
-      <%= f.input :descripcion, input_html: { 'ng-model': "actividad_publica.descripcion", 'placeholder': "Descripción" } %>
-      <%= f.input :link, input_html: { 'ng-model': "actividad_publica.link", 'placeholder': "Enlace" } %>
+        <%= f.input :partido_id, as: :hidden, :value => @partido.id, input_html: { 'ng-model': "actividad_publica.partido_id"} %>
+        <%= f.input :fecha, as: :date, input_html: { 'ng-model': "actividad_publica.fecha"} %>
+        <%= f.input :descripcion, input_html: { 'ng-model': "actividad_publica.descripcion", 'placeholder': "Descripción" } %>
+        <%= f.input :link, input_html: { 'ng-model': "actividad_publica.link", 'placeholder': "Enlace" } %>
       <% end %>
 
     <div class="modal-footer">
-      <button class="btn btn-primary" ng-click="save($event)">guardar</button>
-      <button class="btn btn-warning" ng-click="cancel($event)">cancelar</button>
+      <button class="btn btn-primary" ng-click="save($event)">Guardar</button>
+      <button class="btn btn-warning" ng-click="cancel($event)">Cancelar</button>
     </div>
   </div>
 </script>

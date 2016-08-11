@@ -1,0 +1,1 @@
+json.extract! @contratacion, :id, :partido_id, :fecha_datos, :numero, :individualizacion, :razon_social, :rut, :titulares, :descripcion, :monto, :fecha_inicio, :fecha_termino, :link, :created_at, :updated_at

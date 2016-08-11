@@ -1,0 +1,9 @@
+<ul>
+  <% @normas_internas.each do |n| %>
+    <li>
+      <%= link_to n.archivo.url, target: "_blank", onclick: "ga('send','event','click','"+n.archivo_file_name+"')" do %>
+        <%= n.descripcion %>
+        <% end %>
+    </li>
+  <% end %>
+</ul>

@@ -4,17 +4,22 @@
 
 $ ->
   ready = ->
+    $('.checkForDelete').on 'click', ->
+      el = $(this)
+      el.removeClass('btn-danger').addClass('btn-success');
+
+      child = el.children()
+      child.addClass('fa-check').removeClass 'fa-trash'
+      return
     $('input:file').on 'change', () ->
       $('#personas_file_submit').prop 'disabled', !$(this).val()
+      $('#afiliacion_file_submit').prop 'disabled', !$(this).val()
     $('#partido_steps_form').on("ajax:success", (e, data, status, xhr) ->
-      console.log "ajax:sucess"
+      scroll_to_top();
       #$("#partido_steps_form").append xhr.responseText
     ).on "ajax:error", (e, xhr, status, error) ->
-      console.log xhr
-      console.log status
+      scroll_to_top();
       #$("#partido_steps_form").append "<p>ERROR</p>"
-
-
 
     $('.upload-file').on 'click', ->
       id = $(this).data('file-id')
