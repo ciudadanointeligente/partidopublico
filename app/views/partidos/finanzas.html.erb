@@ -1,6 +1,26 @@
+<% @fechas_datos.each do |f| %>
+  <ul>
+    <li><%= f %></li>
+
+  </ul>
+<% end %>
+
 <% @ingresos_ordinarios.each do |i| %>
   <ul>
     <li><%= i.concepto %> : $<%= i.importe %></li>
 
   </ul>
 <% end %>
+<div id="barras"></div>
+<script>
+$(document).ready(function(){
+var data = [[35000,5000],[122,383,70,99]],
+    labels = [['hombres','mujeres'],['hombres < 20', 'hombres > 20 < 40','mujeres < 20', 'mujeres > 20 < 40']],
+    colors = ["#23dbb8", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
+for( var x = 0, y = data.length; x<y; x++ ){
+  //Raphael("circulo", 400, 200).pieChart(100, 100, 80, data[x], labels[x], colors, "#fff");
+  //Raphael("circulo", 400, 200).donutChart(100, 100, 80, 35, data[x], labels[x], colors, true, $('#circulo-'+x), colors);
+  Raphael("barras",40, 200 ).bar();
+}
+});
+</script>

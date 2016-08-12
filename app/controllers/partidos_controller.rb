@@ -226,6 +226,8 @@ class PartidosController < ApplicationController
   end
 
   def finanzas
+  datos_by_partido = IngresoOrdinario.where partido: @partido
+    @fechas_datos =  datos_by_partido.uniq.pluck(:fecha_datos)
     @ingresos_ordinarios = IngresoOrdinario.where(:partido => @partido, :fecha_datos => '2016-08-01' )
     puts @ingresos_ordinarios.to_yaml
   end
