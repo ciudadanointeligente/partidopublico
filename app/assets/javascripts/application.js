@@ -26,5 +26,6 @@
 //= require cocoon
 //= require angular-aside/dist/js/angular-aside
 //= require angular-utils-pagination/dirPagination
+//= require raphael/raphael
 //= require angular/angular_app
 //= require_tree .

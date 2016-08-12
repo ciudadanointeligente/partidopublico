@@ -1,9 +1,8 @@
 class PartidosController < ApplicationController
-  #before_action :authenticate_admin!, only: [:new, :destroy, :edit, :create, :update, :admin, :index]
   before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy]
   before_action :set_partido, except: [:index, :new, :create, :admin]
-  layout "frontend", only: [:normas_internas, :regiones, :sedes_partido, :autoridades, :vinculos_intereses, :pactos, :sanciones, :finanzas
-]
+  layout "frontend", only: [:normas_internas, :regiones, :sedes_partido, :autoridades, :vinculos_intereses, :pactos, :sanciones, :finanzas]
+
 
   # GET /partidos
   # GET /partidos.json
@@ -143,8 +142,13 @@ class PartidosController < ApplicationController
 
   def regiones
     @datos_region = []
+    @datos_nacional = []
+    @rangos_edad = []
+    nh = 0
+    nm = 0
+    pnh = 0
+    pnm = 0
     @partido.regions.each do |r|
-      #@regiones.push r
       afiliados = Afiliacion.where(partido_id: @partido, region_id: r)
 
       h = 0
@@ -158,12 +162,25 @@ class PartidosController < ApplicationController
         ph = (h*100)/total
         pm = (m*100)/total
       end
+      nh = nh + h
+      nm = nm + m
+      total_n = nh+nm
+      pnh = (nh*100)/total_n
+      pnm = (nm*100)/total_n
+
       region = { 'region' => r.nombre, 'ordinal' => r.ordinal, 'hombres' => h, 'porcentaje_hombres' => ph, 'mujeres' => m, 'porcentaje_mujeres' => pm }
       @datos_region.push region
     end
+    nacional = { 'hombres' => nh, 'mujeres' => nm, 'porcentaje_nac_hombres' => pnh, 'porcentaje_nac_mujeres' => pnm, 'total' => nh + nm }
+    @datos_nacional.push nacional
+
+    rangos = [[14,17],[18,24],[25,29],[30,34],[35,39],[40,44],[45,49],[50,54],[55,59],[60,64],[65,69],[70,13]]
+    rangos.each do |r|
+      @partido.afiliacions.where :ano_nacimiento => r[0]..r[1]
+    end
   end
 
-  def sedes_partido
+  def sedes
     @datos_sedes = []
     @partido.regions.each do |r|
       sedes = @partido.sedes.where(region_id: r)
