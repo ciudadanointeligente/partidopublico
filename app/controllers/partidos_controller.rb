@@ -1,7 +1,8 @@
 class PartidosController < ApplicationController
-  before_action :authenticate_admin!, except: [:show]
-  before_action :set_partido, only: [:show, :edit, :update, :destroy, :normas_internas, :regiones, :sedes, :autoridades, :vinculos_intereses, :pactos, :sanciones]
-  layout "frontend", only: [:normas_internas, :regiones, :sedes, :autoridades, :vinculos_intereses, :pactos, :sanciones]
+  #before_action :authenticate_admin!, only: [:new, :destroy, :edit, :create, :update, :admin, :index]
+  before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy]
+  before_action :set_partido, except: [:index, :new, :create, :admin]
+  layout "frontend", only: [:normas_internas, :regiones, :sedes_partido, :autoridades, :vinculos_intereses, :pactos, :sanciones]
 
   # GET /partidos
   # GET /partidos.json
@@ -161,7 +162,7 @@ class PartidosController < ApplicationController
     end
   end
 
-  def sedes
+  def sedes_partido
     @datos_sedes = []
     @partido.regions.each do |r|
       sedes = @partido.sedes.where(region_id: r)
