@@ -69,6 +69,7 @@ Rails.application.routes.draw do
     get "/vinculos_e_intereses", to: 'partidos#vinculos_intereses'
     get "/pactos", to: 'partidos#pactos'
     get "/sanciones", to: 'partidos#sanciones'
+    get "/finanzas", to: 'partidos#finanzas'
     resources :cargos
     resources :personas
     resources :tipo_cargos

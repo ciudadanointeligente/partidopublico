@@ -2,7 +2,8 @@ class PartidosController < ApplicationController
   #before_action :authenticate_admin!, only: [:new, :destroy, :edit, :create, :update, :admin, :index]
   before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy]
   before_action :set_partido, except: [:index, :new, :create, :admin]
-  layout "frontend", only: [:normas_internas, :regiones, :sedes_partido, :autoridades, :vinculos_intereses, :pactos, :sanciones]
+  layout "frontend", only: [:normas_internas, :regiones, :sedes_partido, :autoridades, :vinculos_intereses, :pactos, :sanciones, :finanzas
+]
 
   # GET /partidos
   # GET /partidos.json
@@ -205,6 +206,11 @@ class PartidosController < ApplicationController
     @partido.sancions.each do |s|
       @sanciones.push s
     end
+  end
+
+  def finanzas
+    @ingresos_ordinarios = IngresoOrdinario.where(:partido => @partido, :fecha_datos => '2016-08-01' )
+    puts @ingresos_ordinarios.to_yaml
   end
 
   private
