@@ -173,7 +173,7 @@ class PartidosController < ApplicationController
     nacional = { 'hombres' => nh, 'mujeres' => nm, 'porcentaje_nac_hombres' => pnh, 'porcentaje_nac_mujeres' => pnm, 'total' => nh + nm }
     @datos_nacional.push nacional
 
-    rangos = [{14,17},{18,24},{25,29},{30,34},{35,39},{40,44},{45,49},{50,54},{55,59},{60,64},{65,69},{70,130}]
+    rangos = [[14,17],[18,24],[25,29],[30,34],[35,39],[40,44],[45,49],[50,54],[55,59],[60,64],[65,69],[70,13]]
     rangos.each do |r|
       @partido.afiliacions.where :ano_nacimiento => r[0]..r[1]
     end
