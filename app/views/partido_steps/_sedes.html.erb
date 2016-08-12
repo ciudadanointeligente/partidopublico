@@ -45,7 +45,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr dir-paginate="sede in sedes | filter: filtro_sedes | itemsPerPage: pageSize">
+          <tr dir-paginate="sede in sedes | filter: filtro_sedes | itemsPerPage: pageSize track by sede.id ">
             <td> {{sede.comuna.nombre }} </td>
             <td> {{sede.region.nombre}} </td>
             <td> {{sede.direccion}} </td>

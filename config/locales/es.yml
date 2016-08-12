@@ -35,6 +35,8 @@ es:
       license: "Copyleft"
     frontend:
       title: "Partidos Públicos"
+    welcome:
+      title: "PartidosPúblicos"
   welcome:
     index:
       welcome: "Bienvenido"

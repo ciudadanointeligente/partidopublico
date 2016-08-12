@@ -64,7 +64,7 @@ Rails.application.routes.draw do
   resources :partidos do
     get "/normas_internas", to: 'partidos#normas_internas'
     get "/regiones", to: 'partidos#regiones'
-    get "/sedes", to: 'partidos#sedes'
+    get "/sedes_partido", to: 'partidos#sedes_partido'
     get "/autoridades", to: 'partidos#autoridades'
     get "/vinculos_e_intereses", to: 'partidos#vinculos_intereses'
     get "/pactos", to: 'partidos#pactos'

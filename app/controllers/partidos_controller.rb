@@ -142,6 +142,7 @@ class PartidosController < ApplicationController
   def regiones
     @datos_region = []
     @datos_nacional = []
+    @rangos_edad = []
     nh = 0
     nm = 0
     pnh = 0
@@ -171,6 +172,11 @@ class PartidosController < ApplicationController
     end
     nacional = { 'hombres' => nh, 'mujeres' => nm, 'porcentaje_nac_hombres' => pnh, 'porcentaje_nac_mujeres' => pnm, 'total' => nh + nm }
     @datos_nacional.push nacional
+
+    rangos = [{14,17},{18,24},{25,29},{30,34},{35,39},{40,44},{45,49},{50,54},{55,59},{60,64},{65,69},{70,130}]
+    rangos.each do |r|
+      @partido.afiliacions.where :ano_nacimiento => r[0]..r[1]
+    end
   end
 
   def sedes

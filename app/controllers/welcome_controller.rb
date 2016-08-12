@@ -2,7 +2,7 @@ class WelcomeController < ApplicationController
     def index
        @partidos = Partido.all
 
-       #render layout: "frontend"
+       render layout: "welcome"
     end
 
 
