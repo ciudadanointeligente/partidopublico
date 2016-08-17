@@ -226,16 +226,27 @@ class PartidosController < ApplicationController
   end
 
   def finanzas_1
-    #datos_by_partido = IngresoOrdinario.where partido: @partido
     @fechas_datos = IngresoOrdinario.where(partido: @partido).uniq.pluck(:fecha_datos)
-    ingresos_ordinarios = IngresoOrdinario.where(:partido => @partido, :fecha_datos => '2016-08-01' )
+
+    # @fechas_datos = []
+    # IngresoOrdinario.where(partido: @partido).uniq.pluck(:fecha_datos).each do |f|
+    #   @fechas_datos << { :fecha_datos => f.strftime("%Y - %m") }.to_json
+    # end
+    puts "@fecha_datos.to_yaml"
+    puts @fechas_datos.class.to_s
+    if params[:fecha_datos]
+      #fecha = Date.new(params[:fecha_datos][0,4].to_i, params[:fecha_datos][4,2].to_i, params[:fecha_datos][6,2].to_i)
+      @fecha = Date.new(params[:fecha_datos].split("-")[0].to_i, params[:fecha_datos].split("-")[1].to_i, params[:fecha_datos].split("-")[2].to_i)
+    else
+      @fecha = @fechas_datos.last
+    end
+    #datos_by_partido = IngresoOrdinario.where partido: @partido
+    #@fechas_datos = IngresoOrdinario.where(partido: @partido).uniq.pluck(:fecha_datos)
+    ingresos_ordinarios = IngresoOrdinario.where(:partido => @partido, :fecha_datos => @fecha )
     max_value = ingresos_ordinarios.maximum(:importe)
     @datos_ingresos_ordinarios = []
     ingresos_ordinarios.each do |io|
-      puts max_value
-      puts io.importe
       val = (100 * (io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
-      puts val
       line ={ 'text'=> io.concepto, 'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe, delimiter: "."), 'percentage' => val }
       @datos_ingresos_ordinarios << line
     end

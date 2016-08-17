@@ -107,7 +107,7 @@ $(document).ready(function(){
     return chart;
   };
 
-  Raphael.fn.ingresos_ordinarios_chart = function(datos, datos_totales){
+  Raphael.fn.ingresos_ordinarios_chart = function(datos, datos_totales, fecha_seleccionada){
     var paper = this;
     var header_height = 40;
     var line_height = 40;
@@ -198,6 +198,13 @@ $(document).ready(function(){
         "font-family" : "Karla-Regular, Karla",
         "font-size" : 14,
         'text-anchor': 'start'
+      });
+
+      paper.text(650, 17, "Datos de "+fecha_seleccionada)
+      .attr({
+        "font-family" : "Karla-Regular, Karla",
+        "font-size" : 25,
+        'text-anchor': 'end'
       });
 
       paper.text(10, header_height + 20, "Concepto")
