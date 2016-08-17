@@ -1,7 +1,7 @@
 class PartidosController < ApplicationController
   before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy]
   before_action :set_partido, except: [:index, :new, :create, :admin]
-  layout "frontend", only: [:normas_internas, :regiones, :sedes_partido, :autoridades, :vinculos_intereses, :pactos, :sanciones, :finanzas]
+  layout "frontend", only: [:normas_internas, :regiones, :sedes_partido, :autoridades, :vinculos_intereses, :pactos, :sanciones, :finanzas_1]
 
 
   # GET /partidos
@@ -225,11 +225,24 @@ class PartidosController < ApplicationController
     end
   end
 
-  def finanzas
-  datos_by_partido = IngresoOrdinario.where partido: @partido
-    @fechas_datos =  datos_by_partido.uniq.pluck(:fecha_datos)
-    @ingresos_ordinarios = IngresoOrdinario.where(:partido => @partido, :fecha_datos => '2016-08-01' )
-    puts @ingresos_ordinarios.to_yaml
+  def finanzas_1
+    #datos_by_partido = IngresoOrdinario.where partido: @partido
+    @fechas_datos = IngresoOrdinario.where(partido: @partido).uniq.pluck(:fecha_datos)
+    ingresos_ordinarios = IngresoOrdinario.where(:partido => @partido, :fecha_datos => '2016-08-01' )
+    max_value = ingresos_ordinarios.maximum(:importe)
+    @datos_ingresos_ordinarios = []
+    ingresos_ordinarios.each do |io|
+      puts max_value
+      puts io.importe
+      val = (100 * (io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
+      puts val
+      line ={ 'text'=> io.concepto, 'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe, delimiter: "."), 'percentage' => val }
+      @datos_ingresos_ordinarios << line
+    end
+
+    total_publicos = ingresos_ordinarios.where(:concepto => "Aportes Estatales").first.importe rescue 0
+    total_privados = ingresos_ordinarios.sum(:importe) - total_publicos
+    @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
   end
 
   private
