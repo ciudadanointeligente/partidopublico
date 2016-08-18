@@ -51,7 +51,9 @@ class Afiliacion < ActiveRecord::Base
     CSV.foreach(file.path, headers: true) do |row|
       begin
         new_row_hash = row.to_hash
-        new_row_hash['region_id'] = new_row_hash['region']
+
+        region = Region.find_by_ordinal new_row_hash['region']
+        new_row_hash['region_id'] = region.id
         new_row_hash.delete('region')
         new_row_hash['fecha_datos'] = Date.new(new_row_hash['ano_datos'].to_i, new_row_hash['mes_datos'].to_i, 01)
         new_row_hash.delete('ano_datos')
