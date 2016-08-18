@@ -9,7 +9,8 @@ class IngresoOrdinariosController < ApplicationController
   end
 
   def aggregate_ingresos_ordinarios
-    @datos_eficientes = IngresoOrdinario.where(partido: @partido).group("date(fecha_datos)").select("fecha_datos, count(1) as count, sum(importe) as total").order(:fecha_datos)
+    @datos_eficientes = IngresoOrdinario.where(partido: @partido).group("date(fecha_datos)").
+    select("fecha_datos, count(1) as count, sum(importe) as total").order(:fecha_datos)
 
     @datos_eficientes.each do |d|
       d.attributes.symbolize_keys!

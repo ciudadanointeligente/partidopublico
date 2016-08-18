@@ -1,7 +1,8 @@
 class PartidosController < ApplicationController
   before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy]
   before_action :set_partido, except: [:index, :new, :create, :admin]
-  layout "frontend", only: [:normas_internas, :regiones, :sedes_partido, :autoridades, :vinculos_intereses, :pactos, :sanciones, :finanzas_1]
+  layout "frontend", only: [:normas_internas, :regiones, :sedes_partido, :autoridades,
+                            :vinculos_intereses, :pactos, :sanciones, :finanzas_1, :finanzas_2]
 
 
   # GET /partidos
@@ -226,22 +227,12 @@ class PartidosController < ApplicationController
   end
 
   def finanzas_1
-    @fechas_datos = IngresoOrdinario.where(partido: @partido).uniq.pluck(:fecha_datos)
-
-    # @fechas_datos = []
-    # IngresoOrdinario.where(partido: @partido).uniq.pluck(:fecha_datos).each do |f|
-    #   @fechas_datos << { :fecha_datos => f.strftime("%Y - %m") }.to_json
-    # end
-    puts "@fecha_datos.to_yaml"
-    puts @fechas_datos.class.to_s
+    @fechas_datos = IngresoOrdinario.where(partido: @partido).uniq.pluck(:fecha_datos).sort
     if params[:fecha_datos]
-      #fecha = Date.new(params[:fecha_datos][0,4].to_i, params[:fecha_datos][4,2].to_i, params[:fecha_datos][6,2].to_i)
       @fecha = Date.new(params[:fecha_datos].split("-")[0].to_i, params[:fecha_datos].split("-")[1].to_i, params[:fecha_datos].split("-")[2].to_i)
     else
       @fecha = @fechas_datos.last
     end
-    #datos_by_partido = IngresoOrdinario.where partido: @partido
-    #@fechas_datos = IngresoOrdinario.where(partido: @partido).uniq.pluck(:fecha_datos)
     ingresos_ordinarios = IngresoOrdinario.where(:partido => @partido, :fecha_datos => @fecha )
     max_value = ingresos_ordinarios.maximum(:importe)
     @datos_ingresos_ordinarios = []
@@ -250,7 +241,26 @@ class PartidosController < ApplicationController
       line ={ 'text'=> io.concepto, 'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe, delimiter: "."), 'percentage' => val }
       @datos_ingresos_ordinarios << line
     end
+    total_publicos = ingresos_ordinarios.where(:concepto => "Aportes Estatales").first.importe rescue 0
+    total_privados = ingresos_ordinarios.sum(:importe) - total_publicos
+    @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
+  end
 
+  def finanzas_2
+    @fechas_datos = EgresoOrdinario.where(partido: @partido).uniq.pluck(:fecha_datos).sort
+    if params[:fecha_datos]
+      @fecha = Date.new(params[:fecha_datos].split("-")[0].to_i, params[:fecha_datos].split("-")[1].to_i, params[:fecha_datos].split("-")[2].to_i)
+    else
+      @fecha = @fechas_datos.last
+    end
+    egresos_ordinarios = EgresoOrdinario.where(:partido => @partido, :fecha_datos => @fecha )
+    max_value = egresos_ordinarios.maximum(:privado + :publico)
+    @datos_ingresos_ordinarios = []
+    ingresos_ordinarios.each do |io|
+      val = (100 * (io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
+      line ={ 'text'=> io.concepto, 'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe, delimiter: "."), 'percentage' => val }
+      @datos_ingresos_ordinarios << line
+    end
     total_publicos = ingresos_ordinarios.where(:concepto => "Aportes Estatales").first.importe rescue 0
     total_privados = ingresos_ordinarios.sum(:importe) - total_publicos
     @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
