@@ -254,16 +254,17 @@ class PartidosController < ApplicationController
       @fecha = @fechas_datos.last
     end
     egresos_ordinarios = EgresoOrdinario.where(:partido => @partido, :fecha_datos => @fecha )
-    max_value = egresos_ordinarios.maximum(:privado + :publico)
-    @datos_ingresos_ordinarios = []
-    ingresos_ordinarios.each do |io|
-      val = (100 * (io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
-      line ={ 'text'=> io.concepto, 'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe, delimiter: "."), 'percentage' => val }
-      @datos_ingresos_ordinarios << line
+    max_value = egresos_ordinarios.maximum("privado + publico")
+    @datos_egresos_ordinarios = []
+    egresos_ordinarios.each do |eo|
+      val = (100 * ((eo.publico.to_f + eo.privado.to_f)/ max_value.to_f).to_f rescue 0).to_s
+      line ={ 'text'=> eo.concepto, 'value_publico' => eo.publico, 'value_privado' => eo.privado,
+        'value' => ActiveSupport::NumberHelper::number_to_delimited(eo.privado + eo.publico, delimiter: "."), 'percentage' => val }
+      @datos_egresos_ordinarios << line
     end
-    total_publicos = ingresos_ordinarios.where(:concepto => "Aportes Estatales").first.importe rescue 0
-    total_privados = ingresos_ordinarios.sum(:importe) - total_publicos
-    @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
+    total_publicos = egresos_ordinarios.sum(:publico)
+    total_privados = egresos_ordinarios.sum(:privado)
+    @datos_egresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
   end
 
   private

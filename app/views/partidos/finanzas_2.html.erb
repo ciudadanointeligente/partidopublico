@@ -6,12 +6,12 @@
 
 <script>
 $(document).ready(function(){
-  var data = <%=  @datos_ingresos_ordinarios.to_json.html_safe %>;
-  var data_totals = <%=  @datos_ingresos_ordinarios_totals.to_json.html_safe %>;
+  var data = <%=  @datos_egresos_ordinarios.to_json.html_safe %>;
+  var data_totals = <%=  @datos_egresos_ordinarios_totals.to_json.html_safe %>;
   var fechas = <%=  @fechas_datos.to_json.html_safe %>;
   var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
   if (fechas.length > 0){
-    Raphael("barras",700, 500 ).ingresos_ordinarios_chart(data, data_totals,fecha_seleccionada);
+    Raphael("barras",700, 1000 ).egresos_ordinarios_chart(data, data_totals,fecha_seleccionada);
   } else {
     Raphael("barras",700, 200 ).no_data_chart()
   }

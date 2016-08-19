@@ -72,9 +72,11 @@ class IngresoOrdinariosController < ApplicationController
   end
 
   def eliminar
-    array_fecha = params[:fecha_datos].split(' - ')
+    #array_fecha = params[:fecha_datos].split(' - ')
+    fecha_eliminacion = Date.new(params[:fecha_datos].split("-")[0].to_i, params[:fecha_datos].split("-")[1].to_i, params[:fecha_datos].split("-")[2].to_i)
     datos_partido = IngresoOrdinario.where partido: @partido
-    datos_de_fecha = datos_partido.where fecha_datos: Date.new(array_fecha[0].to_i, array_fecha[1].to_i, 01)
+    #datos_de_fecha = datos_partido.where fecha_datos: Date.new(array_fecha[0].to_i, array_fecha[1].to_i, 01)
+    datos_de_fecha = datos_partido.where fecha_datos: fecha_eliminacion
     datos_de_fecha.delete_all
     render plain: "OK"
   end
