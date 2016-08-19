@@ -140,20 +140,24 @@ class PartidosController < ApplicationController
   end
 
   def regiones
+    rangos = [[14,17],[18,24],[25,29],[30,34],[35,39],[40,44],[45,49],[50,54],[55,59],[60,64],[65,69],[70,100]]
     @datos_region = []
     @datos_nacional = []
     @rangos_edad = []
-    nh = 0
-    nm = 0
-    pnh = 0
-    pnm = 0
-    @partido.regions.each do |r|
-      afiliados = Afiliacion.where(partido_id: @partido, region_id: r)
 
-      h = 0
-      m = 0
-      ph = 0
-      pm = 0
+    nh = 0 #nacional hombres
+    nm = 0 #nacional mujeres
+    pnh = 0 #promedio nacional hombres
+    pnm = 0 #promedio nacional mujeres
+
+    last_date = Afiliacion.where(partido_id: @partido).uniq.pluck(:fecha_datos).sort.last
+
+    @partido.regions.each do |r|
+      afiliados = Afiliacion.where(partido_id: @partido, region_id: r, fecha_datos: last_date)
+      h = 0 #hombres
+      m = 0 #mujeres
+      ph = 0 #promedio hombres
+      pm = 0 #promedio mujeres
       afiliados.each do |a|
         h = h + a.hombres
         m = m + a.mujeres
@@ -161,22 +165,42 @@ class PartidosController < ApplicationController
         ph = (h*100)/total
         pm = (m*100)/total
       end
-      nh = nh + h
-      nm = nm + m
-      total_n = nh+nm
-      pnh = (nh*100)/total_n
-      pnm = (nm*100)/total_n
+      nh = nh + h #nacional hombres
+      nm = nm + m #nacional mujeres
+      total_n = nh+nm #total nacional
+      pnh = (nh*100)/total_n #promedio nacional hombres
+      pnm = (nm*100)/total_n #promedio nacional mujeres
 
-      region = { 'region' => r.nombre, 'ordinal' => r.ordinal, 'hombres' => h, 'porcentaje_hombres' => ph, 'mujeres' => m, 'porcentaje_mujeres' => pm }
+      region = { "region" => r.nombre, "ordinal" => r.ordinal, "hombres" => h, "porcentaje_hombres" => ph, "mujeres" => m, "porcentaje_mujeres" => pm, "total" => h + m, "desgloce" => [] }
+
+      participantes = 0
+      rangos.each do |rango|
+        participantes = @partido.afiliacions.where(:ano_nacimiento => Date.today.year-rango[1]..Date.today.year-rango[0], :region_id => r, fecha_datos: last_date)
+        ph = 0 #participantes hombres
+        pm = 0 #participantes mujeres
+        participantes.each do |np|
+          ph = ph + np.hombres
+          pm = pm + np.mujeres
+        end
+        region["desgloce"].push({ rango[0].to_s+'-'+rango[1].to_s => ph + pm })
+      end
+
       @datos_region.push region
     end
-    nacional = { 'hombres' => nh, 'mujeres' => nm, 'porcentaje_nac_hombres' => pnh, 'porcentaje_nac_mujeres' => pnm, 'total' => nh + nm }
+
+    nacional = { "region" => "nacional", "ordinal" => "nacional", "hombres" => nh, "mujeres" => nm, "porcentaje_hombres" => pnh, "porcentaje_mujeres" => pnm, "total" => nh + nm, "desgloce" => [] }
+    a = []
+    @datos_region.each do |dr|
+      dr["desgloce"].each do |d|
+        a << d
+      end
+    end
+
+    nacional["desgloce"] << a.inject{ |x,y| x.merge(y) { |k,old_v, new_v| old_v+new_v } }
+
     @datos_nacional.push nacional
 
-    rangos = [[14,17],[18,24],[25,29],[30,34],[35,39],[40,44],[45,49],[50,54],[55,59],[60,64],[65,69],[70,13]]
-    rangos.each do |r|
-      @partido.afiliacions.where :ano_nacimiento => r[0]..r[1]
-    end
+    @datos_total_nacional = @datos_nacional + @datos_region
   end
 
   def sedes
