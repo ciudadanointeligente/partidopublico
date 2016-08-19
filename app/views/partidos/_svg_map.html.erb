@@ -62,13 +62,32 @@ $(document).ready(function(){
     tmp = $(this)[0].id.split("-")
     el = $("#"+tmp[0]+"-"+tmp[2])
 
+    $('#select-region').val(tmp[0]+"-"+tmp[2])
+
     $('.showData').addClass('hideData').removeClass('showData');
     el.removeClass('hideData').addClass('showData')
   })
 
+  $('#select-region').on('change', function(){
+    selected_opt = $(this)[0].value;
+    tmp_path = selected_opt.split('-');
+    el_path = tmp_path[0]+'-mapa-'+tmp_path[1];
+
+    $('path').removeClass('active');
+    $("#"+el_path).addClass('active');
+
+    $('.showData').addClass('hideData').removeClass('showData');
+    $('#'+selected_opt).removeClass('hideData').addClass('showData')
+  })
+
   for( var x = 0, y = presencia.length; x<y; x++ ){
     if(presencia[x].hombres > 0 && presencia[x].mujeres > 0 ) {
-      Raphael("circulo-"+presencia[x].ordinal, 200, 200).donutChart(100, 100, 80, 35, [presencia[x].hombres, presencia[x].mujeres], ['hombres', 'mujeres'], colors, true, $('#region-'+presencia[x].ordinal+' .leyenda'), colors);
+      el_select = document.getElementById('select-region')
+      el_select.options[el_select.options.length] = new Option(presencia[x].region, 'region-'+presencia[x].ordinal);
+
+      $('#region-'+presencia[x].ordinal).find('h3').html( presencia[x].region )
+      $('#region-'+presencia[x].ordinal).find('h4').html( "Total de afiliados: " + (presencia[x].hombres + presencia[x].mujeres) )
+      Raphael("circulo-"+presencia[x].ordinal, 150, 150).donutChart(75, 75, 70, 35, [presencia[x].hombres, presencia[x].mujeres], ['hombres', 'mujeres'], colors, true, $('#region-'+presencia[x].ordinal+' .leyenda'), colors);
       var data_desgloce = [],
           display_desgloce = 0;
       for( var v = 0, w = presencia[x].desgloce.length; v<w; v++ ) {
@@ -81,7 +100,7 @@ $(document).ready(function(){
       if(display_desgloce) {
         colors_range = ["#FDD7D2","#FFBCAA","#F28269","#E85D34","#B74B2B","#9A553A","#2C1313","#5E3F3F","#756666","#C5C0C0","#E9DEDF","#F4F2F2"];
         var leyenda = ["14-17 años","18-24 años","25-29 años","30-34 años","35-39 años","40-44 años","45-49 años","50-54 años","55-59 años","60-64 años","65-69 años","> 70 años"];
-        Raphael("desgloce-"+presencia[x].ordinal, 200, 200).donutChart(100, 100, 80, 35, data_desgloce, leyenda, colors_range, true, $('#region-'+presencia[x].ordinal+' .leyenda-desgloce'), colors_range);
+        Raphael("desgloce-"+presencia[x].ordinal, 150, 150).donutChart(75, 75, 70, 35, data_desgloce, leyenda, colors_range, true, $('#region-'+presencia[x].ordinal+' .leyenda-desgloce'), colors_range);
       }
     }
   }
