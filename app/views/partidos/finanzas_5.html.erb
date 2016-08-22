@@ -1,0 +1,19 @@
+<%= form_tag partido_finanzas_5_path, :method =>  :get do |f| %>
+  <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
+<% end %>
+
+<div id="barras"></div>
+
+<script>
+$(document).ready(function(){
+  var data = <%=  @datos_transferencias.to_json.html_safe %>;
+  var data_totals = <%=  @datos_transferencias_totals.to_json.html_safe %>;
+  var fechas = <%=  @fechas_datos.to_json.html_safe %>;
+  var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
+  if (fechas.length > 0){
+    Raphael("barras",700, 1000 ).transferencias_chart(data, data_totals,fecha_seleccionada);
+  } else {
+    Raphael("barras",700, 200 ).no_data_chart()
+  }
+});
+</script>

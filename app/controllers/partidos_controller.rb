@@ -2,7 +2,8 @@ class PartidosController < ApplicationController
   before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy]
   before_action :set_partido, except: [:index, :new, :create, :admin]
   layout "frontend", only: [:normas_internas, :regiones, :sedes_partido, :autoridades,
-                            :vinculos_intereses, :pactos, :sanciones, :finanzas_1, :finanzas_2]
+                            :vinculos_intereses, :pactos, :sanciones,
+                            :finanzas_1, :finanzas_2, :finanzas_5]
 
 
   # GET /partidos
@@ -23,10 +24,13 @@ class PartidosController < ApplicationController
           admin_logins.order(fecha: :desc).limit(3).each do |login|
             logins << {fecha: login.fecha, ip: login.ip}
           end
-          @login_data << {email: admin.email, login_count: admin_logins.count, logins: logins}
+          last_actions = PaperTrail::Version.where(:whodunnit => admin.email).limit(3)
+          @login_data << {email: admin.email, login_count: admin_logins.count, logins: logins, last_actions: last_actions}
         end
+
         puts @login_data
       end
+
     else
       redirect_to new_admin_session_path
     end
@@ -266,6 +270,38 @@ class PartidosController < ApplicationController
     total_privados = egresos_ordinarios.sum(:privado)
     @datos_egresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
   end
+
+  def finanzas_5
+    @fechas_datos = Transferencia.where(partido: @partido).uniq.pluck(:fecha_datos).sort
+    if params[:fecha_datos]
+      @fecha = Date.new(params[:fecha_datos].split("-")[0].to_i, params[:fecha_datos].split("-")[1].to_i, params[:fecha_datos].split("-")[2].to_i)
+    else
+      @fecha = @fechas_datos.last
+    end
+
+    datos_eficientes_transferencias = Transferencia.where(partido: @partido, :fecha_datos => @fecha).group(:categoria).
+    select("categoria, count(1) as count, sum(monto) as total").order(:categoria)
+
+    max_value = Transferencia.where(partido: @partido, :fecha_datos => @fecha).group(:categoria).select("sum(monto) as total").order("total DESC").first.attributes.symbolize_keys![:total]
+
+    puts max_value
+
+    datos_eficientes_transferencias.each do |d|
+      d.attributes.symbolize_keys!
+    end
+    total = 0
+    @datos_transferencias = []
+    datos_eficientes_transferencias.each do |t|
+      total = total + t.total
+      val = (100 * ((t.total.to_f)/ max_value.to_f).to_f rescue 0).to_s
+      line ={ 'text'=> t.categoria,
+        'value' => ActiveSupport::NumberHelper::number_to_delimited(t.total, delimiter: "."), 'percentage' => val }
+      @datos_transferencias << line
+    end
+    @datos_transferencias_totals = { :total => total }
+  end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
