@@ -24,7 +24,8 @@ $ ->
     $('.upload-file').on 'click', ->
       id = $(this).data('file-id')
       $('#hidden_file_input_' + id).click();
-      $('#file_label_' + id)[0].innerHTML = "Archivo listo."
+      $('#hidden_file_input_' + id).on 'change', ->
+        $('#file_label_' + id)[0].innerHTML = "Archivo listo."
       return
 
   load = ->

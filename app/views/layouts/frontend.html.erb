@@ -24,8 +24,8 @@
   <meta name="twitter:image" content="">
 
   <!-- Latest compiled and minified CSS -->
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application_frontend', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'frontend', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'frontend', 'data-turbolinks-track' => true %>
 </head>
 <body>
   <header>
@@ -82,15 +82,15 @@
               <%= link_to "Regiones constituido y numero de afiliados", partido_regiones_path %>
             </li>
             <li>
-              <%= link_to "Domicilio y sedes de contacto", partido_sedes_path %>
+              <%= link_to "Domicilio y sedes de contacto", partido_sedes_partido_path %>
             </li>
           </ul>
         </li>
         <li>
-          Como participar
+          <%= link_to "Cómo participar", partido_afiliacion_desafiliacion_path %>
           <ul>
-            <li>subitem 01</li>
-            <li>subitem 02</li>
+            <li><%= link_to "Afiliación y Desafiliación", partido_afiliacion_desafiliacion_path %></li>
+            <li><%= link_to "Elección popular", partido_eleccion_popular_path %></li>
           </ul>
         </li>
         <li>

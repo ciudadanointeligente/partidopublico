@@ -3,7 +3,8 @@ class PartidosController < ApplicationController
   before_action :set_partido, except: [:index, :new, :create, :admin]
   layout "frontend", only: [:normas_internas, :regiones, :sedes_partido, :autoridades,
                             :vinculos_intereses, :pactos, :sanciones,
-                            :finanzas_1, :finanzas_2, :finanzas_5]
+                            :finanzas_1, :finanzas_2, :finanzas_5,
+                            :afiliacion_desafiliacion, :eleccion_popular]
 
 
   # GET /partidos
@@ -146,46 +147,78 @@ class PartidosController < ApplicationController
   end
 
   def regiones
+    rangos = [[14,17],[18,24],[25,29],[30,34],[35,39],[40,44],[45,49],[50,54],[55,59],[60,64],[65,69],[70,100]]
     @datos_region = []
     @datos_nacional = []
     @rangos_edad = []
-    nh = 0
-    nm = 0
-    pnh = 0
-    pnm = 0
+
+    nh = 0 #nacional hombres
+    nm = 0 #nacional mujeres
+    pnh = 0 #promedio nacional hombres
+    pnm = 0 #promedio nacional mujeres
+
+    nacional = { "region" => "nacional", "ordinal" => "nacional", "hombres" => 0, "mujeres" => 0, "porcentaje_hombres" => 0, "porcentaje_mujeres" => 0, "total" => 0, "desgloce" => [] }
+
+    last_date = Afiliacion.where(partido_id: @partido).uniq.pluck(:fecha_datos).sort.last
+
     @partido.regions.each do |r|
-      afiliados = Afiliacion.where(partido_id: @partido, region_id: r)
+      afiliados = Afiliacion.where(partido_id: @partido, region_id: r, fecha_datos: last_date)
+      if afiliados.any?
+        h = 0 #hombres
+        m = 0 #mujeres
+        ph = 0 #promedio hombres
+        pm = 0 #promedio mujeres
+        afiliados.each do |a|
+          h = h + a.hombres
+          m = m + a.mujeres
+          total = h+m
+          ph = (h*100)/total
+          pm = (m*100)/total
+        end
+        nh = nh + h #nacional hombres
+        nm = nm + m #nacional mujeres
+        total_n = nh+nm #total nacional
+        pnh = (nh*100)/total_n #promedio nacional hombres
+        pnm = (nm*100)/total_n #promedio nacional mujeres
 
-      h = 0
-      m = 0
-      ph = 0
-      pm = 0
-      afiliados.each do |a|
-        h = h + a.hombres
-        m = m + a.mujeres
-        total = h+m
-        ph = (h*100)/total
-        pm = (m*100)/total
+        region = { "region" => r.nombre, "ordinal" => r.ordinal, "hombres" => h, "porcentaje_hombres" => ph, "mujeres" => m, "porcentaje_mujeres" => pm, "total" => h + m, "desgloce" => [] }
+
+        participantes = 0
+        rangos.each do |rango|
+          participantes = @partido.afiliacions.where(:ano_nacimiento => Date.today.year-rango[1]..Date.today.year-rango[0], :region_id => r, fecha_datos: last_date)
+          ph = 0 #participantes hombres
+          pm = 0 #participantes mujeres
+          participantes.each do |np|
+            ph = ph + np.hombres
+            pm = pm + np.mujeres
+          end
+          region["desgloce"].push({ rango[0].to_s+'-'+rango[1].to_s => ph + pm })
+        end
+        @datos_region.push region
       end
-      nh = nh + h
-      nm = nm + m
-      total_n = nh+nm
-      pnh = (nh*100)/total_n
-      pnm = (nm*100)/total_n
 
-      region = { 'region' => r.nombre, 'ordinal' => r.ordinal, 'hombres' => h, 'porcentaje_hombres' => ph, 'mujeres' => m, 'porcentaje_mujeres' => pm }
-      @datos_region.push region
     end
-    nacional = { 'hombres' => nh, 'mujeres' => nm, 'porcentaje_nac_hombres' => pnh, 'porcentaje_nac_mujeres' => pnm, 'total' => nh + nm }
+
+    nacional = { "region" => "nacional", "ordinal" => "nacional", "hombres" => nh, "mujeres" => nm, "porcentaje_hombres" => pnh, "porcentaje_mujeres" => pnm, "total" => nh + nm, "desgloce" => [] }
+    a = []
+    if @datos_region.any?
+      puts '++++++++++++++++'
+      p @datos_region
+      @datos_region.each do |dr|
+        dr["desgloce"].each do |d|
+          a << d
+        end
+      end
+      nacional["desgloce"] << a.inject{ |x,y| x.merge(y) { |k,old_v, new_v| old_v+new_v } }
+    end
+
+
     @datos_nacional.push nacional
 
-    rangos = [[14,17],[18,24],[25,29],[30,34],[35,39],[40,44],[45,49],[50,54],[55,59],[60,64],[65,69],[70,13]]
-    rangos.each do |r|
-      @partido.afiliacions.where :ano_nacimiento => r[0]..r[1]
-    end
+    @datos_total_nacional = @datos_nacional + @datos_region
   end
 
-  def sedes
+  def sedes_partido
     @datos_sedes = []
     @partido.regions.each do |r|
       sedes = @partido.sedes.where(region_id: r)
@@ -302,6 +335,34 @@ class PartidosController < ApplicationController
   end
 
 
+
+  def afiliacion_desafiliacion
+    @tramites = @partido.tramites
+  end
+
+  def eleccion_popular
+
+    cargos = %w(Presidente Senador Diputado Consejero\ Regional Alcalde Concejal)
+    e_popular = []
+    cargos.each do |c|
+      query = @partido.eleccion_populars.where(cargo: c)
+      tmp = []
+      query.each do |q|
+        procedimiento = []
+        q.procedimientos.each do |p|
+          procedimiento << {"descripcion" => p.descripcion}
+        end
+        requisito = []
+        q.requisitos.each do |r|
+          requisito << {"descripcion" => r.descripcion}
+        end
+        tmp <<  {"fecha_eleccion" => q.fecha_eleccion, "dias" => q.dias, "procedimientos" => procedimiento, "requisitos" => requisito}
+      end
+      e_popular << { "type" => c, "dates" => tmp }
+    end
+
+    @e_popular = e_popular
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
