@@ -71,6 +71,8 @@ Rails.application.routes.draw do
     get "/sanciones", to: 'partidos#sanciones'
     get "/finanzas_1", to: 'partidos#finanzas_1'
     get "/finanzas_2", to: 'partidos#finanzas_2'
+    get "/afiliacion_desafiliacion", to: 'partidos#afiliacion_desafiliacion'
+    get "/eleccion_popular", to: 'partidos#eleccion_popular'
     resources :cargos
     resources :personas
     resources :tipo_cargos
