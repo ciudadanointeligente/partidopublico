@@ -293,18 +293,55 @@ $(document).ready(function(){
           bar_x_end = bar_x_start + aux,
           y_end = y_start + 25
           value = v,
-          text = t
+          text = t,
+          height = 40,
           publicos = parseInt(pub),
           privados = parseInt(pri);
           factor_1 = publicos /(publicos + privados);
           publicos_width = Math.ceil(aux * factor_1)
 
-      var category_label = paper.text(text_x_start, text_y_start, text)
-           .attr({
-             "font-family" : "Karla-Regular, Karla",
-             "font-size" : 12,
-             'text-anchor': 'start'
-           });
+          if(text.length > 50){
+            word_array = text.split(" ");
+            console.log(word_array);
+            array_size = word_array.length;
+            console.log(array_size);
+            half_size = Math.ceil(array_size /2 );
+            console.log(half_size);
+            first_line = word_array.slice(0, half_size).join(" ")
+            console.log(first_line);
+            last_line = word_array.slice(half_size, array_size).join(" ")
+            console.log(text);
+            console.log(first_line);
+            console.log(last_line);
+            var category_label1 = paper.text(text_x_start, -8 + y_start + height /2 , first_line)
+                 .attr({
+                   "font-family" : "Karla-Regular, Karla",
+                   "font-size" : 14,
+                   'text-anchor': 'start'
+                 });
+
+            var category_label2 = paper.text(text_x_start, 9 + y_start + height /2 , last_line)
+                .attr({
+                  "font-family" : "Karla-Regular, Karla",
+                  "font-size" : 14,
+                  'text-anchor': 'start'
+                });
+          } else {
+
+            var category_label = paper.text(text_x_start, y_start + height /2 , text)
+                 .attr({
+                   "font-family" : "Karla-Regular, Karla",
+                   "font-size" : 14,
+                   'text-anchor': 'start'
+                 });
+          }
+
+      // var category_label = paper.text(text_x_start, text_y_start, text)
+      //      .attr({
+      //        "font-family" : "Karla-Regular, Karla",
+      //        "font-size" : 12,
+      //        'text-anchor': 'start'
+      //      });
 
       paper.rect(bar_x_start, bar_y_start, publicos_width, 20).attr({
         "fill" : "#23DBB8",
@@ -453,14 +490,47 @@ $(document).ready(function(){
 
       //console.log(x_start);
 
-      var category_label = paper.text(text_x_start, y_start + height /2 , text)
-           .attr({
-             "font-family" : "Karla-Regular, Karla",
-             "font-size" : 14,
-             'text-anchor': 'start'
-           });
+      if(text.length > 50){
+        word_array = text.split(" ");
+        console.log(word_array);
+        array_size = word_array.length;
+        console.log(array_size);
+        half_size = Math.ceil(array_size /2 );
+        console.log(half_size);
+        first_line = word_array.slice(0, half_size).join(" ")
+        console.log(first_line);
+        last_line = word_array.slice(half_size, array_size).join(" ")
+        console.log(text);
+        console.log(first_line);
+        console.log(last_line);
+        var category_label1 = paper.text(text_x_start, - 4 +  y_start + height /2 , first_line)
+             .attr({
+               "font-family" : "Karla-Regular, Karla",
+               "font-size" : 14,
+               'text-anchor': 'start'
+             });
 
-      // console.log(category_label);
+        var category_label2 = paper.text(text_x_start, 14 + y_start + height /2 , last_line)
+            .attr({
+              "font-family" : "Karla-Regular, Karla",
+              "font-size" : 14,
+              'text-anchor': 'start'
+            });
+      } else {
+
+        var category_label = paper.text(text_x_start, y_start + height /2 , text)
+             .attr({
+               "font-family" : "Karla-Regular, Karla",
+               "font-size" : 14,
+               'text-anchor': 'start'
+             });
+      }
+
+
+
+      // console.log(text);
+      // console.log(text.length);
+      // console.log(category_label.getBBox());
 
       var barra = paper.path([
        "M", bar_x_start, bar_y_start,
