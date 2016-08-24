@@ -24,6 +24,7 @@
 #
 
 class Contratacion < ActiveRecord::Base
+  has_paper_trail
   belongs_to :partido
 
   def self.import(file, partido_id, email)

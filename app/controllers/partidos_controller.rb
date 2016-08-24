@@ -1,5 +1,5 @@
 class PartidosController < ApplicationController
-  before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy]
+  before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy, :admin]
   before_action :set_partido, except: [:index, :new, :create, :admin]
   layout "frontend", only: [:normas_internas, :regiones, :sedes_partido, :autoridades,
                             :vinculos_intereses, :pactos, :sanciones,
@@ -14,27 +14,27 @@ class PartidosController < ApplicationController
   end
 
   def admin
-    if admin_signed_in?
-      @partidos = current_admin.partidos
-      if current_admin.is_superadmin?
-        @login_data = []
+    # if admin_signed_in?
+    @partidos = current_admin.partidos
+    if current_admin.is_superadmin?
+      @login_data = []
 
-        Admin.order(last_sign_in_at: :desc).each do |admin|
-          admin_logins = AdminLogin.where admin: admin
-          logins = []
-          admin_logins.order(fecha: :desc).limit(3).each do |login|
-            logins << {fecha: login.fecha, ip: login.ip}
-          end
-          last_actions = PaperTrail::Version.where(:whodunnit => admin.email).limit(3)
-          @login_data << {email: admin.email, login_count: admin_logins.count, logins: logins, last_actions: last_actions}
+      Admin.order(last_sign_in_at: :desc).each do |admin|
+        admin_logins = AdminLogin.where admin: admin
+        logins = []
+        admin_logins.order(fecha: :desc).limit(3).each do |login|
+          logins << {fecha: login.fecha, ip: login.ip}
         end
-
-        puts @login_data
+        last_actions = PaperTrail::Version.where(:whodunnit => admin.email).last(3)
+        @login_data << {email: admin.email, login_count: admin_logins.count, logins: logins, last_actions: last_actions}
       end
 
-    else
-      redirect_to new_admin_session_path
+      puts @login_data
     end
+
+    # else
+    #   redirect_to new_admin_session_path
+    # end
   end
 
   # GET /partidos/1
@@ -98,6 +98,7 @@ class PartidosController < ApplicationController
   # POST /partidos
   # POST /partidos.json
   def create
+    PaperTrail.whodunnit = current_admin.email
     @partido = Partido.new(partido_params)
     # @partido.user = current_user
 
@@ -116,6 +117,7 @@ class PartidosController < ApplicationController
   # PATCH/PUT /partidos/1
   # PATCH/PUT /partidos/1.json
   def update
+    PaperTrail.whodunnit = current_admin.email
     respond_to do |format|
       if @partido.update(partido_params)
         format.html { redirect_to @partido, notice: 'Partido was successfully updated.' }
@@ -130,6 +132,7 @@ class PartidosController < ApplicationController
   # DELETE /partidos/1
   # DELETE /partidos/1.json
   def destroy
+    PaperTrail.whodunnit = current_admin.email
     @partido.destroy
     respond_to do |format|
       format.html { redirect_to partidos_url, notice: 'Partido was successfully destroyed.' }
@@ -334,8 +337,6 @@ class PartidosController < ApplicationController
     @datos_transferencias_totals = { :total => total }
   end
 
-
-
   def afiliacion_desafiliacion
     @tramites = @partido.tramites
   end
@@ -376,4 +377,5 @@ class PartidosController < ApplicationController
       # params.fetch(:partido, {:nombre, :sigla, :lema})
       params.require(:partido).permit(:nombre, :sigla, :lema, :fecha_fundacion, :texto, :logo)
     end
+
 end

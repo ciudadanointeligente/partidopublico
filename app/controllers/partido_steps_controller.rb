@@ -1,6 +1,7 @@
 class PartidoStepsController < ApplicationController
     include Wicked::Wizard
     before_action :authenticate_admin!
+    before_filter :set_paper_trail_whodunnit
     helper  :all
 
     respond_to :html, :json, :csv
@@ -87,7 +88,7 @@ class PartidoStepsController < ApplicationController
     end
 
     def update
-
+        PaperTrail.whodunnit = current_admin.email
         # puts params[:partido]
         # @partido = Partido.find_by_user_id(current_user.id)
         puts "----------------->  Update::"+step.to_s
