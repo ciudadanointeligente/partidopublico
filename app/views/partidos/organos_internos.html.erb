@@ -1,0 +1,21 @@
+<h3>Órganos Internos</h3>
+
+<% @organos.each do |o| %>
+<h4><%= o.nombre %></h4>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Funciones</th>
+      <th>Contacto</th>
+      <th>Nro Integrantes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= o.funciones %></td>
+      <td><%= o.contacto %></td>
+      <td><%= o.num_integrantes %></td>
+    </tr>
+  </tbody>
+</table>
+<% end %>

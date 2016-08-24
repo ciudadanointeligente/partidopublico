@@ -3,7 +3,7 @@ class PartidosController < ApplicationController
   before_action :set_partido, except: [:index, :new, :create, :admin]
   layout "frontend", only: [:normas_internas, :regiones, :sedes_partido, :autoridades,
                             :vinculos_intereses, :pactos, :sanciones, :finanzas_1, :finanzas_2,
-                            :afiliacion_desafiliacion, :eleccion_popular]
+                            :afiliacion_desafiliacion, :eleccion_popular, :organos_internos, :elecciones_internas]
 
 
   # GET /partidos
@@ -326,6 +326,31 @@ class PartidosController < ApplicationController
     end
 
     @e_popular = e_popular
+  end
+
+  def organos_internos
+    @organos = @partido.organo_internos
+  end
+
+  def elecciones_internas
+    @elecciones = []
+    organos = @partido.organo_internos
+    organos.each do |o|
+      elecciones = o.eleccion_interna
+      tmp_elecciones = []
+      elecciones.each do |e|
+        tmp_procedimientos = []
+        e.procedimientos.each do |p|
+          tmp_procedimientos << {"descripcion" => p.descripcion}
+        end
+        tmp_requisitos = []
+        e.requisitos.each do |r|
+          tmp_requisitos << {"descripcion" => r.descripcion}
+        end
+        tmp_elecciones << {"cargo" => e.cargo, "fecha_eleccion" => e.fecha_eleccion, "fecha_limite_inscripcion" => e.fecha_limite_inscripcion, "procedimientos" => tmp_procedimientos, "requisitos" => tmp_requisitos}
+      end
+      @elecciones << {"organo" => o.nombre, "elecciones_internas" => tmp_elecciones}
+    end
   end
 
   private

@@ -1,0 +1,51 @@
+<h3>Elecciones Internas</h3>
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <% @elecciones.each_with_index do |e, index| %>
+    <% if e['elecciones_internas'].count > 0 %>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="heading-<%= index %>">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
+          <%= e['organo'] %>
+        </a>
+      </h4>
+    </div>
+    <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
+      <div class="panel-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Cargo</th>
+              <th>Fecha Elección</th>
+              <th>Fecha Límite</th>
+              <th>Procedimientos</th>
+              <th>Requisitos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% e['elecciones_internas'].each do |ei| %>
+            <tr>
+              <td><%= ei['cargo'] %></td>
+              <td><%= ei['fecha_eleccion'] %></td>
+              <td><%= ei['fecha_limite_inscripcion'] %></td>
+              <td>
+                <% ei['procedimientos'].each do |p| %>
+                  <li><%= p['descripcion'] %></li>
+                <% end %>
+              </td>
+              <td>
+                <% ei['requisitos'].each do |r| %>
+                  <li><%= r['descripcion'] %></li>
+                <% end %>
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+    <% end %>
+  <% end %>
+</div>
