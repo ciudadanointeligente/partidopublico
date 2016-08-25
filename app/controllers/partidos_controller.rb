@@ -1,6 +1,7 @@
 class PartidosController < ApplicationController
   before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy]
   before_action :set_partido, except: [:index, :new, :create, :admin]
+  before_action :get_partidos, except: [:index, :new, :create, :admin]
   layout "frontend", only: [:normas_internas, :regiones, :sedes_partido, :autoridades,
                             :vinculos_intereses, :pactos, :sanciones, :finanzas_1, :finanzas_2,
                             :afiliacion_desafiliacion, :eleccion_popular, :organos_internos, :elecciones_internas]
@@ -358,6 +359,14 @@ class PartidosController < ApplicationController
     def set_partido
       partido_id = params[:id] || params[:partido_id]
       @partido = Partido.find(partido_id)
+    end
+
+    def get_partidos
+      partidos = Partido.all
+      @partidos = []
+      partidos.each do |p|
+        @partidos << { "nombre" => p.nombre, "id" => p.id }
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
