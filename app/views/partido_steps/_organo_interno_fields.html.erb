@@ -4,24 +4,20 @@
       <% if f.object.id.nil? %>
         Nuevo órgano
       <% else %>
-        <%= f.object.nombre %>
+        <%= f.input :nombre %>
       <% end %>
     </div>
     <div class="panel-body">
 
       <% if f.object.id.nil? %>
         <%= f.input :nombre  %>
-        <%= f.input :funciones  %>
-        <%= f.input :contacto  %>
-        <%= f.input :num_integrantes  %>
-      <% else %>
-        <!-- <%= f.object.funciones %> -->
-        <%= f.input :id, as: :hidden %>
-        <%= f.input :nombre %>
-        <%= f.input :funciones %>
-        <%= f.input :contacto  %>
-        <%= f.input :num_integrantes  %>
+
       <% end %>
+
+      <%= f.input :funciones, as: :text, :input_html => { :cols => 150, :rows => 15 } %>
+      <%= f.input :contacto  %>
+      <%= f.input :num_integrantes  %>
+
     </div>
     <div class="panel-footer org-interno">
       <%= link_to_remove_association f, class: 'btn btn-danger checkForDelete' do %>
