@@ -63,6 +63,7 @@ th{
 .panel{
 	border: none;
 	text-align: center;
+	list-style-type: none;
 }
 
 .panel-default > .panel-heading{
@@ -78,17 +79,32 @@ th{
 	font-size: 14px;
 	letter-spacing: 1.2px;
 	font-weight: 400;
+	a{
+		color: white;
+		font-weight: 400;
+		&:hover{
+			text-decoration: none;
+			color: $blue;
+		}
+	}
 }
 
 .panel-default > .panel-heading + .panel-collapse > .panel-body{
 	background-color: $nude-light;
 	border-top: 3px solid $nude;
 	color: $blue;
-	text-align: center;
 }
 
 .panel-body{
 	padding: 7px 15px 7px 15px;
+	a{
+		color: $blue;
+		font-weight: 400;
+		&:hover{
+			text-decoration: none;
+			color: $orange;
+		}
+	}
 }
 
 /*SELECT*/
