@@ -73,83 +73,162 @@
     <aside class="col-sm-3 col-md-3">
       <h5>Transparencia</h5>
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+          <!----- 1 - Normas internas y pensamiento------>
           <div class="panel panel-default">
               <div class="panel-heading" role="tab" id="headingOne">
                 <h4 class="panel-title">
-                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Collapsible Group Item #1
-                  </a>
+                  <li role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <%= link_to "Normas Internas y Pensamiento", partido_normas_internas_path %>
+                  </li>
                 </h4>
               </div>
               <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                 <div class="panel-body">
-                  Hola
+                  El partido
                 </div>
                 <div class="panel-body">
-                  Hola
-                </div>
-                <div class="panel-body">
-                  Hola
-                </div>
-                <div class="panel-body">
-                  Hola
+                  Estructura orgánica
                 </div>
               </div>
             </div>
+            <!----- 2 - Presencia Nacional------>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                  <h4 class="panel-title">
+                    <li class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Presencia Nacional
+                   </li>
+                  </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                  <div class="panel-body">
+                    <%= link_to "Regiones constituido y numero de afiliados", partido_regiones_path %>
+                  </div>
+                  <div class="panel-body">
+                    <%= link_to "Domicilio y sedes de contacto", partido_sedes_partido_path %>
+                  </div>
+                  <div class="panel-body">
+                    Representantes electos
+                  </div>
+                  <div class="panel-body">
+                    Autoridades designadas
+                  </div>
+                </div>
+              </div>
+              <!----- 3 - Cómo participar ------>
+              <div class="panel panel-default">
+                  <div class="panel-heading" role="tab" id="headingThree">
+                    <h4 class="panel-title">
+                      <li class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <%= link_to "Cómo participar", partido_afiliacion_desafiliacion_path %>
+                     </li>
+                    </h4>
+                  </div>
+                  <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                    <div class="panel-body">
+                      <li><%= link_to "Afiliación y Desafiliación", partido_afiliacion_desafiliacion_path %></li>
+                    </div>
+                    <div class="panel-body">
+                      <li><%= link_to "Elección popular", partido_eleccion_popular_path %></li>
+                    </div>
+                    <div class="panel-body">
+                      Postular a cargos de dirección interna
+                    </div>
+                    <div class="panel-body">
+                      Actividades públicas
+                    </div>
+                  </div>
+                </div>
+              <!----- 4 - Vínculos e intereses ------>
+              <div class="panel panel-default">
+                  <div class="panel-heading" role="tab" id="headingFour">
+                    <h4 class="panel-title">
+                      <li class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        <%= link_to "Vinculos e Intereses", partido_vinculos_e_intereses_path %>
+                     </li>
+                    </h4>
+                  </div>
+                  <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                    <div class="panel-body">
+                      <li><%= link_to "Entidades", partido_vinculos_e_intereses_path %></li>
+                    </div>
+                    <div class="panel-body">
+                      <li><%= link_to "Pactos", partido_pactos_path %></li>
+                    </div>
+                    <div class="panel-body">
+                      Declaración de intereses y patrimonio
+                    </div>
+                  </div>
+                </div>
+              <!----- 5 - Finanzas ------>
+              <div class="panel panel-default">
+                  <div class="panel-heading" role="tab" id="headingFive">
+                    <h4 class="panel-title">
+                      <li class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        <%= link_to "Finanzas", partido_finanzas_1_path %>
+                     </li>
+                    </h4>
+                  </div>
+                  <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                    <div class="panel-body">
+                      <li><%= link_to "Ingresos Ordinarios", partido_finanzas_1_path %></li>
+                    </div>
+                    <div class="panel-body">
+                      <li><%= link_to "Egresos Ordinarios", partido_finanzas_2_path %></li>
+                    </div>
+                    <div class="panel-body">
+                      <li><%= link_to "Balance Anual", partido_finanzas_2_path %></li>
+                    </div>
+                    <div class="panel-body">
+                      <li><%= link_to "Contrataciones sobre 20 UTM", partido_finanzas_2_path %></li>
+                    </div>
+                    <div class="panel-body">
+                      <li><%= link_to "Transferencias de Fondos Públicos", partido_finanzas_2_path %></li>
+                    </div>
+                    <div class="panel-body">
+                      <li><%= link_to "Ingresos por Campaña", partido_finanzas_2_path %></li>
+                    </div>
+                    <div class="panel-body">
+                      <li><%= link_to "Egresos por Campaña", partido_finanzas_2_path %></li>
+                    </div>
+                    <div class="panel-body">
+                      Informes campaña electoral
+                    </div>
+                  </div>
+                </div>
+              <!----- 6 - Últimas decisiones------>
+              <div class="panel panel-default">
+                  <div class="panel-heading" role="tab" id="headingSix">
+                    <h4 class="panel-title">
+                      <li class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        Últimas decisiones
+                     </li>
+                    </h4>
+                  </div>
+                  <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                    <div class="panel-body">
+                      Publicación de los candidatos
+                    </div>
+                    <div class="panel-body">
+                      Resultados elecciones internas
+                    </div>
+                    <div class="panel-body">
+                      Acuerdos órganos intermedios colegiados
+                    </div>
+                  </div>
+                </div>
+              <!----- 7 - Denuncias y sanciones------>
+              <div class="panel panel-default">
+                  <div class="panel-heading" role="tab" id="headingSeven">
+                    <h4 class="panel-title">
+                      <li class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                        Sanciones
+                     </li>
+                    </h4>
+                  </div>
+                </div>
+          </div><!-----PANEL GROUP------>
 
-
-
-
-
-
-
-
-
-
-      <ul>
-        <li>
-          <%= link_to "Normas Internas y Pensamiento", partido_normas_internas_path %>
-        </li>
-        <li>
-          Presencia Nacionalaaaa
-          <ul>
-            <li>
-              <%= link_to "Regiones constituido y numero de afiliados", partido_regiones_path %>
-            </li>
-            <li>
-              <%= link_to "Domicilio y sedes de contacto", partido_sedes_partido_path %>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <%= link_to "Cómo participar", partido_afiliacion_desafiliacion_path %>
-          <ul>
-            <li><%= link_to "Afiliación y Desafiliación", partido_afiliacion_desafiliacion_path %></li>
-            <li><%= link_to "Elección popular", partido_eleccion_popular_path %></li>
-          </ul>
-        </li>
-        <li>
-          <%= link_to "Vinculos e Intereses", partido_vinculos_e_intereses_path %>
-          <ul>
-            <li><%= link_to "Entidades", partido_vinculos_e_intereses_path %></li>
-            <li><%= link_to "Pactos", partido_pactos_path %></li>
-            <li><%= link_to "Sanciones", partido_sanciones_path %></li>
-          </ul>
-        </li>
-        <li>
-          <%= link_to "Finanzas", partido_finanzas_1_path %>
-          <ul>
-            <li><%= link_to "Ingresos Ordinarios", partido_finanzas_1_path %></li>
-            <li><%= link_to "Egresos Ordinarios", partido_finanzas_2_path %></li>
-            <li><%= link_to "Balance Anual", partido_finanzas_2_path %></li>
-            <li><%= link_to "Egresos Ordinarios", partido_finanzas_2_path %></li>
-            <li><%= link_to "Contrataciones sobre 20 UTM", partido_finanzas_2_path %></li>
-            <li><%= link_to "Transferencias de Fondos Públicos", partido_finanzas_2_path %></li>
-            <li><%= link_to "Ingresos por Campaña", partido_finanzas_2_path %></li>
-            <li><%= link_to "Egresos por Campaña", partido_finanzas_2_path %></li>
-          </ul>
-        </li>
-      </ul>
 
       <h5>Acciones</h5>
       <ul>
