@@ -2,6 +2,7 @@ class PartidosController < ApplicationController
   before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy, :admin]
   before_action :set_partido, except: [:index, :new, :create, :admin]
   before_action :get_partidos, except: [:index, :new, :create, :admin]
+  before_action :set_menu
   layout "frontend", only: [:normas_internas, :regiones, :sedes_partido, :autoridades,
                             :vinculos_intereses, :pactos, :sanciones,
                             :finanzas_1, :finanzas_2, :finanzas_5,
@@ -396,6 +397,12 @@ class PartidosController < ApplicationController
     def set_partido
       partido_id = params[:id] || params[:partido_id]
       @partido = Partido.find(partido_id)
+    end
+
+    def set_menu
+      puts params
+        @menu = params[:menu].nil? ? 0 : params[:menu].to_i
+
     end
 
     def get_partidos
