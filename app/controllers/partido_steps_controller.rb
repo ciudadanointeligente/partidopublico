@@ -1,6 +1,7 @@
 class PartidoStepsController < ApplicationController
     include Wicked::Wizard
     before_action :authenticate_admin!
+    before_filter :set_paper_trail_whodunnit
     helper  :all
 
     respond_to :html, :json, :csv
@@ -87,7 +88,7 @@ class PartidoStepsController < ApplicationController
     end
 
     def update
-
+        PaperTrail.whodunnit = current_admin.email
         # puts params[:partido]
         # @partido = Partido.find_by_user_id(current_user.id)
         puts "----------------->  Update::"+step.to_s
@@ -109,8 +110,8 @@ class PartidoStepsController < ApplicationController
         # when :num_afiliados
         #     @partido.update_attributes(partido_params)
 
-        # when :tramites
-        #     @partido.update_attributes(partido_params)
+        when :tramites
+            @partido.update_attributes(partido_params)
 
         # when :representantes
         #     @partido.update_attributes(partido_params)
@@ -124,14 +125,16 @@ class PartidoStepsController < ApplicationController
         when :personas
 
         else
-            PaperTrail.whodunnit = current_admin.email
+            #PaperTrail.whodunnit = current_admin.email
             @partido.update_attributes(partido_params)
         end
         if request.xhr?
             PaperTrail.whodunnit = current_admin.email
+
             @partido.save
             @errors = @partido.errors
             puts "AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST "
+            puts partido_params
             @errors.full_messages.each do |message|
               puts message
             end

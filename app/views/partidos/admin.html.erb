@@ -11,7 +11,7 @@
         <tr>
           <th>Email</th>
           <th>Cuenta</th>
-          <th>Accesos(3 Últimos)</th>
+          <th>Accesos y Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -36,11 +36,30 @@
                     </tr>
                   <% end %>
                 </tbody>
+                <% if line[:last_actions].any? %>
+                        <thead>
+                          <tr>
+                            <th>Item</th>
+                            <th>Evento</th>
+                            <th>Fecha</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% line[:last_actions].each do |action| %>
+                            <tr>
+                              <td> <%= action.item_type %> </td>
+                              <td> <%= action.event %> </td>
+                              <td> <%= action.created_at %> </td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                <% end %>
               </table>
             <% end %>
             </td>
           </tr>
         <% end %>
+
       </tbody>
     </table>
 

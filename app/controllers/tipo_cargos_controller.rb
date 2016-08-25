@@ -25,6 +25,7 @@ class TipoCargosController < ApplicationController
   # POST /tipo_cargos
   # POST /tipo_cargos.json
   def create
+    PaperTrail.whodunnit = current_admin.email
     @tipo_cargo = TipoCargo.new(tipo_cargo_params)
 
     respond_to do |format|
@@ -41,6 +42,7 @@ class TipoCargosController < ApplicationController
   # PATCH/PUT /tipo_cargos/1
   # PATCH/PUT /tipo_cargos/1.json
   def update
+    PaperTrail.whodunnit = current_admin.email
     respond_to do |format|
       if @tipo_cargo.update(tipo_cargo_params)
         format.html { redirect_to @tipo_cargo, notice: 'Tipo cargo was successfully updated.' }
@@ -55,6 +57,7 @@ class TipoCargosController < ApplicationController
   # DELETE /tipo_cargos/1
   # DELETE /tipo_cargos/1.json
   def destroy
+    PaperTrail.whodunnit = current_admin.email
     @tipo_cargo.destroy
     respond_to do |format|
       format.html { redirect_to tipo_cargos_url, notice: 'Tipo cargo was successfully destroyed.' }
