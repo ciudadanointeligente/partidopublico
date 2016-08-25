@@ -74,3 +74,11 @@ select#fecha_datos{
 	width: 200px;
 	-webkit-appearance: none;
 }
+
+
+@media (max-width: 280px) {
+	select#fecha_datos{
+		width: inherit;
+	}
+
+}
