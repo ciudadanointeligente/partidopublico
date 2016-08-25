@@ -19,6 +19,7 @@ $green-dark: #19A58A;
 $sky-dark: #06B9BF;
 $sky-light: #78EEE8;
 
+/*GENERAL*/
 body {
 	background-color: $nude;
 	font-family: 'Karla', sans-serif;
@@ -58,6 +59,38 @@ th{
 	border-bottom: 1px solid $blue;
 }
 
+/*PANELS*/
+.panel{
+	border: none;
+	text-align: center;
+}
+
+.panel-default > .panel-heading{
+	background-color: $orange-dark;
+	border: none;
+	box-shadow: none;
+	border-radius: 0;
+}
+
+.panel-title{
+	color: white;
+	text-transform: uppercase;
+	font-size: 14px;
+	letter-spacing: 1.2px;
+	font-weight: 400;
+}
+
+.panel-default > .panel-heading + .panel-collapse > .panel-body{
+	background-color: $nude-light;
+	border-top: 3px solid $nude;
+	color: $blue;
+	text-align: center;
+}
+
+.panel-body{
+	padding: 7px 15px 7px 15px;
+}
+
 /*SELECT*/
 select#fecha_datos{
 	text-transform: uppercase;
@@ -75,7 +108,7 @@ select#fecha_datos{
 	-webkit-appearance: none;
 }
 
-
+/*MEDIA-QUERIS*/
 @media (max-width: 280px) {
 	select#fecha_datos{
 		width: inherit;

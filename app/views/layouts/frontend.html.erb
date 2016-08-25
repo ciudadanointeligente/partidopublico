@@ -68,9 +68,44 @@
     </div>
   </header>
 
+<!------------------------------------->
   <div class="container">
     <aside class="col-sm-3 col-md-3">
       <h5>Transparencia</h5>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Collapsible Group Item #1
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  Hola
+                </div>
+                <div class="panel-body">
+                  Hola
+                </div>
+                <div class="panel-body">
+                  Hola
+                </div>
+                <div class="panel-body">
+                  Hola
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
       <ul>
         <li>
           <%= link_to "Normas Internas y Pensamiento", partido_normas_internas_path %>
