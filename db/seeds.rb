@@ -510,11 +510,5 @@ Admin.create!([
 ])
 
 Partido.create!([
-  {nombre: "Partido Demócrata Cristiano", sigla: "PDC", lema: "Partido Demócrata Cristiano"},
   {nombre: "Partido Revolución Democrática", sigla: "PRD", lema: "Partido Revolución Democrática"},
-  {nombre: "Partido Liberal", sigla: "PL", lema: "Partido Liberal"},
-  {nombre: "Partido Por la Democracia", sigla: "PPD", lema: "Partido Por la Democracia"},
-  {nombre: "Partido Comunista de Chile", sigla: "PCC", lema: "Partido Comunista de Chile"},
-  {nombre: "Partido Amplitud", sigla: "PA", lema: "Partido Amplitud"},
-  {nombre: "Partido Ciudadanos", sigla: "PC", lema: "Partido Ciudadanos"},
 ])

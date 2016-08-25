@@ -110,8 +110,8 @@ class PartidoStepsController < ApplicationController
         # when :num_afiliados
         #     @partido.update_attributes(partido_params)
 
-        # when :tramites
-        #     @partido.update_attributes(partido_params)
+        when :tramites
+            @partido.update_attributes(partido_params)
 
         # when :representantes
         #     @partido.update_attributes(partido_params)
@@ -125,14 +125,16 @@ class PartidoStepsController < ApplicationController
         when :personas
 
         else
-            PaperTrail.whodunnit = current_admin.email
+            #PaperTrail.whodunnit = current_admin.email
             @partido.update_attributes(partido_params)
         end
         if request.xhr?
             PaperTrail.whodunnit = current_admin.email
+
             @partido.save
             @errors = @partido.errors
             puts "AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST "
+            puts partido_params
             @errors.full_messages.each do |message|
               puts message
             end
