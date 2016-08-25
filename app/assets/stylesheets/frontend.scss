@@ -28,6 +28,7 @@ body {
 .board{
 	background-color: white;
 	box-shadow: -5px 5px 0px $orange;
+	margin-top: 43px;
 }
 
 /*HEADINGS*/
@@ -44,7 +45,8 @@ h4{
 }
 
 h5 {
-	color : red;
+	color: $blue;
+	font-size: 22px;
 }
 
 /*TABLES*/
@@ -71,6 +73,9 @@ th{
 	border: none;
 	box-shadow: none;
 	border-radius: 0;
+	&.actions{
+		background-color: $green;
+	}
 }
 
 .panel-title{

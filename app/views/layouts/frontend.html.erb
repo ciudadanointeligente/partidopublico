@@ -234,13 +234,40 @@
                 </div>
           </div><!-----PANEL GROUP------>
 
+          <h5>Acciones</h5>
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <!----- 1 - Contactar------>
+            <div class="panel panel-default actions">
+                <div class="panel-heading" role="tab" id="headingOne">
+                  <h4 class="panel-title">
+                    <li role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Contactar
+                    </li>
+                  </h4>
+                </div>
+              </div>
+              <!----- 2 - Presencia Nacional------>
+              <div class="panel panel-default">
+                  <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                      <li class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Solicitar reunión con dirigente
+                     </li>
+                    </h4>
+                  </div>
+                </div>
+                <!----- 3 - Cómo participar ------>
+                <div class="panel panel-default actions">
+                    <div class="panel-heading" role="tab" id="headingThree">
+                      <h4 class="panel-title">
+                        <li class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                          Denunciar
+                       </li>
+                      </h4>
+                    </div>
+                  </div>
+            </div><!-----PANEL GROUP------>
 
-      <h5>Acciones</h5>
-      <ul>
-        <li>item 01</li>
-        <li>item 02</li>
-        <li>item 03</li>
-      </ul>
     </aside>
     <main class="col-sm-9 col-md-9 board">
       <%= yield %>
