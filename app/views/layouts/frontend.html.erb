@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,17 +9,17 @@
   <link rel="shortcut icon" href="/favicon.ico">
 
   <!-- OpenGraph -->
-  <meta property="og:title" content="" />
+  <meta property="og:title" content="<%= t('.og_title') %>" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="" />
   <meta property="og:image" content="" />
-  <meta property="og:description" content="" />
+  <meta property="og:description" content="<%= t('.og_description') %>" />
 
   <!-- Twitter card -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:site" content="">
-  <meta name="twitter:title" content="">
-  <meta name="twitter:description" content="">
+  <meta name="twitter:title" content="<%= t('.twitter_title') %>">
+  <meta name="twitter:description" content="<%= t('.twitter_description') %>">
   <meta name="twitter:creator" content="">
   <meta name="twitter:image" content="">
 
@@ -51,13 +51,11 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Partidos adheridos <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li><a href="#">Separated link</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li><a href="#">One more separated link</a></li>
+                  <% @partidos.each do |p| %>
+                  <li>
+                    <%= link_to p['nombre'], partido_normas_internas_path(p['id']) %>
+                  </li>
+                  <% end %>
                 </ul>
               </li>
               <li><a href="#">Comparar partidos</a></li>
@@ -72,6 +70,7 @@
   <div class="container">
     <aside class="col-sm-3 col-md-3">
       <h5>Transparencia</h5>
+
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
           <!----- 1 - Normas internas y pensamiento------>
           <div class="panel panel-default">

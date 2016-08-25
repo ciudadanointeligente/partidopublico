@@ -1,9 +1,12 @@
 class PartidosController < ApplicationController
-  before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy]
+  before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy, :admin]
   before_action :set_partido, except: [:index, :new, :create, :admin]
+  before_action :get_partidos, except: [:index, :new, :create, :admin]
+  before_action :set_menu
   layout "frontend", only: [:normas_internas, :regiones, :sedes_partido, :autoridades,
-                            :vinculos_intereses, :pactos, :sanciones, :finanzas_1, :finanzas_2,
-                            :afiliacion_desafiliacion, :eleccion_popular]
+                            :vinculos_intereses, :pactos, :sanciones,
+                            :finanzas_1, :finanzas_2, :finanzas_5,
+                            :afiliacion_desafiliacion, :eleccion_popular, :organos_internos, :elecciones_internas]
 
 
   # GET /partidos
@@ -13,24 +16,27 @@ class PartidosController < ApplicationController
   end
 
   def admin
-    if admin_signed_in?
-      @partidos = current_admin.partidos
-      if current_admin.is_superadmin?
-        @login_data = []
+    # if admin_signed_in?
+    @partidos = current_admin.partidos
+    if current_admin.is_superadmin?
+      @login_data = []
 
-        Admin.order(last_sign_in_at: :desc).each do |admin|
-          admin_logins = AdminLogin.where admin: admin
-          logins = []
-          admin_logins.order(fecha: :desc).limit(3).each do |login|
-            logins << {fecha: login.fecha, ip: login.ip}
-          end
-          @login_data << {email: admin.email, login_count: admin_logins.count, logins: logins}
+      Admin.order(last_sign_in_at: :desc).each do |admin|
+        admin_logins = AdminLogin.where admin: admin
+        logins = []
+        admin_logins.order(fecha: :desc).limit(3).each do |login|
+          logins << {fecha: login.fecha, ip: login.ip}
         end
-        puts @login_data
+        last_actions = PaperTrail::Version.where(:whodunnit => admin.email).last(3)
+        @login_data << {email: admin.email, login_count: admin_logins.count, logins: logins, last_actions: last_actions}
       end
-    else
-      redirect_to new_admin_session_path
+
+      puts @login_data
     end
+
+    # else
+    #   redirect_to new_admin_session_path
+    # end
   end
 
   # GET /partidos/1
@@ -94,6 +100,7 @@ class PartidosController < ApplicationController
   # POST /partidos
   # POST /partidos.json
   def create
+    PaperTrail.whodunnit = current_admin.email
     @partido = Partido.new(partido_params)
     # @partido.user = current_user
 
@@ -112,6 +119,7 @@ class PartidosController < ApplicationController
   # PATCH/PUT /partidos/1
   # PATCH/PUT /partidos/1.json
   def update
+    PaperTrail.whodunnit = current_admin.email
     respond_to do |format|
       if @partido.update(partido_params)
         format.html { redirect_to @partido, notice: 'Partido was successfully updated.' }
@@ -126,6 +134,7 @@ class PartidosController < ApplicationController
   # DELETE /partidos/1
   # DELETE /partidos/1.json
   def destroy
+    PaperTrail.whodunnit = current_admin.email
     @partido.destroy
     respond_to do |format|
       format.html { redirect_to partidos_url, notice: 'Partido was successfully destroyed.' }
@@ -300,6 +309,36 @@ class PartidosController < ApplicationController
     @datos_egresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
   end
 
+  def finanzas_5
+    @fechas_datos = Transferencia.where(partido: @partido).uniq.pluck(:fecha_datos).sort
+    if params[:fecha_datos]
+      @fecha = Date.new(params[:fecha_datos].split("-")[0].to_i, params[:fecha_datos].split("-")[1].to_i, params[:fecha_datos].split("-")[2].to_i)
+    else
+      @fecha = @fechas_datos.last
+    end
+
+    datos_eficientes_transferencias = Transferencia.where(partido: @partido, :fecha_datos => @fecha).group(:categoria).
+    select("categoria, count(1) as count, sum(monto) as total").order(:categoria)
+
+    max_value = Transferencia.where(partido: @partido, :fecha_datos => @fecha).group(:categoria).select("sum(monto) as total").order("total DESC").first.attributes.symbolize_keys![:total]
+
+    puts max_value
+
+    datos_eficientes_transferencias.each do |d|
+      d.attributes.symbolize_keys!
+    end
+    total = 0
+    @datos_transferencias = []
+    datos_eficientes_transferencias.each do |t|
+      total = total + t.total
+      val = (100 * ((t.total.to_f)/ max_value.to_f).to_f rescue 0).to_s
+      line ={ 'text'=> t.categoria,
+        'value' => ActiveSupport::NumberHelper::number_to_delimited(t.total, delimiter: "."), 'percentage' => val }
+      @datos_transferencias << line
+    end
+    @datos_transferencias_totals = { :total => total }
+  end
+
   def afiliacion_desafiliacion
     @tramites = @partido.tramites
   end
@@ -328,6 +367,31 @@ class PartidosController < ApplicationController
     @e_popular = e_popular
   end
 
+  def organos_internos
+    @organos = @partido.organo_internos
+  end
+
+  def elecciones_internas
+    @elecciones = []
+    organos = @partido.organo_internos
+    organos.each do |o|
+      elecciones = o.eleccion_interna
+      tmp_elecciones = []
+      elecciones.each do |e|
+        tmp_procedimientos = []
+        e.procedimientos.each do |p|
+          tmp_procedimientos << {"descripcion" => p.descripcion}
+        end
+        tmp_requisitos = []
+        e.requisitos.each do |r|
+          tmp_requisitos << {"descripcion" => r.descripcion}
+        end
+        tmp_elecciones << {"cargo" => e.cargo, "fecha_eleccion" => e.fecha_eleccion, "fecha_limite_inscripcion" => e.fecha_limite_inscripcion, "procedimientos" => tmp_procedimientos, "requisitos" => tmp_requisitos}
+      end
+      @elecciones << {"organo" => o.nombre, "elecciones_internas" => tmp_elecciones}
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_partido
@@ -335,9 +399,24 @@ class PartidosController < ApplicationController
       @partido = Partido.find(partido_id)
     end
 
+    def set_menu
+      puts params
+        @menu = params[:menu].nil? ? 0 : params[:menu].to_i
+
+    end
+
+    def get_partidos
+      partidos = Partido.all
+      @partidos = []
+      partidos.each do |p|
+        @partidos << { "nombre" => p.nombre, "id" => p.id }
+      end
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def partido_params
       # params.fetch(:partido, {:nombre, :sigla, :lema})
       params.require(:partido).permit(:nombre, :sigla, :lema, :fecha_fundacion, :texto, :logo)
     end
+
 end

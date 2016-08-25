@@ -49,6 +49,7 @@ class PersonasController < ApplicationController
   # POST /personas
   # POST /personas.json
   def create
+    PaperTrail.whodunnit = current_admin.email
     @persona = Persona.new(persona_params)
     @persona.partido = @partido
 
@@ -66,6 +67,7 @@ class PersonasController < ApplicationController
   # PATCH/PUT /personas/1
   # PATCH/PUT /personas/1.json
   def update
+    PaperTrail.whodunnit = current_admin.email
     if remotipart_submitted?
       p "remotipart_submitted! remotipart_submitted! remotipart_submitted! remotipart_submitted! remotipart_submitted! "
     end
@@ -83,6 +85,7 @@ class PersonasController < ApplicationController
   # DELETE /personas/1
   # DELETE /personas/1.json
   def destroy
+    PaperTrail.whodunnit = current_admin.email
     @persona.destroy
     respond_to do |format|
       format.html { redirect_to personas_url, notice: 'Persona was successfully destroyed.' }

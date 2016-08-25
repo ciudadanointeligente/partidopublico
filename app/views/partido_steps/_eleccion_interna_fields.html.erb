@@ -1,6 +1,7 @@
 <div class="col-md-4">
   <div class="panel panel-default">
     <div class="panel-heading">
+        <%time_id = DateTime.now.strftime('%Q') %>
       Elección Interna: <%= f.object.cargo %>
     </div>
     <div class="panel-body">
@@ -25,13 +26,13 @@
         <div class="panel-heading">
           Procedimientos
         </div>
-        <div class="panel-body procedimientos">
+        <div class="panel-body procedimientos" id="procedimiento_<%= time_id %>">
           <%= f.fields_for :procedimientos do |procedimiento| %>
             <%= render 'procedimiento_fields', :f => procedimiento %>
           <% end %>
         </div>
         <div class="panel-footer">
-          <%= link_to_add_association f, :procedimientos, class: 'btn btn-default', data: { 'association-insertion-method': 'append', 'association-insertion-node': '.procedimientos' } do %>
+          <%= link_to_add_association f, :procedimientos, class: 'btn btn-default', data: { 'association-insertion-method': 'append', 'association-insertion-node': '#procedimiento_'+ time_id } do %>
             <i class="fa fa-plus"></i> Agregar procedimiento
           <% end %>
         </div>
@@ -41,13 +42,13 @@
         <div class="panel-heading">
           Requisitos
         </div>
-        <div class="panel-body requisitos">
+        <div class="panel-body requisitos" id="requisito_<%= time_id %>">
           <%= f.fields_for :requisitos do |requisito| %>
             <%= render 'requisito_fields', :f => requisito %>
           <% end %>
         </div>
         <div class="panel-footer">
-          <%= link_to_add_association f, :requisitos, class: 'btn btn-default', data: { 'association-insertion-method': 'append', 'association-insertion-node': '.requisitos' } do %>
+          <%= link_to_add_association f, :requisitos, class: 'btn btn-default', data: { 'association-insertion-method': 'append', 'association-insertion-node': '#requisito_'+ time_id } do %>
             <i class="fa fa-plus"></i> Agregar requerimiento
           <% end %>
         </div>
