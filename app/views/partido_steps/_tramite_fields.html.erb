@@ -1,6 +1,7 @@
 <div class="col-md-6">
   <div class="panel panel-default">
     <div class="panel-heading">
+      <%time_id = DateTime.now.strftime('%Q') %>
       <% if f.object.id.nil? %>
         Nuevo trámite
       <% else %>
@@ -31,14 +32,14 @@
         <div class="panel-heading">
           Procedimientos<%= f.object.id %>
         </div>
-        <div class="panel-body procedimientos" id="procedimiento_<%= f.object.id %>">
+        <div class="panel-body procedimientos" id="procedimiento_<%= time_id %>">
           <%= f.fields_for :procedimientos do |procedimiento| %>
             <%= render 'procedimiento_fields', :f => procedimiento %>
           <% end %>
 
         </div>
         <div class="panel-footer">
-          <%= link_to_add_association f, :procedimientos, class: 'btn btn-default', data: { 'association-insertion-method': 'append', 'association-insertion-node': '#procedimiento_'+ f.object.id.to_s  } do %>
+          <%= link_to_add_association f, :procedimientos, class: 'btn btn-default', data: { 'association-insertion-method': 'append', 'association-insertion-node': '#procedimiento_'+ time_id  } do %>
             <i class="fa fa-plus"></i> Agregar procedimiento
           <% end %>
         </div>
@@ -48,13 +49,13 @@
         <div class="panel-heading">
           Requisitos<%= f.object.id %>
         </div>
-        <div class="panel-body requisitos" id="requisito_<%= f.object.id %>">
+        <div class="panel-body requisitos" id="requisito_<%= time_id %>">
           <%= f.fields_for :requisitos do |requisito| %>
             <%= render 'requisito_fields', :f => requisito %>
           <% end %>
         </div>
         <div class="panel-footer">
-          <%= link_to_add_association f, :requisitos, class: 'btn btn-default', data: { 'association-insertion-method': 'append', 'association-insertion-node': '#requisito_'+ f.object.id.to_s } do %>
+          <%= link_to_add_association f, :requisitos, class: 'btn btn-default', data: { 'association-insertion-method': 'append', 'association-insertion-node': '#requisito_'+ time_id } do %>
             <i class="fa fa-plus"></i> Agregar requisito
           <% end %>
         </div>

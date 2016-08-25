@@ -16,7 +16,7 @@
 
     <div class="row" id="nueva-postulacion"></div>
 
-    <div class="row">
+    <div class="eleccion-popular" id="eleccion-popular_<%= f.object.id%>">
       <%= f.fields_for :eleccion_populars do |builder| %>
         <%= render 'eleccion_popular_fields', :f => builder %>
       <% end %>
