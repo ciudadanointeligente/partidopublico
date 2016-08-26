@@ -48,4 +48,21 @@ RSpec.describe PartidosController, type: :controller do
     end
   end
 
+  describe "GET #sedes_partido" do
+    it "get an array of sedes by regions from a party" do
+      partido = create(:partido)
+      region = create(:region)
+      comuna = create(:comuna)
+      sede_1 = create(:sede, :region_id => region.id, :comuna_id => comuna.id)
+      partido.sedes << sede_1
+      partido.regions << region
+
+      sedes = [{'region' => region.nombre, 'sedes' => [{ 'direccion' => sede_1.direccion, 'contacto' => sede_1.contacto, 'comuna' => sede_1.comuna.nombre }]}]
+
+      get :sedes_partido, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:datos_sedes)).to eq(sedes)
+    end
+  end
+
 end
