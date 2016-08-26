@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  #get 'compare', to: 'comparisons#index'
+  resources :comparisons
   resources :egreso_campanas
   resources :ingreso_campanas
   resources :transferencias

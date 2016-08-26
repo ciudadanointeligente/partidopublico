@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%= t('.title') %></title>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="<%= t('.og_title') %>" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="" />
+  <meta property="og:image" content="" />
+  <meta property="og:description" content="<%= t('.og_description') %>" />
+
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="">
+  <meta name="twitter:title" content="<%= t('.twitter_title') %>">
+  <meta name="twitter:description" content="<%= t('.twitter_description') %>">
+  <meta name="twitter:creator" content="">
+  <meta name="twitter:image" content="">
+
+  <!-- Latest compiled and minified CSS -->
+  <%= stylesheet_link_tag    'frontend', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'frontend', 'data-turbolinks-track' => true %>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav class="navbar">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Brand</a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a href="#">Que es?</a></li>
+              <li><a href="#">Estandares de transparencia</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Partidos adheridos <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <% @partidos.each do |p| %>
+                  <li>
+                    <%= link_to p['nombre'], partido_normas_internas_path(p['id']) %>
+                  </li>
+                  <% end %>
+                </ul>
+              </li>
+              <li><%= link_to 'Comparar partidos', comparisons_path %></li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+    </div>
+  </header>
+
+<!------------------------------------->
+  <div class="container">
+    <div class="row">
+      <h1> Compara Partidos</h1>
+      <%= form_tag comparisons_path, :method =>  :get do |f| %>
+        <% @partidos.each do |partido| %>
+          <%= check_box_tag 'partido_ids[]', partido.id %>
+          <%= h partido.sigla %>
+        <% end %>
+        <br>
+        <%= select_tag :category, options_for_select(categories), prompt: "Seleccionar un tema" %>
+        <br>
+        <%= submit_tag 'Comparar' %>
+      <% end %>
+    </div>
+    <main class="row">
+      <%= yield %>
+    </main>
+
+    <footer class="col-md-12">
+      <div class="container">
+        footer
+      </div>
+    </footer>
+
+  </div>
+
+</body>
+</html>

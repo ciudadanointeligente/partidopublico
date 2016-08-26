@@ -28,7 +28,7 @@ class PersonasController < ApplicationController
       end
     end
 
-    puts params.to_yaml
+    #puts params.to_yaml
     file = params[:file]
   end
 
