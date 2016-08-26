@@ -5,7 +5,6 @@ $(document).ready(function(){
       chart = this.set();
 
     function sector(cx, cy, r, startAngle, endAngle, params) {
-
       var x1 = cx + r * Math.cos(-startAngle * rad),
         x2 = cx + r * Math.cos(-endAngle * rad),
         y1 = cy + r * Math.sin(-startAngle * rad),
@@ -22,8 +21,8 @@ $(document).ready(function(){
           "L", xx2, yy2,
           "A", rin, rin, 0, +(endAngle - startAngle > 180), 1, xx1, yy1, "z"
       ]).attr(params);
-
-      return cc;
+      // cc.node.id = params.fill;
+      return cc ;
 
     }
     var angle = 0,
@@ -39,10 +38,21 @@ $(document).ready(function(){
           delta = 25,
           bcolor = Raphael.hsb(start,1,1) ;
           bcolor = colors[j%colors.length];
-          var p = sector(cx, cy, r, angle, angle + angleplus, {fill: "90-" + bcolor + "-" + bcolor, stroke: stroke, "stroke-width": 3});
+          draw_params = {fill: "90-" + bcolor + "-" + bcolor, stroke: stroke, "stroke-width": 3}
+          var p = sector(cx, cy, r, angle, angle + angleplus, draw_params);
 
           if (legend == true && legendElement) {
-            legendElement.append('<li><span class="icon" style="background-color:' + bcolor + ';"></span><span>' + labels[j] + " " + values[j] + '%</span></li>');
+            switch(labels[j]) {
+              case 'hombres':
+                legendElement.append('<li data-id='+ bcolor +' style="color:' + bcolor + ';"><i class="fa fa-male"></i> ' + labels[j] + " : " + values[j] + '</li>');
+                break;
+              case 'mujeres':
+                legendElement.append('<li data-id='+ bcolor +' style="color:' + bcolor + ';"><i class="fa fa-female"></i> ' + labels[j] + " : " + values[j] + '</li>');
+                break;
+              default:
+                legendElement.append('<li data-id='+ bcolor +' style="color:' + bcolor + ';"><i class="fa fa-male"></i><i class="fa fa-female"></i> ' + labels[j] + " : " + values[j] + '</li>');
+                break;
+            }
           }
 
         // ****** Added BY SM ******* //
@@ -106,7 +116,7 @@ $(document).ready(function(){
 
     return chart;
   };
-
+  
   Raphael.fn.ingresos_ordinarios_chart = function(datos, datos_totales, fecha_seleccionada){
     var paper = this;
     var header_height = 40;
