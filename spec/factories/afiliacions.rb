@@ -21,9 +21,10 @@
 
 FactoryGirl.define do
   factory :afiliacion do
-    region nil
-    hombres 1
-    mujeres 1
-    rangos "MyString"
+    hombres 10
+    mujeres 20
+    fecha_datos "2016-01-01"
+    ano_nacimiento 1981
+    otros 0
   end
 end

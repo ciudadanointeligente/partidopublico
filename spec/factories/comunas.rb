@@ -15,6 +15,6 @@
 
 FactoryGirl.define do
   factory :comuna do
-    nombre "MyString"
+    nombre "una comuna"
   end
 end

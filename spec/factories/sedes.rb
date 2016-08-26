@@ -19,8 +19,7 @@
 
 FactoryGirl.define do
   factory :sede do
-    region "MyString"
-    direccion "MyString"
-    contacto "MyString"
+    direccion "direccion #123"
+    contacto "contacto@contacto.cl"
   end
 end
