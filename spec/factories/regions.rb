@@ -12,5 +12,6 @@
 FactoryGirl.define do
   factory :region do
     nombre "MyString"
+    ordinal "MS"
   end
 end

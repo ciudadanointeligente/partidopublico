@@ -29,7 +29,6 @@
 FactoryGirl.define do
   factory :cargo do
     persona nil
-    cargo nil
     partido nil
   end
 end

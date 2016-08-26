@@ -197,7 +197,7 @@ class PartidosController < ApplicationController
             ph = ph + np.hombres
             pm = pm + np.mujeres
           end
-          region["desgloce"].push({ rango[0].to_s+'-'+rango[1].to_s => ph + pm })
+          region["desgloce"].push( rango[0].to_s+'-'+rango[1].to_s => ph + pm )
         end
         @datos_region.push region
       end
@@ -207,8 +207,6 @@ class PartidosController < ApplicationController
     nacional = { "region" => "nacional", "ordinal" => "nacional", "hombres" => nh, "mujeres" => nm, "porcentaje_hombres" => pnh, "porcentaje_mujeres" => pnm, "total" => nh + nm, "desgloce" => [] }
     a = []
     if @datos_region.any?
-      puts '++++++++++++++++'
-      p @datos_region
       @datos_region.each do |dr|
         dr["desgloce"].each do |d|
           a << d
@@ -321,8 +319,6 @@ class PartidosController < ApplicationController
     select("categoria, count(1) as count, sum(monto) as total").order(:categoria)
 
     max_value = Transferencia.where(partido: @partido, :fecha_datos => @fecha).group(:categoria).select("sum(monto) as total").order("total DESC").first.attributes.symbolize_keys![:total]
-
-    puts max_value
 
     datos_eficientes_transferencias.each do |d|
       d.attributes.symbolize_keys!
