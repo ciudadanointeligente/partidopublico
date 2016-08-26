@@ -197,7 +197,7 @@ class PartidosController < ApplicationController
             ph = ph + np.hombres
             pm = pm + np.mujeres
           end
-          region["desgloce"].push({ rango[0].to_s+'-'+rango[1].to_s => ph + pm })
+          region["desgloce"].push( rango[0].to_s+'-'+rango[1].to_s => ph + pm )
         end
         @datos_region.push region
       end

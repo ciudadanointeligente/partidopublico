@@ -26,4 +26,26 @@ RSpec.describe PartidosController, type: :controller do
     end
   end
 
+  describe "GET #regiones" do
+    it "get an array of presencia nacional" do
+      partido = create(:partido)
+      region = create(:region)
+      afiliacion = create(:afiliacion)
+      afiliacion.region_id = region.id
+      partido.regions << region
+      partido.afiliacions << afiliacion
+
+      nacional = { "region" => "nacional", "ordinal" => "nacional", "hombres" => 10, "mujeres" => 20, "porcentaje_hombres" => 33, "porcentaje_mujeres" => 66, "total" => 30, "desgloce" => [{"14-17"=>0, "18-24"=>0, "25-29"=>0, "30-34"=>0, "35-39"=>30, "40-44"=>0, "45-49"=>0, "50-54"=>0, "55-59"=>0, "60-64"=>0, "65-69"=>0, "70-100"=>0}] }
+      regional = { "region" => "MyString", "ordinal" => "MS", "hombres" => 10, "mujeres" => 20, "porcentaje_hombres" => 33, "porcentaje_mujeres" => 66, "total" => 30, "desgloce" => [{"14-17"=>0},{"18-24"=>0},{"25-29"=>0},{"30-34"=>0},{"35-39"=>30},{"40-44"=>0},{"45-49"=>0},{"50-54"=>0},{"55-59"=>0},{"60-64"=>0},{"65-69"=>0},{"70-100"=>0}] }
+      total_nacional = []
+      total_nacional << nacional
+      total_nacional << regional
+
+      get :regiones, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:datos_total_nacional)).not_to be_empty
+      expect(assigns(:datos_total_nacional)).to eq(total_nacional)
+    end
+  end
+
 end
