@@ -85,8 +85,8 @@ $(document).ready(function(){
       el_select = document.getElementById('select-region')
       el_select.options[el_select.options.length] = new Option(presencia[x].region, 'region-'+presencia[x].ordinal);
 
-      $('#region-'+presencia[x].ordinal).find('h3').html( presencia[x].region )
-      $('#region-'+presencia[x].ordinal).find('h4').html( "Total de afiliados: " + (presencia[x].hombres + presencia[x].mujeres) )
+      $('#region-'+presencia[x].ordinal).find('h4').html( "Total de afiliados " + presencia[x].region )
+      $('#region-'+presencia[x].ordinal).find('h6').html(presencia[x].hombres + presencia[x].mujeres)
       Raphael("circulo-"+presencia[x].ordinal, 150, 150).donutChart(75, 75, 70, 35, [presencia[x].hombres, presencia[x].mujeres], ['hombres', 'mujeres'], colors, true, $('#region-'+presencia[x].ordinal+' .leyenda'), colors);
       var data_desgloce = [],
           display_desgloce = 0;
