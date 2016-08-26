@@ -31,6 +31,58 @@ body {
 	margin-top: 43px;
 }
 
+/*NAV*/
+.navbar-default{
+	background-color: #0A3451;
+	border: none;
+	height: 70px;
+	color: white;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: white;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 1.3px;
+  font-weight: 400;
+	padding: 24px 15px;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus{
+	color: $orange;
+}
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+  background-color: transparent;
+  color: white;
+}
+
+.dropdown-menu {
+  padding: 8px 0;
+  font-size: 11px;
+  background-color: #0A3451;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+}
+
+.dropdown-menu > li > a{
+	color: white;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: $orange;
+    background-color: transparent;
+}
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border: none;
+    background-color: #0A3451;
+    z-index: 2000;
+}
+
 /*HEADINGS*/
 h3{
 	font-weight: 700;
