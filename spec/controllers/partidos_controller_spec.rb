@@ -65,4 +65,23 @@ RSpec.describe PartidosController, type: :controller do
     end
   end
 
+  describe "GET #autoridades" do
+    it "return an array with all autorities of a party by region" do
+      partido = create(:partido)
+      region = create(:region)
+      comuna = create(:comuna)
+      tipo_cargo = create(:tipo_cargo)
+      persona = create(:persona, :partido_id => partido.id)
+      cargo_1 = create(:cargo, :partido_id => partido.id, :region_id => region.id, :comuna_id => comuna.id, :persona_id => persona.id, :tipo_cargo_id => tipo_cargo.id)
+
+      partido.regions << region
+
+      cargos = [{'region' => region.nombre, 'cargos' => [{ 'persona' => cargo_1.persona.nombre, 'cargo' => cargo_1.tipo_cargo.titulo, 'comuna' => cargo_1.comuna.nombre }]}]
+
+      get :autoridades, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:datos_cargos)).to eq(cargos)
+    end
+  end
+
 end
