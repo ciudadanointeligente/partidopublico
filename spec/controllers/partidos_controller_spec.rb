@@ -110,4 +110,18 @@ RSpec.describe PartidosController, type: :controller do
     end
   end
 
+  describe "GET #sanciones" do
+    it "return an array of sanciones" do
+      partido = create(:partido)
+      sancion_01 = create(:sancion, :partido_id => partido.id)
+      sancion_02 = create(:sancion, :partido_id => partido.id)
+
+      get :sanciones, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:sanciones)).to eq(partido.sancions)
+      expect(assigns(:sanciones)).to include(sancion_01)
+      expect(assigns(:sanciones)).to include(sancion_02)
+    end
+  end
+
 end
