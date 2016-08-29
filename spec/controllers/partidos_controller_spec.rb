@@ -167,4 +167,21 @@ RSpec.describe PartidosController, type: :controller do
     end
   end
 
+  describe "GET #elecciones_internas" do
+    it "return an array of elecciones" do
+      partido = create(:partido)
+      org_interno = create(:organo_interno, :partido_id => partido.id)
+      eleccion_interna = create(:eleccion_interna, :partido_id => partido.id, :organo_interno_id => org_interno.id)
+
+      elecciones = [{"organo"=>"Órgano ejecutivo", "elecciones_internas"=>[]},
+                    {"organo"=>"Órgano intermedio colegiado", "elecciones_internas"=>[]},
+                    {"organo"=>"Tribunal supremo", "elecciones_internas"=>[]},
+                    {"organo"=>org_interno.nombre, "elecciones_internas"=>[{"cargo"=>eleccion_interna.cargo, "fecha_eleccion"=>eleccion_interna.fecha_eleccion, "fecha_limite_inscripcion"=>eleccion_interna.fecha_limite_inscripcion, "procedimientos"=>[], "requisitos"=>[]}]}]
+
+      get :elecciones_internas, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:elecciones)).to eq(elecciones)
+    end
+  end
+
 end
