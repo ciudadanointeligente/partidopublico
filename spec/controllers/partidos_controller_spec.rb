@@ -198,4 +198,16 @@ RSpec.describe PartidosController, type: :controller do
     end
   end
 
+  describe "GET finanzas_2" do
+    it "return finanzas_2" do
+      partido = create(:partido)
+      egreso_1 = create(:egreso_ordinario, :partido_id => partido.id, :fecha_datos => "2016-01-01", :privado => 1200, :publico => 800)
+      egreso_2 = create(:egreso_ordinario, :partido_id => partido.id, :fecha_datos => "2016-01-01", :privado => 1300, :publico => 700)
+
+      get :finanzas_2, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:datos_egresos_ordinarios_totals)).to eq({"publicos"=> egreso_1.publico+egreso_2.publico, "privados"=>egreso_1.privado+egreso_2.privado})
+    end
+  end
+
 end
