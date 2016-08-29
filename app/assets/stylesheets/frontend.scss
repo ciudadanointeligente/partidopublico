@@ -166,6 +166,7 @@ th{
 			color: $blue;
 		&:hover{
 				color: $orange;
+				text-decoration: none;
 			}
 		}
 	}
@@ -173,8 +174,11 @@ th{
 
 .panel-default > .panel-heading + .panel-collapse > .panel-body{
 	background-color: white;
-	border-top: 3px solid $nude;
+	border: none;
 	color: $blue;
+	&.principal{
+		border-top: 3px solid $nude;
+	}
 }
 
 .panel-body{
