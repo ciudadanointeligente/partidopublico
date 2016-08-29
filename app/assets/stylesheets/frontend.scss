@@ -93,7 +93,7 @@ h3{
 h4{
 	font-weight: 700;
 	color: $blue;
-	font-size: 18px
+	font-size: 16px
 }
 
 h5 {
@@ -206,6 +206,16 @@ select#select-region{
 	margin-top: 0;
 }
 
+.documents{
+	min-height: 100px;
+	a{
+		color: $blue;
+		&:hover{
+			color: $orange;
+			text-decoration: none;
+		}
+	}
+}
 
 /*MEDIA-QUERIS*/
 @media (max-width: 280px) {
