@@ -155,4 +155,16 @@ RSpec.describe PartidosController, type: :controller do
     end
   end
 
+  describe "GET #organos_internos" do
+    it "return an array of organos_internos" do
+      partido = create(:partido)
+      organo_interno = create(:organo_interno, :partido_id => partido.id)
+
+      get :organos_internos, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:organos)).to eq(partido.organo_internos)
+      expect(assigns(:organos)).to include(organo_interno)
+    end
+  end
+
 end
