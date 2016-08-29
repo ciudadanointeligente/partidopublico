@@ -95,4 +95,19 @@ RSpec.describe PartidosController, type: :controller do
     end
   end
 
+  describe "GET #pactos" do
+    it "return an array of pactos" do
+      partido = create(:partido)
+      partido_pacto_1 = create(:partido, :nombre => "partido 01", :sigla => 'SP01')
+      partido_pacto_2 = create(:partido, :nombre => "partido 02", :sigla => 'SP02')
+      pacto = create(:pacto_electoral)
+      pacto.partidos << [partido_pacto_1, partido_pacto_2]
+      partido.pacto_electorals << pacto
+
+      get :pactos, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:pactos)).to eq(partido.pacto_electorals)
+    end
+  end
+
 end
