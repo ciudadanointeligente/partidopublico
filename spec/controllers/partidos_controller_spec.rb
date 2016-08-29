@@ -84,4 +84,15 @@ RSpec.describe PartidosController, type: :controller do
     end
   end
 
+  describe "GET #vinculos_intereses" do
+    it "return an array of intereses" do
+      partido = create(:partido)
+      entidad_1 = create(:participacion_entidad, :partido_id => partido.id)
+
+      get :vinculos_intereses, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:entidades)).to eq(partido.participacion_entidads)
+    end
+  end
+
 end
