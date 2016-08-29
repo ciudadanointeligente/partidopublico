@@ -184,4 +184,18 @@ RSpec.describe PartidosController, type: :controller do
     end
   end
 
+  describe "GET #finanzas_1" do
+    it "return publicos y privados" do
+      partido = create(:partido)
+      ingreso_1 = create(:ingreso_ordinario, :partido_id => partido.id, :fecha_datos => "2016-01-01", :concepto => "concepto 01", :importe => 1000)
+      ingreso_2 = create(:ingreso_ordinario, :partido_id => partido.id, :fecha_datos => "2016-01-01", :concepto => "Aportes Estatales", :importe => 2000)
+
+      ingresos_ordinarios = { 'publicos'=> ingreso_2.importe, 'privados' => ingreso_1.importe}
+
+      get :finanzas_1, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:datos_ingresos_ordinarios_totals)).to eq(ingresos_ordinarios)
+    end
+  end
+
 end
