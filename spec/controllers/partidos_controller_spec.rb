@@ -210,4 +210,15 @@ RSpec.describe PartidosController, type: :controller do
     end
   end
 
+  describe "GET finanzas_5" do
+    it "return finanzas_5" do
+      partido = create(:partido)
+      transferencia_1 = create(:transferencia, :partido_id => partido.id)
+
+      get :finanzas_5, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:fecha)).to eq(transferencia_1.fecha_datos)
+    end
+  end
+
 end
