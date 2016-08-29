@@ -124,4 +124,18 @@ RSpec.describe PartidosController, type: :controller do
     end
   end
 
+  describe "GET #afiliacion_desafiliacion" do
+    it "return an array of afiliacion/desafiliacion process" do
+      partido = create(:partido)
+      tramite_afiliacion = create(:tramite, :partido_id => partido.id )
+      tramite_desafiliacion = create(:tramite)
+
+      get :afiliacion_desafiliacion, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:tramites)).to eq(partido.tramites)
+      expect(assigns(:tramites)).to include(tramite_afiliacion)
+      expect(assigns(:tramites)).to_not include(tramite_desafiliacion)
+    end
+  end
+
 end
