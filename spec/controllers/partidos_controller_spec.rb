@@ -138,4 +138,21 @@ RSpec.describe PartidosController, type: :controller do
     end
   end
 
+  describe "GET #eleccion_popular" do
+    it "return an array with eleccion popular" do
+      partido = create(:partido)
+      presidencia = create(:eleccion_popular, :partido_id => partido.id, :cargo => "Presidente", :fecha_eleccion => "2016-12-31", :dias => 5)
+      alcaldia = create(:eleccion_popular, :partido_id => partido.id, :cargo => "Alcalde", :fecha_eleccion => "2016-12-31", :dias => 25)
+
+      e_popular = [{"type"=>"Presidente", "dates"=> [{"fecha_eleccion"=>presidencia.fecha_eleccion, "dias"=>presidencia.dias, "procedimientos"=>[], "requisitos"=>[]}]},
+                    {"type"=>"Senador", "dates"=>[]}, {"type"=>"Diputado", "dates"=>[]}, {"type"=>"Consejero Regional", "dates"=>[]},
+                    {"type"=>"Alcalde", "dates"=> [{"fecha_eleccion"=>alcaldia.fecha_eleccion, "dias"=>alcaldia.dias, "procedimientos"=>[], "requisitos"=>[]}]},
+                    {"type"=>"Concejal", "dates"=>[]}]
+
+      get :eleccion_popular, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:e_popular)).to eq(e_popular)
+    end
+  end
+
 end
