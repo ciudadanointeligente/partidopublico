@@ -99,7 +99,7 @@
                 </div>
                 <div id="collapseTwo" class="panel-collapse collapse <%= @menu==1 ? 'in' : ''%>" role="tabpanel" aria-labelledby="heading1_Two">
                   <div class="panel-body">
-                    <%= link_to "Regiones constituido y numero de afiliados", partido_regiones_path(:menu => 1) %>
+                    <%= link_to "Regiones constituido y número de afiliados", partido_regiones_path(:menu => 1) %>
                   </div>
                   <div class="panel-body">
                     <%= link_to "Domicilio y sedes de contacto", partido_sedes_partido_path(:menu => 1) %>
@@ -126,7 +126,7 @@
                       <li><%= link_to "Afiliación y Desafiliación", partido_afiliacion_desafiliacion_path(:menu => 2) %></li>
                     </div>
                     <div class="panel-body">
-                      <li><%= link_to "Elección popular", partido_eleccion_popular_path(:menu => 2) %></li>
+                      <li><%= link_to "Postular a cargos de elección popular", partido_eleccion_popular_path(:menu => 2) %></li>
                     </div>
                     <div class="panel-body">
                       Postular a cargos de dirección interna
@@ -147,10 +147,10 @@
                   </div>
                   <div id="collapseFour" class="panel-collapse collapse <%= @menu==3 ? 'in' : ''%>" role="tabpanel" aria-labelledby="heading1_Four">
                     <div class="panel-body">
-                      <li><%= link_to "Entidades", partido_vinculos_e_intereses_path(:menu => 3) %></li>
+                      <li><%= link_to "Entidades en que tenga participación", partido_vinculos_e_intereses_path(:menu => 3) %></li>
                     </div>
                     <div class="panel-body">
-                      <li><%= link_to "Pactos", partido_pactos_path(:menu => 3) %></li>
+                      <li><%= link_to "Pactos electorales que integra", partido_pactos_path(:menu => 3) %></li>
                     </div>
                     <div class="panel-body">
                       Declaración de intereses y patrimonio
@@ -180,13 +180,13 @@
                       <li><%= link_to "Contrataciones sobre 20 UTM", partido_finanzas_2_path(:menu => 4) %></li>
                     </div>
                     <div class="panel-body">
-                      <li><%= link_to "Transferencias de Fondos Públicos", partido_finanzas_2_path(:menu => 4) %></li>
+                      <li><%= link_to "Transferencias de fondos públicos", partido_finanzas_2_path(:menu => 4) %></li>
                     </div>
                     <div class="panel-body">
-                      <li><%= link_to "Ingresos por Campaña", partido_finanzas_2_path(:menu => 4) %></li>
+                      <li><%= link_to "Ingresos campaña electoral", partido_finanzas_2_path(:menu => 4) %></li>
                     </div>
                     <div class="panel-body">
-                      <li><%= link_to "Egresos por Campaña", partido_finanzas_2_path(:menu => 4) %></li>
+                      <li><%= link_to "Egresos campaña electoral", partido_finanzas_2_path(:menu => 4) %></li>
                     </div>
                     <div class="panel-body">
                       Informes campaña electoral
