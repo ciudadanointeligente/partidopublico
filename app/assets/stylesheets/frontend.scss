@@ -122,39 +122,57 @@ th{
 /*PANELS*/
 .panel{
 	border: none;
-	text-align: center;
 	list-style-type: none;
 	margin: 0 0 5px 0;
+	&.principal{
+		text-align: center;
+	}
 }
 
 .panel-default > .panel-heading{
-	background-color: $orange-dark;
-	border: none;
-	box-shadow: none;
-	border-radius: 0;
-	&.actions{
-		background-color: $green;
+	&.principal{
+		background-color: $orange-dark;
+		border: none;
+		box-shadow: none;
+		border-radius: 0;
+	}
+	&.intern{
+		background-color: white;
+		border: 3px solid $orange;
+		border-radius: 0px;
 	}
 }
 
 .panel-title{
-	color: white;
-	text-transform: uppercase;
-	font-size: 14px;
-	letter-spacing: 1.2px;
-	font-weight: 400;
-	a{
+	&.principal{
+		text-transform: uppercase;
 		color: white;
 		font-weight: 400;
-		&:hover{
-			text-decoration: none;
+		font-size: 14px;
+		letter-spacing: 1.2px;
+		a{
+			color: white;
+			&:hover{
+				text-decoration: none;
+				color: $blue;
+			}
+		}
+	}
+	&.intern{
+		color: $blue;
+		font-size: 16px;
+		font-weight: 700;
+		a{
 			color: $blue;
+		&:hover{
+				color: $orange;
+			}
 		}
 	}
 }
 
 .panel-default > .panel-heading + .panel-collapse > .panel-body{
-	background-color: $nude-light;
+	background-color: white;
 	border-top: 3px solid $nude;
 	color: $blue;
 }
