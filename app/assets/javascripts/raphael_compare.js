@@ -192,11 +192,65 @@ $(document).ready(function(){
 
     for( var x = 0, y = datos.length; x<y; x++ ){
 
-      var p = regions_compare_detail(x + 1, datos[x].nombre, datos[x].sigla, datos[x].map);
+      var p = regions_compare_detail(x + 1, datos[x].nombre, datos[x].sigla, datos[x].mapa);
 
     }
 
   }
+
+  Raphael.fn.ingreso_ord_compare_bar = function(dato){
+    var paper = this;
+    if(!dato.missing_data){
+
+      var bar_width = 300;
+      var bar_height = 30;
+      var publico_width = (dato.total_publico / (dato.total_publico + dato.total_privado)) * bar_width;
+      var privado_width = bar_width - publico_width;
+
+      var publico_bar = paper.rect(0, 0, publico_width, bar_height).attr({
+        "fill" : "#23DBB8",
+        "stroke" : "none"
+      });
+
+      var privado_bar = paper.rect(publico_width, 0, privado_width, bar_height).attr({
+        "fill" : "#19a58a",
+        "stroke" : "none"
+      });
+    } else {
+      paper.text(50, 15, "Faltan datos.")
+    }
+
+
+  }
+  Raphael.fn.ingreso_ord_header = function(){
+    var paper = this;
+    paper.circle(12, 15, 9 )
+    .attr({
+      "fill" : "#23DBB8",
+      "stroke" : "none"
+    });
+
+    paper.text(28, 17, "Aportes públicos")
+    .attr({
+      "font-family" : "Karla-Regular, Karla",
+      "font-size" : 14,
+      'text-anchor': 'start'
+    });
+
+    paper.circle(191, 15, 9 )
+    .attr({
+      "fill" : "#19A58A",
+      "stroke" : "none"
+    });
+
+    paper.text(207, 17, "Aportes privados")
+    .attr({
+      "font-family" : "Karla-Regular, Karla",
+      "font-size" : 14,
+      'text-anchor': 'start'
+    });
+  }
+
 
   Raphael.fn.no_data_chart = function(){
     this.text(20 , 20, "No hay datos")

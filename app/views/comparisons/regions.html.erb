@@ -1,7 +1,38 @@
 <p id="notice"><%= notice %></p>
 
 <h3>Regiones</h3>
+
 <div class="row">
+  <table class="table">
+    <thead>
+      <tr>
+        <td>
+          Partido
+        </td>
+        <% roman_ordinals.each do |roman|%>
+        <td>
+          <%= roman %>
+        </td>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @datos.each do |linea| %>
+      <tr>
+        <td>
+          <%= linea[:nombre] %>
+        </td>
+        <% linea[:mapa].each do |region| %>
+          <td>
+            <%if region %>
+            <i class="fa fa-circle <%= region ? 'icon-green' : 'icon-gray' %>" aria-hidden="true"></i>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
 
 </div>
 

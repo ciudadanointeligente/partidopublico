@@ -13,6 +13,10 @@ class ComparisonsController < ApplicationController
     case i
       when 1
         regions
+
+      when 2
+        ingresos_ordianrios
+
       else
         afiliados
 
@@ -64,18 +68,53 @@ class ComparisonsController < ApplicationController
           regions_map << regions_ordinals.include?(ordinal.to_s) ? true : false
         end
 
-        @datos << {:nombre => partido.nombre, :sigla =>partido.sigla, :map => regions_map}
+        @datos << {:nombre => partido.nombre, :sigla =>partido.sigla, :mapa => regions_map}
       end
 
       render "regions"
+    end
+
+    def ingresos_ordianrios
+      @datos = []
+
+      @fechas_datos = IngresoOrdinario.where(IngresoOrdinario.arel_table[:partido_id].in(@partido_ids)).uniq.pluck(:fecha_datos).sort
+
+      if @fecha_param.nil?
+        @fecha = @fechas_datos.last
+      else
+        @fecha = @fecha_param
+      end
+
+
+      @datos_publicos = Partido.joins('left join ingreso_ordinarios on ingreso_ordinarios.partido_id = partidos.id ')
+      .where(Partido.arel_table[:id].in(@partido_ids))
+      .where(IngresoOrdinario.arel_table[:concepto].eq('Aportes Estatales').or(IngresoOrdinario.arel_table[:concepto].eq(nil)))
+      .where(IngresoOrdinario.arel_table[:fecha_datos].in(@fecha).or(IngresoOrdinario.arel_table[:fecha_datos].eq(nil)))
+      .select(Partido.arel_table[:sigla],Partido.arel_table[:nombre], "fecha_datos, partido_id, sum(importe) as total_publico")
+      .group(IngresoOrdinario.arel_table[:fecha_datos], Partido.arel_table[:id], IngresoOrdinario.arel_table[:partido_id])
+      .order(Partido.arel_table[:id])
+
+      @datos_privados = Partido.joins('left join ingreso_ordinarios on ingreso_ordinarios.partido_id = partidos.id ')
+      .where(Partido.arel_table[:id].in(@partido_ids))
+      .where(IngresoOrdinario.arel_table[:concepto].not_eq('Aportes Estatales').or(IngresoOrdinario.arel_table[:concepto].eq(nil)))
+      .where(IngresoOrdinario.arel_table[:fecha_datos].in(@fecha).or(IngresoOrdinario.arel_table[:fecha_datos].eq(nil)))
+      .select(Partido.arel_table[:sigla],Partido.arel_table[:nombre], "fecha_datos, partido_id, sum(importe) as total_privado")
+      .group(IngresoOrdinario.arel_table[:fecha_datos], Partido.arel_table[:id], IngresoOrdinario.arel_table[:partido_id])
+      .order(Partido.arel_table[:id])
+
+      @datos_privados.each_with_index do |d, i|
+        missing_data = @datos_privados[i].total_privado.nil? or @datos_publicos[i].total_publico.nil?
+        @datos << {:nombre => @datos_privados[i].nombre.to_s, :sigla => @datos_privados[i].sigla.to_s,
+           :total_privado => @datos_privados[i].total_privado, :total_publico => @datos_publicos[i].total_publico, :missing_data => missing_data }
+      end
+
+      render "ingresos_ord"
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_comparison_params
       @partido_ids = params[:partido_ids].nil? ? Partido.ids : params[:partido_ids]
       @category = params[:category].nil? ? 'category_1' : params[:category]
       @fecha_param = params[:fecha_datos].nil? ? nil : Date.new(params[:fecha_datos].split("-")[0].to_i, params[:fecha_datos].split("-")[1].to_i, params[:fecha_datos].split("-")[2].to_i)
-      # puts "Comparing partidos with id: " + @partido_ids.join(',')
-      # puts "Category: " + @category
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
