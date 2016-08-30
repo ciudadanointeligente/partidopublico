@@ -1,9 +1,12 @@
 <ul>
   <% @normas_internas.each do |n| %>
-    <li>
-      <%= link_to n.archivo.url, target: "_blank", onclick: "ga('send','event','click','"+n.archivo_file_name+"')" do %>
+    <div class="col-sm-6 col-md-4 text-center documents">
+      <div><svg id="i-file" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="#F28269" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+    <path d="M6 2 L6 30 26 30 26 10 18 2 Z M18 2 L18 10 26 10" />
+</svg></div>
+      <h4><%= link_to n.archivo.url, target: "_blank", onclick: "ga('send','event','click','"+n.archivo_file_name+"')" do %>
         <%= n.descripcion %>
-        <% end %>
-    </li>
+        <% end %></h4>
+    </div>
   <% end %>
 </ul>
