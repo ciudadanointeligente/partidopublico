@@ -7,8 +7,8 @@ class ApplicationController < ActionController::Base
 
   def beforeFilter
     $request = request
-    puts "request : " + request.to_s
-    #  puts "current_admin : " + current_admin.to_s
+    #puts "request : " + request.to_s
+    #  #puts "current_admin : " + current_admin.to_s
     #  $current_admin = current_admin
   end
 

@@ -295,6 +295,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  arel
   autoprefixer-rails
   better_errors
   bootstrap-sass

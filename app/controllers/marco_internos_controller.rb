@@ -42,7 +42,7 @@ class MarcoInternosController < ApplicationController
   # PATCH/PUT /marco_internos/1.json
   def update
     respond_to do |format|
-      puts marco_interno_params.to_yaml
+      #puts marco_interno_params.to_yaml
 
       if @marco_interno.update(marco_interno_params)
         # return
