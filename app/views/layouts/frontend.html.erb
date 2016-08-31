@@ -106,7 +106,7 @@
             <li><%= link_to "Afiliación y Desafiliación", partido_afiliacion_desafiliacion_path(:menu => 2) %></li>
             <li><%= link_to "Elección popular", partido_eleccion_popular_path(:menu => 2) %></li>
             <li>
-              <a href="#">Postular a cargos de dirección interna</a>
+              <%= link_to "Postular a cargos de dirección interna", partido_organos_internos_path(:menu => 2) %>
             </li>
             <li>
               <a href="#">Actividades públicas</a>
@@ -160,7 +160,7 @@
           </ul>
         </li>
         <li>
-          <a href="#">Sanciones</a>
+          <%= link_to "Sanciones", partido_sanciones_path(:menu => 6) %>
         </li>
       </ul>
       <h5>Acciones</h5>
