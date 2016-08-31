@@ -31,6 +31,58 @@ body {
 	margin-top: 43px;
 }
 
+/*NAV*/
+.navbar-default{
+	background-color: #0A3451;
+	border: none;
+	height: 70px;
+	color: white;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: white;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 1.3px;
+  font-weight: 400;
+	padding: 24px 15px;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus{
+	color: $orange;
+}
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+  background-color: transparent;
+  color: white;
+}
+
+.dropdown-menu {
+  padding: 8px 0;
+  font-size: 11px;
+  background-color: #0A3451;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+}
+
+.dropdown-menu > li > a{
+	color: white;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: $orange;
+    background-color: transparent;
+}
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border: none;
+    background-color: #0A3451;
+    z-index: 2000;
+}
+
 /*HEADINGS*/
 h3{
 	font-weight: 700;
@@ -41,12 +93,18 @@ h3{
 h4{
 	font-weight: 700;
 	color: $blue;
-	font-size: 18px
+	font-size: 16px
 }
 
 h5 {
 	color: $blue;
 	font-size: 22px;
+}
+
+h6 {
+	font-weight: 700;
+	color: $blue;
+	font-size: 46px
 }
 
 /*TABLES*/
@@ -61,53 +119,37 @@ th{
 	border-bottom: 1px solid $blue;
 }
 
-/*PANELS*/
-.panel{
-	border: none;
-	text-align: center;
-	list-style-type: none;
-}
-
-.panel-default > .panel-heading{
-	background-color: $orange-dark;
-	border: none;
-	box-shadow: none;
-	border-radius: 0;
-	&.actions{
-		background-color: $green;
-	}
-}
-
-.panel-title{
-	color: white;
-	text-transform: uppercase;
-	font-size: 14px;
-	letter-spacing: 1.2px;
-	font-weight: 400;
-	a{
-		color: white;
+/*Aside Menu*/
+.aside-menu {
+	li {
+		background-color: $orange-dark;
+		text-align: center;
+		text-transform: uppercase;
+		font-size: 14px;
+		letter-spacing: 1.2px;
 		font-weight: 400;
-		&:hover{
-			text-decoration: none;
-			color: $blue;
+		a {
+			color: white;
+			&:hover{
+				text-decoration: none;
+				color: $blue;
+			}
 		}
-	}
-}
-
-.panel-default > .panel-heading + .panel-collapse > .panel-body{
-	background-color: $nude-light;
-	border-top: 3px solid $nude;
-	color: $blue;
-}
-
-.panel-body{
-	padding: 7px 15px 7px 15px;
-	a{
-		color: $blue;
-		font-weight: 400;
-		&:hover{
-			text-decoration: none;
-			color: $orange;
+		ul {
+			padding-left: 0px;
+			li {
+				padding: 7px 15px 7px 15px;
+				background-color: $nude-light;
+				list-style: none;
+				a {
+					color: $blue;
+					font-weight: 400;
+					&:hover{
+						text-decoration: none;
+						color: $orange;
+					}
+				}
+			}
 		}
 	}
 }
@@ -127,6 +169,35 @@ select#fecha_datos{
 	height: 40px;
 	width: 200px;
 	-webkit-appearance: none;
+	margin-top: 0;
+}
+
+select#select-region{
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: 700;
+	color: $blue;
+	letter-spacing: 1.2px;
+	border: 2px solid $nude;
+	border-radius: 0px;
+	padding: 5px;
+	margin-top: 20px;
+	background-color: white;
+	height: 40px;
+	width: 200px;
+	-webkit-appearance: none;
+	margin-top: 0;
+}
+
+.documents{
+	min-height: 100px;
+	a{
+		color: $blue;
+		&:hover{
+			color: $orange;
+			text-decoration: none;
+		}
+	}
 }
 
 /*MEDIA-QUERIS*/

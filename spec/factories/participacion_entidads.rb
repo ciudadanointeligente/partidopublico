@@ -23,6 +23,10 @@
 
 FactoryGirl.define do
   factory :participacion_entidad do
-    
+    entidad "Nombre Entidad"
+    descripcion "Descripcion entidad"
+    tipo_vinculo ""
+    fecha_inicio ""
+    fecha_fin ""
   end
 end

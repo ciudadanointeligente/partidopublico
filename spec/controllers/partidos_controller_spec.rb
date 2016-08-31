@@ -84,4 +84,141 @@ RSpec.describe PartidosController, type: :controller do
     end
   end
 
+  describe "GET #vinculos_intereses" do
+    it "return an array of intereses" do
+      partido = create(:partido)
+      entidad_1 = create(:participacion_entidad, :partido_id => partido.id)
+
+      get :vinculos_intereses, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:entidades)).to eq(partido.participacion_entidads)
+    end
+  end
+
+  describe "GET #pactos" do
+    it "return an array of pactos" do
+      partido = create(:partido)
+      partido_pacto_1 = create(:partido, :nombre => "partido 01", :sigla => 'SP01')
+      partido_pacto_2 = create(:partido, :nombre => "partido 02", :sigla => 'SP02')
+      pacto = create(:pacto_electoral)
+      pacto.partidos << [partido_pacto_1, partido_pacto_2]
+      partido.pacto_electorals << pacto
+
+      get :pactos, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:pactos)).to eq(partido.pacto_electorals)
+    end
+  end
+
+  describe "GET #sanciones" do
+    it "return an array of sanciones" do
+      partido = create(:partido)
+      sancion_01 = create(:sancion, :partido_id => partido.id)
+      sancion_02 = create(:sancion, :partido_id => partido.id)
+
+      get :sanciones, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:sanciones)).to eq(partido.sancions)
+      expect(assigns(:sanciones)).to include(sancion_01)
+      expect(assigns(:sanciones)).to include(sancion_02)
+    end
+  end
+
+  describe "GET #afiliacion_desafiliacion" do
+    it "return an array of afiliacion/desafiliacion process" do
+      partido = create(:partido)
+      tramite_afiliacion = create(:tramite, :partido_id => partido.id )
+      tramite_desafiliacion = create(:tramite)
+
+      get :afiliacion_desafiliacion, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:tramites)).to eq(partido.tramites)
+      expect(assigns(:tramites)).to include(tramite_afiliacion)
+      expect(assigns(:tramites)).to_not include(tramite_desafiliacion)
+    end
+  end
+
+  describe "GET #eleccion_popular" do
+    it "return an array with eleccion popular" do
+      partido = create(:partido)
+      presidencia = create(:eleccion_popular, :partido_id => partido.id, :cargo => "Presidente", :fecha_eleccion => "2016-12-31", :dias => 5)
+      alcaldia = create(:eleccion_popular, :partido_id => partido.id, :cargo => "Alcalde", :fecha_eleccion => "2016-12-31", :dias => 25)
+
+      e_popular = [{"type"=>"Presidente", "dates"=> [{"fecha_eleccion"=>presidencia.fecha_eleccion, "dias"=>presidencia.dias, "procedimientos"=>[], "requisitos"=>[]}]},
+                    {"type"=>"Senador", "dates"=>[]}, {"type"=>"Diputado", "dates"=>[]}, {"type"=>"Consejero Regional", "dates"=>[]},
+                    {"type"=>"Alcalde", "dates"=> [{"fecha_eleccion"=>alcaldia.fecha_eleccion, "dias"=>alcaldia.dias, "procedimientos"=>[], "requisitos"=>[]}]},
+                    {"type"=>"Concejal", "dates"=>[]}]
+
+      get :eleccion_popular, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:e_popular)).to eq(e_popular)
+    end
+  end
+
+  describe "GET #organos_internos" do
+    it "return an array of organos_internos" do
+      partido = create(:partido)
+      organo_interno = create(:organo_interno, :partido_id => partido.id)
+
+      get :organos_internos, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:organos)).to eq(partido.organo_internos)
+      expect(assigns(:organos)).to include(organo_interno)
+    end
+  end
+
+  describe "GET #elecciones_internas" do
+    it "return an array of elecciones" do
+      partido = create(:partido)
+      org_interno = create(:organo_interno, :partido_id => partido.id)
+      eleccion_interna = create(:eleccion_interna, :partido_id => partido.id, :organo_interno_id => org_interno.id)
+
+      elecciones = [{"organo"=>"Órgano ejecutivo", "elecciones_internas"=>[]},
+                    {"organo"=>"Órgano intermedio colegiado", "elecciones_internas"=>[]},
+                    {"organo"=>"Tribunal supremo", "elecciones_internas"=>[]},
+                    {"organo"=>org_interno.nombre, "elecciones_internas"=>[{"cargo"=>eleccion_interna.cargo, "fecha_eleccion"=>eleccion_interna.fecha_eleccion, "fecha_limite_inscripcion"=>eleccion_interna.fecha_limite_inscripcion, "procedimientos"=>[], "requisitos"=>[]}]}]
+
+      get :elecciones_internas, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:elecciones)).to eq(elecciones)
+    end
+  end
+
+  describe "GET #finanzas_1" do
+    it "return publicos y privados" do
+      partido = create(:partido)
+      ingreso_1 = create(:ingreso_ordinario, :partido_id => partido.id, :fecha_datos => "2016-01-01", :concepto => "concepto 01", :importe => 1000)
+      ingreso_2 = create(:ingreso_ordinario, :partido_id => partido.id, :fecha_datos => "2016-01-01", :concepto => "Aportes Estatales", :importe => 2000)
+
+      ingresos_ordinarios = { 'publicos'=> ingreso_2.importe, 'privados' => ingreso_1.importe}
+
+      get :finanzas_1, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:datos_ingresos_ordinarios_totals)).to eq(ingresos_ordinarios)
+    end
+  end
+
+  describe "GET finanzas_2" do
+    it "return finanzas_2" do
+      partido = create(:partido)
+      egreso_1 = create(:egreso_ordinario, :partido_id => partido.id, :fecha_datos => "2016-01-01", :privado => 1200, :publico => 800)
+      egreso_2 = create(:egreso_ordinario, :partido_id => partido.id, :fecha_datos => "2016-01-01", :privado => 1300, :publico => 700)
+
+      get :finanzas_2, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:datos_egresos_ordinarios_totals)).to eq({"publicos"=> egreso_1.publico+egreso_2.publico, "privados"=>egreso_1.privado+egreso_2.privado})
+    end
+  end
+
+  describe "GET finanzas_5" do
+    it "return finanzas_5" do
+      partido = create(:partido)
+      transferencia_1 = create(:transferencia, :partido_id => partido.id)
+
+      get :finanzas_5, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:fecha)).to eq(transferencia_1.fecha_datos)
+    end
+  end
+
 end

@@ -29,9 +29,8 @@
 </head>
 <body>
   <header>
-    <div class="container">
-      <nav class="navbar">
-        <div class="container-fluid">
+      <nav class="navbar navbar-default">
+        <div class="container">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -40,12 +39,12 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Brand</a>
+            <a class="navbar-brand" href="#"><img src=""></a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav navbar-right">
               <li><a href="#">Que es?</a></li>
               <li><a href="#">Estandares de transparencia</a></li>
               <li class="dropdown">
@@ -63,211 +62,119 @@
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
       </nav>
-    </div>
   </header>
 
 <!------------------------------------->
   <div class="container">
     <aside class="col-sm-3 col-md-3">
       <h5>Transparencia</h5>
-
-        <div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
-          <!----- 1 - Normas internas y pensamiento------>
-          <div class="panel panel-default">
-              <div class="panel-heading" role="tab" id="heading1_One">
-                <h4 class="panel-title">
-                  <li role="button" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                    <%= link_to "Normas Internas y Pensamiento", partido_normas_internas_path(:menu => 0) %>
-                  </li>
-                </h4>
-              </div>
-              <div id="collapseOne" class="panel-collapse collapse <%= @menu == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading1_One">
-                <div class="panel-body">
-                  El partido
-                </div>
-                <div class="panel-body">
-                  Estructura orgánica
-                </div>
-              </div>
-            </div>
-            <!----- 2 - Presencia Nacional------>
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="heading1_Two">
-                  <h4 class="panel-title">
-                    <li class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion1" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                      Presencia Nacional
-                   </li>
-                  </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse <%= @menu==1 ? 'in' : ''%>" role="tabpanel" aria-labelledby="heading1_Two">
-                  <div class="panel-body">
-                    <%= link_to "Regiones constituido y numero de afiliados", partido_regiones_path(:menu => 1) %>
-                  </div>
-                  <div class="panel-body">
-                    <%= link_to "Domicilio y sedes de contacto", partido_sedes_partido_path(:menu => 1) %>
-                  </div>
-                  <div class="panel-body">
-                    <%= link_to "Representantes Electos", partido_representantes_path(:menu => 1) %>
-                  </div>
-                  <div class="panel-body">
-                    <%= link_to "Autoridades Designadas", partido_autoridades_path(:menu => 1) %>
-
-                  </div>
-                </div>
-              </div>
-              <!----- 3 - Cómo participar ------>
-              <div class="panel panel-default">
-                  <div class="panel-heading" role="tab" id="heading1_Three">
-                    <h4 class="panel-title">
-                      <li class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion1" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        <%= link_to "Cómo participar", partido_afiliacion_desafiliacion_path %>
-                     </li>
-                    </h4>
-                  </div>
-                  <div id="collapseThree" class="panel-collapse collapse <%= @menu==2 ? 'in' : ''%>" role="tabpanel" aria-labelledby="heading1_Three">
-                    <div class="panel-body">
-                      <li><%= link_to "Afiliación y Desafiliación", partido_afiliacion_desafiliacion_path(:menu => 2) %></li>
-                    </div>
-                    <div class="panel-body">
-                      <li><%= link_to "Elección popular", partido_eleccion_popular_path(:menu => 2) %></li>
-                    </div>
-                    <div class="panel-body">
-                      Postular a cargos de dirección interna
-                    </div>
-                    <div class="panel-body">
-                      Actividades públicas
-                    </div>
-                  </div>
-                </div>
-              <!----- 4 - Vínculos e intereses ------>
-              <div class="panel panel-default">
-                  <div class="panel-heading" role="tab" id="heading1_Four">
-                    <h4 class="panel-title">
-                      <li class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion1" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                        <%= link_to "Vínculos e Intereses", partido_vinculos_e_intereses_path %>
-                     </li>
-                    </h4>
-                  </div>
-                  <div id="collapseFour" class="panel-collapse collapse <%= @menu==3 ? 'in' : ''%>" role="tabpanel" aria-labelledby="heading1_Four">
-                    <div class="panel-body">
-                      <li><%= link_to "Entidades", partido_vinculos_e_intereses_path(:menu => 3) %></li>
-                    </div>
-                    <div class="panel-body">
-                      <li><%= link_to "Pactos", partido_pactos_path(:menu => 3) %></li>
-                    </div>
-                    <div class="panel-body">
-                      Declaración de intereses y patrimonio
-                    </div>
-                  </div>
-                </div>
-              <!----- 5 - Finanzas ------>
-              <div class="panel panel-default">
-                  <div class="panel-heading" role="tab" id="heading1_Five">
-                    <h4 class="panel-title">
-                      <li class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion1" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                        <%= link_to "Finanzas", partido_finanzas_1_path %>
-                     </li>
-                    </h4>
-                  </div>
-                  <div id="collapseFive" class="panel-collapse collapse <%= @menu==4 ? 'in' : ''%>" role="tabpanel" aria-labelledby="heading1_Five">
-                    <div class="panel-body">
-                      <li><%= link_to "Ingresos Ordinarios", partido_finanzas_1_path(:menu => 4) %></li>
-                    </div>
-                    <div class="panel-body">
-                      <li><%= link_to "Egresos Ordinarios", partido_finanzas_2_path(:menu => 4) %></li>
-                    </div>
-                    <div class="panel-body">
-                      <li><%= link_to "Balance Anual", partido_finanzas_2_path(:menu => 4) %></li>
-                    </div>
-                    <div class="panel-body">
-                      <li><%= link_to "Contrataciones sobre 20 UTM", partido_finanzas_2_path(:menu => 4) %></li>
-                    </div>
-                    <div class="panel-body">
-                      <li><%= link_to "Transferencias de Fondos Públicos", partido_finanzas_2_path(:menu => 4) %></li>
-                    </div>
-                    <div class="panel-body">
-                      <li><%= link_to "Ingresos por Campaña", partido_finanzas_2_path(:menu => 4) %></li>
-                    </div>
-                    <div class="panel-body">
-                      <li><%= link_to "Egresos por Campaña", partido_finanzas_2_path(:menu => 4) %></li>
-                    </div>
-                    <div class="panel-body">
-                      Informes campaña electoral
-                    </div>
-                  </div>
-                </div>
-              <!----- 6 - Últimas decisiones------>
-              <div class="panel panel-default">
-                  <div class="panel-heading" role="tab" id="heading1_Six">
-                    <h4 class="panel-title">
-                      <li class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion1" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                        Últimas decisiones
-                     </li>
-                    </h4>
-                  </div>
-                  <div id="collapseSix" class="panel-collapse collapse <%= @menu==5 ? 'in' : ''%>" role="tabpanel" aria-labelledby="heading1_Six">
-                    <div class="panel-body">
-                      Publicación de los candidatos
-                    </div>
-                    <div class="panel-body">
-                      Resultados elecciones internas
-                    </div>
-                    <div class="panel-body">
-                      Acuerdos órganos intermedios colegiados
-                    </div>
-                  </div>
-                </div>
-              <!----- 7 - Denuncias y sanciones------>
-              <div class="panel panel-default">
-                  <div class="panel-heading" role="tab" id="heading1_Seven">
-                    <h4 class="panel-title">
-                      <li class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion1" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
-                        Sanciones
-                     </li>
-                    </h4>
-                  </div>
-                  <div id="collapseSeven" class="panel-collapse collapse <%= @menu==6 ? 'in' : ''%>" role="tabpanel" aria-labelledby="heading1_Seven">
-                    <div class="panel-body">
-                      Sanciones
-                    </div>
-                  </div>
-                </div>
-          </div><!-----PANEL GROUP------>
-
-          <h5>Acciones</h5>
-          <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
-            <!----- 1 - Contactar------>
-            <div class="panel panel-default actions">
-                <div class="panel-heading" role="tab" id="headingOne">
-                  <h4 class="panel-title">
-                    <li role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                      Contactar
-                    </li>
-                  </h4>
-                </div>
-              </div>
-              <!----- 2 - Presencia Nacional------>
-              <div class="panel panel-default">
-                  <div class="panel-heading" role="tab" id="headingTwo">
-                    <h4 class="panel-title">
-                      <li class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Solicitar reunión con dirigente
-                     </li>
-                    </h4>
-                  </div>
-                </div>
-                <!----- 3 - Cómo participar ------>
-                <div class="panel panel-default actions">
-                    <div class="panel-heading" role="tab" id="headingThree">
-                      <h4 class="panel-title">
-                        <li class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                          Denunciar
-                       </li>
-                      </h4>
-                    </div>
-                  </div>
-            </div><!-----PANEL GROUP------>
-
+      <ul id="accordion" class="list-unstyled aside-menu" role="tablist" aria-multiselectable="true">
+        <li>
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#aside-menu-one" aria-expanded="true" aria-controls="aside-menu-one">Normas Internas y Pensamiento</a>
+          <ul id="aside-menu-one" class="collapse <%= @menu == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="aside-menu-one">
+            <li>
+              <%= link_to "Normas Internas y Pensamiento", partido_normas_internas_path(:menu => 0) %>
+            </li>
+            <li>
+              <a href="#">El Partido</a>
+            </li>
+            <li>
+              <a href="#">Estructura Orgánica</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#aside-menu-two" aria-expanded="false" aria-controls="aside-menu-two">Presencia Nacional</a>
+          <ul id="aside-menu-two" class="collapse <%= @menu == 1 ? 'in' : '' %>" role="tabpanel" aria-labelledby="aside-menu-two">
+            <li>
+              <%= link_to "Regiones constituido y numero de afiliados", partido_regiones_path(:menu => 1) %>
+            </li>
+            <li>
+              <%= link_to "Domicilio y sedes de contacto", partido_sedes_partido_path(:menu => 1) %>
+            </li>
+            <li>
+              <a href="#">Representantes electos</a>
+            </li>
+            <li>
+              <%= link_to "Autoridades designadas", partido_autoridades_path(:menu => 1) %>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#aside-menu-three" aria-expanded="false" aria-controls="aside-menu-three">Cómo participar</a>
+          <ul id="aside-menu-three" class="collapse <%= @menu == 2 ? 'in' : '' %>" role="tabpanel" aria-labelledby="aside-menu-three">
+            <li><%= link_to "Afiliación y Desafiliación", partido_afiliacion_desafiliacion_path(:menu => 2) %></li>
+            <li><%= link_to "Elección popular", partido_eleccion_popular_path(:menu => 2) %></li>
+            <li>
+              <a href="#">Postular a cargos de dirección interna</a>
+            </li>
+            <li>
+              <a href="#">Actividades públicas</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#aside-menu-four" aria-expanded="false" aria-controls="aside-menu-four">Vínculos e Intereses</a>
+          <ul id="aside-menu-four" class="collapse <%= @menu == 3 ? 'in' : '' %>" role="tabpanel" aria-labelledby="aside-menu-four">
+            <li><%= link_to "Entidades", partido_vinculos_e_intereses_path(:menu => 3) %></li>
+            <li><%= link_to "Pactos", partido_pactos_path(:menu => 3) %></li>
+            <li>
+              <a href="#">Declaración de intereses y patrimonio</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#aside-menu-five" aria-expanded="false" aria-controls="aside-menu-five">Finanzas</a>
+          <ul id="aside-menu-five" class="collapse <%= @menu == 4 ? 'in' : '' %>" role="tabpanel" aria-labelledby="aside-menu-five">
+            <li><%= link_to "Ingresos Ordinarios", partido_finanzas_1_path(:menu => 4) %></li>
+            <li><%= link_to "Egresos Ordinarios", partido_finanzas_2_path(:menu => 4) %></li>
+            <li>
+              <a href="#">Balance anual</a>
+            </li>
+            <li>
+              <a href="#">Contrataciones sobre 20 UTM</a>
+            </li>
+            <li>
+              <a href="#">Transferencias de Fondos Públicos</a>
+            </li>
+            <li>
+              <a href="#">Ingresos por Campaña</a>
+            </li>
+            <li>
+              <a href="#">Egresos por Campaña</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#aside-menu-six" aria-expanded="false" aria-controls="aside-menu-six">Últimas decisiones</a>
+          <ul id="aside-menu-six" class="collapse <%= @menu == 5 ? 'in' : '' %>" role="tabpanel" aria-labelledby="aside-menu-six">
+            <li>
+              <a href="#">Publicación de los candidatos</a>
+            </li>
+            <li>
+              <a href="#">Resultados elecciones internas</a>
+            </li>
+            <li>
+              <a href="#">Acuerdos órganos intermedios colegiados</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Sanciones</a>
+        </li>
+      </ul>
+      <h5>Acciones</h5>
+      <ul class="list-unstyled aside-menu">
+        <li>
+          <a href="#">Contactar</a>
+        </li>
+        <li>
+          <a href="#">Solicitar reunión con dirigente</a>
+        </li>
+        <li>
+          <a href="#">Denunciar</a>
+        </li>
+      </ul>
     </aside>
     <main class="col-sm-9 col-md-9 board">
       <%= yield %>
