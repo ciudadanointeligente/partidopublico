@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h3>Número de afiliados</h3>
+
+<div class="row">
+<%= form_tag comparisons_path, :method => :get do |f| %>
+  <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
+
+  <%= select_tag :region, options_for_select(@regiones_datos), prompt: "Seleccionar Region"  %>
+
+  <%= select_tag :genero, options_for_select([:hombres, :mujeres]), prompt: "Según sexo"  %>
+<% end %>
+</div>
+
+<div id="barras"></div>
+
+<br>
+<script>
+$(document).ready(function(){
+  var data = <%=  @datos.to_json.html_safe %>;
+  var data_totals = <%=  @datos_totals.to_json.html_safe %>;
+  var fechas = <%=  @fechas_datos.to_json.html_safe %>;
+  var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
+  // if (fechas.length != 0){
+     Raphael("barras",800, 800 ).afiliados_compare_chart(data, data_totals);
+  // } else {
+    // Raphael("barras",700, 200 ).no_data_chart()
+  // }
+});
+</script>

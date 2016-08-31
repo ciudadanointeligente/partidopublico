@@ -31,7 +31,7 @@ class PartidosController < ApplicationController
         @login_data << {email: admin.email, login_count: admin_logins.count, logins: logins, last_actions: last_actions}
       end
 
-      puts @login_data
+      ##puts @login_data
     end
 
     # else
@@ -207,6 +207,7 @@ class PartidosController < ApplicationController
     nacional = { "region" => "nacional", "ordinal" => "nacional", "hombres" => nh, "mujeres" => nm, "porcentaje_hombres" => pnh, "porcentaje_mujeres" => pnm, "total" => nh + nm, "desgloce" => [] }
     a = []
     if @datos_region.any?
+
       @datos_region.each do |dr|
         dr["desgloce"].each do |d|
           a << d
@@ -320,6 +321,7 @@ class PartidosController < ApplicationController
 
     max_value = Transferencia.where(partido: @partido, :fecha_datos => @fecha).group(:categoria).select("sum(monto) as total").order("total DESC").first.attributes.symbolize_keys![:total]
 
+
     datos_eficientes_transferencias.each do |d|
       d.attributes.symbolize_keys!
     end
@@ -396,7 +398,7 @@ class PartidosController < ApplicationController
     end
 
     def set_menu
-      puts params
+      ##puts params
         @menu = params[:menu].nil? ? 0 : params[:menu].to_i
 
     end
