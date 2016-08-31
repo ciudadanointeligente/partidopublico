@@ -6,7 +6,8 @@ class PartidosController < ApplicationController
   layout "frontend", only: [:normas_internas, :regiones, :sedes_partido, :autoridades,
                             :vinculos_intereses, :pactos, :sanciones,
                             :finanzas_1, :finanzas_2, :finanzas_5,
-                            :afiliacion_desafiliacion, :eleccion_popular, :organos_internos, :elecciones_internas]
+                            :afiliacion_desafiliacion, :eleccion_popular, :organos_internos, :elecciones_internas,
+                            :representantes]
 
 
   # GET /partidos
@@ -235,14 +236,23 @@ class PartidosController < ApplicationController
   end
 
   def autoridades
+    # @datos_cargos = []
+    # @partido.regions.each do |r|
+    #   cargos = @partido.cargos.where(region_id: r)
+    #   all_cargos = []
+    #   cargos.each do |c|
+    #     all_cargos.push( { 'persona' => c.persona.nombre, 'cargo' => c.tipo_cargo.titulo, 'comuna' => c.comuna.nombre } )
+    #   end
+    #   @datos_cargos.push( {'region' => r.nombre, 'cargos' => all_cargos} )
+    # end
     @datos_cargos = []
-    @partido.regions.each do |r|
-      cargos = @partido.cargos.where(region_id: r)
-      all_cargos = []
-      cargos.each do |c|
-        all_cargos.push( { 'persona' => c.persona.nombre, 'cargo' => c.tipo_cargo.titulo, 'comuna' => c.comuna.nombre } )
-      end
-      @datos_cargos.push( {'region' => r.nombre, 'cargos' => all_cargos} )
+    @autoridades = @partido.cargos.joins(:tipo_cargo).joins(:persona).
+    select('cargos.*, tipo_cargos.*, personas.*')
+    .where(TipoCargo.arel_table[:autoridad].eq(true))
+    .order(TipoCargo.arel_table[:titulo])
+
+    if params[:nombre]
+      @autoridades = @autoridades.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
     end
   end
 
@@ -387,6 +397,32 @@ class PartidosController < ApplicationController
         tmp_elecciones << {"cargo" => e.cargo, "fecha_eleccion" => e.fecha_eleccion, "fecha_limite_inscripcion" => e.fecha_limite_inscripcion, "procedimientos" => tmp_procedimientos, "requisitos" => tmp_requisitos}
       end
       @elecciones << {"organo" => o.nombre, "elecciones_internas" => tmp_elecciones}
+    end
+  end
+
+  def representantes
+    @alcaldes = @partido.cargos.joins(:tipo_cargo).joins(:persona).
+    select('cargos.*, tipo_cargos.*, personas.*').where('titulo = \'Alcalde\'')
+
+    @concejales = @partido.cargos.joins(:tipo_cargo).joins(:persona).
+    select('cargos.*, tipo_cargos.*, personas.*').where('titulo = \'Concejal\'')
+
+    @diputados = @partido.cargos.joins(:tipo_cargo).joins(:persona).
+    select('cargos.*, tipo_cargos.*, personas.*').where('titulo = \'Diputado\'')
+
+    @senadores = @partido.cargos.joins(:tipo_cargo).joins(:persona).
+    select('cargos.*, tipo_cargos.*, personas.*').where('titulo = \'Senador\'')
+
+    @cores = @partido.cargos.joins(:tipo_cargo).joins(:persona).
+    select('cargos.*, tipo_cargos.*, personas.*').where('titulo = \'Consejero Regional\'')
+
+
+    if params[:nombre]
+      @alcaldes = @alcaldes.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
+      @concejales = @concejales.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
+      @diputados = @diputados.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
+      @senadores = @senadores.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
+      @cores = @cores.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
     end
   end
 

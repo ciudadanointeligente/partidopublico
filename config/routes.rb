@@ -68,6 +68,7 @@ Rails.application.routes.draw do
     get "/regiones", to: 'partidos#regiones'
     get "/sedes_partido", to: 'partidos#sedes_partido'
     get "/autoridades", to: 'partidos#autoridades'
+    get "/representantes", to: 'partidos#representantes'
     get "/vinculos_e_intereses", to: 'partidos#vinculos_intereses'
     get "/pactos", to: 'partidos#pactos'
     get "/sanciones", to: 'partidos#sanciones'
