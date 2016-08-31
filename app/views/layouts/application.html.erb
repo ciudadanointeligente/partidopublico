@@ -18,12 +18,14 @@
     <% if !current_admin.nil? %>
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-12"></div>
-        </div>
-        <div class="row">
-          <div class="col-md-9"></div>
-          <div class="col-md-2 text-right"><%= current_admin.email %></div>
-          <div class="col-md-1 text-right"><%= link_to('Salir', destroy_admin_session_path, :method => :delete) %></div>
+          <div class="col-md-12 text-right">
+            <ul class="list-unstyled list-inline">
+              <li><%= link_to "Portada", root_path, {:target => "_blank"} %></li>
+              <li><%= link_to "Admin", admin_path %></li>
+              <li><%= current_admin.email %></li>
+              <li><%= link_to('Salir', destroy_admin_session_path, :method => :delete) %></li>
+            </ul>
+          </div>
         </div>
       </div>
     <% end %>
