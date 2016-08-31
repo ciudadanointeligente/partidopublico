@@ -78,6 +78,7 @@ Rails.application.routes.draw do
     get "/eleccion_popular", to: 'partidos#eleccion_popular'
     get "/organos_internos", to: 'partidos#organos_internos'
     get "/elecciones_internas", to: 'partidos#elecciones_internas'
+    get "/acuerdos_organos", to: "partidos#acuerdos_organos"
     resources :cargos
     resources :personas
     resources :tipo_cargos
