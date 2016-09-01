@@ -41,6 +41,12 @@ en:
       twitter_description: "Partidos Públicos es una plataforma web que busca reivindicar la importancia de partidos transparentes, participativos y abiertos para una sana democracia."
     welcome:
       title: "PartidosPúblicos"
+    comparison:
+      title: "Partidos Públicos"
+      og_title: "Partidos Públicos"
+      og_description: "Partidos Públicos es una plataforma web que busca reivindicar la importancia de partidos transparentes, participativos y abiertos para una sana democracia."
+      twitter_title: "Partidos Públicos"
+      twitter_description: "Partidos Públicos es una plataforma web que busca reivindicar la importancia de partidos transparentes, participativos y abiertos para una sana democracia."
   welcome:
     index:
       welcome: "Welcome"

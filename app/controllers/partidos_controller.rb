@@ -6,7 +6,8 @@ class PartidosController < ApplicationController
   layout "frontend", only: [:normas_internas, :regiones, :sedes_partido, :autoridades,
                             :vinculos_intereses, :pactos, :sanciones,
                             :finanzas_1, :finanzas_2, :finanzas_5,
-                            :afiliacion_desafiliacion, :eleccion_popular, :organos_internos, :elecciones_internas]
+                            :afiliacion_desafiliacion, :eleccion_popular, :organos_internos, :elecciones_internas,
+                            :representantes, :acuerdos_organos]
 
 
   # GET /partidos
@@ -31,7 +32,7 @@ class PartidosController < ApplicationController
         @login_data << {email: admin.email, login_count: admin_logins.count, logins: logins, last_actions: last_actions}
       end
 
-      puts @login_data
+      ##puts @login_data
     end
 
     # else
@@ -207,6 +208,7 @@ class PartidosController < ApplicationController
     nacional = { "region" => "nacional", "ordinal" => "nacional", "hombres" => nh, "mujeres" => nm, "porcentaje_hombres" => pnh, "porcentaje_mujeres" => pnm, "total" => nh + nm, "desgloce" => [] }
     a = []
     if @datos_region.any?
+
       @datos_region.each do |dr|
         dr["desgloce"].each do |d|
           a << d
@@ -234,14 +236,21 @@ class PartidosController < ApplicationController
   end
 
   def autoridades
+    # @datos_cargos = []
+    # @partido.regions.each do |r|
+    #   cargos = @partido.cargos.where(region_id: r)
+    #   all_cargos = []
+    #   cargos.each do |c|
+    #     all_cargos.push( { 'persona' => c.persona.nombre, 'cargo' => c.tipo_cargo.titulo, 'comuna' => c.comuna.nombre } )
+    #   end
+    #   @datos_cargos.push( {'region' => r.nombre, 'cargos' => all_cargos} )
+    # end
     @datos_cargos = []
-    @partido.regions.each do |r|
-      cargos = @partido.cargos.where(region_id: r)
-      all_cargos = []
-      cargos.each do |c|
-        all_cargos.push( { 'persona' => c.persona.nombre, 'cargo' => c.tipo_cargo.titulo, 'comuna' => c.comuna.nombre } )
-      end
-      @datos_cargos.push( {'region' => r.nombre, 'cargos' => all_cargos} )
+    #@autoridades = @partido.cargos.joins(:tipo_cargo).joins(:persona).select('cargos.*, tipo_cargos.*, personas.*').where(TipoCargo.arel_table[:autoridad].eq(true)).order(TipoCargo.arel_table[:titulo])
+    @autoridades = @partido.cargos.joins(:tipo_cargo).joins(:persona).where(TipoCargo.arel_table[:autoridad].eq(true)).order(TipoCargo.arel_table[:titulo])
+
+    if params[:nombre]
+      @autoridades = @autoridades.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
     end
   end
 
@@ -320,6 +329,7 @@ class PartidosController < ApplicationController
 
     max_value = Transferencia.where(partido: @partido, :fecha_datos => @fecha).group(:categoria).select("sum(monto) as total").order("total DESC").first.attributes.symbolize_keys![:total]
 
+
     datos_eficientes_transferencias.each do |d|
       d.attributes.symbolize_keys!
     end
@@ -388,6 +398,47 @@ class PartidosController < ApplicationController
     end
   end
 
+<<<<<<< HEAD
+  def representantes
+    @alcaldes = @partido.cargos.joins(:tipo_cargo).joins(:persona).
+    select('cargos.*, tipo_cargos.*, personas.*').where('titulo = \'Alcalde\'')
+
+    @concejales = @partido.cargos.joins(:tipo_cargo).joins(:persona).
+    select('cargos.*, tipo_cargos.*, personas.*').where('titulo = \'Concejal\'')
+
+    @diputados = @partido.cargos.joins(:tipo_cargo).joins(:persona).
+    select('cargos.*, tipo_cargos.*, personas.*').where('titulo = \'Diputado\'')
+
+    @senadores = @partido.cargos.joins(:tipo_cargo).joins(:persona).
+    select('cargos.*, tipo_cargos.*, personas.*').where('titulo = \'Senador\'')
+
+    @cores = @partido.cargos.joins(:tipo_cargo).joins(:persona).
+    select('cargos.*, tipo_cargos.*, personas.*').where('titulo = \'Consejero Regional\'')
+
+
+    if params[:nombre]
+      @alcaldes = @alcaldes.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
+      @concejales = @concejales.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
+      @diputados = @diputados.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
+      @senadores = @senadores.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
+      @cores = @cores.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
+    end
+=======
+  def acuerdos_organos
+    @acuerdos = []
+    tipos = %w(Acta Programatico Electoral Funcionamiento\ Interno)
+
+    tipos.each do |t|
+      acuerdos = []
+      @partido.acuerdos.where(tipo: t).each do |a|
+        acuerdos << {"numero" => a.numero, "tema" => a.tema, "fecha" => a.fecha, "region" => Region.find(a.region.to_i).nombre, "organo_interno" => a.organo_interno.nombre, "documento" => a.documento_file_name, "documento_url" => a.documento.url}
+      end
+      @acuerdos << { "type" => t, "agreements" => acuerdos }
+    end
+
+>>>>>>> 860c5215df26949ee890997c4c8db22cc14ad99c
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_partido
@@ -396,7 +447,7 @@ class PartidosController < ApplicationController
     end
 
     def set_menu
-      puts params
+      ##puts params
         @menu = params[:menu].nil? ? 0 : params[:menu].to_i
 
     end

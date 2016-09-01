@@ -24,7 +24,9 @@ class Afiliacion < ActiveRecord::Base
   belongs_to :partido
   belongs_to :region
 
-  after_initialize :default_afiliados
+  validates_presence_of :partido_id, :fecha_datos, :region_id, :ano_nacimiento
+
+  before_save :default_afiliados
   before_save :corregir_fecha
 
   def default_afiliados

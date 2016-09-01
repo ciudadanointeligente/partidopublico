@@ -20,5 +20,7 @@ FactoryGirl.define do
   factory :organo_interno do
     nombre "MyString"
     funciones "MyString"
+    contacto "contact@contac.to"
+    num_integrantes 3
   end
 end

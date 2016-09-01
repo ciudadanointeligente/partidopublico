@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  #get 'compare', to: 'comparisons#index'
+  resources :comparisons
   resources :egreso_campanas
   resources :ingreso_campanas
   resources :transferencias
@@ -66,6 +68,7 @@ Rails.application.routes.draw do
     get "/regiones", to: 'partidos#regiones'
     get "/sedes_partido", to: 'partidos#sedes_partido'
     get "/autoridades", to: 'partidos#autoridades'
+    get "/representantes", to: 'partidos#representantes'
     get "/vinculos_e_intereses", to: 'partidos#vinculos_intereses'
     get "/pactos", to: 'partidos#pactos'
     get "/sanciones", to: 'partidos#sanciones'
@@ -76,6 +79,7 @@ Rails.application.routes.draw do
     get "/eleccion_popular", to: 'partidos#eleccion_popular'
     get "/organos_internos", to: 'partidos#organos_internos'
     get "/elecciones_internas", to: 'partidos#elecciones_internas'
+    get "/acuerdos_organos", to: "partidos#acuerdos_organos"
     resources :cargos
     resources :personas
     resources :tipo_cargos
