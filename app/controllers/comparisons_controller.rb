@@ -26,7 +26,6 @@ class ComparisonsController < ApplicationController
   private
 
     def afiliados
-      puts "compartiva de afiliados"
       @fechas_datos = Afiliacion.where(Afiliacion.arel_table[:partido_id].in(@partido_ids)).uniq.pluck(:fecha_datos).sort
 
       @regiones_datos = Afiliacion.joins(:region).where(Afiliacion.arel_table[:partido_id].in(@partido_ids)).uniq.pluck(:nombre, :region_id).sort
@@ -37,22 +36,23 @@ class ComparisonsController < ApplicationController
         @fecha = @fecha_param
       end
 
-      @datos = Afiliacion.joins(:partido).where(Afiliacion.arel_table[:partido_id].in(@partido_ids))
-      .where(Afiliacion.arel_table[:fecha_datos].in(@fecha))
+      @datos = Partido.joins('left join afiliacions on afiliacions.partido_id = partidos.id and afiliacions.fecha_datos in (\'' + @fecha.to_s + '\')')
+      .where(Partido.arel_table[:id].in(@partido_ids))
       .select(Partido.arel_table[:sigla],Partido.arel_table[:nombre], 'fecha_datos, partido_id, sum(hombres) as hombres, sum(mujeres) as mujeres, sum(otros) as otros, (sum(hombres) + sum(mujeres)) as total')
       .group(Afiliacion.arel_table[:fecha_datos], Partido.arel_table[:id], Afiliacion.arel_table[:partido_id])
 
+      #   @datos =[]
+      #
+      # @datos_query.each do |d|
+      #   puts d
+      #   missing_data = d['total'].nil?
+      #   @datos << {:nombre => d.nombre.to_s, :sigla =>d.sigla.to_s, :total => d['total'],
+      #      :hombres => d['hombres'], :mujeres => d['mujeres'], :missing_data => missing_data }
+      # end
 
-      #max_sum = ActiveRecord::Base.connection.select('SUM(hombres + mujeres) as total').from(@datos).order('total DESC').first
-      #max_sum = Afiliacion.select('hombres, mujeres').from(@datos).order('hombres + mujeres DESC').first
-      # sql = "SELECT * from admins limit 10"
-      # result = ActiveRecord::Base.connection.execute(sql)
-      # puts result.to_a
-      totals = @datos.map {|d| d.total}
+      totals = @datos.map {|d| d.total || 0}
+      @datos_totals = [{ :max_value => totals.max}]
 
-      puts totals.max
-
-      @datos_totales = [{ :max_value => totals.max}]
 
       render "num_afiliados"
     end
@@ -86,7 +86,7 @@ class ComparisonsController < ApplicationController
       end
 
 
-      @datos_publicos = Partido.joins('left join ingreso_ordinarios on ingreso_ordinarios.partido_id = partidos.id ')
+      @datos_publicos = Partido.joins('left join ingreso_ordinarios on ingreso_ordinarios.partido_id = partidos.id and ingreso_ordinarios.fecha_datos in (\'' + @fecha.to_s + '\')')
       .where(Partido.arel_table[:id].in(@partido_ids))
       .where(IngresoOrdinario.arel_table[:concepto].eq('Aportes Estatales').or(IngresoOrdinario.arel_table[:concepto].eq(nil)))
       .where(IngresoOrdinario.arel_table[:fecha_datos].in(@fecha).or(IngresoOrdinario.arel_table[:fecha_datos].eq(nil)))
@@ -94,7 +94,7 @@ class ComparisonsController < ApplicationController
       .group(IngresoOrdinario.arel_table[:fecha_datos], Partido.arel_table[:id], IngresoOrdinario.arel_table[:partido_id])
       .order(Partido.arel_table[:id])
 
-      @datos_privados = Partido.joins('left join ingreso_ordinarios on ingreso_ordinarios.partido_id = partidos.id ')
+      @datos_privados = Partido.joins('left join ingreso_ordinarios on ingreso_ordinarios.partido_id = partidos.id and ingreso_ordinarios.fecha_datos in (\'' + @fecha.to_s + '\')')
       .where(Partido.arel_table[:id].in(@partido_ids))
       .where(IngresoOrdinario.arel_table[:concepto].not_eq('Aportes Estatales').or(IngresoOrdinario.arel_table[:concepto].eq(nil)))
       .where(IngresoOrdinario.arel_table[:fecha_datos].in(@fecha).or(IngresoOrdinario.arel_table[:fecha_datos].eq(nil)))
