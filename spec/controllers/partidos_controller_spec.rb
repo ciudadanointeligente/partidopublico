@@ -30,8 +30,8 @@ RSpec.describe PartidosController, type: :controller do
     it "get an array of presencia nacional" do
       partido = create(:partido)
       region = create(:region)
-      afiliacion = create(:afiliacion)
-      afiliacion.region_id = region.id
+      afiliacion = create(:afiliacion, :partido_id => partido.id, :region_id => region.id)
+      #afiliacion.region_id = region.id
       partido.regions << region
       partido.afiliacions << afiliacion
 
@@ -70,17 +70,17 @@ RSpec.describe PartidosController, type: :controller do
       partido = create(:partido)
       region = create(:region)
       comuna = create(:comuna)
-      tipo_cargo = create(:tipo_cargo)
+      tipo_cargo = create(:tipo_cargo, :autoridad => true)
       persona = create(:persona, :partido_id => partido.id)
       cargo_1 = create(:cargo, :partido_id => partido.id, :region_id => region.id, :comuna_id => comuna.id, :persona_id => persona.id, :tipo_cargo_id => tipo_cargo.id)
 
       partido.regions << region
 
-      cargos = [{'region' => region.nombre, 'cargos' => [{ 'persona' => cargo_1.persona.nombre, 'cargo' => cargo_1.tipo_cargo.titulo, 'comuna' => cargo_1.comuna.nombre }]}]
+      # cargos = [{'region' => region.nombre, 'cargos' => [{ 'persona' => cargo_1.persona.nombre, 'cargo' => cargo_1.tipo_cargo.titulo, 'comuna' => cargo_1.comuna.nombre }]}]
 
       get :autoridades, {:partido_id => partido.to_param}, valid_session
 
-      expect(assigns(:datos_cargos)).to eq(cargos)
+      expect(assigns(:autoridades)).to include(cargo_1)
     end
   end
 

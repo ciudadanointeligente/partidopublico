@@ -246,10 +246,8 @@ class PartidosController < ApplicationController
     #   @datos_cargos.push( {'region' => r.nombre, 'cargos' => all_cargos} )
     # end
     @datos_cargos = []
-    @autoridades = @partido.cargos.joins(:tipo_cargo).joins(:persona).
-    select('cargos.*, tipo_cargos.*, personas.*')
-    .where(TipoCargo.arel_table[:autoridad].eq(true))
-    .order(TipoCargo.arel_table[:titulo])
+    #@autoridades = @partido.cargos.joins(:tipo_cargo).joins(:persona).select('cargos.*, tipo_cargos.*, personas.*').where(TipoCargo.arel_table[:autoridad].eq(true)).order(TipoCargo.arel_table[:titulo])
+    @autoridades = @partido.cargos.joins(:tipo_cargo).joins(:persona).where(TipoCargo.arel_table[:autoridad].eq(true)).order(TipoCargo.arel_table[:titulo])
 
     if params[:nombre]
       @autoridades = @autoridades.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))

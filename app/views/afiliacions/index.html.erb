@@ -8,6 +8,7 @@
       <th>Region</th>
       <th>Hombres</th>
       <th>Mujeres</th>
+      <th>Año</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
         <td><%= afiliacion.region %></td>
         <td><%= afiliacion.hombres %></td>
         <td><%= afiliacion.mujeres %></td>
+        <td><%= afiliacion.ano_nacimiento %></td>
         <td><%= link_to 'Show', afiliacion %></td>
         <td><%= link_to 'Edit', edit_afiliacion_path(afiliacion) %></td>
         <td><%= link_to 'Destroy', afiliacion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
