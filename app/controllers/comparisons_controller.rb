@@ -26,7 +26,6 @@ class ComparisonsController < ApplicationController
   private
 
     def afiliados
-      puts "compartiva de afiliados"
       @fechas_datos = Afiliacion.where(Afiliacion.arel_table[:partido_id].in(@partido_ids)).uniq.pluck(:fecha_datos).sort
 
       @regiones_datos = Afiliacion.joins(:region).where(Afiliacion.arel_table[:partido_id].in(@partido_ids)).uniq.pluck(:nombre, :region_id).sort
