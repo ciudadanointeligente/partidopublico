@@ -7,7 +7,7 @@ class PartidosController < ApplicationController
                             :vinculos_intereses, :pactos, :sanciones,
                             :finanzas_1, :finanzas_2, :finanzas_5,
                             :afiliacion_desafiliacion, :eleccion_popular, :organos_internos, :elecciones_internas,
-                            :representantes]
+                            :representantes, :acuerdos_organos]
 
 
   # GET /partidos
@@ -398,6 +398,7 @@ class PartidosController < ApplicationController
     end
   end
 
+<<<<<<< HEAD
   def representantes
     @alcaldes = @partido.cargos.joins(:tipo_cargo).joins(:persona).
     select('cargos.*, tipo_cargos.*, personas.*').where('titulo = \'Alcalde\'')
@@ -422,6 +423,20 @@ class PartidosController < ApplicationController
       @senadores = @senadores.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
       @cores = @cores.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
     end
+=======
+  def acuerdos_organos
+    @acuerdos = []
+    tipos = %w(Acta Programatico Electoral Funcionamiento\ Interno)
+
+    tipos.each do |t|
+      acuerdos = []
+      @partido.acuerdos.where(tipo: t).each do |a|
+        acuerdos << {"numero" => a.numero, "tema" => a.tema, "fecha" => a.fecha, "region" => Region.find(a.region.to_i).nombre, "organo_interno" => a.organo_interno.nombre, "documento" => a.documento_file_name, "documento_url" => a.documento.url}
+      end
+      @acuerdos << { "type" => t, "agreements" => acuerdos }
+    end
+
+>>>>>>> 860c5215df26949ee890997c4c8db22cc14ad99c
   end
 
   private

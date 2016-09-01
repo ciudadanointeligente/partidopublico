@@ -221,4 +221,22 @@ RSpec.describe PartidosController, type: :controller do
     end
   end
 
+  describe "GET #acuerdos_organos" do
+    it "return an array with acuerdos by tipo" do
+      partido = create(:partido)
+      organo_interno = create(:organo_interno, :nombre => 'Un Organo Interno')
+      region_1 = create(:region)
+      region_2 = create(:region)
+      acuerdo_1 = create(:acuerdo, :tipo => 'Funcionamiento Interno', :organo_interno_id => organo_interno.id, :region => region_1.id.to_s)
+      acuerdo_2 = create(:acuerdo, :tipo => 'Electoral', :organo_interno_id => organo_interno.id, :region => region_2.id.to_s)
+      acuerdo_3 = create(:acuerdo, :tipo => 'Electoral', :organo_interno_id => organo_interno.id, :region => region_2.id.to_s)
+      partido.acuerdos << [acuerdo_1, acuerdo_2, acuerdo_3]
+
+      get :acuerdos_organos, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:acuerdos).count).to eq(4)
+      expect(assigns(:acuerdos)[2]["agreements"].count).to eq(2)
+    end
+  end
+
 end
