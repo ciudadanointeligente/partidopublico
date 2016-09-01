@@ -399,28 +399,17 @@ class PartidosController < ApplicationController
   end
 
   def representantes
-    @alcaldes = @partido.cargos.joins(:tipo_cargo).joins(:persona).
-    select('cargos.*, tipo_cargos.*, personas.*').where('titulo = \'Alcalde\'')
-
-    @concejales = @partido.cargos.joins(:tipo_cargo).joins(:persona).
-    select('cargos.*, tipo_cargos.*, personas.*').where('titulo = \'Concejal\'')
-
-    @diputados = @partido.cargos.joins(:tipo_cargo).joins(:persona).
-    select('cargos.*, tipo_cargos.*, personas.*').where('titulo = \'Diputado\'')
-
-    @senadores = @partido.cargos.joins(:tipo_cargo).joins(:persona).
-    select('cargos.*, tipo_cargos.*, personas.*').where('titulo = \'Senador\'')
-
-    @cores = @partido.cargos.joins(:tipo_cargo).joins(:persona).
-    select('cargos.*, tipo_cargos.*, personas.*').where('titulo = \'Consejero Regional\'')
-
-
-    if params[:nombre]
-      @alcaldes = @alcaldes.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
-      @concejales = @concejales.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
-      @diputados = @diputados.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
-      @senadores = @senadores.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
-      @cores = @cores.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
+    @representantes = []
+    t_cargos = @partido.tipo_cargos.where(representante: true)
+    t_cargos.each do |tc|
+      if params[:q]
+        n = params[:q].split(" ")[0]
+        a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
+        personas = Persona.where("lower(personas.nombre) = '"+n.downcase+"' OR lower(personas.apellidos) = '"+a.downcase+"'")
+        @representantes << {"type" => tc.titulo, "representatives" => @partido.cargos.where(:tipo_cargo_id => tc.id, persona_id: personas)}
+      else
+        @representantes << {"type" => tc.titulo, "representatives" => @partido.cargos.where(:tipo_cargo_id => tc.id)}
+      end
     end
 
   end

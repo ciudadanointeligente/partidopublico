@@ -1,144 +1,30 @@
+<h3>Representantes</h3>
+
 <%= form_tag partido_representantes_path, :method =>  :get do |f| %>
-  <%= text_field_tag :nombre %>
+  <%= text_field_tag :q %>
   <%= submit_tag 'Buscar' %>
 <% end %>
 
-<% if @alcaldes.any? %>
-  <div>
-
-    <h3>Alcaldes</h3>
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Region</th>
-          <th>Comuna</th>
-          <th>link</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @alcaldes.each do |a| %>
-        <tr>
-          <td><%= a.nombre + " " + a.apellidos %></td>
-          <td><%= a.region.nombre %></td>
-          <td><%= a.comuna.nombre %></td>
-          <td><%= a['intereses'] %></td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-<% end %>
-
-<% if @concejales.any? %>
-  <div>
-
-    <h3>Concejales</h3>
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Region</th>
-          <th>Comuna</th>
-          <th>link</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @concejales.each do |c| %>
-        <tr>
-          <td><%= c.nombre + " " + c.apellidos %></td>
-          <td><%= c.region.nombre %></td>
-          <td><%= c.comuna.nombre %></td>
-          <td><%= c.intereses %></td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-<% end %>
-
-<% if @diputados.any? %>
-  <div>
-
-    <h3>Diputados</h3>
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Region</th>
-          <th>Comuna</th>
-          <th>link</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @diputados.each do |d| %>
-        <tr>
-          <td><%= d.nombre + " " + d.apellidos %></td>
-          <td><%= d.region.nombre %></td>
-          <td><%= d.comuna.nombre %></td>
-          <td><%= d.intereses %></td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-<% end %>
-
-<% if @senadores.any? %>
-  <div>
-
-    <h3>Senadores</h3>
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Region</th>
-          <th>Comuna</th>
-          <th>link</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @senadores.each do |s| %>
-        <tr>
-          <td><%= s.nombre + " " + s.apellidos %></td>
-          <td><%= s.region.nombre %></td>
-          <td><%= s.comuna.nombre %></td>
-          <td><%= s.intereses %></td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-<% end %>
-
-<% if @cores.any? %>
-  <div>
-
-    <h3>Consejeros Regionales</h3>
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Region</th>
-          <th>Comuna</th>
-          <th>link</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @cores.each do |c| %>
-        <tr>
-          <td><%= c.nombre + " " + c.apellidos %></td>
-          <td><%= c.region.nombre %></td>
-          <td><%= c.comuna.nombre %></td>
-          <td><%= c.intereses %></td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+<% @representantes.each do |all_representatives| %>
+  <% if all_representatives["representatives"].any? %>
+  <h4><%= all_representatives["type"] %></h4>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Region</th>
+        <th>Comuna</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% all_representatives["representatives"].each do |r| %>
+      <tr>
+        <td><%= r.persona.nombre %> <%= r.persona.apellidos %></td>
+        <td><%= r.region.nombre %></td>
+        <td><%= r.comuna.nombre %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% end %>
 <% end %>
