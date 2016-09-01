@@ -405,7 +405,7 @@ class PartidosController < ApplicationController
       if params[:q]
         n = params[:q].split(" ")[0]
         a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
-        personas = Persona.where("lower(personas.nombre) = '"+n.downcase+"' OR lower(personas.apellidos) = '"+a.downcase+"'")
+        personas = Persona.where("lower(personas.nombre) = ? OR lower(personas.apellidos) = ?", n.downcase, a.downcase)
         @representantes << {"type" => tc.titulo, "representatives" => @partido.cargos.where(:tipo_cargo_id => tc.id, persona_id: personas)}
       else
         @representantes << {"type" => tc.titulo, "representatives" => @partido.cargos.where(:tipo_cargo_id => tc.id)}
