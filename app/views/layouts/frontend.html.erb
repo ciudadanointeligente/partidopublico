@@ -57,7 +57,9 @@
                   <% end %>
                 </ul>
               </li>
-              <li><a href="#">Comparar partidos</a></li>
+              <li>
+                <%= link_to "Comparar partidos",comparisons_path %>
+              </li>
             </ul>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -93,7 +95,7 @@
               <%= link_to "Domicilio y sedes de contacto", partido_sedes_partido_path(:menu => 1) %>
             </li>
             <li>
-              <a href="#">Representantes electos</a>
+              <%= link_to "Representantes Electos", partido_representantes_path(:menu => 1) %>
             </li>
             <li>
               <%= link_to "Autoridades designadas", partido_autoridades_path(:menu => 1) %>

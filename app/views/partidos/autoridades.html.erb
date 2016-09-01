@@ -21,6 +21,7 @@
   </table>
   <% end %>
 <% end %> -->
+
 <%= form_tag partido_autoridades_path, :method =>  :get do |f| %>
   <%= text_field_tag :nombre %>
   <%= submit_tag 'Buscar' %>
@@ -42,9 +43,9 @@
       <tbody>
         <% @autoridades.each do |c| %>
         <tr>
-          <td><%= c.titulo %></td>
-          <td><%= c.persona.nombre + " " + c.apellidos %></td>
-          <td><%= c.intereses %></td>
+          <td><%= c.tipo_cargo.titulo %></td>
+          <td><%= c.persona.nombre + " " + c.persona.apellidos %></td>
+          <td><%= c.persona.intereses %></td>
         </tr>
         <% end %>
       </tbody>
