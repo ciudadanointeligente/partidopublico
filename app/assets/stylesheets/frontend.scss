@@ -37,6 +37,7 @@ body {
 	border: none;
 	height: 70px;
 	color: white;
+	border-radius: 0px;
 }
 
 .navbar-default .navbar-nav > li > a {
@@ -213,6 +214,18 @@ select#select-region{
 			text-decoration: none;
 		}
 	}
+}
+
+/*PANELS*/
+.panel{
+	border: none;
+	box-shadow: none;
+}
+
+.panel-default > .panel-heading{
+	background-color: transparent;
+	border: 3px solid $orange;
+	border-radius: 0px;
 }
 
 /*MEDIA-QUERIS*/
