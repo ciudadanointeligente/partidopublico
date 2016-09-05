@@ -102,7 +102,7 @@
         </li>
           <ul id="aside-menu-three" class="collapse <%= @menu == 2 ? 'in' : '' %>" role="tab" aria-labelledby="aside-menu-three">
             <li>
-              <%= link_to "Afiliación y Desafiliación", partido_afiliacion_desafiliacion_path(:menu => 2) %>
+              <%= link_to "Afiliación y desafiliación", partido_afiliacion_desafiliacion_path(:menu => 2) %>
             </li>
             <li>
               <%= link_to "Postular a cargos de elección popular", partido_eleccion_popular_path(:menu => 2) %>
@@ -119,10 +119,10 @@
         </li>
           <ul id="aside-menu-four" class="collapse <%= @menu == 3 ? 'in' : '' %>" role="tab" aria-labelledby="aside-menu-four">
             <li>
-              <%= link_to "Entidades", partido_vinculos_e_intereses_path(:menu => 3) %>
+              <%= link_to "Entidades en que tenga participación", partido_vinculos_e_intereses_path(:menu => 3) %>
             </li>
             <li>
-              <%= link_to "Pactos", partido_pactos_path(:menu => 3) %>
+              <%= link_to "Pactos electorales que integra", partido_pactos_path(:menu => 3) %>
             </li>
             <li>
               <a href="#">Declaración de intereses y patrimonio</a>
@@ -133,10 +133,10 @@
         </li>
           <ul id="aside-menu-five" class="collapse <%= @menu == 4 ? 'in' : '' %>" role="tab" aria-labelledby="aside-menu-five">
             <li>
-              <%= link_to "Ingresos Ordinarios", partido_finanzas_1_path(:menu => 4) %>
+              <%= link_to "Ingresos ordinarios", partido_finanzas_1_path(:menu => 4) %>
             </li>
             <li>
-              <%= link_to "Egresos Ordinarios", partido_finanzas_2_path(:menu => 4) %>
+              <%= link_to "Egresos ordinarios", partido_finanzas_2_path(:menu => 4) %>
             </li>
             <li>
               <a href="#">Balance anual</a>
@@ -148,10 +148,13 @@
               <%= link_to "Transferencias de fondos públicos", partido_finanzas_5_path(:menu => 4) %>
             </li>
             <li>
-              <a href="#">Ingresos por Campaña</a>
+              <a href="#">Ingresos campaña electoral</a>
             </li>
             <li>
-              <a href="#">Egresos por Campaña</a>
+              <a href="#">Egresos campaña electoral</a>
+            </li>
+            <li>
+              <a href="#">Informes campaña electoral</a>
             </li>
           </ul>
         <li class="principal">
