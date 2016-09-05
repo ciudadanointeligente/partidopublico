@@ -221,4 +221,63 @@ RSpec.describe PartidosController, type: :controller do
     end
   end
 
+  describe "GET #acuerdos_organos" do
+    it "return an array with acuerdos by tipo" do
+      partido = create(:partido)
+      organo_interno = create(:organo_interno, :nombre => 'Un Organo Interno')
+      region_1 = create(:region)
+      region_2 = create(:region)
+      acuerdo_1 = create(:acuerdo, :tipo => 'Funcionamiento Interno', :organo_interno_id => organo_interno.id, :region => region_1.id.to_s)
+      acuerdo_2 = create(:acuerdo, :tipo => 'Electoral', :organo_interno_id => organo_interno.id, :region => region_2.id.to_s)
+      acuerdo_3 = create(:acuerdo, :tipo => 'Electoral', :organo_interno_id => organo_interno.id, :region => region_2.id.to_s)
+      partido.acuerdos << [acuerdo_1, acuerdo_2, acuerdo_3]
+
+      get :acuerdos_organos, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:acuerdos).count).to eq(4)
+      expect(assigns(:acuerdos)[2]["agreements"].count).to eq(2)
+    end
+  end
+
+  describe "GET #representantes" do
+    it "get an array of representantes" do
+      partido = create(:partido)
+      region = create(:region)
+      comuna_1 = create(:comuna)
+      comuna_2 = create(:comuna)
+      cargo_alcalde = create(:tipo_cargo, :titulo =>"Alcalde", :representante => true, partido_id: partido.id)
+      cargo_senador = create(:tipo_cargo, :titulo =>"Senador", :representante => true, partido_id: partido.id)
+      persona_1 = create(:persona, :rut => '1-2', :partido_id => partido.id)
+      persona_2 = create(:persona, :rut => '3-4', :partido_id => partido.id)
+
+      cargo_1 = create(:cargo, :partido_id => partido.id, :region_id => region.id, :comuna_id => comuna_1.id, :persona_id => persona_1.id, :tipo_cargo_id => cargo_alcalde.id)
+      cargo_2 = create(:cargo, :partido_id => partido.id, :region_id => region.id, :comuna_id => comuna_2.id, :persona_id => persona_2.id, :tipo_cargo_id => cargo_senador.id)
+
+      get :representantes, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:representantes)[5]['representatives'].count).to eq(1)
+      expect(assigns(:representantes)[5]['representatives']).to include(cargo_1)
+      expect(assigns(:representantes)[6]['representatives']).to include(cargo_2)
+    end
+
+    it "get an array of representantes searched by nombre or apellidos" do
+      partido = create(:partido)
+      region = create(:region)
+      comuna_1 = create(:comuna)
+      comuna_2 = create(:comuna)
+      cargo_alcalde = create(:tipo_cargo, :titulo =>"Alcalde", :representante => true, partido_id: partido.id)
+      cargo_senador = create(:tipo_cargo, :titulo =>"Senador", :representante => true, partido_id: partido.id)
+      persona_1 = create(:persona, :nombre => "Juanito", :apellidos => "Ramirez", :rut => '1-2', :partido_id => partido.id)
+      persona_2 = create(:persona, :nombre => "John", :apellidos => "Connor", :rut => '3-4', :partido_id => partido.id)
+
+      cargo_1 = create(:cargo, :partido_id => partido.id, :region_id => region.id, :comuna_id => comuna_1.id, :persona_id => persona_1.id, :tipo_cargo_id => cargo_alcalde.id)
+      cargo_2 = create(:cargo, :partido_id => partido.id, :region_id => region.id, :comuna_id => comuna_2.id, :persona_id => persona_2.id, :tipo_cargo_id => cargo_senador.id)
+
+      get :representantes, {:partido_id => partido.to_param, :q => "Juanito Connor"}, valid_session
+
+      expect(assigns(:representantes)[5]['representatives'].count).to eq(1)
+      expect(assigns(:representantes)[6]['representatives'].count).to eq(1)
+    end
+  end
+
 end
