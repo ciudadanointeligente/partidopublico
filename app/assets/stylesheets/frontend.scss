@@ -122,25 +122,37 @@ th{
 /*Aside Menu*/
 .aside-menu {
 	li {
-		background-color: $orange-dark;
 		text-align: center;
-		text-transform: uppercase;
 		font-size: 14px;
-		letter-spacing: 1.2px;
 		font-weight: 400;
-		a {
-			color: white;
-			&:hover{
-				text-decoration: none;
+		margin-bottom: 5px;
+		padding: 10px 0 10px 0;
+		line-height: 15px;
+		background-color: white;
+		list-style: none;
+		color: $blue;
+			a {
 				color: $blue;
+				&:hover{
+					text-decoration: none;
+					color: $orange;
+				}
+			}
+		&.principal{
+			background-color: $orange-dark;
+			letter-spacing: 1.2px;
+			text-transform: uppercase;
+			color: white;
+			a {
+				color: white;
+				&:hover{
+					text-decoration: none;
+					color: $blue;
+				}
 			}
 		}
 		ul {
 			padding-left: 0px;
-			li {
-				padding: 7px 15px 7px 15px;
-				background-color: $nude-light;
-				list-style: none;
 				a {
 					color: $blue;
 					font-weight: 400;
@@ -149,9 +161,12 @@ th{
 						color: $orange;
 					}
 				}
-			}
 		}
 	}
+}
+
+.collapse.in, .collapsing, .collapse{
+	padding: 0;
 }
 
 /*SELECT*/
