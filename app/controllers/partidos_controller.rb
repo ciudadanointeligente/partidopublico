@@ -167,6 +167,10 @@ class PartidosController < ApplicationController
 
     last_date = Afiliacion.where(partido_id: @partido).uniq.pluck(:fecha_datos).sort.last
 
+    autoridad = @partido.tipo_cargos.where(:autoridad => true)
+    cargo_interno = @partido.tipo_cargos.where(:cargo_interno => true)
+    representante = @partido.tipo_cargos.where(:representante => true)
+
     @partido.regions.each do |r|
       afiliados = Afiliacion.where(partido_id: @partido, region_id: r, fecha_datos: last_date)
       if afiliados.any?
@@ -187,7 +191,11 @@ class PartidosController < ApplicationController
         pnh = (nh*100)/total_n #promedio nacional hombres
         pnm = (nm*100)/total_n #promedio nacional mujeres
 
-        region = { "region" => r.nombre, "ordinal" => r.ordinal, "hombres" => h, "porcentaje_hombres" => ph, "mujeres" => m, "porcentaje_mujeres" => pm, "total" => h + m, "desgloce" => [] }
+        region = { "region" => r.nombre, "ordinal" => r.ordinal, "hombres" => h, "porcentaje_hombres" => ph, "mujeres" => m, "porcentaje_mujeres" => pm, "total" => h + m, "desgloce" => [], "cargos" => [] }
+
+        region["cargos"] << {"type" => "autoridad", "nro_cargos" => @partido.cargos.where(:tipo_cargo_id => autoridad, :region_id => r).count}
+        region["cargos"] << {"type" => "cargo_interno", "nro_cargos" => @partido.cargos.where(:tipo_cargo_id => cargo_interno, :region_id => r).count}
+        region["cargos"] << {"type" => "representante", "nro_cargos" => @partido.cargos.where(:tipo_cargo_id => representante, :region_id => r).count}
 
         participantes = 0
         rangos.each do |rango|
@@ -205,7 +213,7 @@ class PartidosController < ApplicationController
 
     end
 
-    nacional = { "region" => "nacional", "ordinal" => "nacional", "hombres" => nh, "mujeres" => nm, "porcentaje_hombres" => pnh, "porcentaje_mujeres" => pnm, "total" => nh + nm, "desgloce" => [] }
+    nacional = { "region" => "nacional", "ordinal" => "nacional", "hombres" => nh, "mujeres" => nm, "porcentaje_hombres" => pnh, "porcentaje_mujeres" => pnm, "total" => nh + nm, "desgloce" => [], "cargos" => [] }
     a = []
     if @datos_region.any?
 
@@ -217,6 +225,9 @@ class PartidosController < ApplicationController
       nacional["desgloce"] << a.inject{ |x,y| x.merge(y) { |k,old_v, new_v| old_v+new_v } }
     end
 
+    nacional["cargos"] << {"type" => "autoridad", "nro_cargos" => @partido.cargos.where(:tipo_cargo_id => autoridad).count}
+    nacional["cargos"] << {"type" => "cargo_interno", "nro_cargos" => @partido.cargos.where(:tipo_cargo_id => cargo_interno).count}
+    nacional["cargos"] << {"type" => "representante", "nro_cargos" => @partido.cargos.where(:tipo_cargo_id => representante).count}
 
     @datos_nacional.push nacional
 
