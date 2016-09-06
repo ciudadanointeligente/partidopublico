@@ -29,22 +29,146 @@ RSpec.describe PartidosController, type: :controller do
   describe "GET #regiones" do
     it "get an array of presencia nacional" do
       partido = create(:partido)
-      region = create(:region)
-      afiliacion = create(:afiliacion, :partido_id => partido.id, :region_id => region.id)
-      #afiliacion.region_id = region.id
-      partido.regions << region
-      partido.afiliacions << afiliacion
 
-      nacional = { "region" => "nacional", "ordinal" => "nacional", "hombres" => 10, "mujeres" => 20, "porcentaje_hombres" => 33, "porcentaje_mujeres" => 66, "total" => 30, "desgloce" => [{"14-17"=>0, "18-24"=>0, "25-29"=>0, "30-34"=>0, "35-39"=>30, "40-44"=>0, "45-49"=>0, "50-54"=>0, "55-59"=>0, "60-64"=>0, "65-69"=>0, "70-100"=>0}] }
-      regional = { "region" => "MyString", "ordinal" => "MS", "hombres" => 10, "mujeres" => 20, "porcentaje_hombres" => 33, "porcentaje_mujeres" => 66, "total" => 30, "desgloce" => [{"14-17"=>0},{"18-24"=>0},{"25-29"=>0},{"30-34"=>0},{"35-39"=>30},{"40-44"=>0},{"45-49"=>0},{"50-54"=>0},{"55-59"=>0},{"60-64"=>0},{"65-69"=>0},{"70-100"=>0}] }
-      total_nacional = []
-      total_nacional << nacional
-      total_nacional << regional
+      region_1 = create(:region, :nombre => "Region 1", :ordinal => "I")
+      region_2 = create(:region, :nombre => "Region 2", :ordinal => "II")
+      region_3 = create(:region, :nombre => "Region 3", :ordinal => "III")
+
+      partido.regions << [region_1, region_2, region_3]
+
+      persona_1 = create(:persona, :rut => '1-1', :partido_id => partido.id)
+      persona_2 = create(:persona, :rut => '1-2', :partido_id => partido.id)
+      persona_3 = create(:persona, :rut => '1-3', :partido_id => partido.id)
+      persona_4 = create(:persona, :rut => '1-4', :partido_id => partido.id)
+      persona_5 = create(:persona, :rut => '1-5', :partido_id => partido.id)
+      persona_6 = create(:persona, :rut => '1-6', :partido_id => partido.id)
+      persona_7 = create(:persona, :rut => '1-7', :partido_id => partido.id)
+      persona_8 = create(:persona, :rut => '1-8', :partido_id => partido.id)
+      persona_9 = create(:persona, :rut => '1-9', :partido_id => partido.id)
+
+      afiliacion_region_1 = create(:afiliacion, :hombres => 15, :mujeres => 20, :partido_id => partido.id, :region_id => region_1.id, :fecha_datos => '2016-01-01', :ano_nacimiento => 1981)
+      afiliacion_region_2 = create(:afiliacion, :hombres => 25, :mujeres => 10, :partido_id => partido.id, :region_id => region_2.id, :fecha_datos => '2016-01-01', :ano_nacimiento => 1981)
+      afiliacion_region_3 = create(:afiliacion, :hombres => 35, :mujeres => 30, :partido_id => partido.id, :region_id => region_3.id, :fecha_datos => '2016-01-01', :ano_nacimiento => 1981)
+
+      tipo_cargo_alcalde = create(:tipo_cargo, :titulo => "Alcalde", :representante => true, :partido_id => partido.id)
+
+      cargo_alcalde_1_region_1 = create(:cargo, :persona_id => persona_1.id, :tipo_cargo_id => tipo_cargo_alcalde.id, :partido_id => partido.id, :region_id => region_1.id)
+      cargo_alcalde_2_region_1 = create(:cargo, :persona_id => persona_8.id, :tipo_cargo_id => tipo_cargo_alcalde.id, :partido_id => partido.id, :region_id => region_1.id)
+      cargo_alcalde_3_region_1 = create(:cargo, :persona_id => persona_9.id, :tipo_cargo_id => tipo_cargo_alcalde.id, :partido_id => partido.id, :region_id => region_1.id)
+
+      cargo_alcalde_region_2 = create(:cargo, :persona_id => persona_3.id, :tipo_cargo_id => tipo_cargo_alcalde.id, :partido_id => partido.id, :region_id => region_2.id)
+      cargo_alcalde_region_3 = create(:cargo, :persona_id => persona_5.id, :tipo_cargo_id => tipo_cargo_alcalde.id, :partido_id => partido.id, :region_id => region_3.id)
 
       get :regiones, {:partido_id => partido.to_param}, valid_session
 
       expect(assigns(:datos_total_nacional)).not_to be_empty
-      expect(assigns(:datos_total_nacional)).to eq(total_nacional)
+      expect(assigns(:datos_total_nacional)[0]['hombres']).to eq(75)
+      expect(assigns(:datos_total_nacional)[0]['mujeres']).to eq(60)
+    end
+
+    it "get an array of presencia de cargos" do
+      partido = create(:partido)
+
+      region_1 = create(:region, :nombre => "Region 1", :ordinal => "I")
+      region_2 = create(:region, :nombre => "Region 2", :ordinal => "II")
+      region_3 = create(:region, :nombre => "Region 3", :ordinal => "III")
+
+      partido.regions << [region_1, region_2, region_3]
+
+      tipo_cargo_alcalde = create(:tipo_cargo, :titulo => "Alcalde", :representante => true, :partido_id => partido.id)
+      tipo_cargo_senador = create(:tipo_cargo, :titulo => "Senador", :representante => true, :partido_id => partido.id)
+      tipo_cargo_secretario = create(:tipo_cargo, :titulo => "Secretario", :cargo_interno => true, :partido_id => partido.id)
+      tipo_cargo_ministro = create(:tipo_cargo, :titulo => "Ministro", :autoridad => true, :partido_id => partido.id)
+
+      persona_1 = create(:persona, :rut => '1-1', :partido_id => partido.id)
+      persona_2 = create(:persona, :rut => '1-2', :partido_id => partido.id)
+      persona_3 = create(:persona, :rut => '1-3', :partido_id => partido.id)
+      persona_4 = create(:persona, :rut => '1-4', :partido_id => partido.id)
+      persona_5 = create(:persona, :rut => '1-5', :partido_id => partido.id)
+      persona_6 = create(:persona, :rut => '1-6', :partido_id => partido.id)
+      persona_7 = create(:persona, :rut => '1-7', :partido_id => partido.id)
+      persona_8 = create(:persona, :rut => '1-8', :partido_id => partido.id)
+      persona_9 = create(:persona, :rut => '1-9', :partido_id => partido.id)
+
+      afiliacion_region_1 = create(:afiliacion, :hombres => 15, :mujeres => 20, :partido_id => partido.id, :region_id => region_1.id, :fecha_datos => '2016-01-01', :ano_nacimiento => 1981)
+      afiliacion_region_2 = create(:afiliacion, :hombres => 25, :mujeres => 10, :partido_id => partido.id, :region_id => region_2.id, :fecha_datos => '2016-01-01', :ano_nacimiento => 1981)
+      afiliacion_region_3 = create(:afiliacion, :hombres => 35, :mujeres => 30, :partido_id => partido.id, :region_id => region_3.id, :fecha_datos => '2016-01-01', :ano_nacimiento => 1981)
+
+      cargo_alcalde_1_region_1 = create(:cargo, :persona_id => persona_1.id, :tipo_cargo_id => tipo_cargo_alcalde.id, :partido_id => partido.id, :region_id => region_1.id)
+      cargo_alcalde_2_region_1 = create(:cargo, :persona_id => persona_8.id, :tipo_cargo_id => tipo_cargo_alcalde.id, :partido_id => partido.id, :region_id => region_1.id)
+      cargo_ministro_region_1 = create(:cargo, :persona_id => persona_9.id, :tipo_cargo_id => tipo_cargo_ministro.id, :partido_id => partido.id, :region_id => region_1.id)
+
+      cargo_alcalde_region_2 = create(:cargo, :persona_id => persona_3.id, :tipo_cargo_id => tipo_cargo_alcalde.id, :partido_id => partido.id, :region_id => region_2.id)
+      cargo_alcalde_region_3 = create(:cargo, :persona_id => persona_5.id, :tipo_cargo_id => tipo_cargo_alcalde.id, :partido_id => partido.id, :region_id => region_3.id)
+
+      cargo_senador_region_1 = create(:cargo, :persona_id => persona_2.id, :tipo_cargo_id => tipo_cargo_senador.id, :partido_id => partido.id, :region_id => region_1.id)
+      cargo_senador_region_2 = create(:cargo, :persona_id => persona_4.id, :tipo_cargo_id => tipo_cargo_senador.id, :partido_id => partido.id, :region_id => region_2.id)
+      cargo_senador_region_3 = create(:cargo, :persona_id => persona_6.id, :tipo_cargo_id => tipo_cargo_senador.id, :partido_id => partido.id, :region_id => region_3.id)
+
+      cargo_secretario_partido = create(:cargo, :persona_id => persona_7.id, :tipo_cargo_id => tipo_cargo_secretario.id, :partido_id => partido.id, :region_id => region_1.id)
+
+      get :regiones, {:partido_id => partido.to_param}, valid_session
+
+      # nacional
+      nro_autoridades = partido.cargos.where(:tipo_cargo_id => partido.tipo_cargos.where(:autoridad => true)).count
+      expect(assigns(:datos_total_nacional)[0]["cargos"][0]["nro_cargos"]).to eq(nro_autoridades)
+
+      nro_cargos_internos = partido.cargos.where(:tipo_cargo_id => partido.tipo_cargos.where(:cargo_interno => true)).count
+      expect(assigns(:datos_total_nacional)[0]["cargos"][1]["nro_cargos"]).to eq(nro_cargos_internos)
+
+      nro_representantes = partido.cargos.where(:tipo_cargo_id => partido.tipo_cargos.where(:representante => true)).count
+      expect(assigns(:datos_total_nacional)[0]["cargos"][2]["nro_cargos"]).to eq(nro_representantes)
+
+      #regional
+      nro_autoridades = partido.cargos.where(:region_id => region_1.id, :tipo_cargo_id => partido.tipo_cargos.where(:autoridad => true)).count
+      expect(assigns(:datos_total_nacional)[1]["cargos"][0]["nro_cargos"]).to eq(nro_autoridades)
+
+      nro_cargos_internos = partido.cargos.where(:region_id => region_1.id, :tipo_cargo_id => partido.tipo_cargos.where(:cargo_interno => true)).count
+      expect(assigns(:datos_total_nacional)[1]["cargos"][1]["nro_cargos"]).to eq(nro_cargos_internos)
+
+      nro_representantes = partido.cargos.where(:region_id => region_1.id, :tipo_cargo_id => partido.tipo_cargos.where(:representante => true)).count
+      expect(assigns(:datos_total_nacional)[1]["cargos"][2]["nro_cargos"]).to eq(nro_representantes)
+
+    end
+
+    it "get an array of presencia de cargos without cargos" do
+      partido = create(:partido)
+
+      region_1 = create(:region, :nombre => "Region 1", :ordinal => "I")
+      region_2 = create(:region, :nombre => "Region 2", :ordinal => "II")
+      region_3 = create(:region, :nombre => "Region 3", :ordinal => "III")
+
+      partido.regions << [region_1, region_2, region_3]
+
+      afiliacion_region_1 = create(:afiliacion, :hombres => 15, :mujeres => 20, :partido_id => partido.id, :region_id => region_1.id, :fecha_datos => '2016-01-01', :ano_nacimiento => 1981)
+      afiliacion_region_2 = create(:afiliacion, :hombres => 25, :mujeres => 10, :partido_id => partido.id, :region_id => region_2.id, :fecha_datos => '2016-01-01', :ano_nacimiento => 1981)
+      afiliacion_region_3 = create(:afiliacion, :hombres => 35, :mujeres => 30, :partido_id => partido.id, :region_id => region_3.id, :fecha_datos => '2016-01-01', :ano_nacimiento => 1981)
+
+      get :regiones, {:partido_id => partido.to_param}, valid_session
+
+      # puts '-+-+-+-+-+--+-+-+-+-'
+      # p assigns(:datos_total_nacional)
+      # puts '-+-+-+-+-+--+-+-+-+-'
+
+      # nacional
+      nro_autoridades = partido.cargos.where(:tipo_cargo_id => partido.tipo_cargos.where(:autoridad => true)).count
+      expect(assigns(:datos_total_nacional)[0]["cargos"][0]["nro_cargos"]).to eq(nro_autoridades)
+
+      nro_cargos_internos = partido.cargos.where(:tipo_cargo_id => partido.tipo_cargos.where(:cargo_interno => true)).count
+      expect(assigns(:datos_total_nacional)[0]["cargos"][1]["nro_cargos"]).to eq(nro_cargos_internos)
+
+      nro_representantes = partido.cargos.where(:tipo_cargo_id => partido.tipo_cargos.where(:representante => true)).count
+      expect(assigns(:datos_total_nacional)[0]["cargos"][2]["nro_cargos"]).to eq(nro_representantes)
+
+      #regional
+      nro_autoridades = partido.cargos.where(:region_id => region_1.id, :tipo_cargo_id => partido.tipo_cargos.where(:autoridad => true)).count
+      expect(assigns(:datos_total_nacional)[1]["cargos"][0]["nro_cargos"]).to eq(nro_autoridades)
+
+      nro_cargos_internos = partido.cargos.where(:region_id => region_1.id, :tipo_cargo_id => partido.tipo_cargos.where(:cargo_interno => true)).count
+      expect(assigns(:datos_total_nacional)[1]["cargos"][1]["nro_cargos"]).to eq(nro_cargos_internos)
+
+      nro_representantes = partido.cargos.where(:region_id => region_1.id, :tipo_cargo_id => partido.tipo_cargos.where(:representante => true)).count
+      expect(assigns(:datos_total_nacional)[1]["cargos"][2]["nro_cargos"]).to eq(nro_representantes)
     end
   end
 
@@ -236,6 +360,47 @@ RSpec.describe PartidosController, type: :controller do
 
       expect(assigns(:acuerdos).count).to eq(4)
       expect(assigns(:acuerdos)[2]["agreements"].count).to eq(2)
+    end
+  end
+
+  describe "GET #representantes" do
+    it "get an array of representantes" do
+      partido = create(:partido)
+      region = create(:region)
+      comuna_1 = create(:comuna)
+      comuna_2 = create(:comuna)
+      cargo_alcalde = create(:tipo_cargo, :titulo =>"Alcalde", :representante => true, partido_id: partido.id)
+      cargo_senador = create(:tipo_cargo, :titulo =>"Senador", :representante => true, partido_id: partido.id)
+      persona_1 = create(:persona, :rut => '1-2', :partido_id => partido.id)
+      persona_2 = create(:persona, :rut => '3-4', :partido_id => partido.id)
+
+      cargo_1 = create(:cargo, :partido_id => partido.id, :region_id => region.id, :comuna_id => comuna_1.id, :persona_id => persona_1.id, :tipo_cargo_id => cargo_alcalde.id)
+      cargo_2 = create(:cargo, :partido_id => partido.id, :region_id => region.id, :comuna_id => comuna_2.id, :persona_id => persona_2.id, :tipo_cargo_id => cargo_senador.id)
+
+      get :representantes, {:partido_id => partido.to_param}, valid_session
+
+      expect(assigns(:representantes)[5]['representatives'].count).to eq(1)
+      expect(assigns(:representantes)[5]['representatives']).to include(cargo_1)
+      expect(assigns(:representantes)[6]['representatives']).to include(cargo_2)
+    end
+
+    it "get an array of representantes searched by nombre or apellidos" do
+      partido = create(:partido)
+      region = create(:region)
+      comuna_1 = create(:comuna)
+      comuna_2 = create(:comuna)
+      cargo_alcalde = create(:tipo_cargo, :titulo =>"Alcalde", :representante => true, partido_id: partido.id)
+      cargo_senador = create(:tipo_cargo, :titulo =>"Senador", :representante => true, partido_id: partido.id)
+      persona_1 = create(:persona, :nombre => "Juanito", :apellidos => "Ramirez", :rut => '1-2', :partido_id => partido.id)
+      persona_2 = create(:persona, :nombre => "John", :apellidos => "Connor", :rut => '3-4', :partido_id => partido.id)
+
+      cargo_1 = create(:cargo, :partido_id => partido.id, :region_id => region.id, :comuna_id => comuna_1.id, :persona_id => persona_1.id, :tipo_cargo_id => cargo_alcalde.id)
+      cargo_2 = create(:cargo, :partido_id => partido.id, :region_id => region.id, :comuna_id => comuna_2.id, :persona_id => persona_2.id, :tipo_cargo_id => cargo_senador.id)
+
+      get :representantes, {:partido_id => partido.to_param, :q => "Juanito Connor"}, valid_session
+
+      expect(assigns(:representantes)[5]['representatives'].count).to eq(1)
+      expect(assigns(:representantes)[6]['representatives'].count).to eq(1)
     end
   end
 
