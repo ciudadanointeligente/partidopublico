@@ -232,6 +232,52 @@ select#select-region{
 	background-repeat: no-repeat;
 }
 
+input#q{
+	font-size: 11px;
+	color: $blue;
+	border: 2px solid $blue;
+	width: 200px;
+	border-radius: 0px;
+	padding: 5px;
+	margin-top: 20px;
+	background-color: white;
+	height: 40px;
+	-webkit-appearance: none;
+	margin: 0 0 20px 0;
+}
+
+input#nombre{
+	font-size: 11px;
+	color: $blue;
+	border: 2px solid $blue;
+	width: 200px;
+	border-radius: 0px;
+	padding: 5px;
+	margin-top: 20px;
+	background-color: white;
+	height: 40px;
+	-webkit-appearance: none;
+	margin: 0 0 20px 0;
+}
+
+input[type="submit"]{
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: 700;
+	color: $green;
+	letter-spacing: 1.2px;
+	border: 2px solid $green;
+	border-radius: 0px;
+	padding: 5px;
+	margin-top: 20px;
+	background-color: white;
+	height: 40px;
+	-webkit-appearance: none;
+	margin-top: 0;
+}
+
+
+/*VARIOS*/
 .documents{
 	min-height: 100px;
 	a{
