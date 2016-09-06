@@ -44,13 +44,13 @@ $(document).ready(function(){
           if (legend == true && legendElement) {
             switch(labels[j]) {
               case 'hombres':
-                legendElement.append('<li data-id='+ bcolor +' style="color:' + bcolor + ';"><i class="fa fa-male"></i> ' + labels[j] + " : " + values[j] + '</li>');
+                legendElement.append('<li><i class="fa fa-circle" aria-hidden="true" data-id='+ bcolor +' style="color:' + bcolor + ';"></i> ' + labels[j] + " : " + values[j] + '</li>');
                 break;
               case 'mujeres':
-                legendElement.append('<li data-id='+ bcolor +' style="color:' + bcolor + ';"><i class="fa fa-female"></i> ' + labels[j] + " : " + values[j] + '</li>');
+                legendElement.append('<li><i class="fa fa-circle" aria-hidden="true" data-id='+ bcolor +' style="color:' + bcolor + ';"></i> ' + labels[j] + " : " + values[j] + '</li>');
                 break;
               default:
-                legendElement.append('<li data-id='+ bcolor +' style="color:' + bcolor + ';"><i class="fa fa-male"></i><i class="fa fa-female"></i> ' + labels[j] + " : " + values[j] + '</li>');
+                legendElement.append('<li><i class="fa fa-circle" aria-hidden="true" data-id='+ bcolor +' style="color:' + bcolor + ';"></i> ' + labels[j] + " : " + values[j] + '</li>');
                 break;
             }
           }
@@ -116,7 +116,7 @@ $(document).ready(function(){
 
     return chart;
   };
-  
+
   Raphael.fn.ingresos_ordinarios_chart = function(datos, datos_totales, fecha_seleccionada){
     var paper = this;
     var header_height = 40;

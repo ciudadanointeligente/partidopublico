@@ -31,6 +31,10 @@ body {
 	margin-top: 43px;
 }
 
+ul{
+	padding: 0;
+}
+
 /*NAV*/
 .navbar-default{
 	background-color: #0A3451;
@@ -120,7 +124,7 @@ th{
 	border-bottom: 1px solid $blue;
 }
 
-/*Aside Menu*/
+/*ASIDE MENU*/
 .aside-menu {
 	li {
 		text-align: center;
@@ -168,6 +172,22 @@ th{
 
 .collapse.in, .collapsing, .collapse{
 	padding: 0;
+}
+
+/*NAV*/
+.leyenda-cargos{
+	text-align: left;
+	margin-top: 50px;
+}
+
+.leyenda{
+	text-align: left;
+	margin-top: 70px;
+}
+
+.leyenda-desgloce{
+	text-align: left;
+	margin-top: 20px;
 }
 
 /*SELECT*/
