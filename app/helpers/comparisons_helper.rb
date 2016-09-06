@@ -1,6 +1,6 @@
 module ComparisonsHelper
   def categories
-    categories = ["Número de Afiliados", "Regiones", "Ingresos Ordinarios"]
+    categories = ["Número de Afiliados", "Regiones", "Ingresos Ordinarios", "Representantes Electos"]
   end
 
   def roman_ordinals
