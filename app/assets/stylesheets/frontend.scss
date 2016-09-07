@@ -37,7 +37,9 @@ span{
 }
 
 ul{
-	padding: 0;
+	&.nospace{
+		padding: 0;
+	}
 }
 
 /*NAV*/
