@@ -97,7 +97,7 @@ $(document).ready(function(){
       }
 
       cargo_colors = ["#99F4F0", "#1ED6D6", "#06B9BF", "#CDFEFC"];
-      data_cargos = [presencia[x].cargos[0].nro_cargos, presencia[x].cargos[1].nro_cargos, presencia[x].cargos[2].nro_cargos, presencia[x].total]
+      data_cargos = [presencia[x].cargos[1].nro_cargos, presencia[x].cargos[2].nro_cargos, presencia[x].cargos[0].nro_cargos, presencia[x].total]
       label_cargos = ["Cargos de dirección interna","Representantes electos","Autoridades designadas","Afiliados sin cargos"]
       if(data_cargos.length > 0)
         Raphael("cargos-"+presencia[x].ordinal, 170, 170).donutChart(85, 85, 70, 35, data_cargos, label_cargos, cargo_colors, true, $('#region-'+presencia[x].ordinal+' .leyenda-cargos'), cargo_colors);
