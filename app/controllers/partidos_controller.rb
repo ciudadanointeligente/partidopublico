@@ -413,7 +413,7 @@ class PartidosController < ApplicationController
     @representantes = []
     t_cargos = @partido.tipo_cargos.where(representante: true)
     t_cargos.each do |tc|
-      if params[:q]
+      if !params[:q].blank?
         n = params[:q].split(" ")[0]
         a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
         personas = Persona.where("lower(personas.nombre) = ? OR lower(personas.apellidos) = ?", n.downcase, a.downcase)
