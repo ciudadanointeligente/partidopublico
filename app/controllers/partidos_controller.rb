@@ -173,7 +173,7 @@ class PartidosController < ApplicationController
 
     @partido.regions.each do |r|
       afiliados = Afiliacion.where(partido_id: @partido, region_id: r, fecha_datos: last_date)
-      if afiliados.any?
+      # if afiliados.any?
         h = 0 #hombres
         m = 0 #mujeres
         ph = 0 #promedio hombres
@@ -209,7 +209,7 @@ class PartidosController < ApplicationController
           region["desgloce"].push( rango[0].to_s+'-'+rango[1].to_s => ph + pm )
         end
         @datos_region.push region
-      end
+      # end
 
     end
 
