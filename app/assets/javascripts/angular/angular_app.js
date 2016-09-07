@@ -47,6 +47,7 @@ function personasController($scope,$http,$location,$aside,$attrs){
   }
 
   function getPersonasByPartido(partido_id) {
+    console.log("test output");
     $http.get('partidos/'+partido_id+'/personas')
       .success( function(data){
         $scope.personas = data;
@@ -153,7 +154,18 @@ function cargosController($scope,$http,$location,$aside,$attrs){
       })
   }
 
+  function getOrganosInternos(partido_id) {
+    $http.get('partidos/'+partido_id+'/organo_internos')
+      .success( function(data){
+        $scope.organo_internos = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
   function getCargosByPartido(partido_id) {
+    console.log("test output");
     $http.get('partidos/'+partido_id+'/cargos')
       .success( function(data){
         $scope.cargos = data;
@@ -233,7 +245,9 @@ function cargosController($scope,$http,$location,$aside,$attrs){
   getCargosByPartido($scope.partido_id);
   getPersonasByPartido($scope.partido_id);
   getTipoCargos($scope.partido_id);
+  getOrganosInternos($scope.partido_id);
   getRegions();
+  console.log("test output");
   //getComunas();
 };
 

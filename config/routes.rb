@@ -82,7 +82,8 @@ Rails.application.routes.draw do
     get "/acuerdos_organos", to: "partidos#acuerdos_organos"
     resources :cargos
     resources :personas
-    resources :tipo_cargos
+    resources :tipo_cargos    
+    resources :organo_internos
     resources :regions do
       resources :comunas
     end
