@@ -23,6 +23,11 @@ $sky-light: #78EEE8;
 body {
 	background-color: $nude;
 	font-family: 'Karla', sans-serif;
+	color: $blue;
+}
+
+span{
+	font-weight: 700;
 }
 
 .board{
@@ -278,8 +283,16 @@ input[type="submit"]{
 
 
 /*VARIOS*/
+.basicos{
+	margin-bottom: 40px;
+	td{
+		min-width: 150px;
+	}
+}
+
 .documents{
 	min-height: 100px;
+	text-align: center;
 	a{
 		color: $blue;
 		&:hover{
