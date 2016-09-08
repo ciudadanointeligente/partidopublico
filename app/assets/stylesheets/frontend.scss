@@ -311,6 +311,16 @@ input[type="submit"]{
 	}
 }
 
+/*ELEMENTS*/
+.panel-default > .panel-heading .badge{
+	padding: 4px 8px;
+	font-size: 10px;
+	font-weight: 400;
+	background-color: $orange;
+}
+
+
+
 /*PANELS*/
 .panel{
 	border: none;
