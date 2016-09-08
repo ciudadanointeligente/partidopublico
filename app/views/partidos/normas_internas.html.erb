@@ -1,12 +1,50 @@
+<h3>El partido</h3>
 <ul>
+<div class="row">
+  <div class="col-md-3">
+    <%= image_tag @partido.logo.url(:thumb), class: "img-responsive", alt: @partido.sigla %>
+  </div>
+  <div class="col-md-9 basicos">
+    <table>
+      <tbody>
+        <% if !@partido.sigla.blank? %>
+        <tr>
+          <td><span>Sigla</span></td>
+          <td><%= @partido.sigla %></td>
+        </tr>
+        <% end %>
+        <% if !@partido.lema.blank? %>
+        <tr>
+          <td><span>Lema</span></td>
+          <td><%= @partido.lema %></td>
+        </tr>
+        <% end %>
+        <% if !@partido.fecha_fundacion.blank? %>
+        <tr>
+          <td><span>Fecha fundación</span></td>
+          <td><%= @partido.fecha_fundacion.to_formatted_s(:long) %></td>
+        </tr>
+        <% end %>
+        <% if !@partido.texto.blank? %>
+        <tr>
+          <td><span>Reseña</span></td>
+          <td><%= @partido.texto %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ul class="list-inline list-unstyled">
   <% @normas_internas.each do |n| %>
-    <div class="col-sm-6 col-md-4 text-center documents">
-      <div><svg id="i-file" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="#F28269" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-    <path d="M6 2 L6 30 26 30 26 10 18 2 Z M18 2 L18 10 26 10" />
-</svg></div>
-      <h4><%= link_to n.archivo.url, target: "_blank", onclick: "ga('send','event','click','"+n.archivo_file_name+"')" do %>
+    <li class="col-md-4 documents">
+      <i class="fa fa-file-o fa-3x" style="color: #F28269"></i>
+      <h4>
+        <%= link_to n.archivo.url, target: "_blank", onclick: "ga('send','event','click','"+n.archivo_file_name+"')" do %>
         <%= n.descripcion %>
-        <% end %></h4>
-    </div>
+        <% end %>
+      </h4>
+    </li>
   <% end %>
 </ul>
