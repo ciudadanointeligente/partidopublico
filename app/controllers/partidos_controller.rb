@@ -338,7 +338,7 @@ class PartidosController < ApplicationController
     datos_eficientes_transferencias = Transferencia.where(partido: @partido, :fecha_datos => @fecha).group(:categoria).
     select("categoria, count(1) as count, sum(monto) as total").order(:categoria)
 
-    max_value = Transferencia.where(partido: @partido, :fecha_datos => @fecha).group(:categoria).select("sum(monto) as total").order("total DESC").first.attributes.symbolize_keys![:total]
+    max_value = Transferencia.where(partido: @partido, :fecha_datos => @fecha).group(:categoria).select("sum(monto) as total").order("total DESC").first.attributes.symbolize_keys![:total] rescue 0
 
 
     datos_eficientes_transferencias.each do |d|
