@@ -266,7 +266,7 @@ input#nombre{
 	border: 2px solid $blue;
 	width: 200px;
 	border-radius: 0px;
-	padding: 5px;
+	padding: 5px 15px 5px 15px;
 	margin-top: 20px;
 	background-color: white;
 	height: 40px;
@@ -282,7 +282,7 @@ input[type="submit"]{
 	letter-spacing: 1.2px;
 	border: 2px solid $green;
 	border-radius: 0px;
-	padding: 5px;
+	padding: 5px 15px 5px 15px;
 	margin-top: 20px;
 	background-color: white;
 	height: 40px;
