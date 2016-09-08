@@ -654,7 +654,6 @@ $(document).ready(function(){
     var p = transferencias_footer(datos, datos_totales);
   };
 
-
   Raphael.fn.no_data_chart = function(){
     this.text(20 , 20, "No hay datos")
          .attr({
@@ -663,6 +662,161 @@ $(document).ready(function(){
            'text-anchor': 'start',
            'font-weight' : "bold"
          });
+  }
+
+  Raphael.fn.ingreso_ord_front_header = function(){
+
+    var paper = this;
+
+    paper.circle(12, 15, 9 )
+    .attr({
+      "fill" : "#23DBB8",
+      "stroke" : "none"
+    });
+
+    paper.text(28, 17, "Aportes públicos")
+    .attr({
+      "font-family" : "Karla-Regular, Karla",
+      "font-size" : 14,
+      'text-anchor': 'start'
+    });
+
+    paper.circle(191, 15, 9 )
+    .attr({
+      "fill" : "#19A58A",
+      "stroke" : "none"
+    });
+
+    paper.text(207, 17, "Aportes privados")
+    .attr({
+      "font-family" : "Karla-Regular, Karla",
+      "font-size" : 14,
+      'text-anchor': 'start'
+    });
+
+  };
+
+  Raphael.fn.ingreso_ord_front_bar = function(dato){
+    var paper = this;
+    var bar_width = 300;
+    var bar_height = 30;
+    var ingreso_width = (dato.value * (dato.percentage / 100)) * bar_width;
+    var color = '#23DBB8';
+
+    if(dato.text == "Aportes Estatales"){
+      color = '#23DBB8';
+    } else {
+      color = '#19a58a';
+    }
+
+    var bar = paper.rect(0, 0, ingreso_width, bar_height).attr({
+      "fill" : color,
+      "stroke" : "none"
+    });
+
+  }
+
+  Raphael.fn.ingreso_ord_front_footer = function(dato){
+    var paper = this;
+    var bar_width = 300;
+    var bar_height = 30;
+    var publico_width = (dato.publicos / (dato.publicos + dato.privados)) * bar_width;
+    var privado_width = bar_width - publico_width;
+
+    var publico_bar = paper.rect(0, 0, publico_width, bar_height).attr({
+      "fill" : "#23DBB8",
+      "stroke" : "none"
+    });
+
+    var privado_bar = paper.rect(publico_width, 0, privado_width, bar_height).attr({
+      "fill" : "#19a58a",
+      "stroke" : "none"
+    });
+
+  }
+
+  Raphael.fn.egreso_ord_front_header = function(){
+
+    var paper = this;
+
+    paper.circle(12, 15, 9 )
+    .attr({
+      "fill" : "#23DBB8",
+      "stroke" : "none"
+    });
+
+    paper.text(28, 17, "Egresos de fondos públicos")
+    .attr({
+      "font-family" : "Karla-Regular, Karla",
+      "font-size" : 14,
+      'text-anchor': 'start'
+    });
+
+    paper.circle(247, 15, 9 )
+    .attr({
+      "fill" : "#19A58A",
+      "stroke" : "none"
+    });
+
+    paper.text(263, 17, "Egresos de fondos privados")
+    .attr({
+      "font-family" : "Karla-Regular, Karla",
+      "font-size" : 14,
+      'text-anchor': 'start'
+    });
+
+  };
+
+  Raphael.fn.egreso_ord_front_bar = function(dato){
+    var paper = this;
+    var bar_width = 300;
+    var bar_height = 30;
+    var publico_width = (dato.value_publico / (dato.value_publico + dato.value_privado)) * bar_width * (dato.percentage / 100);
+    var privado_width = (bar_width - publico_width) *  (dato.percentage / 100);
+
+    var publico_bar = paper.rect(0, 0, publico_width, bar_height).attr({
+      "fill" : "#23DBB8",
+      "stroke" : "none"
+    });
+
+    var privado_bar = paper.rect(publico_width, 0, privado_width, bar_height).attr({
+      "fill" : "#19a58a",
+      "stroke" : "none"
+    });
+
+  }
+
+  Raphael.fn.egreso_ord_front_footer = function(dato){
+    var paper = this;
+    var bar_width = 300;
+    var bar_height = 30;
+    var publico_width = (dato.publicos / (dato.publicos + dato.privados)) * bar_width;
+    var privado_width = bar_width - publico_width;
+
+    var publico_bar = paper.rect(0, 0, publico_width, bar_height).attr({
+      "fill" : "#23DBB8",
+      "stroke" : "none"
+    });
+
+    var privado_bar = paper.rect(publico_width, 0, privado_width, bar_height).attr({
+      "fill" : "#19a58a",
+      "stroke" : "none"
+    });
+
+  }
+
+  Raphael.fn.transferencia_front_bar = function(dato){
+    var paper = this;
+    var bar_width = 300;
+    var bar_height = 30;
+    var width = bar_width * (dato.percentage / 100);
+
+
+    var bar = paper.rect(0, 0, width, bar_height).attr({
+      "fill" : "#23DBB8",
+      "stroke" : "none"
+    });
+
   }
 
 })
