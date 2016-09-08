@@ -34,6 +34,7 @@ span{
 	background-color: white;
 	box-shadow: -5px 5px 0px $orange;
 	margin-top: 43px;
+	padding-top: 20px;
 }
 
 .nospace{
@@ -97,7 +98,8 @@ span{
 h3{
 	font-weight: 700;
 	color: $orange-dark;
-	font-size: 22px
+	font-size: 22px;
+	margin: 5px 0 10px 0;
 }
 
 h4{
@@ -115,6 +117,13 @@ h6 {
 	font-weight: 700;
 	color: $blue;
 	font-size: 46px
+}
+
+h7 {
+	text-transform: uppercase;
+  letter-spacing: 1.2px;
+  font-size: 9px;
+  font-weight: 700;
 }
 
 /*TABLES*/
