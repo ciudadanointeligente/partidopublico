@@ -412,15 +412,25 @@ class PartidosController < ApplicationController
   def representantes
     @representantes = []
     t_cargos = @partido.tipo_cargos.where(representante: true)
+    by_gender = []
+    if !params[:genero].blank?
+      by_gender = @partido.personas.where(:genero => params[:genero])
+    end
     t_cargos.each do |tc|
+      filter_by = @partido.cargos.where(:tipo_cargo_id => tc.id)
       if !params[:q].blank?
         n = params[:q].split(" ")[0]
         a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
         personas = Persona.where("lower(personas.nombre) = ? OR lower(personas.apellidos) = ?", n.downcase, a.downcase)
-        @representantes << {"type" => tc.titulo, "representatives" => @partido.cargos.where(:tipo_cargo_id => tc.id, persona_id: personas)}
-      else
-        @representantes << {"type" => tc.titulo, "representatives" => @partido.cargos.where(:tipo_cargo_id => tc.id)}
+        filter_by = filter_by.where(:persona_id => personas)
       end
+      if !params[:genero].blank?
+        filter_by = filter_by.where(:persona_id => by_gender)
+      end
+      if !params[:region].blank?
+        filter_by = filter_by.where(:region_id => params[:region])
+      end
+      @representantes << {"type" => tc.titulo, "representatives" => filter_by}
     end
 
   end
