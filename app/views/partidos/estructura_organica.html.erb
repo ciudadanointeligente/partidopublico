@@ -1,0 +1,46 @@
+<h3>Estructura Orgánica</h3>
+
+<%= form_tag partido_estructura_organica_path, :method =>  :get do |f| %>
+  <%= text_field_tag :q %>
+  <%= submit_tag 'Buscar' %>
+<% end %>
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+  <% @datos.each_with_index do |a, index| %>
+    <div class="panel panel-default">
+      <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
+        <h4 class="panel-title intern">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
+            <%= a[:organo_interno].nombre %> <%= a[:miembros].count %>
+          </a>
+        </h4>
+      </div>
+      <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
+        <div class="panel-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Cargo</th>
+                <th>Intereses</th>
+                <th>Patrimoni0</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% a[:miembros].each do |cargo| %>
+              <tr>
+                <td><%= cargo[:persona].nombre + ' ' + cargo[:persona].apellidos  %></td>
+                <td><%= cargo[:tipo_cargo].titulo  %></td>
+                <td><%= cargo[:persona].intereses  %></td>
+                <td><%= cargo[:persona].patrimonio  %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <%= a[:organo_interno].funciones %>
+      </div>
+    </div>
+    <% end %>
+</div>

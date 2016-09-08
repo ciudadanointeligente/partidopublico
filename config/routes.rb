@@ -80,9 +80,10 @@ Rails.application.routes.draw do
     get "/organos_internos", to: 'partidos#organos_internos'
     get "/elecciones_internas", to: 'partidos#elecciones_internas'
     get "/acuerdos_organos", to: "partidos#acuerdos_organos"
+    get "/estructura_organica", to: "partidos#estructura_organica"
     resources :cargos
     resources :personas
-    resources :tipo_cargos    
+    resources :tipo_cargos
     resources :organo_internos
     resources :regions do
       resources :comunas
