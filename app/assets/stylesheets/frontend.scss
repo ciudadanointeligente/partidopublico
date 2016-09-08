@@ -247,29 +247,35 @@ select#select-region{
 }
 
 input#q{
+	text-transform: uppercase;
 	font-size: 11px;
+	font-weight: 700;
 	color: $blue;
-	border: 2px solid $blue;
-	width: 200px;
+	letter-spacing: 1.2px;
+	border: 2px solid $nude;
 	border-radius: 0px;
 	padding: 5px;
 	margin-top: 20px;
 	background-color: white;
 	height: 40px;
+	width: 200px;
 	-webkit-appearance: none;
 	margin: 0 0 20px 0;
 }
 
 input#nombre{
+	text-transform: uppercase;
 	font-size: 11px;
+	font-weight: 700;
 	color: $blue;
-	border: 2px solid $blue;
-	width: 200px;
+	letter-spacing: 1.2px;
+	border: 2px solid $nude;
 	border-radius: 0px;
-	padding: 5px 15px 5px 15px;
+	padding: 5px;
 	margin-top: 20px;
 	background-color: white;
 	height: 40px;
+	width: 200px;
 	-webkit-appearance: none;
 	margin: 0 0 20px 0;
 }
@@ -278,16 +284,16 @@ input[type="submit"]{
 	text-transform: uppercase;
 	font-size: 11px;
 	font-weight: 700;
-	color: $green;
+	color: $blue;
 	letter-spacing: 1.2px;
-	border: 2px solid $green;
+	border: 2px solid $nude;
 	border-radius: 0px;
 	padding: 5px 15px 5px 15px;
 	margin-top: 20px;
 	background-color: white;
 	height: 40px;
 	-webkit-appearance: none;
-	margin-top: 0;
+	margin: 0 0 20px 0;
 }
 
 
