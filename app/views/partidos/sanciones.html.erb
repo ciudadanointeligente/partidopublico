@@ -1,13 +1,29 @@
+<h7>Nombre del partido > Transparencia > Sanciones</h7>
 <h3>Sanciones aplicadas al partido</h3>
 
-<% @sanciones.each do |s| %>
-  <ul>
-    <li><%= s.descripcion %></li>
-    <li><%= s.institucion %></li>
-    <li><%= s.tipo_sancion %></li>
-    <li><%= s.tipo_infraccion %></li>
-    <% if !s.documento_file_name.nil? %>
-      <li><%= link_to s.documento_file_name, s.documento.url %></li>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Descripción</th>
+      <th>Institución</th>
+      <th>Tipo de sanción</th>
+      <th>Tipo de infracción</th>
+      <th>Documento</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @sanciones.each do |s| %>
+    <tr>
+      <td><%= s.descripcion %></td>
+      <td><%= s.institucion %></td>
+      <td><%= s.tipo_sancion %></td>
+      <td><%= s.tipo_infraccion %></td>
+      <td>
+        <% if !s.documento_file_name.nil? %>
+          <li><%= link_to s.documento_file_name, s.documento.url %></li>
+        <% end %>
+      </td>
+    </tr>
     <% end %>
-  </ul>
-<% end %>
+  </tbody>
+</table>

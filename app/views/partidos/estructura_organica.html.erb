@@ -12,8 +12,10 @@
       <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
         <h4 class="panel-title intern">
           <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
-            <%= a[:organo_interno].nombre %> <%= a[:miembros].count %>
+            <%= a[:organo_interno].nombre %> <span class="badge"><%= a[:miembros].count %></span>
           </a>
+          <i class="fa fa-info-circle pull-right" aria-hidden="true">        <%= a[:organo_interno].funciones %>
+</i>
         </h4>
       </div>
       <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">

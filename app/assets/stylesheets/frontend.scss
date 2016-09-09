@@ -34,10 +34,11 @@ span{
 	background-color: white;
 	box-shadow: -5px 5px 0px $orange;
 	margin-top: 43px;
+	padding-top: 20px;
 }
 
-ul{
-	padding: 0;
+.nospace{
+		padding: 0;
 }
 
 /*NAV*/
@@ -97,24 +98,43 @@ ul{
 h3{
 	font-weight: 700;
 	color: $orange-dark;
-	font-size: 22px
+	font-size: 22px;
+	margin: 5px 0 10px 0;
 }
 
 h4{
 	font-weight: 700;
 	color: $blue;
-	font-size: 16px
+	font-size: 16px;
+	a{
+		&:hover{
+			color: $orange;
+			text-decoration: none;
+		}
+		&:focus{
+			color: $orange;
+			text-decoration: none;
+		}
+	}
 }
 
-h5 {
+h5{
 	color: $blue;
 	font-size: 22px;
+	font-weight: 700;
 }
 
-h6 {
+h6{
 	font-weight: 700;
 	color: $blue;
-	font-size: 46px
+	font-size: 46px;
+}
+
+h7{
+	text-transform: uppercase;
+  letter-spacing: 1.2px;
+  font-size: 9px;
+  font-weight: 700;
 }
 
 /*TABLES*/
@@ -148,6 +168,10 @@ th{
 					text-decoration: none;
 					color: $orange;
 				}
+				&:focus{
+					text-decoration: none;
+					color: $orange;
+				}
 			}
 		&.principal{
 			background-color: $orange-dark;
@@ -160,6 +184,10 @@ th{
 					text-decoration: none;
 					color: $blue;
 				}
+				&:focus{
+					text-decoration: none;
+					color: $blue;
+				}
 			}
 		}
 		ul {
@@ -168,6 +196,10 @@ th{
 					color: $blue;
 					font-weight: 400;
 					&:hover{
+						text-decoration: none;
+						color: $orange;
+					}
+					&:focus{
 						text-decoration: none;
 						color: $orange;
 					}
@@ -194,6 +226,11 @@ th{
 .leyenda-desgloce{
 	text-align: left;
 	margin-top: 20px;
+}
+
+/*SVG*/
+div#header{
+	margin-top: 10px;
 }
 
 /*SELECT*/
@@ -238,29 +275,35 @@ select#select-region{
 }
 
 input#q{
+	text-transform: uppercase;
 	font-size: 11px;
+	font-weight: 700;
 	color: $blue;
-	border: 2px solid $blue;
-	width: 200px;
+	letter-spacing: 1.2px;
+	border: 2px solid $nude;
 	border-radius: 0px;
 	padding: 5px;
 	margin-top: 20px;
 	background-color: white;
 	height: 40px;
+	width: 200px;
 	-webkit-appearance: none;
 	margin: 0 0 20px 0;
 }
 
 input#nombre{
+	text-transform: uppercase;
 	font-size: 11px;
+	font-weight: 700;
 	color: $blue;
-	border: 2px solid $blue;
-	width: 200px;
+	letter-spacing: 1.2px;
+	border: 2px solid $nude;
 	border-radius: 0px;
 	padding: 5px;
 	margin-top: 20px;
 	background-color: white;
 	height: 40px;
+	width: 200px;
 	-webkit-appearance: none;
 	margin: 0 0 20px 0;
 }
@@ -269,16 +312,16 @@ input[type="submit"]{
 	text-transform: uppercase;
 	font-size: 11px;
 	font-weight: 700;
-	color: $green;
+	color: $blue;
 	letter-spacing: 1.2px;
-	border: 2px solid $green;
+	border: 2px solid $nude;
 	border-radius: 0px;
-	padding: 5px;
+	padding: 5px 15px 5px 15px;
 	margin-top: 20px;
 	background-color: white;
 	height: 40px;
 	-webkit-appearance: none;
-	margin-top: 0;
+	margin: 0 0 20px 0;
 }
 
 
@@ -301,6 +344,33 @@ input[type="submit"]{
 		}
 	}
 }
+
+.monto{
+	color: $blue;
+	font-size: 18px;
+	font-weight: 700;
+	text-align: right;
+}
+
+.total{
+	color: $blue;
+	font-size: 22px;
+	font-weight: 700;
+	&.monto{
+		text-align: right;
+	}
+}
+
+
+/*ELEMENTS*/
+.panel-default > .panel-heading .badge{
+	padding: 4px 8px;
+	font-size: 10px;
+	font-weight: 400;
+	background-color: $orange;
+}
+
+
 
 /*PANELS*/
 .panel{
