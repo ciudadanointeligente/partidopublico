@@ -167,6 +167,10 @@ th{
 					text-decoration: none;
 					color: $orange;
 				}
+				&:focus{
+					text-decoration: none;
+					color: $orange;
+				}
 			}
 		&.principal{
 			background-color: $orange-dark;
@@ -179,6 +183,10 @@ th{
 					text-decoration: none;
 					color: $blue;
 				}
+				&:focus{
+					text-decoration: none;
+					color: $blue;
+				}
 			}
 		}
 		ul {
@@ -187,6 +195,10 @@ th{
 					color: $blue;
 					font-weight: 400;
 					&:hover{
+						text-decoration: none;
+						color: $orange;
+					}
+					&:focus{
 						text-decoration: none;
 						color: $orange;
 					}
