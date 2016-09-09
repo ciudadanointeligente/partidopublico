@@ -3,45 +3,46 @@
 <% end %>
 
 <div class="row">
-  <div id="header"></div>
-  <table class="table">
-    <thead>
-      <tr>
-        <td>
-          Partido
-        </td>
-        <td>
-          <%=  @fecha %>
-        </td>
-        <td>
-          Monto Total
-        </td>
-      </tr>
-    </thead>
-    <tbody>
-      <% @datos_transferencias.each_with_index do |linea, i| %>
+  <div class="col-md-12">
+    <div id="header"></div>
+    <%=  @fecha %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            Concepto
+          </th>
+          <th>
+            Monto Total
+          </th>
+          <th>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @datos_transferencias.each_with_index do |linea, i| %>
 
-      <tr>
-        <td>
-          <%= linea['text'] %>
-        </td>
-        <td>
-          <div id="barras_<%= i.to_s %>"></div>
-        </td>
-        <td>
-          <%= linea['value'] %>
-        </td>
-      </tr>
-      <% end %>
-      <tr>
-        <td> TOTAL </td>
-        <td>  </td>
-        <td> <%=  @datos_transferencias_totals[:total] %> </td>
+        <tr>
+          <td>
+            <%= linea['text'] %>
+          </td>
+          <td>
+            <div id="barras_<%= i.to_s %>"></div>
+          </td>
+          <td class="monto">
+            <%= linea['value'] %>
+          </td>
+        </tr>
+        <% end %>
+        <tr>
+          <td class="total"> Total </td>
+          <td>  </td>
+          <td class="total monto"> <%=  @datos_transferencias_totals[:total] %> </td>
 
-      </tr>
-    </tbody>
-  </table>
-
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <div id="barras"></div>
