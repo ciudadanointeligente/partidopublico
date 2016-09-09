@@ -23,12 +23,22 @@ $sky-light: #78EEE8;
 body {
 	background-color: $nude;
 	font-family: 'Karla', sans-serif;
+	color: $blue;
+}
+
+span{
+	font-weight: 700;
 }
 
 .board{
 	background-color: white;
 	box-shadow: -5px 5px 0px $orange;
 	margin-top: 43px;
+	padding-top: 20px;
+}
+
+.nospace{
+		padding: 0;
 }
 
 /*NAV*/
@@ -37,6 +47,7 @@ body {
 	border: none;
 	height: 70px;
 	color: white;
+	border-radius: 0px;
 }
 
 .navbar-default .navbar-nav > li > a {
@@ -87,24 +98,43 @@ body {
 h3{
 	font-weight: 700;
 	color: $orange-dark;
-	font-size: 22px
+	font-size: 22px;
+	margin: 5px 0 10px 0;
 }
 
 h4{
 	font-weight: 700;
 	color: $blue;
-	font-size: 16px
+	font-size: 16px;
+	a{
+		&:hover{
+			color: $orange;
+			text-decoration: none;
+		}
+		&:focus{
+			color: $orange;
+			text-decoration: none;
+		}
+	}
 }
 
-h5 {
+h5{
 	color: $blue;
 	font-size: 22px;
+	font-weight: 700;
 }
 
-h6 {
+h6{
 	font-weight: 700;
 	color: $blue;
-	font-size: 46px
+	font-size: 46px;
+}
+
+h7{
+	text-transform: uppercase;
+  letter-spacing: 1.2px;
+  font-size: 9px;
+  font-weight: 700;
 }
 
 /*TABLES*/
@@ -113,34 +143,55 @@ th{
 	font-size: 10px;
 	letter-spacing: 1.2px;
 	text-transform: uppercase;
+	width: 200px;
 }
 
 .table > thead > tr > th {
 	border-bottom: 1px solid $blue;
 }
 
-/*Aside Menu*/
+/*ASIDE MENU*/
 .aside-menu {
 	li {
-		background-color: $orange-dark;
 		text-align: center;
-		text-transform: uppercase;
 		font-size: 14px;
-		letter-spacing: 1.2px;
 		font-weight: 400;
-		a {
-			color: white;
-			&:hover{
-				text-decoration: none;
+		margin-bottom: 5px;
+		padding: 10px 0 10px 0;
+		line-height: 15px;
+		background-color: white;
+		list-style: none;
+		color: $blue;
+			a {
 				color: $blue;
+				&:hover{
+					text-decoration: none;
+					color: $orange;
+				}
+				&:focus{
+					text-decoration: none;
+					color: $orange;
+				}
+			}
+		&.principal{
+			background-color: $orange-dark;
+			letter-spacing: 1.2px;
+			text-transform: uppercase;
+			color: white;
+			a {
+				color: white;
+				&:hover{
+					text-decoration: none;
+					color: $blue;
+				}
+				&:focus{
+					text-decoration: none;
+					color: $blue;
+				}
 			}
 		}
 		ul {
 			padding-left: 0px;
-			li {
-				padding: 7px 15px 7px 15px;
-				background-color: $nude-light;
-				list-style: none;
 				a {
 					color: $blue;
 					font-weight: 400;
@@ -148,10 +199,38 @@ th{
 						text-decoration: none;
 						color: $orange;
 					}
+					&:focus{
+						text-decoration: none;
+						color: $orange;
+					}
 				}
-			}
 		}
 	}
+}
+
+.collapse.in, .collapsing, .collapse{
+	padding: 0;
+}
+
+/*NAV*/
+.leyenda-cargos{
+	text-align: left;
+	margin-top: 50px;
+}
+
+.leyenda{
+	text-align: left;
+	margin-top: 70px;
+}
+
+.leyenda-desgloce{
+	text-align: left;
+	margin-top: 20px;
+}
+
+/*SVG*/
+div#header{
+	margin-top: 10px;
 }
 
 /*SELECT*/
@@ -170,6 +249,9 @@ select#fecha_datos{
 	width: 200px;
 	-webkit-appearance: none;
 	margin-top: 0;
+	background: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'><path fill='#012639' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>");
+	background-position: 98% 50%;
+	background-repeat: no-repeat;
 }
 
 select#select-region{
@@ -187,10 +269,73 @@ select#select-region{
 	width: 200px;
 	-webkit-appearance: none;
 	margin-top: 0;
+	background: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'><path fill='#012639' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>");
+	background-position: 98% 50%;
+	background-repeat: no-repeat;
+}
+
+input#q{
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: 700;
+	color: $blue;
+	letter-spacing: 1.2px;
+	border: 2px solid $nude;
+	border-radius: 0px;
+	padding: 5px;
+	margin-top: 20px;
+	background-color: white;
+	height: 40px;
+	width: 200px;
+	-webkit-appearance: none;
+	margin: 0 0 20px 0;
+}
+
+input#nombre{
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: 700;
+	color: $blue;
+	letter-spacing: 1.2px;
+	border: 2px solid $nude;
+	border-radius: 0px;
+	padding: 5px;
+	margin-top: 20px;
+	background-color: white;
+	height: 40px;
+	width: 200px;
+	-webkit-appearance: none;
+	margin: 0 0 20px 0;
+}
+
+input[type="submit"]{
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: 700;
+	color: $blue;
+	letter-spacing: 1.2px;
+	border: 2px solid $nude;
+	border-radius: 0px;
+	padding: 5px 15px 5px 15px;
+	margin-top: 20px;
+	background-color: white;
+	height: 40px;
+	-webkit-appearance: none;
+	margin: 0 0 20px 0;
+}
+
+
+/*VARIOS*/
+.basicos{
+	margin-bottom: 40px;
+	td{
+		min-width: 150px;
+	}
 }
 
 .documents{
 	min-height: 100px;
+	text-align: center;
 	a{
 		color: $blue;
 		&:hover{
@@ -198,6 +343,45 @@ select#select-region{
 			text-decoration: none;
 		}
 	}
+}
+
+.monto{
+	color: $blue;
+	font-size: 18px;
+	font-weight: 700;
+	text-align: right;
+}
+
+.total{
+	color: $blue;
+	font-size: 22px;
+	font-weight: 700;
+	&.monto{
+		text-align: right;
+	}
+}
+
+
+/*ELEMENTS*/
+.panel-default > .panel-heading .badge{
+	padding: 4px 8px;
+	font-size: 10px;
+	font-weight: 400;
+	background-color: $orange;
+}
+
+
+
+/*PANELS*/
+.panel{
+	border: none;
+	box-shadow: none;
+}
+
+.panel-default > .panel-heading{
+	background-color: transparent;
+	border: 3px solid $orange;
+	border-radius: 0px;
 }
 
 /*MEDIA-QUERIS*/
