@@ -247,21 +247,24 @@ class PartidosController < ApplicationController
   end
 
   def autoridades
-    # @datos_cargos = []
-    # @partido.regions.each do |r|
-    #   cargos = @partido.cargos.where(region_id: r)
-    #   all_cargos = []
-    #   cargos.each do |c|
-    #     all_cargos.push( { 'persona' => c.persona.nombre, 'cargo' => c.tipo_cargo.titulo, 'comuna' => c.comuna.nombre } )
-    #   end
-    #   @datos_cargos.push( {'region' => r.nombre, 'cargos' => all_cargos} )
-    # end
-    @datos_cargos = []
-    #@autoridades = @partido.cargos.joins(:tipo_cargo).joins(:persona).select('cargos.*, tipo_cargos.*, personas.*').where(TipoCargo.arel_table[:autoridad].eq(true)).order(TipoCargo.arel_table[:titulo])
-    @autoridades = @partido.cargos.joins(:tipo_cargo).joins(:persona).where(TipoCargo.arel_table[:autoridad].eq(true)).order(TipoCargo.arel_table[:titulo])
-
-    if params[:nombre]
-      @autoridades = @autoridades.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
+    @autoridades = []
+    t_cargos = @partido.tipo_cargos.where(autoridad: true)
+    t_cargos.each do |tc|
+      cargos = @partido.cargos.where(tipo_cargo_id: tc)
+      if !params["region"].blank?
+        cargos = cargos.where(region_id: params["region"])
+      end
+      if !params["genero"].blank?
+        personas_id = @partido.personas.where(genero: params["genero"])
+        cargos = cargos.where(persona_id: personas_id)
+      end
+      if !params["q"].blank?
+        n = params[:q].split(" ")[0]
+        a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
+        personas_id = Persona.where("lower(personas.nombre) = ? OR lower(personas.apellidos) = ?", n.downcase, a.downcase)
+        cargos = cargos.where(persona_id: personas_id)
+      end
+      @autoridades << {"type" => tc.titulo, "cargos" => cargos}
     end
   end
 
