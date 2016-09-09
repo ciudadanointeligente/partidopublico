@@ -9,6 +9,7 @@
         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
           <%= e['type'] %>
         </a>
+        <span class="badge"><%= e['dates'].count %></span>
       </h4>
     </div>
     <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">

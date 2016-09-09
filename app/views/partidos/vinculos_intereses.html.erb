@@ -1,9 +1,28 @@
-<% @entidades.each do |e| %>
-<ul>
-  <li><%= e.entidad %></li>
-  <li><%= e.descripcion %></li>
-  <% if !e.documento_file_name.nil? %>
-    <li><%= link_to e.documento_file_name, e.documento.url %></li>
-  <% end %>
-</ul>
-  <% end %>
+<h3>Declaración de Intereses y Patrimonio</h3>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Entidad</th>
+        <th>Vínculo</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha Término</th>
+        <th>Descripción</th>
+        <th>Documento</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @entidades.each do |e| %>
+      <tr>
+        <td><%= e.entidad %></td>
+        <td><%= e.tipo_vinculo %></td>
+        <td><%= e.fecha_inicio %></td>
+        <td><%= e.fecha_fin %></td>
+        <td><%= e.descripcion %></td>
+        <td><% if !e.documento_file_name.nil? %><%= link_to e.documento.url do %><i class="fa fa-download"></i> Descargar<% end %><% end %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

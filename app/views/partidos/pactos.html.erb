@@ -1,14 +1,30 @@
-<% @pactos.each do |p| %>
-<ul>
-  <li><%= p.nombre_pacto %></li>
-  <li><%= p.descripcion %></li>
-  <li><%= p.ano_eleccion %></li>
-  <li>Partidos:
-    <ul>
-      <% p.partidos.each do |partido| %>
-      <li><%= partido.nombre %></li>
+<h3>Pactos</h3>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Pacto</th>
+        <th>Descripción</th>
+        <th>Año</th>
+        <th>Partidos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @pactos.each do |p| %>
+      <tr>
+        <td><%= p.nombre_pacto %></td>
+        <td><%= p.descripcion %></td>
+        <td><%= p.ano_eleccion %></td>
+        <td>
+          <ul>
+            <% p.partidos.each do |partido| %>
+            <li><%= partido.nombre %></li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
       <% end %>
-    </ul>
-  </li>
-</ul>
-<% end %>
+    </tbody>
+  </table>
+</div>
