@@ -118,18 +118,19 @@ h4{
 	}
 }
 
-h5 {
+h5{
 	color: $blue;
 	font-size: 22px;
+	font-weight: 700;
 }
 
-h6 {
+h6{
 	font-weight: 700;
 	color: $blue;
-	font-size: 46px
+	font-size: 46px;
 }
 
-h7 {
+h7{
 	text-transform: uppercase;
   letter-spacing: 1.2px;
   font-size: 9px;
@@ -338,6 +339,23 @@ input[type="submit"]{
 		}
 	}
 }
+
+.monto{
+	color: $blue;
+	font-size: 18px;
+	font-weight: 700;
+	text-align: right;
+}
+
+.total{
+	color: $blue;
+	font-size: 22px;
+	font-weight: 700;
+	&.monto{
+		text-align: right;
+	}
+}
+
 
 /*ELEMENTS*/
 .panel-default > .panel-heading .badge{

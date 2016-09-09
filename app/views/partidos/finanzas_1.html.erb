@@ -6,45 +6,46 @@
 <% end %>
 
 <div class="row">
-  <div id="header"></div>
-  <table class="table">
-    <thead>
-      <tr>
-        <td>
-          Partido
-        </td>
-        <td>
-          <%=  @fecha %>
-        </td>
-        <td>
-          Monto Total
-        </td>
-      </tr>
-    </thead>
-    <tbody>
-      <% @datos_ingresos_ordinarios.each_with_index do |linea, i| %>
+  <div class="col-md-12">
+    <div id="header"></div>
+    <%=  @fecha %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            Concepto
+          </th>
+          <th>
+            Monto Total
+          </th>
+          <th>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @datos_ingresos_ordinarios.each_with_index do |linea, i| %>
 
-      <tr>
-        <td>
-          <%= linea['text'] %>
-        </td>
-        <td>
-          <div id="barras_<%= i.to_s %>"></div>
-        </td>
-        <td>
-          <%= linea['value'] %>
-        </td>
-      </tr>
-      <% end %>
-      <tr>
-        <td> TOTAL </td>
-        <td> <div id='footer'></div> </td>
-        <td> <%= @datos_ingresos_ordinarios_totals['publicos'] + @datos_ingresos_ordinarios_totals['privados'] %> </td>
+        <tr>
+          <td>
+            <%= linea['text'] %>
+          </td>
+          <td>
+            <div id="barras_<%= i.to_s %>"></div>
+          </td>
+          <td class="monto">
+            $<%= linea['value'] %>
+          </td>
+        </tr>
+        <% end %>
+        <tr>
+          <td class="total">Total</td>
+          <td><div id='footer'></div></td>
+          <td class="total monto">$<%= @datos_ingresos_ordinarios_totals['publicos'] + @datos_ingresos_ordinarios_totals['privados'] %></td>
 
-      </tr>
-    </tbody>
-  </table>
-
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <script>
