@@ -14,6 +14,11 @@
 #  logo_content_type :string
 #  logo_file_size    :integer
 #  logo_updated_at   :datetime
+#  user_id           :integer
+#
+# Indexes
+#
+#  index_partidos_on_user_id  (user_id)
 #
 
 FactoryGirl.define do
