@@ -12,11 +12,18 @@
       <% if f.object.id.nil? %>
         <%= f.input :entidad %>
         <%= f.input :descripcion %>
+        <%= label_tag(:tipo_vinculo, "Vínculo") %>
+        <%= f.select(:tipo_vinculo, options_for_select(ParticipacionEntidad.tipos_vinculo)) %>
+        <%= f.input :fecha_inicio, html5: true %>
+        <%= f.input :fecha_fin, html5: true %>
         <%= f.input :documento %>
       <% else %>
         <ul>
           <li><%= f.object.entidad %></li>
           <li><%= f.object.descripcion %></li>
+          <li><%= f.object.tipo_vinculo %></li>
+          <li><%= f.object.fecha_inicio %></li>
+          <li><%= f.object.fecha_fin %></li>
           <% if !f.object.documento_file_name.blank? %>
           <li><a href="<%= f.object.documento.url %>" target="_blank"><i class="fa fa-file-text-o"></i> <%= f.object.documento_file_name %></a> (<%= number_to_human_size f.object.documento.size %>)</li>
           <% end %>

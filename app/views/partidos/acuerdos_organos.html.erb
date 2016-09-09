@@ -33,7 +33,7 @@
                 <td><%= acuerdo["fecha"] %></td>
                 <td><%= acuerdo["region"] %></td>
                 <td><%= acuerdo["organo_interno"] %></td>
-                <td><%= !acuerdo["documento"].blank? ? link_to(acuerdo["documento"], acuerdo["documento_url"]) : '' %></td>
+                <td><%= !acuerdo["documento"].blank? ? link_to(acuerdo["documento_url"]) do '<i class="fa fa-download"></i> Descargar'.html_safe end : '' %></td>
               </tr>
               <% end %>
             </tbody>
