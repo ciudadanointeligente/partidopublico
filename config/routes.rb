@@ -68,6 +68,7 @@ Rails.application.routes.draw do
     get "/regiones", to: 'partidos#regiones'
     get "/sedes_partido", to: 'partidos#sedes_partido'
     get "/autoridades", to: 'partidos#autoridades'
+    get "/representantes", to: 'partidos#representantes'
     get "/vinculos_e_intereses", to: 'partidos#vinculos_intereses'
     get "/pactos", to: 'partidos#pactos'
     get "/sanciones", to: 'partidos#sanciones'
@@ -78,9 +79,12 @@ Rails.application.routes.draw do
     get "/eleccion_popular", to: 'partidos#eleccion_popular'
     get "/organos_internos", to: 'partidos#organos_internos'
     get "/elecciones_internas", to: 'partidos#elecciones_internas'
+    get "/acuerdos_organos", to: "partidos#acuerdos_organos"
+    get "/estructura_organica", to: "partidos#estructura_organica"
     resources :cargos
     resources :personas
     resources :tipo_cargos
+    resources :organo_internos
     resources :regions do
       resources :comunas
     end

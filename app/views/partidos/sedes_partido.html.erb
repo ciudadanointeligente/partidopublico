@@ -1,23 +1,26 @@
-<% @datos_sedes.each do |r| %>
-  <% if r['sedes'].any? %>
-  <h3><%= r['region'] %></h3>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Comuna</th>
-        <th>Direccion</th>
-        <th>Contacto</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% r['sedes'].each do |s| %>
-      <tr>
-        <td><%= s['comuna'] %></td>
-        <td><%= s['direccion'] %></td>
-        <td><%= s['contacto'] %></td>
-      </tr>
+<h7><%= @partido.nombre %> > Transparencia > Presencia nacional</h7>
+<h3>Domicilio y sedes de contacto</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Región</th>
+      <th>Comuna</th>
+      <th>Dirección</th>
+      <th>Contacto</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @datos_sedes.each do |r| %>
+      <% if r['sedes'].any? %>
+        <% r['sedes'].each do |s| %>
+        <tr>
+          <td><%= r['region'] %></td>
+          <td><%= s['comuna'] %></td>
+          <td><%= s['direccion'] %></td>
+          <td><%= s['contacto'] %></td>
+        </tr>
+        <% end %>
       <% end %>
-    </tbody>
-  </table>
-  <% end %>
-<% end %>
+    <% end %>
+  </tbody>
+</table>

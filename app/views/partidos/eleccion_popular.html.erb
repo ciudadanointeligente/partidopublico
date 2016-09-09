@@ -1,11 +1,12 @@
-<h3>Elección Popular</h3>
+<h7><%= @partido.nombre %> > Transparencia > Cómo participar</h7>
+<h3>Postular a cargos de elección popular</h3>
 
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
   <% @e_popular.each_with_index do |e, index| %>
     <% if e['dates'].count > 0 %>
   <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="heading-<%= index %>">
-      <h4 class="panel-title">
+    <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
+      <h4 class="panel-title intern">
         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
           <%= e['type'] %>
         </a>

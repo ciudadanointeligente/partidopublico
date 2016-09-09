@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160811140724) do
+ActiveRecord::Schema.define(version: 20160907192951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,11 +115,13 @@ ActiveRecord::Schema.define(version: 20160811140724) do
     t.date     "fecha_hasta"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.integer  "organo_interno_id"
   end
 
   add_index "cargos", ["circunscripcion_id"], name: "index_cargos_on_circunscripcion_id", using: :btree
   add_index "cargos", ["comuna_id"], name: "index_cargos_on_comuna_id", using: :btree
   add_index "cargos", ["distrito_id"], name: "index_cargos_on_distrito_id", using: :btree
+  add_index "cargos", ["organo_interno_id"], name: "index_cargos_on_organo_interno_id", using: :btree
   add_index "cargos", ["partido_id"], name: "index_cargos_on_partido_id", using: :btree
   add_index "cargos", ["persona_id"], name: "index_cargos_on_persona_id", using: :btree
   add_index "cargos", ["region_id"], name: "index_cargos_on_region_id", using: :btree
@@ -562,6 +564,7 @@ ActiveRecord::Schema.define(version: 20160811140724) do
   add_foreign_key "cargos", "circunscripcions"
   add_foreign_key "cargos", "comunas"
   add_foreign_key "cargos", "distritos"
+  add_foreign_key "cargos", "organo_internos"
   add_foreign_key "cargos", "partidos"
   add_foreign_key "cargos", "personas"
   add_foreign_key "cargos", "regions"
