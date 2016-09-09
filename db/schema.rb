@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160811140724) do
+ActiveRecord::Schema.define(version: 20160907192951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,11 +115,13 @@ ActiveRecord::Schema.define(version: 20160811140724) do
     t.date     "fecha_hasta"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.integer  "organo_interno_id"
   end
 
   add_index "cargos", ["circunscripcion_id"], name: "index_cargos_on_circunscripcion_id", using: :btree
   add_index "cargos", ["comuna_id"], name: "index_cargos_on_comuna_id", using: :btree
   add_index "cargos", ["distrito_id"], name: "index_cargos_on_distrito_id", using: :btree
+  add_index "cargos", ["organo_interno_id"], name: "index_cargos_on_organo_interno_id", using: :btree
   add_index "cargos", ["partido_id"], name: "index_cargos_on_partido_id", using: :btree
   add_index "cargos", ["persona_id"], name: "index_cargos_on_persona_id", using: :btree
   add_index "cargos", ["region_id"], name: "index_cargos_on_region_id", using: :btree
@@ -373,7 +375,10 @@ ActiveRecord::Schema.define(version: 20160811140724) do
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
+    t.integer  "user_id"
   end
+
+  add_index "partidos", ["user_id"], name: "index_partidos_on_user_id", using: :btree
 
   create_table "partidos_regions", id: false, force: :cascade do |t|
     t.integer "partido_id", null: false
@@ -541,6 +546,33 @@ ActiveRecord::Schema.define(version: 20160811140724) do
   add_index "transferencias", ["partido_id"], name: "index_transferencias_on_partido_id", using: :btree
   add_index "transferencias", ["region_id"], name: "index_transferencias_on_region_id", using: :btree
 
+  create_table "users", force: :cascade do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet     "current_sign_in_ip"
+    t.inet     "last_sign_in_ip"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
+    t.integer  "failed_attempts",        default: 0,  null: false
+    t.string   "unlock_token"
+    t.datetime "locked_at"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
+
   create_table "versions", force: :cascade do |t|
     t.string   "item_type",  null: false
     t.integer  "item_id",    null: false
@@ -562,6 +594,7 @@ ActiveRecord::Schema.define(version: 20160811140724) do
   add_foreign_key "cargos", "circunscripcions"
   add_foreign_key "cargos", "comunas"
   add_foreign_key "cargos", "distritos"
+  add_foreign_key "cargos", "organo_internos"
   add_foreign_key "cargos", "partidos"
   add_foreign_key "cargos", "personas"
   add_foreign_key "cargos", "regions"
@@ -581,6 +614,7 @@ ActiveRecord::Schema.define(version: 20160811140724) do
   add_foreign_key "marco_internos", "partidos"
   add_foreign_key "organo_internos", "partidos"
   add_foreign_key "participacion_entidads", "partidos"
+  add_foreign_key "partidos", "users"
   add_foreign_key "permissions", "admins"
   add_foreign_key "permissions", "partidos"
   add_foreign_key "personas", "partidos"

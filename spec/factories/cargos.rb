@@ -14,12 +14,14 @@
 #  fecha_hasta        :date
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  organo_interno_id  :integer
 #
 # Indexes
 #
 #  index_cargos_on_circunscripcion_id  (circunscripcion_id)
 #  index_cargos_on_comuna_id           (comuna_id)
 #  index_cargos_on_distrito_id         (distrito_id)
+#  index_cargos_on_organo_interno_id   (organo_interno_id)
 #  index_cargos_on_partido_id          (partido_id)
 #  index_cargos_on_persona_id          (persona_id)
 #  index_cargos_on_region_id           (region_id)

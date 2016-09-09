@@ -1,13 +1,18 @@
-<h3>Acuerdos órganos intermedios colegiados</h3>
+<h3>Estructura Orgánica</h3>
+
+<%= form_tag partido_estructura_organica_path, :method =>  :get do |f| %>
+  <%= text_field_tag :q %>
+  <%= submit_tag 'Buscar' %>
+<% end %>
 
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-  <% @acuerdos.each_with_index do |a, index| %>
-    <% if a['agreements'].count > 0 %>
+
+  <% @datos.each_with_index do |a, index| %>
     <div class="panel panel-default">
       <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
         <h4 class="panel-title intern">
           <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
-            <%= a['type'] %>
+            <%= a[:organo_interno].nombre %> <%= a[:miembros].count %>
           </a>
         </h4>
       </div>
@@ -16,30 +21,26 @@
           <table class="table">
             <thead>
               <tr>
-                <th>Nro</th>
-                <th>Tema</th>
-                <th>Fecha</th>
-                <th>Región</th>
-                <th>Organo</th>
-                <th>Documento</th>
+                <th>Nombre</th>
+                <th>Cargo</th>
+                <th>Intereses</th>
+                <th>Patrimoni0</th>
               </tr>
             </thead>
             <tbody>
-              <% a["agreements"].each do |acuerdo|%>
+              <% a[:miembros].each do |cargo| %>
               <tr>
-                <td><%= acuerdo["numero"] %></td>
-                <td><%= acuerdo["tema"] %></td>
-                <td><%= acuerdo["fecha"] %></td>
-                <td><%= acuerdo["region"] %></td>
-                <td><%= acuerdo["organo_interno"] %></td>
-                <td><%= !acuerdo["documento"].blank? ? link_to(acuerdo["documento"], acuerdo["documento_url"]) : '' %></td>
+                <td><%= cargo[:persona].nombre + ' ' + cargo[:persona].apellidos  %></td>
+                <td><%= cargo[:tipo_cargo].titulo  %></td>
+                <td><%= cargo[:persona].intereses  %></td>
+                <td><%= cargo[:persona].patrimonio  %></td>
               </tr>
               <% end %>
             </tbody>
           </table>
         </div>
+        <%= a[:organo_interno].funciones %>
       </div>
     </div>
     <% end %>
-  <% end %>
 </div>

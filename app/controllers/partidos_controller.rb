@@ -7,7 +7,7 @@ class PartidosController < ApplicationController
                             :vinculos_intereses, :pactos, :sanciones,
                             :finanzas_1, :finanzas_2, :finanzas_5,
                             :afiliacion_desafiliacion, :eleccion_popular, :organos_internos, :elecciones_internas,
-                            :representantes, :acuerdos_organos]
+                            :representantes, :acuerdos_organos, :estructura_organica]
 
 
   # GET /partidos
@@ -448,6 +448,29 @@ class PartidosController < ApplicationController
         acuerdos << {"numero" => a.numero, "tema" => a.tema, "fecha" => a.fecha, "region" => Region.find(a.region.to_i).nombre, "organo_interno" => a.organo_interno.nombre, "documento" => a.documento_file_name, "documento_url" => a.documento.url}
       end
       @acuerdos << { "type" => t, "agreements" => acuerdos }
+    end
+
+  end
+
+  def estructura_organica
+    organos_internos = @partido.organo_internos
+    @datos = []
+
+    organos_internos.each do |o|
+      members = []
+      o.cargos.each do |m|
+        if params[:q]
+          n = params[:q].split(" ")[0]
+          a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
+          if m.persona.nombre.downcase.include?(n.downcase) || m.persona.apellidos.downcase.include?(a.downcase)
+            members << {:cargo => m, :persona => m.persona, :tipo_cargo => m.tipo_cargo}
+          end
+        else
+          members << {:cargo => m, :persona => m.persona, :tipo_cargo => m.tipo_cargo}
+        end
+
+      end
+      @datos << {:organo_interno => o, :miembros => members}
     end
 
   end

@@ -1,8 +1,50 @@
+<h3>Ingresos ordinarios</h3>
+
 <%= form_tag partido_finanzas_1_path, :method =>  :get do |f| %>
   <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
 <% end %>
 
-<div id="barras"></div>
+<div class="row">
+  <div id="header"></div>
+  <table class="table">
+    <thead>
+      <tr>
+        <td>
+          Partido
+        </td>
+        <td>
+          <%=  @fecha %>
+        </td>
+        <td>
+          Monto Total
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @datos_ingresos_ordinarios.each_with_index do |linea, i| %>
+
+      <tr>
+        <td>
+          <%= linea['text'] %>
+        </td>
+        <td>
+          <div id="barras_<%= i.to_s %>"></div>
+        </td>
+        <td>
+          <%= linea['value'] %>
+        </td>
+      </tr>
+      <% end %>
+      <tr>
+        <td> TOTAL </td>
+        <td> <div id='footer'></div> </td>
+        <td> <%= @datos_ingresos_ordinarios_totals['publicos'] + @datos_ingresos_ordinarios_totals['privados'] %> </td>
+
+      </tr>
+    </tbody>
+  </table>
+
+</div>
 
 <script>
 $(document).ready(function(){
@@ -10,10 +52,13 @@ $(document).ready(function(){
   var data_totals = <%=  @datos_ingresos_ordinarios_totals.to_json.html_safe %>;
   var fechas = <%=  @fechas_datos.to_json.html_safe %>;
   var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
-  if (fechas.length > 0){
-    Raphael("barras",700, 500 ).ingresos_ordinarios_chart(data, data_totals,fecha_seleccionada);
-  } else {
-    Raphael("barras",700, 200 ).no_data_chart()
+
+  Raphael("header",500, 40 ).ingreso_ord_front_header();
+
+  for(var i=0; i < data.length; i++){
+    Raphael("barras_" + i,300, 30 ).ingreso_ord_front_bar(data[i]);
   }
+
+  Raphael("footer",500, 40 ).ingreso_ord_front_footer(data_totals);
 });
 </script>

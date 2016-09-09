@@ -1,10 +1,12 @@
 class OrganoInternosController < ApplicationController
   before_action :set_organo_interno, only: [:show, :edit, :update, :destroy]
+  before_action :set_partido, only: [:index]
+  before_filter :set_paper_trail_whodunnit
 
   # GET /organo_internos
   # GET /organo_internos.json
   def index
-    @organo_internos = OrganoInterno.all
+    @organo_internos = OrganoInterno.where partido: @partido
   end
 
   # GET /organo_internos/1
@@ -69,9 +71,13 @@ class OrganoInternosController < ApplicationController
       @organo_interno = OrganoInterno.find(params[:id])
     end
 
+    def set_partido
+      @partido = Partido.find(params[:partido_id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def organo_interno_params
-      params.require(:organo_interno).permit(:nombre, :funciones, personas_attributes: [:id, 
+      params.require(:organo_interno).permit(:nombre, :funciones, personas_attributes: [:id,
                                                                                         :fecha_nacimiento,
                                                                                         :nivel_estudios,
                                                                                         :nombre,
@@ -87,4 +93,3 @@ class OrganoInternosController < ApplicationController
                                                                                         )
     end
 end
-

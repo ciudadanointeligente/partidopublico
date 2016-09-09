@@ -14,6 +14,11 @@
 #  logo_content_type :string
 #  logo_file_size    :integer
 #  logo_updated_at   :datetime
+#  user_id           :integer
+#
+# Indexes
+#
+#  index_partidos_on_user_id  (user_id)
 #
 
 class Partido < ActiveRecord::Base
@@ -46,6 +51,7 @@ class Partido < ActiveRecord::Base
     has_many :cargos, dependent: :destroy
     has_many :tipo_cargos, dependent: :destroy
     has_many :ingreso_ordinarios, dependent: :destroy
+    has_many :egreso_ordinarios, dependent: :destroy
 
     accepts_nested_attributes_for :marco_interno, allow_destroy: true
     accepts_nested_attributes_for :organo_internos, allow_destroy: true
