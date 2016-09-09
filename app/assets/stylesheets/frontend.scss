@@ -370,8 +370,6 @@ input[type="submit"]{
 	background-color: $orange;
 }
 
-
-
 /*PANELS*/
 .panel{
 	border: none;
@@ -382,6 +380,18 @@ input[type="submit"]{
 	background-color: transparent;
 	border: 3px solid $orange;
 	border-radius: 0px;
+}
+
+/*MODAL*/
+.modal-header{
+	border-bottom: none;
+	background-color: $orange;
+}
+
+.modal-content{
+	border-radius: 0;
+	box-shadow: none;
+	border: none;
 }
 
 /*MEDIA-QUERIS*/
