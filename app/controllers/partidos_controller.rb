@@ -7,7 +7,9 @@ class PartidosController < ApplicationController
                             :vinculos_intereses, :pactos, :sanciones,
                             :finanzas_1, :finanzas_2, :finanzas_5,
                             :afiliacion_desafiliacion, :eleccion_popular, :organos_internos, :elecciones_internas,
-                            :representantes, :acuerdos_organos, :estructura_organica]
+                            :representantes, :acuerdos_organos, :estructura_organica, :actividades_publicas,
+                            :intereses_patrimonios
+                          ]
 
 
   # GET /partidos
@@ -437,7 +439,7 @@ class PartidosController < ApplicationController
       end
       @representantes << {"type" => tc.titulo, "representatives" => filter_by}
     end
-    
+
   end
 
   def acuerdos_organos
@@ -475,6 +477,12 @@ class PartidosController < ApplicationController
       @datos << {:organo_interno => o, :miembros => members}
     end
 
+  end
+
+  def actividades_publicas
+  end
+
+  def intereses_patrimonios
   end
 
   private
