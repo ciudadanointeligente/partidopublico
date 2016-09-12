@@ -1,17 +1,19 @@
 <h7><%= @partido.nombre %> > Transparencia > Presencia nacional</h7>
 <h3>Domicilio y sedes de contacto</h3>
-<table class="table">
-  <thead>
-    <tr>
-      <th>Región</th>
-      <th>Comuna</th>
-      <th>Dirección</th>
-      <th>Contacto</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @datos_sedes.each do |r| %>
-      <% if r['sedes'].any? %>
+<% @datos_sedes.each do |r| %>
+  <% if r['sedes'].any? %>
+  <h4><%= r['region'] %></h4>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+      	  <th>Región</th>
+          <th>Comuna</th>
+          <th>Direccion</th>
+          <th>Contacto</th>
+        </tr>
+      </thead>
+      <tbody>
         <% r['sedes'].each do |s| %>
         <tr>
           <td><%= r['region'] %></td>
@@ -20,7 +22,8 @@
           <td><%= s['contacto'] %></td>
         </tr>
         <% end %>
-      <% end %>
-    <% end %>
-  </tbody>
-</table>
+      </tbody>
+    </table>
+  </div>
+  <% end %>
+<% end %>

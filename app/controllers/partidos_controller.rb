@@ -173,7 +173,7 @@ class PartidosController < ApplicationController
 
     @partido.regions.each do |r|
       afiliados = Afiliacion.where(partido_id: @partido, region_id: r, fecha_datos: last_date)
-      if afiliados.any?
+      # if afiliados.any?
         h = 0 #hombres
         m = 0 #mujeres
         ph = 0 #promedio hombres
@@ -182,34 +182,38 @@ class PartidosController < ApplicationController
           h = h + a.hombres
           m = m + a.mujeres
           total = h+m
-          ph = (h*100)/total
-          pm = (m*100)/total
-        end
-        nh = nh + h #nacional hombres
-        nm = nm + m #nacional mujeres
-        total_n = nh+nm #total nacional
-        pnh = (nh*100)/total_n #promedio nacional hombres
-        pnm = (nm*100)/total_n #promedio nacional mujeres
-
-        region = { "region" => r.nombre, "ordinal" => r.ordinal, "hombres" => h, "porcentaje_hombres" => ph, "mujeres" => m, "porcentaje_mujeres" => pm, "total" => h + m, "desgloce" => [], "cargos" => [] }
-
-        region["cargos"] << {"type" => "autoridad", "nro_cargos" => @partido.cargos.where(:tipo_cargo_id => autoridad, :region_id => r).count}
-        region["cargos"] << {"type" => "cargo_interno", "nro_cargos" => @partido.cargos.where(:tipo_cargo_id => cargo_interno, :region_id => r).count}
-        region["cargos"] << {"type" => "representante", "nro_cargos" => @partido.cargos.where(:tipo_cargo_id => representante, :region_id => r).count}
-
-        participantes = 0
-        rangos.each do |rango|
-          participantes = @partido.afiliacions.where(:ano_nacimiento => Date.today.year-rango[1]..Date.today.year-rango[0], :region_id => r, fecha_datos: last_date)
-          ph = 0 #participantes hombres
-          pm = 0 #participantes mujeres
-          participantes.each do |np|
-            ph = ph + np.hombres
-            pm = pm + np.mujeres
+          if(total>0)
+            ph = (h*100)/total
+            pm = (m*100)/total
           end
-          region["desgloce"].push( rango[0].to_s+'-'+rango[1].to_s => ph + pm )
         end
-        @datos_region.push region
-      end
+        if(h>0 || m>0)
+          nh = nh + h #nacional hombres
+          nm = nm + m #nacional mujeres
+          total_n = nh+nm #total nacional
+          pnh = (nh*100)/total_n #promedio nacional hombres
+          pnm = (nm*100)/total_n #promedio nacional mujeres
+
+          region = { "region" => r.nombre, "ordinal" => r.ordinal, "hombres" => h, "porcentaje_hombres" => ph, "mujeres" => m, "porcentaje_mujeres" => pm, "total" => h + m, "desgloce" => [], "cargos" => [] }
+
+          region["cargos"] << {"type" => "autoridad", "nro_cargos" => @partido.cargos.where(:tipo_cargo_id => autoridad, :region_id => r).count}
+          region["cargos"] << {"type" => "cargo_interno", "nro_cargos" => @partido.cargos.where(:tipo_cargo_id => cargo_interno, :region_id => r).count}
+          region["cargos"] << {"type" => "representante", "nro_cargos" => @partido.cargos.where(:tipo_cargo_id => representante, :region_id => r).count}
+
+          participantes = 0
+          rangos.each do |rango|
+            participantes = @partido.afiliacions.where(:ano_nacimiento => Date.today.year-rango[1]..Date.today.year-rango[0], :region_id => r, fecha_datos: last_date)
+            ph = 0 #participantes hombres
+            pm = 0 #participantes mujeres
+            participantes.each do |np|
+              ph = ph + np.hombres
+              pm = pm + np.mujeres
+            end
+            region["desgloce"].push( rango[0].to_s+'-'+rango[1].to_s => ph + pm )
+          end
+          @datos_region.push region
+        end
+      # end
 
     end
 
@@ -247,21 +251,24 @@ class PartidosController < ApplicationController
   end
 
   def autoridades
-    # @datos_cargos = []
-    # @partido.regions.each do |r|
-    #   cargos = @partido.cargos.where(region_id: r)
-    #   all_cargos = []
-    #   cargos.each do |c|
-    #     all_cargos.push( { 'persona' => c.persona.nombre, 'cargo' => c.tipo_cargo.titulo, 'comuna' => c.comuna.nombre } )
-    #   end
-    #   @datos_cargos.push( {'region' => r.nombre, 'cargos' => all_cargos} )
-    # end
-    @datos_cargos = []
-    #@autoridades = @partido.cargos.joins(:tipo_cargo).joins(:persona).select('cargos.*, tipo_cargos.*, personas.*').where(TipoCargo.arel_table[:autoridad].eq(true)).order(TipoCargo.arel_table[:titulo])
-    @autoridades = @partido.cargos.joins(:tipo_cargo).joins(:persona).where(TipoCargo.arel_table[:autoridad].eq(true)).order(TipoCargo.arel_table[:titulo])
-
-    if params[:nombre]
-      @autoridades = @autoridades.where(Persona.arel_table[:nombre].matches("%" + params[:nombre] + "%"))
+    @autoridades = []
+    t_cargos = @partido.tipo_cargos.where(autoridad: true)
+    t_cargos.each do |tc|
+      cargos = @partido.cargos.where(tipo_cargo_id: tc)
+      if !params["region"].blank?
+        cargos = cargos.where(region_id: params["region"])
+      end
+      if !params["genero"].blank?
+        personas_id = @partido.personas.where(genero: params["genero"])
+        cargos = cargos.where(persona_id: personas_id)
+      end
+      if !params["q"].blank?
+        n = params[:q].split(" ")[0]
+        a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
+        personas_id = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", n.downcase, a.downcase)
+        cargos = cargos.where(persona_id: personas_id)
+      end
+      @autoridades << {"type" => tc.titulo, "cargos" => cargos}
     end
   end
 
@@ -412,17 +419,25 @@ class PartidosController < ApplicationController
   def representantes
     @representantes = []
     t_cargos = @partido.tipo_cargos.where(representante: true)
+    by_gender = []
     t_cargos.each do |tc|
-      if params[:q]
+      filter_by = @partido.cargos.where(:tipo_cargo_id => tc.id)
+      if !params[:q].blank?
         n = params[:q].split(" ")[0]
         a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
-        personas = Persona.where("lower(personas.nombre) = ? OR lower(personas.apellidos) = ?", n.downcase, a.downcase)
-        @representantes << {"type" => tc.titulo, "representatives" => @partido.cargos.where(:tipo_cargo_id => tc.id, persona_id: personas)}
-      else
-        @representantes << {"type" => tc.titulo, "representatives" => @partido.cargos.where(:tipo_cargo_id => tc.id)}
+        personas = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", n.downcase, a.downcase)
+        filter_by = filter_by.where(:persona_id => personas)
       end
+      if !params[:genero].blank?
+        by_gender = @partido.personas.where(:genero => params[:genero])
+        filter_by = filter_by.where(:persona_id => by_gender)
+      end
+      if !params[:region].blank?
+        filter_by = filter_by.where(:region_id => params[:region])
+      end
+      @representantes << {"type" => tc.titulo, "representatives" => filter_by}
     end
-
+    
   end
 
   def acuerdos_organos

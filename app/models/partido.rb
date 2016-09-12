@@ -133,11 +133,11 @@ class Partido < ActiveRecord::Base
                                     ano_inicio_militancia:"1950",
                                     bio:"Ejemplo Biografía"
                                     )
-
       self.tipo_cargos << TipoCargo.new(titulo:"Alcalde", representante: true)
       self.tipo_cargos << TipoCargo.new(titulo:"Concejal", representante: true)
-      self.tipo_cargos << TipoCargo.new(titulo:"Diputado", representante: true)
       self.tipo_cargos << TipoCargo.new(titulo:"Senador", representante: true)
+      self.tipo_cargos << TipoCargo.new(titulo:"Diputado", representante: true)
+      self.tipo_cargos << TipoCargo.new(titulo:"Presidente", representante: true)
       self.tipo_cargos << TipoCargo.new(titulo:"Consejero Regional", representante: true)
 
       self.save

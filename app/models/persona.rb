@@ -66,19 +66,21 @@ class Persona < ActiveRecord::Base
     # end
 
     # a class method import, with file passed through as an argument
-    def self.import(file, partido_id)
+    def self.import(file, partido_id, email)
       partido = Partido.find partido_id
       personas_creadas = 0
       personas_actualizadas = 0
       errores = 0
       # a block that runs through a loop in our CSV data
+      exceptions = []
       CSV.foreach(file.path, headers: true) do |row|
         # creates a user for each row in the CSV file
-        row.to_hash.each {|key,value| row[key.parameterize.underscore] = value ; row.delete(key)}
-
+        #row.to_hash.each {|key,value| row[key.parameterize.underscore] = value ; row.delete(key)}
+        #puts row.to_hash
+        #puts row
         begin
           u = Persona.find_by_rut row.to_hash['rut']
-          PaperTrail.whodunnit = current_admin.email
+          PaperTrail.whodunnit = email
           if u.blank?
             u = Persona.new row.to_hash
             u.partido = partido
@@ -89,12 +91,14 @@ class Persona < ActiveRecord::Base
             personas_actualizadas = personas_actualizadas + 1
           end
           u.save
-        rescue
+        rescue Exception => e
           errores = errores + 1
+          puts e
+          exceptions << e
         end
 
       end
-      return_values = { :errores => errores, :personas_creadas => personas_creadas, :personas_actualizadas => personas_actualizadas }
+      return_values = { :errores => errores, :personas_creadas => personas_creadas, :personas_actualizadas => personas_actualizadas, :exceptions => exceptions }
     end
 
     def self.to_csv

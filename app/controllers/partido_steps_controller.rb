@@ -188,7 +188,7 @@ class PartidoStepsController < ApplicationController
                                                                 procedimientos_attributes: [:descripcion, :id, :_destroy]],
                                                     actividad_publicas_attributes: [:id, :fecha, :descripcion, :link, :_destroy],
                                                     acuerdos_attributes: [:id, :numero, :fecha, :tipo, :tema, :region, :organo_interno_id, :documento, :_destroy],
-                                                    participacion_entidads_attributes: [:id, :entidad, :documento, :tipo_vinculo, :descripcion, :_destroy],
+                                                    participacion_entidads_attributes: [:id, :entidad, :documento, :tipo_vinculo, :descripcion, :fecha_inicio, :fecha_fin, :_destroy],
                                                     pacto_electorals_attributes: [:id, :nombre_pacto, :ano_eleccion, :descripcion, :_destroy, :partido_ids => []],
                                                     sancions_attributes: [:id, :descripcion, :institucion, :tipo_sancion, :tipo_infraccion, :fecha, :documento, :_destroy],
                                                     region_ids: []
