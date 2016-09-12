@@ -164,10 +164,10 @@
         </li>
           <ul id="aside-menu-six" class="collapse <%= @menu == 5 ? 'in' : '' %>" role="tab" aria-labelledby="aside-menu-six">
             <li>
-              <a href="#">Publicación de los candidatos</a>
+              <%= link_to "Publicación de los candidatos", partido_publicacion_candidatos_path(:menu => 5) %>
             </li>
             <li>
-              <a href="#">Resultados elecciones internas</a>
+              <%= link_to "Resultados elecciones internas", partido_resultado_elecciones_internas_path(:menu => 5) %>
             </li>
             <li>
               <%= link_to "Acuerdos órganos intermedios colegiados", partido_acuerdos_organos_path(:menu => 5) %>

@@ -540,4 +540,9 @@ RSpec.describe PartidosController, type: :controller do
   end
   describe "GET #intereses_patrimonios" do
   end
+
+  describe "GET #publicacion_candidatos" do
+  end
+  describe "GET #resultado_elecciones_internas" do
+  end
 end

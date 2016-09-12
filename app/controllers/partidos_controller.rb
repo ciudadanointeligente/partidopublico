@@ -8,7 +8,7 @@ class PartidosController < ApplicationController
                             :finanzas_1, :finanzas_2, :finanzas_5,
                             :afiliacion_desafiliacion, :eleccion_popular, :organos_internos, :elecciones_internas,
                             :representantes, :acuerdos_organos, :estructura_organica, :actividades_publicas,
-                            :intereses_patrimonios
+                            :intereses_patrimonios, :publicacion_candidatos, :resultado_elecciones_internas
                           ]
 
 
@@ -483,6 +483,12 @@ class PartidosController < ApplicationController
   end
 
   def intereses_patrimonios
+  end
+
+  def publicacion_candidatos
+  end
+
+  def resultado_elecciones_internas
   end
 
   private
