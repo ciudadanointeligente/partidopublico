@@ -79,16 +79,19 @@
     }
   }
 </script>
+<section class=" comparacion">
   <div class="container">
     <div class="row">
-      <h2>Compara Partidos</h2>
+      <h2 class="text-center">Compara Partidos</h2>
 
       <%= form_tag comparisons_path, :method =>  :get do |f| %>
         <ul class="list-inline">
           <% @partidos.each do |partido| %>
           <li>
+            <div class="col-md-4">
             <%= check_box_tag 'partido_ids[]', partido.id %>
             <%= h partido.sigla %>
+            </div>
           </li>
           <% end %>
           <li><input type="checkbox" name="all" id="all" data-checked="false" onclick="select_all(document.getElementById('all').dataset.checked)"> <label for="all">todos</label></li>
@@ -99,17 +102,21 @@
         <%= submit_tag 'Comparar' %>
       <% end %>
     </div>
-    <main class="row">
+  </div>
+</section>
+
+<div class="container">
+  <div class="row">
+    <main class="col-md-12 board">
       <%= yield %>
     </main>
+  </div>
+</div>
 
     <footer class="col-md-12">
       <div class="container">
         footer
       </div>
     </footer>
-
-  </div>
-
 </body>
 </html>
