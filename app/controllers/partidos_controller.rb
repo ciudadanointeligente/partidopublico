@@ -416,9 +416,6 @@ class PartidosController < ApplicationController
     @representantes = []
     t_cargos = @partido.tipo_cargos.where(representante: true)
     by_gender = []
-    if !params[:genero].blank?
-      by_gender = @partido.personas.where(:genero => params[:genero])
-    end
     t_cargos.each do |tc|
       filter_by = @partido.cargos.where(:tipo_cargo_id => tc.id)
       if !params[:q].blank?
@@ -428,6 +425,7 @@ class PartidosController < ApplicationController
         filter_by = filter_by.where(:persona_id => personas)
       end
       if !params[:genero].blank?
+        by_gender = @partido.personas.where(:genero => params[:genero])
         filter_by = filter_by.where(:persona_id => by_gender)
       end
       if !params[:region].blank?
