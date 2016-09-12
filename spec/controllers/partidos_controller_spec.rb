@@ -459,9 +459,9 @@ RSpec.describe PartidosController, type: :controller do
 
       get :representantes, {:partido_id => partido.to_param}, valid_session
 
-      expect(assigns(:representantes)[5]['representatives'].count).to eq(1)
-      expect(assigns(:representantes)[5]['representatives']).to include(cargo_1)
-      expect(assigns(:representantes)[6]['representatives']).to include(cargo_2)
+      expect(assigns(:representantes)[6]['representatives'].count).to eq(1)
+      expect(assigns(:representantes)[6]['representatives']).to include(cargo_1)
+      expect(assigns(:representantes)[7]['representatives']).to include(cargo_2)
     end
 
     it "get an array of representantes searched by nombre or apellidos" do
@@ -479,8 +479,8 @@ RSpec.describe PartidosController, type: :controller do
 
       get :representantes, {:partido_id => partido.to_param, :q => "Juanito Connor"}, valid_session
 
-      expect(assigns(:representantes)[5]['representatives'].count).to eq(1)
       expect(assigns(:representantes)[6]['representatives'].count).to eq(1)
+      expect(assigns(:representantes)[7]['representatives'].count).to eq(1)
     end
 
     it "request by gender" do
@@ -504,8 +504,8 @@ RSpec.describe PartidosController, type: :controller do
 
       get :representantes, {:partido_id => partido.to_param, :genero => 'Femenino'}, valid_session
 
-      expect(assigns(:representantes)[6]['representatives'].count).to eq(partido.personas.where(:genero => 'Femenino').count)
-      expect(assigns(:representantes)[6]['representatives']).to include(cargo_2)
+      expect(assigns(:representantes)[7]['representatives'].count).to eq(partido.personas.where(:genero => 'Femenino').count)
+      expect(assigns(:representantes)[7]['representatives']).to include(cargo_2)
     end
 
     it "request by region" do
@@ -529,8 +529,8 @@ RSpec.describe PartidosController, type: :controller do
 
       get :representantes, {:partido_id => partido.to_param, :region => region_1.id}, valid_session
 
-      expect(assigns(:representantes)[5]['representatives']).to include(cargo_1)
-      expect(assigns(:representantes)[6]['representatives']).to include(cargo_2)
+      expect(assigns(:representantes)[6]['representatives']).to include(cargo_1)
+      expect(assigns(:representantes)[7]['representatives']).to include(cargo_2)
     end
   end
 
