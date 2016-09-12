@@ -1,6 +1,7 @@
 <h7><%= @partido.nombre %> > Transparencia > Cómo participar</h7>
 <h3>Afiliación y desafiliación</h3>
-<h4 class="total">Número total de afiliados: <%=@partido.afiliacions.count%></h4>
+<h4 style="float:left;margin:16px 10px 0 0;">Total de afiliados:</h4> <h6><%=@partido.afiliacions.count%></h6>
+<hr>
 <% @tramites.each do |t| %>
   <h4><%= t.nombre %></h4>
   <p><%= t.descripcion %></p>
