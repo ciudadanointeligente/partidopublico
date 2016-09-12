@@ -77,6 +77,6 @@ class TipoCargosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tipo_cargo_params
-      params.require(:tipo_cargo).permit(:id, :titulo, :partido_id, :representante, :autoridad, :cargo_interno)
+      params.require(:tipo_cargo).permit(:id, :titulo, :partido_id, :representante, :autoridad, :cargo_interno, :candidato)
     end
 end

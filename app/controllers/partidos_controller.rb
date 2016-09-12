@@ -483,6 +483,11 @@ class PartidosController < ApplicationController
   end
 
   def intereses_patrimonios
+    @intereses_patrimonios = []
+    tc_candidatos = @partido.tipo_cargos.where(candidato:true)
+    tc_candidatos.each do |tc|
+      @intereses_patrimonios << {"type" => tc.titulo, "cargos" => @partido.cargos.where(tipo_cargo_id:tc)}
+    end
   end
 
   def publicacion_candidatos

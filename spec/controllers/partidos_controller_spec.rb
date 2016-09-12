@@ -539,6 +539,42 @@ RSpec.describe PartidosController, type: :controller do
   describe "GET #actividades_publicas" do
   end
   describe "GET #intereses_patrimonios" do
+    it "array with cargos" do
+      partido = create(:partido)
+
+      region_1 = create(:region)
+      region_2 = create(:region)
+
+      comuna_1 = create(:comuna)
+      comuna_2 = create(:comuna)
+
+      partido.regions << [region_1, region_2]
+
+      tipo_cargo_senador = create(:tipo_cargo, partido_id: partido.id, titulo: "Senador", representante: true, candidato: true)
+      tipo_cargo_diputado = create(:tipo_cargo, partido_id: partido.id, titulo: "Diputado", representante: true, candidato: true)
+      tipo_cargo_ministro = create(:tipo_cargo, partido_id: partido.id, titulo: "Ministro", autoridad: true)
+
+      persona_1 = create(:persona, :nombre => "Juanito", :apellidos => "Ramirez", :rut => '1-2', :genero => 'Masculino', :partido_id => partido.id)
+      persona_2 = create(:persona, :nombre => "Juana", :apellidos => "Connor", :rut => '3-4', :genero => 'Femenino', :partido_id => partido.id)
+      persona_3 = create(:persona, :nombre => "Jean", :apellidos => "Connor", :rut => '4-4', :genero => 'Femenino', :partido_id => partido.id)
+      persona_4 = create(:persona, :nombre => "Jin", :apellidos => "Connor", :rut => '4-5', :genero => 'Femenino', :partido_id => partido.id)
+
+      cargo_senador_1 = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna_1.id, :persona_id => persona_1.id, :tipo_cargo_id => tipo_cargo_senador.id)
+      cargo_senador_2 = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna_1.id, :persona_id => persona_2.id, :tipo_cargo_id => tipo_cargo_senador.id)
+      cargo_diputado_1 = create(:cargo, :partido_id => partido.id, :region_id => region_2.id, :comuna_id => comuna_2.id, :persona_id => persona_3.id, :tipo_cargo_id => tipo_cargo_diputado.id)
+      cargo_ministro_1 = create(:cargo, :partido_id => partido.id, :region_id => region_2.id, :comuna_id => comuna_2.id, :persona_id => persona_4.id, :tipo_cargo_id => tipo_cargo_ministro.id)
+
+      get :intereses_patrimonios, {:partido_id => partido.to_param}, valid_session
+
+      cargos_candidato = partido.tipo_cargos.where(candidato:true)
+      expect(assigns(:intereses_patrimonios).count).to eq(cargos_candidato.count)
+
+      senador_id = cargos_candidato.where(titulo:"Senador")
+      expect(assigns(:intereses_patrimonios)[0]["cargos"].count).to eq(partido.cargos.where(tipo_cargo_id:senador_id).count)
+
+      ministro_id = cargos_candidato.where(titulo:"Ministro")
+      expect(assigns(:intereses_patrimonios)[0]["cargos"]).to_not include(cargo_ministro_1)
+    end
   end
 
   describe "GET #publicacion_candidatos" do

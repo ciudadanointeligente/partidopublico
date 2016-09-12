@@ -10,6 +10,7 @@
 #  cargo_interno :boolean
 #  representante :boolean
 #  autoridad     :boolean
+#  candidato     :boolean
 #
 # Indexes
 #

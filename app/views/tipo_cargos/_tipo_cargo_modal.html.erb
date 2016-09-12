@@ -8,6 +8,7 @@
       <%= f.input :representante, as: :boolean, label: "Representante Electo", input_html: { 'ng-model': "tipo_cargo.representante" } %>
       <%= f.input :autoridad, as: :boolean, label: "Autoridad Designada", input_html: { 'ng-model': "tipo_cargo.autoridad" } %>
       <%= f.input :cargo_interno, as: :boolean, label: "Cargo Interno del Partido", input_html: { 'ng-model': "tipo_cargo.cargo_interno" } %>
+      <%= f.input :candidato, as: :boolean, label: "Candidato", input_html: { 'ng-model': "tipo_cargo.candidato" } %>
     <% end %>
   </div>
   <div class="modal-footer">
