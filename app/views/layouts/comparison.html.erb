@@ -87,19 +87,23 @@
       <%= form_tag comparisons_path, :method =>  :get do |f| %>
         <ul class="list-inline">
           <% @partidos.each do |partido| %>
+          <div class="col-md-4">
+
           <li>
-            <div class="col-md-4">
             <%= check_box_tag 'partido_ids[]', partido.id %>
             <%= h partido.sigla %>
-            </div>
           </li>
+        </div>
+
           <% end %>
           <li><input type="checkbox" name="all" id="all" data-checked="false" onclick="select_all(document.getElementById('all').dataset.checked)"> <label for="all">todos</label></li>
         </ul>
         <br>
-        <%= select_tag :category, options_for_select(categories), prompt: "Seleccionar un tema" %>
-        <br>
-        <%= submit_tag 'Comparar' %>
+        <div class="col-md-12 text-center">
+          <%= select_tag :category, options_for_select(categories), prompt: "Seleccionar un tema" %>
+          <br>
+          <%= submit_tag 'Comparar' %>
+        </div>
       <% end %>
     </div>
   </div>
