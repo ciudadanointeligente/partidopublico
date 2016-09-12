@@ -265,7 +265,7 @@ class PartidosController < ApplicationController
       if !params["q"].blank?
         n = params[:q].split(" ")[0]
         a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
-        personas_id = Persona.where("lower(personas.nombre) = ? OR lower(personas.apellidos) = ?", n.downcase, a.downcase)
+        personas_id = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", n.downcase, a.downcase)
         cargos = cargos.where(persona_id: personas_id)
       end
       @autoridades << {"type" => tc.titulo, "cargos" => cargos}
@@ -425,7 +425,7 @@ class PartidosController < ApplicationController
       if !params[:q].blank?
         n = params[:q].split(" ")[0]
         a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
-        personas = Persona.where("lower(personas.nombre) = ? OR lower(personas.apellidos) = ?", n.downcase, a.downcase)
+        personas = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", n.downcase, a.downcase)
         filter_by = filter_by.where(:persona_id => personas)
       end
       if !params[:genero].blank?
@@ -437,7 +437,7 @@ class PartidosController < ApplicationController
       end
       @representantes << {"type" => tc.titulo, "representatives" => filter_by}
     end
-
+    
   end
 
   def acuerdos_organos
