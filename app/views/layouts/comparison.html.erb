@@ -91,15 +91,15 @@
 
           <li>
             <%= check_box_tag 'partido_ids[]', partido.id %>
-            <%= h partido.sigla %>
+            <%= h partido.nombre %>
           </li>
         </div>
-
           <% end %>
-          <li><input type="checkbox" name="all" id="all" data-checked="false" onclick="select_all(document.getElementById('all').dataset.checked)"> <label for="all">todos</label></li>
+          <li><input type="checkbox" name="all" id="all" data-checked="false" onclick="select_all(document.getElementById('all').dataset.checked)"> <label for="all">Seleccionar todos los partidos</label></li>
         </ul>
-        <br>
         <div class="col-md-12 text-center">
+          <br>
+
           <%= select_tag :category, options_for_select(categories), prompt: "Seleccionar un tema" %>
           <br>
           <%= submit_tag 'Comparar' %>
