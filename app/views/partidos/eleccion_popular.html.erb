@@ -1,5 +1,6 @@
 <h7><%= @partido.nombre %> > Transparencia > Cómo participar</h7>
 <h3>Postular a cargos de elección popular</h3>
+<h4>Postulaciones</h4>
 
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
   <% @e_popular.each_with_index do |e, index| %>
@@ -10,6 +11,7 @@
         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
           <%= e['type'] %>
         </a>
+        <span class="badge"><%= e['dates'].count %></span>
       </h4>
     </div>
     <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">

@@ -1,30 +1,49 @@
 <h7><%= @partido.nombre %> > Transparencia > Presencia nacional</h7>
 <h3>Autoridades designadas</h3>
 
-<%= form_tag partido_autoridades_path, :method =>  :get do |f| %>
-  <%= text_field_tag :nombre %>
-  <%= submit_tag 'Buscar' %>
+<%= form_tag partido_autoridades_path, :method =>  :get, class: 'form-inline' do |f| %>
+  <%= text_field_tag :q, params[:q] || "", class: "form-control" %>
+  <%= select_tag "region", options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
+  <%= select_tag "genero", options_for_select(["Masculino", "Femenino"], params[:genero] || ""), include_blank: "Género", class: "form-control" %>
+  <%= submit_tag 'Buscar', class: "btn" %>
+  <%= hidden_field_tag 'menu', params[:menu] %>
 <% end %>
 
-<% if @autoridades.any? %>
-  <div>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Título</th>
-          <th>Nombre</th>
-          <th>link</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @autoridades.each do |c| %>
-        <tr>
-          <td><%= c.tipo_cargo.titulo %></td>
-          <td><%= c.persona.nombre + " " + c.persona.apellidos %></td>
-          <td><%= c.persona.intereses %></td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
+<% @autoridades.each_with_index do |a, index| %>
+  <% if a["cargos"].any? %>
+  <div class="panel panel-default">
+    <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
+      <h4 class="panel-title intern">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
+          <%= a["type"] %>
+        </a>
+        <span class="badge"><%= a["cargos"].count %></span>
+      </h4>
+    </div>
+    <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Nombre</th>
+                <th>link</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% a["cargos"].each do |c| %>
+              <tr>
+                <td><%= c.tipo_cargo.titulo %></td>
+                <td><%= c.persona.nombre + " " + c.persona.apellidos %></td>
+                <td><%= c.persona.intereses %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
+  <% end %>
 <% end %>

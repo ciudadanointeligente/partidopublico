@@ -45,8 +45,8 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">Que es?</a></li>
-              <li><a href="#">Estandares de transparencia</a></li>
+              <li><a href="#">Qué es?</a></li>
+              <li><a href="#">Estándares de transparencia</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Partidos adheridos <span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -112,7 +112,7 @@
             <li>
               <%= link_to "Postular a cargos de dirección interna", partido_elecciones_internas_path(:menu => 2) %>
             </li>
-            <li>
+            <li class="hidden">
               <a href="#">Actividades públicas</a>
             </li>
           </ul>
@@ -140,7 +140,7 @@
             <li>
               <%= link_to "Egresos ordinarios", partido_finanzas_2_path(:menu => 4) %>
             </li>
-            <li>
+            <li class="hidden">
               <a href="#">Balance anual</a>
             </li>
             <li>
@@ -174,8 +174,13 @@
             </li>
           </ul>
         <li class="principal">
-          <%= link_to "Sanciones", partido_sanciones_path(:menu => 6) %>
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#aside-menu-seven" aria-expanded="false" aria-controls="aside-menu-seven">Sanciones</a>
         </li>
+          <ul id="aside-menu-seven" class="collapse <%= @menu == 6 ? 'in' : '' %>" role="tab" aria-labelledby="aside-menu-seven">
+            <li>
+              <%= link_to "Sanciones aplicadas al partido", partido_sanciones_path(:menu => 6) %>
+            </li>
+          </ul>
       </ul>
       <h5>Acciones</h5>
       <ul class="list-unstyled aside-menu">

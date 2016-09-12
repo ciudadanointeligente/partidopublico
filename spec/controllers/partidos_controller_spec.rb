@@ -62,8 +62,8 @@ RSpec.describe PartidosController, type: :controller do
       get :regiones, {:partido_id => partido.to_param}, valid_session
 
       expect(assigns(:datos_total_nacional)).not_to be_empty
-      expect(assigns(:datos_total_nacional)[0]['hombres']).to eq(75)
-      expect(assigns(:datos_total_nacional)[0]['mujeres']).to eq(60)
+      expect(assigns(:datos_total_nacional)[0]['hombres']).to eq(afiliacion_region_1.hombres + afiliacion_region_2.hombres + afiliacion_region_3.hombres)
+      expect(assigns(:datos_total_nacional)[0]['mujeres']).to eq(afiliacion_region_1.mujeres + afiliacion_region_2.mujeres + afiliacion_region_3.mujeres)
     end
 
     it "get an array of presencia de cargos" do
@@ -72,8 +72,9 @@ RSpec.describe PartidosController, type: :controller do
       region_1 = create(:region, :nombre => "Region 1", :ordinal => "I")
       region_2 = create(:region, :nombre => "Region 2", :ordinal => "II")
       region_3 = create(:region, :nombre => "Region 3", :ordinal => "III")
+      region_4 = create(:region, :nombre => "Region 4", :ordinal => "IV")
 
-      partido.regions << [region_1, region_2, region_3]
+      partido.regions << [region_1, region_2, region_3, region_4]
 
       tipo_cargo_alcalde = create(:tipo_cargo, :titulo => "Alcalde", :representante => true, :partido_id => partido.id)
       tipo_cargo_senador = create(:tipo_cargo, :titulo => "Senador", :representante => true, :partido_id => partido.id)
@@ -93,6 +94,7 @@ RSpec.describe PartidosController, type: :controller do
       afiliacion_region_1 = create(:afiliacion, :hombres => 15, :mujeres => 20, :partido_id => partido.id, :region_id => region_1.id, :fecha_datos => '2016-01-01', :ano_nacimiento => 1981)
       afiliacion_region_2 = create(:afiliacion, :hombres => 25, :mujeres => 10, :partido_id => partido.id, :region_id => region_2.id, :fecha_datos => '2016-01-01', :ano_nacimiento => 1981)
       afiliacion_region_3 = create(:afiliacion, :hombres => 35, :mujeres => 30, :partido_id => partido.id, :region_id => region_3.id, :fecha_datos => '2016-01-01', :ano_nacimiento => 1981)
+      afiliacion_region_4 = create(:afiliacion, :hombres => 0, :mujeres => 0, :partido_id => partido.id, :region_id => region_4.id, :fecha_datos => '2016-01-01', :ano_nacimiento => 1981)
 
       cargo_alcalde_1_region_1 = create(:cargo, :persona_id => persona_1.id, :tipo_cargo_id => tipo_cargo_alcalde.id, :partido_id => partido.id, :region_id => region_1.id)
       cargo_alcalde_2_region_1 = create(:cargo, :persona_id => persona_8.id, :tipo_cargo_id => tipo_cargo_alcalde.id, :partido_id => partido.id, :region_id => region_1.id)
@@ -190,21 +192,101 @@ RSpec.describe PartidosController, type: :controller do
   end
 
   describe "GET #autoridades" do
-    it "return an array with all autorities of a party by region" do
+    it "return an array with all autorities" do
       partido = create(:partido)
       region = create(:region)
       comuna = create(:comuna)
-      tipo_cargo = create(:tipo_cargo, :autoridad => true)
-      persona = create(:persona, :partido_id => partido.id)
-      cargo_1 = create(:cargo, :partido_id => partido.id, :region_id => region.id, :comuna_id => comuna.id, :persona_id => persona.id, :tipo_cargo_id => tipo_cargo.id)
-
       partido.regions << region
 
-      # cargos = [{'region' => region.nombre, 'cargos' => [{ 'persona' => cargo_1.persona.nombre, 'cargo' => cargo_1.tipo_cargo.titulo, 'comuna' => cargo_1.comuna.nombre }]}]
+      ministro = create(:tipo_cargo, titulo: "Ministro", :autoridad => true, partido_id: partido.id)
+      subsecretario = create(:tipo_cargo, titulo: "Subsecretario", :autoridad => true, partido_id: partido.id)
+
+      persona_1 = create(:persona, :partido_id => partido.id, rut: "1-2", genero: "Masculino")
+      persona_2 = create(:persona, :partido_id => partido.id, rut: "1-3", genero: "Femenino")
+      persona_3 = create(:persona, :partido_id => partido.id, rut: "1-4", genero: "Femenino")
+
+      cargo_ministro = create(:cargo, :partido_id => partido.id, :region_id => region.id, :comuna_id => comuna.id, :persona_id => persona_2.id, :tipo_cargo_id => ministro.id)
+      cargo_subsecretario_1 = create(:cargo, :partido_id => partido.id, :region_id => region.id, :comuna_id => comuna.id, :persona_id => persona_1.id, :tipo_cargo_id => subsecretario.id)
+      cargo_subsecretario_2 = create(:cargo, :partido_id => partido.id, :region_id => region.id, :comuna_id => comuna.id, :persona_id => persona_2.id, :tipo_cargo_id => subsecretario.id)
 
       get :autoridades, {:partido_id => partido.to_param}, valid_session
 
-      expect(assigns(:autoridades)).to include(cargo_1)
+      expect(assigns(:autoridades).count).to eq(partido.tipo_cargos.where(autoridad: true).count)
+      expect(assigns(:autoridades)[0]["cargos"]).to include(cargo_ministro)
+      expect(assigns(:autoridades)[1]["cargos"]).to include(cargo_subsecretario_1, cargo_subsecretario_2)
+    end
+
+    it "return by region" do
+      partido = create(:partido)
+      region_1 = create(:region)
+      region_2 = create(:region)
+      comuna = create(:comuna)
+      partido.regions << [region_1, region_2]
+
+      ministro = create(:tipo_cargo, titulo: "Ministro", :autoridad => true, partido_id: partido.id)
+      subsecretario = create(:tipo_cargo, titulo: "Subsecretario", :autoridad => true, partido_id: partido.id)
+
+      persona_1 = create(:persona, :partido_id => partido.id, rut: "1-2", genero: "Masculino")
+      persona_2 = create(:persona, :partido_id => partido.id, rut: "1-3", genero: "Femenino")
+      persona_3 = create(:persona, :partido_id => partido.id, rut: "1-4", genero: "Femenino")
+
+      cargo_ministro = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna.id, :persona_id => persona_2.id, :tipo_cargo_id => ministro.id)
+      cargo_subsecretario_1 = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna.id, :persona_id => persona_1.id, :tipo_cargo_id => subsecretario.id)
+      cargo_subsecretario_2 = create(:cargo, :partido_id => partido.id, :region_id => region_2.id, :comuna_id => comuna.id, :persona_id => persona_2.id, :tipo_cargo_id => subsecretario.id)
+
+      get :autoridades, {:partido_id => partido.to_param, region: region_1.id}, valid_session
+
+      expect(assigns(:autoridades)[0]["cargos"]).to include(cargo_ministro)
+      expect(assigns(:autoridades)[1]["cargos"]).to_not include(cargo_subsecretario_2)
+    end
+
+    it "return by gender" do
+      partido = create(:partido)
+      region_1 = create(:region)
+      region_2 = create(:region)
+      comuna = create(:comuna)
+      partido.regions << [region_1, region_2]
+
+      ministro = create(:tipo_cargo, titulo: "Ministro", :autoridad => true, partido_id: partido.id)
+      subsecretario = create(:tipo_cargo, titulo: "Subsecretario", :autoridad => true, partido_id: partido.id)
+
+      persona_1 = create(:persona, :partido_id => partido.id, rut: "1-2", genero: "Masculino")
+      persona_2 = create(:persona, :partido_id => partido.id, rut: "1-3", genero: "Femenino")
+      persona_3 = create(:persona, :partido_id => partido.id, rut: "1-4", genero: "Femenino")
+
+      cargo_ministro = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna.id, :persona_id => persona_2.id, :tipo_cargo_id => ministro.id)
+      cargo_subsecretario_1 = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna.id, :persona_id => persona_1.id, :tipo_cargo_id => subsecretario.id)
+      cargo_subsecretario_2 = create(:cargo, :partido_id => partido.id, :region_id => region_2.id, :comuna_id => comuna.id, :persona_id => persona_2.id, :tipo_cargo_id => subsecretario.id)
+
+      get :autoridades, {:partido_id => partido.to_param, genero: "Femenino"}, valid_session
+
+      expect(assigns(:autoridades)[0]["cargos"]).to include(cargo_ministro)
+      expect(assigns(:autoridades)[1]["cargos"]).to_not include(cargo_subsecretario_1)
+      expect(assigns(:autoridades)[1]["cargos"]).to include(cargo_subsecretario_2)
+    end
+
+    it "return by input search" do
+      partido = create(:partido)
+      region_1 = create(:region)
+      region_2 = create(:region)
+      comuna = create(:comuna)
+      partido.regions << [region_1, region_2]
+
+      ministro = create(:tipo_cargo, titulo: "Ministro", :autoridad => true, partido_id: partido.id)
+      subsecretario = create(:tipo_cargo, titulo: "Subsecretario", :autoridad => true, partido_id: partido.id)
+
+      persona_1 = create(:persona, nombre: "Juan", apellidos: "Gonzáles", :partido_id => partido.id, rut: "1-2", genero: "Masculino")
+      persona_2 = create(:persona, nombre: "Juana", apellidos: "de la Maza", :partido_id => partido.id, rut: "1-3", genero: "Femenino")
+      persona_3 = create(:persona, nombre: "Jean", apellidos: "Gonzales", :partido_id => partido.id, rut: "1-4", genero: "Femenino")
+
+      cargo_ministro = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna.id, :persona_id => persona_2.id, :tipo_cargo_id => ministro.id)
+      cargo_subsecretario_1 = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna.id, :persona_id => persona_1.id, :tipo_cargo_id => subsecretario.id)
+      cargo_subsecretario_2 = create(:cargo, :partido_id => partido.id, :region_id => region_2.id, :comuna_id => comuna.id, :persona_id => persona_2.id, :tipo_cargo_id => subsecretario.id)
+
+      get :autoridades, {:partido_id => partido.to_param, q: "Juan"}, valid_session
+
+      expect(assigns(:autoridades)[0]["cargos"]).to_not include(cargo_ministro)
+      expect(assigns(:autoridades)[1]["cargos"]).to include(cargo_subsecretario_1)
     end
   end
 
@@ -379,9 +461,9 @@ RSpec.describe PartidosController, type: :controller do
 
       get :representantes, {:partido_id => partido.to_param}, valid_session
 
-      expect(assigns(:representantes)[5]['representatives'].count).to eq(1)
-      expect(assigns(:representantes)[5]['representatives']).to include(cargo_1)
-      expect(assigns(:representantes)[6]['representatives']).to include(cargo_2)
+      expect(assigns(:representantes)[6]['representatives'].count).to eq(1)
+      expect(assigns(:representantes)[6]['representatives']).to include(cargo_1)
+      expect(assigns(:representantes)[7]['representatives']).to include(cargo_2)
     end
 
     it "get an array of representantes searched by nombre or apellidos" do
@@ -399,8 +481,58 @@ RSpec.describe PartidosController, type: :controller do
 
       get :representantes, {:partido_id => partido.to_param, :q => "Juanito Connor"}, valid_session
 
-      expect(assigns(:representantes)[5]['representatives'].count).to eq(1)
       expect(assigns(:representantes)[6]['representatives'].count).to eq(1)
+      expect(assigns(:representantes)[7]['representatives'].count).to eq(1)
+    end
+
+    it "request by gender" do
+      partido = create(:partido)
+      region_1 = create(:region)
+      region_2 = create(:region)
+      comuna_1 = create(:comuna)
+      comuna_2 = create(:comuna)
+      partido.regions << [region_1, region_2]
+
+      cargo_alcalde = create(:tipo_cargo, :titulo =>"Alcalde", :representante => true, partido_id: partido.id)
+      cargo_core = create(:tipo_cargo, :titulo =>"CORE", :representante => true, partido_id: partido.id)
+
+      persona_1 = create(:persona, :nombre => "Juanito", :apellidos => "Ramirez", :rut => '1-2', :genero => 'Masculino', :partido_id => partido.id)
+      persona_2 = create(:persona, :nombre => "Juana", :apellidos => "Connor", :rut => '3-4', :genero => 'Femenino', :partido_id => partido.id)
+      persona_3 = create(:persona, :nombre => "Jean", :apellidos => "Connor", :rut => '4-4', :genero => 'Femenino', :partido_id => partido.id)
+
+      cargo_1 = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna_1.id, :persona_id => persona_1.id, :tipo_cargo_id => cargo_alcalde.id)
+      cargo_2 = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna_1.id, :persona_id => persona_2.id, :tipo_cargo_id => cargo_core.id)
+      cargo_3 = create(:cargo, :partido_id => partido.id, :region_id => region_2.id, :comuna_id => comuna_2.id, :persona_id => persona_3.id, :tipo_cargo_id => cargo_core.id)
+
+      get :representantes, {:partido_id => partido.to_param, :genero => 'Femenino'}, valid_session
+
+      expect(assigns(:representantes)[7]['representatives'].count).to eq(partido.personas.where(:genero => 'Femenino').count)
+      expect(assigns(:representantes)[7]['representatives']).to include(cargo_2)
+    end
+
+    it "request by region" do
+      partido = create(:partido)
+      region_1 = create(:region)
+      region_2 = create(:region)
+      comuna_1 = create(:comuna)
+      comuna_2 = create(:comuna)
+      partido.regions << [region_1, region_2]
+
+      cargo_alcalde = create(:tipo_cargo, :titulo =>"Alcalde", :representante => true, partido_id: partido.id)
+      cargo_core = create(:tipo_cargo, :titulo =>"CORE", :representante => true, partido_id: partido.id)
+
+      persona_1 = create(:persona, :nombre => "Juanito", :apellidos => "Ramirez", :rut => '1-2', :genero => 'Masculino', :partido_id => partido.id)
+      persona_2 = create(:persona, :nombre => "Juana", :apellidos => "Connor", :rut => '3-4', :genero => 'Femenino', :partido_id => partido.id)
+      persona_3 = create(:persona, :nombre => "Jean", :apellidos => "Connor", :rut => '4-4', :genero => 'Femenino', :partido_id => partido.id)
+
+      cargo_1 = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna_1.id, :persona_id => persona_1.id, :tipo_cargo_id => cargo_alcalde.id)
+      cargo_2 = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna_1.id, :persona_id => persona_2.id, :tipo_cargo_id => cargo_core.id)
+      cargo_3 = create(:cargo, :partido_id => partido.id, :region_id => region_2.id, :comuna_id => comuna_2.id, :persona_id => persona_3.id, :tipo_cargo_id => cargo_core.id)
+
+      get :representantes, {:partido_id => partido.to_param, :region => region_1.id}, valid_session
+
+      expect(assigns(:representantes)[6]['representatives']).to include(cargo_1)
+      expect(assigns(:representantes)[7]['representatives']).to include(cargo_2)
     end
   end
 

@@ -17,6 +17,9 @@ class ComparisonsController < ApplicationController
       when 2
         ingresos_ordianrios
 
+      when 3
+        representantes
+
       else
         afiliados
 
@@ -110,6 +113,29 @@ class ComparisonsController < ApplicationController
 
       render "ingresos_ord"
     end
+
+    def representantes
+      query_r = Partido.joins('left join tipo_cargos tc on tc.partido_id = partidos.id and tc.representante = true left join cargos c on c.tipo_cargo_id = tc.id ')
+      .where(Partido.arel_table[:id].in(@partido_ids))
+      .select('partidos.id, partidos.sigla, tc.titulo, count(c.id) as count')
+      .group('partidos.id, tc.id')
+      .order('partidos.id, tc.id')
+
+      partidos = query_r.map{|l| l.sigla}.uniq
+      keys = ['titulo', 'count']
+      @datos =[]
+      partidos.map do |p|
+        r =  query_r.select{|r| r[:sigla] == p }
+
+        @datos << {:partido => {:sigla => p} , :representantes => r.map{|h| Hash[keys.zip(h.attributes.values_at(*keys))]} }
+      end
+
+      @fechas_datos = []
+      @regiones_datos = []
+
+      render "representantes"
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_comparison_params
       @partido_ids = params[:partido_ids].nil? ? Partido.ids : params[:partido_ids]
