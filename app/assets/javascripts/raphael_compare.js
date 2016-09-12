@@ -1,5 +1,7 @@
 $(document).ready(function(){
-  
+  var bar_width = 300;
+  var bar_height = 30;
+
   Raphael.fn.afiliados_compare_header = function(){
     var paper = this;
     paper.circle(12, 15, 9 )
@@ -32,9 +34,6 @@ $(document).ready(function(){
   Raphael.fn.afiliados_compare_bar = function(dato){
     var paper = this;
     if(dato.total != null){
-
-      var bar_width = 300;
-      var bar_height = 30;
       var hombres_width = (dato.hombres / (dato.hombres + dato.mujeres)) * bar_width;
       var mujeres_width = bar_width - hombres_width;
 
@@ -53,6 +52,7 @@ $(document).ready(function(){
 
 
   }
+
   Raphael.fn.regiones_compare_chart = function(datos){
     var paper = this;
     var header_height = 40;
@@ -153,9 +153,6 @@ $(document).ready(function(){
   Raphael.fn.ingreso_ord_compare_bar = function(dato){
     var paper = this;
     if(!dato.missing_data){
-
-      var bar_width = 300;
-      var bar_height = 30;
       var publico_width = (dato.total_publico / (dato.total_publico + dato.total_privado)) * bar_width;
       var privado_width = bar_width - publico_width;
 
@@ -204,6 +201,97 @@ $(document).ready(function(){
     });
   }
 
+  Raphael.fn.representantes_compare_header = function(){
+    var paper = this;
+    paper.circle(12, 15, 9 )
+    .attr({
+      "fill" : "#23DBB8",
+      "stroke" : "none"
+    });
+
+    paper.text(28, 17, "Alcaldes")
+    .attr({
+      "font-family" : "Karla-Regular, Karla",
+      "font-size" : 14,
+      'text-anchor': 'start'
+    });
+
+    paper.circle(110, 15, 9 )
+    .attr({
+      "fill" : "#19A58A",
+      "stroke" : "none"
+    });
+
+    paper.text(126, 17, "Concejales")
+    .attr({
+      "font-family" : "Karla-Regular, Karla",
+      "font-size" : 14,
+      'text-anchor': 'start'
+    });
+
+    paper.circle(220, 15, 9 )
+    .attr({
+      "fill" : "#23DBB8",
+      "stroke" : "none"
+    });
+
+    paper.text(236, 17, "Diputados")
+    .attr({
+      "font-family" : "Karla-Regular, Karla",
+      "font-size" : 14,
+      'text-anchor': 'start'
+    });
+
+    paper.circle(320, 15, 9 )
+    .attr({
+      "fill" : "#19A58A",
+      "stroke" : "none"
+    });
+
+    paper.text(336, 17, "Senadores")
+    .attr({
+      "font-family" : "Karla-Regular, Karla",
+      "font-size" : 14,
+      'text-anchor': 'start'
+    });
+
+    paper.circle(430, 15, 9 )
+    .attr({
+      "fill" : "#23DBB8",
+      "stroke" : "none"
+    });
+
+    paper.text(446, 17, "Presidentes")
+    .attr({
+      "font-family" : "Karla-Regular, Karla",
+      "font-size" : 14,
+      'text-anchor': 'start'
+    });
+
+    paper.circle(540, 15, 9 )
+    .attr({
+      "fill" : "#19A58A",
+      "stroke" : "none"
+    });
+
+    paper.text(556, 17, "Consejeros Regionales")
+    .attr({
+      "font-family" : "Karla-Regular, Karla",
+      "font-size" : 14,
+      'text-anchor': 'start'
+    });
+  }
+
+  Raphael.fn.representantes_compare_bar = function(max, val, text){
+    var paper = this;
+    var width = (val / max) * bar_width;
+
+    var bar = paper.rect(0, 0, width, bar_height).attr({
+      "fill" : "#23DBB8",
+      "stroke" : "none"
+    });
+
+  }
 
   Raphael.fn.no_data_chart = function(){
     this.text(20 , 20, "No hay datos")

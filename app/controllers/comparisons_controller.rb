@@ -9,7 +9,7 @@ class ComparisonsController < ApplicationController
   def index
     @partidos = Partido.select(:id, :nombre, :sigla)
     i = categories.index @category
-    puts "i: " + i.to_s
+    
     case i
       when 1
         regions
@@ -126,9 +126,11 @@ class ComparisonsController < ApplicationController
       @datos =[]
       partidos.map do |p|
         r =  query_r.select{|r| r[:sigla] == p }
-
         @datos << {:partido => {:sigla => p} , :representantes => r.map{|h| Hash[keys.zip(h.attributes.values_at(*keys))]} }
       end
+
+      @max_number = @datos.map{|r| r[:representantes].map{|c| c['count']}.max}.max
+      p @max_number
 
       @fechas_datos = []
       @regiones_datos = []
