@@ -67,14 +67,32 @@
   </header>
 
 <!------------------------------------->
+<script>
+  function select_all(status) {
+    all_checkbox = document.getElementsByTagName('input');
+    status = (status === "false" ? true : false)
+    document.getElementById('all').dataset.checked = status;
+    for(x=0;x<all_checkbox.length;x++) {
+      if (all_checkbox[x].type === "checkbox" ) {
+        all_checkbox[x].checked = status
+      }
+    }
+  }
+</script>
   <div class="container">
     <div class="row">
-      <h1> Compara Partidos</h1>
+      <h2>Compara Partidos</h2>
+
       <%= form_tag comparisons_path, :method =>  :get do |f| %>
-        <% @partidos.each do |partido| %>
-          <%= check_box_tag 'partido_ids[]', partido.id %>
-          <%= h partido.sigla %>
-        <% end %>
+        <ul class="list-inline">
+          <% @partidos.each do |partido| %>
+          <li>
+            <%= check_box_tag 'partido_ids[]', partido.id %>
+            <%= h partido.sigla %>
+          </li>
+          <% end %>
+          <li><input type="checkbox" name="all" id="all" data-checked="false" onclick="select_all(document.getElementById('all').dataset.checked)"> <label for="all">todos</label></li>
+        </ul>
         <br>
         <%= select_tag :category, options_for_select(categories), prompt: "Seleccionar un tema" %>
         <br>

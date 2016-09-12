@@ -2,12 +2,16 @@ require 'rails_helper'
 
 RSpec.describe "afiliacions/show", type: :view do
   before(:each) do
+    partido = create(:partido)
+    region = create(:region)
     @afiliacion = assign(:afiliacion, Afiliacion.create!(
-      :region => nil,
+      :partido => partido,
+      :region => region,
       :hombres => 1,
       :mujeres => 2,
       :otros => 1,
-      :fecha_datos => '2016-01-01'
+      :fecha_datos => '2016-01-01',
+      :ano_nacimiento => 1971
     ))
   end
 

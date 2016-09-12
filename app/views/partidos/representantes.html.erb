@@ -1,30 +1,49 @@
-<h3>Representantes</h3>
+<h7><%= @partido.nombre %> > Transparencia > Presencia nacional</h7>
+<h3>Representantes electos</h3>
 
-<%= form_tag partido_representantes_path, :method =>  :get do |f| %>
-  <%= text_field_tag :q %>
-  <%= submit_tag 'Buscar' %>
+<%= form_tag partido_representantes_path, :method =>  :get, class: 'form-inline' do |f| %>
+  <%= text_field_tag :q, params[:q] || "", class: "form-control" %>
+  <%= select_tag "region", options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
+  <%= select_tag "genero", options_for_select(["Masculino", "Femenino"], params[:genero] || ""), include_blank: "Genero", class: "form-control" %>
+  <%= submit_tag 'Buscar', class: "btn" %>
+  <%= hidden_field_tag 'menu', params[:menu] %>
 <% end %>
 
-<% @representantes.each do |all_representatives| %>
+<% @representantes.each_with_index do |all_representatives, index| %>
   <% if all_representatives["representatives"].any? %>
-  <h4><%= all_representatives["type"] %></h4>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Region</th>
-        <th>Comuna</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% all_representatives["representatives"].each do |r| %>
-      <tr>
-        <td><%= r.persona.nombre %> <%= r.persona.apellidos %></td>
-        <td><%= r.region.nombre %></td>
-        <td><%= r.comuna.nombre %></td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <div class="panel panel-default">
+    <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
+      <h4 class="panel-title intern">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
+          <%= all_representatives["type"] %>
+        </a>
+        <span class="badge"><%= all_representatives["representatives"].count %></span>
+      </h4>
+    </div>
+    <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Region</th>
+                <th>Comuna</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% all_representatives["representatives"].each do |r| %>
+              <tr>
+                <td><%= r.persona.nombre %> <%= r.persona.apellidos %></td>
+                <td><%= r.region.nombre %></td>
+                <td><%= r.comuna.nombre %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
   <% end %>
 <% end %>

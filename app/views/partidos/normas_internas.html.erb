@@ -1,9 +1,51 @@
+<h7><%= @partido.nombre %> > Transparencia > Normas internas y pensamiento</h7>
+<h3>El partido</h3>
 <ul>
+<div class="row">
+  <div class="col-md-3">
+    <%= image_tag @partido.logo.url(:thumb), class: "img-responsive", alt: @partido.sigla %>
+  </div>
+  <div class="col-md-9 basicos">
+    <table>
+      <tbody>
+        <% if !@partido.sigla.blank? %>
+        <tr>
+          <td><span>Sigla</span></td>
+          <td><%= @partido.sigla %></td>
+        </tr>
+        <% end %>
+        <% if !@partido.lema.blank? %>
+        <tr>
+          <td><span>Lema</span></td>
+          <td><%= @partido.lema %></td>
+        </tr>
+        <% end %>
+        <% if !@partido.fecha_fundacion.blank? %>
+        <tr>
+          <td><span>Fecha fundación</span></td>
+          <td><%= @partido.fecha_fundacion.to_formatted_s(:long) %></td>
+        </tr>
+        <% end %>
+        <% if !@partido.texto.blank? %>
+        <tr>
+          <td><span>Reseña</span></td>
+          <td><%= @partido.texto %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ul class="list-inline list-unstyled nospace">
   <% @normas_internas.each do |n| %>
-    <li>
-      <%= link_to n.archivo.url, target: "_blank", onclick: "ga('send','event','click','"+n.archivo_file_name+"')" do %>
+    <li class="col-md-4 documents">
+      <i class="fa fa-file-o fa-3x" style="color: #F28269"></i>
+      <h4>
+        <%= link_to n.archivo.url, target: "_blank", onclick: "ga('send','event','click','"+n.archivo_file_name+"')" do %>
         <%= n.descripcion %>
         <% end %>
+      </h4>
     </li>
   <% end %>
 </ul>

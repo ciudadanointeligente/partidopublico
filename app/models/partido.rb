@@ -18,7 +18,7 @@
 
 class Partido < ActiveRecord::Base
     has_paper_trail
-    has_attached_file :logo, styles: { large: "600x600>", medium: "300x300>", thumb: "100x100>" }, default_url: "/resources/missing.png"
+    has_attached_file :logo, styles: { large: "600x600>", medium: "300x300>", thumb: "220x110>" }, default_url: "/resources/missing.png"
     validates_attachment :logo,
         content_type: { content_type:  /\Aimage\/.*\Z/ },
         size: { in: 0..500.kilobytes }
@@ -46,6 +46,7 @@ class Partido < ActiveRecord::Base
     has_many :cargos, dependent: :destroy
     has_many :tipo_cargos, dependent: :destroy
     has_many :ingreso_ordinarios, dependent: :destroy
+    has_many :egreso_ordinarios, dependent: :destroy
 
     accepts_nested_attributes_for :marco_interno, allow_destroy: true
     accepts_nested_attributes_for :organo_internos, allow_destroy: true
