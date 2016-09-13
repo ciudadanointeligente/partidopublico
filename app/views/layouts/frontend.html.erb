@@ -4,24 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title><%= t('.title') %></title>
+  <title><%= t('.title') %><% if @partido %><%= ' - '+ @partido.nombre + ' (' + @partido.sigla + ')' %><% end %></title>
 
   <link rel="shortcut icon" href="/favicon.ico">
 
   <!-- OpenGraph -->
   <meta property="og:title" content="<%= t('.og_title') %>" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="" />
-  <meta property="og:image" content="" />
+  <meta property="og:url" content="<%= request.original_url %>" />
+  <meta property="og:image" content="<%= image_url('og-img.png') %>" />
   <meta property="og:description" content="<%= t('.og_description') %>" />
+  <meta property="og:locale" content="es_CL" />
 
   <!-- Twitter card -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:site" content="">
+  <meta name="twitter:site" content="<%= request.original_url %>">
   <meta name="twitter:title" content="<%= t('.twitter_title') %>">
   <meta name="twitter:description" content="<%= t('.twitter_description') %>">
   <meta name="twitter:creator" content="">
-  <meta name="twitter:image" content="">
+  <meta name="twitter:image" content="<%= image_url('og-img.png') %>">
 
   <!-- Latest compiled and minified CSS -->
   <%= stylesheet_link_tag    'frontend', media: 'all', 'data-turbolinks-track' => true %>
