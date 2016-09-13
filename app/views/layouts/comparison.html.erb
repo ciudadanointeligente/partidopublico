@@ -90,12 +90,12 @@
           <div class="col-md-4">
 
           <li>
-            <%= check_box_tag 'partido_ids[]', partido.id %>
+            <%= check_box_tag 'partido_ids[]', partido.id, false, class: 'marcado'%>
             <%= h partido.nombre %>
           </li>
         </div>
           <% end %>
-          <li><input type="checkbox" name="all" id="all" data-checked="false" onclick="select_all(document.getElementById('all').dataset.checked)"> <label for="all">Seleccionar todos los partidos</label></li>
+          <li><input type="checkbox" class="marcado"name="all" id="all" data-checked="false" onclick="select_all(document.getElementById('all').dataset.checked)"> <label for="all">Seleccionar todos los partidos</label></li>
         </ul>
         <div class="col-md-12 text-center">
           <br>
