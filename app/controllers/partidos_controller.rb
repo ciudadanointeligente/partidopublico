@@ -505,6 +505,25 @@ class PartidosController < ApplicationController
   end
 
   def publicacion_candidatos
+    @publicacion_candidatos = []
+    tc_candidatos = @partido.tipo_cargos.where(candidato:true)
+    tc_candidatos.each do |tc|
+      filter_by = @partido.cargos.where(tipo_cargo_id:tc)
+      if !params[:q].blank?
+        n = params[:q].split(" ")[0]
+        a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
+        personas = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", n.downcase, a.downcase)
+        filter_by = filter_by.where(:persona_id => personas)
+      end
+      if !params[:region].blank?
+        filter_by = filter_by.where(:region_id => params["region"])
+      end
+      if !params[:genero].blank?
+        by_gender = @partido.personas.where(:genero => params[:genero])
+        filter_by = filter_by.where(:persona_id => by_gender)
+      end
+      @publicacion_candidatos << {"type" => tc.titulo, "cargos" => filter_by}
+    end
   end
 
   def resultado_elecciones_internas
