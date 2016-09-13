@@ -1,5 +1,5 @@
 class PartidosController < ApplicationController
-  before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy, :admin]
+  #before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy, :admin]
   before_action :set_partido, except: [:index, :new, :create, :admin]
   before_action :get_partidos, except: [:index, :new, :create, :admin]
   before_action :set_menu
@@ -437,7 +437,7 @@ class PartidosController < ApplicationController
       end
       @representantes << {"type" => tc.titulo, "representatives" => filter_by}
     end
-    
+
   end
 
   def acuerdos_organos
