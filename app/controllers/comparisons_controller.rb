@@ -9,7 +9,7 @@ class ComparisonsController < ApplicationController
   def index
     @partidos = Partido.select(:id, :nombre, :sigla)
     i = categories.index @category
-    
+
     case i
       when 1
         regions
@@ -115,25 +115,48 @@ class ComparisonsController < ApplicationController
     end
 
     def representantes
-      query_r = Partido.joins('left join tipo_cargos tc on tc.partido_id = partidos.id and tc.representante = true left join cargos c on c.tipo_cargo_id = tc.id ')
-      .where(Partido.arel_table[:id].in(@partido_ids))
-      .select('partidos.id, partidos.sigla, tc.titulo, count(c.id) as count')
-      .group('partidos.id, tc.id')
-      .order('partidos.id, tc.id')
-
-      partidos = query_r.map{|l| l.sigla}.uniq
-      keys = ['titulo', 'count']
       @datos =[]
-      partidos.map do |p|
-        r =  query_r.select{|r| r[:sigla] == p }
-        @datos << {:partido => {:sigla => p} , :representantes => r.map{|h| Hash[keys.zip(h.attributes.values_at(*keys))]} }
+      @partido_ids.each do |p_id|
+        partido = Partido.find p_id
+        tipos_cargo = partido.tipo_cargos.where :representante => true
+        if !params["tipo_cargo"].blank?
+          tipos_cargo = tipos_cargo.where(titulo: params["tipo_cargo"])
+        end
+        cargos = partido.cargos.where :tipo_cargo => tipos_cargo
+        if !params["region"].blank?
+          cargos = cargos.where(region_id: params["region"])
+        end
+        cargos_ids_array = cargos.map{|c| c.tipo_cargo_id}.inject(Hash.new(0)) { |total, e| total[e] += 1 ;total}
+        cargos_count = cargos_ids_array.transform_keys{|key| TipoCargo.find(key).titulo}
+        @datos << {:partido => {:sigla => partido.sigla} , :representantes => cargos_count }
       end
 
-      @max_number = @datos.map{|r| r[:representantes].map{|c| c['count']}.max}.max
-      p @max_number
+      @max_number = @datos.map{|r| r[:representantes].map{|c| c[1]}.max}.compact.max
 
-      @fechas_datos = []
-      @regiones_datos = []
+      @regiones = Region.all
+      @tipo_cargos = TipoCargo.where(:representante => true).pluck(:titulo).uniq
+
+
+
+      # query_r = Partido.joins('left join tipo_cargos tc on tc.partido_id = partidos.id and tc.representante = true left join cargos c on c.tipo_cargo_id = tc.id ')
+      # .where(Partido.arel_table[:id].in(@partido_ids))
+      # .select('partidos.id, partidos.sigla, tc.titulo, count(c.id) as count')
+      # .group('partidos.id, tc.id')
+      # .order('partidos.id, tc.id')
+      #
+      # partidos = query_r.map{|l| l.sigla}.uniq
+      # keys = ['titulo', 'count']
+      # @datos =[]
+      # partidos.map do |p|
+      #   r = query_r.select{|r| r[:sigla] == p }
+      #   s = r.select{|r| r[:region_id] == 1}
+      #   @datos << {:partido => {:sigla => p} , :representantes => r.map{|h| Hash[keys.zip(h.attributes.values_at(*keys))]} }
+      # end
+      #
+      # @max_number = @datos.map{|r| r[:representantes].map{|c| c['count']}.max}.max
+      #
+      # @fechas_datos = []
+      # @regiones_datos = []
 
       render "representantes"
     end

@@ -2,14 +2,13 @@
 
 <h3>Número de afiliados</h3>
 <div class="row">
-<%= form_tag comparisons_path, :method => :get do |f| %>
-  <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
-
-  <%= select_tag :region, options_for_select(@regiones_datos), prompt: "Seleccionar Region"  %>
-
-<% end %>
+  <%= form_tag comparisons_path, :method =>  :get, class: 'form-inline' do |f| %>
+    <%= select_tag "tipo_cargo", options_for_select(@tipo_cargos, params[:tipo_cargo] || ""), include_blank: "Cargo", class: "form-control" %>
+    <%= select_tag "region", options_from_collection_for_select(@regiones, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
+    <%= submit_tag 'Buscar', class: "btn" %>
+    <%= hidden_field_tag 'category', "Representantes Electos" %>
+  <% end %>
 </div>
-<%=  @datos.to_json.html_safe %>;
 <div class="row">
   <table class="table">
     <thead>
@@ -38,8 +37,10 @@
           <ul class="list-unstyled">
             <% linea[:representantes].each_with_index do |r, j| %>
               <li>
-                <div >
-                  <%= r['titulo'] %> <div id="barra_<%= r['titulo'] %>_<%= linea[:partido][:sigla] %>"></div> <%= r['count'] %>
+                <div style="display: inline">
+                  <%= r[0] %>
+                  <div style="display: inline" id="barra_" + <%= r[0] %> + "_" + <%= linea[:partido][:sigla] %> ></div>
+                  <%= r[1] %>
                 </div>
               </li>
             <% end %>
