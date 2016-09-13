@@ -411,6 +411,19 @@ input[type="submit"].transparente{
 	padding-top: 30px;
 }
 
+.numero{
+	font-size: 24px;
+  background-color: $blue;
+  color: white;
+  text-align: center;
+  border-radius: 20px;
+  width: 35px;
+  margin: auto;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+
 /*ELEMENTS*/
 .panel-default > .panel-heading .badge{
 	padding: 4px 8px;

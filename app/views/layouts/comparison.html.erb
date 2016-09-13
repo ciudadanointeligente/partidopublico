@@ -83,27 +83,28 @@
   <div class="container">
     <div class="row">
       <h2 class="text-center">Compara Partidos</h2>
-
-      <%= form_tag comparisons_path, :method =>  :get do |f| %>
+      <div class="col-md-4">
+        <p class="numero">1</p>
+        Selecciona los partidos a comparar
+        <%= form_tag comparisons_path, :method =>  :get do |f| %>
         <ul class="list-inline">
           <% @partidos.each do |partido| %>
-          <div class="col-md-4">
-
           <li>
             <%= check_box_tag 'partido_ids[]', partido.id, false, class: 'marcado'%>
             <%= h partido.nombre %>
           </li>
-        </div>
           <% end %>
           <li><input type="checkbox" class="marcado"name="all" id="all" data-checked="false" onclick="select_all(document.getElementById('all').dataset.checked)"> <label for="all">Seleccionar todos los partidos</label></li>
         </ul>
-        <div class="col-md-12 text-center">
-          <br>
-
-          <%= select_tag :category, options_for_select(categories), prompt: "Seleccionar un tema" %>
-          <br>
-          <%= submit_tag 'Comparar', class: 'transparente'%>
-        </div>
+      </div>
+      <div class="col-md-4">
+        <p class="numero">2</p>
+        <%= select_tag :category, options_for_select(categories), prompt: "Seleccionar un tema" %>
+      </div>
+      <div class="col-md-4">
+        <p class="numero">3</p>
+        <%= submit_tag 'Comparar', class: 'transparente'%>
+      </div>
       <% end %>
     </div>
   </div>
