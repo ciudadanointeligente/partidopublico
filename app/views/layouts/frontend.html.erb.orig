@@ -112,8 +112,13 @@
             <li>
               <%= link_to "Postular a cargos de dirección interna", partido_elecciones_internas_path(:menu => 2) %>
             </li>
+<<<<<<< HEAD
+            <li>
+              <%= link_to "Actividades públicas", partido_actividades_publicas_path(:menu => 2) %>
+=======
             <li class="hidden">
               <a href="#">Actividades públicas</a>
+>>>>>>> dev_estilos_comparativa
             </li>
           </ul>
         <li class="principal">
