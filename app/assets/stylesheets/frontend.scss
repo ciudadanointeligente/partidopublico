@@ -153,59 +153,60 @@ th{
 /*ASIDE MENU*/
 .aside-menu {
 	li {
-		text-align: center;
-		font-size: 14px;
-		font-weight: 400;
-		margin-bottom: 5px;
-		padding: 10px 0 10px 0;
-		line-height: 15px;
-		background-color: white;
-		list-style: none;
-		color: $blue;
-			a {
-				color: $blue;
-				&:hover{
-					text-decoration: none;
-					color: $orange;
-				}
-				&:focus{
-					text-decoration: none;
-					color: $orange;
-				}
-			}
 		&.principal{
+			text-align: center;
+			font-size: 14px;
+			font-weight: 400;
+			margin-bottom: 5px;
+			padding: 10px 0 10px 0;
+			line-height: 15px;
 			background-color: $orange-dark;
+			list-style: none;
+			color: white;
 			letter-spacing: 1.2px;
 			text-transform: uppercase;
-			color: white;
-			a {
-				color: white;
-				&:hover{
-					text-decoration: none;
-					color: $blue;
-				}
-				&:focus{
-					text-decoration: none;
-					color: $blue;
-				}
-			}
-		}
-		ul {
-			padding-left: 0px;
 				a {
-					color: $blue;
-					font-weight: 400;
+					color: white;
 					&:hover{
 						text-decoration: none;
-						color: $orange;
+						color: $blue;
 					}
 					&:focus{
 						text-decoration: none;
-						color: $orange;
+						color: $blue;
+					}
+					.collapse.in, .collapsing, .collapse{
+					margin: 0;
 					}
 				}
+				ul {
+					padding-left: 0px;
+					color: $blue;
+					background-color: $nude;
+					list-style: none;
+					text-transform: none;
+					letter-spacing: normal;
+					margin: 0 0 -10px 0;
+					li{
+						padding: 10px 0 10px 0;
+						background-color: white;
+						margin: 5px 0 0 0;
+						a {
+							color: $blue;
+							font-weight: 400;
+							&:hover{
+								text-decoration: none;
+								color: $orange;
+							}
+							&:focus{
+								text-decoration: none;
+								color: $orange;
+							}
+						}
+					}
+				}
+			}
 		}
-	}
 }
 
 .collapse.in, .collapsing, .collapse{
