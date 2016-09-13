@@ -38,6 +38,7 @@
         <thead>
           <tr>
             <th>Titulo</th>
+            <th>Candidato</th>
             <th>Representante</th>
             <th>Autoridad</th>
             <th>Cargo Interno</th>
@@ -48,6 +49,7 @@
         <tbody>
           <tr dir-paginate="tipo_cargo in tipo_cargos | orderBy:'titulo' | filter: filtro_tipo_cargos | itemsPerPage: pageSize">
             <td> {{tipo_cargo.titulo}} </td>
+            <td> <i class="fa" ng-class="tipo_cargo.candidato ? 'fa-check' : ''"></i> </td>
             <td> <i class="fa" ng-class="tipo_cargo.representante ? 'fa-check' : ''"></i> </td>
             <td> <i class="fa" ng-class="tipo_cargo.autoridad ? 'fa-check' : ''"></i> </td>
             <td> <i class="fa" ng-class="tipo_cargo.cargo_interno ? 'fa-check' : ''"></i> </td>

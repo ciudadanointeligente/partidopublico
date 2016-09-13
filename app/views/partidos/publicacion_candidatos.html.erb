@@ -1,23 +1,23 @@
-<h6><%= @partido.nombre %> > Transparencia > Presencia nacional</h6>
-<h3>Autoridades designadas</h3>
+<h6><%= @partido.nombre %> > Últimas decisiones > Publicación de los candidatos</h6>
+<h3>Publicación de los candidatos</h3>
 
-<%= form_tag partido_autoridades_path, :method =>  :get, class: 'form-inline' do |f| %>
+<%= form_tag partido_intereses_patrimonios_path, :method =>  :get, class: 'form-inline' do |f| %>
   <%= text_field_tag :q, params[:q] || "", class: "form-control" %>
   <%= select_tag "region", options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
-  <%= select_tag "genero", options_for_select(["Masculino", "Femenino"], params[:genero] || ""), include_blank: "Género", class: "form-control" %>
+  <%= select_tag "genero", options_for_select(["Masculino", "Femenino"], params[:genero] || ""), include_blank: "Genero", class: "form-control" %>
   <%= submit_tag 'Buscar', class: "btn" %>
   <%= hidden_field_tag 'menu', params[:menu] %>
 <% end %>
 
-<% @autoridades.each_with_index do |a, index| %>
-  <% if a["cargos"].any? %>
+<% @publicacion_candidatos.each_with_index do |ip, index| %>
+  <% if ip["cargos"].any? %>
   <div class="panel panel-default">
     <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
       <h4 class="panel-title intern">
         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
-          <%= a["type"] %>
+          <%= ip["type"] %>
         </a>
-        <span class="badge"><%= a["cargos"].count %></span>
+        <span class="badge"><%= ip["cargos"].count %></span>
       </h4>
     </div>
     <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
@@ -26,17 +26,19 @@
           <table class="table">
             <thead>
               <tr>
-                <th>Título</th>
                 <th>Nombre</th>
-                <th>link</th>
+                <th>Región</th>
+                <th>Comuna</th>
+                <th>Circunscripción</th>
               </tr>
             </thead>
             <tbody>
-              <% a["cargos"].each do |c| %>
+              <% ip["cargos"].each do |c|%>
               <tr>
-                <td><%= c.tipo_cargo.titulo %></td>
-                <td><%= c.persona.nombre + " " + c.persona.apellidos %></td>
-                <td><%= c.persona.intereses %></td>
+                <td><%= c.persona.nombre + " " +c.persona.apellidos %></td>
+                <td><%= c.region.nombre %></td>
+                <td><%= c.comuna.nombre %></td>
+                <td><%= c.circunscripcion_id %></td>
               </tr>
               <% end %>
             </tbody>
