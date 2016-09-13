@@ -41,6 +41,9 @@ span{
 		padding: 0;
 }
 
+.list-inline > li{
+	padding-left: 15px;
+}
 /*NAV*/
 .navbar-default{
 	background-color: #0A3451;
@@ -404,6 +407,8 @@ input[type="submit"].transparente{
 
 .comparacion{
 	background-color: $orange-dark;
+	margin-top: -20px;
+	padding-top: 30px;
 }
 
 /*ELEMENTS*/
