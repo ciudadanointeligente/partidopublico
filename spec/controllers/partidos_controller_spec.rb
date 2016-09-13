@@ -62,8 +62,8 @@ RSpec.describe PartidosController, type: :controller do
       get :regiones, {:partido_id => partido.to_param}, valid_session
 
       expect(assigns(:datos_total_nacional)).not_to be_empty
-      expect(assigns(:datos_total_nacional)[0]['hombres']).to eq(75)
-      expect(assigns(:datos_total_nacional)[0]['mujeres']).to eq(60)
+      expect(assigns(:datos_total_nacional)[0]['hombres']).to eq(afiliacion_region_1.hombres + afiliacion_region_2.hombres + afiliacion_region_3.hombres)
+      expect(assigns(:datos_total_nacional)[0]['mujeres']).to eq(afiliacion_region_1.mujeres + afiliacion_region_2.mujeres + afiliacion_region_3.mujeres)
     end
 
     it "get an array of presencia de cargos" do
@@ -72,8 +72,9 @@ RSpec.describe PartidosController, type: :controller do
       region_1 = create(:region, :nombre => "Region 1", :ordinal => "I")
       region_2 = create(:region, :nombre => "Region 2", :ordinal => "II")
       region_3 = create(:region, :nombre => "Region 3", :ordinal => "III")
+      region_4 = create(:region, :nombre => "Region 4", :ordinal => "IV")
 
-      partido.regions << [region_1, region_2, region_3]
+      partido.regions << [region_1, region_2, region_3, region_4]
 
       tipo_cargo_alcalde = create(:tipo_cargo, :titulo => "Alcalde", :representante => true, :partido_id => partido.id)
       tipo_cargo_senador = create(:tipo_cargo, :titulo => "Senador", :representante => true, :partido_id => partido.id)
@@ -93,6 +94,7 @@ RSpec.describe PartidosController, type: :controller do
       afiliacion_region_1 = create(:afiliacion, :hombres => 15, :mujeres => 20, :partido_id => partido.id, :region_id => region_1.id, :fecha_datos => '2016-01-01', :ano_nacimiento => 1981)
       afiliacion_region_2 = create(:afiliacion, :hombres => 25, :mujeres => 10, :partido_id => partido.id, :region_id => region_2.id, :fecha_datos => '2016-01-01', :ano_nacimiento => 1981)
       afiliacion_region_3 = create(:afiliacion, :hombres => 35, :mujeres => 30, :partido_id => partido.id, :region_id => region_3.id, :fecha_datos => '2016-01-01', :ano_nacimiento => 1981)
+      afiliacion_region_4 = create(:afiliacion, :hombres => 0, :mujeres => 0, :partido_id => partido.id, :region_id => region_4.id, :fecha_datos => '2016-01-01', :ano_nacimiento => 1981)
 
       cargo_alcalde_1_region_1 = create(:cargo, :persona_id => persona_1.id, :tipo_cargo_id => tipo_cargo_alcalde.id, :partido_id => partido.id, :region_id => region_1.id)
       cargo_alcalde_2_region_1 = create(:cargo, :persona_id => persona_8.id, :tipo_cargo_id => tipo_cargo_alcalde.id, :partido_id => partido.id, :region_id => region_1.id)

@@ -234,7 +234,7 @@ div#header{
 }
 
 /*SELECT*/
-select#fecha_datos{
+select#fecha_datos, select#region, select#genero{
 	text-transform: uppercase;
 	font-size: 11px;
 	font-weight: 700;
@@ -254,44 +254,7 @@ select#fecha_datos{
 	background-repeat: no-repeat;
 }
 
-select#select-region{
-	text-transform: uppercase;
-	font-size: 11px;
-	font-weight: 700;
-	color: $blue;
-	letter-spacing: 1.2px;
-	border: 2px solid $nude;
-	border-radius: 0px;
-	padding: 5px;
-	margin-top: 20px;
-	background-color: white;
-	height: 40px;
-	width: 200px;
-	-webkit-appearance: none;
-	margin-top: 0;
-	background: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'><path fill='#012639' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>");
-	background-position: 98% 50%;
-	background-repeat: no-repeat;
-}
-
-input#q{
-	text-transform: uppercase;
-	font-size: 11px;
-	font-weight: 700;
-	color: $blue;
-	letter-spacing: 1.2px;
-	border: 2px solid $nude;
-	border-radius: 0px;
-	padding: 5px;
-	margin-top: 20px;
-	background-color: white;
-	height: 40px;
-	width: 200px;
-	-webkit-appearance: none;
-	margin: 0 0 20px 0;
-}
-
-input#nombre{
+input#q, input#nombre{
 	text-transform: uppercase;
 	font-size: 11px;
 	font-weight: 700;
@@ -324,6 +287,31 @@ input[type="submit"]{
 	margin: 0 0 20px 0;
 }
 
+input#partido_ids_, input#all{
+	padding: 5px;
+	-webkit-appearance: none;
+	background-color: white;
+}
+
+select#category{
+	text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 700;
+  color: #012639;
+  letter-spacing: 1.2px;
+  border: none;
+  border-radius: 0px;
+  padding: 5px;
+  margin-top: 20px;
+  height: 40px;
+  width: 250px;
+  -webkit-appearance: none;
+  margin-top: 0;
+	background: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'><path fill='#012639' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>");
+  background-position: 98% 50%;
+  background-repeat: no-repeat;
+  background-color: white;
+}
 
 /*VARIOS*/
 .basicos{
@@ -361,6 +349,9 @@ input[type="submit"]{
 	}
 }
 
+.comparacion{
+	background-color: $orange-dark;
+}
 
 /*ELEMENTS*/
 .panel-default > .panel-heading .badge{

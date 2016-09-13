@@ -79,37 +79,48 @@
     }
   }
 </script>
+<section class=" comparacion">
   <div class="container">
     <div class="row">
-      <h2>Compara Partidos</h2>
+      <h2 class="text-center">Compara Partidos</h2>
 
       <%= form_tag comparisons_path, :method =>  :get do |f| %>
         <ul class="list-inline">
           <% @partidos.each do |partido| %>
+          <div class="col-md-4">
+
           <li>
             <%= check_box_tag 'partido_ids[]', partido.id %>
-            <%= h partido.sigla %>
+            <%= h partido.nombre %>
           </li>
+        </div>
           <% end %>
-          <li><input type="checkbox" name="all" id="all" data-checked="false" onclick="select_all(document.getElementById('all').dataset.checked)"> <label for="all">todos</label></li>
+          <li><input type="checkbox" name="all" id="all" data-checked="false" onclick="select_all(document.getElementById('all').dataset.checked)"> <label for="all">Seleccionar todos los partidos</label></li>
         </ul>
-        <br>
-        <%= select_tag :category, options_for_select(categories), prompt: "Seleccionar un tema" %>
-        <br>
-        <%= submit_tag 'Comparar' %>
+        <div class="col-md-12 text-center">
+          <br>
+
+          <%= select_tag :category, options_for_select(categories), prompt: "Seleccionar un tema" %>
+          <br>
+          <%= submit_tag 'Comparar' %>
+        </div>
       <% end %>
     </div>
-    <main class="row">
+  </div>
+</section>
+
+<div class="container">
+  <div class="row">
+    <main class="col-md-12 board">
       <%= yield %>
     </main>
+  </div>
+</div>
 
     <footer class="col-md-12">
       <div class="container">
         footer
       </div>
     </footer>
-
-  </div>
-
 </body>
 </html>
