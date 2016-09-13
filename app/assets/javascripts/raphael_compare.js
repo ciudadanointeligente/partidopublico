@@ -1,6 +1,8 @@
 $(document).ready(function(){
   var bar_width = 300;
   var bar_height = 30;
+  var colors_x_edad = ["#FF0000", "#F00000", "#00F000", "#00FF00", "#0000F0", "#0000FF",
+                       "#0F0F00", "#FF00F0", "#FF000F", "#FF0F00", "#0FF000", "#FF00FF"]
 
   Raphael.fn.afiliados_compare_header = function(){
     var paper = this;
@@ -292,6 +294,40 @@ $(document).ready(function(){
     });
 
   }
+
+  Raphael.fn.edades_compare_header = function(data){
+    var paper = this;
+    for(var i = 0; i < data.tramos.length; i++ ){
+      paper.circle(12 + (i * 90), 15, 9 )
+      .attr({
+        "fill" : colors_x_edad[i],
+        "stroke" : "none"
+      });
+
+      paper.text(28 + (i * 90), 17, data.tramos[i].tramo[0] + "-" +  data.tramos[i].tramo[1] + " años")
+      .attr({
+        "font-family" : "Karla-Regular, Karla",
+        "font-size" : 14,
+        'text-anchor': 'start'
+      });
+    }
+  }
+
+  Raphael.fn.edades_compare_bar = function(max, data){
+    var paper = this;
+    var prev_width = 0;
+
+    for(var i = 0; i < data.tramos.length; i++){
+      var width = (data.tramos[i].count / max) * bar_width;
+      var bar = paper.rect(prev_width, 0, width, bar_height).attr({
+        "fill" : colors_x_edad[i],
+        "stroke" : "none"
+      });
+
+      prev_width = prev_width + width;
+    }
+  }
+
 
   Raphael.fn.no_data_chart = function(){
     this.text(20 , 20, "No hay datos")

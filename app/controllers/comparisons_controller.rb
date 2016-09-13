@@ -20,6 +20,9 @@ class ComparisonsController < ApplicationController
       when 3
         representantes
 
+      when 4
+        afiliados_x_edad
+
       else
         afiliados
 
@@ -58,6 +61,71 @@ class ComparisonsController < ApplicationController
 
 
       render "num_afiliados"
+    end
+
+    def afiliados_x_edad
+      rangos = [[14,17],[18,24],[25,29],[30,34],[35,39],[40,44],[45,49],[50,54],[55,59],[60,64],[65,69],[70,100]]
+
+      @datos = []
+      @partido_ids.each do |p_id|
+        partido = Partido.find p_id
+        last_date = Afiliacion.where(partido: partido).uniq.pluck(:fecha_datos).sort.last
+        p "last_date : " + last_date.to_s
+        afiliados = Afiliacion.where(partido: partido, fecha_datos: last_date)
+        if !params["region"].blank?
+          afiliados = afiliados.where(region_id: params["region"])
+        end
+        h = 0 #hombres
+        m = 0 #mujeres
+        nh = 0 #nacional hombres
+        nm = 0 #nacional mujeres
+        afiliados.each do |a|
+          h = h + a.hombres
+          m = m + a.mujeres
+        end
+        tramos = []
+        if (h > 0 || m > 0)
+          rangos.each do |rango|
+            participantes = afiliados.where(:ano_nacimiento => Date.today.year-rango[1]..Date.today.year-rango[0])
+            ph = 0 #participantes hombres
+            pm = 0 #participantes mujeres
+            participantes.each do |np|
+              ph = ph + np.hombres
+              pm = pm + np.mujeres
+            end
+            num_generos = ph + pm
+            if !params[:genero].blank?
+              case params[:genero]
+                when 'hombres'
+                  num_generos = ph
+
+                when 'mujeres'
+                  num_generos = pm
+
+              end
+            end
+            tramos << {:tramo => rango, :count => num_generos}
+          end
+        end
+        total_generos = h + m
+        if !params[:genero].blank?
+          case params[:genero]
+            when 'hombres'
+              total_generos = h
+
+            when 'mujeres'
+              total_generos = m
+
+          end
+        end
+        @datos << {:partido => partido.nombre, :tramos => tramos, :total => total_generos}
+      end
+
+      @max_total = @datos.map{|p| p[:total]}.max
+
+      @regiones = Region.all
+
+      render "afiliados_x_edad"
     end
 
     def regions
