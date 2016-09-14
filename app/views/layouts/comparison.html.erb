@@ -29,7 +29,7 @@
 </head>
 <body>
   <header>
-      <nav class="navbar navbar-default">
+      <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
@@ -45,8 +45,8 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">Que es?</a></li>
-              <li><a href="#">Estandares de transparencia</a></li>
+              <li><a href="#">¿Qué es?</a></li>
+              <li><a href="#">Estándares de transparencia</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Partidos adheridos <span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -89,12 +89,12 @@
         <%= form_tag comparisons_path, :method =>  :get do |f| %>
         <ul class="list-unstyled">
           <% @partidos.each do |partido| %>
-          <li>
+          <li class="versalitas">
             <%= check_box_tag 'partido_ids[]', partido.id, false, class: 'marcado'%>
             <%= h partido.nombre %>
           </li>
           <% end %>
-          <li><input type="checkbox" class="marcado"name="all" id="all" data-checked="false" onclick="select_all(document.getElementById('all').dataset.checked)"> <label for="all">Seleccionar todos los partidos</label></li>
+          <li><input type="checkbox" class="marcado"name="all" id="all" data-checked="false" onclick="select_all(document.getElementById('all').dataset.checked)"> <label for="all" class="versalitas">Seleccionar todos los partidos</label></li>
         </ul>
       </div>
       <div class="col-md-4">

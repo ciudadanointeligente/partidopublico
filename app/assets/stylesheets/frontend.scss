@@ -59,7 +59,6 @@ span{
 	background-color: #012639;
 	border: none;
 	height: 70px;
-	color: white;
 	border-radius: 0px;
 	border-bottom: 1px solid $orange;
 }
@@ -96,6 +95,7 @@ span{
 .navbar-nav > li > .dropdown-menu{
 	margin-top: -15px;
 }
+
 .dropdown-menu > li > a{
 	color: $orange;
 }
@@ -429,8 +429,11 @@ input[type="submit"].transparente{
 
 .comparacion{
 	background-color: $orange-dark;
-	margin-top: -20px;
+	margin-top: 70px;
 	padding-top: 30px;
+	h2, h4{
+		color: white;
+	}
 }
 
 .numero{
@@ -445,6 +448,12 @@ input[type="submit"].transparente{
   margin-bottom: 18px;
 }
 
+.versalitas{
+	text-transform: uppercase;
+	letter-spacing: 1.2px;
+	font-size: 11px;
+	font-weight: 700;
+}
 
 /*ELEMENTS*/
 .panel-default > .panel-heading .badge{
