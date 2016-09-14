@@ -1,47 +1,49 @@
 <p id="notice"><%= notice %></p>
 
-<h3>Ingresos Ordianrios</h3>
+<h3>Ingresos ordinarios</h3>
 <div class="row">
-<%= form_tag comparisons_path, :method => :get do |f| %>
-  <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
-<% end %>
+  <div class="col-md-12">
+    <%= form_tag comparisons_path, :method => :get do |f| %>
+      <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
+    <% end %>
+  </div>
 </div>
 
 <div class="row">
-  <table class="table">
-    <thead>
-      <tr>
-        <td>
-          Partido
-        </td>
-        <td>
-
-        </td>
-        <td>
-          Monto Total
-        </td>
-      </tr>
-    </thead>
-    <tbody>
-      <% @datos.each_with_index do |linea, i| %>
-      <tr>
-        <div id='header'></div>
-      </tr>
-      <tr>
-        <td>
-          <%= linea[:nombre] %>
-        </td>
-        <td>
-          <div id="barras_<%= i.to_s %>"></div>
-        </td>
-        <td>
-          <%= ((linea[:total_privado].nil? ? 0 : linea[:total_privado]) + (linea[:total_publico].nil? ? 0 : linea[:total_publico])).to_s %>
-        </td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-
+  <div class="col-md-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            Partido
+          </th>
+          <th>
+            Monto Total
+          </th>
+          <th>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @datos.each_with_index do |linea, i| %>
+        <tr>
+          <div id='header'></div>
+        </tr>
+        <tr>
+          <td>
+            <%= linea[:nombre] %>
+          </td>
+          <td>
+            <div id="barras_<%= i.to_s %>"></div>
+          </td>
+          <td class="monto">
+            <%= ((linea[:total_privado].nil? ? 0 : linea[:total_privado]) + (linea[:total_publico].nil? ? 0 : linea[:total_publico])).to_s %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 

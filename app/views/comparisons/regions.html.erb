@@ -1,39 +1,40 @@
 <p id="notice"><%= notice %></p>
 
-<h3>Regiones</h3>
+<h3>Regiones en las que se encuentran constituidos</h3>
 
 <div class="row">
-  <table class="table">
-    <thead>
-      <tr>
-        <td>
-          Partido
-        </td>
-        <% roman_ordinals.each do |roman|%>
-        <td>
-          <%= roman %>
-        </td>
-        <% end %>
-      </tr>
-    </thead>
-    <tbody>
-      <% @datos.each do |linea| %>
-      <tr>
-        <td>
-          <%= linea[:nombre] %>
-        </td>
-        <% linea[:mapa].each do |region| %>
+  <div class="col-md-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            Partido
+          </th>
+          <% roman_ordinals.each do |roman|%>
+          <th>
+            <%= roman %>
+          </th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @datos.each do |linea| %>
+        <tr>
           <td>
-            <%if region %>
-            <i class="fa fa-circle <%= region ? 'icon-green' : 'icon-gray' %>" aria-hidden="true"></i>
-            <% end %>
+            <%= linea[:nombre] %>
           </td>
+          <% linea[:mapa].each do |region| %>
+            <td>
+              <%if region %>
+              <i class="fa fa-circle <%= region ? 'icon-green' : 'icon-gray' %>" aria-hidden="true"></i>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
         <% end %>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <div id="barras"></div>
