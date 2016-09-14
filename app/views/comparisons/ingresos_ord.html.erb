@@ -36,7 +36,7 @@
           <td>
             <div id="barras_<%= i.to_s %>"></div>
           </td>
-          <td>
+          <td class="monto">
             <%= ((linea[:total_privado].nil? ? 0 : linea[:total_privado]) + (linea[:total_publico].nil? ? 0 : linea[:total_publico])).to_s %>
           </td>
         </tr>
