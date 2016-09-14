@@ -350,7 +350,7 @@ select#category{
 	font-weight: 700;
 	color: $blue;
 	letter-spacing: 1.2px;
-	border: 2px solid white;
+	border: 2px solid $blue;
 	border-radius: 0px;
 	padding: 5px;
 	margin-top: 20px;
@@ -361,27 +361,27 @@ select#category{
 	background: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'><path fill='#012639' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>");
 	background-position: 98% 50%;
 	background-repeat: no-repeat;
-	background-color: white;
+	background-color: transparent;;
 }
 
 input[type="submit"].transparente{
 	text-transform: uppercase;
 	font-size: 11px;
 	font-weight: 700;
-	color: white;
+	color: $blue;
 	letter-spacing: 1.2px;
 	border: 2px solid white;
 	border-radius: 0px;
 	padding: 5px 15px 5px 15px;
 	margin-top: 20px;
-	background-color: transparent;;
+	background-color: white;
 	height: 40px;
 	width: 100%;
 	-webkit-appearance: none;
-	margin: 0 0 20px 0;
+	margin: 60px 0 40px 0;
 	&:hover{
-		background-color: white;
-		color: $orange-dark;
+		background-color: transparent;;
+		color: white;
 	}
 }
 
