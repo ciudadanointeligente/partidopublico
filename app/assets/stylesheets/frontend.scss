@@ -60,7 +60,7 @@ span{
 	border: none;
 	height: 70px;
 	border-radius: 0px;
-	border-bottom: 1px solid $orange;
+	border: none;
 }
 
 .navbar-default .navbar-nav > li > a {
@@ -94,6 +94,7 @@ span{
 
 .navbar-nav > li > .dropdown-menu{
 	margin-top: -15px;
+	border-radius: 5px;
 }
 
 .dropdown-menu > li > a{
