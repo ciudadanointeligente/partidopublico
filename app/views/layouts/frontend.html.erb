@@ -30,7 +30,7 @@
 </head>
 <body>
   <header>
-      <nav class="navbar navbar-default">
+      <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
@@ -46,7 +46,7 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">Qué es?</a></li>
+              <li><a href="#">¿Qué es?</a></li>
               <li><a href="#">Estándares de transparencia</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Partidos adheridos <span class="caret"></span></a>
@@ -68,9 +68,18 @@
   </header>
 
 <!------------------------------------->
+<section class="nombre-partido">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2><%= @partido.nombre %></h2>
+      </div>
+    </div>
+  </div>
+</section>
+
   <div class="container">
     <aside class="col-sm-3 col-md-3">
-      <h5>Transparencia</h5>
       <ul id="accordion" class="list-unstyled aside-menu" role="tablist" aria-multiselectable="true">
         <li class="principal">
           <a role="button" data-toggle="collapse" data-parent="#accordion" href="#aside-menu-one" aria-expanded="true" aria-controls="aside-menu-one">Normas internas y pensamiento</a>
