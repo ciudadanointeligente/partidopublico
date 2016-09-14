@@ -214,20 +214,20 @@ $(document).ready(function(){
       "stroke" : "none"
     });
 
-    paper.text(28, 17, "Egresos de fondos públicos")
+    paper.text(28, 17, "Egresos públicos")
     .attr({
       "font-family" : "Karla-Regular, Karla",
       "font-size" : 14,
       'text-anchor': 'start'
     });
 
-    paper.circle(247, 15, 9 )
+    paper.circle(190, 15, 9 )
     .attr({
       "fill" : sky_dark,
       "stroke" : "none"
     });
 
-    paper.text(263, 17, "Egresos de fondos privados")
+    paper.text(208, 17, "Egresos privados")
     .attr({
       "font-family" : "Karla-Regular, Karla",
       "font-size" : 14,

@@ -1,29 +1,31 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Transparencia</li><li>Vínculos e intereses</li></ol>
 <h3>Pactos electorales que integra</h3>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Nombre del pacto</th>
-      <th>Descripción</th>
-      <th>Elección</th>
-      <th>Partidos que lo integran</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @pactos.each do |p| %>
-    <tr>
-      <td><%= p.nombre_pacto %></td>
-      <td><%= p.descripcion %></td>
-      <td><%= p.ano_eleccion %></td>
-      <td>
-        <ul>
-          <% p.partidos.each do |partido| %>
-          <li><%= partido.nombre %></li>
-          <% end %>
-        </ul>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre del pacto</th>
+        <th>Descripción</th>
+        <th>Elección</th>
+        <th>Partidos que lo integran</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @pactos.each do |p| %>
+      <tr>
+        <td><%= p.nombre_pacto %></td>
+        <td><%= p.descripcion %></td>
+        <td><%= p.ano_eleccion %></td>
+        <td>
+          <ul>
+            <% p.partidos.each do |partido| %>
+            <li><%= partido.nombre %></li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
