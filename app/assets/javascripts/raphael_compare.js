@@ -186,37 +186,6 @@ $(document).ready(function(){
     } else {
       paper.text(50, 15, "Faltan datos.")
     }
-
-
-  }
-
-  Raphael.fn.ingreso_ord_header = function(){
-    var paper = this;
-    paper.circle(12, 15, 9 )
-    .attr({
-      "fill" : "#23DBB8",
-      "stroke" : "none"
-    });
-
-    paper.text(28, 17, "Aportes públicos")
-    .attr({
-      "font-family" : "Karla-Regular, Karla",
-      "font-size" : 14,
-      'text-anchor': 'start'
-    });
-
-    paper.circle(191, 15, 9 )
-    .attr({
-      "fill" : "#19A58A",
-      "stroke" : "none"
-    });
-
-    paper.text(207, 17, "Aportes privados")
-    .attr({
-      "font-family" : "Karla-Regular, Karla",
-      "font-size" : 14,
-      'text-anchor': 'start'
-    });
   }
 
   Raphael.fn.representantes_compare_header = function(){
