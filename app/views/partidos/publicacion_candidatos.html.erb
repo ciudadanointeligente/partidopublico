@@ -1,4 +1,4 @@
-<h6><%= @partido.nombre %> > Últimas decisiones > Publicación de los candidatos</h6>
+<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Últimas decisiones</li><li>Publicación de los candidatos</li></ol>
 <h3>Publicación de los candidatos</h3>
 
 <%= form_tag partido_intereses_patrimonios_path, :method =>  :get, class: 'form-inline' do |f| %>

@@ -1,4 +1,4 @@
-<h6><%= @partido.nombre %> > Transparencia > Finanzas</h6>
+<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Transparencia</li><li>Finanzas</li></ol>
 <h3>Egresos ordinarios</h3>
 
 <%= form_tag partido_finanzas_2_path, :method =>  :get do |f| %>

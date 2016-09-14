@@ -1,4 +1,4 @@
-<h6><%= @partido.nombre %> > Transparencia > Declaración de intereses y patrimonio</h6>
+<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Transparencia</li><li>Declaración de intereses y patrimonio</li></ol>
 <h3>Declaración de intereses y patrimonio</h3>
 
 <%= form_tag partido_intereses_patrimonios_path, :method =>  :get, class: 'form-inline' do |f| %>
