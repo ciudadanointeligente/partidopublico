@@ -155,6 +155,9 @@ th{
 }
 
 /*ASIDE MENU*/
+aside.col-sm-3.col-md-3{
+	padding: 0 15px 0 0;
+}
 .aside-menu {
 	li {
 		&.principal{
@@ -463,9 +466,14 @@ input[type="submit"].transparente{
 }
 
 /*MEDIA-QUERIS*/
+@media (max-width: 767px) {
+	aside.col-sm-3.col-md-3{
+		padding: 0 0 0 0;
+	}
+}
+
 @media (max-width: 280px) {
 	select#fecha_datos{
 		width: inherit;
 	}
-
 }
