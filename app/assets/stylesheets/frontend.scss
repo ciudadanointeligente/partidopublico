@@ -429,7 +429,7 @@ input[type="submit"].transparente{
 
 .comparacion{
 	background-color: $orange-dark;
-	margin-top: 70px;
+	margin-top: 70px 0 40px 0;
 	padding-top: 30px;
 	h2, h4{
 		color: white;
@@ -445,7 +445,7 @@ input[type="submit"].transparente{
   width: 35px;
   margin: auto;
   font-weight: 700;
-  margin-bottom: 18px;
+  margin-top: 20px;
 }
 
 .versalitas{
