@@ -4,11 +4,11 @@
 <div class="row">
   <div class="col-md-12">
   <%= form_tag comparisons_path, :method => :get do |f| %>
-    <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
+    <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar fecha", onchange: "this.form.submit();"  %>
 
-    <%= select_tag :region, options_for_select(@regiones_datos), prompt: "Seleccionar Region"  %>
+    <%= select_tag :region, options_for_select(@regiones_datos), prompt: "Nacional"  %>
 
-    <%= select_tag :genero, options_for_select([:hombres, :mujeres]), prompt: "Según sexo"  %>
+    <%= select_tag :genero, options_for_select([:hombres, :mujeres]), prompt: "Hombres y mujeres"  %>
   <% end %>
   </div>
 </div>
