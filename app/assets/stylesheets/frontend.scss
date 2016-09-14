@@ -502,6 +502,41 @@ input[type="submit"].transparente{
 
 /*MEDIA-QUERIS*/
 @media (max-width: 767px) {
+	div#bs-example-navbar-collapse-1{
+		margin-top: 7px;
+	}
+	.navbar-toggle{
+		margin-top: 17px;
+		border: none;
+	}
+
+	.navbar-default .navbar-toggle .icon-bar{
+		background-color: $orange;
+	}
+
+	.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus{
+		background-color: transparent;
+	}
+
+	.navbar-fixed-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse{
+		max-height: inherit;
+	}
+
+	.collapse.in, .collapsing, .collapse{
+		padding: inherit;
+	}
+
+	.navbar-default .navbar-nav > li > a{
+		padding: 15px;
+	}
+
+	.navbar-default .navbar-nav .open .dropdown-menu > li > a{
+		color: $orange;
+		&:hover{
+			color: white;
+		}
+	}
+
 	aside.col-sm-3.col-md-3{
 		padding: 0 0 0 0;
 	}
