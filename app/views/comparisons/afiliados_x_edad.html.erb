@@ -1,13 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<h3>Afiliados según ranto etario</h3>
+<h3>Afiliados según rango etario</h3>
 <div class="row">
   <div class="col-md-12">
     <%= form_tag comparisons_path, :method => :get do |f| %>
       <%= select_tag "region", options_from_collection_for_select(@regiones, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
       <%= select_tag :genero, options_for_select([:hombres, :mujeres]), prompt: "Según sexo"  %>
       <%= submit_tag 'Buscar', class: "btn" %>
-      <%= hidden_field_tag 'category', "Afiliados por Edad" %>
+      <%= hidden_field_tag 'category', "Afiliados según rango etario" %>
     <% end %>
   </div>
 </div>

@@ -7,7 +7,7 @@
       <%= select_tag "tipo_cargo", options_for_select(@tipo_cargos, params[:tipo_cargo] || ""), include_blank: "Cargo", class: "form-control" %>
       <%= select_tag "region", options_from_collection_for_select(@regiones, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
       <%= submit_tag 'Buscar', class: "btn" %>
-      <%= hidden_field_tag 'category', "Representantes Electos" %>
+      <%= hidden_field_tag 'category', "Representantes electos" %>
     <% end %>
   </div>
 </div>

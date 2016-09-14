@@ -4,7 +4,7 @@ module ComparisonsHelper
                   "Regiones",
                   "Ingresos Ordinarios",
                   "Representantes Electos",
-                  "Afiliados por Edad"
+                  "Afiliados según rango etario"
                 ]
   end
 
