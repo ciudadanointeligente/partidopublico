@@ -540,6 +540,12 @@ input[type="submit"].transparente{
 	aside.col-sm-3.col-md-3{
 		padding: 0 0 0 0;
 	}
+
+	select#fecha_datos, select#select-region, select#region, select#genero, select#category, input#q, input#nombre, input[type="submit"]{
+		width: 100%;
+		margin-bottom: 10px;
+	}
+
 }
 
 @media (max-width: 280px) {
