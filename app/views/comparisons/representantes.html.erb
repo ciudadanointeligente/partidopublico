@@ -1,56 +1,59 @@
 <p id="notice"><%= notice %></p>
 
-<h3>Número de afiliados</h3>
+<h3>Representantes electos</h3>
 <div class="row">
-<%= form_tag comparisons_path, :method => :get do |f| %>
-  <%= select_tag "tipo_cargo", options_for_select(@tipo_cargos, params[:tipo_cargo] || ""), include_blank: "Cargo", class: "form-control" %>
-  <%= select_tag "region", options_from_collection_for_select(@regiones, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
-  <%= submit_tag 'Buscar', class: "btn" %>
-  <%= hidden_field_tag 'category', "Representantes Electos" %>
-<% end %>
+  <div class="col-md-12">
+    <%= form_tag comparisons_path, :method => :get do |f| %>
+      <%= select_tag "tipo_cargo", options_for_select(@tipo_cargos, params[:tipo_cargo] || ""), include_blank: "Cargo", class: "form-control" %>
+      <%= select_tag "region", options_from_collection_for_select(@regiones, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
+      <%= submit_tag 'Buscar', class: "btn" %>
+      <%= hidden_field_tag 'category', "Representantes Electos" %>
+    <% end %>
+  </div>
 </div>
 <%=  @datos.to_json.html_safe %>
 <div class="row">
-  <table class="table">
-    <thead>
-      <tr>
-        <td>
-          Partido
-        </td>
-        <td>
-          Representantes
-        </td>
-        <td>
+  <div class="col-md-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <td>
+            Partido
+          </td>
+          <td>
+            Representantes
+          </td>
+          <td>
 
-        </td>
-      </tr>
-    </thead>
-    <tbody>
-      <% @datos.each_with_index do |linea, i| %>
-      <tr>
-        <div id='header'></div>
-      </tr>
-      <tr>
-        <td>
-          <%= linea[:partido][:sigla] %>
-        </td>
-        <td>
-          <% linea[:representantes].each_with_index do |r, j| %>
-            <tr>
-              <td>
-                <%= r %>
-              </td>
-            </tr>
-          <% end %>
-        </td>
-        <td>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <% @datos.each_with_index do |linea, i| %>
+        <tr>
+          <div id='header'></div>
+        </tr>
+        <tr>
+          <td>
+            <%= linea[:partido][:sigla] %>
+          </td>
+          <td>
+            <% linea[:representantes].each_with_index do |r, j| %>
+              <tr>
+                <td>
+                  <%= r %>
+                </td>
+              </tr>
+            <% end %>
+          </td>
+          <td>
 
-        </td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <div id="barras"></div>
