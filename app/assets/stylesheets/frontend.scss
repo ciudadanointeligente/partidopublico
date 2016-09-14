@@ -333,6 +333,10 @@ input[type="submit"]{
 	-webkit-appearance: none;
 	margin: 0 0 20px 0;
 	border-radius: 20px;
+	&:hover{
+		background-color: $orange;
+		border: 2px solid $orange;
+	}
 }
 
 input#partido_ids_, input#all{
