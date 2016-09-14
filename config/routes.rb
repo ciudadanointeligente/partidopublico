@@ -4,8 +4,6 @@ Rails.application.routes.draw do
   resources :egreso_campanas
   resources :ingreso_campanas
   resources :transferencias
-  resources :transferencia
-  resources :contratacions
   resources :contratacions
   resources :balance_anuals
   resources :egreso_ordinarios

@@ -134,11 +134,24 @@ h4{
 }
 
 h6{
-	font-weight: 700;
 	color: $blue;
+}
+
+.breadcrumb {
+	background-color: initial;
+	font-weight: 700;
 	text-transform: uppercase;;
 	letter-spacing: 1.2px;
 	font-size: xx-small;
+	color: $blue;
+	padding: initial;
+	margin-bottom: 0px;
+	border-radius: 0px;
+}
+
+.breadcrumb > li + li:before {
+  content: "> ";
+	color: $blue;
 }
 
 /*TABLES*/
