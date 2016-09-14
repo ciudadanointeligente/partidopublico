@@ -87,7 +87,7 @@
         <p class="numero">1</p>
         <h4 class="text-center">Selecciona los partidos a comparar</h4>
         <%= form_tag comparisons_path, :method =>  :get do |f| %>
-        <ul class="list-inline">
+        <ul class="list-unstyled">
           <% @partidos.each do |partido| %>
           <li>
             <%= check_box_tag 'partido_ids[]', partido.id, false, class: 'marcado'%>
@@ -100,7 +100,7 @@
       <div class="col-md-4">
         <p class="numero">2</p>
         <h4 class="text-center">Selecciona un tema</h4>
-        <%= select_tag :category, options_for_select(categories), prompt: "Seleccionar un tema" %>
+        <%= select_tag :category, options_for_select(categories), prompt: "Seleccionar tema" %>
       </div>
       <div class="col-md-4 col-md-offset-4">
         <%= submit_tag 'Comparar', class: 'transparente'%>
