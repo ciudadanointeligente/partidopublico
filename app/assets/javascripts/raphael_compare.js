@@ -33,16 +33,32 @@ $(document).ready(function(){
     });
   }
 
-  Raphael.fn.afiliados_compare_bar = function(dato){
+  Raphael.fn.afiliados_compare_bar = function(max, dato){
     var paper = this;
     if(dato.total != null){
-      var hombres_width = (dato.hombres / (dato.hombres + dato.mujeres)) * bar_width;
-      var mujeres_width = bar_width - hombres_width;
+      var scale = dato.total / max
+      var hombres_width = (dato.hombres / (dato.hombres + dato.mujeres)) * bar_width * scale;
+      var mujeres_width = (bar_width * scale - hombres_width) ;
 
       var publico_bar = paper.rect(0, 0, hombres_width, bar_height).attr({
         "fill" : "#23DBB8",
         "stroke" : "none"
       });
+
+      // publico_bar.txt = paper.text(5, 10, dato.hombres).attr({
+      //   "font-family" : "Karla-Regular, Karla",
+      //   "font-size" : 14,
+      //   'text-anchor': 'start'
+      // });
+      //
+      // publico_bar.mouseover(function () {
+      //             //this.animate({"fill-opacity": 1, 'transform':"s2 2"}, 500);
+      //         this.txt.show();
+      //     })
+      //     .mouseout(function () {
+      //         //this.animate({"fill-opacity": 0.8, 'transform':"s0.5 0.5"}, 500);
+      //         this.txt.hide();
+      //     });
 
       var privado_bar = paper.rect(hombres_width, 0, mujeres_width, bar_height).attr({
         "fill" : "#19a58a",
@@ -327,7 +343,6 @@ $(document).ready(function(){
       prev_width = prev_width + width;
     }
   }
-
 
   Raphael.fn.no_data_chart = function(){
     this.text(20 , 20, "No hay datos")

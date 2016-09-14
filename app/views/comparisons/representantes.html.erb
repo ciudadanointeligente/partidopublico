@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h3>Número de afiliados</h3>
+<h3>Representantes Electos</h3>
 <div class="row">
 <%= form_tag comparisons_path, :method => :get do |f| %>
   <%= select_tag "tipo_cargo", options_for_select(@tipo_cargos, params[:tipo_cargo] || ""), include_blank: "Cargo", class: "form-control" %>
