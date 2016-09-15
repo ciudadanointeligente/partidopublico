@@ -15,36 +15,38 @@
     </div>
     <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
       <div class="panel-body">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Cargo</th>
-              <th>Fecha Elección</th>
-              <th>Fecha Límite</th>
-              <th>Procedimientos</th>
-              <th>Requisitos</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% e['elecciones_internas'].each do |ei| %>
-            <tr>
-              <td><%= ei['cargo'] %></td>
-              <td><%= ei['fecha_eleccion'] %></td>
-              <td><%= ei['fecha_limite_inscripcion'] %></td>
-              <td>
-                <% ei['procedimientos'].each do |p| %>
-                  <li><%= p['descripcion'] %></li>
-                <% end %>
-              </td>
-              <td>
-                <% ei['requisitos'].each do |r| %>
-                  <li><%= r['descripcion'] %></li>
-                <% end %>
-              </td>
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Cargo</th>
+                <th>Fecha Elección</th>
+                <th>Fecha Límite</th>
+                <th>Procedimientos</th>
+                <th>Requisitos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% e['elecciones_internas'].each do |ei| %>
+              <tr>
+                <td><%= ei['cargo'] %></td>
+                <td><%= ei['fecha_eleccion'] %></td>
+                <td><%= ei['fecha_limite_inscripcion'] %></td>
+                <td>
+                  <% ei['procedimientos'].each do |p| %>
+                    <li><%= p['descripcion'] %></li>
+                  <% end %>
+                </td>
+                <td>
+                  <% ei['requisitos'].each do |r| %>
+                    <li><%= r['descripcion'] %></li>
+                  <% end %>
+                </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

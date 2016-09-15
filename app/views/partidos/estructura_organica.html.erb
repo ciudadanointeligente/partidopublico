@@ -22,26 +22,28 @@
       </div>
       <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
         <div class="panel-body">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Cargo</th>
-                <th>Intereses</th>
-                <th>Patrimoni0</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% a[:miembros].each do |cargo| %>
-              <tr>
-                <td><%= cargo[:persona].nombre + ' ' + cargo[:persona].apellidos  %></td>
-                <td><%= cargo[:tipo_cargo].titulo  %></td>
-                <td><%= cargo[:persona].intereses  %></td>
-                <td><%= cargo[:persona].patrimonio  %></td>
-              </tr>
-              <% end %>
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Cargo</th>
+                    <th>Intereses</th>
+                    <th>Patrimoni0</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% a[:miembros].each do |cargo| %>
+                  <tr>
+                    <td><%= cargo[:persona].nombre + ' ' + cargo[:persona].apellidos  %></td>
+                    <td><%= cargo[:tipo_cargo].titulo  %></td>
+                    <td><%= cargo[:persona].intereses  %></td>
+                    <td><%= cargo[:persona].patrimonio  %></td>
+                  </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
         </div>
       </div>
     </div>
