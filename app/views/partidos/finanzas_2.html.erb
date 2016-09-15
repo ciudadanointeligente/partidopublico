@@ -1,4 +1,4 @@
-<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Transparencia</li><li>Finanzas</li></ol>
+<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Finanzas</li><li>Egresos ordinarios</li></ol>
 <h3>Egresos ordinarios</h3>
 
 <%= form_tag partido_finanzas_2_path, :method =>  :get do |f| %>
@@ -37,7 +37,7 @@
           <th class="total">Total</th>
           <th><span id='footer'></span></th>
           <th class="total monto">
-            <%= number_to_currency(@datos_egresos_ordinarios_totals['publicos'] + @datos_egresos_ordinarios_totals['privados'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %> 
+            <%= number_to_currency(@datos_egresos_ordinarios_totals['publicos'] + @datos_egresos_ordinarios_totals['privados'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %>
           </th>
         </tr>
       </tfoot>
