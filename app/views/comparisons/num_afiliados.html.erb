@@ -1,57 +1,38 @@
-<p id="notice"><%= notice %></p>
-
 <h3>Afiliados según género</h3>
-<div class="row">
-  <div class="col-md-12">
-  <%= form_tag comparisons_path, :method => :get do |f| %>
-    <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar fecha", onchange: "this.form.submit();"  %>
 
-    <%= select_tag :region, options_for_select(@regiones_datos), prompt: "Nacional"  %>
+<div>
+<%= form_tag comparisons_path, :method => :get do |f| %>
+  <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar fecha", onchange: "this.form.submit();" %>
+  <%= select_tag :region, options_for_select(@regiones_datos), prompt: "Nacional" %>
+  <%= select_tag :genero, options_for_select([:hombres, :mujeres]), prompt: "Hombres y mujeres" %>
+<% end %>
+</div>
 
-    <%= select_tag :genero, options_for_select([:hombres, :mujeres]), prompt: "Hombres y mujeres"  %>
-  <% end %>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-12">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>
-            Partido
-          </th>
-          <th>
-            Monto Total
-          </th>
-          <th>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @datos.each_with_index do |linea, i| %>
-        <tr>
-          <div id='header'></div>
-        </tr>
-        <tr>
-          <td>
-            <%= linea[:nombre] %>
-          </td>
-          <td>
-            <div id="barras_<%= i.to_s %>"></div>
-          </td>
-          <td class="monto">
-            <%= (linea[:total].nil? ? 'NA' : linea[:total]).to_s %>
-          </td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <div>
-</div>
+<span id='legend'></span>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Partido</th>
+        <th>&nbsp;</th>
+        <th>Nro Total Afiliados</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @datos.each_with_index do |linea, i| %>
+      <tr>
+        <td><%= linea[:nombre] %></td>
+        <td><span id="barras_<%= i.to_s %>"></span></td>
+        <td class="monto"><%= (linea[:total].nil? ? 'NA' : number_with_delimiter(linea[:total], delimiter: ".", separator: ',')).to_s %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<div>
 
 <div id="barras"></div>
 
-<br>
 <script>
 $(document).ready(function(){
   var data = <%=  @datos.to_json.html_safe %>;
@@ -59,10 +40,9 @@ $(document).ready(function(){
   var fechas = <%=  @fechas_datos.to_json.html_safe %>;
   var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
      //Raphael("barras",800, 800 ).afiliados_compare_chart(data, data_totals);
-     Raphael("header",400, 40 ).afiliados_compare_header();
+     Raphael("legend",300, 40 ).afiliados_compare_header();
      for(var i=0; i < data.length; i++){
        Raphael("barras_" + i,300, 30 ).afiliados_compare_bar(data[i]);
      }
-
 });
 </script>

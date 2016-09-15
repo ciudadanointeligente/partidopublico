@@ -189,13 +189,13 @@ $(document).ready(function(){
       'text-anchor': 'start'
     });
 
-    paper.circle(191, 15, 9 )
+    paper.circle(170, 15, 9 )
     .attr({
       "fill" : "#19A58A",
       "stroke" : "none"
     });
 
-    paper.text(207, 17, "Aportes privados")
+    paper.text(187, 17, "Aportes privados")
     .attr({
       "font-family" : "Karla-Regular, Karla",
       "font-size" : 14,
