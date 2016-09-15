@@ -1,64 +1,46 @@
-<p id="notice"><%= notice %></p>
-
 <h3>Ingresos ordinarios</h3>
-<div class="row">
-  <div class="col-md-12">
-    <%= form_tag comparisons_path, :method => :get do |f| %>
-      <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
-    <% end %>
-  </div>
+
+<div>
+  <%= form_tag comparisons_path, :method => :get do |f| %>
+    <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
+  <% end %>
 </div>
 
-<div class="row">
-  <div class="col-md-12">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>
-            Partido
-          </th>
-          <th>
-            Monto Total
-          </th>
-          <th>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @datos.each_with_index do |linea, i| %>
-        <tr>
-          <div id='header'></div>
-        </tr>
-        <tr>
-          <td>
-            <%= linea[:nombre] %>
-          </td>
-          <td>
-            <div id="barras_<%= i.to_s %>"></div>
-          </td>
-          <td class="monto">
-            <%= ((linea[:total_privado].nil? ? 0 : linea[:total_privado]) + (linea[:total_publico].nil? ? 0 : linea[:total_publico])).to_s %>
-          </td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
+<span id='header'></span>
 
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Partido</th>
+        <th>&nbsp;</th>
+        <th>Monto Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @datos.each_with_index do |linea, i| %>
+      <tr>
+        <td><%= linea[:nombre] %></td>
+        <td><span id="barras_<%= i.to_s %>"></span></td>
+        <td class="monto">
+          <%= number_to_currency(((linea[:total_privado].nil? ? 0 : linea[:total_privado]) + (linea[:total_publico].nil? ? 0 : linea[:total_publico])), delimiter: ".", separator: ',', unit: "$", precision: 0 , format: "%u%n").to_s %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <div id="barras"></div>
 
-<br>
 <script>
 $(document).ready(function(){
   var data = <%=  @datos.to_json.html_safe %>;
   var fechas = <%=  @fechas_datos.to_json.html_safe %>;
   var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
-  Raphael("header",400, 40 ).ingreso_ord_header();
+  Raphael("header",300, 40 ).ingreso_ord_header();
   for(var i=0; i < data.length; i++){
     Raphael("barras_" + i,300, 30 ).ingreso_ord_compare_bar(data[i]);
   }
-
 });
 </script>

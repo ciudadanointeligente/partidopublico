@@ -27,7 +27,7 @@
             <div id="barras_<%= i.to_s %>"></div>
           </td>
           <td class="monto">
-            <%= linea['value'] %>
+            <%= number_to_currency(linea['value'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %>
           </td>
         </tr>
         <% end %>
