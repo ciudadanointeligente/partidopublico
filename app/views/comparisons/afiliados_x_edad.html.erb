@@ -37,8 +37,8 @@
         <% linea[:tramos].each do |t| %>
         <% color = t[:count].to_f / linea[:total].to_f %>
           <td>
-            <p style="color:rgba(232,93,52,<%= color * 4 %>);">
-              <%= number_to_percentage(100 * color) %>
+            <p class="edades" style="background-color:rgba(232,93,52,<%= color * 2.5 %>);">
+              <%= number_to_percentage(100 * color, precision: 0) %>
             </p>
           </td>
         <% end %>
