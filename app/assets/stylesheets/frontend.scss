@@ -235,7 +235,7 @@ aside.col-sm-3.col-md-3{
 	padding: 0;
 }
 
-/*NAV*/
+/*LEYENDAS*/
 .leyenda-cargos{
 	text-align: left;
 	margin-top: 50px;
@@ -249,6 +249,18 @@ aside.col-sm-3.col-md-3{
 .leyenda-desgloce{
 	text-align: left;
 	margin-top: 20px;
+}
+
+.circle-lg{
+	color: $green-light;
+	float: left;
+	margin-right: 5px;
+}
+
+.circle-gd{
+	color: $green-dark;
+	float: left;
+	margin-right: 5px;
 }
 
 /*SVG*/
