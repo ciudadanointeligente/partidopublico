@@ -1,5 +1,5 @@
-<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Transparencia</li><li>Declaración de intereses y patrimonio</li></ol>
-<h3>Declaración de intereses y patrimonio</h3>
+<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Vínculos e intereses</li><li>Declaraciones de intereses y patrimonio</li></ol>
+<h3>Declaraciones de intereses y patrimonio</h3>
 
 <%= form_tag partido_intereses_patrimonios_path, :method =>  :get, class: 'form-inline' do |f| %>
   <%= text_field_tag :q, params[:q] || "", class: "form-control" %>
