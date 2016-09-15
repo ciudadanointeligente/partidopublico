@@ -1,8 +1,9 @@
 $(document).ready(function(){
   var bar_width = 300;
   var bar_height = 30;
-  var colors_x_edad = ["#FF0000", "#F00000", "#00F000", "#00FF00", "#0000F0", "#0000FF",
+  var colors_x_edad = ["#FF0000", "#F0F00F", "#00F000", "#00FF00", "#0000F0", "#0000FF",
                        "#0F0F00", "#FF00F0", "#FF000F", "#FF0F00", "#0FF000", "#FF00FF"]
+  var colors_representantes =["#FF0000", "#F0F000", "#0FF000", "#0FFF0F", "#0000F0", "#0000FF"]
 
   Raphael.fn.afiliados_compare_header = function(){
     var paper = this;
@@ -192,7 +193,7 @@ $(document).ready(function(){
     var paper = this;
     paper.circle(12, 15, 9 )
     .attr({
-      "fill" : "#23DBB8",
+      "fill" : colors_representantes[0],
       "stroke" : "none"
     });
 
@@ -205,7 +206,7 @@ $(document).ready(function(){
 
     paper.circle(110, 15, 9 )
     .attr({
-      "fill" : "#19A58A",
+      "fill" : colors_representantes[1],
       "stroke" : "none"
     });
 
@@ -218,7 +219,7 @@ $(document).ready(function(){
 
     paper.circle(220, 15, 9 )
     .attr({
-      "fill" : "#23DBB8",
+      "fill" : colors_representantes[2],
       "stroke" : "none"
     });
 
@@ -231,7 +232,7 @@ $(document).ready(function(){
 
     paper.circle(320, 15, 9 )
     .attr({
-      "fill" : "#19A58A",
+      "fill" : colors_representantes[3],
       "stroke" : "none"
     });
 
@@ -244,7 +245,7 @@ $(document).ready(function(){
 
     paper.circle(430, 15, 9 )
     .attr({
-      "fill" : "#23DBB8",
+      "fill" : colors_representantes[4],
       "stroke" : "none"
     });
 
@@ -257,7 +258,7 @@ $(document).ready(function(){
 
     paper.circle(540, 15, 9 )
     .attr({
-      "fill" : "#19A58A",
+      "fill" : colors_representantes[5],
       "stroke" : "none"
     });
 
@@ -272,9 +273,34 @@ $(document).ready(function(){
   Raphael.fn.representantes_compare_bar = function(max, val, text){
     var paper = this;
     var width = (val / max) * bar_width;
+    var color = 0;
+    switch (text) {
+    case "Alcalde":
+        color = 0;
+        break;
+    case "Concejal":
+        color = 1;
+        break;
+    case "Diputado":
+        color = 2;
+        break;
+    case "Senador":
+        color = 3;
+        break;
+    case "Presidente":
+        color = 4;
+        break;
+    case "Consejero Regional":
+        color = 5;
+        break;
+    default:
+        color = 0;
+        break;
+      }
+
 
     var bar = paper.rect(0, 0, width, bar_height).attr({
-      "fill" : "#23DBB8",
+      "fill" : colors_representantes[color],
       "stroke" : "none"
     });
 

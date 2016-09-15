@@ -9,8 +9,9 @@
   <%= hidden_field_tag 'category', "Representantes Electos" %>
 <% end %>
 </div>
-<%=  @datos.to_json.html_safe %>
+
 <div class="row">
+  <div id='header'></div>
   <table class="table">
     <thead>
       <tr>
@@ -28,7 +29,7 @@
     <tbody>
       <% @datos.each_with_index do |linea, i| %>
       <tr>
-        <div id='header'></div>
+
       </tr>
       <tr>
         <td>
@@ -40,7 +41,7 @@
               <li>
                 <div style="display: inline">
                   <%= r[0] %>
-                  <div style="display: inline" id="barra_" + <%= r[0] %> + "_" + <%= linea[:partido][:sigla] %> ></div>
+                  <div style="display: inline" id="barra_<%= r[0] %>_<%= linea[:partido][:sigla] %>" ></div>
                   <%= r[1] %>
                 </div>
               </li>
@@ -67,9 +68,12 @@ $(document).ready(function(){
   var fechas = <%=  @fechas_datos.to_json.html_safe %>;
   var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
   Raphael("header",750, 40 ).representantes_compare_header();
+  console.log(data.length);
   for(var i = 0; i < data.length; i++){
+    console.log(data[i].representantes.length);
     for(var j = 0; j < data[i].representantes.length; j++){
-      Raphael("barra_" + data[i].representantes[j].titulo+ "_"+ data[i].partido.sigla,300, 30 ).representantes_compare_bar(<%= @max_number %>, data[i].representantes[j].count, data[i].representantes[j].titulo);
+      console.log("barra_" + data[i].representantes[j][0]+ "_"+ data[i].partido.sigla);
+      Raphael("barra_" + data[i].representantes[j][0]+ "_"+ data[i].partido.sigla,300, 30 ).representantes_compare_bar(<%= @max_number %>, data[i].representantes[j][1], data[i].representantes[j][0]);
     }
   }
 });

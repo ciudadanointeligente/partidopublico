@@ -3,7 +3,7 @@
 <h3>Número de afiliados por rango etário</h3>
 <div class="row">
 <%= form_tag comparisons_path, :method => :get do |f| %>
-  <%= select_tag :fecha_datos, options_for_select(@fechas_datos, params[:fecha_datos] || ""), prompt: "Seleccionar Fecha" %>
+  <%= select_tag :fecha_datos, options_for_select(@fechas_datos.reverse, params[:fecha_datos] || ""), prompt: "Seleccionar Fecha" %>
   <%= select_tag :region, options_from_collection_for_select(@regiones, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
   <%= select_tag :genero, options_for_select([:hombres, :mujeres], params[:genero] || ""), prompt: "Según sexo"  %>
   <%= submit_tag 'Buscar', class: "btn" %>
@@ -11,32 +11,40 @@
 <% end %>
 </div>
 <div class="row">
+  <div id='_header'></div>
   <table class="table">
     <thead>
       <tr>
         <td>
           Partido
         </td>
+        <% rangos_etarios.each do |r| %>
+          <td>
+            <%= r[0] %> a <%= r[1] %>
+          </td>
+        <% end %>
         <td>
-
-        </td>
-        <td>
-          Monto Total
+          Total
         </td>
       </tr>
     </thead>
     <tbody>
       <% @datos.each_with_index do |linea, i| %>
       <tr>
-        <div id='header'></div>
-      </tr>
-      <tr>
         <td>
           <%= linea[:partido] %>
         </td>
-        <td>
-          <div id="barra_<%= i.to_s %>"></div>
-        </td>
+        <% linea[:tramos].each do |t| %>
+        <% color = t[:count].to_f / linea[:total].to_f %>
+          <td>
+            <p style="color:rgba(232,93,52,<%= color * 4 %>);">
+              <%= number_to_percentage(100 * color) %>
+            </p>
+          </td>
+        <% end %>
+        <!-- <td>
+          <div id="_barra_<%= i.to_s %>"></div>
+        </td> -->
         <td>
           <%= (linea[:total].nil? ? 'NA' : linea[:total]).to_s %>
         </td>
@@ -44,23 +52,18 @@
       <% end %>
     </tbody>
   </table>
-
 </div>
 
-<div id="barras"></div>
-
-<br>
 <script>
 $(document).ready(function(){
   var data = <%=  @datos.to_json.html_safe %>;
   var data_totals = <%=  @datos_totals.to_json.html_safe %>;
   var fechas = <%=  @fechas_datos.to_json.html_safe %>;
   var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
-     //Raphael("barras",800, 800 ).afiliados_compare_chart(data, data_totals);
-     Raphael("header",800, 40 ).edades_compare_header(data[0]);
-     for(var i=0; i < data.length; i++){
-       Raphael("barra_" + i,300, 30 ).edades_compare_bar(<%= @max_total %>, data[i]);
-     }
+    //  Raphael("header",800, 40 ).edades_compare_header(data[0]);
+    //  for(var i=0; i < data.length; i++){
+    //    Raphael("barra_" + i,300, 30 ).edades_compare_bar(<%= @max_total %>, data[i]);
+    //  }
 
 });
 </script>

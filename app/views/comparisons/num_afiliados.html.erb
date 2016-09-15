@@ -3,15 +3,13 @@
 <h3>Número de afiliados</h3>
 <div class="row">
 <%= form_tag comparisons_path, :method => :get do |f| %>
-  <%= select_tag :fecha_datos, options_for_select(@fechas_datos, params[:fecha_datos] || ""), prompt: "Seleccionar Fecha" %>
+  <%= select_tag :fecha_datos, options_for_select(@fechas_datos.reverse, params[:fecha_datos] || ""), prompt: "Seleccionar Fecha" %>
   <%= select_tag :region, options_for_select(@regiones_datos, params[:region] || ""), prompt: "Seleccionar Region"  %>
   <%= select_tag :genero, options_for_select([:hombres, :mujeres], params[:genero] || ""), prompt: "Según sexo"  %>
   <%= submit_tag 'Buscar', class: "btn" %>
   <%= hidden_field_tag 'category', "Número de Afiliados" %>
 <% end %>
 </div>
-<%= @datos %>
-<%= @max_value %>
 <div class="row">
   <table class="table">
     <thead>

@@ -100,7 +100,7 @@ class ComparisonsController < ApplicationController
     end
 
     def afiliados_x_edad
-      rangos = [[14,17],[18,24],[25,29],[30,34],[35,39],[40,44],[45,49],[50,54],[55,59],[60,64],[65,69],[70,100]]
+      rangos = rangos_etarios
 
       @fechas_datos = Afiliacion.where(Afiliacion.arel_table[:partido_id].in(@partido_ids)).uniq.pluck(:fecha_datos).sort
 
@@ -237,7 +237,7 @@ class ComparisonsController < ApplicationController
         end
         cargos_ids_array = cargos.map{|c| c.tipo_cargo_id}.inject(Hash.new(0)) { |total, e| total[e] += 1 ;total}
         cargos_count = cargos_ids_array.transform_keys{|key| TipoCargo.find(key).titulo}
-        @datos << {:partido => {:sigla => partido.sigla} , :representantes => cargos_count }
+        @datos << {:partido => {:sigla => partido.sigla} , :representantes => cargos_count.to_a }
       end
 
       @max_number = @datos.map{|r| r[:representantes].map{|c| c[1]}.max}.compact.max
