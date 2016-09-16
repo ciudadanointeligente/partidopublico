@@ -1,4 +1,5 @@
 class PersonasController < ApplicationController
+  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy, :foto_upload, :import_personas]
   before_action :set_persona, only: [:show, :edit, :update, :destroy]
   before_action :set_partido, only: [:index, :create]
   # GET /personas
@@ -101,11 +102,6 @@ class PersonasController < ApplicationController
       format.any { render file: "partido_steps/import_response.js.erb", content_type: "application/js" , :locals => { :return_values => return_values }}
     end
 
-    #return
-    #render :text => params[:partido_id]
-    #redirect_to partido_steps_path(params[:partido_id], :personas)
-
-    #redirect_to partido_steps_path(:personas, params[:partido_id])
   end
 
   private

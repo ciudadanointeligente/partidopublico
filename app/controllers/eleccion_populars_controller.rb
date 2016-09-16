@@ -1,4 +1,5 @@
 class EleccionPopularsController < ApplicationController
+  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy]
   before_action :set_eleccion_popular, only: [:show, :edit, :update, :destroy]
 
   # GET /eleccion_populars

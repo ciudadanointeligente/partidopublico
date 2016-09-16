@@ -55,7 +55,7 @@ Rails.application.routes.draw do
   #resources :comunas
   resources :distritos
   resources :circunscripcions
-  resources :actividad_publicas
+  resources :actividad_publicas, only: [:index, :show]
 
   resources :marco_internos
   resources :documentos

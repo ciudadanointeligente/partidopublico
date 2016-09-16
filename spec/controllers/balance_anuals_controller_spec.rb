@@ -53,13 +53,15 @@ RSpec.describe BalanceAnualsController, type: :controller do
   end
 
   describe "GET #new" do
-    xit "assigns a new balance_anual as @balance_anual" do
+    login_admin
+    it "assigns a new balance_anual as @balance_anual" do
       get :new, {}, valid_session
       expect(assigns(:balance_anual)).to be_a_new(BalanceAnual)
     end
   end
 
   describe "GET #edit" do
+    login_admin
     it "assigns the requested balance_anual as @balance_anual" do
       balance_anual = BalanceAnual.create! valid_attributes
       get :edit, {:id => balance_anual.to_param}, valid_session
@@ -68,6 +70,7 @@ RSpec.describe BalanceAnualsController, type: :controller do
   end
 
   describe "POST #create" do
+    login_admin
     context "with valid params" do
       it "creates a new BalanceAnual" do
         expect {
@@ -101,6 +104,7 @@ RSpec.describe BalanceAnualsController, type: :controller do
   end
 
   describe "PUT #update" do
+    login_admin
     context "with valid params" do
       let(:new_attributes) {
         skip("Add a hash of attributes valid for your model")
@@ -142,6 +146,7 @@ RSpec.describe BalanceAnualsController, type: :controller do
   end
 
   describe "DELETE #destroy" do
+    login_admin
     it "destroys the requested balance_anual" do
       balance_anual = BalanceAnual.create! valid_attributes
       expect {

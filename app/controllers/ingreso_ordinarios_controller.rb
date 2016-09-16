@@ -1,5 +1,5 @@
 class IngresoOrdinariosController < ApplicationController
-  before_action :authenticate_admin!
+  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy, :aggregate_ingresos_ordinarios, :eliminar, :import_ingresos_ordinarios]
   before_action :set_ingreso_ordinario, only: [:show, :edit, :update, :destroy]
   before_action :set_partido, only: [:aggregate_ingresos_ordinarios, :eliminar]
   # GET /ingreso_ordinarios

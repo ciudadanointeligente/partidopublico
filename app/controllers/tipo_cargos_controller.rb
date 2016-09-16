@@ -1,4 +1,5 @@
 class TipoCargosController < ApplicationController
+  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy]
   before_action :set_tipo_cargo, only: [:show, :edit, :update, :destroy]
   before_action :set_partido, only: [:index, :create]
 
