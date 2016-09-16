@@ -1,0 +1,109 @@
+<<<<<<< HEAD
+<h3>Afiliados según rango etario</h3>
+<div>
+  <%= form_tag comparisons_path, :method => :get do |f| %>
+    <%= select_tag "region", options_from_collection_for_select(@regiones, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
+    <%= select_tag :genero, options_for_select([:hombres, :mujeres]), prompt: "Hombres y mujeres"  %>
+    <%= submit_tag 'Buscar', class: "btn" %>
+    <%= hidden_field_tag 'category', "Afiliados según rango etario" %>
+  <% end %>
+</div>
+
+<span id='header'></span>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Partido</th>
+        <th>&nbsp;</th>
+        <th>Nro Total Afiliados</th>
+=======
+<p id="notice"><%= notice %></p>
+
+<h3>Número de afiliados por rango etário</h3>
+<div class="row">
+<%= form_tag comparisons_path, :method => :get do |f| %>
+  <%= select_tag :fecha_datos, options_for_select(@fechas_datos.reverse, params[:fecha_datos] || ""), prompt: "Seleccionar Fecha" %>
+  <%= select_tag :region, options_from_collection_for_select(@regiones, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
+  <%= select_tag :genero, options_for_select([:hombres, :mujeres], params[:genero] || ""), prompt: "Según sexo"  %>
+  <%= submit_tag 'Buscar', class: "btn" %>
+  <%= hidden_field_tag 'category', "Afiliados por Edad" %>
+<% end %>
+</div>
+<div class="row">
+  <div id='_header'></div>
+  <table class="table">
+    <thead>
+      <tr>
+        <td>
+          Partido
+        </td>
+        <% rangos_etarios.each do |r| %>
+          <td>
+            <%= r[0] %> a <%= r[1] %>
+          </td>
+        <% end %>
+        <td>
+          Total
+        </td>
+>>>>>>> dev_comparativa
+      </tr>
+    </thead>
+    <tbody>
+      <% @datos.each_with_index do |linea, i| %>
+      <tr>
+<<<<<<< HEAD
+        <td><%= linea[:partido] %></td>
+        <td><span id="barra_<%= i.to_s %>"></span></td>
+        <td class="monto"><%= (linea[:total].nil? ? 'NA' : number_with_delimiter(linea[:total], delimiter: ".", separator: ',')).to_s %></td>
+=======
+        <td>
+          <%= linea[:partido] %>
+        </td>
+        <% linea[:tramos].each do |t| %>
+        <% color = t[:count].to_f / linea[:total].to_f %>
+          <td>
+            <p class="edades" style="background-color:rgba(232,93,52,<%= color * 2.5 %>);">
+              <%= number_to_percentage(100 * color, precision: 0) %>
+            </p>
+          </td>
+        <% end %>
+        <!-- <td>
+          <div id="_barra_<%= i.to_s %>"></div>
+        </td> -->
+        <td>
+          <%= (linea[:total].nil? ? 'NA' : linea[:total]).to_s %>
+        </td>
+>>>>>>> dev_comparativa
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<<<<<<< HEAD
+<div id="barras"></div>
+
+=======
+>>>>>>> dev_comparativa
+<script>
+$(document).ready(function(){
+  var data = <%=  @datos.to_json.html_safe %>;
+  var data_totals = <%=  @datos_totals.to_json.html_safe %>;
+  var fechas = <%=  @fechas_datos.to_json.html_safe %>;
+  var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
+<<<<<<< HEAD
+     Raphael("header",300, 40 ).edades_compare_header(data[0]);
+     for(var i=0; i < data.length; i++){
+       Raphael("barra_" + i,300, 30 ).edades_compare_bar(<%= @max_total %>, data[i]);
+     }
+=======
+    //  Raphael("header",800, 40 ).edades_compare_header(data[0]);
+    //  for(var i=0; i < data.length; i++){
+    //    Raphael("barra_" + i,300, 30 ).edades_compare_bar(<%= @max_total %>, data[i]);
+    //  }
+
+>>>>>>> dev_comparativa
+});
+</script>

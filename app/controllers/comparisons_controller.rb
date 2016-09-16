@@ -36,17 +36,54 @@ class ComparisonsController < ApplicationController
 
       @regiones_datos = Afiliacion.joins(:region).where(Afiliacion.arel_table[:partido_id].in(@partido_ids)).uniq.pluck(:nombre, :region_id).sort
 
-      if @fecha_param.nil?
-        @fecha = @fechas_datos.last
-      else
-        @fecha = @fecha_param
+      # if @fecha_param.nil?
+      #   @fecha = @fechas_datos.last
+      # else
+      #   @fecha = @fecha_param
+      # end
+      #
+      # @datos = Partido.joins('left join afiliacions on afiliacions.partido_id = partidos.id and afiliacions.fecha_datos in (\'' + @fecha.to_s + '\')')
+      # .where(Partido.arel_table[:id].in(@partido_ids))
+      # .select(Partido.arel_table[:sigla],Partido.arel_table[:nombre], 'fecha_datos, partido_id, sum(hombres) as hombres, sum(mujeres) as mujeres, sum(otros) as otros, (sum(hombres) + sum(mujeres)) as total')
+      # .group(Afiliacion.arel_table[:fecha_datos], Partido.arel_table[:id], Afiliacion.arel_table[:partido_id])
+
+      @datos = []
+      @partido_ids.each do |p_id|
+        partido = Partido.find p_id
+
+        if @fecha_param.nil?
+          @fecha = @fechas_datos.last
+        else
+          @fecha = @fecha_param
+        end
+
+        afiliados = Afiliacion.where(partido: partido, fecha_datos: @fecha)
+        if !params["region"].blank?
+          afiliados = afiliados.where(region_id: params["region"])
+        end
+        h = 0 #hombres
+        m = 0 #mujeres
+        afiliados.each do |a|
+          h = h + a.hombres
+          m = m + a.mujeres
+        end
+        total_generos = h + m
+        if !params[:genero].blank?
+          case params[:genero]
+            when 'hombres'
+              total_generos = h
+              m = 0
+
+            when 'mujeres'
+              total_generos = m
+              h = 0
+
+          end
+        end
+        missing_data = total_generos.nil?
+        @datos << {:nombre => partido.nombre, :total => total_generos,
+                   :hombres => h, :mujeres => m, :missing_data => missing_data }
       end
-
-      @datos = Partido.joins('left join afiliacions on afiliacions.partido_id = partidos.id and afiliacions.fecha_datos in (\'' + @fecha.to_s + '\')')
-      .where(Partido.arel_table[:id].in(@partido_ids))
-      .select(Partido.arel_table[:sigla],Partido.arel_table[:nombre], 'fecha_datos, partido_id, sum(hombres) as hombres, sum(mujeres) as mujeres, sum(otros) as otros, (sum(hombres) + sum(mujeres)) as total')
-      .group(Afiliacion.arel_table[:fecha_datos], Partido.arel_table[:id], Afiliacion.arel_table[:partido_id])
-
       #   @datos =[]
       #
       # @datos_query.each do |d|
@@ -56,29 +93,34 @@ class ComparisonsController < ApplicationController
       #      :hombres => d['hombres'], :mujeres => d['mujeres'], :missing_data => missing_data }
       # end
 
-      totals = @datos.map {|d| d.total || 0}
-      @datos_totals = [{ :max_value => totals.max}]
+      @max_value = @datos.map {|d| d[:total] || 0}.max
 
 
       render "num_afiliados"
     end
 
     def afiliados_x_edad
-      rangos = [[14,17],[18,24],[25,29],[30,34],[35,39],[40,44],[45,49],[50,54],[55,59],[60,64],[65,69],[70,100]]
+      rangos = rangos_etarios
+
+      @fechas_datos = Afiliacion.where(Afiliacion.arel_table[:partido_id].in(@partido_ids)).uniq.pluck(:fecha_datos).sort
 
       @datos = []
       @partido_ids.each do |p_id|
         partido = Partido.find p_id
-        last_date = Afiliacion.where(partido: partido).uniq.pluck(:fecha_datos).sort.last
-        p "last_date : " + last_date.to_s
-        afiliados = Afiliacion.where(partido: partido, fecha_datos: last_date)
+        #last_date = Afiliacion.where(partido: partido).uniq.pluck(:fecha_datos).sort.last
+
+        if @fecha_param.nil?
+          @fecha = @fechas_datos.last
+        else
+          @fecha = @fecha_param
+        end
+
+        afiliados = Afiliacion.where(partido: partido, fecha_datos: @fecha)
         if !params["region"].blank?
           afiliados = afiliados.where(region_id: params["region"])
         end
         h = 0 #hombres
         m = 0 #mujeres
-        nh = 0 #nacional hombres
-        nm = 0 #nacional mujeres
         afiliados.each do |a|
           h = h + a.hombres
           m = m + a.mujeres
@@ -107,15 +149,14 @@ class ComparisonsController < ApplicationController
             tramos << {:tramo => rango, :count => num_generos}
           end
         end
+
         total_generos = h + m
         if !params[:genero].blank?
           case params[:genero]
             when 'hombres'
               total_generos = h
-
             when 'mujeres'
               total_generos = m
-
           end
         end
         @datos << {:partido => partido.nombre, :tramos => tramos, :total => total_generos}
@@ -196,7 +237,7 @@ class ComparisonsController < ApplicationController
         end
         cargos_ids_array = cargos.map{|c| c.tipo_cargo_id}.inject(Hash.new(0)) { |total, e| total[e] += 1 ;total}
         cargos_count = cargos_ids_array.transform_keys{|key| TipoCargo.find(key).titulo}
-        @datos << {:partido => {:sigla => partido.sigla} , :representantes => cargos_count }
+        @datos << {:partido => {:sigla => partido.sigla} , :representantes => cargos_count.to_a }
       end
 
       @max_number = @datos.map{|r| r[:representantes].map{|c| c[1]}.max}.compact.max
@@ -233,7 +274,7 @@ class ComparisonsController < ApplicationController
     def set_comparison_params
       @partido_ids = params[:partido_ids].nil? ? Partido.ids : params[:partido_ids]
       @category = params[:category].nil? ? 'category_1' : params[:category]
-      @fecha_param = params[:fecha_datos].nil? ? nil : Date.new(params[:fecha_datos].split("-")[0].to_i, params[:fecha_datos].split("-")[1].to_i, params[:fecha_datos].split("-")[2].to_i)
+      @fecha_param = params[:fecha_datos].blank? ? nil : Date.new(params[:fecha_datos].split("-")[0].to_i, params[:fecha_datos].split("-")[1].to_i, params[:fecha_datos].split("-")[2].to_i)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
