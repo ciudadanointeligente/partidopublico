@@ -552,23 +552,26 @@ input[type="submit"].transparente{
 }
 
 /*FOOTER*/
-.site-footer {
-    background-color: $blue;
-    color: white;
-    padding: 40px 0;
-		margin-top: 30px;
-		position: relative;
-		bottom: -40px;
-		width: 100%;
+.site-footer{
+  background-color: $blue;
+  color: white;
+  padding: 40px 0;
+	margin-top: 30px;
+	position: relative;
+	bottom: -40px;
+	width: 100%;
+	a{
+		color: white;
+	}
+}
 
+.site-footer a:hover, .site-footer a :focus{
+	color: $orange;
+	text-decoration: none;
 }
 
 .logo-fci img {
   width: 200px;
-}
-
-.site-footer a:hover, .site-footer a:focus {
-  color: #FFF;
 }
 
 @media (max-width: 991px) {
