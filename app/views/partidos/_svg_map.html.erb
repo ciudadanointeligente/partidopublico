@@ -85,7 +85,7 @@ $(document).ready(function(){
       el_select.options[el_select.options.length] = new Option(presencia[x].region, 'region-'+presencia[x].ordinal);
 
       $('#region-'+presencia[x].ordinal).find('h4').html( "Total de afiliados " + presencia[x].region )
-      $('#region-'+presencia[x].ordinal).find('.total-max').html(presencia[x].hombres + presencia[x].mujeres)
+      $('#region-'+presencia[x].ordinal).find('h6').html(presencia[x].hombres + presencia[x].mujeres)
       if(presencia[x].hombres > 0 && presencia[x].mujeres > 0 ) {
         Raphael("circulo-"+presencia[x].ordinal, 170, 170).donutChart(85, 85, 70, 35, [presencia[x].hombres, presencia[x].mujeres], ['Hombres', 'Mujeres'], colors, true, $('#region-'+presencia[x].ordinal+' .leyenda'), colors);
       }

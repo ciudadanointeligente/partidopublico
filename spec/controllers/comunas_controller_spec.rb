@@ -60,7 +60,6 @@ RSpec.describe ComunasController, type: :controller do
   end
 
   describe "GET #new" do
-    login_admin
     it "assigns a new comuna as @comuna" do
       partido = create(:partido)
       region = create(:region)
@@ -72,7 +71,6 @@ RSpec.describe ComunasController, type: :controller do
   end
 
   describe "GET #edit" do
-    login_admin
     it "assigns the requested comuna as @comuna" do
       comuna = Comuna.create! valid_attributes
       get :edit, {:id => comuna.to_param}, valid_session
@@ -81,7 +79,6 @@ RSpec.describe ComunasController, type: :controller do
   end
 
   describe "POST #create" do
-    login_admin
     context "with valid params" do
       it "creates a new Comuna" do
         expect {
@@ -115,7 +112,6 @@ RSpec.describe ComunasController, type: :controller do
   end
 
   describe "PUT #update" do
-    login_admin
     context "with valid params" do
       let(:new_attributes) {
         skip("Add a hash of attributes valid for your model")
@@ -157,7 +153,6 @@ RSpec.describe ComunasController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    login_admin
     it "destroys the requested comuna" do
       comuna = Comuna.create! valid_attributes
       expect {

@@ -1,5 +1,4 @@
 class ComunasController < ApplicationController
-  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy]
   before_action :set_comuna, only: [:show, :edit, :update, :destroy]
   before_action :set_partido
   before_action :set_region

@@ -3,8 +3,8 @@ module ComparisonsHelper
     categories = ["Número de Afiliados",
                   "Regiones",
                   "Ingresos Ordinarios",
-                  "Representantes electos",
-                  "Afiliados según rango etario"
+                  "Representantes Electos",
+                  "Afiliados por Edad"
                 ]
   end
 

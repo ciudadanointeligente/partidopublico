@@ -52,7 +52,6 @@ RSpec.describe ProcedimientosController, type: :controller do
   end
 
   describe "GET #new" do
-    login_admin
     it "assigns a new procedimiento as @procedimiento" do
       get :new, {}, valid_session
       expect(assigns(:procedimiento)).to be_a_new(Procedimiento)
@@ -60,7 +59,6 @@ RSpec.describe ProcedimientosController, type: :controller do
   end
 
   describe "GET #edit" do
-    login_admin
     it "assigns the requested procedimiento as @procedimiento" do
       procedimiento = Procedimiento.create! valid_attributes
       get :edit, {:id => procedimiento.to_param}, valid_session
@@ -69,7 +67,6 @@ RSpec.describe ProcedimientosController, type: :controller do
   end
 
   describe "POST #create" do
-    login_admin
     context "with valid params" do
       it "creates a new Procedimiento" do
         expect {
@@ -103,7 +100,6 @@ RSpec.describe ProcedimientosController, type: :controller do
   end
 
   describe "PUT #update" do
-    login_admin
     context "with valid params" do
       let(:new_attributes) {
         skip("Add a hash of attributes valid for your model")
@@ -145,7 +141,6 @@ RSpec.describe ProcedimientosController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    login_admin
     it "destroys the requested procedimiento" do
       procedimiento = Procedimiento.create! valid_attributes
       expect {

@@ -1,7 +1,7 @@
 $(document).ready(function(){
   var bar_width = 300;
   var bar_height = 30;
-  var colors_x_edad = ["#FF0000", "#F00000", "#00F000", "#00FF00", "#0000F0", "#0000FF",
+  var colors_x_edad = ["#FF0000", "#F0F00F", "#00F000", "#00FF00", "#0000F0", "#0000FF",
                        "#0F0F00", "#FF00F0", "#FF000F", "#FF0F00", "#0FF000", "#FF00FF"]
   var colors_representantes =["#FF0000", "#F0F000", "#0FF000", "#0FFF0F", "#0000F0", "#0000FF"]
 
@@ -187,37 +187,6 @@ $(document).ready(function(){
     } else {
       paper.text(50, 15, "Faltan datos.")
     }
-
-
-  }
-
-  Raphael.fn.ingreso_ord_header = function(){
-    var paper = this;
-    paper.circle(12, 15, 9 )
-    .attr({
-      "fill" : "#23DBB8",
-      "stroke" : "none"
-    });
-
-    paper.text(28, 17, "Aportes públicos")
-    .attr({
-      "font-family" : "Karla-Regular, Karla",
-      "font-size" : 14,
-      'text-anchor': 'start'
-    });
-
-    paper.circle(191, 15, 9 )
-    .attr({
-      "fill" : "#19A58A",
-      "stroke" : "none"
-    });
-
-    paper.text(207, 17, "Aportes privados")
-    .attr({
-      "font-family" : "Karla-Regular, Karla",
-      "font-size" : 14,
-      'text-anchor': 'start'
-    });
   }
 
   Raphael.fn.representantes_compare_header = function(){
@@ -369,7 +338,6 @@ $(document).ready(function(){
       prev_width = prev_width + width;
     }
   }
-
 
   Raphael.fn.no_data_chart = function(){
     this.text(20 , 20, "No hay datos")

@@ -1,5 +1,5 @@
 class EgresoOrdinariosController < ApplicationController
-  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy, :aggregate_egresos_ordinarios, :eliminar, :import_egresos_ordinarios]
+  before_action :authenticate_admin!
   before_action :set_egreso_ordinario, only: [:show, :edit, :update, :destroy]
   before_action :set_partido, only: [:aggregate_egresos_ordinarios, :eliminar]
 
@@ -10,6 +10,18 @@ class EgresoOrdinariosController < ApplicationController
   end
 
   def aggregate_egresos_ordinarios
+  #   datos_by_partido = EgresoOrdinario.where partido: @partido
+  #   fechas_distintas = datos_by_partido.uniq.pluck(:fecha_datos)
+  #   @datos = []
+  #   fechas_distintas.each do |fecha|
+  #     datos_by_date = datos_by_partido.where("fecha_datos=to_date('" + fecha.to_s + "','YYYY-MM-DD')")
+  #     count = datos_by_date.count
+  #     total_privado = datos_by_date.sum(:privado)
+  #     total_publico = datos_by_date.sum(:publico)
+  #     line={:fecha_datos => fecha.strftime("%Y - %m"), :count => count, :total_privado => total_privado, :total_publico => total_publico}
+  #     @datos << line
+  #   end
+
     @datos_eficientes = EgresoOrdinario.where(:partido => @partido).group("date(fecha_datos)").
     select("fecha_datos, count(1) as count, sum(privado) as total_privado, sum(publico) as total_publico").order(:fecha_datos)
 

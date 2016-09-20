@@ -1,5 +1,4 @@
 class LeysController < ApplicationController
-  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy]
   before_action :set_ley, only: [:show, :edit, :update, :destroy]
 
   # GET /leys

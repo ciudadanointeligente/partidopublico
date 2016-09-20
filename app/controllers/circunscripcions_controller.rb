@@ -1,5 +1,4 @@
 class CircunscripcionsController < ApplicationController
-  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy]
   before_action :set_circunscripcion, only: [:show, :edit, :update, :destroy]
 
   # GET /circunscripcions

@@ -8,7 +8,7 @@ RSpec.describe "actividad_publicas/index", type: :view do
     ])
   end
 
-  xit "renders a list of actividad_publicas" do
+  it "renders a list of actividad_publicas" do
     render
   end
 end

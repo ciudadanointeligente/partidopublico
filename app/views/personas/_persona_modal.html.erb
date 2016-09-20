@@ -3,37 +3,47 @@
     <h3>Datos Persona {{ persona.id }}</h3>
   </div>
   <div class="modal-body">
-    <%= simple_form_for :persona, :multipart => true , :remote => true do |f| %>
-      <!-- required -->
-      <%= f.input :nombre, input_html: { 'ng-model': "persona.nombre", 'placeholder': "Nombre" } %>
-      <%= f.input :apellidos, as: :string, input_html: { 'ng-model': "persona.apellidos", 'placeholder': "Apellido" } %>
-      <!-- uniq -->
-      <%= f.input :rut, as: :string, input_html: { 'ng-model': "persona.rut", 'placeholder': "Rut" } %>
-      <!-- uniq -->
-      <!-- end of required -->
 
-      <%= f.input :email, required: false, as: :string, input_html: { 'ng-model': "persona.email", 'placeholder': "usuario@compañia.com" } %>
-      <%= f.input :fecha_nacimiento, required: false, as: :date, html5: true, input_html: { 'ng-model': "persona.fecha_nacimiento", 'placeholder': "Fecha de nacimiento" } %>
-      <%= f.input :nivel_estudios, required: false, input_html: { 'ng-model': "persona.nivel_estudios", 'placeholder': "Nivel de estudios" } %>
-      <div class="form-group">
-        <label for="">Región</label>
-        <%= f.collection_select(:region_id, @partido.regions, :id, :nombre, {prompt: 'Seleccione región'}, {'class' => 'form-control', 'ng-model' => "persona.region"}) %>
-      </div>
-      <%= f.input :ano_inicio_militancia, required: false, as: :integer, input_html: { 'ng-model': "persona.ano_inicio_militancia", 'placeholder': "Año militancia persona" } %>
-      <div class="form-group">
-        <label for="afiliado">Afiliado</label>
-        <select name="afiliado" id="afiliado" ng-model="persona.afiliado" class="form-control">
-          <option value="">Se encuentra afiliada al partido?</option>
-          <option value="0">No</option>
-          <option value="1">Si</option>
-        </select>
-      </div>
-      <%= f.input :bio, required: false, as: :text, input_html: { 'ng-model': "persona.bio", 'placeholder': "Biografía" } %>
-      <%= f.input :intereses, required: false, as: :url, input_html: { 'ng-model': "persona.intereses", 'placeholder': "URL Intereses declarados", "pattern": "https?://.+" } %>
-      <%= f.input :patrimonio, required: false, input_html: { 'ng-model': "persona.patrimonio", 'placeholder': "URL Patrimonios declarados", "pattern": "https?://.+" } %>
+      <%= simple_form_for :persona, :multipart => true , :remote => true do |f| %>
+        <!-- required -->
+        <%= f.input :nombre, input_html: { 'ng-model': "persona.nombre", 'placeholder': "Nombre" } %>
+        <%= f.input :apellidos, as: :string, input_html: { 'ng-model': "persona.apellidos", 'placeholder': "Apellido" } %>
+        <!-- uniq -->
+        <%= f.input :rut, as: :string, input_html: { 'ng-model': "persona.rut", 'placeholder': "Rut" } %>
+        <!-- uniq -->
+        <!-- end of required -->
 
-      <%= f.hidden_field :partido_id, :value => @partido.id %>
-    <% end %>
+        <%= f.input :email, required: false, as: :string, input_html: { 'ng-model': "persona.email", 'placeholder': "usuario@compañia.com" } %>
+        <%= f.input :fecha_nacimiento, required: false, as: :date, html5: true, input_html: { 'ng-model': "persona.fecha_nacimiento", 'placeholder': "Fecha de nacimiento" } %>
+        <%= f.input :nivel_estudios, required: false, input_html: { 'ng-model': "persona.nivel_estudios", 'placeholder': "Nivel de estudios" } %>
+        <div class="form-group">
+          <label for="">Región</label>
+          <%= f.collection_select(:region_id, @partido.regions, :id, :nombre, {prompt: 'Seleccione región'}, {'class' => 'form-control', 'ng-model' => "persona.region"}) %>
+        </div>
+        <%= f.input :ano_inicio_militancia, required: false, as: :integer, input_html: { 'ng-model': "persona.ano_inicio_militancia", 'placeholder': "Año militancia persona" } %>
+        <div class="form-group">
+          <label for="afiliado">Afiliado</label>
+          <select name="afiliado" id="afiliado" ng-model="persona.afiliado" class="form-control">
+            <option value="">Se encuentra afiliada al partido?</option>
+            <option value="0">No</option>
+            <option value="1">Si</option>
+          </select>
+        </div>
+        <%= f.input :bio, required: false, as: :text, input_html: { 'ng-model': "persona.bio", 'placeholder': "Biografía" } %>
+        <!--<%= f.input :foto, required: false, as: :file , input_html: { 'ng-model': "persona.foto" } %>-->
+        <%= f.hidden_field :partido_id, :value => @partido.id %>
+      <% end %>
+
+    <!--<div flow-init="{target: '/personas/7/foto_upload', method:post}"
+     flow-files-submitted="$flow.upload()"
+     flow-file-success="$file.msg = $message">
+
+      <input type="file" flow-btn/>
+      Input OR Other element as upload button
+      <span class="btn" flow-btn>Upload File</span>
+
+    </div>-->
+
   </div>
   <div class="modal-footer">
     <button class="btn btn-primary" ng-disabled="(persona.nombre && persona.apellidos && persona.rut) ? '' : 'disabled'" ng-click="save($event)" ng-class="{ 'btn-primary-save' : (persona.nombre && persona.apellidos && persona.rut) }">Guardar</button>

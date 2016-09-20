@@ -53,15 +53,13 @@ RSpec.describe EgresoCampanasController, type: :controller do
   end
 
   describe "GET #new" do
-    login_admin
-    it "assigns a new egreso_campana as @egreso_campana" do
+    xit "assigns a new egreso_campana as @egreso_campana" do
       get :new, {}, valid_session
       expect(assigns(:egreso_campana)).to be_a_new(EgresoCampana)
     end
   end
 
   describe "GET #edit" do
-    login_admin
     it "assigns the requested egreso_campana as @egreso_campana" do
       egreso_campana = EgresoCampana.create! valid_attributes
       get :edit, {:id => egreso_campana.to_param}, valid_session
@@ -70,7 +68,6 @@ RSpec.describe EgresoCampanasController, type: :controller do
   end
 
   describe "POST #create" do
-    login_admin
     context "with valid params" do
       it "creates a new EgresoCampana" do
         expect {
@@ -104,7 +101,6 @@ RSpec.describe EgresoCampanasController, type: :controller do
   end
 
   describe "PUT #update" do
-    login_admin
     context "with valid params" do
       let(:new_attributes) {
         skip("Add a hash of attributes valid for your model")
@@ -146,7 +142,6 @@ RSpec.describe EgresoCampanasController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    login_admin
     it "destroys the requested egreso_campana" do
       egreso_campana = EgresoCampana.create! valid_attributes
       expect {

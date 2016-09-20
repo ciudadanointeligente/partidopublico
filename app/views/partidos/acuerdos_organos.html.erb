@@ -1,4 +1,4 @@
-<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Últimas decisiones</li><li>Acuerdos órganos intermedios colegiados</li></ol>
+<h7><%= @partido.nombre %> > Transparencia > Últimas decisiones</h7>
 <h3>Acuerdos órganos intermedios colegiados</h3>
 
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -14,32 +14,30 @@
       </div>
       <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
         <div class="panel-body">
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Número</th>
-                  <th>Tema</th>
-                  <th>Fecha</th>
-                  <th>Región</th>
-                  <th>Órgano</th>
-                  <th>Documento</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% a["agreements"].each do |acuerdo|%>
-                <tr>
-                  <td><%= acuerdo["numero"] %></td>
-                  <td><%= acuerdo["tema"] %></td>
-                  <td><%= acuerdo["fecha"] %></td>
-                  <td><%= acuerdo["region"] %></td>
-                  <td><%= acuerdo["organo_interno"] %></td>
-                  <td><%= !acuerdo["documento"].blank? ? link_to(acuerdo["documento_url"]) do '<i class="fa fa-download"></i> Descargar'.html_safe end : '' %></td>
-                </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Número</th>
+                <th>Tema</th>
+                <th>Fecha</th>
+                <th>Región</th>
+                <th>Órgano</th>
+                <th>Documento</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% a["agreements"].each do |acuerdo|%>
+              <tr>
+                <td><%= acuerdo["numero"] %></td>
+                <td><%= acuerdo["tema"] %></td>
+                <td><%= acuerdo["fecha"] %></td>
+                <td><%= acuerdo["region"] %></td>
+                <td><%= acuerdo["organo_interno"] %></td>
+                <td><%= !acuerdo["documento"].blank? ? link_to(acuerdo["documento_url"]) do '<i class="fa fa-download"></i> Descargar'.html_safe end : '' %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

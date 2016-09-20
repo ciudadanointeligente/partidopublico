@@ -1,5 +1,4 @@
 class AcuerdosController < ApplicationController
-  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy]
   before_action :set_acuerdo, only: [:show, :edit, :update, :destroy]
 
   # GET /acuerdos

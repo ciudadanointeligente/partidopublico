@@ -56,7 +56,6 @@ RSpec.describe RegionsController, type: :controller do
   end
 
   describe "GET #new" do
-    login_admin
     it "assigns a new region as @region" do
       get :new, {partido_id: @partido}, valid_session
       expect(assigns(:region)).to be_a_new(Region)
@@ -64,7 +63,6 @@ RSpec.describe RegionsController, type: :controller do
   end
 
   describe "GET #edit" do
-    login_admin
     it "assigns the requested region as @region" do
       region = Region.create! valid_attributes
       get :edit, {partido_id: @partido, :id => region.to_param}, valid_session
@@ -73,7 +71,6 @@ RSpec.describe RegionsController, type: :controller do
   end
 
   describe "POST #create" do
-    login_admin
     context "with valid params" do
       it "creates a new Region" do
         expect {
@@ -107,7 +104,6 @@ RSpec.describe RegionsController, type: :controller do
   end
 
   describe "PUT #update" do
-    login_admin
     context "with valid params" do
       let(:new_attributes) {
         skip("Add a hash of attributes valid for your model")
@@ -149,7 +145,6 @@ RSpec.describe RegionsController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    login_admin
     it "destroys the requested region" do
       region = Region.create! valid_attributes
       expect {

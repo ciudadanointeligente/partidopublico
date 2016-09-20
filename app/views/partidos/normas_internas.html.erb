@@ -1,5 +1,6 @@
-<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Normas internas y pensamiento</li><li>Datos básicos del partido</li></ol>
-<h3>Datos básicos del partido</h3>
+<h7><%= @partido.nombre %> > Transparencia > Normas internas y pensamiento</h7>
+<h3>El partido</h3>
+<ul>
 <div class="row">
   <div class="col-md-3">
     <%= image_tag @partido.logo.url(:thumb), class: "img-responsive", alt: @partido.sigla %>
@@ -38,8 +39,7 @@
 
 <ul class="list-inline list-unstyled nospace">
   <% @normas_internas.each do |n| %>
-  <% if n.descripcion != "Estructura Orgánica" %>
-    <li class="col-xs-12 col-sm-6 col-md-4 documents">
+    <li class="col-md-4 documents">
       <i class="fa fa-file-o fa-3x" style="color: #F28269"></i>
       <h4>
         <%= link_to n.archivo.url, target: "_blank", onclick: "ga('send','event','click','"+n.archivo_file_name+"')" do %>
@@ -47,6 +47,5 @@
         <% end %>
       </h4>
     </li>
-  <% end %>
   <% end %>
 </ul>

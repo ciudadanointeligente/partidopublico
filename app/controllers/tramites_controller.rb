@@ -1,5 +1,4 @@
 class TramitesController < ApplicationController
-  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy]
   before_action :set_tramite, only: [:show, :edit, :update, :destroy]
 
   # GET /tramites

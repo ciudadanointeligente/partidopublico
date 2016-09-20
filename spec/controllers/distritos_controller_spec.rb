@@ -53,7 +53,6 @@ RSpec.describe DistritosController, type: :controller do
   end
 
   describe "GET #new" do
-    login_admin
     it "assigns a new distrito as @distrito" do
       get :new, {}, valid_session
       expect(assigns(:distrito)).to be_a_new(Distrito)
@@ -61,7 +60,6 @@ RSpec.describe DistritosController, type: :controller do
   end
 
   describe "GET #edit" do
-    login_admin
     it "assigns the requested distrito as @distrito" do
       distrito = Distrito.create! valid_attributes
       get :edit, {:id => distrito.to_param}, valid_session
@@ -70,7 +68,6 @@ RSpec.describe DistritosController, type: :controller do
   end
 
   describe "POST #create" do
-    login_admin
     context "with valid params" do
       it "creates a new Distrito" do
         expect {
@@ -104,7 +101,6 @@ RSpec.describe DistritosController, type: :controller do
   end
 
   describe "PUT #update" do
-    login_admin
     context "with valid params" do
       let(:new_attributes) {
         skip("Add a hash of attributes valid for your model")
@@ -146,7 +142,6 @@ RSpec.describe DistritosController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    login_admin
     it "destroys the requested distrito" do
       distrito = Distrito.create! valid_attributes
       expect {

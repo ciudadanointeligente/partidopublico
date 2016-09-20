@@ -5,7 +5,7 @@ RSpec.describe "actividad_publicas/show", type: :view do
     @actividad_publica = assign(:actividad_publica, ActividadPublica.create!())
   end
 
-  xit "renders attributes in <p>" do
+  it "renders attributes in <p>" do
     render
   end
 end

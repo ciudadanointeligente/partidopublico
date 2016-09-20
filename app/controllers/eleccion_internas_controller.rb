@@ -1,5 +1,4 @@
 class EleccionInternasController < ApplicationController
-  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy]
   before_action :set_eleccion_interna, only: [:show, :edit, :update, :destroy]
 
   # GET /eleccion_internas

@@ -1,5 +1,5 @@
 class ContratacionsController < ApplicationController
-  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy, :eliminar, :import_contrataciones]
+  before_action :authenticate_admin!
   before_action :set_contratacion, only: [:show, :edit, :update, :destroy]
   before_action :set_partido, only: [:aggregate_contrataciones, :eliminar]
 

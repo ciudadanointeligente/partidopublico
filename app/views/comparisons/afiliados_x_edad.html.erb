@@ -1,19 +1,31 @@
+<p id="notice"><%= notice %></p>
+
 <h3>Número de afiliados por rango etário</h3>
 <div class="row">
 <%= form_tag comparisons_path, :method => :get do |f| %>
-  <%= select_tag "region", options_from_collection_for_select(@regiones, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
-  <%= select_tag :genero, options_for_select([:hombres, :mujeres]), prompt: "Según sexo"  %>
+  <%= select_tag :fecha_datos, options_for_select(@fechas_datos.reverse, params[:fecha_datos] || ""), prompt: "Seleccionar Fecha" %>
+  <%= select_tag :region, options_from_collection_for_select(@regiones, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
+  <%= select_tag :genero, options_for_select([:hombres, :mujeres], params[:genero] || ""), prompt: "Según sexo"  %>
   <%= submit_tag 'Buscar', class: "btn" %>
   <%= hidden_field_tag 'category', "Afiliados por Edad" %>
 <% end %>
 </div>
-<div class="table-responsive">
+<div class="row">
+  <div id='_header'></div>
   <table class="table">
     <thead>
       <tr>
-        <th>Partido</th>
-        <th>&nbsp;</th>
-        <th>Total</th>
+        <td>
+          Partido
+        </td>
+        <% rangos_etarios.each do |r| %>
+          <td>
+            <%= r[0] %> a <%= r[1] %>
+          </td>
+        <% end %>
+        <td>
+          Total
+        </td>
       </tr>
     </thead>
     <tbody>
@@ -33,7 +45,7 @@
         <!-- <td>
           <div id="_barra_<%= i.to_s %>"></div>
         </td> -->
-        <td class="monto">
+        <td>
           <%= (linea[:total].nil? ? 'NA' : linea[:total]).to_s %>
         </td>
       </tr>

@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h3>Número de afiliados</h3>
+<h3>Representantes Electos</h3>
 <div class="row">
 <%= form_tag comparisons_path, :method => :get do |f| %>
   <%= select_tag "tipo_cargo", options_for_select(@tipo_cargos, params[:tipo_cargo] || ""), include_blank: "Cargo", class: "form-control" %>
@@ -10,18 +10,31 @@
 <% end %>
 </div>
 
-<div class="table-responsive">
+<div class="row">
+  <div id='header'></div>
   <table class="table">
     <thead>
       <tr>
-        <th>Partido</th>
-        <th>Representantes</th>
+        <td>
+          Partido
+        </td>
+        <td>
+          Representantes
+        </td>
+        <td>
+
+        </td>
       </tr>
     </thead>
     <tbody>
       <% @datos.each_with_index do |linea, i| %>
       <tr>
-        <td><%= linea[:partido][:sigla] %></td>
+
+      </tr>
+      <tr>
+        <td>
+          <%= linea[:partido][:sigla] %>
+        </td>
         <td>
           <ul class="list-unstyled">
             <% linea[:representantes].each_with_index do |r, j| %>
@@ -35,10 +48,14 @@
             <% end %>
           </ul>
         </td>
+        <td>
+
+        </td>
       </tr>
       <% end %>
     </tbody>
   </table>
+
 </div>
 
 <div id="barras"></div>

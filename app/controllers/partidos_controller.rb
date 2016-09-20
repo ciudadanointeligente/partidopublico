@@ -1,5 +1,5 @@
 class PartidosController < ApplicationController
-  before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy, :admin]
+  #before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy, :admin]
   before_action :set_partido, except: [:index, :new, :create, :admin]
   before_action :get_partidos, except: [:index, :new, :create, :admin]
   before_action :set_menu
@@ -7,9 +7,7 @@ class PartidosController < ApplicationController
                             :vinculos_intereses, :pactos, :sanciones,
                             :finanzas_1, :finanzas_2, :finanzas_5,
                             :afiliacion_desafiliacion, :eleccion_popular, :organos_internos, :elecciones_internas,
-                            :representantes, :acuerdos_organos, :estructura_organica, :actividades_publicas,
-                            :intereses_patrimonios, :publicacion_candidatos, :resultado_elecciones_internas
-                          ]
+                            :representantes, :acuerdos_organos, :estructura_organica]
 
 
   # GET /partidos
@@ -477,56 +475,6 @@ class PartidosController < ApplicationController
       @datos << {:organo_interno => o, :miembros => members}
     end
 
-  end
-
-  def actividades_publicas
-  end
-
-  def intereses_patrimonios
-    @intereses_patrimonios = []
-    tc_candidatos = @partido.tipo_cargos.where(candidato:true)
-    tc_candidatos.each do |tc|
-      filter_by = @partido.cargos.where(tipo_cargo_id:tc)
-      if !params[:q].blank?
-        n = params[:q].split(" ")[0]
-        a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
-        personas = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", n.downcase, a.downcase)
-        filter_by = filter_by.where(:persona_id => personas)
-      end
-      if !params[:region].blank?
-        filter_by = filter_by.where(:region_id => params["region"])
-      end
-      if !params[:genero].blank?
-        by_gender = @partido.personas.where(:genero => params[:genero])
-        filter_by = filter_by.where(:persona_id => by_gender)
-      end
-      @intereses_patrimonios << {"type" => tc.titulo, "cargos" => filter_by}
-    end
-  end
-
-  def publicacion_candidatos
-    @publicacion_candidatos = []
-    tc_candidatos = @partido.tipo_cargos.where(candidato:true)
-    tc_candidatos.each do |tc|
-      filter_by = @partido.cargos.where(tipo_cargo_id:tc)
-      if !params[:q].blank?
-        n = params[:q].split(" ")[0]
-        a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
-        personas = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", n.downcase, a.downcase)
-        filter_by = filter_by.where(:persona_id => personas)
-      end
-      if !params[:region].blank?
-        filter_by = filter_by.where(:region_id => params["region"])
-      end
-      if !params[:genero].blank?
-        by_gender = @partido.personas.where(:genero => params[:genero])
-        filter_by = filter_by.where(:persona_id => by_gender)
-      end
-      @publicacion_candidatos << {"type" => tc.titulo, "cargos" => filter_by}
-    end
-  end
-
-  def resultado_elecciones_internas
   end
 
   private
