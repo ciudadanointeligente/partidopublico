@@ -169,6 +169,48 @@ th{
 	border-bottom: 1px solid $blue;
 }
 
+/*BUTTONS*/
+button#dropdownMenu1{
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: 700;
+	color: white;
+	letter-spacing: 1.2px;
+	padding: 5px;
+	border: none;
+	background-color: $orange-dark;
+	height: 40px;
+	width: 100%;
+	-webkit-appearance: none;
+	margin-bottom: 10px;
+	margin-top: -30px;
+	border-radius: 6px;
+	&:hover{
+		background-color: white;
+		color: $orange-dark;
+	}
+}
+
+ul.dropdown-menu.dropdown-select{
+	width: 100%;
+	border-radius: 6px;
+	background-color: white;
+	font-weight: 700;
+	border: none;
+	padding: 15px;
+	color: $orange-dark;
+	li > ul > li{
+		list-style-type: disc;
+	}
+	a{
+		color: $blue;
+		&:hover{
+			color: $orange;
+			text-decoration: none;
+		}
+	}
+}
+
 /*ASIDE MENU*/
 aside.col-sm-3.col-md-3{
 	padding: 0 15px 0 0;
@@ -183,7 +225,7 @@ aside.col-sm-3.col-md-3{
 			padding: 10px 0 10px 0;
 			line-height: 15px;
 			background-color: $orange-dark;
-			list-style: none;
+			list-style-type: none;
 			color: white;
 			letter-spacing: 1.2px;
 			text-transform: uppercase;
@@ -277,7 +319,6 @@ select#fecha_datos, select#select-region{
 	color: $blue;
 	letter-spacing: 1.2px;
 	border: 2px solid $nude;
-	border-radius: 0px;
 	padding: 5px;
 	margin-top: 20px;
 	background-color: white;
@@ -298,7 +339,6 @@ select#region, select#genero, select#tipo_cargo{
 	color: $blue;
 	letter-spacing: 1.2px;
 	border: 2px solid $nude;
-	border-radius: 0px;
 	padding: 5px;
 	margin-top: 20px;
 	background-color: white;
@@ -320,7 +360,6 @@ input#q, input#nombre{
 	color: $blue;
 	letter-spacing: 1.2px;
 	border: 2px solid $nude;
-	border-radius: 0px;
 	padding: 5px;
 	margin-top: 20px;
 	background-color: white;
@@ -338,7 +377,6 @@ input[type="submit"]{
 	color: $blue;
 	letter-spacing: 1.2px;
 	border: 2px solid $nude;
-	border-radius: 0px;
 	padding: 5px 15px 5px 15px;
 	margin-top: 20px;
 	background-color: white;
@@ -375,7 +413,6 @@ select#category{
 	color: $blue;
 	letter-spacing: 1.2px;
 	border: 2px solid $blue;
-	border-radius: 0px;
 	padding: 5px;
 	margin-top: 20px;
 	height: 40px;

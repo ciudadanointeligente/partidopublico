@@ -80,13 +80,13 @@
 
 <div class="container">
   <div class="dropdown visible-xs visible-sm">
-    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <button class="btn btn-default btn-select dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       Menú
       <span class="caret"></span>
     </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <ul class="dropdown-menu dropdown-select" aria-labelledby="dropdownMenu1">
       <li class="principal">
-        <a href="#">Normas internas y pensamiento</a>
+        <p>Normas internas y pensamiento</p>
         <ul>
           <li>
             <%= link_to "Datos básicos del partido", partido_normas_internas_path(:menu => 0) %>
@@ -98,7 +98,7 @@
       </li>
       <li role="separator" class="divider"></li>
       <li class="principal">
-        <a href="#">Presencia nacional</a>
+        <p>Presencia nacional</p>
         <ul>
           <li>
             <%= link_to "Regiones constituido y número de afiliados", partido_regiones_path(:menu => 1) %>
@@ -116,7 +116,7 @@
       </li>
       <li role="separator" class="divider"></li>
       <li class="principal">
-        <a href="#">Cómo participar</a>
+        <p>Cómo participar</p>
         <ul>
           <li>
             <%= link_to "Afiliación y desafiliación", partido_afiliacion_desafiliacion_path(:menu => 2) %>
@@ -128,13 +128,13 @@
             <%= link_to "Postular a cargos de dirección interna", partido_elecciones_internas_path(:menu => 2) %>
           </li>
           <li class="hidden">
-            <a href="#">Actividades públicas</a>
+            <p>Actividades públicas</p>
           </li>
         </ul>
       </li>
       <li role="separator" class="divider"></li>
       <li class="principal">
-        <a href="#">Vínculos e Intereses</a>
+        <p>Vínculos e Intereses</p>
         <ul>
           <li>
             <%= link_to "Entidades en que tenga participación", partido_vinculos_e_intereses_path(:menu => 3) %>
@@ -149,7 +149,7 @@
       </li>
       <li role="separator" class="divider"></li>
       <li class="principal">
-        <a href="#">Finanzas</a>
+        <p>Finanzas</p>
         <ul>
           <li>
             <%= link_to "Ingresos ordinarios", partido_finanzas_1_path(:menu => 4) %>
@@ -179,7 +179,7 @@
       </li>
       <li role="separator" class="divider"></li>
       <li class="principal">
-        <a href="#">Últimas decisiones</a>
+        <p>Últimas decisiones</p>
         <ul>
           <li>
             <%= link_to "Publicación de los candidatos", partido_publicacion_candidatos_path(:menu => 5) %>
@@ -194,7 +194,7 @@
       </li>
       <li role="separator" class="divider"></li>
       <li class="principal">
-        <a href="#">Sanciones</a>
+        <p>Sanciones</p>
         <ul>
           <li>
             <%= link_to "Sanciones aplicadas al partido", partido_sanciones_path(:menu => 6) %>
