@@ -21,12 +21,8 @@
       </div>
       <%= f.input :ano_inicio_militancia, required: false, as: :integer, input_html: { 'ng-model': "persona.ano_inicio_militancia", 'placeholder': "Año militancia persona" } %>
       <div class="form-group">
-        <label for="afiliado">Afiliado</label>
-        <select name="afiliado" id="afiliado" ng-model="persona.afiliado" class="form-control">
-          <option value="">Se encuentra afiliada al partido?</option>
-          <option value="0">No</option>
-          <option value="1">Si</option>
-        </select>
+        <label for="afiliado">Afiliado</label>{{}}
+        <%= f.input_field :afiliado, as: :boolean, data: { 'ng-model': "persona.afiliado" } %>
       </div>
       <%= f.input :bio, required: false, as: :text, input_html: { 'ng-model': "persona.bio", 'placeholder': "Biografía" } %>
       <%= f.input :intereses, required: false, as: :url, input_html: { 'ng-model': "persona.intereses", 'placeholder': "URL Intereses declarados", "pattern": "https?://.+" } %>
