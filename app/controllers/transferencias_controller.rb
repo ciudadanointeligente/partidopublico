@@ -1,5 +1,5 @@
 class TransferenciasController < ApplicationController
-  before_action :authenticate_admin!
+  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy, :aggregate_transferencias, :eliminar, :import_transferencias]
   before_action :set_partido, only: [:aggregate_transferencias, :eliminar]
   before_action :set_transferencia, only: [:show, :edit, :update, :destroy]
 

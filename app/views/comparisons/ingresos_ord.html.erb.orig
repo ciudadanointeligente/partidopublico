@@ -1,0 +1,56 @@
+<h3>Ingresos ordinarios</h3>
+
+<<<<<<< HEAD
+<div>
+  <%= form_tag comparisons_path, :method => :get do |f| %>
+    <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
+  <% end %>
+=======
+<h3>Ingresos Ordianrios</h3>
+<div class="row">
+<%= form_tag comparisons_path, :method => :get do |f| %>
+  <%= select_tag :fecha_datos, options_for_select(@fechas_datos, params[:fecha_datos]), prompt: "Seleccionar Fecha"  %>
+  <%= submit_tag 'Buscar', class: "btn" %>
+  <%= hidden_field_tag 'category', "Ingresos Ordinarios" %>
+<% end %>
+>>>>>>> dev_comparativa
+</div>
+
+<span id='header'></span>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Partido</th>
+        <th>&nbsp;</th>
+        <th>Monto Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @datos.each_with_index do |linea, i| %>
+      <tr>
+        <td><%= linea[:nombre] %></td>
+        <td><span id="barras_<%= i.to_s %>"></span></td>
+        <td class="monto">
+          <%= number_to_currency(((linea[:total_privado].nil? ? 0 : linea[:total_privado]) + (linea[:total_publico].nil? ? 0 : linea[:total_publico])), delimiter: ".", separator: ',', unit: "$", precision: 0 , format: "%u%n").to_s %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div id="barras"></div>
+
+<script>
+$(document).ready(function(){
+  var data = <%=  @datos.to_json.html_safe %>;
+  var fechas = <%=  @fechas_datos.to_json.html_safe %>;
+  var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
+  Raphael("header",300, 40 ).ingreso_ord_header();
+  for(var i=0; i < data.length; i++){
+    Raphael("barras_" + i,300, 30 ).ingreso_ord_compare_bar(data[i]);
+  }
+});
+</script>

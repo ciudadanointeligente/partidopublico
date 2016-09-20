@@ -1,4 +1,4 @@
-<h7><%= @partido.nombre %> > Transparencia > Presencia nacional</h7>
+<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Presencia nacional</li><li>Representantes electos</li></ol>
 <h3>Representantes electos</h3>
 
 <%= form_tag partido_representantes_path, :method =>  :get, class: 'form-inline' do |f| %>

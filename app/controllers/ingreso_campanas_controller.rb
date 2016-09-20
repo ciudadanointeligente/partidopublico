@@ -1,5 +1,5 @@
 class IngresoCampanasController < ApplicationController
-  before_action :authenticate_admin!
+  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy, :aggregate_ingresos_campanas, :eliminar, :import_ingresos_campanas]
   before_action :set_partido, only: [:aggregate_ingresos_campanas, :eliminar]
   before_action :set_ingreso_campana, only: [:show, :edit, :update, :destroy]
 

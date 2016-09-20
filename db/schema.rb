@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160907192951) do
+ActiveRecord::Schema.define(version: 20160912184903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -505,6 +505,7 @@ ActiveRecord::Schema.define(version: 20160907192951) do
     t.boolean  "cargo_interno"
     t.boolean  "representante"
     t.boolean  "autoridad"
+    t.boolean  "candidato"
   end
 
   add_index "tipo_cargos", ["partido_id"], name: "index_tipo_cargos_on_partido_id", using: :btree

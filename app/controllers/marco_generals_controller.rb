@@ -1,4 +1,5 @@
 class MarcoGeneralsController < ApplicationController
+  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy]
   before_action :set_marco_general, only: [:show, :edit, :update, :destroy]
 
   # GET /marco_generals
@@ -15,7 +16,7 @@ class MarcoGeneralsController < ApplicationController
   # GET /marco_generals/new
   def new
     @marco_general = MarcoGeneral.new
-    
+
   end
 
   # GET /marco_generals/1/edit

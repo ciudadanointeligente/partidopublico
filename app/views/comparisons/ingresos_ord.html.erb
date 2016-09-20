@@ -1,55 +1,33 @@
-<p id="notice"><%= notice %></p>
-
 <h3>Ingresos Ordianrios</h3>
 <div class="row">
 <%= form_tag comparisons_path, :method => :get do |f| %>
-  <%= select_tag :fecha_datos, options_for_select(@fechas_datos, params[:fecha_datos]), prompt: "Seleccionar Fecha"  %>
-  <%= submit_tag 'Buscar', class: "btn" %>
-  <%= hidden_field_tag 'category', "Ingresos Ordinarios" %>
+  <%= select_tag :fecha_datos, options_for_select(@fechas_datos.reverse), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
 <% end %>
 </div>
-
-<div class="row">
+<div id='header'></div>
+<div class="table-responsive">
   <table class="table">
     <thead>
       <tr>
-        <td>
-          Partido
-        </td>
-        <td>
-
-        </td>
-        <td>
-          Monto Total
-        </td>
+        <th>Partido</th>
+        <th>&nbsp;</th>
+        <th>Monto Total</th>
       </tr>
     </thead>
     <tbody>
       <% @datos.each_with_index do |linea, i| %>
       <tr>
-        <div id='header'></div>
-      </tr>
-      <tr>
-        <td>
-          <%= linea[:nombre] %>
-        </td>
-        <td>
-          <div id="barras_<%= i.to_s %>"></div>
-        </td>
-        <td>
-          <%= ((linea[:total_privado].nil? ? 0 : linea[:total_privado]) + (linea[:total_publico].nil? ? 0 : linea[:total_publico])).to_s %>
+        <td><%= linea[:nombre] %></td>
+        <td><span id="barras_<%= i.to_s %>"></span></td>
+        <td class="monto">
+          <%= number_to_currency(((linea[:total_privado].nil? ? 0 : linea[:total_privado]) + (linea[:total_publico].nil? ? 0 : linea[:total_publico])), delimiter: ".", separator: ',', unit: "$", precision: 0 , format: "%u%n").to_s %>
         </td>
       </tr>
       <% end %>
     </tbody>
   </table>
-
 </div>
 
-
-<div id="barras"></div>
-
-<br>
 <script>
 $(document).ready(function(){
   var data = <%=  @datos.to_json.html_safe %>;
@@ -59,6 +37,5 @@ $(document).ready(function(){
   for(var i=0; i < data.length; i++){
     Raphael("barras_" + i,300, 30 ).ingreso_ord_compare_bar(data[i]);
   }
-
 });
 </script>

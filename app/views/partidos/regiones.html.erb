@@ -1,4 +1,4 @@
-<h7><%= @partido.nombre %> > Transparencia > Presencia nacional</h7>
+<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Presencia nacional</li><li>Regiones constituido y número de afiliados</li></ol>
 <div class="row">
   <div class="col-md-12">
     <h3>Regiones constituido y número de afiliados</h3>
@@ -7,7 +7,7 @@
     </select>
   </div>
 
-  <div class="hidden-xs col-md-4">
+  <div class="hidden-xs hidden-sm col-md-4">
     <%= render 'svg_map' %>
   </div>
   <div class="col-md-8 text-center">
@@ -16,35 +16,33 @@
       .hideData { display: none }
     </style>
 
-    <!-- <%= @datos_total_nacional %> -->
-
     <div id="region-nacional" class="showData">
       <div>
         <h4></h4>
-        <h6></h6>
+        <span class="total-max"></span>
       </div>
 
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="cargos-nacional"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-cargos"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-xs-12 col-sm-5">
           <div id="circulo-nacional"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="desgloce-nacional"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-desgloce"></ul>
         </div>
       </div>
@@ -52,29 +50,29 @@
     <div id="region-1" class="hideData">
       <div>
         <h4></h4>
-        <h6></h6>
+        <span class="total-max"></span>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="cargos-1"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-cargos"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="circulo-1"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="desgloce-1"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-desgloce"></ul>
         </div>
       </div>
@@ -82,29 +80,29 @@
     <div id="region-2" class="hideData">
       <div>
         <h4></h4>
-        <h6></h6>
+        <span class="total-max"></span>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="cargos-2"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-cargos"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="circulo-2"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="desgloce-2"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-desgloce"></ul>
         </div>
       </div>
@@ -112,29 +110,29 @@
     <div id="region-3" class="hideData">
       <div>
         <h4></h4>
-        <h6></h6>
+        <span class="total-max"></span>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="cargos-3"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-cargos"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="circulo-3"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="desgloce-3"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-desgloce"></ul>
         </div>
       </div>
@@ -142,29 +140,29 @@
     <div id="region-4" class="hideData">
       <div>
         <h4></h4>
-        <h6></h6>
+        <span class="total-max"></span>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="cargos-4"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-cargos"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="circulo-4"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="desgloce-4"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-desgloce"></ul>
         </div>
       </div>
@@ -172,29 +170,29 @@
     <div id="region-5" class="hideData">
       <div>
         <h4></h4>
-        <h6></h6>
+        <span class="total-max"></span>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="cargos-5"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-cargos"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="circulo-5"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="desgloce-5"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-desgloce"></ul>
         </div>
       </div>
@@ -202,29 +200,29 @@
     <div id="region-6" class="hideData">
       <div>
         <h4></h4>
-        <h6></h6>
+        <span class="total-max"></span>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="cargos-6"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-cargos"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="circulo-6"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="desgloce-6"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-desgloce"></ul>
         </div>
       </div>
@@ -232,29 +230,29 @@
     <div id="region-7" class="hideData">
       <div>
         <h4></h4>
-        <h6></h6>
+        <span class="total-max"></span>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="cargos-7"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-cargos"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="circulo-7"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="desgloce-7"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-desgloce"></ul>
         </div>
       </div>
@@ -262,29 +260,29 @@
     <div id="region-8" class="hideData">
       <div>
         <h4></h4>
-        <h6></h6>
+        <span class="total-max"></span>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="cargos-8"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-cargos"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="circulo-8"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="desgloce-8"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-desgloce"></ul>
         </div>
       </div>
@@ -292,29 +290,29 @@
     <div id="region-9" class="hideData">
       <div>
         <h4></h4>
-        <h6></h6>
+        <span class="total-max"></span>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="cargos-9"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-cargos"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="circulo-9"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="desgloce-9"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-desgloce"></ul>
         </div>
       </div>
@@ -322,29 +320,29 @@
     <div id="region-10" class="hideData">
       <div>
         <h4></h4>
-        <h6></h6>
+        <span class="total-max"></span>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="cargos-10"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-cargos"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="circulo-10"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="desgloce-10"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-desgloce"></ul>
         </div>
       </div>
@@ -352,29 +350,29 @@
     <div id="region-11" class="hideData">
       <div>
         <h4></h4>
-        <h6></h6>
+        <span class="total-max"></span>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="cargos-11"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-cargos"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="circulo-11"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="desgloce-11"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-desgloce"></ul>
         </div>
       </div>
@@ -382,29 +380,29 @@
     <div id="region-12" class="hideData">
       <div>
         <h4></h4>
-        <h6></h6>
+        <span class="total-max"></span>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="cargos-12"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-cargos"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="circulo-12"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="desgloce-12"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-desgloce"></ul>
         </div>
       </div>
@@ -412,29 +410,29 @@
     <div id="region-13" class="hideData">
       <div>
         <h4></h4>
-        <h6></h6>
+        <span class="total-max"></span>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="cargos-13"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-cargos"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="circulo-13"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="desgloce-13"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-desgloce"></ul>
         </div>
       </div>
@@ -442,29 +440,29 @@
     <div id="region-14" class="hideData">
       <div>
         <h4></h4>
-        <h6></h6>
+        <span class="total-max"></span>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="cargos-14"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-cargos"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="circulo-14"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="desgloce-14"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-desgloce"></ul>
         </div>
       </div>
@@ -472,29 +470,29 @@
     <div id="region-15" class="hideData">
       <div>
         <h4></h4>
-        <h6></h6>
+        <span class="total-max"></span>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="cargos-15"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-cargos"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="circulo-15"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda"></ul>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-sm-5">
           <div id="desgloce-15"></div>
         </div>
-        <div class="col-xs-7">
+        <div class="col-sm-7">
           <ul class="list-unstyled leyenda-desgloce"></ul>
         </div>
       </div>

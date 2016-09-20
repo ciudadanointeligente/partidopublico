@@ -1,24 +1,28 @@
-<h7><%= @partido.nombre %> > Transparencia > Vínculos e intereses</h7>
+<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Vínculos e intereses</li><li>Entidades en las que tenga participación</li></ol>
 <h3>Entidades en que tenga participación</h3>
-<table class="table">
-  <thead>
-    <tr>
-      <th>Entidad</th>
-      <th>Descripción</th>
-      <th>Documento</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @entidades.each do |e| %>
-    <tr>
-      <td><%= e.entidad %></td>
-      <td><%= e.descripcion %></td>
-      <td>
-        <% if !e.documento_file_name.nil? %>
-          <%= link_to e.documento_file_name, e.documento.url %>
-        <% end %>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Entidad</th>
+        <th>Descripción</th>
+        <th>Documento</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @entidades.each do |e| %>
+      <tr>
+        <td><%= e.entidad %></td>
+        <td><%= e.descripcion %></td>
+        <td>
+          <% if !e.documento_file_name.nil? %>
+            <%= link_to e.documento.url do %>
+              <i class="fa fa-download"></i> Descargar
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

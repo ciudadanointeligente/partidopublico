@@ -1,48 +1,39 @@
-<h7><%= @partido.nombre %> > Transparencia > Finanzas</h7>
+<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Finanzas</li><li>Transferencias de fondos públicos</li></ol>
 <h3>Transferencias de fondos públicos</h3>
 <%= form_tag partido_finanzas_5_path, :method =>  :get do |f| %>
   <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
 <% end %>
-<div class="row">
-  <div class="col-md-12">
-    <h4>Datos correspondientes al <%=  @fecha %></h4>
-    <div id="header"></div>
-    <%=  @fecha %>
+
+<div>
+  <h4>Datos correspondientes al <%=  @fecha %></h4>
+  <span id="header"></span>
+  <div class="table-responsive">
     <table class="table">
       <thead>
         <tr>
-          <th>
-            Concepto
-          </th>
-          <th>
-            Monto Total
-          </th>
-          <th>
-          </th>
+          <th>Concepto</th>
+          <th>&nbsp;</th>
+          <th>Monto Total</th>
         </tr>
       </thead>
       <tbody>
         <% @datos_transferencias.each_with_index do |linea, i| %>
-
         <tr>
-          <td>
-            <%= linea['text'] %>
-          </td>
-          <td>
-            <div id="barras_<%= i.to_s %>"></div>
-          </td>
+          <td><%= linea['text'] %></td>
+          <td><span id="barras_<%= i.to_s %>"></span></td>
           <td class="monto">
-            <%= linea['value'] %>
+            <%= number_to_currency(linea['value'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %>
           </td>
         </tr>
         <% end %>
-        <tr>
-          <td class="total"> Total </td>
-          <td>  </td>
-          <td class="total monto"> <%=  @datos_transferencias_totals[:total] %> </td>
-
-        </tr>
       </tbody>
+      <tfoot>
+        <tr>
+          <th class="total">Total</th>
+          <th>&nbsp;</th>
+          <th class="total monto"> <%=  number_to_currency(@datos_transferencias_totals[:total], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %> </th>
+        </tr>
+      </tfoot>
     </table>
   </div>
 </div>
