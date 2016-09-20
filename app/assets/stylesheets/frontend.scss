@@ -551,6 +551,32 @@ input[type="submit"].transparente{
 	border: none;
 }
 
+/*FOOTER*/
+.site-footer {
+    background-color: $blue;
+    color: white;
+    padding: 40px 0;
+		margin-top: 30px;
+		position: relative;
+		bottom: -40px;
+		width: 100%;
+
+}
+
+.logo-fci img {
+  width: 200px;
+}
+
+.site-footer a:hover, .site-footer a:focus {
+  color: #FFF;
+}
+
+@media (max-width: 991px) {
+	.site-footer li {
+			text-align: center;
+	}
+}
+
 /*MEDIA-QUERIS*/
 @media (max-width: 767px) {
 	div#bs-example-navbar-collapse-1{
