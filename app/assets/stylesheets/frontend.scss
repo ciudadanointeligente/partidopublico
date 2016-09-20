@@ -199,6 +199,7 @@ ul.dropdown-menu.dropdown-select{
 	border: none;
 	padding: 15px;
 	color: $orange-dark;
+	box-shadow: -5px 5px 0px $orange-dark;
 	li > ul > li{
 		list-style-type: disc;
 	}
