@@ -62,6 +62,7 @@ function personasController($scope,$http,$location,$aside,$attrs){
     if(persona_id) {
       $http.get('personas/'+persona_id+'.json')
         .success( function(data){
+          data.fecha_nacimiento = new Date(data.fecha_nacimiento)
           $scope.persona = data;
         })
         .error( function(error_data){
