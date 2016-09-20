@@ -551,6 +551,16 @@ input[type="submit"].transparente{
 	border: none;
 }
 
+/*COMPARATIVES*/
+p.edades{
+	text-align: center;
+	width: 30px;
+	height: 30px;
+	margin: auto;
+	border-radius: 15px;
+	padding-top: 5px
+}
+
 /*FOOTER*/
 .site-footer{
   background-color: $blue;
@@ -574,13 +584,13 @@ input[type="submit"].transparente{
   width: 200px;
 }
 
+/*MEDIA-QUERIS*/
 @media (max-width: 991px) {
 	.site-footer li {
 			text-align: center;
 	}
 }
 
-/*MEDIA-QUERIS*/
 @media (max-width: 767px) {
 	div#bs-example-navbar-collapse-1{
 		margin-top: 7px;
