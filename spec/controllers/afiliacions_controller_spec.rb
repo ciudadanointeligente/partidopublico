@@ -52,13 +52,15 @@ RSpec.describe AfiliacionsController, type: :controller do
   end
 
   describe "GET #new" do
-    xit "assigns a new afiliacion as @afiliacion" do
+    login_admin
+    it "assigns a new afiliacion as @afiliacion" do
       get :new, {}, valid_session
       expect(assigns(:afiliacion)).to be_a_new(Afiliacion)
     end
   end
 
   describe "GET #edit" do
+    login_admin
     it "assigns the requested afiliacion as @afiliacion" do
       afiliacion = Afiliacion.create! valid_attributes
       get :edit, {:id => afiliacion.to_param}, valid_session
@@ -67,6 +69,7 @@ RSpec.describe AfiliacionsController, type: :controller do
   end
 
   describe "POST #create" do
+    login_admin
     context "with valid params" do
       it "creates a new Afiliacion" do
         expect {
@@ -100,6 +103,7 @@ RSpec.describe AfiliacionsController, type: :controller do
   end
 
   describe "PUT #update" do
+    login_admin
     context "with valid params" do
       let(:new_attributes) {
         skip("Add a hash of attributes valid for your model")
@@ -141,6 +145,7 @@ RSpec.describe AfiliacionsController, type: :controller do
   end
 
   describe "DELETE #destroy" do
+    login_admin
     it "destroys the requested afiliacion" do
       afiliacion = Afiliacion.create! valid_attributes
       expect {

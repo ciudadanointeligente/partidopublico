@@ -1,5 +1,5 @@
 class PartidosController < ApplicationController
-  #before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy, :admin]
+  before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy, :admin]
   before_action :set_partido, except: [:index, :new, :create, :admin]
   before_action :get_partidos, except: [:index, :new, :create, :admin]
   before_action :set_menu

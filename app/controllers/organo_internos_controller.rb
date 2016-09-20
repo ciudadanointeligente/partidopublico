@@ -1,4 +1,5 @@
 class OrganoInternosController < ApplicationController
+  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy]
   before_action :set_organo_interno, only: [:show, :edit, :update, :destroy]
   before_action :set_partido, only: [:index]
   before_filter :set_paper_trail_whodunnit

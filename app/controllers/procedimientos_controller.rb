@@ -1,4 +1,5 @@
 class ProcedimientosController < ApplicationController
+  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy]
   before_action :set_procedimiento, only: [:show, :edit, :update, :destroy]
 
   # GET /procedimientos

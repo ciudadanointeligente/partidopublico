@@ -38,6 +38,7 @@
 
 <ul class="list-inline list-unstyled nospace">
   <% @normas_internas.each do |n| %>
+  <% if n.descripcion != "Estructura Orgánica" %>
     <li class="col-xs-12 col-sm-6 col-md-4 documents">
       <i class="fa fa-file-o fa-3x" style="color: #F28269"></i>
       <h4>
@@ -46,5 +47,6 @@
         <% end %>
       </h4>
     </li>
+  <% end %>
   <% end %>
 </ul>

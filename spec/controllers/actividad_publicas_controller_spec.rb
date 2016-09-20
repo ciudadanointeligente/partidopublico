@@ -19,7 +19,6 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe ActividadPublicasController, type: :controller do
-
   # This should return the minimal set of attributes required to create a valid
   # ActividadPublica. As you add validations to ActividadPublica, be sure to
   # adjust the attributes here as well.
@@ -53,13 +52,16 @@ RSpec.describe ActividadPublicasController, type: :controller do
   end
 
   describe "GET #new" do
+    login_admin
     it "assigns a new actividad_publica as @actividad_publica" do
-      get :new, {}, valid_session
+      partido = (:create)
+      get :new, {partido_id: partido.to_param}, valid_session
       expect(assigns(:actividad_publica)).to be_a_new(ActividadPublica)
     end
   end
 
   describe "GET #edit" do
+    login_admin
     it "assigns the requested actividad_publica as @actividad_publica" do
       actividad_publica = ActividadPublica.create! valid_attributes
       get :edit, {:id => actividad_publica.to_param}, valid_session

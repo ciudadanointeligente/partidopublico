@@ -1,5 +1,5 @@
 class EgresoCampanasController < ApplicationController
-  before_action :authenticate_admin!
+  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy, :aggregate_egresos_campanas, :eliminar, :import_egresos_campanas]
   before_action :set_partido, only: [:aggregate_egresos_campanas, :eliminar]
   before_action :set_egreso_campana, only: [:show, :edit, :update, :destroy]
 
@@ -102,7 +102,7 @@ class EgresoCampanasController < ApplicationController
     def set_partido
       @partido = Partido.find(params[:partido_id])
     end
-    
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def egreso_campana_params
       params.require(:egreso_campana).permit(:partido_id, :fecha_datos, :fecha_eleccion, :rut_candidato, :rut_proveedor, :nombre, :proveedor, :fecha_documento, :tipo_documento, :numero_documento, :numero_cuenta, :p_o_c, :glosa, :monto)

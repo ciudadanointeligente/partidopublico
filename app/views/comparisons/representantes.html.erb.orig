@@ -1,6 +1,18 @@
-<p id="notice"><%= notice %></p>
+<h3>Representantes electos</h3>
 
-<h3>Número de afiliados</h3>
+<<<<<<< HEAD
+<div>
+    <%= form_tag comparisons_path, :method => :get do |f| %>
+      <%= select_tag "tipo_cargo", options_for_select(@tipo_cargos, params[:tipo_cargo] || ""), include_blank: "Cargo", class: "form-control" %>
+      <%= select_tag "region", options_from_collection_for_select(@regiones, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
+      <%= submit_tag 'Buscar', class: "btn" %>
+      <%= hidden_field_tag 'category', "Representantes electos" %>
+    <% end %>
+</div>
+
+<div class="table-responsive">
+=======
+<h3>Representantes Electos</h3>
 <div class="row">
 <%= form_tag comparisons_path, :method => :get do |f| %>
   <%= select_tag "tipo_cargo", options_for_select(@tipo_cargos, params[:tipo_cargo] || ""), include_blank: "Cargo", class: "form-control" %>
@@ -10,7 +22,9 @@
 <% end %>
 </div>
 
-<div class="table-responsive">
+<div class="row">
+  <div id='header'></div>
+>>>>>>> dev_comparativa
   <table class="table">
     <thead>
       <tr>
@@ -21,7 +35,21 @@
     <tbody>
       <% @datos.each_with_index do |linea, i| %>
       <tr>
+<<<<<<< HEAD
         <td><%= linea[:partido][:sigla] %></td>
+        <td>
+          <ul>
+          <% linea[:representantes].each_with_index do |r, j| %>
+            <li><%= r[0] + ': ' + r[1].to_s %></li>
+          <% end %>
+          </ul>
+=======
+
+      </tr>
+      <tr>
+        <td>
+          <%= linea[:partido][:sigla] %>
+        </td>
         <td>
           <ul class="list-unstyled">
             <% linea[:representantes].each_with_index do |r, j| %>
@@ -35,11 +63,17 @@
             <% end %>
           </ul>
         </td>
+        <td>
+
+>>>>>>> dev_comparativa
+        </td>
       </tr>
       <% end %>
     </tbody>
   </table>
 </div>
+<<<<<<< HEAD
+=======
 
 <div id="barras"></div>
 
@@ -61,3 +95,4 @@ $(document).ready(function(){
   }
 });
 </script>
+>>>>>>> dev_comparativa
