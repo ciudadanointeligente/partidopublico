@@ -321,12 +321,11 @@ select#fecha_datos, select#select-region{
 	letter-spacing: 1.2px;
 	border: 2px solid $nude;
 	padding: 5px;
-	margin-top: 20px;
+	margin-bottom: 20px;
 	background-color: white;
 	height: 40px;
 	width: 200px;
 	-webkit-appearance: none;
-	margin-top: 0;
 	background: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'><path fill='#012639' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>");
 	background-position: 98% 50%;
 	background-repeat: no-repeat;
@@ -341,12 +340,11 @@ select#region, select#genero, select#tipo_cargo{
 	letter-spacing: 1.2px;
 	border: 2px solid $nude;
 	padding: 5px;
-	margin-top: 20px;
+	margin-bottom: 20px;
 	background-color: white;
 	height: 40px;
 	width: 200px;
 	-webkit-appearance: none;
-	margin-top: 0;
 	background: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'><path fill='#012639' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>");
 	background-position: 98% 50%;
 	background-repeat: no-repeat;
@@ -362,12 +360,11 @@ input#q, input#nombre{
 	letter-spacing: 1.2px;
 	border: 2px solid $nude;
 	padding: 5px;
-	margin-top: 20px;
+	margin-bottom: 20px;
 	background-color: white;
 	height: 40px;
 	width: 200px;
 	-webkit-appearance: none;
-	margin: 0 0 20px 0;
 	border-radius: 6px;
 }
 
@@ -379,11 +376,10 @@ input[type="submit"]{
 	letter-spacing: 1.2px;
 	border: 2px solid $nude;
 	padding: 5px 15px 5px 15px;
-	margin-top: 20px;
+	margin-bottom: 20px;
 	background-color: white;
 	height: 40px;
 	-webkit-appearance: none;
-	margin: 0 0 20px 0;
 	border-radius: 20px;
 	&:hover{
 		background-color: $orange;
@@ -415,11 +411,10 @@ select#category{
 	letter-spacing: 1.2px;
 	border: 2px solid $blue;
 	padding: 5px;
-	margin-top: 20px;
+	margin-bottom: 20px;
 	height: 40px;
 	width: 100%;
 	-webkit-appearance: none;
-	margin-top: 0;
 	background: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'><path fill='#012639' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>");
 	background-position: 98% 50%;
 	background-repeat: no-repeat;
@@ -436,7 +431,6 @@ input[type="submit"].transparente{
 	border: 2px solid white;
 	border-radius: 0px;
 	padding: 5px 15px 5px 15px;
-	margin-top: 20px;
 	background-color: white;
 	height: 40px;
 	width: 100%;
