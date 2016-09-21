@@ -81,7 +81,7 @@ class ComparisonsController < ApplicationController
           end
         end
         missing_data = total_generos.nil?
-        @datos << {:nombre => partido.nombre, :total => total_generos,
+        @datos << {:nombre => partido.nombre, :partido_id => partido.id, :total => total_generos,
                    :hombres => h, :mujeres => m, :missing_data => missing_data }
       end
       #   @datos =[]
@@ -180,7 +180,7 @@ class ComparisonsController < ApplicationController
           regions_map << regions_ordinals.include?(ordinal.to_s) ? true : false
         end
 
-        @datos << {:nombre => partido.nombre, :sigla =>partido.sigla, :mapa => regions_map}
+        @datos << {:nombre => partido.nombre, :partido_id => partido.id, :sigla =>partido.sigla, :mapa => regions_map}
       end
 
       render "regions"
@@ -216,7 +216,7 @@ class ComparisonsController < ApplicationController
 
       @datos_privados.each_with_index do |d, i|
         missing_data = @datos_privados[i].total_privado.nil? or @datos_publicos[i].total_publico.nil?
-        @datos << {:nombre => @datos_privados[i].nombre.to_s, :sigla => @datos_privados[i].sigla.to_s,
+        @datos << {:nombre => @datos_privados[i].nombre.to_s, :partido_id => @datos_privados[i].partido_id.to_s, :sigla => @datos_privados[i].sigla.to_s,
            :total_privado => @datos_privados[i].total_privado, :total_publico => @datos_publicos[i].total_publico, :missing_data => missing_data }
       end
 
@@ -237,7 +237,7 @@ class ComparisonsController < ApplicationController
         end
         cargos_ids_array = cargos.map{|c| c.tipo_cargo_id}.inject(Hash.new(0)) { |total, e| total[e] += 1 ;total}
         cargos_count = cargos_ids_array.transform_keys{|key| TipoCargo.find(key).titulo}
-        @datos << {:partido => {:sigla => partido.sigla} , :representantes => cargos_count.to_a }
+        @datos << {:partido => {:sigla => partido.sigla, :partido_id => partido.id}, :representantes => cargos_count.to_a }
       end
 
       @max_number = @datos.map{|r| r[:representantes].map{|c| c[1]}.max}.compact.max
