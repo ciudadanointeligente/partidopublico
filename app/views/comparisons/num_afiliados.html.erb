@@ -6,7 +6,7 @@
   <%= select_tag :region, options_for_select(@regiones_datos, params[:region] || ""), prompt: "Seleccionar Region"  %>
   <%= select_tag :genero, options_for_select([:hombres, :mujeres], params[:genero] || ""), prompt: "Según sexo"  %>
   <%= submit_tag 'Filtrar', class: "btn" %>
-  <%= hidden_field_tag 'category', "Número de Afiliados" %>
+  <%= hidden_field_tag 'category', "Afiliados según género" %>
 <% end %>
 
 <div class="table-responsive">
