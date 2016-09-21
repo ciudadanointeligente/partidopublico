@@ -330,6 +330,8 @@ select#fecha_datos, select#select-region{
 	background-position: 98% 50%;
 	background-repeat: no-repeat;
 	border-radius: 6px;
+	float: left;
+	margin-right: 6px;
 }
 
 select#region, select#genero, select#tipo_cargo{
@@ -350,6 +352,8 @@ select#region, select#genero, select#tipo_cargo{
 	background-repeat: no-repeat;
 	vertical-align: top;
 	border-radius: 6px;
+	float: left;
+	margin-right: 6px;
 }
 
 input#q, input#nombre{
@@ -635,10 +639,4 @@ p.edades{
 		margin: 0 0 40px 0;
 	}
 
-}
-
-@media (max-width: 280px) {
-	select#fecha_datos{
-		width: inherit;
-	}
 }
