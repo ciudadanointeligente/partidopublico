@@ -19,6 +19,7 @@
         <th><%= r[0] %> a <%= r[1] %></th>
         <% end %>
         <th>Total</th>
+        <th>URL</th>
       </tr>
     </thead>
     <tbody>
@@ -27,6 +28,9 @@
         <td>
           <%= linea[:partido] %>
         </td>
+        <% if !linea[:tramos].any? %>
+        <td colspan="12">&nbsp;</td>
+        <% end %>
         <% linea[:tramos].each do |t| %>
         <% color = t[:count].to_f / linea[:total].to_f %>
           <td>
