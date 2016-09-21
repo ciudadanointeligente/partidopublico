@@ -1,10 +1,10 @@
 module ComparisonsHelper
   def categories
-    categories = ["Número de Afiliados",
-                  "Regiones",
-                  "Ingresos ordinarios",
+    categories = ["Afiliados según género",
+                  "Afiliados según rango etario",
+                  "Regiones constituidos",
                   "Representantes electos",
-                  "Afiliados según rango etario"
+                  "Ingresos ordinarios"
                 ]
   end
 

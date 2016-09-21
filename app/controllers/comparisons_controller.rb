@@ -11,16 +11,16 @@ class ComparisonsController < ApplicationController
     i = categories.index @category
 
     case i
-      when 1
+    when 2
         regions
 
-      when 2
+      when 4
         ingresos_ordianrios
 
       when 3
         representantes
 
-      when 4
+      when 1
         afiliados_x_edad
 
       else
