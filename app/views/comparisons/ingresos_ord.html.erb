@@ -1,7 +1,8 @@
 <h3>Ingresos Ordianrios</h3>
 <div class="row">
 <%= form_tag comparisons_path, :method => :get do |f| %>
-  <%= select_tag :fecha_datos, options_for_select(@fechas_datos.reverse), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
+  <%= select_tag :fecha_datos, options_for_select(@fechas_datos.reverse, params[:fecha_datos] || ""), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
+  <%= hidden_field_tag 'category', "Ingresos ordinarios" %>
 <% end %>
 </div>
 <div id='header'></div>

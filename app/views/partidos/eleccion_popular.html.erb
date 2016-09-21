@@ -16,36 +16,38 @@
     </div>
     <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
       <div class="panel-body">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Procedimientos</th>
-              <th>Requisitos</th>
-              <th>Fecha</th>
-              <th>Días</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% e['dates'].each do |d| %>
-            <tr>
-              <td>
-                <% d['procedimientos'].each do |p| %>
-                  <li><%= p["descripcion"] %></li>
-                <% end %>
-              </td>
-              <td>
-                <% d['requisitos'].each do |r| %>
-                  <li><%= r["descripcion"] %></li>
-                <% end %>
-              </td>
-              <td>
-                <%= d["fecha_eleccion"] %>
-              </td>
-              <td><%= d["dias"] %></td>
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Procedimientos</th>
+                <th>Requisitos</th>
+                <th>Fecha</th>
+                <th>Días</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% e['dates'].each do |d| %>
+              <tr>
+                <td>
+                  <% d['procedimientos'].each do |p| %>
+                    <li><%= p["descripcion"] %></li>
+                  <% end %>
+                </td>
+                <td>
+                  <% d['requisitos'].each do |r| %>
+                    <li><%= r["descripcion"] %></li>
+                  <% end %>
+                </td>
+                <td>
+                  <%= d["fecha_eleccion"] %>
+                </td>
+                <td><%= d["dias"] %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

@@ -1,16 +1,17 @@
 <p id="notice"><%= notice %></p>
 
-<h3>Número de afiliados</h3>
+<h3>Representantes electos</h3>
 <div class="row">
-<%= form_tag comparisons_path, :method => :get do |f| %>
-  <%= select_tag "tipo_cargo", options_for_select(@tipo_cargos, params[:tipo_cargo] || ""), include_blank: "Cargo", class: "form-control" %>
-  <%= select_tag "region", options_from_collection_for_select(@regiones, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
-  <%= submit_tag 'Buscar', class: "btn" %>
-  <%= hidden_field_tag 'category', "Representantes Electos" %>
-<% end %>
+  <%= form_tag comparisons_path, :method => :get do |f| %>
+    <%= select_tag "tipo_cargo", options_for_select(@tipo_cargos, params[:tipo_cargo] || ""), include_blank: "Cargo", class: "form-control" %>
+    <%= select_tag "region", options_from_collection_for_select(@regiones, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
+    <%= submit_tag 'Buscar', class: "btn" %>
+    <%= hidden_field_tag 'category', "Representantes electos" %>
+  <% end %>
 </div>
 
 <div class="table-responsive">
+  <div id='header'></div>
   <table class="table">
     <thead>
       <tr>
