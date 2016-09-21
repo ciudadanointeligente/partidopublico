@@ -47,7 +47,6 @@ function personasController($scope,$http,$location,$aside,$attrs){
   }
 
   function getPersonasByPartido(partido_id) {
-    console.log("test output");
     $http.get('partidos/'+partido_id+'/personas')
       .success( function(data){
         $scope.personas = data;
@@ -166,9 +165,12 @@ function cargosController($scope,$http,$location,$aside,$attrs){
   }
 
   function getCargosByPartido(partido_id) {
-    console.log("test output");
     $http.get('partidos/'+partido_id+'/cargos')
       .success( function(data){
+        for(x=0; data.length>x; x++) {
+          data[x].fecha_desde = new Date(moment(data[x].fecha_desde).utc(-3));
+          data[x].fecha_hasta = new Date(moment(data[x].fecha_hasta).utc(-3));
+        }
         $scope.cargos = data;
       })
       .error( function(error_data){
@@ -199,9 +201,9 @@ function cargosController($scope,$http,$location,$aside,$attrs){
   function getCargoInfo(cargo_id) {
     $http.get('cargos/'+cargo_id+'.json')
       .success( function(data){
+        data.fecha_desde = new Date(moment(data.fecha_desde).utc(-3));
+        data.fecha_hasta = new Date(moment(data.fecha_hasta).utc(-3));
         $scope.cargo = data;
-        $scope.cargo.fecha_desde = new Date(data.fecha_desde);
-        $scope.cargo.fecha_hasta = new Date(data.fecha_hasta);
       })
       .error( function(error_data){
         $scope.messages = {response: false, message: error_data}
@@ -248,8 +250,6 @@ function cargosController($scope,$http,$location,$aside,$attrs){
   getTipoCargos($scope.partido_id);
   getOrganosInternos($scope.partido_id);
   getRegions();
-  console.log("test output");
-  //getComunas();
 };
 
 app.controller("sedesController",sedesController);
@@ -385,7 +385,6 @@ function actividad_publicasController($scope,$http,$location,$aside,$attrs){
         });
     }
     else {
-      console.log($scope.actividad_publica)
       $http.post('/actividad_publicas/', $scope.actividad_publica)
         .success(function(data){
           getActividadesPublicassByPartido($scope.partido_id);
@@ -400,7 +399,6 @@ function actividad_publicasController($scope,$http,$location,$aside,$attrs){
   function getActividadesPublicassByPartido(partido_id) {
     $http.get('partidos/'+partido_id+'/actividad_publicas')
       .success( function(data){
-        console.log(data);
         $scope.actividad_publicas = data;
       })
       .error( function(error_data){
