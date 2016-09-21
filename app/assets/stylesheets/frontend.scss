@@ -20,6 +20,8 @@ $sky-dark: #06B9BF;
 $sky-light: #78EEE8;
 
 /*GENERAL*/
+html{position:relative;min-height:100%}
+
 body {
 	background-color: $nude;
 	font-family: 'Karla', sans-serif;
@@ -29,6 +31,9 @@ body {
 	text-shadow: rgba(0,0,0,.01) 0 0 1px;
 	-webkit-text-size-adjust: 100%;
 }
+body{margin-bottom:100px}
+
+footer{position:absolute;bottom:0;width:100%;height:60px}
 
 span{
 	font-weight: 700;
