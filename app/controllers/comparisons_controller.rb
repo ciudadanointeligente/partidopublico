@@ -159,7 +159,7 @@ class ComparisonsController < ApplicationController
               total_generos = m
           end
         end
-        @datos << {:partido => partido.nombre, :tramos => tramos, :total => total_generos}
+        @datos << {:partido => partido.nombre, :partido_id => partido.id, :tramos => tramos, :total => total_generos}
       end
 
       @max_total = @datos.map{|p| p[:total]}.max
