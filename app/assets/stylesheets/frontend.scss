@@ -212,6 +212,20 @@ ul.dropdown-menu.dropdown-select{
 	}
 }
 
+button.btn.btn-default.btn-xs{
+	border-radius: 12px;
+	text-transform: uppercase;
+	font-size: 10px;
+	letter-spacing: 1.2px;
+	height: 24px;
+	border: 2px solid $green;
+	font-weight: 700;
+	padding: 0 10px 0 10px;
+	a{
+		color: $green;
+	}
+}
+
 /*ASIDE MENU*/
 aside.col-sm-3.col-md-3{
 	padding: 0 15px 0 0;
