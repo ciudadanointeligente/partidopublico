@@ -6,7 +6,7 @@
     <%= select_tag :region, options_from_collection_for_select(@regiones, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
     <%= select_tag :genero, options_for_select([:hombres, :mujeres], params[:genero] || ""), prompt: "Según sexo"  %>
     <%= submit_tag 'Buscar', class: "btn" %>
-    <%= hidden_field_tag 'category', "Afiliados por Edad" %>
+    <%= hidden_field_tag 'category', "Afiliados según rango etario" %>
   <% end %>
 </div>
 <div id='_header'></div>
