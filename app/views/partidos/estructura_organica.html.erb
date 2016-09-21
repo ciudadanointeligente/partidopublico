@@ -8,16 +8,17 @@
   <%= submit_tag 'Buscar' %>
 <% end %>
 
-<% @datos.each_with_index do |a, index| %>
 
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <% @datos.each_with_index do |a, index| %>
+  <% if a[:miembros].any? %>
+  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     <div class="panel panel-default">
       <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
         <h4 class="panel-title intern">
           <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
             <%= a[:organo_interno].nombre %> <span class="badge"><%= a[:miembros].count %></span>
           </a>
-          <a class="pull-right "data-toggle="modal" data-target="#myModal">
+          <a class="pull-right "data-toggle="modal" data-target="#myModal-<%= index %>">
             <i class="fa fa-info-circle" aria-hidden="true"></i>
           </a>
         </h4>
@@ -49,20 +50,23 @@
         </div>
       </div>
     </div>
-</div>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><h4>Funciones del <%= a[:organo_interno].nombre %></h4></h4>
-      </div>
-      <div class="modal-body">
-        <%= a[:organo_interno].funciones %>
+
+    <div class="modal fade" id="myModal-<%= index %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-<%= index %>">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel-<%= index %>"><h4>Funciones del <%= a[:organo_interno].nombre %></h4></h4>
+          </div>
+          <div class="modal-body">
+            <%= a[:organo_interno].funciones %>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<% end %>
+    <% end %>
+  <% end %>
+
 
 <!-- Modal -->
