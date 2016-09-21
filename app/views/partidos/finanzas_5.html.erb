@@ -1,7 +1,7 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Finanzas</li><li>Transferencias de fondos públicos</li></ol>
 <h3>Transferencias de fondos públicos</h3>
-<%= form_tag partido_finanzas_5_path, :method =>  :get do |f| %>
-  <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
+<%= form_tag partido_finanzas_5_path, :method => :get, class: 'form-inline' do |f| %>
+  <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar Fecha", onchange: "this.form.submit();", class: "form-control"  %>
 <% end %>
 
 <div>

@@ -13,6 +13,7 @@
         </a>
         <span class="badge"><%= e['dates'].count %></span>
       </h4>
+      <span class="sr-only"><p>Se han encontrado <%= e['dates'].count %> cargos de elección poopular para <%= e["type"] %>.</p></span>
     </div>
     <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
       <div class="panel-body">

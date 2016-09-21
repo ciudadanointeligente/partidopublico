@@ -16,7 +16,7 @@
       <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
         <h4 class="panel-title intern">
           <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
-            <%= a[:organo_interno].nombre %> <span class="badge"><%= a[:miembros].count %></span>
+            <%= a[:organo_interno].nombre %> <span class="badge"><%= a[:miembros].count %></span><span class="sr-only"><p>Se han encontrado <%= a[:miembros].count %> miembros.</p></span>
           </a>
           <a class="pull-right "data-toggle="modal" data-target="#myModal-<%= index %>">
             <i class="fa fa-info-circle" aria-hidden="true"></i>
@@ -65,8 +65,8 @@
       </div>
     </div>
   </div>
-    <% end %>
-  <% end %>
+<% end %>
+<% end %>
 
 
 <!-- Modal -->
