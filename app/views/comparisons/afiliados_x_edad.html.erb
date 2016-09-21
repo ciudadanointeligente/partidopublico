@@ -1,6 +1,5 @@
 <p id="notice"><%= notice %></p>
 <h3>Afiliados según rango etario</h3>
-<div class="container">
   <%= form_tag comparisons_path, :method => :get do |f| %>
     <%= select_tag :fecha_datos, options_for_select(@fechas_datos.reverse, params[:fecha_datos] || ""), prompt: "Seleccionar fecha" %>
     <%= select_tag :region, options_from_collection_for_select(@regiones, "id", "nombre", params[:region] || ""), include_blank: "Seleccionar región", class: "form-control" %>
@@ -8,7 +7,6 @@
     <%= submit_tag 'Filtrar', class: "btn" %>
     <%= hidden_field_tag 'category', "Afiliados según rango etario" %>
   <% end %>
-</div>
 <div id='_header'></div>
 <div class="table-responsive">
   <table class="table">
