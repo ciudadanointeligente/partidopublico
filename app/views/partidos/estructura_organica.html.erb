@@ -3,8 +3,8 @@
 
 <%= form_tag partido_estructura_organica_path, :method =>  :get, class: 'form-inline' do |f| %>
   <%= text_field_tag :q %>
-  <%= select_tag "region", options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
-  <%= select_tag "genero", options_for_select(["Masculino", "Femenino"], params[:genero] || ""), include_blank: "Género", class: "form-control" %>
+  <%= select_tag :region, options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
+  <%= select_tag :genero, options_for_select(["Masculino", "Femenino"], params[:genero] || ""), include_blank: "Género", class: "form-control" %>
   <%= submit_tag 'Buscar' %>
 <% end %>
 

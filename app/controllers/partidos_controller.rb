@@ -463,17 +463,17 @@ class PartidosController < ApplicationController
     organos_internos.each do |o|
       members = []
       data = o.cargos
-      if !params[:region].empty?
+      if !params[:region].blank?
         data = data.where(region_id: params[:region])
       end
 
-      if !params[:genero].empty?
+      if !params[:genero].blank?
         by_gender = @partido.personas.where(:genero => params[:genero])
         data = data.where(persona_id: by_gender)
       end
 
       data.each do |m|
-        if !params[:q].empty?
+        if !params[:q].blank?
           n = params[:q].split(" ")[0]
           a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
           if m.persona.nombre.downcase.include?(n.downcase) || m.persona.apellidos.downcase.include?(a.downcase)
