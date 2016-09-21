@@ -1,31 +1,32 @@
+<p id="notice"><%= notice %></p>
+
 <h3>Número de afiliados</h3>
-<div class="row">
 <%= form_tag comparisons_path, :method => :get do |f| %>
   <%= select_tag :fecha_datos, options_for_select(@fechas_datos.reverse, params[:fecha_datos] || ""), prompt: "Seleccionar Fecha" %>
   <%= select_tag :region, options_for_select(@regiones_datos, params[:region] || ""), prompt: "Seleccionar Region"  %>
   <%= select_tag :genero, options_for_select([:hombres, :mujeres], params[:genero] || ""), prompt: "Según sexo"  %>
-  <%= submit_tag 'Buscar', class: "btn" %>
+  <%= submit_tag 'Filtrar', class: "btn" %>
   <%= hidden_field_tag 'category', "Número de Afiliados" %>
 <% end %>
-</div>
-
-<span id='legend'></span>
 
 <div class="table-responsive">
   <table class="table">
     <thead>
       <tr>
         <th>Partido</th>
-        <th>&nbsp;</th>
-        <th>Nro Total Afiliados</th>
+        <th></th>
+        <th>Número total afiliados</th>
       </tr>
     </thead>
     <tbody>
       <% @datos.each_with_index do |linea, i| %>
       <tr>
+        <div id='header'></div>
+      </tr>
+      <tr>
         <td><%= linea[:nombre] %></td>
         <td><span id="barras_<%= i.to_s %>"></span></td>
-        <td class="monto"><%= (linea[:total].nil? ? 'NA' : number_with_delimiter(linea[:total], delimiter: ".", separator: ',')).to_s %></td>
+        <td class="monto"><%= (linea[:total].nil? ? 'NA' : linea[:total]).to_s %></td>
       </tr>
       <% end %>
     </tbody>
@@ -43,5 +44,6 @@ $(document).ready(function(){
      for(var i=0; i < data.length; i++){
        Raphael("barras_" + i,300, 30 ).afiliados_compare_bar(<%= @max_value %>,data[i]);
      }
+
 });
 </script>

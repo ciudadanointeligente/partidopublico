@@ -10,30 +10,32 @@
       <i class="fa fa-download"></i> <%= t.documento_file_name %>
     <% end %>
   <% end %>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Procedimientos</th>
-        <th>Requisitos</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <ul>
-          <% t.procedimientos.each do |p| %>
-            <li><%= p.descripcion %></li>
-          <% end %>
-          </ul>
-        </td>
-        <td>
-          <ul>
-          <% t.requisitos.each do |r| %>
-            <li><%= r.descripcion %></li>
-          <% end %>
-          </ul>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Procedimientos</th>
+          <th>Requisitos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <ul>
+            <% t.procedimientos.each do |p| %>
+              <li><%= p.descripcion %></li>
+            <% end %>
+            </ul>
+          </td>
+          <td>
+            <ul>
+            <% t.requisitos.each do |r| %>
+              <li><%= r.descripcion %></li>
+            <% end %>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 <% end %>

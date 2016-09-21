@@ -44,6 +44,7 @@ span{
 	background-color: white;
 	box-shadow: -5px 5px 0px $orange;
 	padding-top: 20px;
+	padding-bottom: 20px;
 	border-radius: 5px;
 }
 
@@ -168,6 +169,49 @@ th{
 	border-bottom: 1px solid $blue;
 }
 
+/*BUTTONS*/
+button#dropdownMenu1{
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: 700;
+	color: white;
+	letter-spacing: 1.2px;
+	padding: 5px;
+	border: none;
+	background-color: $orange-dark;
+	height: 40px;
+	width: 100%;
+	-webkit-appearance: none;
+	margin-bottom: 10px;
+	margin-top: -30px;
+	border-radius: 6px;
+	&:hover{
+		background-color: white;
+		color: $orange-dark;
+	}
+}
+
+ul.dropdown-menu.dropdown-select{
+	width: 100%;
+	border-radius: 6px;
+	background-color: white;
+	font-weight: 700;
+	border: none;
+	padding: 15px;
+	color: $orange-dark;
+	box-shadow: -5px 5px 0px $orange-dark;
+	li > ul > li{
+		list-style-type: disc;
+	}
+	a{
+		color: $blue;
+		&:hover{
+			color: $orange;
+			text-decoration: none;
+		}
+	}
+}
+
 /*ASIDE MENU*/
 aside.col-sm-3.col-md-3{
 	padding: 0 15px 0 0;
@@ -182,7 +226,7 @@ aside.col-sm-3.col-md-3{
 			padding: 10px 0 10px 0;
 			line-height: 15px;
 			background-color: $orange-dark;
-			list-style: none;
+			list-style-type: none;
 			color: white;
 			letter-spacing: 1.2px;
 			text-transform: uppercase;
@@ -235,7 +279,7 @@ aside.col-sm-3.col-md-3{
 	padding: 0;
 }
 
-/*NAV*/
+/*LEYENDAS*/
 .leyenda-cargos{
 	text-align: left;
 	margin-top: 50px;
@@ -251,6 +295,18 @@ aside.col-sm-3.col-md-3{
 	margin-top: 20px;
 }
 
+.circle-lg{
+	color: $green-light;
+	float: left;
+	margin-right: 5px;
+}
+
+.circle-gd{
+	color: $green-dark;
+	float: left;
+	margin-right: 5px;
+}
+
 /*SVG*/
 div#header{
 	margin-top: 10px;
@@ -264,35 +320,31 @@ select#fecha_datos, select#select-region{
 	color: $blue;
 	letter-spacing: 1.2px;
 	border: 2px solid $nude;
-	border-radius: 0px;
 	padding: 5px;
-	margin-top: 20px;
+	margin-bottom: 20px;
 	background-color: white;
 	height: 40px;
 	width: 200px;
 	-webkit-appearance: none;
-	margin-top: 0;
 	background: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'><path fill='#012639' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>");
 	background-position: 98% 50%;
 	background-repeat: no-repeat;
 	border-radius: 6px;
 }
 
-select#region, select#genero{
+select#region, select#genero, select#tipo_cargo{
 	text-transform: uppercase;
 	font-size: 11px;
 	font-weight: 700;
 	color: $blue;
 	letter-spacing: 1.2px;
 	border: 2px solid $nude;
-	border-radius: 0px;
 	padding: 5px;
-	margin-top: 20px;
+	margin-bottom: 20px;
 	background-color: white;
 	height: 40px;
 	width: 200px;
 	-webkit-appearance: none;
-	margin-top: 0;
 	background: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'><path fill='#012639' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>");
 	background-position: 98% 50%;
 	background-repeat: no-repeat;
@@ -307,14 +359,12 @@ input#q, input#nombre{
 	color: $blue;
 	letter-spacing: 1.2px;
 	border: 2px solid $nude;
-	border-radius: 0px;
 	padding: 5px;
-	margin-top: 20px;
+	margin-bottom: 20px;
 	background-color: white;
 	height: 40px;
 	width: 200px;
 	-webkit-appearance: none;
-	margin: 0 0 20px 0;
 	border-radius: 6px;
 }
 
@@ -325,13 +375,11 @@ input[type="submit"]{
 	color: $blue;
 	letter-spacing: 1.2px;
 	border: 2px solid $nude;
-	border-radius: 0px;
 	padding: 5px 15px 5px 15px;
-	margin-top: 20px;
+	margin-bottom: 20px;
 	background-color: white;
 	height: 40px;
 	-webkit-appearance: none;
-	margin: 0 0 20px 0;
 	border-radius: 20px;
 	&:hover{
 		background-color: $orange;
@@ -362,13 +410,11 @@ select#category{
 	color: $blue;
 	letter-spacing: 1.2px;
 	border: 2px solid $blue;
-	border-radius: 0px;
 	padding: 5px;
-	margin-top: 20px;
+	margin-bottom: 20px;
 	height: 40px;
 	width: 100%;
 	-webkit-appearance: none;
-	margin-top: 0;
 	background: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'><path fill='#012639' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>");
 	background-position: 98% 50%;
 	background-repeat: no-repeat;
@@ -385,7 +431,6 @@ input[type="submit"].transparente{
 	border: 2px solid white;
 	border-radius: 0px;
 	padding: 5px 15px 5px 15px;
-	margin-top: 20px;
 	background-color: white;
 	height: 40px;
 	width: 100%;
@@ -500,7 +545,46 @@ input[type="submit"].transparente{
 	border: none;
 }
 
+/*COMPARATIVES*/
+p.edades{
+	text-align: center;
+	width: 30px;
+	height: 30px;
+	margin: auto;
+	border-radius: 15px;
+	padding-top: 5px
+}
+
+/*FOOTER*/
+.site-footer{
+  background-color: $blue;
+  color: white;
+  padding: 40px 0;
+	margin-top: 30px;
+	position: relative;
+	bottom: -40px;
+	width: 100%;
+	a{
+		color: white;
+	}
+}
+
+.site-footer a:hover, .site-footer a :focus{
+	color: $orange;
+	text-decoration: none;
+}
+
+.logo-fci img {
+  width: 200px;
+}
+
 /*MEDIA-QUERIS*/
+@media (max-width: 991px) {
+	.site-footer li {
+			text-align: center;
+	}
+}
+
 @media (max-width: 767px) {
 	div#bs-example-navbar-collapse-1{
 		margin-top: 7px;
@@ -541,7 +625,7 @@ input[type="submit"].transparente{
 		padding: 0 0 0 0;
 	}
 
-	select#fecha_datos, select#select-region, select#region, select#genero, select#category, input#q, input#nombre, input[type="submit"]{
+	select#fecha_datos, select#select-region, select#region, select#genero, select#category, select#tipo_cargo, input#q, input#nombre, input[type="submit"]{
 		width: 100%;
 		margin-bottom: 10px;
 	}
