@@ -6,7 +6,7 @@
     <%= select_tag :region, options_from_collection_for_select(@regiones, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
     <%= select_tag :genero, options_for_select([:hombres, :mujeres], params[:genero] || ""), prompt: "Según sexo"  %>
     <%= submit_tag 'Buscar', class: "btn" %>
-    <%= hidden_field_tag 'category', "Afiliados por Edad" %>
+    <%= hidden_field_tag 'category', "Afiliados según rango etario" %>
   <% end %>
 </div>
 <div id='_header'></div>
@@ -40,6 +40,9 @@
         </td> -->
         <td class="monto">
           <%= (linea[:total].nil? ? 'NA' : linea[:total]).to_s %>
+        </td>
+        <td>
+          <%= link_to "Regiones constituido y número de afiliados", partido_regiones_path(:partido_id => linea[:partido_id], :menu => 1) %>
         </td>
       </tr>
       <% end %>
