@@ -1,9 +1,13 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Finanzas</li><li>Ingresos ordinarios</li></ol>
 <h3>Ingresos ordinarios</h3>
 
-<%= form_tag partido_finanzas_1_path, :method =>  :get do |f| %>
-  <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
-<% end %>
+<div class="row">
+  <div class="col-md-12">
+    <%= form_tag partido_finanzas_1_path, :method =>  :get do |f| %>
+    <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
+    <% end %>
+  </div>
+</div>
 
 <div>
   <h4>Datos correspondientes al <%=  @fecha %></h4>
