@@ -62,6 +62,7 @@ Rails.application.routes.draw do
   resources :leys
   resources :marco_generals
   resources :partidos do
+    get "/", to: "partidos#normas_internas"
     get "/normas_internas", to: 'partidos#normas_internas'
     get "/regiones", to: 'partidos#regiones'
     get "/sedes_partido", to: 'partidos#sedes_partido'
