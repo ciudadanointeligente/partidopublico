@@ -2,14 +2,14 @@
 <h3>Estructura orgánica</h3>
 
 <%= form_tag partido_estructura_organica_path, :method =>  :get, class: 'form-inline' do |f| %>
-  <%= text_field_tag :q %>
+  <%= text_field_tag :q, nil, placeholder: "Ingrese nombre o apellido" %>
   <%= select_tag :region, options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Nacional", class: "form-control" %>
   <%= select_tag :genero, options_for_select(["Masculino", "Femenino"], params[:genero] || ""), include_blank: "Género", class: "form-control" %>
   <%= submit_tag 'Buscar' %>
 <% end %>
 
-
-  <% @datos.each_with_index do |a, index| %>
+<% cnt = 0 %>
+<% @datos.each_with_index do |a, index| %>
   <% if a[:miembros].any? %>
   <div class="panel-group" id="accordion" role="tablist">
     <div class="panel panel-default">
@@ -65,8 +65,9 @@
       </div>
     </div>
   </div>
+  <% cnt = cnt + 1 %>
+  <% end %>
 <% end %>
+<% if cnt == 0 %>
+<p class="text-info">No se encontraron registros</p>
 <% end %>
-
-
-<!-- Modal -->

@@ -9,7 +9,7 @@
   <% end %>
 <div id='_header'></div>
 <div class="table-responsive">
-  <table class="table">
+  <table class="table table-bordered">
     <thead>
       <tr>
         <th>Partido</th>
@@ -27,7 +27,7 @@
           <%= linea[:partido] %>
         </td>
         <% if !linea[:tramos].any? %>
-        <td colspan="12">&nbsp;</td>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
         <% end %>
         <% linea[:tramos].each do |t| %>
         <% color = t[:count].to_f / linea[:total].to_f %>
