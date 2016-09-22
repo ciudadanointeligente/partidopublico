@@ -1,7 +1,7 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Últimas decisiones</li><li>Publicación de los candidatos</li></ol>
 <h3>Publicación de los candidatos</h3>
 
-<%= form_tag partido_intereses_patrimonios_path, :method =>  :get, class: 'form-inline' do |f| %>
+<%= form_tag partido_publicacion_candidatos_path, :method =>  :get, class: 'form-inline' do |f| %>
   <%= text_field_tag :q, params[:q] || "", class: "form-control", placeholder: "Ingrese nombre o apellido" %>
   <%= select_tag "region", options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Seleccionar región", class: "form-control" %>
   <%= select_tag "genero", options_for_select(["Masculino", "Femenino"], params[:genero] || ""), include_blank: "Seleccionar género", class: "form-control" %>
@@ -9,8 +9,10 @@
   <%= hidden_field_tag 'menu', params[:menu] %>
 <% end %>
 
+<% cnt = 0 %>
 <% @publicacion_candidatos.each_with_index do |ip, index| %>
   <% if ip["cargos"].any? %>
+  <% cnt = cnt + 1 %>
   <div class="panel panel-default">
     <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
       <h4 class="panel-title intern">
@@ -49,4 +51,8 @@
     </div>
   </div>
   <% end %>
+<% end %>
+
+<% if cnt == 0 %>
+<p class="text-info">No se encontraron registros</p>
 <% end %>

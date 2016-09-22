@@ -8,8 +8,8 @@
   <%= submit_tag 'Buscar' %>
 <% end %>
 
-
-  <% @datos.each_with_index do |a, index| %>
+<% cnt = 0 %>
+<% @datos.each_with_index do |a, index| %>
   <% if a[:miembros].any? %>
   <div class="panel-group" id="accordion" role="tablist">
     <div class="panel panel-default">
@@ -65,8 +65,9 @@
       </div>
     </div>
   </div>
+  <% cnt = cnt + 1 %>
+  <% end %>
 <% end %>
+<% if cnt == 0 %>
+<p class="text-info">No se encontraron registros</p>
 <% end %>
-
-
-<!-- Modal -->

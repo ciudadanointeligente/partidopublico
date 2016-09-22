@@ -9,8 +9,10 @@
   <%= hidden_field_tag 'menu', params[:menu] %>
 <% end %>
 
+<% cnt = 0 %>
 <% @autoridades.each_with_index do |a, index| %>
   <% if a["cargos"].any? %>
+  <% cnt = cnt + 1 %>
   <div class="panel panel-default">
     <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
       <h4 class="panel-title intern">
@@ -47,4 +49,8 @@
     </div>
   </div>
   <% end %>
+<% end %>
+
+<% if cnt == 0 %>
+<p class="text-info">No se encontraron registros</p>
 <% end %>
