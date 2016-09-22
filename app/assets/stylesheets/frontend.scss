@@ -594,6 +594,17 @@ p.edades{
 	}
 }
 
+@media (max-width: 320px) {
+	.navbar-brand {
+		padding: 15px 0px;
+	}
+}
+
+@media (max-width: 960px) {
+	.nav > li > a {
+		padding: 0px 15px !important;
+	}
+}
 @media (max-width: 767px) {
 	div#bs-example-navbar-collapse-1{
 		margin-top: 7px;
