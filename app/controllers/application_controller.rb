@@ -12,6 +12,10 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-
+    if current_admin.is_superadmin
+      admin_path
+    else
+      partido_steps_path current_admin.partidos.first
+    end
   end
 end

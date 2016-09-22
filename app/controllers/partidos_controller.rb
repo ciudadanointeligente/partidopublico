@@ -1,5 +1,6 @@
 class PartidosController < ApplicationController
   before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy, :admin]
+  before_filter :authenticate_superadmin, only: [:new, :edit, :create, :update, :destroy]
   before_action :set_partido, except: [:index, :new, :create, :admin]
   before_action :get_partidos, except: [:index, :new, :create, :admin]
   before_action :set_menu
@@ -31,7 +32,7 @@ class PartidosController < ApplicationController
           logins << {fecha: login.fecha, ip: login.ip}
         end
         last_actions = PaperTrail::Version.where(:whodunnit => admin.email).last(3)
-        @login_data << {email: admin.email, login_count: admin_logins.count, logins: logins, last_actions: last_actions}
+        @login_data << {email: admin.email, is_superadmin: admin.is_superadmin, login_count: admin_logins.count, logins: logins, last_actions: last_actions}
       end
 
       ##puts @login_data
@@ -540,6 +541,13 @@ class PartidosController < ApplicationController
   end
 
   private
+    def authenticate_superadmin
+      puts "validating superadmin capabilities"
+      unless current_admin.is_superadmin?
+        redirect_to admin_path
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_partido
       partido_id = params[:id] || params[:partido_id]
