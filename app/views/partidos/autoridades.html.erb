@@ -2,7 +2,7 @@
 <h3>Autoridades designadas</h3>
 
 <%= form_tag partido_autoridades_path, :method =>  :get, class: 'form-inline' do |f| %>
-  <%= text_field_tag :q, params[:q] || "", class: "form-control" %>
+  <%= text_field_tag :q, params[:q] || "", class: "form-control", placeholder: "Ingrese nombre o apellido" %>
   <%= select_tag "region", options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Seleccionar región", class: "form-control" %>
   <%= select_tag "genero", options_for_select(["Masculino", "Femenino"], params[:genero] || ""), include_blank: "Seleccionar género", class: "form-control" %>
   <%= submit_tag 'Filtrar', class: "btn" %>
