@@ -207,8 +207,8 @@
 
   <div class="container">
     <div class="row">
-      <aside class="col-md-3 hidden-xs hidden-sm">
-        <ul id="accordion" class="list-unstyled aside-menu" role="tablist" aria-multiselectable="true">
+      <aside class="col-md-3 hidden-xs hidden-sm" aria-hidden="true">
+        <ul id="accordion" class="list-unstyled aside-menu" role="tablist">
           <li class="principal">
             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#aside-menu-one" aria-expanded="true" aria-controls="aside-menu-one">Normas internas y pensamiento</a>
             <ul id="aside-menu-one" class="collapse <%= @menu == 0 ? 'in' : '' %>" role="tab" aria-labelledby="aside-menu-one">
@@ -333,10 +333,8 @@
           </li>
         </ul>
       </aside>
-      <main class="col-xs-12 col-sm-12 col-md-9">
-        <div class="col-sm-12 board">
-          <%= yield %>
-        </div>
+      <main class="col-xs-12 col-sm-12 col-md-9 board">
+        <%= yield %>
       </main>
     </div>
   </div>
@@ -344,18 +342,17 @@
   <footer class="site-footer">
     <div id="footer">
       <div class="container">
-        <div id="disqus_thread"></div>
         <div class="row">
           <div class="col-md-4">
             <ul class="list-unstyled">
               <li><a href="mailto:info@ciudadanointeligente.org?Subject=Prensa%20de%20labcivico.org" class="email-prensa" target="_top"><i class="fa fa-envelope-o"></i> Mándanos un correo</a></li>
-              <li><a href="https://github.com/ciudadanointeligente/labcivico" target="_blank"><i class="fa fa-github-alt"></i> Revisa nuestro código</a></li>
+              <li><a href="//github.com/ciudadanointeligente/labcivico" target="_blank"><i class="fa fa-github-alt"></i> Revisa nuestro código</a></li>
             </ul>
           </div>
           <div class="col-md-4 logo-fci">
             <ul class="list-unstyled">
               <li>
-                Un proyecto de <a href="http://ciudadanointeligente.org" target="_blank"><img src="img/logofci_footer.png" title="Fundación Ciudadano Inteligente"></a>
+                Un proyecto de <a href="//ciudadanointeligente.org" target="_blank"><img src="img/logofci_footer.png" title="Fundación Ciudadano Inteligente"></a>
               </li>
             </ul>
           </div>

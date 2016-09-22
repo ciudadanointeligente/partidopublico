@@ -14,11 +14,12 @@
   <div class="panel panel-default">
     <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
       <h4 class="panel-title intern">
-        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="<%= (index != 0) ? "false" : "true" %>" aria-controls="collapse-<%= index %>">
           <%= all_representatives["type"] %>
         </a>
         <span class="badge"><%= all_representatives["representatives"].count %></span>
       </h4>
+      <span class="sr-only"><p>Se han encontrado <%= all_representatives["representatives"].count %> representantes para <%= all_representatives["type"] %>.</p></span>
     </div>
     <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
       <div class="panel-body">

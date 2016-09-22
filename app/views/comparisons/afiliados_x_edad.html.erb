@@ -17,7 +17,7 @@
         <th><%= r[0] %> a <%= r[1] %></th>
         <% end %>
         <th>Total</th>
-        <th>Detalle</th>
+        <th class="text-center"><i class="fa fa-link" aria-hidden="true"></i></th>
       </tr>
     </thead>
     <tbody>
@@ -26,6 +26,9 @@
         <td>
           <%= linea[:partido] %>
         </td>
+        <% if !linea[:tramos].any? %>
+        <td colspan="12">&nbsp;</td>
+        <% end %>
         <% linea[:tramos].each do |t| %>
         <% color = t[:count].to_f / linea[:total].to_f %>
           <td>
@@ -40,7 +43,7 @@
         <td class="total">
           <%= (linea[:total].nil? ? 'NA' : linea[:total]).to_s %>
         </td>
-        <td>
+        <td class="text-center">
           <button class="btn btn-default btn-xs" type="submit"><%= link_to "Ver detalle", partido_regiones_path(:partido_id => linea[:partido_id], :menu => 1) %></button>
         </td>
       </tr>

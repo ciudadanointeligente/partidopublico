@@ -14,6 +14,7 @@
       </div>
       <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
         <div class="panel-body">
+          <span class="sr-only"><p>Se han encontrado <%= a["agreements"].count %> acuerdos <%= a['type'] %></p></span>
           <div class="table-responsive">
             <table class="table">
               <thead>

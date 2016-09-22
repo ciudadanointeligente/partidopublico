@@ -1,6 +1,8 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Transparencia</li><li>Sanciones</li></ol>
 <h3>Sanciones aplicadas al partido</h3>
 
+<span class="sr-only"><p>Se han encontrado <%=@sanciones.count %> sanciones al partido. A continuación se detallan</p></span>
+
 <div class="table-responsive">
   <table class="table">
     <thead>

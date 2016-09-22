@@ -20,6 +20,8 @@ $sky-dark: #06B9BF;
 $sky-light: #78EEE8;
 
 /*GENERAL*/
+html{position:relative;min-height:100%}
+
 body {
 	background-color: $nude;
 	font-family: 'Karla', sans-serif;
@@ -29,6 +31,9 @@ body {
 	text-shadow: rgba(0,0,0,.01) 0 0 1px;
 	-webkit-text-size-adjust: 100%;
 }
+// body{margin-bottom:100px}
+
+footer{position:absolute;bottom:0;width:100%;}
 
 span{
 	font-weight: 700;
@@ -344,7 +349,7 @@ select#fecha_datos, select#select-region{
 	background-position: 98% 50%;
 	background-repeat: no-repeat;
 	border-radius: 6px;
-	float: left;
+	// float: left;
 	margin-right: 6px;
 }
 
