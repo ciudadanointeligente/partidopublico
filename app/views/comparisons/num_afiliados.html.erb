@@ -15,7 +15,9 @@
       <tr>
         <th>Partido</th>
         <th></th>
-        <th>Número total afiliados</th>
+        <th class="text-center">Hombres</th>
+        <th class="text-center">Mujeres</th>
+        <th class="text-right">Número total afiliados</th>
       </tr>
     </thead>
     <tbody>
@@ -26,7 +28,9 @@
       <tr>
         <td><%= linea[:nombre] %></td>
         <td><span id="barras_<%= i.to_s %>"></span></td>
-        <td class="monto"><%= (linea[:total].nil? ? 'NA' : linea[:total]).to_s %></td>
+        <td></td>
+        <td></td>
+        <td class="total text-right"><%= (linea[:total].nil? ? 'NA' : linea[:total]).to_s %></td>
       </tr>
       <% end %>
     </tbody>
