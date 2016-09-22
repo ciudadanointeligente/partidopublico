@@ -556,6 +556,10 @@ input[type="submit"].transparente{
 	border-radius: 10px;
 }
 
+.panel-group .panel-heading + .panel-collapse > .panel-body, .panel-group .panel-heading + .panel-collapse > .list-group{
+	border-top: none;
+}
+
 /*MODAL*/
 .modal-header{
 	border-bottom: none;
