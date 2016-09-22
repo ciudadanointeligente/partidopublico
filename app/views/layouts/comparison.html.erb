@@ -11,17 +11,18 @@
   <!-- OpenGraph -->
   <meta property="og:title" content="<%= t('.og_title') %>" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="" />
-  <meta property="og:image" content="" />
+  <meta property="og:url" content="<%= request.original_url %>" />
+  <meta property="og:image" content="<%= image_url('og-img.png') %>" />
   <meta property="og:description" content="<%= t('.og_description') %>" />
+  <meta property="og:locale" content="es_CL" />
 
   <!-- Twitter card -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:site" content="">
+  <meta name="twitter:site" content="<%= request.original_url %>">
   <meta name="twitter:title" content="<%= t('.twitter_title') %>">
   <meta name="twitter:description" content="<%= t('.twitter_description') %>">
   <meta name="twitter:creator" content="">
-  <meta name="twitter:image" content="">
+  <meta name="twitter:image" content="<%= image_url('og-img.png') %>">
 
   <!-- Latest compiled and minified CSS -->
   <%= stylesheet_link_tag    'frontend', media: 'all', 'data-turbolinks-track' => true %>
@@ -39,7 +40,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><img src=""></a>
+            <a class="navbar-brand" href="#"><img src="<%= image_url("logo.svg")%>" alt="<%= t('.title') %>" class="img-responsive"></a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
@@ -118,9 +119,31 @@
     </div>
   </div>
 
-  <footer>
-    <div class="container">
-      footer
+  <footer class="site-footer">
+    <div id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <ul class="list-unstyled">
+              <li><a href="mailto:info@ciudadanointeligente.org?Subject=Prensa%20de%20labcivico.org" class="email-prensa" target="_top"><i class="fa fa-envelope-o"></i> Mándanos un correo</a></li>
+              <li><a href="//github.com/ciudadanointeligente/labcivico" target="_blank"><i class="fa fa-github-alt"></i> Revisa nuestro código</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4 logo-fci">
+            <ul class="list-unstyled">
+              <li>
+                Un proyecto de <a href="//ciudadanointeligente.org" target="_blank"><img src="<%= image_url("logo-fci.png")%>" title="Fundación Ciudadano Inteligente"></a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4 text-right">
+            <ul class="list-unstyled">
+              <li><a href="//twitter.com/ciudadanoi" target="blank"><i class="fa fa-twitter" aria-hidden="true"></i> @Ciudadanoi</a></li>
+              <li><a href="//www.facebook.com/ciudadanointeligente" target="blank"><i class="fa  fa-facebook" aria-hidden="true"></i> Ciudadano Inteligente</li></a>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </footer>
 </body>
