@@ -229,6 +229,14 @@ button.btn.btn-default.btn-xs{
 	a{
 		color: $green;
 	}
+	&:hover{
+		background-color: $green;
+		color: white;
+		a{
+			color: white;
+			text-decoration: none;
+		}
+	}
 }
 
 /*ASIDE MENU*/
