@@ -1,3 +1,4 @@
+<ol class="breadcrumb"><li>Comparativas</li></ol>
 <p id="notice"><%= notice %></p>
 
 <h3>Regiones en las que se encuentran constituidos</h3>
@@ -8,8 +9,9 @@
       <tr>
         <th>Partido</th>
         <% roman_ordinals.each do |roman|%>
-          <th><%= roman %></th>
+          <th class="text-center"><%= roman %></th>
         <% end %>
+        <th class="text-center"><i class="fa fa-link" aria-hidden="true"></i></th>
       </tr>
     </thead>
     <tbody>
@@ -17,8 +19,11 @@
       <tr>
         <td><%= linea[:nombre] %></td>
         <% linea[:mapa].each do |region| %>
-          <td><% if region %><i class="fa fa-circle <%= region ? 'icon-green' : 'icon-gray' %>" aria-hidden="true"></i><% end %></td>
+          <td class="text-center"><% if region %><i class="fa fa-circle <%= region ? 'icon-green' : 'icon-gray' %>" aria-hidden="true"></i><% end %></td>
         <% end %>
+        <td class="text-center">
+          <button class="btn btn-default btn-xs" type="submit"><%= link_to "Ver detalle", partido_regiones_path(:partido_id => linea[:partido_id], :menu => 1) %></button>
+        </td>
       </tr>
       <% end %>
     </tbody>

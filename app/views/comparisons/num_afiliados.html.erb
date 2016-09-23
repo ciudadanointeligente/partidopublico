@@ -1,3 +1,4 @@
+<ol class="breadcrumb"><li>Comparativas</li></ol>
 <p id="notice"><%= notice %></p>
 
 <h3>Afiliados según género</h3>
@@ -15,7 +16,10 @@
       <tr>
         <th>Partido</th>
         <th></th>
-        <th>Número total afiliados</th>
+        <th class="text-center">Hombres</th>
+        <th class="text-center">Mujeres</th>
+        <th class="text-center">Número total afiliados</th>
+        <th class="text-center"><i class="fa fa-link" aria-hidden="true"></i></th>
       </tr>
     </thead>
     <tbody>
@@ -26,7 +30,12 @@
       <tr>
         <td><%= linea[:nombre] %></td>
         <td><span id="barras_<%= i.to_s %>"></span></td>
-        <td class="monto"><%= (linea[:total].nil? ? 'NA' : linea[:total]).to_s %></td>
+        <td></td>
+        <td></td>
+        <td class="total text-center"><%= (linea[:total].nil? ? 'NA' : linea[:total]).to_s %></td>
+        <td class="text-center">
+          <button class="btn btn-default btn-xs" type="submit"><%= link_to "Ver detalle", partido_regiones_path(:partido_id => linea[:partido_id], :menu => 1) %></button>
+        </td>
       </tr>
       <% end %>
     </tbody>
