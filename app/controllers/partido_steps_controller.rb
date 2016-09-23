@@ -121,7 +121,17 @@ class PartidoStepsController < ApplicationController
 
         # when :postulacion_popular
         #     @partido.update_attributes(partido_params)
-
+        when :administradores
+          new_admin = Admin.new email: partido_params[:admin][:email].to_s
+          new_admin.password = "xxxxxxxx"
+          new_admin.password_confirmation = "xxxxxxxx"
+          new_admin.save
+          @partido.admins << new_admin
+          @partido.admins.map{|a| puts a.email}
+          # respond_to do |format|
+          #   #format.any { render json: return_values, content_type: 'application/json' }
+          #   format.any { render file: "update.js.erb", content_type: "application/js" }
+          # end
         when :personas
 
         else
@@ -129,11 +139,13 @@ class PartidoStepsController < ApplicationController
             @partido.update_attributes(partido_params)
         end
         if request.xhr?
+          puts "AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST "
+          #puts partido_params
             PaperTrail.whodunnit = current_admin.email
 
             @partido.save
             @errors = @partido.errors
-            #puts "AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST "
+            puts "AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST "
             #puts partido_params
             @errors.full_messages.each do |message|
               #puts message
@@ -191,6 +203,7 @@ class PartidoStepsController < ApplicationController
                                                     participacion_entidads_attributes: [:id, :entidad, :documento, :tipo_vinculo, :descripcion, :fecha_inicio, :fecha_fin, :_destroy],
                                                     pacto_electorals_attributes: [:id, :nombre_pacto, :ano_eleccion, :descripcion, :_destroy, :partido_ids => []],
                                                     sancions_attributes: [:id, :descripcion, :institucion, :tipo_sancion, :tipo_infraccion, :fecha, :documento, :_destroy],
+                                                    admin: [:email],
                                                     region_ids: []
             )
         end

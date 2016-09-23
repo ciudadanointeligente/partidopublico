@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :balance_anuals
   resources :egreso_ordinarios
   resources :ingreso_ordinarios
-  devise_for :admins
+  devise_for :admins, :skip => [:registrations] 
   get 'admin', to: 'partidos#admin'
 
   resources :cargos
