@@ -17,7 +17,8 @@
         <th></th>
         <th class="text-center">Hombres</th>
         <th class="text-center">Mujeres</th>
-        <th class="text-right">Número total afiliados</th>
+        <th class="text-center">Número total afiliados</th>
+        <th class="text-center"><i class="fa fa-link" aria-hidden="true"></i></th>
       </tr>
     </thead>
     <tbody>
@@ -30,7 +31,10 @@
         <td><span id="barras_<%= i.to_s %>"></span></td>
         <td></td>
         <td></td>
-        <td class="total text-right"><%= (linea[:total].nil? ? 'NA' : linea[:total]).to_s %></td>
+        <td class="total text-center"><%= (linea[:total].nil? ? 'NA' : linea[:total]).to_s %></td>
+        <td class="text-center">
+          <button class="btn btn-default btn-xs" type="submit"><%= link_to "Ver detalle", partido_regiones_path(:partido_id => linea[:partido_id], :menu => 1) %></button>
+        </td>
       </tr>
       <% end %>
     </tbody>
