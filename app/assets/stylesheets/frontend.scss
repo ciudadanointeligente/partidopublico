@@ -118,6 +118,29 @@ span{
     z-index: 2000;
 }
 
+.navbar-brand > img{
+	position: absolute;
+	top: 16px;
+}
+
+.sub-brand{
+	position: relative;
+	top: 35px;
+	left: -16px;
+	min-width: 200px;
+	a{
+		color: $sky-dark;
+		&:hover{
+			color: white;
+			text-decoration: none;
+		}
+		&:focus{
+			color: white;
+			text-decoration: none;
+		}
+	}
+}
+
 /*HEADINGS*/
 h3{
 	font-weight: 700;
@@ -630,12 +653,6 @@ p.edades{
 	}
 }
 
-@media (max-width: 320px) {
-	.navbar-brand {
-		padding: 15px 0px;
-	}
-}
-
 @media (max-width: 960px) {
 	.nav > li > a {
 		padding: 0px 15px !important;
@@ -646,7 +663,7 @@ p.edades{
 		margin-top: 7px;
 	}
 	.navbar-toggle{
-		margin-top: 17px;
+		margin-top: -1px;
 		border: none;
 	}
 
@@ -691,4 +708,10 @@ p.edades{
 		margin: 0 0 40px 0;
 	}
 
+}
+
+@media (max-width: 336px) {
+	.navbar-brand > img{
+		width: 65%;
+	}
 }
