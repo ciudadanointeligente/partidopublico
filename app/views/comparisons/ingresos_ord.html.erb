@@ -1,3 +1,4 @@
+<ol class="breadcrumb"><li>Comparativas</li></ol>
 <h3>Ingresos ordinarios</h3>
 <%= form_tag comparisons_path, :method => :get do |f| %>
   <%= select_tag :fecha_datos, options_for_select(@fechas_datos.reverse, params[:fecha_datos] || ""), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
