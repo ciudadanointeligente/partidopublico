@@ -1,3 +1,4 @@
+<ol class="breadcrumb"><li>Comparativas</li></ol>
 <p id="notice"><%= notice %></p>
 <h3>Afiliados según rango etario</h3>
   <%= form_tag comparisons_path, :method => :get do |f| %>
@@ -14,10 +15,10 @@
       <tr>
         <th>Partido</th>
         <% rangos_etarios.each do |r| %>
-        <th><%= r[0] %> a <%= r[1] %></th>
+        <th class="text-center"><%= r[0] %> a <%= r[1] %></th>
         <% end %>
-        <th>Total</th>
-        <th>URL</th>
+        <th class="text-center">Total</th>
+        <th class="text-center"><i class="fa fa-link" aria-hidden="true"></i></th>
       </tr>
     </thead>
     <tbody>
@@ -42,7 +43,7 @@
         <% end %>
         <% linea[:tramos].each do |t| %>
         <% color = t[:count].to_f / linea[:total].to_f %>
-          <td>
+          <td class="text-center">
             <p class="edades" style="background-color:rgba(232,93,52,<%= color * 2.5 %>);">
               <%= number_to_percentage(100 * color, precision: 0) %>
             </p>
@@ -51,11 +52,11 @@
         <!-- <td>
           <div id="_barra_<%= i.to_s %>"></div>
         </td> -->
-        <td class="monto">
+        <td class="total text-center">
           <%= (linea[:total].nil? ? 'NA' : linea[:total]).to_s %>
         </td>
-        <td>
-          <%= link_to "Regiones constituido y número de afiliados", partido_regiones_path(:partido_id => linea[:partido_id], :menu => 1) %>
+        <td class="text-center">
+          <button class="btn btn-default btn-xs" type="submit"><%= link_to "Ver detalle", partido_regiones_path(:partido_id => linea[:partido_id], :menu => 1) %></button>
         </td>
       </tr>
       <% end %>

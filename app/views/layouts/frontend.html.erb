@@ -34,13 +34,16 @@
         <div class="container">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
+            <div class="brand">
+              <a class="navbar-brand" href="#"><img src="<%= image_url("logo.svg")%>" alt="<%= t('.title') %>"></a>
+              <div class="sub-brand"><a href="http://ciudadanointeligente.org" target="_blank">de CiudadanoInteligente.org</a></div>
+            </div>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><img src="<%= image_url("logo.svg")%>" alt="<%= t('.title') %>"></a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
@@ -160,19 +163,19 @@
           <li class="hidden">
             <a href="#">Balance anual</a>
           </li>
-          <li>
+          <li class="hidden">
             <a href="#">Contrataciones sobre 20 UTM</a>
           </li>
           <li class="<% if current_page?(:controller => 'partidos', :action => 'finanzas_5') %>current<% end %>">
             <%= link_to "Transferencias de fondos públicos", partido_finanzas_5_path(:menu => 4) %>
           </li>
-          <li>
+          <li class="hidden">
             <a href="#">Ingresos campaña electoral</a>
           </li>
-          <li>
+          <li class="hidden">
             <a href="#">Egresos campaña electoral</a>
           </li>
-          <li>
+          <li class="hidden">
             <a href="#">Informes campaña electoral</a>
           </li>
         </ul>
@@ -183,9 +186,6 @@
         <ul>
           <li class="<% if current_page?(:controller => 'partidos', :action => 'publicacion_candidatos') %>current<% end %>">
             <%= link_to "Publicación de los candidatos", partido_publicacion_candidatos_path(:menu => 5) %>
-          </li>
-          <li class="<% if current_page?(:controller => 'partidos', :action => 'resultado_elecciones_internas') %>current<% end %>">
-            <%= link_to "Resultados elecciones internas", partido_resultado_elecciones_internas_path(:menu => 5) %>
           </li>
           <li class="<% if current_page?(:controller => 'partidos', :action => 'acuerdos_organos') %>current<% end %>">
             <%= link_to "Acuerdos órganos intermedios colegiados", partido_acuerdos_organos_path(:menu => 5) %>
@@ -280,19 +280,19 @@
               <li class="hidden">
                 <a href="#">Balance anual</a>
               </li>
-              <li>
+              <li class="hidden">
                 <a href="#">Contrataciones sobre 20 UTM</a>
               </li>
               <li class="<% if current_page?(:controller => 'partidos', :action => 'finanzas_5') %>current<% end %>">
                 <%= link_to "Transferencias de fondos públicos", partido_finanzas_5_path(:menu => 4) %>
               </li>
-              <li>
+              <li class="hidden">
                 <a href="#">Ingresos campaña electoral</a>
               </li>
-              <li>
+              <li class="hidden">
                 <a href="#">Egresos campaña electoral</a>
               </li>
-              <li>
+              <li class="hidden">
                 <a href="#">Informes campaña electoral</a>
               </li>
             </ul>
@@ -302,9 +302,6 @@
             <ul id="aside-menu-six" class="collapse <%= @menu == 5 ? 'in' : '' %>" role="tab" aria-labelledby="aside-menu-six">
               <li class="<% if current_page?(:controller => 'partidos', :action => 'publicacion_candidatos') %>current<% end %>">
                 <%= link_to "Publicación de los candidatos", partido_publicacion_candidatos_path(:menu => 5) %>
-              </li>
-              <li class="<% if current_page?(:controller => 'partidos', :action => 'resultado_elecciones_internas') %>current<% end %>">
-                <%= link_to "Resultados elecciones internas", partido_resultado_elecciones_internas_path(:menu => 5) %>
               </li>
               <li class="<% if current_page?(:controller => 'partidos', :action => 'acuerdos_organos') %>current<% end %>">
                 <%= link_to "Acuerdos órganos intermedios colegiados", partido_acuerdos_organos_path(:menu => 5) %>
