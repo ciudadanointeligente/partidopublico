@@ -23,6 +23,13 @@
         </td>
       </tr>
       <% end %>
+      <% if !@entidades.any? %>
+      <tr>
+        <td colspan="3">
+          <p>No se han encontrado registros</p>
+        </td>
+      </tr>
+      <% end %>
     </tbody>
   </table>
 </div>

@@ -26,6 +26,13 @@
         </td>
       </tr>
       <% end %>
+      <% if !@pactos.any? %>
+      <tr>
+        <td colspan="4">
+          <p>No se han encontrado registros</p>
+        </td>
+      </tr>
+      <% end %>
     </tbody>
   </table>
 </div>
