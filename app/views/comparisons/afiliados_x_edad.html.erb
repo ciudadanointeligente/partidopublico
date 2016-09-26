@@ -27,7 +27,18 @@
           <%= linea[:partido] %>
         </td>
         <% if !linea[:tramos].any? %>
-        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        <td><p class="edades">0%</p></td>
+        <td><p class="edades">0%</p></td>
+        <td><p class="edades">0%</p></td>
+        <td><p class="edades">0%</p></td>
+        <td><p class="edades">0%</p></td>
+        <td><p class="edades">0%</p></td>
+        <td><p class="edades">0%</p></td>
+        <td><p class="edades">0%</p></td>
+        <td><p class="edades">0%</p></td>
+        <td><p class="edades">0%</p></td>
+        <td><p class="edades">0%</p></td>
+        <td><p class="edades">0%</p></td>
         <% end %>
         <% linea[:tramos].each do |t| %>
         <% color = t[:count].to_f / linea[:total].to_f %>

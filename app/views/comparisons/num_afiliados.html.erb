@@ -10,11 +10,15 @@
 <% end %>
 
 <div class="table-responsive">
-  <table class="table">
+  <table class="table table-bordered">
     <thead>
       <tr>
         <th>Partido</th>
-        <th></th>
+        <th>Hombres</th>
+        <th>% Hombres</th>
+        <th>Mujeres</th>
+        <th>% Mujeres</th>
+        <th>&nbsp;</th>
         <th>Número total afiliados</th>
       </tr>
     </thead>
@@ -25,8 +29,12 @@
       </tr>
       <tr>
         <td><%= linea[:nombre] %></td>
+        <td><%= number_with_precision(linea[:hombres], precision: 0, delimiter: ".") %></td>
+        <td><%= linea[:total]>0 ? number_to_percentage(linea[:hombres]*100/linea[:total], precision: 0) :"0%" %></td>
+        <td><%= number_with_precision(linea[:mujeres], precision: 0, delimiter: ".") %></td>
+        <td><%= linea[:total]>0 ? number_to_percentage(linea[:mujeres]*100/linea[:total], precision: 0) :"0%" %></td>
         <td><span id="barras_<%= i.to_s %>"></span></td>
-        <td class="monto"><%= (linea[:total].nil? ? 'NA' : linea[:total]).to_s %></td>
+        <td class="monto"><%= linea[:total].nil? ? 'NA' : number_with_precision(linea[:total], precision: 0, delimiter: ".") %></td>
       </tr>
       <% end %>
     </tbody>
