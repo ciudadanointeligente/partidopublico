@@ -25,7 +25,8 @@ class Partido < ActiveRecord::Base
     validates_presence_of :nombre, :sigla, :message => "debe rellenar"
     validates_uniqueness_of :nombre, :sigla, :message => "already exists"
 
-    has_many :admins, through: :permissions
+    has_many :admins, {:through=>:permissions, :source=>"admin"}
+
     has_many :permissions, dependent: :destroy
 
     has_one :marco_general, dependent: :destroy
@@ -40,7 +41,7 @@ class Partido < ActiveRecord::Base
     has_many :actividad_publicas, dependent: :destroy
     has_many :acuerdos, dependent: :destroy
     has_many :participacion_entidads, dependent: :destroy
-    has_and_belongs_to_many :pacto_electorals
+    has_and_belongs_to_many :pacto_electorals, :uniq => true
     has_many :sancions, dependent: :destroy
     has_many :personas, dependent: :destroy
     has_many :cargos, dependent: :destroy
