@@ -108,13 +108,17 @@ class Partido < ActiveRecord::Base
 
       #self.marco_general = MarcoGeneral.new
       self.marco_interno = MarcoInterno.new
-      self.marco_interno.documentos << Documento.new(descripcion:"Marco Normativo Interno", obligatorio: true)
-      self.marco_interno.documentos << Documento.new(descripcion:"Código de Ética", obligatorio: false)
-      self.marco_interno.documentos << Documento.new(descripcion:"Procedimiento de Prevención de la Corrupción", obligatorio: false)
-      self.marco_interno.documentos << Documento.new(descripcion:"Reseña Histórica", obligatorio: false)
-      self.marco_interno.documentos << Documento.new(descripcion:"Declaración de Principios", obligatorio: true)
-      self.marco_interno.documentos << Documento.new(descripcion:"Programa Base", obligatorio: false)
-      self.marco_interno.documentos << Documento.new(descripcion:"Estructura Orgánica", obligatorio: true)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Marco Normativo Interno", obligatorio: true)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Código de Ética", obligatorio: false)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Procedimiento de Prevención de la Corrupción", obligatorio: false)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Reseña Histórica", obligatorio: false)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Declaración de Principios", obligatorio: true)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Programa Base", obligatorio: false)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Estructura Orgánica", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Estatutos del partido", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Desclaración de principios", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Reglamiento interno", obligatorio: true)
+      
       self.organo_internos << OrganoInterno.new(nombre:"Órgano ejecutivo")
       self.organo_internos << OrganoInterno.new(nombre:"Órgano intermedio colegiado")
       self.organo_internos << OrganoInterno.new(nombre:"Tribunal supremo")
