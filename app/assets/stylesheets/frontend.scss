@@ -153,14 +153,32 @@ span{
 	}
 }
 
+mark{
+	background-color: white;
+	font-size: 36px;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+	color: $orange-dark;
+
+}
+
 .btn-lg{
 		background-color: transparent;
 		border: 3px solid white;
 		border-radius: 50px;
 		text-transform: uppercase;
-		letter-spacing: 1.2px;
+		letter-spacing: 1.4px;
 		font-weight: 700;
-		font-size: 16px;
+		font-size: 14px;
+		margin-top: 25px;
+		&:hover{
+			background-color: $blue;
+			border-color: $blue;
+		}
+		&:focus{
+			background-color: $blue;
+			border-color: $blue;
+		}
 }
 
 /*HEADINGS*/
