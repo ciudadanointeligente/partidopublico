@@ -24,52 +24,52 @@
   <meta name="twitter:image" content="">
 
   <!-- Latest compiled and minified CSS -->
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'frontend', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'frontend', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
   <header>
-    <div class="container">
-      <nav class="navbar">
-        <div class="container-fluid">
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
+            <div class="brand">
+              <a class="navbar-brand" href="#"><img src="<%= image_url("logo-front.svg")%>" alt="<%= t('.title') %>"></a>
+              <div class="sub-brand hidden"><a href="http://ciudadanointeligente.org" target="_blank">de CiudadanoInteligente.org</a></div>
+            </div>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Brand</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-              <li><a href="#">Que es?</a></li>
-              <li><a href="#">Estandares de transparencia</a></li>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">¿Qué es?</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Partidos adheridos <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <% @partidos.each do |p| %>
                   <li>
-                    <%= link_to p.nombre, partido_normas_internas_path(p) %>
+                    <%= link_to p['nombre'], partido_normas_internas_path(p['id']) %>
                   </li>
                   <% end %>
                 </ul>
               </li>
-              <li><a href="#">Comparar partidos</a></li>
+              <li>
+                <%= link_to "Comparar partidos",comparisons_path %>
+              </li>
             </ul>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
       </nav>
-    </div>
   </header>
 
-  <div class="container">
     <%= yield %>
-  </div>
 
 </body>
 </html>

@@ -1,33 +1,49 @@
-<!-- Title -->
-<div class="row">
-    <div class="col-lg-12">
-        <h3><%= t('.enrolled_parties') %>:</h3>
+<!-- Welcome -->
+  <div class="section">
+    <div class="jumbotron">
+      <div class="container">
+        <div class="row">
+          <h1>Hello, world!</h1>
+          <p>...</p>
+          <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+        </div>
+      </div>
     </div>
+  </div>
+
+<!-- Title -->
+<div class="section">
+  <div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3><%= t('.enrolled_parties') %>:</h3>
+        </div>
+    </div>
+  </div>
 </div>
 <!-- /.row -->
 
 <!-- Page Features -->
-<div class="row text-center">
-
-    <% @partidos.each do |partido| %>
-    <div class="col-md-3 col-sm-6 hero-feature">
-        <div class="thumbnail">
-            <% if !partido.logo.blank? %>
-            <div class="logo">
-                <%= image_tag partido.logo.url(:medium), :class => "img-responsive", :alt => partido.nombre + ' - ' + partido.lema %>
-            </div>
-            <% end %>
-            <div class="caption">
-                <h3><%= partido.sigla %></h3>
-                <p><%= partido.nombre %></p>
-            </div>
-            <div class="buttons">
-                <a href="<%= partido_normas_internas_path(partido) %>" class="btn btn-primary"><%= t('.details') %></a>
-                <!-- <a href="<%= partido_steps_path(partido)%>" class="btn btn-default"><%= t('.edit') %></a> -->
-            </div>
-        </div>
-    </div>
-
-    <% end %>
-
+<div class="container">
+  <div class="row text-center">
+      <% @partidos.each do |partido| %>
+      <div class="col-md-3 col-sm-6 hero-feature">
+          <div class="thumbnail">
+              <% if !partido.logo.blank? %>
+              <div class="logo">
+                  <%= image_tag partido.logo.url(:medium), :class => "img-responsive", :alt => partido.nombre + ' - ' + partido.lema %>
+              </div>
+              <% end %>
+              <div class="caption">
+                  <h3><%= partido.sigla %></h3>
+                  <p><%= partido.nombre %></p>
+              </div>
+              <div class="buttons">
+                  <a href="<%= partido_normas_internas_path(partido) %>" class="btn btn-primary"><%= t('.details') %></a>
+                  <!-- <a href="<%= partido_steps_path(partido)%>" class="btn btn-default"><%= t('.edit') %></a> -->
+              </div>
+          </div>
+      </div>
+      <% end %>
+  </div>
 </div>
