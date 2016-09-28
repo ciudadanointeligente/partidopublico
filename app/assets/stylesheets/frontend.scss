@@ -32,7 +32,6 @@ body {
 	text-shadow: rgba(0,0,0,.01) 0 0 1px;
 	-webkit-text-size-adjust: 100%;
 }
-// body{margin-bottom:100px}
 
 footer{position:absolute;bottom:0;width:100%;}
 
@@ -144,7 +143,34 @@ span{
 	}
 }
 
+/*JUMBOTRON*/
+.jumbotron{
+	background-color: $orange-dark;
+	height: 500px;
+	padding-top: 100px;
+	h1{
+		color: white;
+	}
+}
+
+.btn-lg{
+		background-color: transparent;
+		border: 3px solid white;
+		border-radius: 50px;
+		text-transform: uppercase;
+		letter-spacing: 1.2px;
+		font-weight: 700;
+		font-size: 16px;
+}
+
 /*HEADINGS*/
+h1{
+	font-size: 63px;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+	color: white;
+}
+
 h3{
 	font-weight: 700;
 	color: $orange-dark;
