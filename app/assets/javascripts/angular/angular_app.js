@@ -135,7 +135,7 @@ function cargosController($scope,$http,$location,$aside,$attrs){
   }
 
   function getRegions() {
-    $http.get('partidos/'+$scope.partido_id+'/regions')
+    $http.get('all_regions')
       .success( function(data){
         $scope.regions = data;
       })
@@ -284,7 +284,7 @@ function sedesController($scope,$http,$location,$aside,$attrs){
   }
 
   function getRegions() {
-    $http.get('partidos/'+$scope.partido_id+'/regions')
+    $http.get('all_regions')
       .success( function(data){
         $scope.regions = data;
       })

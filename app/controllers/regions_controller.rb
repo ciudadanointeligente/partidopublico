@@ -1,12 +1,16 @@
 class RegionsController < ApplicationController
   before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy]
   before_action :set_region, only: [:show, :edit, :update, :destroy]
-  before_action :set_partido
+  before_action :set_partido, except: [:all]
 
   # GET /regions
   # GET /regions.json
   def index
     @regions = @partido.regions
+  end
+
+  def all
+    @regions = Region.all
   end
 
   # GET /regions/1

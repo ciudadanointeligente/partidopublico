@@ -243,13 +243,15 @@ class PartidosController < ApplicationController
 
   def sedes_partido
     @datos_sedes = []
-    @partido.regions.each do |r|
+    region_ids_with_sede = @partido.sedes.select(:region_id).uniq.map(&:region_id)
+    region_ids_with_sede.each do |r|
       sedes = @partido.sedes.where(region_id: r)
       all_sedes = []
       sedes.each do |s|
         all_sedes.push( { 'direccion' => s.direccion, 'contacto' => s.contacto, 'comuna' => s.comuna.nombre } )
       end
-      @datos_sedes.push( {'region' => r.nombre, 'sedes' => all_sedes} )
+      region = Region.find r
+      @datos_sedes.push( {'region' => region.nombre, 'sedes' => all_sedes} )
     end
   end
 
