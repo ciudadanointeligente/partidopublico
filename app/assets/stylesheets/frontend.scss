@@ -680,12 +680,14 @@ p.edades{
 	}
 }
 @media (max-width: 767px) {
-	div#bs-example-navbar-collapse-1{
-		margin-top: 7px;
-	}
 	.navbar-toggle{
 		margin-top: -1px;
 		border: none;
+		top: 20px;
+	}
+
+	.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+		background-color: $blue;
 		top: 20px;
 	}
 
