@@ -36,17 +36,6 @@ class ComparisonsController < ApplicationController
 
       @regiones_datos = Afiliacion.joins(:region).where(Afiliacion.arel_table[:partido_id].in(@partido_ids)).uniq.pluck(:nombre, :region_id).sort
 
-      # if @fecha_param.nil?
-      #   @fecha = @fechas_datos.last
-      # else
-      #   @fecha = @fecha_param
-      # end
-      #
-      # @datos = Partido.joins('left join afiliacions on afiliacions.partido_id = partidos.id and afiliacions.fecha_datos in (\'' + @fecha.to_s + '\')')
-      # .where(Partido.arel_table[:id].in(@partido_ids))
-      # .select(Partido.arel_table[:sigla],Partido.arel_table[:nombre], 'fecha_datos, partido_id, sum(hombres) as hombres, sum(mujeres) as mujeres, sum(otros) as otros, (sum(hombres) + sum(mujeres)) as total')
-      # .group(Afiliacion.arel_table[:fecha_datos], Partido.arel_table[:id], Afiliacion.arel_table[:partido_id])
-
       @datos = []
       @partido_ids.each do |p_id|
         partido = Partido.find p_id
@@ -84,14 +73,6 @@ class ComparisonsController < ApplicationController
         @datos << {:nombre => partido.nombre, :partido_id => partido.id, :total => total_generos,
                    :hombres => h, :mujeres => m, :missing_data => missing_data }
       end
-      #   @datos =[]
-      #
-      # @datos_query.each do |d|
-      #   puts d
-      #   missing_data = d['total'].nil?
-      #   @datos << {:nombre => d.nombre.to_s, :sigla =>d.sigla.to_s, :total => d['total'],
-      #      :hombres => d['hombres'], :mujeres => d['mujeres'], :missing_data => missing_data }
-      # end
 
       @max_value = @datos.map {|d| d[:total] || 0}.max
 

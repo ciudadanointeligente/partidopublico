@@ -11,30 +11,31 @@
 <% end %>
 
 <div class="table-responsive">
-  <table class="table">
+  <table class="table table-bordered">
     <thead>
       <tr>
         <th>Partido</th>
-        <th></th>
         <th class="text-center">Hombres</th>
+        <th class="text-center">% Hombres</th>
         <th class="text-center">Mujeres</th>
+        <th class="text-center">% Mujeres</th>
+        <th>&nbsp;</th>
         <th class="text-center">Número total afiliados</th>
-        <th class="text-center"><i class="fa fa-link" aria-hidden="true"></i></th>
+        <th class="text-center">Detalle</th>
       </tr>
     </thead>
     <tbody>
       <% @datos.each_with_index do |linea, i| %>
       <tr>
-        <div id='header'></div>
-      </tr>
-      <tr>
         <td><%= linea[:nombre] %></td>
+        <td><%= number_with_precision(linea[:hombres], precision: 0, delimiter: ".") %></td>
+        <td><%= linea[:total]>0 ? number_to_percentage(linea[:hombres]*100/linea[:total], precision: 0) :"0%" %></td>
+        <td><%= number_with_precision(linea[:mujeres], precision: 0, delimiter: ".") %></td>
+        <td><%= linea[:total]>0 ? number_to_percentage(linea[:mujeres]*100/linea[:total], precision: 0) :"0%" %></td>
         <td><span id="barras_<%= i.to_s %>"></span></td>
-        <td></td>
-        <td></td>
-        <td class="total text-center"><%= (linea[:total].nil? ? 'NA' : linea[:total]).to_s %></td>
+        <td class="monto"><%= linea[:total].nil? ? 'NA' : number_with_precision(linea[:total], precision: 0, delimiter: ".") %></td>
         <td class="text-center">
-          <button class="btn btn-default btn-xs" type="submit"><%= link_to "Ver detalle", partido_regiones_path(:partido_id => linea[:partido_id], :menu => 1) %></button>
+          <%= link_to "Ver", partido_regiones_path(:partido_id => linea[:partido_id], :menu => 1), class: 'btn-view-detail-by-gender btn btn-default btn-xs' %>
         </td>
       </tr>
       <% end %>
@@ -48,11 +49,10 @@ $(document).ready(function(){
   var data_totals = <%=  @datos_totals.to_json.html_safe %>;
   var fechas = <%=  @fechas_datos.to_json.html_safe %>;
   var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
-     //Raphael("barras",800, 800 ).afiliados_compare_chart(data, data_totals);
-     Raphael("header",400, 40 ).afiliados_compare_header();
-     for(var i=0; i < data.length; i++){
-       Raphael("barras_" + i,300, 30 ).afiliados_compare_bar(<%= @max_value %>,data[i]);
-     }
+  // Raphael("header",400, 40 ).afiliados_compare_header();
+  for(var i=0; i < data.length; i++){
+   Raphael("barras_" + i,300, 30 ).afiliados_compare_bar(<%= @max_value %>,data[i]);
+  }
 
 });
 </script>

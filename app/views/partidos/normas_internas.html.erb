@@ -2,7 +2,9 @@
 <h3>Datos básicos del partido</h3>
 <div class="row">
   <div class="col-md-3">
+    <% if @partido.logo_file_size %>
     <%= image_tag @partido.logo.url(:thumb), class: "img-responsive", alt: @partido.sigla %>
+    <% end %>
   </div>
   <div class="col-md-9 basicos">
     <table>

@@ -25,7 +25,8 @@ class Partido < ActiveRecord::Base
     validates_presence_of :nombre, :sigla, :message => "debe rellenar"
     validates_uniqueness_of :nombre, :sigla, :message => "already exists"
 
-    has_many :admins, through: :permissions
+    has_many :admins, {:through=>:permissions, :source=>"admin"}
+
     has_many :permissions, dependent: :destroy
 
     has_one :marco_general, dependent: :destroy
@@ -40,7 +41,7 @@ class Partido < ActiveRecord::Base
     has_many :actividad_publicas, dependent: :destroy
     has_many :acuerdos, dependent: :destroy
     has_many :participacion_entidads, dependent: :destroy
-    has_and_belongs_to_many :pacto_electorals
+    has_and_belongs_to_many :pacto_electorals, :uniq => true
     has_many :sancions, dependent: :destroy
     has_many :personas, dependent: :destroy
     has_many :cargos, dependent: :destroy
@@ -107,13 +108,17 @@ class Partido < ActiveRecord::Base
 
       #self.marco_general = MarcoGeneral.new
       self.marco_interno = MarcoInterno.new
-      self.marco_interno.documentos << Documento.new(descripcion:"Marco Normativo Interno", obligatorio: true)
-      self.marco_interno.documentos << Documento.new(descripcion:"Código de Ética", obligatorio: false)
-      self.marco_interno.documentos << Documento.new(descripcion:"Procedimiento de Prevención de la Corrupción", obligatorio: false)
-      self.marco_interno.documentos << Documento.new(descripcion:"Reseña Histórica", obligatorio: false)
-      self.marco_interno.documentos << Documento.new(descripcion:"Declaración de Principios", obligatorio: true)
-      self.marco_interno.documentos << Documento.new(descripcion:"Programa Base", obligatorio: false)
-      self.marco_interno.documentos << Documento.new(descripcion:"Estructura Orgánica", obligatorio: true)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Marco Normativo Interno", obligatorio: true)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Código de Ética", obligatorio: false)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Procedimiento de Prevención de la Corrupción", obligatorio: false)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Reseña Histórica", obligatorio: false)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Declaración de Principios", obligatorio: true)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Programa Base", obligatorio: false)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Estructura Orgánica", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Estatutos del partido", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Desclaración de principios", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Reglamiento interno", obligatorio: true)
+      
       self.organo_internos << OrganoInterno.new(nombre:"Órgano ejecutivo")
       self.organo_internos << OrganoInterno.new(nombre:"Órgano intermedio colegiado")
       self.organo_internos << OrganoInterno.new(nombre:"Tribunal supremo")

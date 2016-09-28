@@ -17,7 +17,7 @@
       <%= f.input :nivel_estudios, required: false, input_html: { 'ng-model': "persona.nivel_estudios", 'placeholder': "Nivel de estudios" } %>
       <div class="form-group">
         <label for="">Región</label>
-        <%= f.collection_select(:region_id, @partido.regions, :id, :nombre, {prompt: 'Seleccione región'}, {'class' => 'form-control', 'ng-model' => "persona.region"}) %>
+        <%= f.collection_select(:region_id, Region.all, :id, :nombre, {prompt: 'Seleccione región'}, {'class' => 'form-control', 'ng-model' => "persona.region"}) %>
       </div>
       <%= f.input :ano_inicio_militancia, required: false, as: :integer, input_html: { 'ng-model': "persona.ano_inicio_militancia", 'placeholder': "Año militancia persona" } %>
       <div class="form-group">

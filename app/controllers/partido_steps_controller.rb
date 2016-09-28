@@ -72,7 +72,7 @@ class PartidoStepsController < ApplicationController
         when :linea_denuncia
           tribunal_supremo = @partido.organo_internos.where('lower(nombre) = ?', "Tribunal Supremo".downcase)
           if tribunal_supremo.any?
-            if tribunal_supremo.first.contacto.nil?
+            if tribunal_supremo.first.contacto.nil? || tribunal_supremo.first.contacto == ''
               @message =  "Por favor rellene el campo contacto del Órgano Interno: Tribunal Supremo."
             else
               @message =  "Las denuncias serán enviadas al contacto del Órgano Interno: Tribunal Supremo. ("+tribunal_supremo.first.contacto+")"
@@ -89,38 +89,15 @@ class PartidoStepsController < ApplicationController
 
     def update
         PaperTrail.whodunnit = current_admin.email
-        # #puts params[:partido]
-        # @partido = Partido.find_by_user_id(current_user.id)
+
         #puts "----------------->  Update::"+step.to_s
         case step
-        # when :datos_basicos
-        #     @partido.update_attributes(partido_params)
 
         when :normas_internas
             PaperTrail.whodunnit = current_admin.email
             @partido.marco_interno.update_attributes(marco_interno_params)
             @partido.marco_interno.save
 
-        # when :regiones
-        #     @partido.update_attributes(partido_params)
-
-        # when :sedes
-        #     @partido.update_attributes(partido_params)
-
-        # when :num_afiliados
-        #     @partido.update_attributes(partido_params)
-
-        when :tramites
-            @partido.update_attributes(partido_params)
-
-        # when :representantes
-        #     @partido.update_attributes(partido_params)
-
-        # when :autoridades
-        #     @partido.update_attributes(partido_params)
-
-        # when :postulacion_popular
-        #     @partido.update_attributes(partido_params)
         when :administradores
           new_admin = Admin.new email: partido_params[:admin][:email].to_s
           new_admin.password = "xxxxxxxx"
@@ -128,11 +105,6 @@ class PartidoStepsController < ApplicationController
           new_admin.save
           @partido.admins << new_admin
           @partido.admins.map{|a| puts a.email}
-          # respond_to do |format|
-          #   #format.any { render json: return_values, content_type: 'application/json' }
-          #   format.any { render file: "update.js.erb", content_type: "application/js" }
-          # end
-        when :personas
 
         else
             #PaperTrail.whodunnit = current_admin.email

@@ -12,7 +12,7 @@
         <%= f.input :nombre_pacto %>
         <%= f.input :ano_eleccion, as: :date, html5: true, label: 'Año del pacto' %>
         <%= f.input :descripcion, as: :text %>
-        <%= f.association :partidos %>
+        <%= f.association :partidos, collection: Partido.where('id !='+ @partido.id.to_s) %>
       <% else %>
         <ul>
           <li><%= f.object.nombre_pacto %></li>

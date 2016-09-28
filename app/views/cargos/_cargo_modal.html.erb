@@ -26,7 +26,7 @@
 
       <div class="form-group">
         <label for="circunscripcion_id">Circunscripción</label>
-        <select name="circunscripcion_id" id="circunscripcion_id" class="form-control chosen-select" ng-model="cargo.circunscripcion_id" ng-init="cargo.circunscripcion_id" ng-options="r.id as r.nombre for r in circunscripcions" ng-change="getComunas(partido_id, cargo.region_id)"></select>
+        <select name="circunscripcion_id" id="circunscripcion_id" class="form-control chosen-select" ng-model="cargo.circunscripcion_id" ng-init="cargo.circunscripcion_id" ng-options="r.id as r.nombre for r in circunscripcions" ng-change="getDistritos(cargo.circunscripcion_id)"></select>
       </div>
 
       <div class="form-group">

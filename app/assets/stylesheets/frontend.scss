@@ -3,6 +3,7 @@
 @import "font-awesome-sprockets";
 @import "font-awesome";
 @import 'https://fonts.googleapis.com/css?family=Karla:400,700';
+@import 'https://fonts.googleapis.com/css?family=Montserrat:400,700';
 
 $red : #87e0fd; 	/* Here's how you assign the values to a variable */
 $darkblue : #2cafe3;
@@ -67,24 +68,26 @@ span{
 	height: 70px;
 	border-radius: 0px;
 	border: none;
+	font-family: 'Montserrat', sans-serif;
 }
 
 .navbar-default .navbar-nav > li > a {
-  color: $orange;
+  color: white;
   text-transform: uppercase;
   font-size: 11px;
   letter-spacing: 1.3px;
   font-weight: 700;
 	padding: 24px 15px;
+	font-family: 'Montserrat', sans-serif;
 }
 
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus{
-	color: white;
+	color: $orange;
 }
 
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
   background-color: transparent;
-  color: white;
+  color: $orange;
 }
 
 .dropdown-menu {
@@ -95,7 +98,7 @@ span{
   box-shadow: none;
   text-transform: uppercase;
   letter-spacing: 1.3px;
-	border: 1px solid $orange;
+	border: none;
 }
 
 .navbar-nav > li > .dropdown-menu{
@@ -104,23 +107,23 @@ span{
 }
 
 .dropdown-menu > li > a{
-	color: $orange;
+	color: white;
 }
 
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
-    color: white;
+    color: $orange;
     background-color: transparent;
 }
 
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
     border: none;
-    background-color: #012639;
+    background-color: transparent;
     z-index: 2000;
 }
 
 .navbar-brand > img{
 	position: absolute;
-	top: 16px;
+	top: 13px;
 }
 
 .sub-brand{
@@ -177,6 +180,7 @@ h6{
 	padding: initial;
 	margin-bottom: 0px;
 	border-radius: 0px;
+	font-family: 'Montserrat', sans-serif;
 }
 
 .breadcrumb > li + li:before {
@@ -213,6 +217,7 @@ button#dropdownMenu1{
 	margin-bottom: 10px;
 	margin-top: -30px;
 	border-radius: 6px;
+	font-family: 'Montserrat', sans-serif;
 	&:hover{
 		background-color: white;
 		color: $orange-dark;
@@ -228,6 +233,7 @@ ul.dropdown-menu.dropdown-select{
 	padding: 15px;
 	color: $orange-dark;
 	box-shadow: -5px 5px 0px $orange-dark;
+	font-family: 'Montserrat', sans-serif;
 	li > ul > li{
 		list-style-type: disc;
 	}
@@ -240,7 +246,7 @@ ul.dropdown-menu.dropdown-select{
 	}
 }
 
-button.btn.btn-default.btn-xs{
+.btn-view-detail-by-gender{
 	border-radius: 12px;
 	text-transform: uppercase;
 	font-size: 10px;
@@ -248,7 +254,7 @@ button.btn.btn-default.btn-xs{
 	height: 24px;
 	border: 2px solid $green;
 	font-weight: 700;
-	padding: 0 10px 0 10px;
+	padding: 3px 10px;
 	a{
 		color: $green;
 	}
@@ -281,6 +287,8 @@ aside.col-sm-3.col-md-3{
 			letter-spacing: 1.2px;
 			text-transform: uppercase;
 			border-radius: 5px;
+			font-family: 'Montserrat', sans-serif;
+			font-size: 11px;
 				a {
 					color: white;
 					&:hover{
@@ -303,13 +311,19 @@ aside.col-sm-3.col-md-3{
 					text-transform: none;
 					letter-spacing: normal;
 					margin: 0 0 -10px 0;
+					font-family: 'Karla', sans-serif;
+					font-size: 14px;
 					li{
 						padding: 10px 0 10px 0;
 						background-color: white;
 						margin: 5px 0 0 0;
 						a {
 							color: $blue;
-							font-weight: 400;
+							font-weight: 700;
+							font-family: 'Montserrat', sans-serif;
+							font-size: 11px;
+							letter-spacing: 1px;
+							text-transform: uppercase;
 							&:hover{
 								text-decoration: none;
 								color: $orange;
@@ -474,6 +488,7 @@ select#category{
 	background-repeat: no-repeat;
 	background-color: transparent;
 	border-radius: 6px;
+	font-family: 'Montserrat', sans-serif;
 }
 
 input[type="submit"].transparente{
@@ -565,6 +580,7 @@ input[type="submit"].transparente{
 	letter-spacing: 1.2px;
 	font-size: 11px;
 	font-weight: 700;
+	font-family: 'Montserrat', sans-serif;
 }
 
 .text-info{
@@ -653,9 +669,14 @@ p.edades{
 	}
 }
 
-@media (max-width: 960px) {
+@media (max-width: 961px) {
 	.nav > li > a {
 		padding: 0px 15px !important;
+	}
+
+	.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+		position: relative;
+		top: 24px;
 	}
 }
 @media (max-width: 767px) {
@@ -665,6 +686,7 @@ p.edades{
 	.navbar-toggle{
 		margin-top: -1px;
 		border: none;
+		top: 20px;
 	}
 
 	.navbar-default .navbar-toggle .icon-bar{
@@ -708,10 +730,4 @@ p.edades{
 		margin: 0 0 40px 0;
 	}
 
-}
-
-@media (max-width: 336px) {
-	.navbar-brand > img{
-		width: 65%;
-	}
 }
