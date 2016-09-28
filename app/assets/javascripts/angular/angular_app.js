@@ -154,6 +154,26 @@ function cargosController($scope,$http,$location,$aside,$attrs){
       })
   }
 
+  function getCircunscripciones() {
+    $http.get('circunscripcions')
+      .success( function(data){
+        $scope.circunscripcions = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
+  $scope.getDistritos = function(circunscripcion_id) {
+    $http.get('circunscripcions/' + circunscripcion_id + '/distritos')
+      .success( function(data){
+        $scope.distritos = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
   function getOrganosInternos(partido_id) {
     $http.get('partidos/'+partido_id+'/organo_internos')
       .success( function(data){
@@ -250,6 +270,7 @@ function cargosController($scope,$http,$location,$aside,$attrs){
   getTipoCargos($scope.partido_id);
   getOrganosInternos($scope.partido_id);
   getRegions();
+  getCircunscripciones();
 };
 
 app.controller("sedesController",sedesController);

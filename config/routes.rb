@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   resources :sedes
   resources :regions
   get 'all_regions', to: 'regions#all'
+  resources :circunscripcions do
+    resources :distritos
+  end
   resources :tramites
   resources :acuerdos
   resources :eleccion_populars
