@@ -8,8 +8,8 @@
 $red : #87e0fd; 	/* Here's how you assign the values to a variable */
 $darkblue : #2cafe3;
 $cpad: 20px;		/* Variables are not limited to colors, you can use it to store values too*/
-$nude: #EADFE1;
-$nude-light: #F4F2F2;
+$nude: #FCEDF0;
+$nude-light: #FFF9FA;
 $orange-dark: #E85D34;
 $orange: #F28269;
 $orange-light: #FAC5BE;
@@ -163,22 +163,24 @@ mark{
 }
 
 .btn-primary{
-	background-color: transparent;
-	border: 3px solid $sky-dark;
+	background-color: white;
+	border: 3px solid white;
 	border-radius: 50px;
 	text-transform: uppercase;
 	letter-spacing: 1.4px;
 	font-weight: 700;
 	font-size: 12px;
 	margin-top: 25px;
-	color: $sky-dark;
+	color: $blue;
 	&:hover{
-		background-color: $sky-dark;
-		border-color: white;
+		background-color: $orange;
+		border: 3px solid $orange;
+		color: white;
 	}
 	&:focus{
-		background-color: $sky-dark;
-		border-color: white;
+		background-color: $orange;
+		border: 3px solid $orange;
+		color: white;
 	}
 }
 
@@ -195,10 +197,12 @@ mark{
 		&:hover{
 			background-color: $blue;
 			border-color: $blue;
+			color: white;
 		}
 		&:focus{
 			background-color: $blue;
 			border-color: $blue;
+			color: white;
 		}
 }
 
@@ -262,24 +266,17 @@ h6{
 }
 
 section#que-es{
-	background-color: white;
 	margin-top: -110px;
+	background: asset-url('images/ciudadanos.svg') 70% 120% no-repeat $nude;
 }
 section#fechas{
-	background-color: $green;
+	background-color: white;
 	h2{
 		color: white;
 	}
 }
 section#funciones{
-	background-color: $orange-dark;
-	color: white;
-	h3{
-		color: white;
-	}
-	h2{
-		color: $blue;
-	}
+	background-color: $nude;
 }
 section#partidos{
 	background-color: white;
@@ -306,24 +303,24 @@ section{
 .carousel-control{
 	opacity: 1;
 	text-shadow: none;
-	color: white;
+	color: $blue;
 	font-size: 14px;
 	width: initial;
 	top: 45%;
 	&:hover{
-		color: $blue;
+		color: $orange;
 	}
 	&:focus{
-		color: $blue;
+		color: $orange;
 	}
 }
 
 .carousel-indicators .active{
-	background-color: white;
+	background-color: $orange;
 }
 
 .carousel-indicators li{
-	border: 1px solid white;
+	border: 1px solid $orange;
 }
 
 .vistas > img{
