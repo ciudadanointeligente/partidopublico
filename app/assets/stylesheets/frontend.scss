@@ -190,6 +190,14 @@ h1{
 	color: white;
 }
 
+h2{
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+	text-transform: uppercase;
+	font-size: 20px;
+	margin: 40px 0 40px 0;
+}
+
 h3{
 	font-weight: 700;
 	color: $orange-dark;
@@ -233,6 +241,38 @@ h6{
 	color: $blue;
 }
 
+section#que-es{
+	background-color: white;
+	margin-top: -110px;
+}
+section#fechas{
+	background-color: $green;
+	h2{
+		color: white;
+	}
+}
+section#funciones{
+	background-color: $orange-dark;
+	color: white;
+	h3{
+		color: white;
+	}
+	h2{
+		color: $blue;
+	}
+}
+section#partidos{
+	background-color: white;
+	margin-bottom: -70px;
+	h2{
+		color: $orange-dark;
+	}
+}
+
+section{
+	padding: 30px 0 80px 0;
+}
+
 /*CAROUSEL*/
 .carousel{
 	min-height: 550px;
@@ -246,13 +286,24 @@ h6{
 .carousel-control{
 	opacity: 1;
 	text-shadow: none;
-	color: $blue;
+	color: white;
 	font-size: 14px;
 	width: initial;
 	top: 45%;
 	&:hover{
-		color: $orange;
+		color: $blue;
 	}
+	&:focus{
+		color: $blue;
+	}
+}
+
+.carousel-indicators .active{
+	background-color: white;
+}
+
+.carousel-indicators li{
+	border: 1px solid white;
 }
 
 .vistas > img{
