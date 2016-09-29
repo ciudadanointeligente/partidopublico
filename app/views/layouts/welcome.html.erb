@@ -49,8 +49,7 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li><%= link_to "¿Qué es?",que_es_path %>
-</li>
+              <li><%= link_to "¿Qué es?",que_es_path %></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Partidos adheridos <span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -70,7 +69,35 @@
       </nav>
   </header>
 
-    <%= yield %>
+<%= yield %>
+
+  <footer class="site-footer">
+    <div id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <ul class="list-unstyled">
+              <li><a href="mailto:info@ciudadanointeligente.org?Subject=Prensa%20de%20Partido%20Publico" class="email-prensa" target="_top"><i class="fa fa-envelope-o"></i> Mándanos un correo</a></li>
+              <li><a href="//github.com/ciudadanointeligente/partidopublico" target="_blank"><i class="fa fa-github-alt"></i> Revisa nuestro código</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4 logo-fci">
+            <ul class="list-unstyled">
+              <li>
+                Un proyecto de <a href="//ciudadanointeligente.org" target="_blank"><img src="<%= image_url("logo-fci.png")%>" title="Fundación Ciudadano Inteligente"></a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4 text-right">
+            <ul class="list-unstyled">
+              <li><a href="//twitter.com/ciudadanoi" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> @Ciudadanoi</a></li>
+              <li><a href="//www.facebook.com/ciudadanointeligente" target="_blank"><i class="fa  fa-facebook" aria-hidden="true"></i> Ciudadano Inteligente</li></a>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
 
 </body>
 </html>

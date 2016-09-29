@@ -6,8 +6,39 @@
           <div class="col-md-4">
             <h1>Porque la ciudadanía exige más</h1>
             <mark>#AbramosLaCancha</mark>
-            <p><a class="btn btn-primary btn-lg" href="#" role="button">Revisa los partidos</a></p>
+            <a class="btn btn-primary btn-lg" href="#" role="button">Revisa los partidos</a>
+            <a class="btn btn-primary btn-lg" href="#" role="button">¿Cómo funciona?</a>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>¿Qué es?</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>Fechas</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>Funcionalidades</h2>
         </div>
       </div>
     </div>
@@ -18,34 +49,30 @@
   <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <h3><%= t('.enrolled_parties') %>:</h3>
+            <h2><%= t('.enrolled_parties') %>:</h2>
+            Selecciona un partido
         </div>
+    </div>
+    <div class="row text-center">
+        <% @partidos.each do |partido| %>
+        <div class="col-md-3 col-sm-6 hero-feature">
+            <div class="thumbnail">
+                <% if !partido.logo.blank? %>
+                <div class="logo">
+                    <%= image_tag partido.logo.url(:medium), :class => "img-responsive", :alt => partido.nombre + ' - ' + partido.lema %>
+                </div>
+                <% end %>
+                <div class="caption">
+                    <p><%= partido.nombre %></p>
+                </div>
+                <div class="buttons">
+                    <a href="<%= partido_normas_internas_path(partido) %>" class="btn btn-primary"><%= t('.details') %></a>
+                    <!-- <a href="<%= partido_steps_path(partido)%>" class="btn btn-default"><%= t('.edit') %></a> -->
+                </div>
+            </div>
+        </div>
+        <% end %>
     </div>
   </div>
 </div>
 <!-- /.row -->
-
-<!-- Page Features -->
-<div class="container">
-  <div class="row text-center">
-      <% @partidos.each do |partido| %>
-      <div class="col-md-3 col-sm-6 hero-feature">
-          <div class="thumbnail">
-              <% if !partido.logo.blank? %>
-              <div class="logo">
-                  <%= image_tag partido.logo.url(:medium), :class => "img-responsive", :alt => partido.nombre + ' - ' + partido.lema %>
-              </div>
-              <% end %>
-              <div class="caption">
-                  <h3><%= partido.sigla %></h3>
-                  <p><%= partido.nombre %></p>
-              </div>
-              <div class="buttons">
-                  <a href="<%= partido_normas_internas_path(partido) %>" class="btn btn-primary"><%= t('.details') %></a>
-                  <!-- <a href="<%= partido_steps_path(partido)%>" class="btn btn-default"><%= t('.edit') %></a> -->
-              </div>
-          </div>
-      </div>
-      <% end %>
-  </div>
-</div>
