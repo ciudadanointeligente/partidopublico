@@ -18,14 +18,15 @@
 
 class Partido < ActiveRecord::Base
     has_paper_trail
-    has_attached_file :logo, styles: { large: "600x600>", medium: "300x300>", thumb: "100x100>" }, default_url: "/resources/missing.png"
+    has_attached_file :logo, styles: { large: "600x600>", medium: "300x300>", thumb: "220x110>" }, default_url: "/resources/missing.png"
     validates_attachment :logo,
         content_type: { content_type:  /\Aimage\/.*\Z/ },
         size: { in: 0..500.kilobytes }
     validates_presence_of :nombre, :sigla, :message => "debe rellenar"
     validates_uniqueness_of :nombre, :sigla, :message => "already exists"
 
-    has_many :admins, through: :permissions
+    has_many :admins, {:through=>:permissions, :source=>"admin"}
+
     has_many :permissions, dependent: :destroy
 
     has_one :marco_general, dependent: :destroy
@@ -40,12 +41,13 @@ class Partido < ActiveRecord::Base
     has_many :actividad_publicas, dependent: :destroy
     has_many :acuerdos, dependent: :destroy
     has_many :participacion_entidads, dependent: :destroy
-    has_and_belongs_to_many :pacto_electorals
+    has_and_belongs_to_many :pacto_electorals, :uniq => true
     has_many :sancions, dependent: :destroy
     has_many :personas, dependent: :destroy
     has_many :cargos, dependent: :destroy
     has_many :tipo_cargos, dependent: :destroy
     has_many :ingreso_ordinarios, dependent: :destroy
+    has_many :egreso_ordinarios, dependent: :destroy
 
     accepts_nested_attributes_for :marco_interno, allow_destroy: true
     accepts_nested_attributes_for :organo_internos, allow_destroy: true
@@ -106,13 +108,17 @@ class Partido < ActiveRecord::Base
 
       #self.marco_general = MarcoGeneral.new
       self.marco_interno = MarcoInterno.new
-      self.marco_interno.documentos << Documento.new(descripcion:"Marco Normativo Interno", obligatorio: true)
-      self.marco_interno.documentos << Documento.new(descripcion:"Código de Ética", obligatorio: true)
-      self.marco_interno.documentos << Documento.new(descripcion:"Procedimiento de Prevención de la Corrupción", obligatorio: true)
-      self.marco_interno.documentos << Documento.new(descripcion:"Reseña Histórica", obligatorio: true)
-      self.marco_interno.documentos << Documento.new(descripcion:"Declaración de Principios", obligatorio: true)
-      self.marco_interno.documentos << Documento.new(descripcion:"Programa Base", obligatorio: true)
-      self.marco_interno.documentos << Documento.new(descripcion:"Estructura Orgánica", obligatorio: true)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Marco Normativo Interno", obligatorio: true)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Código de Ética", obligatorio: false)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Procedimiento de Prevención de la Corrupción", obligatorio: false)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Reseña Histórica", obligatorio: false)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Declaración de Principios", obligatorio: true)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Programa Base", obligatorio: false)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Estructura Orgánica", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Estatutos del partido", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Desclaración de principios", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Reglamiento interno", obligatorio: true)
+      
       self.organo_internos << OrganoInterno.new(nombre:"Órgano ejecutivo")
       self.organo_internos << OrganoInterno.new(nombre:"Órgano intermedio colegiado")
       self.organo_internos << OrganoInterno.new(nombre:"Tribunal supremo")
@@ -132,7 +138,13 @@ class Partido < ActiveRecord::Base
                                     ano_inicio_militancia:"1950",
                                     bio:"Ejemplo Biografía"
                                     )
-      self.tipo_cargos << TipoCargo.new(titulo:"Ejemplo Alcalde")
+      self.tipo_cargos << TipoCargo.new(titulo:"Alcalde", representante: true)
+      self.tipo_cargos << TipoCargo.new(titulo:"Concejal", representante: true)
+      self.tipo_cargos << TipoCargo.new(titulo:"Senador", representante: true)
+      self.tipo_cargos << TipoCargo.new(titulo:"Diputado", representante: true)
+      self.tipo_cargos << TipoCargo.new(titulo:"Presidente", representante: true)
+      self.tipo_cargos << TipoCargo.new(titulo:"Consejero Regional", representante: true)
+
       self.save
     end
 

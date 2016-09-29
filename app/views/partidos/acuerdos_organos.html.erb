@@ -1,0 +1,49 @@
+<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Últimas decisiones</li><li>Acuerdos órganos intermedios colegiados</li></ol>
+<h3>Acuerdos órganos intermedios colegiados</h3>
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <% @acuerdos.each_with_index do |a, index| %>
+    <% if a['agreements'].count > 0 %>
+    <div class="panel panel-default">
+      <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
+        <h4 class="panel-title intern">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
+            <%= a['type'] %>
+          </a>
+        </h4>
+      </div>
+      <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
+        <div class="panel-body">
+          <span class="sr-only"><p>Se han encontrado <%= a["agreements"].count %> acuerdos <%= a['type'] %></p></span>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Número</th>
+                  <th>Tema</th>
+                  <th>Fecha</th>
+                  <th>Región</th>
+                  <th>Órgano</th>
+                  <th>Documento</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% a["agreements"].each do |acuerdo|%>
+                <tr>
+                  <td><%= acuerdo["numero"] %></td>
+                  <td><%= acuerdo["tema"] %></td>
+                  <td><%= acuerdo["fecha"] %></td>
+                  <td><%= acuerdo["region"] %></td>
+                  <td><%= acuerdo["organo_interno"] %></td>
+                  <td><%= !acuerdo["documento"].blank? ? link_to(acuerdo["documento_url"]) do '<i class="fa fa-download"></i> Descargar'.html_safe end : '' %></td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  <% end %>
+</div>

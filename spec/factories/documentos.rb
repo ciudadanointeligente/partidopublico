@@ -23,5 +23,6 @@
 FactoryGirl.define do
   factory :documento do
     descripcion "MyString"
+    archivo { File.new("#{Rails.root}/spec/fixtures/documents/document_test.pdf") } 
   end
 end

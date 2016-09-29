@@ -23,8 +23,24 @@
         <label for="comuna_id">Comuna</label>
         <select name="comuna_id" id="comuna_id" class="form-control chosen-select" ng-model="cargo.comuna_id" ng-init="cargo.comuna_id" ng-options="comuna.id as comuna.nombre for comuna in comunas"></select>
       </div>
-      <%= f.input :fecha_desde, as: :date, html5: true, required: false, input_html: {class: 'form-control', 'ng-model': 'cargo.fecha_desde'} %>
-      <%= f.input :fecha_hasta, as: :date, html5: true, required: false, input_html: {class: 'form-control', 'ng-model': 'cargo.fecha_hasta'} %>
+
+      <div class="form-group">
+        <label for="circunscripcion_id">Circunscripción</label>
+        <select name="circunscripcion_id" id="circunscripcion_id" class="form-control chosen-select" ng-model="cargo.circunscripcion_id" ng-init="cargo.circunscripcion_id" ng-options="r.id as r.nombre for r in circunscripcions" ng-change="getDistritos(cargo.circunscripcion_id)"></select>
+      </div>
+
+      <div class="form-group">
+        <label for="distrito_id">Distrito</label>
+        <select name="distrito_id" id="distrito_id" class="form-control chosen-select" ng-model="cargo.distrito_id" ng-init="cargo.distrito_id" ng-options="distrito.id as distrito.nombre for distrito in distritos"></select>
+      </div>
+
+      <div class="form-group">
+        <label for="organo_interno_id">Organo Interno</label>
+        <select name="organo_interno_id" id="organo_interno_id" class="form-control chosen-select" ng-model="cargo.organo_interno_id" ng-init="cargo.organo_interno_id" ng-options="r.id as r.nombre for r in organo_internos" ></select>
+      </div>
+
+      <%= f.input :fecha_desde, as: :date, html5: true, input_html: {class: 'form-control', 'ng-model': 'cargo.fecha_desde'} %>
+      <%= f.input :fecha_hasta, as: :date, html5: true, input_html: {class: 'form-control', 'ng-model': 'cargo.fecha_hasta'} %>
     <% end %>
   </div>
   <div class="modal-footer">

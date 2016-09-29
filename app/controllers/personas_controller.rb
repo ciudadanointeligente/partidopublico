@@ -1,4 +1,5 @@
 class PersonasController < ApplicationController
+  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy, :foto_upload, :import_personas]
   before_action :set_persona, only: [:show, :edit, :update, :destroy]
   before_action :set_partido, only: [:index, :create]
   # GET /personas
@@ -28,7 +29,7 @@ class PersonasController < ApplicationController
       end
     end
 
-    puts params.to_yaml
+    #puts params.to_yaml
     file = params[:file]
   end
 
@@ -49,6 +50,7 @@ class PersonasController < ApplicationController
   # POST /personas
   # POST /personas.json
   def create
+    PaperTrail.whodunnit = current_admin.email
     @persona = Persona.new(persona_params)
     @persona.partido = @partido
 
@@ -66,6 +68,7 @@ class PersonasController < ApplicationController
   # PATCH/PUT /personas/1
   # PATCH/PUT /personas/1.json
   def update
+    PaperTrail.whodunnit = current_admin.email
     if remotipart_submitted?
       p "remotipart_submitted! remotipart_submitted! remotipart_submitted! remotipart_submitted! remotipart_submitted! "
     end
@@ -83,6 +86,7 @@ class PersonasController < ApplicationController
   # DELETE /personas/1
   # DELETE /personas/1.json
   def destroy
+    PaperTrail.whodunnit = current_admin.email
     @persona.destroy
     respond_to do |format|
       format.html { redirect_to personas_url, notice: 'Persona was successfully destroyed.' }
@@ -92,17 +96,12 @@ class PersonasController < ApplicationController
 
   def import_personas
 
-    return_values = Persona.import(params[:file], params[:partido_id])
+    return_values = Persona.import(params[:file], params[:partido_id], current_admin.email)
     respond_to do |format|
       #format.any { render json: return_values, content_type: 'application/json' }
       format.any { render file: "partido_steps/import_response.js.erb", content_type: "application/js" , :locals => { :return_values => return_values }}
     end
 
-    #return
-    #render :text => params[:partido_id]
-    #redirect_to partido_steps_path(params[:partido_id], :personas)
-
-    #redirect_to partido_steps_path(:personas, params[:partido_id])
   end
 
   private

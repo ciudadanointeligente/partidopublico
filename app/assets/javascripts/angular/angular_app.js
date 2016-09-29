@@ -61,6 +61,7 @@ function personasController($scope,$http,$location,$aside,$attrs){
     if(persona_id) {
       $http.get('personas/'+persona_id+'.json')
         .success( function(data){
+          data.fecha_nacimiento = new Date(data.fecha_nacimiento)
           $scope.persona = data;
         })
         .error( function(error_data){
@@ -134,7 +135,7 @@ function cargosController($scope,$http,$location,$aside,$attrs){
   }
 
   function getRegions() {
-    $http.get('partidos/'+$scope.partido_id+'/regions')
+    $http.get('all_regions')
       .success( function(data){
         $scope.regions = data;
       })
@@ -153,9 +154,43 @@ function cargosController($scope,$http,$location,$aside,$attrs){
       })
   }
 
+  function getCircunscripciones() {
+    $http.get('circunscripcions')
+      .success( function(data){
+        $scope.circunscripcions = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
+  $scope.getDistritos = function(circunscripcion_id) {
+    $http.get('circunscripcions/' + circunscripcion_id + '/distritos')
+      .success( function(data){
+        $scope.distritos = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
+  function getOrganosInternos(partido_id) {
+    $http.get('partidos/'+partido_id+'/organo_internos')
+      .success( function(data){
+        $scope.organo_internos = data;
+      })
+      .error( function(error_data){
+        $scope.messages = {response: false, message: error_data}
+      })
+  }
+
   function getCargosByPartido(partido_id) {
     $http.get('partidos/'+partido_id+'/cargos')
       .success( function(data){
+        for(x=0; data.length>x; x++) {
+          data[x].fecha_desde = new Date(moment(data[x].fecha_desde).utc(-3));
+          data[x].fecha_hasta = new Date(moment(data[x].fecha_hasta).utc(-3));
+        }
         $scope.cargos = data;
       })
       .error( function(error_data){
@@ -186,9 +221,9 @@ function cargosController($scope,$http,$location,$aside,$attrs){
   function getCargoInfo(cargo_id) {
     $http.get('cargos/'+cargo_id+'.json')
       .success( function(data){
+        data.fecha_desde = new Date(moment(data.fecha_desde).utc(-3));
+        data.fecha_hasta = new Date(moment(data.fecha_hasta).utc(-3));
         $scope.cargo = data;
-        $scope.cargo.fecha_desde = new Date(data.fecha_desde);
-        $scope.cargo.fecha_hasta = new Date(data.fecha_hasta);
       })
       .error( function(error_data){
         $scope.messages = {response: false, message: error_data}
@@ -233,8 +268,9 @@ function cargosController($scope,$http,$location,$aside,$attrs){
   getCargosByPartido($scope.partido_id);
   getPersonasByPartido($scope.partido_id);
   getTipoCargos($scope.partido_id);
+  getOrganosInternos($scope.partido_id);
   getRegions();
-  //getComunas();
+  getCircunscripciones();
 };
 
 app.controller("sedesController",sedesController);
@@ -269,7 +305,7 @@ function sedesController($scope,$http,$location,$aside,$attrs){
   }
 
   function getRegions() {
-    $http.get('partidos/'+$scope.partido_id+'/regions')
+    $http.get('all_regions')
       .success( function(data){
         $scope.regions = data;
       })
@@ -370,7 +406,6 @@ function actividad_publicasController($scope,$http,$location,$aside,$attrs){
         });
     }
     else {
-      console.log($scope.actividad_publica)
       $http.post('/actividad_publicas/', $scope.actividad_publica)
         .success(function(data){
           getActividadesPublicassByPartido($scope.partido_id);
@@ -385,7 +420,6 @@ function actividad_publicasController($scope,$http,$location,$aside,$attrs){
   function getActividadesPublicassByPartido(partido_id) {
     $http.get('partidos/'+partido_id+'/actividad_publicas')
       .success( function(data){
-        console.log(data);
         $scope.actividad_publicas = data;
       })
       .error( function(error_data){

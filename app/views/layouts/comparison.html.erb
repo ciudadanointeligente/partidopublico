@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%= t('.title') %></title>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="<%= t('.og_title') %>" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="<%= request.original_url %>" />
+  <meta property="og:image" content="<%= image_url('og-img.png') %>" />
+  <meta property="og:description" content="<%= t('.og_description') %>" />
+  <meta property="og:locale" content="es_CL" />
+
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="<%= request.original_url %>">
+  <meta name="twitter:title" content="<%= t('.twitter_title') %>">
+  <meta name="twitter:description" content="<%= t('.twitter_description') %>">
+  <meta name="twitter:creator" content="">
+  <meta name="twitter:image" content="<%= image_url('og-img.png') %>">
+
+  <!-- Latest compiled and minified CSS -->
+  <%= stylesheet_link_tag    'frontend', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'comparison', 'data-turbolinks-track' => true %>
+</head>
+<body>
+  <header>
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><img src="<%= image_url("logo.svg")%>" alt="<%= t('.title') %>" class="img-responsive"></a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">¿Qué es?</a></li>
+              <li><a href="#">Estándares de transparencia</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Partidos adheridos <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <% @partidos.each do |p| %>
+                  <li>
+                    <%= link_to p['nombre'], partido_normas_internas_path(p['id']) %>
+                  </li>
+                  <% end %>
+                </ul>
+              </li>
+              <li>
+                <%= link_to "Comparar partidos",comparisons_path %>
+              </li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+  </header>
+
+<!------------------------------------->
+<script>
+  function select_all(status) {
+    all_checkbox = document.getElementsByTagName('input');
+    status = (status === "false" ? true : false)
+    document.getElementById('all').dataset.checked = status;
+    for(x=0;x<all_checkbox.length;x++) {
+      if (all_checkbox[x].type === "checkbox" ) {
+        all_checkbox[x].checked = status
+      }
+    }
+  }
+</script>
+  <section class="comparacion">
+    <div class="container">
+      <h2 class="text-center">Compara Partidos</h2>
+      <div class="row">
+        <div class="col-md-4 col-md-offset-2">
+          <p class="numero">1</p>
+          <h4 class="text-center">Selecciona los partidos a comparar</h4>
+          <%= form_tag comparisons_path, :method =>  :get do |f| %>
+          <ul class="list-unstyled">
+            <% @partidos.each do |partido| %>
+            <li class="versalitas">
+              <%= check_box_tag 'partido_ids[]', partido.id, false, class: 'marcado'%>
+              <%= h partido.nombre %>
+            </li>
+            <% end %>
+            <li><input type="checkbox" class="marcado"name="all" id="all" data-checked="false" onclick="select_all(document.getElementById('all').dataset.checked)"> <label for="all" class="versalitas">Seleccionar todos los partidos</label></li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <p class="numero">2</p>
+          <h4 class="text-center">Selecciona un tema</h4>
+          <%= select_tag :category, options_for_select(categories, params[:category]), prompt: "Seleccionar tema", onchange: "this.form.submit();" %>
+        </div>
+        <div class="col-md-4 col-md-offset-4">
+          <%= submit_tag 'Comparar', class: 'transparente'%>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </section>
+
+  <div class="container">
+    <div class="row">
+      <main class="col-xs-12 col-sm-12 col-md-12 board">
+        <%= yield %>
+      </main>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <ul class="list-unstyled">
+              <li><a href="mailto:info@ciudadanointeligente.org?Subject=Prensa%20de%20Partido%20Publico" class="email-prensa" target="_top"><i class="fa fa-envelope-o"></i> Mándanos un correo</a></li>
+              <li><a href="//github.com/ciudadanointeligente/partidopublico" target="_blank"><i class="fa fa-github-alt"></i> Revisa nuestro código</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4 logo-fci">
+            <ul class="list-unstyled">
+              <li>
+                Un proyecto de <a href="//ciudadanointeligente.org" target="_blank"><img src="<%= image_url("logo-fci.png")%>" title="Fundación Ciudadano Inteligente"></a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4 text-right">
+            <ul class="list-unstyled">
+              <li><a href="//twitter.com/ciudadanoi" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> @Ciudadanoi</a></li>
+              <li><a href="//www.facebook.com/ciudadanointeligente" target="_blank"><i class="fa  fa-facebook" aria-hidden="true"></i> Ciudadano Inteligente</li></a>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

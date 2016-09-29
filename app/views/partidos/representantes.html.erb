@@ -1,0 +1,56 @@
+<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Presencia nacional</li><li>Representantes electos</li></ol>
+<h3>Representantes electos</h3>
+
+<%= form_tag partido_representantes_path, :method =>  :get, class: 'form-inline' do |f| %>
+  <%= text_field_tag :q, params[:q] || "", class: "form-control", placeholder: "Ingresar nombre o apellido" %>
+  <%= select_tag "region", options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Seleccionar región", class: "form-control" %>
+  <%= select_tag "genero", options_for_select(["Masculino", "Femenino"], params[:genero] || ""), include_blank: "Seleccionar género", class: "form-control" %>
+  <%= submit_tag 'Filtrar', class: "btn" %>
+  <%= hidden_field_tag 'menu', params[:menu] %>
+<% end %>
+
+<% cnt = 0 %>
+<% @representantes.each_with_index do |all_representatives, index| %>
+  <% if all_representatives["representatives"].any? %>
+  <% cnt = cnt + 1 %>
+  <div class="panel panel-default">
+    <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
+      <h4 class="panel-title intern">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="<%= (index != 0) ? "false" : "true" %>" aria-controls="collapse-<%= index %>">
+          <%= all_representatives["type"] %>
+        </a>
+        <span class="badge"><%= all_representatives["representatives"].count %></span>
+      </h4>
+      <span class="sr-only"><p>Se han encontrado <%= all_representatives["representatives"].count %> representantes para <%= all_representatives["type"] %>.</p></span>
+    </div>
+    <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Region</th>
+                <th>Comuna</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% all_representatives["representatives"].each do |r| %>
+              <tr>
+                <td><%= r.persona.nombre %> <%= r.persona.apellidos %></td>
+                <td><%= r.region.nombre %></td>
+                <td><%= r.comuna.nombre %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+<% end %>
+
+<% if cnt == 0 %>
+<p class="text-info">No se encontraron registros</p>
+<% end %>

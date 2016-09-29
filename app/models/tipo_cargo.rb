@@ -10,6 +10,7 @@
 #  cargo_interno :boolean
 #  representante :boolean
 #  autoridad     :boolean
+#  candidato     :boolean
 #
 # Indexes
 #
@@ -17,6 +18,7 @@
 #
 
 class TipoCargo < ActiveRecord::Base
+  has_paper_trail
   has_many :cargos
   has_many :personas, through: :cargos
   belongs_to :partido

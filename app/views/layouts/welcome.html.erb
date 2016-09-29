@@ -24,8 +24,9 @@
   <meta name="twitter:image" content="">
 
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
 </head>
 <body>
   <header>
@@ -51,13 +52,11 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Partidos adheridos <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li><a href="#">Separated link</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li><a href="#">One more separated link</a></li>
+                  <% @partidos.each do |p| %>
+                  <li>
+                    <%= link_to p.nombre, partido_normas_internas_path(p) %>
+                  </li>
+                  <% end %>
                 </ul>
               </li>
               <li><a href="#">Comparar partidos</a></li>
@@ -69,17 +68,7 @@
   </header>
 
   <div class="container">
-
-    <main class="col-sm-9 col-md-9">
-      <%= yield %>
-    </main>
-
-    <footer class="col-md-12">
-      <div class="container">
-        footer
-      </div>
-    </footer>
-
+    <%= yield %>
   </div>
 
 </body>

@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  # before_action :authenticate_admin!
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -7,15 +9,13 @@ class ApplicationController < ActionController::Base
 
   def beforeFilter
     $request = request
-    puts "request : " + request.to_s
-    #  puts "current_admin : " + current_admin.to_s
-    #  $current_admin = current_admin
   end
 
   def after_sign_in_path_for(resource)
-    #current_user_path
-    #partido_steps_path
-    #partidos_url, action: "admin"
-
+    if current_admin.is_superadmin
+      admin_path
+    else
+      partido_steps_path current_admin.partidos.first
+    end
   end
 end

@@ -1,0 +1,68 @@
+<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Finanzas</li><li>Transferencias de fondos públicos</li></ol>
+<h3>Transferencias de fondos públicos</h3>
+
+<div class="row">
+  <div class="col-md-12">
+    <%= form_tag partido_finanzas_5_path, :method => :get, class: 'form-inline' do |f| %>
+    <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar Fecha", onchange: "this.form.submit();", class: "form-control"  %>
+    <% end %>
+  </div>
+</div>
+
+<div>
+  <h4>Datos correspondientes al <%=  @fecha %></h4>
+  <span id="header"></span>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Concepto</th>
+          <th>&nbsp;</th>
+          <th>Monto Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @datos_transferencias.each_with_index do |linea, i| %>
+        <tr>
+          <td><%= linea['text'] %></td>
+          <td><span id="barras_<%= i.to_s %>"></span></td>
+          <td class="monto">
+            <%= number_to_currency(linea['value'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th class="total">Total</th>
+          <th>&nbsp;</th>
+          <th class="total monto"> <%=  number_to_currency(@datos_transferencias_totals[:total], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %> </th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+
+<div id="barras"></div>
+
+<script>
+$(document).ready(function(){
+  var data = <%=  @datos_transferencias.to_json.html_safe %>;
+  var data_totals = <%=  @datos_transferencias_totals.to_json.html_safe %>;
+  var fechas = <%=  @fechas_datos.to_json.html_safe %>;
+  var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
+  // if (fechas.length > 0){
+  //   Raphael("barras",700, 1000 ).transferencias_chart(data, data_totals,fecha_seleccionada);
+  // } else {
+  //   Raphael("barras",700, 200 ).no_data_chart()
+  // }
+
+  //Raphael("header",500, 40 ).egreso_ord_front_header();
+
+  for(var i=0; i < data.length; i++){
+    Raphael("barras_" + i,300, 30 ).transferencia_front_bar(data[i]);
+  }
+
+  //Raphael("footer",500, 40 ).egreso_ord_front_footer(data_totals);
+});
+</script>

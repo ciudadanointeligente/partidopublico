@@ -1,6 +1,8 @@
 class SedesController < ApplicationController
+  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy]
   before_action :set_sede, only: [:show, :edit, :update, :destroy]
   before_action :set_partido, only: [:index]
+  before_filter :set_paper_trail_whodunnit
 
   # GET /sedes
   # GET /sedes.json
@@ -25,6 +27,7 @@ class SedesController < ApplicationController
   # POST /sedes
   # POST /sedes.json
   def create
+    PaperTrail.whodunnit = current_admin.email
     @sede = Sede.new(sede_params)
 
     respond_to do |format|
@@ -41,6 +44,7 @@ class SedesController < ApplicationController
   # PATCH/PUT /sedes/1
   # PATCH/PUT /sedes/1.json
   def update
+    PaperTrail.whodunnit = current_admin.email
     respond_to do |format|
       if @sede.update(sede_params)
         format.html { redirect_to @sede, notice: 'Sede was successfully updated.' }

@@ -11,5 +11,7 @@
 #
 
 class PactoElectoral < ActiveRecord::Base
-    has_and_belongs_to_many :partidos
+  has_paper_trail
+
+  has_and_belongs_to_many :partidos, :uniq => true
 end

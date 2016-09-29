@@ -1,4 +1,5 @@
 class CargosController < ApplicationController
+  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy]
   before_action :set_cargo, only: [:show, :edit, :update, :destroy]
   before_action :set_partido, only: [:index]
 
@@ -25,6 +26,7 @@ class CargosController < ApplicationController
   # POST /cargos
   # POST /cargos.json
   def create
+    PaperTrail.whodunnit = current_admin.email
     @cargo = Cargo.new(cargo_params)
 
     respond_to do |format|
@@ -41,6 +43,7 @@ class CargosController < ApplicationController
   # PATCH/PUT /cargos/1
   # PATCH/PUT /cargos/1.json
   def update
+    PaperTrail.whodunnit = current_admin.email
     respond_to do |format|
       if @cargo.update(cargo_params)
         format.html { redirect_to @cargo, notice: 'Cargo was successfully updated.' }
@@ -55,6 +58,7 @@ class CargosController < ApplicationController
   # DELETE /cargos/1
   # DELETE /cargos/1.json
   def destroy
+    PaperTrail.whodunnit = current_admin.email
     @cargo.destroy
     respond_to do |format|
       format.html { redirect_to cargos_url, notice: 'Cargo was successfully destroyed.' }
@@ -74,6 +78,6 @@ class CargosController < ApplicationController
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def cargo_params
-      params.require(:cargo).permit(:id, :persona_id, :tipo_cargo_id, :partido_id, :fecha_desde, :fecha_hasta, :comuna_id, :region_id, :circunscripcion_id, :distrito_id)
+      params.require(:cargo).permit(:id, :persona_id, :tipo_cargo_id, :partido_id, :fecha_desde, :fecha_hasta, :comuna_id, :region_id, :circunscripcion_id, :distrito_id, :organo_interno_id)
     end
 end

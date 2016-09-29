@@ -21,8 +21,59 @@
 
 en:
   layouts:
-    title: "Partido Público"
+    application:
+      title: "Partido Público"
+      about: "About"
+      contact: "Contact"
+      parties: "Parties"
+      methodology: "Methodology"
+      actions: "Actions"
+      admin_login: "Log In As Administrator"
+      admin_logout: "Close Session"
+      create_party: "Create New Party"
+      admin_party: "Administrate Party"
+      license: "Copyleft"
+    frontend:
+      title: "PartidosPúblicos"
+      og_title: "Partidos Públicos"
+      og_description: "Partidos Públicos es una plataforma web que busca reivindicar la importancia de partidos transparentes, participativos y abiertos para una sana democracia."
+      twitter_title: "Partidos Públicos"
+      twitter_description: "Partidos Públicos es una plataforma web que busca reivindicar la importancia de partidos transparentes, participativos y abiertos para una sana democracia."
+    welcome:
+      title: "PartidosPúblicos"
+    comparison:
+      title: "Partidos Públicos"
+      og_title: "Partidos Públicos"
+      og_description: "Partidos Públicos es una plataforma web que busca reivindicar la importancia de partidos transparentes, participativos y abiertos para una sana democracia."
+      twitter_title: "Partidos Públicos"
+      twitter_description: "Partidos Públicos es una plataforma web que busca reivindicar la importancia de partidos transparentes, participativos y abiertos para una sana democracia."
   welcome:
-    title: "Hello world"
-    time: "The time is now"
-  hello: "Hello world"
+    index:
+      welcome: "Welcome"
+      welcome_text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat."
+      start: "Empezar"
+      enrolled_parties: "Enrolled Parties"
+      details: "Details"
+      edit: "Edit"
+  datagrid:
+    no_results: "Sin Resultados"
+    form:
+      reset: "Limpiar"
+      search: "Filtrar"
+    filters:
+      dynamic:
+        operations:
+          "=": "igual"
+          "=~": "similar"
+          ">=": "mayor o igual"
+          "<=": "menor o igual"
+    table:
+      order:
+        asc: "↑"
+        desc: "↓"
+  views:
+    pagination:
+      next: "Next"
+      previous: "Previous"
+      last: "Last"
+      first: "First"

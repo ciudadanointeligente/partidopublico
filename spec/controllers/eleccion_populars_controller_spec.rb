@@ -52,6 +52,7 @@ RSpec.describe EleccionPopularsController, type: :controller do
   end
 
   describe "GET #new" do
+    login_admin
     it "assigns a new eleccion_popular as @eleccion_popular" do
       get :new, {}, valid_session
       expect(assigns(:eleccion_popular)).to be_a_new(EleccionPopular)
@@ -59,6 +60,7 @@ RSpec.describe EleccionPopularsController, type: :controller do
   end
 
   describe "GET #edit" do
+    login_admin
     it "assigns the requested eleccion_popular as @eleccion_popular" do
       eleccion_popular = EleccionPopular.create! valid_attributes
       get :edit, {:id => eleccion_popular.to_param}, valid_session
@@ -67,6 +69,7 @@ RSpec.describe EleccionPopularsController, type: :controller do
   end
 
   describe "POST #create" do
+    login_admin
     context "with valid params" do
       it "creates a new EleccionPopular" do
         expect {
@@ -100,6 +103,7 @@ RSpec.describe EleccionPopularsController, type: :controller do
   end
 
   describe "PUT #update" do
+    login_admin
     context "with valid params" do
       let(:new_attributes) {
         skip("Add a hash of attributes valid for your model")
@@ -141,6 +145,7 @@ RSpec.describe EleccionPopularsController, type: :controller do
   end
 
   describe "DELETE #destroy" do
+    login_admin
     it "destroys the requested eleccion_popular" do
       eleccion_popular = EleccionPopular.create! valid_attributes
       expect {

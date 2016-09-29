@@ -52,6 +52,7 @@ RSpec.describe RequisitosController, type: :controller do
   end
 
   describe "GET #new" do
+    login_admin
     it "assigns a new requisito as @requisito" do
       get :new, {}, valid_session
       expect(assigns(:requisito)).to be_a_new(Requisito)
@@ -59,6 +60,7 @@ RSpec.describe RequisitosController, type: :controller do
   end
 
   describe "GET #edit" do
+    login_admin
     it "assigns the requested requisito as @requisito" do
       requisito = Requisito.create! valid_attributes
       get :edit, {:id => requisito.to_param}, valid_session
@@ -67,6 +69,7 @@ RSpec.describe RequisitosController, type: :controller do
   end
 
   describe "POST #create" do
+    login_admin
     context "with valid params" do
       it "creates a new Requisito" do
         expect {
@@ -100,6 +103,7 @@ RSpec.describe RequisitosController, type: :controller do
   end
 
   describe "PUT #update" do
+    login_admin
     context "with valid params" do
       let(:new_attributes) {
         skip("Add a hash of attributes valid for your model")
@@ -141,6 +145,7 @@ RSpec.describe RequisitosController, type: :controller do
   end
 
   describe "DELETE #destroy" do
+    login_admin
     it "destroys the requested requisito" do
       requisito = Requisito.create! valid_attributes
       expect {

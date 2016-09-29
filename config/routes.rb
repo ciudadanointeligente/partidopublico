@@ -1,14 +1,14 @@
 Rails.application.routes.draw do
+  #get 'compare', to: 'comparisons#index'
+  resources :comparisons
   resources :egreso_campanas
   resources :ingreso_campanas
   resources :transferencias
-  resources :transferencia
-  resources :contratacions
   resources :contratacions
   resources :balance_anuals
   resources :egreso_ordinarios
   resources :ingreso_ordinarios
-  devise_for :admins
+  devise_for :admins, :skip => [:registrations]
   get 'admin', to: 'partidos#admin'
 
   resources :cargos
@@ -19,6 +19,11 @@ Rails.application.routes.draw do
     collection { get :aggregate }
   end
   resources :sedes
+  resources :regions
+  get 'all_regions', to: 'regions#all'
+  resources :circunscripcions do
+    resources :distritos
+  end
   resources :tramites
   resources :acuerdos
   resources :eleccion_populars
@@ -55,7 +60,7 @@ Rails.application.routes.draw do
   #resources :comunas
   resources :distritos
   resources :circunscripcions
-  resources :actividad_publicas
+  resources :actividad_publicas, only: [:index, :show]
 
   resources :marco_internos
   resources :documentos
@@ -64,14 +69,29 @@ Rails.application.routes.draw do
   resources :partidos do
     get "/normas_internas", to: 'partidos#normas_internas'
     get "/regiones", to: 'partidos#regiones'
-    get "/sedes", to: 'partidos#sedes'
+    get "/sedes_partido", to: 'partidos#sedes_partido'
     get "/autoridades", to: 'partidos#autoridades'
+    get "/representantes", to: 'partidos#representantes'
     get "/vinculos_e_intereses", to: 'partidos#vinculos_intereses'
     get "/pactos", to: 'partidos#pactos'
     get "/sanciones", to: 'partidos#sanciones'
+    get "/finanzas_1", to: 'partidos#finanzas_1'
+    get "/finanzas_2", to: 'partidos#finanzas_2'
+    get "/finanzas_5", to: 'partidos#finanzas_5'
+    get "/afiliacion_desafiliacion", to: 'partidos#afiliacion_desafiliacion'
+    get "/eleccion_popular", to: 'partidos#eleccion_popular'
+    get "/organos_internos", to: 'partidos#organos_internos'
+    get "/elecciones_internas", to: 'partidos#elecciones_internas'
+    get "/acuerdos_organos", to: "partidos#acuerdos_organos"
+    get "/estructura_organica", to: "partidos#estructura_organica"
+    get "/actividades_publicas", to: "partidos#actividades_publicas"
+    get "/intereses_patrimonios", to: "partidos#intereses_patrimonios"
+    get "/publicacion_candidatos", to: "partidos#publicacion_candidatos"
+    get "/resultado_elecciones_internas", to: "partidos#resultado_elecciones_internas"
     resources :cargos
     resources :personas
     resources :tipo_cargos
+    resources :organo_internos
     resources :regions do
       resources :comunas
     end

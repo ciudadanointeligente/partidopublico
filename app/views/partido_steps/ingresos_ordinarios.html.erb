@@ -55,7 +55,7 @@
         </thead>
         <tbody>
           <tr dir-paginate="dato in datos_ingresos_ordinarios | orderBy:'fecha_datos' | filter: filtro_sedes | itemsPerPage: pageSize">
-            <td> {{dato.fecha_datos}} </td>
+            <td> {{dato.fecha_datos | date : "y - MM" }} </td>
             <td> {{dato.total}} </td>
             <td> <i class="fa fa-trash-o" ng-click="postEliminarDatosIngresosOrdinarios(dato.fecha_datos)" title="Eliminar"></i> </td>
           </tr>

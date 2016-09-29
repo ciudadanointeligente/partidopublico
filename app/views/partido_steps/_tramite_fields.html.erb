@@ -1,10 +1,11 @@
 <div class="col-md-6">
   <div class="panel panel-default">
     <div class="panel-heading">
+      <%time_id = DateTime.now.strftime('%Q') %>
       <% if f.object.id.nil? %>
         Nuevo trámite
       <% else %>
-        <%= f.object.nombre %>
+        <%= f.input :nombre , label: false %>
       <% end %>
     </div>
     <div class="panel-body">
@@ -14,29 +15,31 @@
         <%= f.input :descripcion  %>
         <%= f.input :documento  %>
       <% else %>
-        <p><%= f.object.descripcion %></p>
-        <%= f.input :descripcion, as: :hidden  %>
+        <p><%= f.input :descripcion, as: :text %></p>
+        <p>
+        <%= f.input :documento  %>
         <% if f.object.documento %>
           <%= link_to f.object.documento.url do %>
-            <i class="fa fa-file-text-o"></i> <%= f.object.documento_file_name %>
+            <i class="fa fa-file-text-o fa-3x"></i> <%= f.object.documento_file_name %>
           <% end %>
         <% end %>
+        </p>
         <%= f.input :id, as: :hidden %>
       <% end %>
 
 
       <div class="panel panel-default ">
         <div class="panel-heading">
-          Procedimientos
+          Procedimientos<%= f.object.id %>
         </div>
-        <div class="panel-body procedimientos">
+        <div class="panel-body procedimientos" id="procedimiento_<%= time_id %>">
           <%= f.fields_for :procedimientos do |procedimiento| %>
             <%= render 'procedimiento_fields', :f => procedimiento %>
           <% end %>
 
         </div>
         <div class="panel-footer">
-          <%= link_to_add_association f, :procedimientos, class: 'btn btn-default', data: { 'association-insertion-method': 'append', 'association-insertion-node': '.procedimientos' } do %>
+          <%= link_to_add_association f, :procedimientos, class: 'btn btn-default', data: { 'association-insertion-method': 'append', 'association-insertion-node': '#procedimiento_'+ time_id  } do %>
             <i class="fa fa-plus"></i> Agregar procedimiento
           <% end %>
         </div>
@@ -44,15 +47,15 @@
 
       <div class="panel panel-default ">
         <div class="panel-heading">
-          Requisitos
+          Requisitos<%= f.object.id %>
         </div>
-        <div class="panel-body requisitos">
+        <div class="panel-body requisitos" id="requisito_<%= time_id %>">
           <%= f.fields_for :requisitos do |requisito| %>
             <%= render 'requisito_fields', :f => requisito %>
           <% end %>
         </div>
         <div class="panel-footer">
-          <%= link_to_add_association f, :requisitos, class: 'btn btn-default', data: { 'association-insertion-method': 'append', 'association-insertion-node': '.requisitos' } do %>
+          <%= link_to_add_association f, :requisitos, class: 'btn btn-default', data: { 'association-insertion-method': 'append', 'association-insertion-node': '#requisito_'+ time_id } do %>
             <i class="fa fa-plus"></i> Agregar requisito
           <% end %>
         </div>

@@ -6,6 +6,8 @@
     "angular-route": "latest",
     "angular-aside": "latest",
     "ng-flow": "latest",
-    "angular-utils-pagination": "latest"
+    "angular-utils-pagination": "latest",
+    "raphael": "^2.2.1",
+    "moment": "^2.15.1"
   }
 }

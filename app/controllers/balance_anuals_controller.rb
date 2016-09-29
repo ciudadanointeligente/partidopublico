@@ -1,5 +1,5 @@
 class BalanceAnualsController < ApplicationController
-  before_action :authenticate_admin!
+  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy]
   before_action :set_balance_anual, only: [:show, :edit, :update, :destroy]
   before_action :set_partido, only: [:aggregate_balance_anual, :eliminar]
 

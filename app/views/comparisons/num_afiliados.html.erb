@@ -1,0 +1,58 @@
+<ol class="breadcrumb"><li>Comparativas</li></ol>
+<p id="notice"><%= notice %></p>
+
+<h3>Afiliados según género</h3>
+<%= form_tag comparisons_path, :method => :get do |f| %>
+  <%= select_tag :fecha_datos, options_for_select(@fechas_datos.reverse, params[:fecha_datos] || ""), prompt: "Seleccionar fecha" %>
+  <%= select_tag :region, options_for_select(@regiones_datos, params[:region] || ""), prompt: "Seleccionar región"  %>
+  <%= select_tag :genero, options_for_select([:hombres, :mujeres], params[:genero] || ""), prompt: "Seleccionar género"  %>
+  <%= submit_tag 'Filtrar', class: "btn" %>
+  <%= hidden_field_tag 'category', "Afiliados según género" %>
+<% end %>
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Partido</th>
+        <th class="text-center">Hombres</th>
+        <th class="text-center">% Hombres</th>
+        <th class="text-center">Mujeres</th>
+        <th class="text-center">% Mujeres</th>
+        <th>&nbsp;</th>
+        <th class="text-center">Número total afiliados</th>
+        <th class="text-center">Detalle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @datos.each_with_index do |linea, i| %>
+      <tr>
+        <td><%= linea[:nombre] %></td>
+        <td><%= number_with_precision(linea[:hombres], precision: 0, delimiter: ".") %></td>
+        <td><%= linea[:total]>0 ? number_to_percentage(linea[:hombres]*100/linea[:total], precision: 0) :"0%" %></td>
+        <td><%= number_with_precision(linea[:mujeres], precision: 0, delimiter: ".") %></td>
+        <td><%= linea[:total]>0 ? number_to_percentage(linea[:mujeres]*100/linea[:total], precision: 0) :"0%" %></td>
+        <td><span id="barras_<%= i.to_s %>"></span></td>
+        <td class="monto"><%= linea[:total].nil? ? 'NA' : number_with_precision(linea[:total], precision: 0, delimiter: ".") %></td>
+        <td class="text-center">
+          <%= link_to "Ver", partido_regiones_path(:partido_id => linea[:partido_id], :menu => 1), class: 'btn-view-detail-by-gender btn btn-default btn-xs' %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+$(document).ready(function(){
+  var data = <%=  @datos.to_json.html_safe %>;
+  var data_totals = <%=  @datos_totals.to_json.html_safe %>;
+  var fechas = <%=  @fechas_datos.to_json.html_safe %>;
+  var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
+  // Raphael("header",400, 40 ).afiliados_compare_header();
+  for(var i=0; i < data.length; i++){
+   Raphael("barras_" + i,300, 30 ).afiliados_compare_bar(<%= @max_value %>,data[i]);
+  }
+
+});
+</script>

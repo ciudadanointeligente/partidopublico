@@ -1,0 +1,67 @@
+<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Finanzas</li><li>Egresos ordinarios</li></ol>
+<h3>Egresos ordinarios</h3>
+
+<div class="row">
+  <div class="col-md-12">
+    <%= form_tag partido_finanzas_2_path, :method =>  :get, class: 'form-inline' do |f| %>
+      <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
+    <% end %>
+  </div>
+</div>
+
+<div>
+  <h4>Datos correspondientes al <%=  @fecha %></h4>
+  <span id="header"></span>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Concepto</th>
+          <th>&nbsp;</th>
+          <th>Monto Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @datos_egresos_ordinarios.each_with_index do |linea, i| %>
+        <tr>
+          <td>
+            <%= linea['text'] %>
+          </td>
+          <td>
+            <div id="barras_<%= i.to_s %>"></div>
+          </td>
+          <td class="monto">
+            <%= number_to_currency(linea['value'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th class="total">Total</th>
+          <th><span id='footer'></span></th>
+          <th class="total monto">
+            <%= number_to_currency(@datos_egresos_ordinarios_totals['publicos'] + @datos_egresos_ordinarios_totals['privados'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %>
+          </th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+
+<script>
+$(document).ready(function(){
+  var data = <%=  @datos_egresos_ordinarios.to_json.html_safe %>;
+  var data_totals = <%=  @datos_egresos_ordinarios_totals.to_json.html_safe %>;
+  var fechas = <%=  @fechas_datos.to_json.html_safe %>;
+  var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
+
+  Raphael("header",340, 40 ).egreso_ord_front_header();
+
+  for(var i=0; i < data.length; i++){
+    Raphael("barras_" + i,300, 30 ).egreso_ord_front_bar(data[i]);
+  }
+
+  Raphael("footer",500, 40 ).egreso_ord_front_footer(data_totals);
+});
+</script>

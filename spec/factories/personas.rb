@@ -42,6 +42,9 @@
 
 FactoryGirl.define do
   factory :persona do
+    nombre "Juan de Dios"
+    apellidos "Xartajerje"
+    rut "1-9"
     genero "MyString"
     fecha_nacimiento "2016-03-23"
     nivel_estudios "MyString"

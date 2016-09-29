@@ -1,0 +1,47 @@
+<ol class="breadcrumb"><li>Comparativas</li></ol>
+<p id="notice"><%= notice %></p>
+
+<h3>Regiones en las que se encuentran constituidos</h3>
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Partido</th>
+        <% roman_ordinals.each do |roman|%>
+          <th class="text-center"><%= roman %></th>
+        <% end %>
+        <th class="text-center"><i class="fa fa-link" aria-hidden="true"></i></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @datos.each do |linea| %>
+      <tr>
+        <td><%= linea[:nombre] %></td>
+        <% linea[:mapa].each do |region| %>
+          <td class="text-center"><% if region %><i class="fa fa-circle <%= region ? 'icon-green' : 'icon-gray' %>" aria-hidden="true"></i><% end %></td>
+        <% end %>
+        <td class="text-center">
+          <button class="btn btn-default btn-xs" type="submit"><%= link_to "Ver detalle", partido_regiones_path(:partido_id => linea[:partido_id], :menu => 1) %></button>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div id="barras"></div>
+
+<script>
+$(document).ready(function(){
+  var data = <%=  @datos.to_json.html_safe %>;
+  var data_totals = <%=  @datos_totales.to_json.html_safe %>;
+  var fechas = <%=  @fechas_datos.to_json.html_safe %>;
+  var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
+  // if (fechas.length != 0){
+     //Raphael("barras",800, 800 ).regiones_compare_chart(data, data_totals);
+  // } else {
+    // Raphael("barras",700, 200 ).no_data_chart()
+  // }
+});
+</script>

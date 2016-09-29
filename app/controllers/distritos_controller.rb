@@ -1,10 +1,12 @@
 class DistritosController < ApplicationController
+  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy]
   before_action :set_distrito, only: [:show, :edit, :update, :destroy]
+  before_action :set_circunscripcion, only: [:index]
 
   # GET /distritos
   # GET /distritos.json
   def index
-    @distritos = Distrito.all
+    @distritos = Distrito.where circunscripcion: @circunscripcion
   end
 
   # GET /distritos/1
@@ -65,6 +67,10 @@ class DistritosController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_distrito
       @distrito = Distrito.find(params[:id])
+    end
+
+    def set_circunscripcion
+      @circunscripcion = Circunscripcion.find(params[:circunscripcion_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

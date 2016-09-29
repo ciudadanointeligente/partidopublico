@@ -1,6 +1,5 @@
 class AfiliacionsController < ApplicationController
-
-  before_action :authenticate_admin!
+  before_action :authenticate_admin!, only: [:new, :edit, :update, :destroy]
   before_action :set_afiliacion, only: [:show, :edit, :update, :destroy]
   before_action :set_partido, only: [:index, :aggregate, :eliminar]
 

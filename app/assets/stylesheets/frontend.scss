@@ -1,0 +1,733 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+@import 'https://fonts.googleapis.com/css?family=Karla:400,700';
+@import 'https://fonts.googleapis.com/css?family=Montserrat:400,700';
+
+$red : #87e0fd; 	/* Here's how you assign the values to a variable */
+$darkblue : #2cafe3;
+$cpad: 20px;		/* Variables are not limited to colors, you can use it to store values too*/
+$nude: #EADFE1;
+$nude-light: #F4F2F2;
+$orange-dark: #E85D34;
+$orange: #F28269;
+$orange-light: #FAC5BE;
+$blue: #012639;
+$green: #1AC0A4;
+$green-light: #23DBB8;
+$green-dark: #19A58A;
+$sky-dark: #06B9BF;
+$sky-light: #78EEE8;
+
+/*GENERAL*/
+html{position:relative;min-height:100%}
+
+body {
+	background-color: $nude;
+	font-family: 'Karla', sans-serif;
+	color: $blue;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-shadow: rgba(0,0,0,.01) 0 0 1px;
+	text-shadow: rgba(0,0,0,.01) 0 0 1px;
+	-webkit-text-size-adjust: 100%;
+}
+// body{margin-bottom:100px}
+
+footer{position:absolute;bottom:0;width:100%;}
+
+span{
+	font-weight: 700;
+}
+
+.nombre-partido{
+	background-color: $nude;
+	margin: 70px 0 20px 0;
+	padding: 20px 0 30px 0;
+}
+
+.board{
+	background-color: white;
+	box-shadow: -5px 5px 0px $orange;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-radius: 5px;
+}
+
+.nospace{
+		padding: 0;
+}
+
+.list-inline > li{
+	padding-left: 15px;
+}
+/*NAV*/
+.navbar-default{
+	background-color: #012639;
+	border: none;
+	height: 70px;
+	border-radius: 0px;
+	border: none;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: white;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 1.3px;
+  font-weight: 700;
+	padding: 24px 15px;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus{
+	color: $orange;
+}
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+  background-color: transparent;
+  color: $orange;
+}
+
+.dropdown-menu {
+  padding: 8px 0;
+  font-size: 11px;
+  background-color: #012639;
+  border-radius: 0;
+  box-shadow: none;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+	border: none;
+}
+
+.navbar-nav > li > .dropdown-menu{
+	margin-top: -15px;
+	border-radius: 5px;
+}
+
+.dropdown-menu > li > a{
+	color: white;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: $orange;
+    background-color: transparent;
+}
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border: none;
+    background-color: transparent;
+    z-index: 2000;
+}
+
+.navbar-brand > img{
+	position: absolute;
+	top: 13px;
+}
+
+.sub-brand{
+	position: relative;
+	top: 35px;
+	left: -16px;
+	min-width: 200px;
+	a{
+		color: $sky-dark;
+		&:hover{
+			color: white;
+			text-decoration: none;
+		}
+		&:focus{
+			color: white;
+			text-decoration: none;
+		}
+	}
+}
+
+/*HEADINGS*/
+h3{
+	font-weight: 700;
+	color: $orange-dark;
+	margin: 5px 0 10px 0;
+}
+
+h4{
+	font-weight: 700;
+	color: $blue;
+	a{
+		&:hover{
+			color: $orange;
+			text-decoration: none;
+		}
+		&:focus{
+			color: $orange;
+			text-decoration: none;
+		}
+	}
+}
+
+h6{
+	color: $blue;
+}
+
+.breadcrumb {
+	background-color: initial;
+	font-weight: 700;
+	text-transform: uppercase;;
+	letter-spacing: 1.2px;
+	font-size: xx-small;
+	color: $blue;
+	padding: initial;
+	margin-bottom: 0px;
+	border-radius: 0px;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.breadcrumb > li + li:before {
+  content: "> ";
+	color: $blue;
+}
+
+/*TABLES*/
+th{
+	color: $blue;
+	font-size: 10px;
+	letter-spacing: 1.2px;
+	text-transform: uppercase;
+	width: 200px;
+}
+
+.table > thead > tr > th {
+	border-bottom: 1px solid $blue;
+}
+
+/*BUTTONS*/
+button#dropdownMenu1{
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: 700;
+	color: white;
+	letter-spacing: 1.2px;
+	padding: 5px;
+	border: none;
+	background-color: $orange-dark;
+	height: 40px;
+	width: 100%;
+	-webkit-appearance: none;
+	margin-bottom: 10px;
+	margin-top: -30px;
+	border-radius: 6px;
+	font-family: 'Montserrat', sans-serif;
+	&:hover{
+		background-color: white;
+		color: $orange-dark;
+	}
+}
+
+ul.dropdown-menu.dropdown-select{
+	width: 100%;
+	border-radius: 6px;
+	background-color: white;
+	font-weight: 700;
+	border: none;
+	padding: 15px;
+	color: $orange-dark;
+	box-shadow: -5px 5px 0px $orange-dark;
+	font-family: 'Montserrat', sans-serif;
+	li > ul > li{
+		list-style-type: disc;
+	}
+	a{
+		color: $blue;
+		&:hover{
+			color: $orange;
+			text-decoration: none;
+		}
+	}
+}
+
+.btn-view-detail-by-gender{
+	border-radius: 12px;
+	text-transform: uppercase;
+	font-size: 10px;
+	letter-spacing: 1.2px;
+	height: 24px;
+	border: 2px solid $green;
+	font-weight: 700;
+	padding: 3px 10px;
+	a{
+		color: $green;
+	}
+	&:hover{
+		background-color: $green;
+		color: white;
+		a{
+			color: white;
+			text-decoration: none;
+		}
+	}
+}
+
+/*ASIDE MENU*/
+aside.col-sm-3.col-md-3{
+	padding: 0 15px 0 0;
+}
+.aside-menu {
+	li {
+		&.principal{
+			text-align: center;
+			font-size: 14px;
+			font-weight: 700;
+			margin-bottom: 5px;
+			padding: 10px 0 10px 0;
+			line-height: 15px;
+			background-color: $orange-dark;
+			list-style-type: none;
+			color: white;
+			letter-spacing: 1.2px;
+			text-transform: uppercase;
+			border-radius: 5px;
+			font-family: 'Montserrat', sans-serif;
+			font-size: 11px;
+				a {
+					color: white;
+					&:hover{
+						text-decoration: none;
+						color: $blue;
+					}
+					&:focus{
+						text-decoration: none;
+						color: $blue;
+					}
+					.collapse.in, .collapsing, .collapse{
+					margin: 0;
+					}
+				}
+				ul {
+					padding-left: 0px;
+					color: $blue;
+					background-color: $nude;
+					list-style: none;
+					text-transform: none;
+					letter-spacing: normal;
+					margin: 0 0 -10px 0;
+					font-family: 'Karla', sans-serif;
+					font-size: 14px;
+					li{
+						padding: 10px 0 10px 0;
+						background-color: white;
+						margin: 5px 0 0 0;
+						a {
+							color: $blue;
+							font-weight: 700;
+							font-family: 'Montserrat', sans-serif;
+							font-size: 11px;
+							letter-spacing: 1px;
+							text-transform: uppercase;
+							&:hover{
+								text-decoration: none;
+								color: $orange;
+							}
+							&:focus{
+								text-decoration: none;
+								color: $orange;
+							}
+						}
+					}
+				}
+			}
+		}
+}
+
+.collapse.in, .collapsing, .collapse{
+	padding: 0;
+}
+
+/*LEYENDAS*/
+.leyenda-cargos{
+	text-align: left;
+	margin-top: 50px;
+}
+
+.leyenda{
+	text-align: left;
+	margin-top: 70px;
+}
+
+.leyenda-desgloce{
+	text-align: left;
+	margin-top: 20px;
+}
+
+.circle-lg{
+	color: $green-light;
+	float: left;
+	margin-right: 5px;
+}
+
+.circle-gd{
+	color: $green-dark;
+	float: left;
+	margin-right: 5px;
+}
+
+/*SVG*/
+div#header{
+	margin-top: 10px;
+}
+
+/*SELECT*/
+select#fecha_datos, select#select-region{
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: 700;
+	color: $blue;
+	letter-spacing: 1.2px;
+	border: 2px solid $nude;
+	padding: 5px;
+	margin-bottom: 20px;
+	background-color: white;
+	height: 40px;
+	width: 200px;
+	-webkit-appearance: none;
+	background: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'><path fill='#012639' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>");
+	background-position: 98% 50%;
+	background-repeat: no-repeat;
+	border-radius: 6px;
+	float: left;
+	margin-right: 6px;
+}
+
+select#region, select#genero, select#tipo_cargo{
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: 700;
+	color: $blue;
+	letter-spacing: 1.2px;
+	border: 2px solid $nude;
+	padding: 5px;
+	margin-bottom: 20px;
+	background-color: white;
+	height: 40px;
+	width: 200px;
+	-webkit-appearance: none;
+	background: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'><path fill='#012639' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>");
+	background-position: 98% 50%;
+	background-repeat: no-repeat;
+	vertical-align: top;
+	border-radius: 6px;
+	float: left;
+	margin-right: 6px;
+}
+
+input#q, input#nombre{
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: 700;
+	color: $blue;
+	letter-spacing: 1.2px;
+	border: 2px solid $nude;
+	padding: 5px;
+	margin-bottom: 20px;
+	background-color: white;
+	height: 40px;
+	width: 200px;
+	-webkit-appearance: none;
+	border-radius: 6px;
+}
+
+input[type="submit"]{
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: 700;
+	color: $blue;
+	letter-spacing: 1.2px;
+	border: 2px solid $nude;
+	padding: 5px 15px 5px 15px;
+	margin-bottom: 20px;
+	background-color: white;
+	height: 40px;
+	-webkit-appearance: none;
+	border-radius: 20px;
+	&:hover{
+		background-color: $orange;
+		border: 2px solid $orange;
+	}
+}
+
+input#partido_ids_, input#all{
+	-webkit-appearance: none;
+	background-color: white;
+	height: 10px;
+	width: 10px;
+	border-radius:5px;
+}
+
+input#partido_ids_.marcado:checked {
+	background-color: $blue;
+}
+
+input#all.marcado:checked {
+	background-color: $blue;
+}
+
+select#category{
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: 700;
+	color: $blue;
+	letter-spacing: 1.2px;
+	border: 2px solid $blue;
+	padding: 5px;
+	margin-bottom: 20px;
+	height: 40px;
+	width: 100%;
+	-webkit-appearance: none;
+	background: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'><path fill='#012639' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>");
+	background-position: 98% 50%;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	border-radius: 6px;
+	font-family: 'Montserrat', sans-serif;
+}
+
+input[type="submit"].transparente{
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: 700;
+	color: $blue;
+	letter-spacing: 1.2px;
+	border: 2px solid white;
+	border-radius: 0px;
+	padding: 5px 15px 5px 15px;
+	background-color: white;
+	height: 40px;
+	width: 100%;
+	-webkit-appearance: none;
+	margin: 60px 0 40px 0;
+	border-radius: 20px;
+	&:hover{
+		background-color: transparent;;
+		color: white;
+	}
+}
+
+/*VARIOS*/
+.basicos{
+	margin-bottom: 40px;
+	td{
+		min-width: 150px;
+	}
+}
+
+.documents{
+	min-height: 100px;
+	text-align: center;
+	a{
+		color: $blue;
+		&:hover{
+			color: $orange;
+			text-decoration: none;
+		}
+	}
+}
+
+.total-max{
+	color: $blue;
+	font-size: 40px;
+	font-weight: 700;
+}
+
+.monto{
+	color: $blue;
+	font-size: 18px;
+	font-weight: 700;
+	text-align: right;
+}
+
+.total{
+	color: $blue;
+	font-size: 22px;
+	font-weight: 700;
+	&.monto{
+		text-align: right;
+	}
+}
+
+.comparacion{
+	background-color: $orange-dark;
+	margin: 70px 0 40px 0;
+	padding-top: 30px;
+	h2, h4{
+		color: white;
+	}
+}
+
+.numero{
+	font-size: 24px;
+  background-color: $blue;
+  color: white;
+  text-align: center;
+  border-radius: 20px;
+  width: 35px;
+  margin: auto;
+  font-weight: 700;
+  margin-top: 20px;
+}
+
+.versalitas{
+	text-transform: uppercase;
+	letter-spacing: 1.2px;
+	font-size: 11px;
+	font-weight: 700;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.text-info{
+	color: $blue;
+	font-weight: 700;
+	margin-bottom: 40px;
+}
+
+/*ELEMENTS*/
+.panel-default > .panel-heading .badge{
+	padding: 4px 8px;
+	font-size: 10px;
+	font-weight: 700;
+	background-color: $orange;
+}
+
+i.fa.fa-circle.icon-green{
+	color: $sky-dark;
+}
+
+/*PANELS*/
+.panel{
+	border: none;
+	box-shadow: none;
+}
+
+.panel-default > .panel-heading{
+	background-color: transparent;
+	border: 3px solid $orange;
+	border-radius: 10px;
+}
+
+.panel-group .panel-heading + .panel-collapse > .panel-body, .panel-group .panel-heading + .panel-collapse > .list-group{
+	border-top: none;
+}
+
+/*MODAL*/
+.modal-header{
+	border-bottom: none;
+	background-color: $orange;
+}
+
+.modal-content{
+	border-radius: 0;
+	box-shadow: none;
+	border: none;
+}
+
+/*COMPARATIVES*/
+p.edades{
+	text-align: center;
+	width: 30px;
+	height: 30px;
+	margin: auto;
+	border-radius: 15px;
+	padding-top: 5px
+}
+
+/*FOOTER*/
+.site-footer{
+  background-color: $blue;
+  color: white;
+  padding: 40px 0;
+	margin-top: 30px;
+	position: relative;
+	bottom: -40px;
+	width: 100%;
+	a{
+		color: white;
+	}
+}
+
+.site-footer a:hover, .site-footer a :focus{
+	color: $orange;
+	text-decoration: none;
+}
+
+.logo-fci img {
+  width: 200px;
+}
+
+/*MEDIA-QUERIS*/
+@media (max-width: 991px) {
+	.site-footer li {
+			text-align: center;
+	}
+}
+
+@media (max-width: 961px) {
+	.nav > li > a {
+		padding: 0px 15px !important;
+	}
+
+	.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+		position: relative;
+		top: 24px;
+	}
+}
+@media (max-width: 767px) {
+	div#bs-example-navbar-collapse-1{
+		margin-top: 7px;
+	}
+	.navbar-toggle{
+		margin-top: -1px;
+		border: none;
+		top: 20px;
+	}
+
+	.navbar-default .navbar-toggle .icon-bar{
+		background-color: $orange;
+	}
+
+	.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus{
+		background-color: transparent;
+	}
+
+	.navbar-fixed-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse{
+		max-height: inherit;
+	}
+
+	.collapse.in, .collapsing, .collapse{
+		padding: inherit;
+	}
+
+	.navbar-default .navbar-nav > li > a{
+		padding: 15px;
+	}
+
+	.navbar-default .navbar-nav .open .dropdown-menu > li > a{
+		color: $orange;
+		&:hover{
+			color: white;
+		}
+	}
+
+	aside.col-sm-3.col-md-3{
+		padding: 0 0 0 0;
+	}
+
+	select#fecha_datos, select#select-region, select#region, select#genero, select#category, select#tipo_cargo, input#q, input#nombre, input[type="submit"]{
+		width: 100%;
+		margin-bottom: 10px;
+	}
+
+	.leyenda-cargos, .leyenda, .leyenda-desgloce{
+		text-align: left;
+		margin: 0 0 40px 0;
+	}
+
+}

@@ -1,0 +1,47 @@
+<ol class="breadcrumb"><li>Comparativas</li></ol>
+<h3>Ingresos ordinarios</h3>
+<%= form_tag comparisons_path, :method => :get do |f| %>
+  <%= select_tag :fecha_datos, options_for_select(@fechas_datos.reverse, params[:fecha_datos] || ""), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
+  <%= hidden_field_tag 'category', "Ingresos ordinarios" %>
+<% end %>
+<br>
+<br>
+<br>
+<div id='header'></div>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Partido</th>
+        <th>&nbsp;</th>
+        <th class="text-right">Monto Total</th>
+        <th class="text-center"><i class="fa fa-link" aria-hidden="true"></i></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @datos.each_with_index do |linea, i| %>
+      <tr>
+        <td><%= linea[:nombre] %></td>
+        <td><span id="barras_<%= i.to_s %>"></span></td>
+        <td class="monto">
+          <%= number_to_currency(((linea[:total_privado].nil? ? 0 : linea[:total_privado]) + (linea[:total_publico].nil? ? 0 : linea[:total_publico])), delimiter: ".", separator: ',', unit: "$", precision: 0 , format: "%u%n").to_s %>
+        </td>
+        <td class="text-center">
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+$(document).ready(function(){
+  var data = <%=  @datos.to_json.html_safe %>;
+  var fechas = <%=  @fechas_datos.to_json.html_safe %>;
+  var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
+  Raphael("header",400, 40 ).ingreso_ord_header();
+  for(var i=0; i < data.length; i++){
+    Raphael("barras_" + i,300, 30 ).ingreso_ord_compare_bar(data[i]);
+  }
+});
+</script>

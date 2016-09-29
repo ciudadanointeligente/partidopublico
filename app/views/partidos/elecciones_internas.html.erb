@@ -1,0 +1,57 @@
+<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Cómo participar</li><li>Postular a cargos de dirección interna</li></ol>
+<h3>Postular a cargos de dirección interna</h3>
+<h4>Postulaciones</h4>
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <% @elecciones.each_with_index do |e, index| %>
+    <% if e['elecciones_internas'].count > 0 %>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="heading-<%= index %>">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
+          <%= e['organo'] %>
+        </a>
+        <span class="badge"><%= e['elecciones_internas'].count %></span>
+      </h4>
+      <span class="sr-only"><p>Se han encontrado <%= e['elecciones_internas'].count %> postulaciones a cargos de dirección interna para <%= e["organo"] %>.</p></span>
+    </div>
+    <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Cargo</th>
+                <th>Fecha Elección</th>
+                <th>Fecha Límite</th>
+                <th>Procedimientos</th>
+                <th>Requisitos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% e['elecciones_internas'].each do |ei| %>
+              <tr>
+                <td><%= ei['cargo'] %></td>
+                <td><%= ei['fecha_eleccion'] %></td>
+                <td><%= ei['fecha_limite_inscripcion'] %></td>
+                <td>
+                  <% ei['procedimientos'].each do |p| %>
+                    <li><%= p['descripcion'] %></li>
+                  <% end %>
+                </td>
+                <td>
+                  <% ei['requisitos'].each do |r| %>
+                    <li><%= r['descripcion'] %></li>
+                  <% end %>
+                </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+    <% end %>
+  <% end %>
+</div>

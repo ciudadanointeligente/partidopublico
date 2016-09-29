@@ -1,0 +1,63 @@
+<ol class="breadcrumb"><li>Comparativas</li></ol>
+<p id="notice"><%= notice %></p>
+
+<h3>Representantes electos</h3>
+  <%= form_tag comparisons_path, :method => :get do |f| %>
+    <%= select_tag "tipo_cargo", options_for_select(@tipo_cargos, params[:tipo_cargo] || ""), include_blank: "Seleccionar cargo", class: "form-control" %>
+    <%= select_tag "region", options_from_collection_for_select(@regiones, "id", "nombre", params[:region] || ""), include_blank: "Seleccionar región", class: "form-control" %>
+    <%= submit_tag 'Filtrar', class: "btn" %>
+    <%= hidden_field_tag 'category', "Representantes electos" %>
+  <% end %>
+
+<div class="table-responsive">
+  <div id='header'></div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Partido</th>
+        <th>Representantes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @datos.each_with_index do |linea, i| %>
+      <tr>
+        <td><%= linea[:partido][:sigla] %></td>
+        <td>
+          <ul class="list-unstyled">
+            <% linea[:representantes].each_with_index do |r, j| %>
+              <li>
+                <div style="display: inline">
+                  <%= r[0] %>
+                  <div style="display: inline" id="barra_<%= r[0] %>_<%= linea[:partido][:sigla] %>" ></div>
+                  <%= r[1] %>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div id="barras"></div>
+
+<br>
+<script>
+$(document).ready(function(){
+  var data = <%=  @datos.to_json.html_safe %>;
+  var data_totals = <%=  @datos_totals.to_json.html_safe %>;
+  var fechas = <%=  @fechas_datos.to_json.html_safe %>;
+  var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
+  Raphael("header",750, 40 ).representantes_compare_header();
+  console.log(data.length);
+  for(var i = 0; i < data.length; i++){
+    console.log(data[i].representantes.length);
+    for(var j = 0; j < data[i].representantes.length; j++){
+      console.log("barra_" + data[i].representantes[j][0]+ "_"+ data[i].partido.sigla);
+      Raphael("barra_" + data[i].representantes[j][0]+ "_"+ data[i].partido.sigla,300, 30 ).representantes_compare_bar(<%= @max_number %>, data[i].representantes[j][1], data[i].representantes[j][0]);
+    }
+  }
+});
+</script>
