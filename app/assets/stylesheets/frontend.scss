@@ -233,6 +233,32 @@ h6{
 	color: $blue;
 }
 
+/*CAROUSEL*/
+.carousel{
+	min-height: 550px;
+}
+
+.carousel-control.right, .carousel-control.left{
+	background-image: none;
+	background-repeat: no-repeat;
+}
+
+.carousel-control{
+	opacity: 1;
+	text-shadow: none;
+	color: $blue;
+	font-size: 14px;
+	width: initial;
+	top: 45%;
+	&:hover{
+		color: $orange;
+	}
+}
+
+.vistas > img{
+	width: 100%;
+}
+
 /*TABLES*/
 th{
 	color: $blue;
