@@ -145,12 +145,13 @@ span{
 
 /*JUMBOTRON*/
 .jumbotron{
-	background-color: $orange-dark;
-	height: 500px;
+	height: inherit;
 	padding-top: 100px;
-	h1{
-		color: white;
-	}
+	background: url('welcome.svg') right no-repeat $orange-dark;
+	background-size: 100%;
+		h1{
+			color: white;
+		}
 }
 
 mark{
