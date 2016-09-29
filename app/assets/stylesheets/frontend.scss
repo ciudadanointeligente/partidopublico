@@ -146,9 +146,8 @@ span{
 /*JUMBOTRON*/
 .jumbotron{
 	height: inherit;
-	padding-top: 100px;
-	background: url('welcome.svg') right no-repeat $orange-dark;
-	background-size: 100%;
+	padding-top: 70px;
+	background: asset-url('images/welcome.svg') right no-repeat $orange-dark;
 		h1{
 			color: white;
 		}
@@ -163,6 +162,26 @@ mark{
 
 }
 
+.btn-primary{
+	background-color: transparent;
+	border: 3px solid $sky-dark;
+	border-radius: 50px;
+	text-transform: uppercase;
+	letter-spacing: 1.4px;
+	font-weight: 700;
+	font-size: 12px;
+	margin-top: 25px;
+	color: $sky-dark;
+	&:hover{
+		background-color: $sky-dark;
+		border-color: white;
+	}
+	&:focus{
+		background-color: $sky-dark;
+		border-color: white;
+	}
+}
+
 .btn-lg{
 		background-color: transparent;
 		border: 3px solid white;
@@ -172,6 +191,7 @@ mark{
 		font-weight: 700;
 		font-size: 14px;
 		margin-top: 25px;
+		color: white;
 		&:hover{
 			background-color: $blue;
 			border-color: $blue;
@@ -788,6 +808,9 @@ p.edades{
 @media (max-width: 991px) {
 	.site-footer li {
 			text-align: center;
+	}
+	.jumbotron{
+		background: $orange-dark;
 	}
 }
 
