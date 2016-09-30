@@ -143,7 +143,7 @@ class PartidoStepsController < ApplicationController
 
         # Never trust parameters from the scary internet, only allow the white list through.
         def partido_params
-          params.require(:partido).permit(:nombre, :sigla, :lema, :fecha_fundacion, :texto, :logo,
+          params.require(:partido).permit(:nombre, :sigla, :lema, :fecha_fundacion, :texto, :logo, :front_logo,
                                                     sedes_attributes: [:id, :region, :direccion, :contacto, :_destroy],
                                                     afiliacions_attributes: [:id, :region_id, :hombres, :mujeres, :otros, :fecha_datos, :ano_nacimiento, :_destroy],
                                                     tramites_attributes: [:id, :nombre, :descripcion, :persona_id, :documento, :_destroy,
