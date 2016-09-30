@@ -55,13 +55,13 @@
                 <ul class="dropdown-menu">
                   <% @partidos.each do |p| %>
                   <li>
-                    <%= link_to p['nombre'], partido_normas_internas_path(p['id']) %>
+                    <%= link_to p['nombre'], partido_normas_internas_path(p['id']), onclick: "ga('send', 'event', 'main-menu-partido-"+p['nombre']+"', 'click');" %>
                   </li>
                   <% end %>
                 </ul>
               </li>
               <li>
-                <%= link_to "Comparar partidos",comparisons_path %>
+                <%= link_to "Comparar partidos",comparisons_path, onclick: "ga('send', 'event', 'main-menu-comparar', 'click');" %>
               </li>
             </ul>
           </div><!-- /.navbar-collapse -->
@@ -85,8 +85,8 @@
 <section class="aviso">
   <div class="container">
     <div class="row">
-      <div class="col-md-12"
-      <p class="text-center">La información de transparencia será subida de forma progresiva según lo que estipula la nueva Ley de Partidos Políticos. Revisa las fechas claves.</p>
+      <div class="col-md-12">
+      <p class="text-center">La información será subida de forma progresiva según lo que estipula la nueva Ley de Partidos Políticos  <button class="btn btn-primary btn-xs" type="submit"><%= link_to "Revisa las fechas clave", root_path(anchor: "fechas") %></buton></p>
       </div>
     </div>
   </div>
@@ -138,26 +138,37 @@
         <div class="row">
           <div class="col-md-4">
             <ul class="list-unstyled">
-              <li><a href="mailto:info@ciudadanointeligente.org?Subject=Prensa%20de%20Partido%20Publico" class="email-prensa" target="_top"><i class="fa fa-envelope-o"></i> Mándanos un correo</a></li>
-              <li><a href="//github.com/ciudadanointeligente/partidopublico" target="_blank"><i class="fa fa-github-alt"></i> Revisa nuestro código</a></li>
+              <li><a href="mailto:info@ciudadanointeligente.org?Subject=Prensa%20de%20Partido%20Publico" class="email-prensa" target="_top" onclick="ga('send', 'event', 'footer-email', 'click')"><i class="fa fa-envelope-o"></i> Mándanos un correo</a></li>
+              <li><a href="//github.com/ciudadanointeligente/partidopublico" target="_blank" onclick="ga('send', 'event', 'footer-github', 'click')"><i class="fa fa-github-alt"></i> Revisa nuestro código</a></li>
             </ul>
           </div>
           <div class="col-md-4 logo-fci">
             <ul class="list-unstyled">
               <li>
-                Un proyecto de <a href="//ciudadanointeligente.org" target="_blank"><img src="<%= image_url("logo-fci.png")%>" title="Fundación Ciudadano Inteligente"></a>
+                Un proyecto de <a href="//ciudadanointeligente.org" target="_blank" onclick="ga('send', 'event', 'footer-fci', 'click')"><img src="<%= image_url("logo-fci.png")%>" title="Fundación Ciudadano Inteligente"></a>
               </li>
             </ul>
           </div>
           <div class="col-md-4 text-right">
             <ul class="list-unstyled">
-              <li><a href="//twitter.com/ciudadanoi" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> @Ciudadanoi</a></li>
-              <li><a href="//www.facebook.com/ciudadanointeligente" target="_blank"><i class="fa  fa-facebook" aria-hidden="true"></i> Ciudadano Inteligente</li></a>
+              <li><a href="//twitter.com/ciudadanoi" target="_blank" onclick="ga('send', 'event', 'footer-twitter', 'click')"><i class="fa fa-twitter" aria-hidden="true"></i> @Ciudadanoi</a></li>
+              <li><a href="//www.facebook.com/ciudadanointeligente" target="_blank" onclick="ga('send', 'event', 'footer-facebook', 'click')"><i class="fa fa-facebook" aria-hidden="true"></i> Ciudadano Inteligente</li></a>
             </ul>
           </div>
         </div>
       </div>
     </div>
   </footer>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-41822715-13', 'auto');
+    ga('send', 'pageview');
+
+  </script>
 </body>
 </html>

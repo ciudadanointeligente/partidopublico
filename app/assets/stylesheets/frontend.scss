@@ -287,11 +287,42 @@ section{
 
 section.aviso{
 	background-color: white;
-	margin-top: 70px;
-	padding: 15px;
+	margin: 70px 0 -70px 0;
+	padding: 8px;
 	height: 65px;
 	font-size: 12px;
 	font-weight: 700;
+	.btn-xs{
+		position: relative;
+		top: -13px;
+		background-color: $sky-dark;
+		border: 2px solid $sky-dark;
+		height: 26px;
+		a{
+			color: white;
+			font-size: 11px;
+		}
+		&:hover{
+			background-color: transparent;
+			color: $sky-dark;
+			border: 2px solid $sky-dark;
+			a{
+				color: $sky-dark;
+				font-size: 11px;
+				text-decoration: none;
+			}
+		}
+		&:focus{
+			background-color: transparent;
+			color: $sky-dark;
+			border: 2px solid $sky-dark;
+			a{
+				color: $sky-dark;
+				font-size: 11px;
+				text-decoration: none;
+			}
+		}
+	}
 }
 /*CAROUSEL*/
 .carousel{
@@ -925,6 +956,15 @@ p.edades{
 }
 
 /*MEDIA-QUERIS*/
+@media (max-width: 990px) {
+	section.aviso{
+		.btn-xs{
+			position: relative;
+			top: -20px;
+		}
+	}
+}
+
 @media (max-width: 991px) {
 	.site-footer li {
 			text-align: center;
@@ -1088,5 +1128,17 @@ p.edades{
 
 	.desc > ul > li{
 
+	}
+}
+
+@media (max-width: 461px) {
+	section.aviso{
+		height: 78px;
+	}
+}
+
+@media (max-width: 336px) {
+	section.aviso{
+		height: 98px;
 	}
 }
