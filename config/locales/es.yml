@@ -52,7 +52,7 @@ es:
       welcome: "Bienvenido"
       welcome_text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat."
       start: "Empezar"
-      enrolled_parties: "Partidos que se han unido"
+      enrolled_parties: "Partidos comprometidos"
       details: "Detalles"
       edit: "Editar"
   datagrid:
