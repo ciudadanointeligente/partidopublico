@@ -26,6 +26,10 @@ class Partido < ActiveRecord::Base
     validates_attachment :logo,
         content_type: { content_type:  /\Aimage\/.*\Z/ },
         size: { in: 0..500.kilobytes }
+    has_attached_file :front_logo, styles: { large: "600x600>", medium: "300x300>", thumb: "220x110>" }, default_url: "/resources/missing.png"
+    validates_attachment :front_logo,
+        content_type: { content_type:  /\Aimage\/.*\Z/ },
+        size: { in: 0..500.kilobytes }
     validates_presence_of :nombre, :sigla, :message => "debe rellenar"
     validates_uniqueness_of :nombre, :sigla, :message => "already exists"
 
