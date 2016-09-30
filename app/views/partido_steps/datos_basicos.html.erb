@@ -12,6 +12,7 @@
             <%= f.input :fecha_fundacion, as: :date, inline_label: true, html5: true, wrapper: :horizontal_form, :label => 'Fecha de fundación' %>
             <%= f.input :texto, inline_label: true  %>
             <%= f.input :logo, as: :file, inline_label: true, wrapper: :horizontal_form  %>
+            <%= f.input :front_logo, as: :file, inline_label: true, wrapper: :horizontal_form  %>
             <% if !@partido.logo.blank? %>
             <img src="<%= @partido.logo.url(:thumb) %>" class="img-responsive" alt="<%= @partido.nombre %> - <%= @partido.lema %>">
             <% end %>
