@@ -35,7 +35,7 @@
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
             <div class="brand">
-              <a class="navbar-brand" href="#"><img src="<%= image_url("logo-front.svg")%>" alt="<%= t('.title') %>"></a>
+              <%= link_to image_tag("logo.svg"),root_path %>
               <div class="sub-brand hidden"><a href="http://ciudadanointeligente.org" target="_blank">de CiudadanoInteligente.org</a></div>
             </div>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -49,9 +49,9 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">¿Qué es?</a></li>
+              <li class="hidden"><a href="#">¿Qué es?</a></li>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Partidos adheridos <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Partidos activos <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <% @partidos.each do |p| %>
                   <li>

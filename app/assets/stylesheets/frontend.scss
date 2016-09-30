@@ -8,8 +8,8 @@
 $red : #87e0fd; 	/* Here's how you assign the values to a variable */
 $darkblue : #2cafe3;
 $cpad: 20px;		/* Variables are not limited to colors, you can use it to store values too*/
-$nude: #EADFE1;
-$nude-light: #F4F2F2;
+$nude: #FCEDF0;
+$nude-light: #FFF9FA;
 $orange-dark: #E85D34;
 $orange: #F28269;
 $orange-light: #FAC5BE;
@@ -32,7 +32,6 @@ body {
 	text-shadow: rgba(0,0,0,.01) 0 0 1px;
 	-webkit-text-size-adjust: 100%;
 }
-// body{margin-bottom:100px}
 
 footer{position:absolute;bottom:0;width:100%;}
 
@@ -121,7 +120,7 @@ span{
     z-index: 2000;
 }
 
-.navbar-brand > img{
+.brand img{
 	position: absolute;
 	top: 13px;
 }
@@ -144,7 +143,85 @@ span{
 	}
 }
 
+/*JUMBOTRON*/
+.jumbotron{
+	height: inherit;
+	padding-top: 70px;
+	background: asset-url('images/welcome.svg') right no-repeat $orange-dark;
+		h1{
+			color: white;
+		}
+}
+
+mark{
+	background-color: white;
+	font-size: 36px;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+	color: $orange-dark;
+
+}
+
+.btn-primary{
+	background-color: white;
+	border: 3px solid white;
+	border-radius: 50px;
+	text-transform: uppercase;
+	letter-spacing: 1.4px;
+	font-weight: 700;
+	font-size: 12px;
+	margin-top: 25px;
+	color: $blue;
+	&:hover{
+		background-color: $orange;
+		border: 3px solid $orange;
+		color: white;
+	}
+	&:focus{
+		background-color: $orange;
+		border: 3px solid $orange;
+		color: white;
+	}
+}
+
+.btn-lg{
+		background-color: transparent;
+		border: 3px solid white;
+		border-radius: 50px;
+		text-transform: uppercase;
+		letter-spacing: 1.4px;
+		font-weight: 700;
+		font-size: 14px;
+		margin-top: 25px;
+		color: white;
+		&:hover{
+			background-color: $blue;
+			border-color: $blue;
+			color: white;
+		}
+		&:focus{
+			background-color: $blue;
+			border-color: $blue;
+			color: white;
+		}
+}
+
 /*HEADINGS*/
+h1{
+	font-size: 63px;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+	color: white;
+}
+
+h2{
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+	text-transform: uppercase;
+	font-size: 20px;
+	margin: 70px 0 10px 0;
+}
+
 h3{
 	font-weight: 700;
 	color: $orange-dark;
@@ -186,6 +263,72 @@ h6{
 .breadcrumb > li + li:before {
   content: "> ";
 	color: $blue;
+}
+
+/*SECTIONS*/
+section#que-es{
+	margin-top: -110px;
+	background: asset-url('images/ciudadanos.svg') 70% 120% no-repeat $nude;
+}
+section#fechas{
+	background-color: white;
+}
+section#funciones{
+	background-color: $nude;
+}
+section#partidos{
+	background-color: white;
+	margin-bottom: -70px;
+}
+
+section{
+	padding: 30px 0 80px 0;
+}
+
+section.aviso{
+	background-color: white;
+	margin-top: 70px;
+	padding: 15px;
+	height: 65px;
+	font-size: 12px;
+	font-weight: 700;
+}
+/*CAROUSEL*/
+.carousel{
+	min-height: 550px;
+	margin-top: 30px;
+}
+
+.carousel-control.right, .carousel-control.left{
+	background-image: none;
+	background-repeat: no-repeat;
+}
+
+.carousel-control{
+	opacity: 1;
+	text-shadow: none;
+	color: $blue;
+	font-size: 14px;
+	width: initial;
+	top: 45%;
+	&:hover{
+		color: $orange;
+	}
+	&:focus{
+		color: $orange;
+	}
+}
+
+.carousel-indicators .active{
+	background-color: $orange;
+}
+
+.carousel-indicators li{
+	border: 1px solid $orange;
+}
+
+.vistas > img{
+	width: 100%;
 }
 
 /*TABLES*/
@@ -662,10 +805,132 @@ p.edades{
   width: 200px;
 }
 
+/* ================ The Timeline ================ */
+
+.timeline {
+  position: relative;
+  width: 550px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 1em 0;
+  list-style-type: none;
+}
+
+.timeline:before {
+  position: absolute;
+  top: 23px;
+  content: ' ';
+  display: block;
+  width: 3px;
+  height: 72%;
+  margin-left: -3px;
+  background: $blue;
+
+  z-index: 5;
+}
+
+.timeline li {
+}
+
+.timeline li:after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.direction-r {
+  position: relative;
+	left: 30px;
+	margin: 5px 0 20px 0;
+}
+
+.flag-wrapper {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+
+.flag {
+  position: relative;
+  display: inline;
+  background: $orange-dark;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-weight: 600;
+  text-align: left;
+	color: white;
+	margin-bottom: 10px;
+}
+
+.direction-r .flag:before {
+  position: absolute;
+  top: 50%;
+  right: -35px;
+  content: ' ';
+  display: block;
+  width: 12px;
+  height: 12px;
+  margin-top: -10px;
+  background: $sky-dark;
+  border-radius: 10px;
+  border: 4px solid $sky-dark;
+  z-index: 10;
+}
+
+.direction-r .flag:before {
+  left: -38px;
+}
+
+.direction-r .flag:after {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  height: 0;
+  width: 0;
+  margin-top: -8px;
+  border: solid transparent;
+  border-right-color: $orange-dark;
+  border-width: 8px;
+  pointer-events: none;
+}
+
+.time-wrapper {
+  display: inline;
+  line-height: 1em;
+  font-size: 0.66666em;
+  color: rgb(250,80,80);
+  vertical-align: middle;
+}
+
+.direction-r .time-wrapper {
+  float: right;
+}
+
+.time {
+  display: inline-block;
+  padding: 4px 6px;
+  background: rgb(248,248,248);
+}
+
+.direction-r .desc {
+  margin: 1em 0 0 0.75em;
+}
+
+.desc > ul > li{
+	list-style-type: disc;
+	text-align: left;
+}
+
 /*MEDIA-QUERIS*/
 @media (max-width: 991px) {
 	.site-footer li {
 			text-align: center;
+	}
+	.jumbotron{
+		background: $orange-dark;
 	}
 }
 
@@ -680,12 +945,14 @@ p.edades{
 	}
 }
 @media (max-width: 767px) {
-	div#bs-example-navbar-collapse-1{
-		margin-top: 7px;
-	}
 	.navbar-toggle{
 		margin-top: -1px;
 		border: none;
+		top: 20px;
+	}
+
+	.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+		background-color: $blue;
 		top: 20px;
 	}
 
@@ -730,4 +997,96 @@ p.edades{
 		margin: 0 0 40px 0;
 	}
 
+}
+
+@media screen and (max-width: 660px) {
+
+	.timeline {
+	 	width: 100%;
+		padding: 4em 0 1em 0;
+	}
+
+	.timeline:before {
+		left: 50%;
+		top: 29px;
+		height: 79%;
+	}
+
+	.timeline li {
+	}
+
+	.direction-r {
+		float: none;
+		width: 100%;
+		text-align: center;
+		left: 0;
+	}
+
+	.flag-wrapper {
+		text-align: center;
+	}
+
+	.flag {
+		background: $orange-dark;
+		z-index: 15;
+	}
+
+	.direction-r .flag:before {
+	  position: absolute;
+	  top: -18px;
+		left: 43%;
+		content: ' ';
+		display: block;
+		width: 12px;
+		height: 12px;
+		background: $sky-dark;
+		border-radius: 10px;
+		border: none;
+		z-index: 10;
+	}
+
+	.direction-r .flag:after {
+		content: "";
+		position: absolute;
+		left: 50%;
+		top: -8px;
+		height: 0;
+		width: 0;
+		margin-left: -8px;
+		border: solid transparent;
+		border-bottom-color: $orange-dark;
+		border-width: 8px;
+		pointer-events: none;
+	}
+
+	.time-wrapper {
+		display: block;
+		position: relative;
+		margin: 4px 0 0 0;
+		z-index: 14;
+	}
+
+	.direction-r .time-wrapper {
+		float: none;
+	}
+
+	.desc {
+		position: relative;
+		margin: 1em 0 0 0;
+		padding: 1em;
+		background: $nude;
+	  z-index: 15;
+		border-radius: 6px;
+	}
+
+	.direction-r .desc {
+		position: relative;
+		margin: 15px 0 40px 0;
+		padding: 26px;
+	  z-index: 15;
+	}
+
+	.desc > ul > li{
+
+	}
 }
