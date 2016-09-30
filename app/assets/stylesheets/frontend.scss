@@ -163,24 +163,64 @@ mark{
 }
 
 .btn-primary{
-	background-color: white;
-	border: 3px solid white;
 	border-radius: 50px;
 	text-transform: uppercase;
 	letter-spacing: 1.4px;
 	font-weight: 700;
 	font-size: 12px;
 	margin-top: 25px;
-	color: $blue;
-	&:hover{
-		background-color: $orange;
-		border: 3px solid $orange;
-		color: white;
+	height: 34px;
+	&.que-es-pdf{
+		background-color: white;
+		border: 3px solid white;
+		color: $blue;
+		a{
+			color: $blue;
+			&:hover{
+				color: white;
+				text-decoration: none;
+			}
+			&:focus{
+				color: white;
+			}
+		}
+		&:hover{
+			background-color: $orange;
+			border: 3px solid $orange;
+			color: white;
+		}
+		&:focus{
+			background-color: $orange;
+			border: 3px solid $orange;
+			color: white;
+		}
 	}
-	&:focus{
-		background-color: $orange;
-		border: 3px solid $orange;
-		color: white;
+	&.folleto-pdf{
+		background-color: white;
+		border: 3px solid white;
+		color: $blue;
+		position: relative;
+		top: 30px;
+		a{
+			color: $blue;
+			&:hover{
+				color: white;
+				text-decoration: none;
+			}
+			&:focus{
+				color: white;
+			}
+		}
+		&:hover{
+			background-color: $orange;
+			border: 3px solid $orange;
+			color: white;
+		}
+		&:focus{
+			background-color: $orange;
+			border: 3px solid $orange;
+			color: white;
+		}
 	}
 }
 
@@ -194,6 +234,7 @@ mark{
 		font-size: 14px;
 		margin-top: 25px;
 		color: white;
+		height: 44px;
 		&:hover{
 			background-color: $blue;
 			border-color: $blue;
