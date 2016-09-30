@@ -2,24 +2,32 @@
 #
 # Table name: partidos
 #
-#  id                :integer          not null, primary key
-#  nombre            :string           not null
-#  sigla             :string           not null
-#  lema              :string           not null
-#  fecha_fundacion   :date
-#  texto             :text
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  logo_file_name    :string
-#  logo_content_type :string
-#  logo_file_size    :integer
-#  logo_updated_at   :datetime
+#  id                      :integer          not null, primary key
+#  nombre                  :string           not null
+#  sigla                   :string           not null
+#  lema                    :string           not null
+#  fecha_fundacion         :date
+#  texto                   :text
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  logo_file_name          :string
+#  logo_content_type       :string
+#  logo_file_size          :integer
+#  logo_updated_at         :datetime
+#  front_logo_file_name    :string
+#  front_logo_content_type :string
+#  front_logo_file_size    :integer
+#  front_logo_updated_at   :datetime
 #
 
 class Partido < ActiveRecord::Base
     has_paper_trail
     has_attached_file :logo, styles: { large: "600x600>", medium: "300x300>", thumb: "220x110>" }, default_url: "/resources/missing.png"
     validates_attachment :logo,
+        content_type: { content_type:  /\Aimage\/.*\Z/ },
+        size: { in: 0..500.kilobytes }
+    has_attached_file :front_logo, styles: { large: "600x600>", medium: "300x300>", thumb: "220x110>" }, default_url: "/resources/missing.png"
+    validates_attachment :front_logo,
         content_type: { content_type:  /\Aimage\/.*\Z/ },
         size: { in: 0..500.kilobytes }
     validates_presence_of :nombre, :sigla, :message => "debe rellenar"
@@ -116,9 +124,9 @@ class Partido < ActiveRecord::Base
       # self.marco_interno.documentos << Documento.new(descripcion:"Programa Base", obligatorio: false)
       # self.marco_interno.documentos << Documento.new(descripcion:"Estructura Orgánica", obligatorio: true)
       self.marco_interno.documentos << Documento.new(descripcion:"Estatutos del partido", obligatorio: true)
-      self.marco_interno.documentos << Documento.new(descripcion:"Desclaración de principios", obligatorio: true)
+      self.marco_interno.documentos << Documento.new(descripcion:"Declaración de principios", obligatorio: true)
       self.marco_interno.documentos << Documento.new(descripcion:"Reglamiento interno", obligatorio: true)
-      
+
       self.organo_internos << OrganoInterno.new(nombre:"Órgano ejecutivo")
       self.organo_internos << OrganoInterno.new(nombre:"Órgano intermedio colegiado")
       self.organo_internos << OrganoInterno.new(nombre:"Tribunal supremo")

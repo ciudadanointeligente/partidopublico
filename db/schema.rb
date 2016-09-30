@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912184903) do
+ActiveRecord::Schema.define(version: 20160930142741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -364,17 +364,21 @@ ActiveRecord::Schema.define(version: 20160912184903) do
   add_index "participacion_entidads", ["partido_id"], name: "index_participacion_entidads_on_partido_id", using: :btree
 
   create_table "partidos", force: :cascade do |t|
-    t.string   "nombre",            null: false
-    t.string   "sigla",             null: false
-    t.string   "lema",              null: false
+    t.string   "nombre",                  null: false
+    t.string   "sigla",                   null: false
+    t.string   "lema",                    null: false
     t.date     "fecha_fundacion"
     t.text     "texto"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.string   "logo_file_name"
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
+    t.string   "front_logo_file_name"
+    t.string   "front_logo_content_type"
+    t.integer  "front_logo_file_size"
+    t.datetime "front_logo_updated_at"
   end
 
   create_table "partidos_regions", id: false, force: :cascade do |t|
