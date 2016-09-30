@@ -191,7 +191,7 @@
         <p>Sanciones</p>
         <ul>
           <li class="<% if current_page?(:controller => 'partidos', :action => 'sanciones') %>current<% end %>">
-            <%= link_to "Sanciones aplicadas al partido", partido_sanciones_path(:menu => 6), onclick: "ga('send', 'event', 'mobile-partido-sanciones', 'click');" %> %>
+            <%= link_to "Sanciones aplicadas al partido", partido_sanciones_path(:menu => 6), onclick: "ga('send', 'event', 'mobile-partido-sanciones', 'click');" %>
           </li>
         </ul>
       </li>
@@ -218,10 +218,10 @@
             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#aside-menu-two" aria-expanded="false" aria-controls="aside-menu-two">Presencia nacional</a>
             <ul id="aside-menu-two" class="collapse <%= @menu == 1 ? 'in' : '' %>" role="tab" aria-labelledby="aside-menu-two">
               <li class="<% if current_page?(:controller => 'partidos', :action => 'regiones') %>current<% end %>">
-                <%= link_to "Regiones constituido y número de afiliados", partido_regiones_path(:menu => 1), onclick: "ga('send', 'event', 'desktop-partido-regiones', 'click');" %> %>
+                <%= link_to "Regiones constituido y número de afiliados", partido_regiones_path(:menu => 1), onclick: "ga('send', 'event', 'desktop-partido-regiones', 'click');" %>
               </li>
               <li class="<% if current_page?(:controller => 'partidos', :action => 'sedes_partido') %>current<% end %>">
-                <%= link_to "Domicilio y sedes de contacto", partido_sedes_partido_path(:menu => 1), onclick: "ga('send', 'event', 'desktop-partido-domicilio-sedes', 'click');" %> %>
+                <%= link_to "Domicilio y sedes de contacto", partido_sedes_partido_path(:menu => 1), onclick: "ga('send', 'event', 'desktop-partido-domicilio-sedes', 'click');" %>
               </li>
               <li class="<% if current_page?(:controller => 'partidos', :action => 'representantes') %>current<% end %>">
                 <%= link_to "Representantes electos", partido_representantes_path(:menu => 1), onclick: "ga('send', 'event', 'desktop-partido-representantes-electos', 'click');" %>
