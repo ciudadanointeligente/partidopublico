@@ -169,13 +169,13 @@
             Selecciona un partido
         </div>
     </div>
-    <div class="row text-center hidden">
+    <div class="row text-center">
         <% @partidos.each do |partido| %>
         <div class="col-md-3 col-sm-6 hero-feature">
             <div class="thumbnail">
-                <% if !partido.logo.blank? %>
+                <% if !partido.front_logo.blank? %>
                 <div class="logo">
-                    <%= image_tag partido.logo.url(:medium), :class => "img-responsive", :alt => partido.nombre + ' - ' + partido.lema %>
+                    <%= image_tag partido.front_logo.url(:medium), :class => "img-responsive", :alt => partido.nombre + ' - ' + partido.lema %>
                 </div>
                 <% end %>
                 <div class="caption">
