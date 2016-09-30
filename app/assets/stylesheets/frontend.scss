@@ -799,7 +799,7 @@ p.edades{
 
 .timeline {
   position: relative;
-  width: 660px;
+  width: 550px;
   margin: 0 auto;
   margin-top: 20px;
   padding: 1em 0;
@@ -808,12 +808,11 @@ p.edades{
 
 .timeline:before {
   position: absolute;
-  left: 50%;
-  top: 0;
+  top: 23px;
   content: ' ';
   display: block;
   width: 3px;
-  height: 100%;
+  height: 72%;
   margin-left: -3px;
   background: $blue;
 
@@ -821,7 +820,6 @@ p.edades{
 }
 
 .timeline li {
-  padding: 1em 0;
 }
 
 .timeline li:after {
@@ -832,17 +830,10 @@ p.edades{
   visibility: hidden;
 }
 
-.direction-l {
-  position: relative;
-  width: 300px;
-  float: left;
-  text-align: right;
-}
-
 .direction-r {
   position: relative;
-  width: 300px;
-  float: right;
+	left: 30px;
+	margin: 5px 0 20px 0;
 }
 
 .flag-wrapper {
@@ -860,46 +851,26 @@ p.edades{
   font-weight: 600;
   text-align: left;
 	color: white;
+	margin-bottom: 10px;
 }
 
-.direction-l .flag {
-}
-
-.direction-r .flag {
-}
-
-.direction-l .flag:before,
 .direction-r .flag:before {
   position: absolute;
   top: 50%;
-  right: -40px;
+  right: -35px;
   content: ' ';
   display: block;
   width: 12px;
   height: 12px;
   margin-top: -10px;
-  background: #fff;
+  background: $sky-dark;
   border-radius: 10px;
-  border: 4px solid rgb(255,80,80);
+  border: 4px solid $sky-dark;
   z-index: 10;
 }
 
 .direction-r .flag:before {
-  left: -40px;
-}
-
-.direction-l .flag:after {
-  content: "";
-  position: absolute;
-  left: 100%;
-  top: 50%;
-  height: 0;
-  width: 0;
-  margin-top: -8px;
-  border: solid transparent;
-  border-left-color: rgb(248,248,248);
-  border-width: 8px;
-  pointer-events: none;
+  left: -38px;
 }
 
 .direction-r .flag:after {
@@ -911,22 +882,17 @@ p.edades{
   width: 0;
   margin-top: -8px;
   border: solid transparent;
-  border-right-color: rgb(248,248,248);
+  border-right-color: $orange-dark;
   border-width: 8px;
   pointer-events: none;
 }
 
 .time-wrapper {
   display: inline;
-
   line-height: 1em;
   font-size: 0.66666em;
   color: rgb(250,80,80);
   vertical-align: middle;
-}
-
-.direction-l .time-wrapper {
-  float: left;
 }
 
 .direction-r .time-wrapper {
@@ -941,6 +907,11 @@ p.edades{
 
 .direction-r .desc {
   margin: 1em 0 0 0.75em;
+}
+
+.desc > ul > li{
+	list-style-type: disc;
+	text-align: left;
 }
 
 /*MEDIA-QUERIS*/
@@ -1018,160 +989,6 @@ p.edades{
 
 }
 
-@media (max-width: 660px) {
-	.timeline {
-  position: relative;
-  width: 660px;
-  margin: 0 auto;
-  margin-top: 20px;
-  padding: 1em 0;
-  list-style-type: none;
-}
-
-.timeline:before {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  content: ' ';
-  display: block;
-  width: 6px;
-  height: 100%;
-  margin-left: -3px;
-  background: rgb(80,80,80);
-  z-index: 5;
-}
-
-.timeline li {
-  padding: 1em 0;
-}
-
-.timeline li:after {
-  content: "";
-  display: block;
-  height: 0;
-  clear: both;
-  visibility: hidden;
-}
-
-.direction-l {
-  position: relative;
-  width: 300px;
-  float: left;
-  text-align: right;
-}
-
-.direction-r {
-  position: relative;
-  width: 300px;
-  float: right;
-}
-
-.flag-wrapper {
-  position: relative;
-  display: inline-block;
-  text-align: center;
-}
-
-.flag {
-  position: relative;
-  display: inline;
-  background: rgb(248,248,248);
-  padding: 6px 10px;
-  border-radius: 5px;
-  font-weight: 600;
-  text-align: left;
-}
-
-.direction-l .flag {
-}
-
-.direction-r .flag {
-}
-
-.direction-l .flag:before,
-.direction-r .flag:before {
-  position: absolute;
-  top: 50%;
-  right: -40px;
-  content: ' ';
-  display: block;
-  width: 12px;
-  height: 12px;
-  margin-top: -10px;
-  background: #fff;
-  border-radius: 10px;
-  border: 4px solid rgb(255,80,80);
-  z-index: 10;
-}
-
-.direction-r .flag:before {
-  left: -40px;
-}
-
-.direction-l .flag:after {
-  content: "";
-  position: absolute;
-  left: 100%;
-  top: 50%;
-  height: 0;
-  width: 0;
-  margin-top: -8px;
-  border: solid transparent;
-  border-left-color: rgb(248,248,248);
-  border-width: 8px;
-  pointer-events: none;
-}
-
-.direction-r .flag:after {
-  content: "";
-  position: absolute;
-  right: 100%;
-  top: 50%;
-  height: 0;
-  width: 0;
-  margin-top: -8px;
-  border: solid transparent;
-  border-right-color: rgb(248,248,248);
-  border-width: 8px;
-  pointer-events: none;
-}
-
-.time-wrapper {
-  display: inline;
-  line-height: 1em;
-  font-size: 0.66666em;
-  color: rgb(250,80,80);
-  vertical-align: middle;
-}
-
-.direction-l .time-wrapper {
-  float: left;
-}
-
-.direction-r .time-wrapper {
-  float: right;
-}
-
-.time {
-  display: inline-block;
-  padding: 4px 6px;
-  background: rgb(248,248,248);
-}
-
-.desc {
-  margin: 1em 0.75em 0 0;
-  font-size: 0.77777em;
-  font-style: italic;
-  line-height: 1.5em;
-}
-
-.direction-r .desc {
-  margin: 1em 0 0 0.75em;
-}
-
-}
-/* ================ Timeline Media Queries ================ */
-
 @media screen and (max-width: 660px) {
 
 	.timeline {
@@ -1179,14 +996,20 @@ p.edades{
 		padding: 4em 0 1em 0;
 	}
 
-	.timeline li {
-		padding: 2em 0;
+	.timeline:before {
+		left: 50%;
+		top: 29px;
+		height: 79%;
 	}
 
-	.direction-l, .direction-r {
+	.timeline li {
+	}
+
+	.direction-r {
 		float: none;
 		width: 100%;
 		text-align: center;
+		left: 0;
 	}
 
 	.flag-wrapper {
@@ -1198,22 +1021,21 @@ p.edades{
 		z-index: 15;
 	}
 
-	.direction-l .flag:before, .direction-r .flag:before {
+	.direction-r .flag:before {
 	  position: absolute;
-	  top: -30px;
-		left: 50%;
+	  top: -18px;
+		left: 43%;
 		content: ' ';
 		display: block;
 		width: 12px;
 		height: 12px;
-		margin-left: -9px;
-		background: #fff;
+		background: $sky-dark;
 		border-radius: 10px;
-		border: 4px solid $green-light;
+		border: none;
 		z-index: 10;
 	}
 
-	.direction-l .flag:after, .direction-r .flag:after {
+	.direction-r .flag:after {
 		content: "";
 		position: absolute;
 		left: 50%;
@@ -1234,10 +1056,6 @@ p.edades{
 		z-index: 14;
 	}
 
-	.direction-l .time-wrapper {
-		float: none;
-	}
-
 	.direction-r .time-wrapper {
 		float: none;
 	}
@@ -1246,15 +1064,19 @@ p.edades{
 		position: relative;
 		margin: 1em 0 0 0;
 		padding: 1em;
-		background: rgb(245,245,245);
+		background: $nude;
 	  z-index: 15;
+		border-radius: 6px;
 	}
 
-	.direction-l .desc, .direction-r .desc {
+	.direction-r .desc {
 		position: relative;
-		margin: 1em 1em 0 1em;
-		padding: 1em;
+		margin: 15px 0 40px 0;
+		padding: 26px;
 	  z-index: 15;
 	}
 
+	.desc > ul > li{
+
+	}
 }
