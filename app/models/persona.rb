@@ -55,7 +55,7 @@ class Persona < ActiveRecord::Base
     # belongs_to :personable, polymorphic: true
     # self.inheritance_column = :tipo
 
-    has_many :cargos
+    has_many :cargos, dependent: :destroy
     has_many :tipo_cargos, through: :cargos
 
     # scope :representantes, -> { where(tipo: 'Representante') }

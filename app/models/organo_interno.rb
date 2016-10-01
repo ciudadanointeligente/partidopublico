@@ -22,7 +22,7 @@ class OrganoInterno < ActiveRecord::Base
     has_many :personas, as: :personable
     has_many :eleccion_interna, dependent: :destroy
     has_many :acuerdos, dependent: :destroy
-    has_many :cargos
+    has_many :cargos, dependent: :destroy
 
 
     accepts_nested_attributes_for :personas, reject_if: proc { |attributes| attributes['apellidos'].blank? }, allow_destroy: true
