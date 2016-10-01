@@ -18,7 +18,7 @@ class Permission < ActiveRecord::Base
   belongs_to :admin
   belongs_to :partido
 
-  has_many :admins, dependent: :destroy
+  #has_many :admins, dependent: :destroy
 
   validates_uniqueness_of :admin_id, :scope => [:partido_id]
 end
