@@ -1028,8 +1028,16 @@ p.edades{
 	text-decoration: none;
 }
 
-.logo-fci img {
-  width: 200px;
+.logo-footer{
+	font-family: 'Montserrat', sans-serif;
+	text-transform: uppercase;
+	font-weight: 700;
+	font-size: 11px;
+	margin-bottom: 30px;
+	img{
+		margin-top: 10px;
+		width: 200px;
+	}
 }
 
 /*MEDIA-QUERIS*/
@@ -1045,9 +1053,6 @@ p.edades{
 	}
 	.vistas{
 		min-height: 100px;
-	}
-	.site-footer li {
-			text-align: center;
 	}
 }
 
