@@ -43,6 +43,10 @@ span{
 	padding-left: 15px;
 }
 
+.btn{
+	text-transform: uppercase;
+}
+
 /*NAV*/
 .navbar-default{
 	background-color: #012639;
@@ -427,17 +431,39 @@ section{
 	width: 100%;
 }
 
+/*PARTIES SECTION*/
+.thumbnail{
+	border: none;
+	margin-bottom: 30px;
+}
+
+a.btn.btn-xs.parties{
+	background-color: $orange-dark;
+	color: white;
+	border: 2px solid $orange-dark;
+	height: 24px;
+	border-radius: 12px;
+	letter-spacing: 1.2px;
+	font-weight: 700;
+	font-size: 11px;
+	line-height: 17px;
+	&:hover{
+		color: $orange-dark;
+		background-color: transparent;
+	}
+}
+
 /*PARTIES INFO*/
 section.aviso{
 	background-color: white;
 	margin: 70px 0 -70px 0;
-	padding: 8px;
+	padding: 20px;
 	height: 65px;
 	font-size: 12px;
 	font-weight: 700;
 	.btn-xs{
 		position: relative;
-		top: -13px;
+		top: 0;
 		background-color: $sky-dark;
 		border: 2px solid $sky-dark;
 		height: 26px;
@@ -900,6 +926,7 @@ th{
 	font-size: 11px;
 	font-weight: 700;
 	font-family: 'Montserrat', sans-serif;
+	color: $blue;
 }
 
 .text-info{
@@ -984,11 +1011,8 @@ p.edades{
 
 /*MEDIA-QUERIS*/
 @media (max-width: 990px) {
-	section.aviso{
-		.btn-xs{
-			position: relative;
-			top: -20px;
-		}
+		section.aviso{
+			padding: 14px;
 	}
 }
 
@@ -1167,6 +1191,7 @@ p.edades{
 
 @media (max-width: 461px) {
 	section.aviso{
+		padding: 10px;
 		height: 78px;
 	}
 }
