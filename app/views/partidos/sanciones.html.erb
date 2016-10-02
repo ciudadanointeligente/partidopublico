@@ -7,6 +7,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th>Fecha</th>
         <th>Descripción</th>
         <th>Institución</th>
         <th>Tipo de sanción</th>
@@ -17,6 +18,7 @@
     <tbody>
       <% @sanciones.each do |s| %>
       <tr>
+        <td><%= s.fecha %></td>
         <td><%= s.descripcion %></td>
         <td><%= s.institucion %></td>
         <td><%= s.tipo_sancion %></td>
@@ -31,7 +33,7 @@
       <% if !@sanciones.any? %>
       <tr>
         <td colspan="5">
-          <p>No se han encontrado registros</p>
+          <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i> No se han encontrado registros</p>
         </td>
       </tr>
       <% end %>

@@ -19,7 +19,7 @@
         <th class="text-center">% Hombres</th>
         <th class="text-center">Mujeres</th>
         <th class="text-center">% Mujeres</th>
-        <th>&nbsp;</th>
+        <th class="text-center">Visualización</th>
         <th class="text-center">Número total afiliados</th>
         <th class="text-center">Detalle</th>
       </tr>
@@ -28,14 +28,14 @@
       <% @datos.each_with_index do |linea, i| %>
       <tr>
         <td><%= linea[:nombre] %></td>
-        <td><%= number_with_precision(linea[:hombres], precision: 0, delimiter: ".") %></td>
-        <td><%= linea[:total]>0 ? number_to_percentage(linea[:hombres]*100/linea[:total], precision: 0) :"0%" %></td>
-        <td><%= number_with_precision(linea[:mujeres], precision: 0, delimiter: ".") %></td>
-        <td><%= linea[:total]>0 ? number_to_percentage(linea[:mujeres]*100/linea[:total], precision: 0) :"0%" %></td>
+        <td class="text-center"><%= number_with_precision(linea[:hombres], precision: 0, delimiter: ".") %></td>
+        <td class="text-center"><%= linea[:total]>0 ? number_to_percentage(linea[:hombres]*100/linea[:total], precision: 0) :"0%" %></td>
+        <td class="text-center"><%= number_with_precision(linea[:mujeres], precision: 0, delimiter: ".") %></td>
+        <td class="text-center"><%= linea[:total]>0 ? number_to_percentage(linea[:mujeres]*100/linea[:total], precision: 0) :"0%" %></td>
         <td><span id="barras_<%= i.to_s %>"></span></td>
-        <td class="monto"><%= linea[:total].nil? ? 'NA' : number_with_precision(linea[:total], precision: 0, delimiter: ".") %></td>
+        <td class="text-center total"><%= linea[:total].nil? ? 'NA' : number_with_precision(linea[:total], precision: 0, delimiter: ".") %></td>
         <td class="text-center">
-          <%= link_to "Ver", partido_regiones_path(:partido_id => linea[:partido_id], :menu => 1), class: 'btn-view-detail-by-gender btn btn-default btn-xs' %>
+          <%= link_to "Ver", partido_regiones_path(:partido_id => linea[:partido_id], :menu => 1), class: 'btn-view-detail btn btn-default btn-xs' %>
         </td>
       </tr>
       <% end %>
