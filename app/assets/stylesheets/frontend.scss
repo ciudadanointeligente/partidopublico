@@ -236,12 +236,12 @@ section{
 	letter-spacing: 1.4px;
 	font-weight: 700;
 	font-size: 12px;
-	margin-top: 25px;
 	height: 34px;
 	&.basic{
 		background-color: white;
 		border: 3px solid white;
 		color: $blue;
+		margin-top: 60px;
 		a{
 			color: $blue;
 			&:focus{
