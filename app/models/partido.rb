@@ -56,6 +56,11 @@ class Partido < ActiveRecord::Base
     has_many :tipo_cargos, dependent: :destroy
     has_many :ingreso_ordinarios, dependent: :destroy
     has_many :egreso_ordinarios, dependent: :destroy
+    has_many :balance_anuals, dependent: :destroy
+    has_many :contratacions, dependent: :destroy
+    has_many :transferencias, dependent: :destroy
+    has_many :ingreso_campanas, dependent: :destroy
+    has_many :egreso_campanas, dependent: :destroy
 
     accepts_nested_attributes_for :marco_interno, allow_destroy: true
     accepts_nested_attributes_for :organo_internos, allow_destroy: true
