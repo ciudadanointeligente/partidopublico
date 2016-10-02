@@ -91,7 +91,7 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
         <h2 class="text-center">¿Cómo funciona?</h2>
-        <p class="text-center">Si no se entiende no funciona. Proponemos este estándar para vivir la transparencia.</p>
+        <p class="text-center"><span>Si no se entiende no funciona. Proponemos este estándar para vivir la transparencia</span></p>
       </div>
       <div class="col-md-12">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -168,12 +168,12 @@
     <div class="row">
         <div class="col-lg-12">
             <h2 class="text-center"><%= t('.enrolled_parties') %></h2>
-            Selecciona un partido
+            <p class="text-center"><span>Selecciona uno de los partidos activos para ver la información que han transparentado</span></p>
         </div>
     </div>
     <div class="row text-center">
         <% @partidos.each do |partido| %>
-        <div class="col-md-3 col-sm-6 hero-feature">
+        <div class="col-md-4 col-sm-6 hero-feature">
             <div class="thumbnail">
                 <% if !partido.front_logo.blank? %>
                 <div class="logo">
@@ -181,15 +181,75 @@
                 </div>
                 <% end %>
                 <div class="caption">
-                    <p><%= partido.nombre %></p>
+                    <p class="versalitas"><%= partido.nombre %></p>
                 </div>
                 <div class="buttons">
-                    <a href="<%= partido_normas_internas_path(partido) %>" class="btn btn-primary"><%= t('.details') %></a>
+                    <a href="<%= partido_normas_internas_path(partido) %>" class="btn btn-xs parties"><%= t('.details') %></a>
                     <!-- <a href="<%= partido_steps_path(partido)%>" class="btn btn-default"><%= t('.edit') %></a> -->
                 </div>
             </div>
         </div>
         <% end %>
+        <div class="col-md-4 col-sm-6 hero-feature">
+          <div class="thumbnail">
+              <div class="logo">
+              </div>
+              <div class="caption">
+                  <p class="versalitas">Partido Comunista de Chile</p>
+              </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6 hero-feature">
+          <div class="thumbnail">
+              <div class="logo">
+              </div>
+              <div class="caption">
+                  <p class="versalitas">Partido Demócrata Cristiano</p>
+              </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6 hero-feature">
+          <div class="thumbnail">
+              <div class="logo">
+              </div>
+              <div class="caption">
+                  <p class="versalitas">Evolución Política</p>
+              </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6 hero-feature">
+          <div class="thumbnail">
+              <div class="logo">
+              </div>
+              <div class="caption">
+                  <p class="versalitas">Partido Liberal de Chile</p>
+              </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6 hero-feature">
+          <div class="thumbnail">
+              <div class="logo">
+              </div>
+              <div class="caption">
+                  <p class="versalitas">Partido por la Democracia</p>
+              </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6 hero-feature">
+          <div class="thumbnail">
+              <div class="logo">
+              </div>
+              <div class="caption">
+                  <p class="versalitas">Partido Socialista de Chile</p>
+              </div>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <p class="text-center"><span>También puedes comparar la información de los partidos activos</span></p>
+            <button class="btn btn-primary basic" type="submit"><%= link_to "Comparar partidos", asset_path("la-transparencia-que-queremos.pdf") %></button>
+        </div>
     </div>
   </div>
 </section>
