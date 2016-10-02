@@ -453,6 +453,29 @@ a.btn.btn-xs.parties{
 	}
 }
 
+.compare{
+	background-color: transparent;
+	border: 2px solid $sky-dark;
+	border-radius: 20px;
+	letter-spacing: 1.2px;
+	font-weight: 700;
+	a{
+		color: $sky-dark;
+		&:hover{
+			color: white;
+			text-decoration: none;
+		}
+	}
+	&:hover{
+		background-color: $sky-dark;
+		color: white;
+		a{
+			color: white;
+			text-decoration: none;
+		}
+	}
+}
+
 /*PARTIES INFO*/
 section.aviso{
 	background-color: white;
