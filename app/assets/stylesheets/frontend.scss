@@ -39,27 +39,10 @@ span{
 	font-weight: 700;
 }
 
-.nombre-partido{
-	background-color: $nude;
-	margin: 70px 0 20px 0;
-	padding: 20px 0 30px 0;
-}
-
-.board{
-	background-color: white;
-	box-shadow: -5px 5px 0px $orange;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	border-radius: 5px;
-}
-
-.nospace{
-		padding: 0;
-}
-
 .list-inline > li{
 	padding-left: 15px;
 }
+
 /*NAV*/
 .navbar-default{
 	background-color: #012639;
@@ -162,6 +145,91 @@ mark{
 
 }
 
+.btn-lg{
+		background-color: transparent;
+		border: 3px solid white;
+		border-radius: 50px;
+		text-transform: uppercase;
+		letter-spacing: 1.4px;
+		font-weight: 700;
+		font-size: 14px;
+		margin-top: 10px;
+		color: white;
+		height: 44px;
+		&:hover{
+			background-color: $blue;
+			border-color: $blue;
+			color: white;
+		}
+		&:focus{
+			background-color: $blue;
+			border-color: $blue;
+			color: white;
+		}
+}
+
+/*HEADINGS*/
+h1{
+	font-size: 63px;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+	color: white;
+	margin-bottom: 20px;
+}
+
+h2{
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+	text-transform: uppercase;
+	font-size: 20px;
+	margin: 70px 0 10px 0;
+}
+
+h3{
+	font-weight: 700;
+	color: $orange-dark;
+	margin: 5px 0 10px 0;
+}
+
+h4{
+	font-weight: 700;
+	color: $blue;
+	a{
+		&:hover{
+			color: $orange;
+			text-decoration: none;
+		}
+		&:focus{
+			color: $orange;
+			text-decoration: none;
+		}
+	}
+}
+
+h6{
+	color: $blue;
+}
+
+/*HOME*/
+section#que-es{
+	margin-top: -110px;
+	background: asset-url('images/ciudadanos.svg') 70% 120% no-repeat $nude;
+}
+section#fechas{
+	background-color: white;
+}
+section#funciones{
+	background-color: $nude;
+}
+section#partidos{
+	background-color: white;
+	margin-bottom: -70px;
+}
+
+section{
+	padding: 30px 0 80px 0;
+}
+
 .btn-primary{
 	border-radius: 50px;
 	text-transform: uppercase;
@@ -199,147 +267,124 @@ mark{
 	}
 }
 
-.btn-lg{
-		background-color: transparent;
-		border: 3px solid white;
-		border-radius: 50px;
-		text-transform: uppercase;
-		letter-spacing: 1.4px;
-		font-weight: 700;
-		font-size: 14px;
-		margin-top: 25px;
-		color: white;
-		height: 44px;
-		&:hover{
-			background-color: $blue;
-			border-color: $blue;
-			color: white;
-		}
-		&:focus{
-			background-color: $blue;
-			border-color: $blue;
-			color: white;
-		}
+/*TIMELINE*/
+.timeline {
+  position: relative;
+  width: 550px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 1em 0;
+  list-style-type: none;
 }
 
-/*HEADINGS*/
-h1{
-	font-size: 63px;
-	font-family: 'Montserrat', sans-serif;
-	font-weight: 700;
+.timeline:before {
+  position: absolute;
+  top: 23px;
+  content: ' ';
+  display: block;
+  width: 3px;
+  height: 72%;
+  margin-left: -3px;
+  background: $blue;
+
+  z-index: 5;
+}
+
+.timeline li {
+}
+
+.timeline li:after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.direction-r {
+  position: relative;
+	left: 30px;
+	margin: 5px 0 20px 0;
+}
+
+.flag-wrapper {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+
+.flag {
+  position: relative;
+  display: inline;
+  background: $orange-dark;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-weight: 600;
+  text-align: left;
 	color: white;
+	margin-bottom: 10px;
 }
 
-h2{
-	font-family: 'Montserrat', sans-serif;
-	font-weight: 700;
-	text-transform: uppercase;
-	font-size: 20px;
-	margin: 70px 0 10px 0;
+.direction-r .flag:before {
+  position: absolute;
+  top: 50%;
+  right: -35px;
+  content: ' ';
+  display: block;
+  width: 12px;
+  height: 12px;
+  margin-top: -10px;
+  background: $sky-dark;
+  border-radius: 10px;
+  border: 4px solid $sky-dark;
+  z-index: 10;
 }
 
-h3{
-	font-weight: 700;
-	color: $orange-dark;
-	margin: 5px 0 10px 0;
+.direction-r .flag:before {
+  left: -38px;
 }
 
-h4{
-	font-weight: 700;
-	color: $blue;
-	a{
-		&:hover{
-			color: $orange;
-			text-decoration: none;
-		}
-		&:focus{
-			color: $orange;
-			text-decoration: none;
-		}
-	}
+.direction-r .flag:after {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  height: 0;
+  width: 0;
+  margin-top: -8px;
+  border: solid transparent;
+  border-right-color: $orange-dark;
+  border-width: 8px;
+  pointer-events: none;
 }
 
-h6{
-	color: $blue;
+.time-wrapper {
+  display: inline;
+  line-height: 1em;
+  font-size: 0.66666em;
+  color: rgb(250,80,80);
+  vertical-align: middle;
 }
 
-.breadcrumb {
-	background-color: initial;
-	font-weight: 700;
-	text-transform: uppercase;;
-	letter-spacing: 1.2px;
-	font-size: xx-small;
-	color: $blue;
-	padding: initial;
-	margin-bottom: 0px;
-	border-radius: 0px;
-	font-family: 'Montserrat', sans-serif;
+.direction-r .time-wrapper {
+  float: right;
 }
 
-.breadcrumb > li + li:before {
-  content: "> ";
-	color: $blue;
+.time {
+  display: inline-block;
+  padding: 4px 6px;
+  background: rgb(248,248,248);
 }
 
-/*SECTIONS*/
-section#que-es{
-	margin-top: -110px;
-	background: asset-url('images/ciudadanos.svg') 70% 120% no-repeat $nude;
-}
-section#fechas{
-	background-color: white;
-}
-section#funciones{
-	background-color: $nude;
-}
-section#partidos{
-	background-color: white;
-	margin-bottom: -70px;
+.direction-r .desc {
+  margin: 1em 0 0 0.75em;
 }
 
-section{
-	padding: 30px 0 80px 0;
+.desc > ul > li{
+	list-style-type: disc;
+	text-align: left;
 }
 
-section.aviso{
-	background-color: white;
-	margin: 70px 0 -70px 0;
-	padding: 8px;
-	height: 65px;
-	font-size: 12px;
-	font-weight: 700;
-	.btn-xs{
-		position: relative;
-		top: -13px;
-		background-color: $sky-dark;
-		border: 2px solid $sky-dark;
-		height: 26px;
-		a{
-			color: white;
-			font-size: 11px;
-		}
-		&:hover{
-			background-color: transparent;
-			color: $sky-dark;
-			border: 2px solid $sky-dark;
-			a{
-				color: $sky-dark;
-				font-size: 11px;
-				text-decoration: none;
-			}
-		}
-		&:focus{
-			background-color: transparent;
-			color: $sky-dark;
-			border: 2px solid $sky-dark;
-			a{
-				color: $sky-dark;
-				font-size: 11px;
-				text-decoration: none;
-			}
-		}
-	}
-}
 /*CAROUSEL*/
 .carousel{
 	min-height: 550px;
@@ -382,20 +427,80 @@ section.aviso{
 	width: 100%;
 }
 
-/*TABLES*/
-th{
-	color: $blue;
-	font-size: 10px;
+/*PARTIES INFO*/
+section.aviso{
+	background-color: white;
+	margin: 70px 0 -70px 0;
+	padding: 8px;
+	height: 65px;
+	font-size: 12px;
+	font-weight: 700;
+	.btn-xs{
+		position: relative;
+		top: -13px;
+		background-color: $sky-dark;
+		border: 2px solid $sky-dark;
+		height: 26px;
+		a{
+			color: white;
+			font-size: 11px;
+		}
+		&:hover{
+			background-color: transparent;
+			color: $sky-dark;
+			border: 2px solid $sky-dark;
+			a{
+				color: $sky-dark;
+				font-size: 11px;
+				text-decoration: none;
+			}
+		}
+		&:focus{
+			background-color: transparent;
+			color: $sky-dark;
+			border: 2px solid $sky-dark;
+			a{
+				color: $sky-dark;
+				font-size: 11px;
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+.nombre-partido{
+	background-color: $nude;
+	margin: 70px 0 20px 0;
+	padding: 20px 0 30px 0;
+}
+
+.board{
+	background-color: white;
+	box-shadow: -5px 5px 0px $orange;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-radius: 5px;
+}
+
+.breadcrumb {
+	background-color: initial;
+	font-weight: 700;
+	text-transform: uppercase;;
 	letter-spacing: 1.2px;
-	text-transform: uppercase;
-	width: 200px;
+	font-size: xx-small;
+	color: $blue;
+	padding: initial;
+	margin-bottom: 0px;
+	border-radius: 0px;
+	font-family: 'Montserrat', sans-serif;
 }
 
-.table > thead > tr > th {
-	border-bottom: 1px solid $blue;
+.breadcrumb > li + li:before {
+  content: "> ";
+	color: $blue;
 }
 
-/*BUTTONS*/
+/*ASIDE MENU*/
 button#dropdownMenu1{
 	text-transform: uppercase;
 	font-size: 11px;
@@ -440,40 +545,6 @@ ul.dropdown-menu.dropdown-select{
 	}
 }
 
-.btn-view-detail{
-	border-radius: 12px;
-	text-transform: uppercase;
-	font-size: 10px;
-	letter-spacing: 1.2px;
-	height: 24px;
-	border: 2px solid $green;
-	font-weight: 700;
-	padding: 3px 10px;
-	color: $green;
-	a{
-		color: $green;
-	}
-	&:hover{
-		border: 2px solid $green;
-		background-color: $green;
-		color: white;
-		a{
-			color: white;
-			text-decoration: none;
-		}
-	}
-	&:focus{
-			border: 2px solid $green;
-			background-color: $green;
-			color: white;
-			a{
-				color: white;
-				text-decoration: none;
-			}
-	}
-}
-
-/*ASIDE MENU*/
 aside.col-sm-3.col-md-3{
 	padding: 0 15px 0 0;
 }
@@ -737,6 +808,58 @@ input[type="submit"].transparente{
 	}
 }
 
+.panel-default > .panel-heading .badge{
+	padding: 4px 8px;
+	font-size: 10px;
+	font-weight: 700;
+	background-color: $orange;
+}
+
+i.fa.fa-circle.icon-green{
+	color: $sky-dark;
+}
+
+/*PANELS*/
+.panel{
+	border: none;
+	box-shadow: none;
+}
+
+.panel-default > .panel-heading{
+	background-color: transparent;
+	border: 3px solid $orange;
+	border-radius: 10px;
+}
+
+.panel-group .panel-heading + .panel-collapse > .panel-body, .panel-group .panel-heading + .panel-collapse > .list-group{
+	border-top: none;
+}
+
+/*MODASL*/
+.modal-header{
+	border-bottom: none;
+	background-color: $orange;
+}
+
+.modal-content{
+	border-radius: 0;
+	box-shadow: none;
+	border: none;
+}
+
+/*TABLES & COMPARATIVES*/
+th{
+	color: $blue;
+	font-size: 10px;
+	letter-spacing: 1.2px;
+	text-transform: uppercase;
+	width: 200px;
+}
+
+.table > thead > tr > th {
+	border-bottom: 1px solid $blue;
+}
+
 .total-max{
 	color: $blue;
 	font-size: 40px;
@@ -756,15 +879,6 @@ input[type="submit"].transparente{
 	font-weight: 700;
 	&.monto{
 		text-align: right;
-	}
-}
-
-.comparacion{
-	background-color: $orange-dark;
-	margin: 70px 0 40px 0;
-	padding-top: 0;
-	h2, h4{
-		color: white;
 	}
 }
 
@@ -794,47 +908,15 @@ input[type="submit"].transparente{
 	margin-bottom: 40px;
 }
 
-/*ELEMENTS*/
-.panel-default > .panel-heading .badge{
-	padding: 4px 8px;
-	font-size: 10px;
-	font-weight: 700;
-	background-color: $orange;
+.comparacion{
+	background-color: $orange-dark;
+	margin: 70px 0 40px 0;
+	padding-top: 0;
+	h2, h4{
+		color: white;
+	}
 }
 
-i.fa.fa-circle.icon-green{
-	color: $sky-dark;
-}
-
-/*PANELS*/
-.panel{
-	border: none;
-	box-shadow: none;
-}
-
-.panel-default > .panel-heading{
-	background-color: transparent;
-	border: 3px solid $orange;
-	border-radius: 10px;
-}
-
-.panel-group .panel-heading + .panel-collapse > .panel-body, .panel-group .panel-heading + .panel-collapse > .list-group{
-	border-top: none;
-}
-
-/*MODAL*/
-.modal-header{
-	border-bottom: none;
-	background-color: $orange;
-}
-
-.modal-content{
-	border-radius: 0;
-	box-shadow: none;
-	border: none;
-}
-
-/*COMPARATIVES*/
 p.edades{
 	text-align: center;
 	width: 30px;
@@ -842,6 +924,39 @@ p.edades{
 	margin: auto;
 	border-radius: 15px;
 	padding-top: 5px
+}
+
+.btn-view-detail{
+	border-radius: 12px;
+	text-transform: uppercase;
+	font-size: 10px;
+	letter-spacing: 1.2px;
+	height: 24px;
+	border: 2px solid $green;
+	font-weight: 700;
+	padding: 3px 10px;
+	color: $green;
+	a{
+		color: $green;
+	}
+	&:hover{
+		border: 2px solid $green;
+		background-color: $green;
+		color: white;
+		a{
+			color: white;
+			text-decoration: none;
+		}
+	}
+	&:focus{
+			border: 2px solid $green;
+			background-color: $green;
+			color: white;
+			a{
+				color: white;
+				text-decoration: none;
+			}
+	}
 }
 
 /*FOOTER*/
@@ -867,125 +982,6 @@ p.edades{
   width: 200px;
 }
 
-/* ================ The Timeline ================ */
-
-.timeline {
-  position: relative;
-  width: 550px;
-  margin: 0 auto;
-  margin-top: 20px;
-  padding: 1em 0;
-  list-style-type: none;
-}
-
-.timeline:before {
-  position: absolute;
-  top: 23px;
-  content: ' ';
-  display: block;
-  width: 3px;
-  height: 72%;
-  margin-left: -3px;
-  background: $blue;
-
-  z-index: 5;
-}
-
-.timeline li {
-}
-
-.timeline li:after {
-  content: "";
-  display: block;
-  height: 0;
-  clear: both;
-  visibility: hidden;
-}
-
-.direction-r {
-  position: relative;
-	left: 30px;
-	margin: 5px 0 20px 0;
-}
-
-.flag-wrapper {
-  position: relative;
-  display: inline-block;
-  text-align: center;
-}
-
-.flag {
-  position: relative;
-  display: inline;
-  background: $orange-dark;
-  padding: 6px 10px;
-  border-radius: 5px;
-  font-weight: 600;
-  text-align: left;
-	color: white;
-	margin-bottom: 10px;
-}
-
-.direction-r .flag:before {
-  position: absolute;
-  top: 50%;
-  right: -35px;
-  content: ' ';
-  display: block;
-  width: 12px;
-  height: 12px;
-  margin-top: -10px;
-  background: $sky-dark;
-  border-radius: 10px;
-  border: 4px solid $sky-dark;
-  z-index: 10;
-}
-
-.direction-r .flag:before {
-  left: -38px;
-}
-
-.direction-r .flag:after {
-  content: "";
-  position: absolute;
-  right: 100%;
-  top: 50%;
-  height: 0;
-  width: 0;
-  margin-top: -8px;
-  border: solid transparent;
-  border-right-color: $orange-dark;
-  border-width: 8px;
-  pointer-events: none;
-}
-
-.time-wrapper {
-  display: inline;
-  line-height: 1em;
-  font-size: 0.66666em;
-  color: rgb(250,80,80);
-  vertical-align: middle;
-}
-
-.direction-r .time-wrapper {
-  float: right;
-}
-
-.time {
-  display: inline-block;
-  padding: 4px 6px;
-  background: rgb(248,248,248);
-}
-
-.direction-r .desc {
-  margin: 1em 0 0 0.75em;
-}
-
-.desc > ul > li{
-	list-style-type: disc;
-	text-align: left;
-}
-
 /*MEDIA-QUERIS*/
 @media (max-width: 990px) {
 	section.aviso{
@@ -997,11 +993,14 @@ p.edades{
 }
 
 @media (max-width: 991px) {
-	.site-footer li {
-			text-align: center;
-	}
 	.jumbotron{
 		background: $orange-dark;
+	}
+	.vistas{
+		min-height: 100px;
+	}
+	.site-footer li {
+			text-align: center;
 	}
 }
 
@@ -1067,11 +1066,9 @@ p.edades{
 		text-align: left;
 		margin: 0 0 40px 0;
 	}
-
 }
 
 @media screen and (max-width: 660px) {
-
 	.timeline {
 	 	width: 100%;
 		padding: 4em 0 1em 0;
@@ -1159,6 +1156,12 @@ p.edades{
 
 	.desc > ul > li{
 
+	}
+}
+
+@media (max-width: 503px) {
+	.vistas{
+		min-height: 135px;
 	}
 }
 
