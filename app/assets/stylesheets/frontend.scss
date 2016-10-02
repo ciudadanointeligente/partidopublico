@@ -170,16 +170,12 @@ mark{
 	font-size: 12px;
 	margin-top: 25px;
 	height: 34px;
-	&.que-es-pdf{
+	&.basic{
 		background-color: white;
 		border: 3px solid white;
 		color: $blue;
 		a{
 			color: $blue;
-			&:hover{
-				color: white;
-				text-decoration: none;
-			}
 			&:focus{
 				color: white;
 			}
@@ -187,39 +183,18 @@ mark{
 		&:hover{
 			background-color: $orange;
 			border: 3px solid $orange;
-			color: white;
-		}
-		&:focus{
-			background-color: $orange;
-			border: 3px solid $orange;
-			color: white;
-		}
-	}
-	&.folleto-pdf{
-		background-color: white;
-		border: 3px solid white;
-		color: $blue;
-		position: relative;
-		top: 30px;
-		a{
-			color: $blue;
-			&:hover{
+			a{
 				color: white;
 				text-decoration: none;
 			}
-			&:focus{
-				color: white;
-			}
-		}
-		&:hover{
-			background-color: $orange;
-			border: 3px solid $orange;
-			color: white;
 		}
 		&:focus{
 			background-color: $orange;
 			border: 3px solid $orange;
-			color: white;
+			a{
+				color: white;
+				text-decoration: none;
+			}
 		}
 	}
 }
@@ -465,7 +440,7 @@ ul.dropdown-menu.dropdown-select{
 	}
 }
 
-.btn-view-detail-by-gender{
+.btn-view-detail{
 	border-radius: 12px;
 	text-transform: uppercase;
 	font-size: 10px;
@@ -474,16 +449,27 @@ ul.dropdown-menu.dropdown-select{
 	border: 2px solid $green;
 	font-weight: 700;
 	padding: 3px 10px;
+	color: $green;
 	a{
 		color: $green;
 	}
 	&:hover{
+		border: 2px solid $green;
 		background-color: $green;
 		color: white;
 		a{
 			color: white;
 			text-decoration: none;
 		}
+	}
+	&:focus{
+			border: 2px solid $green;
+			background-color: $green;
+			color: white;
+			a{
+				color: white;
+				text-decoration: none;
+			}
 	}
 }
 
@@ -776,7 +762,7 @@ input[type="submit"].transparente{
 .comparacion{
 	background-color: $orange-dark;
 	margin: 70px 0 40px 0;
-	padding-top: 30px;
+	padding-top: 0;
 	h2, h4{
 		color: white;
 	}
