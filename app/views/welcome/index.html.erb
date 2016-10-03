@@ -184,7 +184,7 @@
                     <p class="versalitas"><%= partido.nombre %></p>
                 </div>
                 <div class="buttons">
-                    <%= link_to partido.nombre, partido_normas_internas_path(partido), :class => 'btn btn-xs parties', :onclick => "ga('send', 'event', 'welcome-access-button-'"+ partido.nombre+", 'click');" %>
+                    <%= link_to "Activo", partido_normas_internas_path(partido), :class => 'btn btn-xs parties', :onclick => "ga('send', 'event', 'welcome-access-button-'"+ partido.nombre+", 'click');" %>
                 </div>
             </div>
         </div>
@@ -246,9 +246,9 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-8 col-md-offset-2 text-center">
             <p class="text-center"><span>También puedes comparar la información de los partidos activos</span></p>
-            <%= link_to "Comparar partidos",comparisons_path, class: 'btn compare center-block', onclick: "ga('send','event','welcome-compare-button','click')" %>
+            <%= link_to "Comparar partidos",comparisons_path, class: 'btn compare', onclick: "ga('send','event','welcome-compare-button','click')" %>
         </div>
     </div>
   </div>
