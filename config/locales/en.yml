@@ -22,7 +22,7 @@
 en:
   layouts:
     application:
-      title: "Partido Público"
+      title: "Partidos Públicos"
       about: "About"
       contact: "Contact"
       parties: "Parties"
@@ -34,13 +34,17 @@ en:
       admin_party: "Administrate Party"
       license: "Copyleft"
     frontend:
-      title: "PartidosPúblicos"
+      title: "Partidos Públicos"
       og_title: "Partidos Públicos"
       og_description: "Partidos Públicos es una plataforma web que busca reivindicar la importancia de partidos transparentes, participativos y abiertos para una sana democracia."
       twitter_title: "Partidos Públicos"
       twitter_description: "Partidos Públicos es una plataforma web que busca reivindicar la importancia de partidos transparentes, participativos y abiertos para una sana democracia."
     welcome:
-      title: "PartidosPúblicos"
+      title: "Partidos Públicos"
+      og_title: "Partidos Públicos"
+      og_description: "Partidos Públicos es una plataforma web que busca reivindicar la importancia de partidos transparentes, participativos y abiertos para una sana democracia."
+      twitter_title: "Partidos Públicos"
+      twitter_description: "Partidos Públicos es una plataforma web que busca reivindicar la importancia de partidos transparentes, participativos y abiertos para una sana democracia."
     comparison:
       title: "Partidos Públicos"
       og_title: "Partidos Públicos"

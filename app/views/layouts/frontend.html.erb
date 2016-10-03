@@ -38,7 +38,7 @@
               <%= link_to image_tag("logo.svg"), root_path, onclick: "ga('send', 'event', 'main-logo', 'click');" %>
               <div class="sub-brand hidden"><a href="//ciudadanointeligente.org" target="_blank" onclick="ga('send', 'event', 'main-fci-brand', 'click');">de CiudadanoInteligente.org</a></div>
             </div>
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" , onclick="ga('send', 'event', 'main-menu-mobile', 'click');">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" onclick="ga('send', 'event', 'main-menu-mobile', 'click');">
               <span class="sr-only">Menú</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
@@ -49,7 +49,7 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li class="hidden"><a href="#">¿Qué es?</a></li>
+              <li class="hidden"><%= link_to "¿Qué es?",que_es_path, onclick: "ga('send', 'event', 'que-es', 'click');" %></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Partidos activos <span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -307,30 +307,27 @@
           <div class="col-md-3 logo-footer">
             <ul class="list-unstyled">
               <li>Un proyecto de</li>
-              <li><a href="//ciudadanointeligente.org" target="_blank"><img src="<%= image_url("logo-fci.png")%>" title="Fundación Ciudadano Inteligente"></a>
-              </li>
+              <li><a href="//ciudadanointeligente.org" target="_blank"><img src="<%= image_url("logo-fci.png")%>" title="Fundación Ciudadano Inteligente"></a></li>
             </ul>
           </div>
           <div class="col-md-3 logo-footer">
             <ul class="list-unstyled">
               <li>Con el apoyo de</li>
-              <li><img src="<%= image_url("logo-undef.png")%>">
-              </li>
+              <li><img src="<%= image_url("logo-undef.png")%>" title="UNDEF"></li>
             </ul>
           </div>
           <div class="col-md-3 logo-footer">
             <ul class="list-unstyled">
               <li>Con la colaboración de</li>
-              <li><img src="<%= image_url("logo-cht.png")%>">
-              </li>
+              <li><img src="<%= image_url("logo-cht.png")%>" title="Chile Transparente"></li>
             </ul>
           </div>
           <div class="col-md-3">
             <ul class="list-unstyled">
-              <li><a href="mailto:info@ciudadanointeligente.org?Subject=Prensa%20de%20Partido%20Publico" class="email-prensa" target="_top"><i class="fa fa-envelope-o"></i> Mándanos un correo</a></li>
-              <li><a href="//github.com/ciudadanointeligente/partidopublico" target="_blank"><i class="fa fa-github-alt"></i> Revisa nuestro código</a></li>
-              <li><a href="//twitter.com/ciudadanoi" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> @Ciudadanoi</a></li>
-              <li><a href="//www.facebook.com/ciudadanointeligente" target="_blank"><i class="fa  fa-facebook" aria-hidden="true"></i> Ciudadano Inteligente</li></a>
+              <li><a href="mailto:info@ciudadanointeligente.org?Subject=Prensa%20de%20Partido%20Publico" class="email-prensa" target="_top" onclick="ga('send', 'event', 'footer-email', 'click');"><i class="fa fa-envelope-o"></i> Mándanos un correo</a></li>
+              <li><a href="//github.com/ciudadanointeligente/partidopublico" target="_blank" onclick="ga('send', 'event', 'footer-github', 'click');"><i class="fa fa-github-alt"></i> Revisa nuestro código</a></li>
+              <li><a href="//twitter.com/ciudadanoi" target="_blank" onclick="ga('send', 'event', 'footer-twitter', 'click');"><i class="fa fa-twitter" aria-hidden="true"></i> @Ciudadanoi</a></li>
+              <li><a href="//www.facebook.com/ciudadanointeligente" target="_blank" onclick="ga('send', 'event', 'footer-facebook', 'click');"><i class="fa  fa-facebook" aria-hidden="true"></i> Ciudadano Inteligente</li></a>
             </ul>
           </div>
         </div>
