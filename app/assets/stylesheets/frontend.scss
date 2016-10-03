@@ -220,7 +220,7 @@ section#que-es{
 	background: asset-url('images/ciudadanos.svg') 70% 120% no-repeat $nude;
 }
 section#fechas{
-	background-color: white;
+	background: asset-url('images/fechas.svg') 80% 104% no-repeat white;
 }
 section#funciones{
 	background-color: $nude;
@@ -228,6 +228,15 @@ section#funciones{
 section#partidos{
 	background-color: white;
 	margin-bottom: -70px;
+}
+
+section#cancha{
+	background-color: white;
+	margin-bottom: -152px;
+	img{
+		width: 100%;
+		bottom: 0;
+	}
 }
 
 section{
@@ -434,13 +443,13 @@ section{
 /*PARTIES SECTION*/
 .thumbnail{
 	border: none;
-	margin-bottom: 0;
+	margin-bottom: 20px;
 }
 
 a.btn.btn-xs.parties{
-	background-color: $orange-dark;
+	background-color: $green;
 	color: white;
-	border: 2px solid $orange-dark;
+	border: 2px solid $green;
 	height: 24px;
 	border-radius: 12px;
 	letter-spacing: 1.2px;
@@ -448,26 +457,37 @@ a.btn.btn-xs.parties{
 	font-size: 11px;
 	line-height: 17px;
 	&:hover{
-		color: $orange-dark;
+		color: $green;
 		background-color: transparent;
 	}
 }
 
+.label-default{
+	border: 2px solid #777777;
+	height: 24px;
+	border-radius: 12px;
+	letter-spacing: 1.2px;
+	font-weight: 700;
+	font-size: 11px;
+	line-height: 17px;
+	text-transform: uppercase;
+}
+
 .compare{
 	background-color: transparent;
-	border: 2px solid $sky-dark;
+	border: 2px solid $orange-dark;
 	border-radius: 20px;
 	letter-spacing: 1.2px;
 	font-weight: 700;
 	a{
-		color: $sky-dark;
+		color: $orange-dark;
 		&:hover{
 			color: white;
 			text-decoration: none;
 		}
 	}
 	&:hover{
-		background-color: $sky-dark;
+		background-color: $orange-dark;
 		color: white;
 		a{
 			color: white;
@@ -1043,6 +1063,12 @@ p.edades{
 @media (max-width: 990px) {
 		section.aviso{
 			padding: 14px;
+	}
+	section#que-es{
+		background: $nude;
+	}
+	section#fechas{
+		background: white;
 	}
 }
 
