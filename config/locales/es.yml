@@ -36,7 +36,7 @@ es:
     frontend:
       title: "Partidos Públicos"
       og_title: "Partidos Públicos"
-      og_description: "Partidos Públicos es una plataforma web que busca reivindicar la importancia de partidos transparentes, participativos y abiertos para una sana democracia."
+      og_description: "Partidos Públicos es una plataforma inédita de transparencia de partidos políticos, que te permite visualizar y comparar fácilmente información financiera, de afiliados y presencia nacional, entre otros. Esta plataforma empuja al cumplimiento de la nueva Ley de Partidos Políticos y de estándares internacionales de apertura de datos."
       twitter_title: "Partidos Públicos"
       twitter_description: "Partidos Públicos es una plataforma web que busca reivindicar la importancia de partidos transparentes, participativos y abiertos para una sana democracia."
     welcome:
@@ -48,13 +48,13 @@ es:
     comparison:
       title: "Partidos Públicos"
       og_title: "Partidos Públicos"
-      og_description: "Partidos Públicos es una plataforma web que busca reivindicar la importancia de partidos transparentes, participativos y abiertos para una sana democracia."
+      og_description: "Partidos Públicos es una plataforma inédita de transparencia de partidos políticos, que te permite visualizar y comparar fácilmente información financiera, de afiliados y presencia nacional, entre otros. Esta plataforma empuja al cumplimiento de la nueva Ley de Partidos Políticos y de estándares internacionales de apertura de datos."
       twitter_title: "Partidos Públicos"
       twitter_description: "Partidos Públicos es una plataforma web que busca reivindicar la importancia de partidos transparentes, participativos y abiertos para una sana democracia."
   welcome:
     index:
       welcome: "Bienvenido"
-      welcome_text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat."
+      welcome_text: "Partidos Públicos es una plataforma inédita de transparencia de partidos políticos, que te permite visualizar y comparar fácilmente información financiera, de afiliados y presencia nacional, entre otros. Esta plataforma empuja al cumplimiento de la nueva Ley de Partidos Políticos y de estándares internacionales de apertura de datos."
       start: "Empezar"
       enrolled_parties: "Partidos comprometidos"
       details: "Detalles"
