@@ -220,7 +220,7 @@ section#que-es{
 	background: asset-url('images/ciudadanos.svg') 70% 120% no-repeat $nude;
 }
 section#fechas{
-	background-color: white;
+	background: asset-url('images/fechas.svg') 80% 104% no-repeat white;
 }
 section#funciones{
 	background-color: $nude;
@@ -228,6 +228,15 @@ section#funciones{
 section#partidos{
 	background-color: white;
 	margin-bottom: -70px;
+}
+
+section#cancha{
+	background-color: white;
+	margin-bottom: -152px;
+	img{
+		width: 100%;
+		bottom: 0;
+	}
 }
 
 section{
@@ -1054,6 +1063,12 @@ p.edades{
 @media (max-width: 990px) {
 		section.aviso{
 			padding: 14px;
+	}
+	section#que-es{
+		background: $nude;
+	}
+	section#fechas{
+		background: white;
 	}
 }
 
