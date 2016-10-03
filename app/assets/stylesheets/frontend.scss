@@ -39,27 +39,14 @@ span{
 	font-weight: 700;
 }
 
-.nombre-partido{
-	background-color: $nude;
-	margin: 70px 0 20px 0;
-	padding: 20px 0 30px 0;
-}
-
-.board{
-	background-color: white;
-	box-shadow: -5px 5px 0px $orange;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	border-radius: 5px;
-}
-
-.nospace{
-		padding: 0;
-}
-
 .list-inline > li{
 	padding-left: 15px;
 }
+
+.btn{
+	text-transform: uppercase;
+}
+
 /*NAV*/
 .navbar-default{
 	background-color: #012639;
@@ -162,68 +149,6 @@ mark{
 
 }
 
-.btn-primary{
-	border-radius: 50px;
-	text-transform: uppercase;
-	letter-spacing: 1.4px;
-	font-weight: 700;
-	font-size: 12px;
-	margin-top: 25px;
-	height: 34px;
-	&.que-es-pdf{
-		background-color: white;
-		border: 3px solid white;
-		color: $blue;
-		a{
-			color: $blue;
-			&:hover{
-				color: white;
-				text-decoration: none;
-			}
-			&:focus{
-				color: white;
-			}
-		}
-		&:hover{
-			background-color: $orange;
-			border: 3px solid $orange;
-			color: white;
-		}
-		&:focus{
-			background-color: $orange;
-			border: 3px solid $orange;
-			color: white;
-		}
-	}
-	&.folleto-pdf{
-		background-color: white;
-		border: 3px solid white;
-		color: $blue;
-		position: relative;
-		top: 30px;
-		a{
-			color: $blue;
-			&:hover{
-				color: white;
-				text-decoration: none;
-			}
-			&:focus{
-				color: white;
-			}
-		}
-		&:hover{
-			background-color: $orange;
-			border: 3px solid $orange;
-			color: white;
-		}
-		&:focus{
-			background-color: $orange;
-			border: 3px solid $orange;
-			color: white;
-		}
-	}
-}
-
 .btn-lg{
 		background-color: transparent;
 		border: 3px solid white;
@@ -232,7 +157,7 @@ mark{
 		letter-spacing: 1.4px;
 		font-weight: 700;
 		font-size: 14px;
-		margin-top: 25px;
+		margin-top: 10px;
 		color: white;
 		height: 44px;
 		&:hover{
@@ -253,6 +178,7 @@ h1{
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 700;
 	color: white;
+	margin-bottom: 20px;
 }
 
 h2{
@@ -288,31 +214,13 @@ h6{
 	color: $blue;
 }
 
-.breadcrumb {
-	background-color: initial;
-	font-weight: 700;
-	text-transform: uppercase;;
-	letter-spacing: 1.2px;
-	font-size: xx-small;
-	color: $blue;
-	padding: initial;
-	margin-bottom: 0px;
-	border-radius: 0px;
-	font-family: 'Montserrat', sans-serif;
-}
-
-.breadcrumb > li + li:before {
-  content: "> ";
-	color: $blue;
-}
-
-/*SECTIONS*/
+/*HOME*/
 section#que-es{
 	margin-top: -110px;
 	background: asset-url('images/ciudadanos.svg') 70% 120% no-repeat $nude;
 }
 section#fechas{
-	background-color: white;
+	background: asset-url('images/fechas.svg') 80% 104% no-repeat white;
 }
 section#funciones{
 	background-color: $nude;
@@ -322,49 +230,174 @@ section#partidos{
 	margin-bottom: -70px;
 }
 
+section#cancha{
+	background-color: white;
+	margin-bottom: -152px;
+	img{
+		width: 100%;
+		bottom: 0;
+	}
+}
+
 section{
 	padding: 30px 0 80px 0;
 }
 
-section.aviso{
-	background-color: white;
-	margin: 70px 0 -70px 0;
-	padding: 8px;
-	height: 65px;
-	font-size: 12px;
+.btn-primary{
+	border-radius: 50px;
+	text-transform: uppercase;
+	letter-spacing: 1.4px;
 	font-weight: 700;
-	.btn-xs{
-		position: relative;
-		top: -13px;
-		background-color: $sky-dark;
-		border: 2px solid $sky-dark;
-		height: 26px;
+	font-size: 12px;
+	height: 34px;
+	&.basic{
+		background-color: white;
+		border: 3px solid white;
+		color: $blue;
+		margin-top: 60px;
 		a{
-			color: white;
-			font-size: 11px;
+			color: $blue;
+			&:focus{
+				color: white;
+			}
 		}
 		&:hover{
-			background-color: transparent;
-			color: $sky-dark;
-			border: 2px solid $sky-dark;
+			background-color: $orange;
+			border: 3px solid $orange;
 			a{
-				color: $sky-dark;
-				font-size: 11px;
+				color: white;
 				text-decoration: none;
 			}
 		}
 		&:focus{
-			background-color: transparent;
-			color: $sky-dark;
-			border: 2px solid $sky-dark;
+			background-color: $orange;
+			border: 3px solid $orange;
 			a{
-				color: $sky-dark;
-				font-size: 11px;
+				color: white;
 				text-decoration: none;
 			}
 		}
 	}
 }
+
+/*TIMELINE*/
+.timeline {
+  position: relative;
+  width: 550px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 1em 0;
+  list-style-type: none;
+}
+
+.timeline:before {
+  position: absolute;
+  top: 23px;
+  content: ' ';
+  display: block;
+  width: 3px;
+  height: 72%;
+  margin-left: -3px;
+  background: $blue;
+
+  z-index: 5;
+}
+
+.timeline li {
+}
+
+.timeline li:after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.direction-r {
+  position: relative;
+	left: 30px;
+	margin: 5px 0 20px 0;
+}
+
+.flag-wrapper {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+
+.flag {
+  position: relative;
+  display: inline;
+  background: $orange-dark;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-weight: 600;
+  text-align: left;
+	color: white;
+	margin-bottom: 10px;
+}
+
+.direction-r .flag:before {
+  position: absolute;
+  top: 50%;
+  right: -35px;
+  content: ' ';
+  display: block;
+  width: 12px;
+  height: 12px;
+  margin-top: -10px;
+  background: $sky-dark;
+  border-radius: 10px;
+  border: 4px solid $sky-dark;
+  z-index: 10;
+}
+
+.direction-r .flag:before {
+  left: -38px;
+}
+
+.direction-r .flag:after {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  height: 0;
+  width: 0;
+  margin-top: -8px;
+  border: solid transparent;
+  border-right-color: $orange-dark;
+  border-width: 8px;
+  pointer-events: none;
+}
+
+.time-wrapper {
+  display: inline;
+  line-height: 1em;
+  font-size: 0.66666em;
+  color: rgb(250,80,80);
+  vertical-align: middle;
+}
+
+.direction-r .time-wrapper {
+  float: right;
+}
+
+.time {
+  display: inline-block;
+  padding: 4px 6px;
+  background: rgb(248,248,248);
+}
+
+.direction-r .desc {
+  margin: 1em 0 0 0.75em;
+}
+
+.desc > ul > li{
+	list-style-type: disc;
+	text-align: left;
+}
+
 /*CAROUSEL*/
 .carousel{
 	min-height: 550px;
@@ -407,20 +440,136 @@ section.aviso{
 	width: 100%;
 }
 
-/*TABLES*/
-th{
-	color: $blue;
-	font-size: 10px;
+/*PARTIES SECTION*/
+.thumbnail{
+	border: none;
+	margin-bottom: 20px;
+}
+
+a.btn.btn-xs.parties{
+	background-color: $green;
+	color: white;
+	border: 2px solid $green;
+	height: 24px;
+	border-radius: 12px;
 	letter-spacing: 1.2px;
+	font-weight: 700;
+	font-size: 11px;
+	line-height: 17px;
+	&:hover{
+		color: $green;
+		background-color: transparent;
+	}
+}
+
+.label-default{
+	border: 2px solid #777777;
+	height: 24px;
+	border-radius: 12px;
+	letter-spacing: 1.2px;
+	font-weight: 700;
+	font-size: 11px;
+	line-height: 17px;
 	text-transform: uppercase;
-	width: 200px;
 }
 
-.table > thead > tr > th {
-	border-bottom: 1px solid $blue;
+.compare{
+	background-color: transparent;
+	border: 2px solid $orange-dark;
+	border-radius: 20px;
+	letter-spacing: 1.2px;
+	font-weight: 700;
+	a{
+		color: $orange-dark;
+		&:hover{
+			color: white;
+			text-decoration: none;
+		}
+	}
+	&:hover{
+		background-color: $orange-dark;
+		color: white;
+		a{
+			color: white;
+			text-decoration: none;
+		}
+	}
 }
 
-/*BUTTONS*/
+/*PARTIES INFO*/
+section.aviso{
+	background-color: white;
+	margin: 70px 0 -70px 0;
+	padding: 20px;
+	height: 65px;
+	font-size: 12px;
+	font-weight: 700;
+	.btn-xs{
+		position: relative;
+		top: 0;
+		background-color: $sky-dark;
+		border: 2px solid $sky-dark;
+		height: 26px;
+		a{
+			color: white;
+			font-size: 11px;
+		}
+		&:hover{
+			background-color: transparent;
+			color: $sky-dark;
+			border: 2px solid $sky-dark;
+			a{
+				color: $sky-dark;
+				font-size: 11px;
+				text-decoration: none;
+			}
+		}
+		&:focus{
+			background-color: transparent;
+			color: $sky-dark;
+			border: 2px solid $sky-dark;
+			a{
+				color: $sky-dark;
+				font-size: 11px;
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+.nombre-partido{
+	background-color: $nude;
+	margin: 70px 0 20px 0;
+	padding: 20px 0 30px 0;
+}
+
+.board{
+	background-color: white;
+	box-shadow: -5px 5px 0px $orange;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-radius: 5px;
+}
+
+.breadcrumb {
+	background-color: initial;
+	font-weight: 700;
+	text-transform: uppercase;;
+	letter-spacing: 1.2px;
+	font-size: xx-small;
+	color: $blue;
+	padding: initial;
+	margin-bottom: 0px;
+	border-radius: 0px;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.breadcrumb > li + li:before {
+  content: "> ";
+	color: $blue;
+}
+
+/*ASIDE MENU*/
 button#dropdownMenu1{
 	text-transform: uppercase;
 	font-size: 11px;
@@ -465,29 +614,6 @@ ul.dropdown-menu.dropdown-select{
 	}
 }
 
-.btn-view-detail-by-gender{
-	border-radius: 12px;
-	text-transform: uppercase;
-	font-size: 10px;
-	letter-spacing: 1.2px;
-	height: 24px;
-	border: 2px solid $green;
-	font-weight: 700;
-	padding: 3px 10px;
-	a{
-		color: $green;
-	}
-	&:hover{
-		background-color: $green;
-		color: white;
-		a{
-			color: white;
-			text-decoration: none;
-		}
-	}
-}
-
-/*ASIDE MENU*/
 aside.col-sm-3.col-md-3{
 	padding: 0 15px 0 0;
 }
@@ -751,64 +877,6 @@ input[type="submit"].transparente{
 	}
 }
 
-.total-max{
-	color: $blue;
-	font-size: 40px;
-	font-weight: 700;
-}
-
-.monto{
-	color: $blue;
-	font-size: 18px;
-	font-weight: 700;
-	text-align: right;
-}
-
-.total{
-	color: $blue;
-	font-size: 22px;
-	font-weight: 700;
-	&.monto{
-		text-align: right;
-	}
-}
-
-.comparacion{
-	background-color: $orange-dark;
-	margin: 70px 0 40px 0;
-	padding-top: 30px;
-	h2, h4{
-		color: white;
-	}
-}
-
-.numero{
-	font-size: 24px;
-  background-color: $blue;
-  color: white;
-  text-align: center;
-  border-radius: 20px;
-  width: 35px;
-  margin: auto;
-  font-weight: 700;
-  margin-top: 20px;
-}
-
-.versalitas{
-	text-transform: uppercase;
-	letter-spacing: 1.2px;
-	font-size: 11px;
-	font-weight: 700;
-	font-family: 'Montserrat', sans-serif;
-}
-
-.text-info{
-	color: $blue;
-	font-weight: 700;
-	margin-bottom: 40px;
-}
-
-/*ELEMENTS*/
 .panel-default > .panel-heading .badge{
 	padding: 4px 8px;
 	font-size: 10px;
@@ -836,7 +904,7 @@ i.fa.fa-circle.icon-green{
 	border-top: none;
 }
 
-/*MODAL*/
+/*MODASL*/
 .modal-header{
 	border-bottom: none;
 	background-color: $orange;
@@ -848,7 +916,77 @@ i.fa.fa-circle.icon-green{
 	border: none;
 }
 
-/*COMPARATIVES*/
+/*TABLES & COMPARATIVES*/
+th{
+	color: $blue;
+	font-size: 10px;
+	letter-spacing: 1.2px;
+	text-transform: uppercase;
+	width: 200px;
+}
+
+.table > thead > tr > th {
+	border-bottom: 1px solid $blue;
+}
+
+.total-max{
+	color: $blue;
+	font-size: 40px;
+	font-weight: 700;
+}
+
+.monto{
+	color: $blue;
+	font-size: 18px;
+	font-weight: 700;
+	text-align: right;
+}
+
+.total{
+	color: $blue;
+	font-size: 22px;
+	font-weight: 700;
+	&.monto{
+		text-align: right;
+	}
+}
+
+.numero{
+	font-size: 24px;
+  background-color: $blue;
+  color: white;
+  text-align: center;
+  border-radius: 20px;
+  width: 35px;
+  margin: auto;
+  font-weight: 700;
+  margin-top: 20px;
+}
+
+.versalitas{
+	text-transform: uppercase;
+	letter-spacing: 1.2px;
+	font-size: 11px;
+	font-weight: 700;
+	font-family: 'Montserrat', sans-serif;
+	color: $blue;
+}
+
+.text-info{
+	color: $blue;
+	font-weight: 700;
+	margin-bottom: 40px;
+}
+
+.comparacion{
+	background-color: $orange-dark;
+	margin: 70px 0 40px 0;
+	padding-top: 0;
+	h2, h4{
+		color: white;
+	}
+}
+
 p.edades{
 	text-align: center;
 	width: 30px;
@@ -856,6 +994,39 @@ p.edades{
 	margin: auto;
 	border-radius: 15px;
 	padding-top: 5px
+}
+
+.btn-view-detail{
+	border-radius: 12px;
+	text-transform: uppercase;
+	font-size: 10px;
+	letter-spacing: 1.2px;
+	height: 24px;
+	border: 2px solid $green;
+	font-weight: 700;
+	padding: 3px 10px;
+	color: $green;
+	a{
+		color: $green;
+	}
+	&:hover{
+		border: 2px solid $green;
+		background-color: $green;
+		color: white;
+		a{
+			color: white;
+			text-decoration: none;
+		}
+	}
+	&:focus{
+			border: 2px solid $green;
+			background-color: $green;
+			color: white;
+			a{
+				color: white;
+				text-decoration: none;
+			}
+	}
 }
 
 /*FOOTER*/
@@ -877,145 +1048,36 @@ p.edades{
 	text-decoration: none;
 }
 
-.logo-fci img {
-  width: 200px;
-}
-
-/* ================ The Timeline ================ */
-
-.timeline {
-  position: relative;
-  width: 550px;
-  margin: 0 auto;
-  margin-top: 20px;
-  padding: 1em 0;
-  list-style-type: none;
-}
-
-.timeline:before {
-  position: absolute;
-  top: 23px;
-  content: ' ';
-  display: block;
-  width: 3px;
-  height: 72%;
-  margin-left: -3px;
-  background: $blue;
-
-  z-index: 5;
-}
-
-.timeline li {
-}
-
-.timeline li:after {
-  content: "";
-  display: block;
-  height: 0;
-  clear: both;
-  visibility: hidden;
-}
-
-.direction-r {
-  position: relative;
-	left: 30px;
-	margin: 5px 0 20px 0;
-}
-
-.flag-wrapper {
-  position: relative;
-  display: inline-block;
-  text-align: center;
-}
-
-.flag {
-  position: relative;
-  display: inline;
-  background: $orange-dark;
-  padding: 6px 10px;
-  border-radius: 5px;
-  font-weight: 600;
-  text-align: left;
-	color: white;
-	margin-bottom: 10px;
-}
-
-.direction-r .flag:before {
-  position: absolute;
-  top: 50%;
-  right: -35px;
-  content: ' ';
-  display: block;
-  width: 12px;
-  height: 12px;
-  margin-top: -10px;
-  background: $sky-dark;
-  border-radius: 10px;
-  border: 4px solid $sky-dark;
-  z-index: 10;
-}
-
-.direction-r .flag:before {
-  left: -38px;
-}
-
-.direction-r .flag:after {
-  content: "";
-  position: absolute;
-  right: 100%;
-  top: 50%;
-  height: 0;
-  width: 0;
-  margin-top: -8px;
-  border: solid transparent;
-  border-right-color: $orange-dark;
-  border-width: 8px;
-  pointer-events: none;
-}
-
-.time-wrapper {
-  display: inline;
-  line-height: 1em;
-  font-size: 0.66666em;
-  color: rgb(250,80,80);
-  vertical-align: middle;
-}
-
-.direction-r .time-wrapper {
-  float: right;
-}
-
-.time {
-  display: inline-block;
-  padding: 4px 6px;
-  background: rgb(248,248,248);
-}
-
-.direction-r .desc {
-  margin: 1em 0 0 0.75em;
-}
-
-.desc > ul > li{
-	list-style-type: disc;
-	text-align: left;
+.logo-footer{
+	font-family: 'Montserrat', sans-serif;
+	text-transform: uppercase;
+	font-weight: 700;
+	font-size: 11px;
+	margin-bottom: 30px;
+	img{
+		margin-top: 10px;
+	}
 }
 
 /*MEDIA-QUERIS*/
 @media (max-width: 990px) {
-	section.aviso{
-		.btn-xs{
-			position: relative;
-			top: -20px;
-		}
+		section.aviso{
+			padding: 14px;
+	}
+	section#que-es{
+		background: $nude;
+	}
+	section#fechas{
+		background: white;
 	}
 }
 
 @media (max-width: 991px) {
-	.site-footer li {
-			text-align: center;
-	}
 	.jumbotron{
 		background: $orange-dark;
+	}
+	.vistas{
+		min-height: 100px;
 	}
 }
 
@@ -1081,11 +1143,9 @@ p.edades{
 		text-align: left;
 		margin: 0 0 40px 0;
 	}
-
 }
 
 @media screen and (max-width: 660px) {
-
 	.timeline {
 	 	width: 100%;
 		padding: 4em 0 1em 0;
@@ -1176,8 +1236,15 @@ p.edades{
 	}
 }
 
+@media (max-width: 503px) {
+	.vistas{
+		min-height: 135px;
+	}
+}
+
 @media (max-width: 461px) {
 	section.aviso{
+		padding: 10px;
 		height: 78px;
 	}
 }
