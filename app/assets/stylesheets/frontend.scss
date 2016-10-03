@@ -1251,16 +1251,16 @@ p.edades{
 }
 
 @media (max-width: 415px) {
-	.h1{
+	h1{
 		font-size: 46px;
 	}
-	.mark{
+	mark{
 		font-size: 24px;
 	}
 	.btn-primary.basic a{
-			font-size: 11px;
-			letter-spacing: 0;
-		}
+		font-size: 11px;
+		letter-spacing: 0;
+	}
 }
 
 @media (max-width: 336px) {
