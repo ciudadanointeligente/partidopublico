@@ -2,9 +2,7 @@ module ComparisonsHelper
   def categories
     categories = ["Afiliados según género",
                   "Afiliados según rango etario",
-                  "Regiones constituidos",
-                  "Representantes electos",
-                  "Ingresos ordinarios"
+                  "Regiones constituidos"
                 ]
   end
 
