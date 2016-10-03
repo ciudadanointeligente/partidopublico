@@ -456,6 +456,7 @@ a.btn.btn-xs.parties{
 	font-weight: 700;
 	font-size: 11px;
 	line-height: 17px;
+	margin-top: -12px;
 	&:hover{
 		color: $green;
 		background-color: transparent;
@@ -1247,6 +1248,19 @@ p.edades{
 		padding: 10px;
 		height: 78px;
 	}
+}
+
+@media (max-width: 415px) {
+	.h1{
+		font-size: 46px;
+	}
+	.mark{
+		font-size: 24px;
+	}
+	.btn-primary.basic a{
+			font-size: 11px;
+			letter-spacing: 0;
+		}
 }
 
 @media (max-width: 336px) {
