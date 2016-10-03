@@ -443,7 +443,10 @@ section{
 /*PARTIES SECTION*/
 .thumbnail{
 	border: none;
-	margin-bottom: 20px;
+	margin-bottom: 40px;
+	img{
+		margin: auto;
+	}
 }
 
 a.btn.btn-xs.parties{
@@ -456,6 +459,7 @@ a.btn.btn-xs.parties{
 	font-weight: 700;
 	font-size: 11px;
 	line-height: 17px;
+	margin-top: -12px;
 	&:hover{
 		color: $green;
 		background-color: transparent;
@@ -479,6 +483,7 @@ a.btn.btn-xs.parties{
 	border-radius: 20px;
 	letter-spacing: 1.2px;
 	font-weight: 700;
+	color: $orange-dark;
 	a{
 		color: $orange-dark;
 		&:hover{
@@ -1246,6 +1251,19 @@ p.edades{
 	section.aviso{
 		padding: 10px;
 		height: 78px;
+	}
+}
+
+@media (max-width: 415px) {
+	h1{
+		font-size: 46px;
+	}
+	mark{
+		font-size: 24px;
+	}
+	.btn-primary.basic a{
+		font-size: 11px;
+		letter-spacing: 0;
 	}
 }
 
