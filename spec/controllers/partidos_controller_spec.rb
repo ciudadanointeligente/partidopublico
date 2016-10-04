@@ -62,8 +62,8 @@ RSpec.describe PartidosController, type: :controller do
       get :regiones, {:partido_id => partido.to_param}, valid_session
 
       expect(assigns(:datos_total_nacional)).not_to be_empty
-      expect(assigns(:datos_total_nacional)[0]['hombres']).to eq(afiliacion_region_1.hombres + afiliacion_region_2.hombres + afiliacion_region_3.hombres)
-      expect(assigns(:datos_total_nacional)[0]['mujeres']).to eq(afiliacion_region_1.mujeres + afiliacion_region_2.mujeres + afiliacion_region_3.mujeres)
+      expect(assigns(:datos_total_nacional)[0]['hombres'].floor).to eq(afiliacion_region_1.hombres + afiliacion_region_2.hombres + afiliacion_region_3.hombres)
+      expect(assigns(:datos_total_nacional)[0]['mujeres'].floor).to eq(afiliacion_region_1.mujeres + afiliacion_region_2.mujeres + afiliacion_region_3.mujeres)
     end
 
     it "get an array of presencia de cargos" do
