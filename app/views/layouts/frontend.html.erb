@@ -90,7 +90,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <p class="text-center">La información será subida de forma progresiva según lo que estipula la nueva Ley de Partidos Políticos  <button class="btn btn-primary btn-xs" type="submit"><%= link_to "Revisa las fechas clave", root_path(anchor: "fechas") %></buton></p>
+        <p class="text-center">La información será subida de forma progresiva según lo que estipula la nueva Ley de Partidos Políticos <%= link_to "Revisa las fechas clave", root_path(anchor: "fechas"), class:"btn btn-primary btn-xs", onclick:"ga('send','event','comparison-fechas-claves','click')" %></p>
       </div>
     </div>
   </div>
