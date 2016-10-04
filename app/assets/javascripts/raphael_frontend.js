@@ -50,13 +50,13 @@ $(document).ready(function(){
           if (legend == true && legendElement) {
             switch(labels[j]) {
               case 'hombres':
-                legendElement.append('<li><i class="fa fa-circle" aria-hidden="true" data-id='+ bcolor +' style="color:' + bcolor + ';"></i> ' + labels[j] + " : " + values[j] + '</li>');
+                legendElement.append('<li><i class="fa fa-circle" aria-hidden="true" data-id='+ bcolor +' style="color:' + bcolor + ';"></i> ' + labels[j] + " : " + Math.floor(values[j]) + '</li>');
                 break;
               case 'mujeres':
-                legendElement.append('<li><i class="fa fa-circle" aria-hidden="true" data-id='+ bcolor +' style="color:' + bcolor + ';"></i> ' + labels[j] + " : " + values[j] + '</li>');
+                legendElement.append('<li><i class="fa fa-circle" aria-hidden="true" data-id='+ bcolor +' style="color:' + bcolor + ';"></i> ' + labels[j] + " : " + Math.floor(values[j]) + '</li>');
                 break;
               default:
-                legendElement.append('<li><i class="fa fa-circle" aria-hidden="true" data-id='+ bcolor +' style="color:' + bcolor + ';"></i> ' + labels[j] + " : " + values[j] + '</li>');
+                legendElement.append('<li><i class="fa fa-circle" aria-hidden="true" data-id='+ bcolor +' style="color:' + bcolor + ';"></i> ' + labels[j] + " : " + Math.floor(values[j]) + '</li>');
                 break;
             }
           }

@@ -201,4 +201,10 @@ class Partido < ActiveRecord::Base
       end
     end
 
+    def afiliados
+      last_date = Afiliacion.where(partido_id: self).uniq.pluck(:fecha_datos).sort.last
+      datos_afiliacion = Afiliacion.where(partido_id: self, fecha_datos: last_date)
+
+      num_afiliados = datos_afiliacion.to_a.sum(&:total)    
+    end
 end
