@@ -17,5 +17,5 @@ class MarcoInterno < ActiveRecord::Base
     belongs_to :partido
     has_many :documentos, as: :documentable
 
-    accepts_nested_attributes_for :documentos, reject_if: proc { |attributes| #puts attributes; attributes['archivo'].blank? | attributes['descripcion'].blank?  }, allow_destroy: true
+    accepts_nested_attributes_for :documentos, reject_if: proc { |attributes| attributes['archivo'].blank? | attributes['descripcion'].blank?  }, allow_destroy: true
 end
