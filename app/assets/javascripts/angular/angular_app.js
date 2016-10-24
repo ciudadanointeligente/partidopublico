@@ -229,6 +229,7 @@ function cargosController($scope,$http,$location,$aside,$attrs){
         data.fecha_desde = new Date(moment(data.fecha_desde).utc(-3));
         data.fecha_hasta = new Date(moment(data.fecha_hasta).utc(-3));
         $scope.cargo = data;
+        $scope.show_for_cargo();
       })
       .error( function(error_data){
         $scope.messages = {response: false, message: error_data}
@@ -238,6 +239,7 @@ function cargosController($scope,$http,$location,$aside,$attrs){
   $scope.getCargoModal = function(cargo_id){
     if(cargo_id) {
       getCargoInfo(cargo_id);
+
     } else {
       $scope.cargo = {
         partido_id: $scope.partido_id
