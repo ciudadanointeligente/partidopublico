@@ -111,6 +111,11 @@ function cargosController($scope,$http,$location,$aside,$attrs){
   $scope.partido_id = $location.path().split("/")[2];
   $scope.pageSize = 5;
 
+  $scope.show_for_cargo = function() {
+    selected = $scope.tipo_cargos.filter(function(item) { return item.id == $scope.cargo.tipo_cargo_id })
+    $scope.cargo.tipo_cargo = selected[0]
+  }
+
   var save_or_update_cargo = function() {
     if($scope.cargo.id) {
       $http.put('/cargos/'+$scope.cargo.id, $scope.cargo)

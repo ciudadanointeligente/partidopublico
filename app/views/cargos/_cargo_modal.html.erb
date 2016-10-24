@@ -11,30 +11,30 @@
 
       <div class="form-group">
         <label for="tipo_cargo_id">Cargo</label>
-        <select name="tipo_cargo_id" id="tipo_cargo_id" class="form-control chosen-select" ng-model="cargo.tipo_cargo_id" ng-init="cargo.tipo_cargo_id" ng-options="c.id as c.titulo for c in tipo_cargos"></select>
+        <select name="tipo_cargo_id" id="tipo_cargo_id" ng-change="show_for_cargo()" class="form-control chosen-select" ng-model="cargo.tipo_cargo_id" ng-init="cargo.tipo_cargo_id" ng-options="c.id as c.titulo for c in tipo_cargos"></select>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" ng-if="['Alcalde', 'Concejal'].indexOf(cargo.tipo_cargo.titulo) !== -1">
         <label for="region_id">Región</label>
         <select name="region_id" id="region_id" class="form-control chosen-select" ng-model="cargo.region_id" ng-init="cargo.region_id" ng-options="r.id as r.nombre for r in regions" ng-change="getComunas(partido_id, cargo.region_id)"></select>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" ng-if="['Alcalde', 'Concejal'].indexOf(cargo.tipo_cargo.titulo) !== -1">
         <label for="comuna_id">Comuna</label>
         <select name="comuna_id" id="comuna_id" class="form-control chosen-select" ng-model="cargo.comuna_id" ng-init="cargo.comuna_id" ng-options="comuna.id as comuna.nombre for comuna in comunas"></select>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" ng-if="['Diputado', 'Concejal'].indexOf(cargo.tipo_cargo.titulo) !== -1">
         <label for="circunscripcion_id">Circunscripción</label>
         <select name="circunscripcion_id" id="circunscripcion_id" class="form-control chosen-select" ng-model="cargo.circunscripcion_id" ng-init="cargo.circunscripcion_id" ng-options="r.id as r.nombre for r in circunscripcions" ng-change="getDistritos(cargo.circunscripcion_id)"></select>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" ng-if="['Senador', 'Diputado'].indexOf(cargo.tipo_cargo.titulo) !== -1">
         <label for="distrito_id">Distrito</label>
         <select name="distrito_id" id="distrito_id" class="form-control chosen-select" ng-model="cargo.distrito_id" ng-init="cargo.distrito_id" ng-options="distrito.id as distrito.nombre for distrito in distritos"></select>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" ng-if="cargo.tipo_cargo.cargo_interno">
         <label for="organo_interno_id">Organo Interno</label>
         <select name="organo_interno_id" id="organo_interno_id" class="form-control chosen-select" ng-model="cargo.organo_interno_id" ng-init="cargo.organo_interno_id" ng-options="r.id as r.nombre for r in organo_internos" ></select>
       </div>
