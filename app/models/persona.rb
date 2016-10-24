@@ -76,8 +76,8 @@ class Persona < ActiveRecord::Base
       CSV.foreach(file.path, headers: true) do |row|
         # creates a user for each row in the CSV file
         #row.to_hash.each {|key,value| row[key.parameterize.underscore] = value ; row.delete(key)}
-        #puts row.to_hash
-        #puts row
+        ##puts row.to_hash
+        ##puts row
         begin
           u = Persona.find_by_rut row.to_hash['rut']
           PaperTrail.whodunnit = email
@@ -93,7 +93,7 @@ class Persona < ActiveRecord::Base
           u.save
         rescue Exception => e
           errores = errores + 1
-          puts e
+          #puts e
           exceptions << e
         end
 

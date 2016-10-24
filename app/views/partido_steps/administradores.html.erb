@@ -2,21 +2,23 @@
   <h2 class="page-header">Administradores</h2>
 
   <div class="row">
-    <%= simple_form_for @partido, url: wizard_path, authenticity_token: true, :multipart => true , :remote => true  do |f| %>
-    <% if @partido.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@partido.errors.count, "error") %> prohibited this partido from being saved:</h2>
-        <ul>
-        <% @partido.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+    <% if current_admin.is_superadmin %>
+      <%= simple_form_for @partido, url: wizard_path, authenticity_token: true, :multipart => true , :remote => true  do |f| %>
+        <% if @partido.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@partido.errors.count, "error") %> prohibited this partido from being saved:</h2>
+            <ul>
+            <% @partido.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
         <% end %>
-        </ul>
-      </div>
-    <% end %>
-    <%= f.fields_for :admin do |builder| %>
-        <%= builder.input :email%>
-    <% end %>
-    <%= f.button :submit, "Añadir administrador del partido", class:'btn btn-success', target: '_self' %>
+        <%= f.fields_for :admin do |builder| %>
+            <%= builder.input :email%>
+        <% end %>
+        <%= f.button :submit, "Añadir administrador del partido", class:'btn btn-success', target: '_self' %>
+      <% end %>
     <% end %>
   </div>
   <div class="row">

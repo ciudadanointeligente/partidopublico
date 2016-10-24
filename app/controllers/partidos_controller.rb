@@ -35,7 +35,7 @@ class PartidosController < ApplicationController
         @login_data << {email: admin.email, is_superadmin: admin.is_superadmin, login_count: admin_logins.count, logins: logins, last_actions: last_actions}
       end
 
-      ##puts @login_data
+      ###puts @login_data
     end
 
     # else
@@ -472,7 +472,12 @@ class PartidosController < ApplicationController
     tipos.each do |t|
       acuerdos = []
       @partido.acuerdos.where(tipo: t).each do |a|
-        acuerdos << {"numero" => a.numero, "tema" => a.tema, "fecha" => a.fecha, "region" => Region.find(a.region.to_i).nombre, "organo_interno" => a.organo_interno.nombre, "documento" => a.documento_file_name, "documento_url" => a.documento.url}
+        ##puts a.region.to_i
+        region = a.region.to_i == 0 ? "" : Region.find(a.region.to_i).nombre
+        organo_interno  = a.organo_interno.nil? ? "" :  a.organo_interno.nombre
+        documento_file_name = a.documento_file_name.nil? ? "" : a.documento_file_name
+        documento_url = a.documento.url.nil? ? "" : a.documento.url
+        acuerdos << {"numero" => a.numero, "tema" => a.tema, "fecha" => a.fecha, "region" => region, "organo_interno" => organo_interno, "documento" => documento_file_name, "documento_url" => documento_url}
       end
       @acuerdos << { "type" => t, "agreements" => acuerdos }
     end
@@ -564,7 +569,7 @@ class PartidosController < ApplicationController
 
   private
     def authenticate_superadmin
-      puts "validating superadmin capabilities"
+      ##puts "validating superadmin capabilities"
       unless current_admin.is_superadmin?
         redirect_to admin_path
       end
@@ -577,7 +582,7 @@ class PartidosController < ApplicationController
     end
 
     def set_menu
-      ##puts params
+      ###puts params
         @menu = params[:menu].nil? ? 0 : params[:menu].to_i
 
     end

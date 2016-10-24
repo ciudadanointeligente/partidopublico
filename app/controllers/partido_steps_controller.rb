@@ -36,8 +36,8 @@ class PartidoStepsController < ApplicationController
         # @user = current_user
         # @partido = Partido.find_by_user_id(current_user.id)
 
-        #puts "----------------->  Show::"+current_admin.email
-        #puts "----------------->  Show::"+step.to_s
+        ##puts "----------------->  Show::"+current_admin.email
+        ##puts "----------------->  Show::"+step.to_s
         case step
         when :datos_basicos
 
@@ -90,7 +90,7 @@ class PartidoStepsController < ApplicationController
     def update
         PaperTrail.whodunnit = current_admin.email
 
-        #puts "----------------->  Update::"+step.to_s
+        ##puts "----------------->  Update::"+step.to_s
         case step
 
         when :normas_internas
@@ -104,25 +104,19 @@ class PartidoStepsController < ApplicationController
           new_admin.password_confirmation = "xxxxxxxx"
           new_admin.save
           @partido.admins << new_admin
-          @partido.admins.map{|a| puts a.email}
+          #@partido.admins.map{|a| #puts a.email}
 
         else
             #PaperTrail.whodunnit = current_admin.email
             @partido.update_attributes(partido_params)
         end
         if request.xhr?
-          puts "AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST "
-          #puts partido_params
             PaperTrail.whodunnit = current_admin.email
 
             @partido.save
             @errors = @partido.errors
-            puts "AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST "
-            #puts partido_params
             @errors.full_messages.each do |message|
-              #puts message
             end
-            #puts "AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST AJAX REQUEST "
         else
           render_wizard @partido
         end
@@ -136,7 +130,7 @@ class PartidoStepsController < ApplicationController
 
         def admin_allowed
           if  !@partido.admins.include?(current_admin)
-            #puts "admin not allowed admin not allowed admin not allowed admin not allowed admin not allowed "
+            ##puts "admin not allowed admin not allowed admin not allowed admin not allowed admin not allowed "
             redirect_to root_path
           end
         end
