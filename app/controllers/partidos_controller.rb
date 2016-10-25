@@ -522,7 +522,7 @@ class PartidosController < ApplicationController
 
   def intereses_patrimonios
     @intereses_patrimonios = []
-    tc_candidatos = @partido.tipo_cargos.where(candidato:true)
+    tc_candidatos = @partido.tipo_cargos#.where(candidato:true)
     tc_candidatos.each do |tc|
       filter_by = @partido.cargos.where(tipo_cargo_id:tc)
       if !params[:q].blank?

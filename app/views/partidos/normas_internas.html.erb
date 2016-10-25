@@ -24,7 +24,7 @@
         <% if !@partido.fecha_fundacion.blank? %>
         <tr>
           <td><span>Fecha fundación</span></td>
-          <td><%= @partido.fecha_fundacion.to_formatted_s(:long) %></td>
+          <td> <%= l(@partido.fecha_fundacion, format: '%d de %B del %Y') %></td>
         </tr>
         <% end %>
         <% if !@partido.texto.blank? %>

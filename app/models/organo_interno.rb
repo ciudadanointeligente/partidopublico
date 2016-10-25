@@ -28,6 +28,6 @@ class OrganoInterno < ActiveRecord::Base
     accepts_nested_attributes_for :personas, reject_if: proc { |attributes| attributes['apellidos'].blank? }, allow_destroy: true
 
     def to_s
-        self.nombre + ":" + self.partido.to_s
+        self.nombre
     end
 end

@@ -41,10 +41,12 @@ class Cargo < ActiveRecord::Base
   belongs_to :organo_interno
 
   def lugar
-    if !self.comuna.blank? || !self.distrito.blank?
-      return self.comuna.to_s + self.distrito.to_s
-    else !self.region.blank? || !self.circunscripcion.blank?
-      return self.region.to_s + self.circunscripcion.to_s
+    if !self.comuna.blank? || !self.region.blank?
+      return self.comuna.to_s + " - " + self.region.to_s
+    elsif !self.distrito.blank? || !self.circunscripcion.blank?
+      return self.distrito.to_s + " - " + self.circunscripcion.to_s
+    else self.tipo_cargo.cargo_interno
+      return self.organo_interno.to_s
     end
   end
 

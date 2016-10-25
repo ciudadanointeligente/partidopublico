@@ -40,8 +40,8 @@
                   <tr>
                     <td><%= cargo[:persona].nombre + ' ' + cargo[:persona].apellidos  %></td>
                     <td><%= cargo[:tipo_cargo].titulo  %></td>
-                    <td><%= cargo[:persona].intereses  %></td>
-                    <td><%= cargo[:persona].patrimonio  %></td>
+                    <td><%= !cargo[:persona].intereses.blank?  ? link_to(cargo[:persona].intereses, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %> </td>
+                    <td><%= !cargo[:persona].patrimonio.blank? ? link_to(cargo[:persona].patrimonio, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %> </td>
                   </tr>
                   <% end %>
                 </tbody>
