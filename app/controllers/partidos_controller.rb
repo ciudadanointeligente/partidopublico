@@ -538,7 +538,9 @@ class PartidosController < ApplicationController
         by_gender = @partido.personas.where(:genero => params[:genero])
         filter_by = filter_by.where(:persona_id => by_gender)
       end
-      @intereses_patrimonios << {"type" => tc.titulo, "cargos" => filter_by}
+      @intereses_patrimonios << {"type" => tc.titulo, "cargos" => filter_by} unless filter_by.empty?
+
+      
     end
   end
 
