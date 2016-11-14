@@ -35,7 +35,7 @@ class PartidosController < ApplicationController
         @login_data << {email: admin.email, is_superadmin: admin.is_superadmin, login_count: admin_logins.count, logins: logins, last_actions: last_actions}
       end
 
-      ##puts @login_data
+      ###puts @login_data
     end
 
     # else
@@ -163,10 +163,15 @@ class PartidosController < ApplicationController
 
     nh = 0 #nacional hombres
     nm = 0 #nacional mujeres
+    no = 0
+    rh = 0 #regional hombres
+    rm = 0 #regional mujeres
+    ro = 0
     pnh = 0 #promedio nacional hombres
     pnm = 0 #promedio nacional mujeres
+    pno = 0
 
-    nacional = { "region" => "nacional", "ordinal" => "nacional", "hombres" => 0, "mujeres" => 0, "porcentaje_hombres" => 0, "porcentaje_mujeres" => 0, "total" => 0, "desgloce" => [] }
+    nacional = { "region" => "nacional", "ordinal" => "nacional", "hombres" => 0, "mujeres" => 0, "otros" => 0, "porcentaje_hombres" => 0, "porcentaje_mujeres" => 0, "porcentaje_otros" => 0, "total" => 0, "desgloce" => [] }
 
     last_date = Afiliacion.where(partido_id: @partido).uniq.pluck(:fecha_datos).sort.last
 
@@ -179,25 +184,38 @@ class PartidosController < ApplicationController
       # if afiliados.any?
         h = 0 #hombres
         m = 0 #mujeres
+        o = 0
+        rh = 0 #hombres
+        rm = 0 #mujeres
+        ro = 0
         ph = 0 #promedio hombres
         pm = 0 #promedio mujeres
+        po = 0
         afiliados.each do |a|
           h = h + a.hombres
           m = m + a.mujeres
-          total = h+m
+          o = o + a.otros
+          total = a.total
           if(total>0)
             ph = (h*100)/total
             pm = (m*100)/total
+            po = (o*100)/total
           end
         end
-        if(h>0 || m>0)
+        if(h>0 || m>0 || o>0)
           nh = nh + h #nacional hombres
           nm = nm + m #nacional mujeres
-          total_n = nh+nm #total nacional
+          no = no + o #nacional otros
+          rh = rh + h #regional hombres
+          rm = rm + m #regional mujeres
+          ro = ro + o #regional otros
+          total_n = nh + nm + no #total nacional
+          total_r = rh + rm + ro #total regional
           pnh = (nh*100)/total_n #promedio nacional hombres
           pnm = (nm*100)/total_n #promedio nacional mujeres
+          pno = (no*100)/total_n #promedio nacional otros
 
-          region = { "region" => r.nombre, "ordinal" => r.ordinal, "hombres" => h, "porcentaje_hombres" => ph, "mujeres" => m, "porcentaje_mujeres" => pm, "total" => h + m, "desgloce" => [], "cargos" => [] }
+          region = { "region" => r.nombre, "ordinal" => r.ordinal, "hombres" => h + 0.000001, "porcentaje_hombres" => ph, "mujeres" => m + 0.000001, "porcentaje_mujeres" => pm, "otros" => o + 0.000001, "porcentaje_otros" => po, "total" => total_r, "desgloce" => [], "cargos" => [] }
 
           region["cargos"] << {"type" => "autoridad", "nro_cargos" => @partido.cargos.where(:tipo_cargo_id => autoridad, :region_id => r).count}
           region["cargos"] << {"type" => "cargo_interno", "nro_cargos" => @partido.cargos.where(:tipo_cargo_id => cargo_interno, :region_id => r).count}
@@ -206,13 +224,15 @@ class PartidosController < ApplicationController
           participantes = 0
           rangos.each do |rango|
             participantes = @partido.afiliacions.where(:ano_nacimiento => Date.today.year-rango[1]..Date.today.year-rango[0], :region_id => r, fecha_datos: last_date)
-            ph = 0 #participantes hombres
-            pm = 0 #participantes mujeres
+            ph = 0.0001 #participantes hombres
+            pm = 0.0001 #participantes mujeres
+            po = 0.0001
             participantes.each do |np|
               ph = ph + np.hombres
               pm = pm + np.mujeres
+              po = po + np.otros
             end
-            region["desgloce"].push( rango[0].to_s+'-'+rango[1].to_s => ph + pm )
+            region["desgloce"].push( rango[0].to_s+'-'+rango[1].to_s => ph + pm + po )
           end
           @datos_region.push region
         end
@@ -220,7 +240,7 @@ class PartidosController < ApplicationController
 
     end
 
-    nacional = { "region" => "nacional", "ordinal" => "nacional", "hombres" => nh, "mujeres" => nm, "porcentaje_hombres" => pnh, "porcentaje_mujeres" => pnm, "total" => nh + nm, "desgloce" => [], "cargos" => [] }
+    nacional = { "region" => "nacional", "ordinal" => "nacional", "hombres" => nh + 0.000001, "mujeres" => nm + 0.000001, "otros" => no + 0.000001, "porcentaje_hombres" => pnh, "porcentaje_mujeres" => pnm, "porcentaje_otros" => pno, "total" => nh + nm + no, "desgloce" => [], "cargos" => [] }
     a = []
     if @datos_region.any?
 
@@ -452,7 +472,12 @@ class PartidosController < ApplicationController
     tipos.each do |t|
       acuerdos = []
       @partido.acuerdos.where(tipo: t).each do |a|
-        acuerdos << {"numero" => a.numero, "tema" => a.tema, "fecha" => a.fecha, "region" => Region.find(a.region.to_i).nombre, "organo_interno" => a.organo_interno.nombre, "documento" => a.documento_file_name, "documento_url" => a.documento.url}
+        ##puts a.region.to_i
+        region = a.region.to_i == 0 ? "" : Region.find(a.region.to_i).nombre
+        organo_interno  = a.organo_interno.nil? ? "" :  a.organo_interno.nombre
+        documento_file_name = a.documento_file_name.nil? ? "" : a.documento_file_name
+        documento_url = a.documento.url.nil? ? "" : a.documento.url
+        acuerdos << {"numero" => a.numero, "tema" => a.tema, "fecha" => a.fecha, "region" => region, "organo_interno" => organo_interno, "documento" => documento_file_name, "documento_url" => documento_url}
       end
       @acuerdos << { "type" => t, "agreements" => acuerdos }
     end
@@ -497,7 +522,7 @@ class PartidosController < ApplicationController
 
   def intereses_patrimonios
     @intereses_patrimonios = []
-    tc_candidatos = @partido.tipo_cargos.where(candidato:true)
+    tc_candidatos = @partido.tipo_cargos#.where(candidato:true)
     tc_candidatos.each do |tc|
       filter_by = @partido.cargos.where(tipo_cargo_id:tc)
       if !params[:q].blank?
@@ -513,7 +538,9 @@ class PartidosController < ApplicationController
         by_gender = @partido.personas.where(:genero => params[:genero])
         filter_by = filter_by.where(:persona_id => by_gender)
       end
-      @intereses_patrimonios << {"type" => tc.titulo, "cargos" => filter_by}
+      @intereses_patrimonios << {"type" => tc.titulo, "cargos" => filter_by} unless filter_by.empty?
+
+      
     end
   end
 
@@ -544,7 +571,7 @@ class PartidosController < ApplicationController
 
   private
     def authenticate_superadmin
-      puts "validating superadmin capabilities"
+      ##puts "validating superadmin capabilities"
       unless current_admin.is_superadmin?
         redirect_to admin_path
       end
@@ -557,7 +584,7 @@ class PartidosController < ApplicationController
     end
 
     def set_menu
-      ##puts params
+      ###puts params
         @menu = params[:menu].nil? ? 0 : params[:menu].to_i
 
     end

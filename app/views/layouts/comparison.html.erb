@@ -36,10 +36,10 @@
           <div class="navbar-header">
             <div class="brand">
               <%= link_to image_tag("logo.svg"),root_path %>
-              <div class="sub-brand hidden"><a href="http://ciudadanointeligente.org" target="_blank">de CiudadanoInteligente.org</a></div>
+              <div class="sub-brand hidden"><a href="//ciudadanointeligente.org" target="_blank">de CiudadanoInteligente.org</a></div>
             </div>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-              <span class="sr-only">Toggle navigation</span>
+              <span class="sr-only">Menu</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
@@ -102,7 +102,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-      <p class="text-center">La información será subida de forma progresiva según lo que estipula la nueva Ley de Partidos Políticos  <button class="btn btn-primary btn-xs" type="submit"><%= link_to "Revisa las fechas clave", root_path(anchor: "fechas") %></buton></p>
+      <p class="text-center">La información será subida de forma progresiva según lo que estipula la nueva Ley de Partidos Políticos <%= link_to "Revisa las fechas clave", root_path(anchor: "fechas"), class: "btn btn-primary btn-xs", onclick: "ga('send','event','comparison-fechas-claves','click')" %></p>
       </div>
     </div>
   </div>
@@ -120,7 +120,7 @@
           <ul class="list-unstyled">
             <% @partidos.each do |partido| %>
             <li class="versalitas">
-              <%= check_box_tag 'partido_ids[]', partido.id, false, class: 'marcado'%>
+              <%= check_box_tag 'partido_ids[]', partido.id, false, class: 'marcado', onclick: "ga('send','event','compare-checkbox-"+partido.nombre+"','click')"%>
               <%= h partido.nombre %>
             </li>
             <% end %>
@@ -130,10 +130,10 @@
         <div class="col-md-4">
           <p class="numero">2</p>
           <h4 class="text-center">Selecciona un tema</h4>
-          <%= select_tag :category, options_for_select(categories, params[:category]), prompt: "Seleccionar tema", onchange: "this.form.submit();" %>
+          <%= select_tag :category, options_for_select(categories, params[:category]), prompt: "Seleccionar tema", onchange: "this.form.submit(); ga('send','event','select-tema','click')" %>
         </div>
         <div class="col-md-4 col-md-offset-4 hidden">
-          <%= submit_tag 'Comparar', class: 'transparente'%>
+          <%= submit_tag 'Comparar', class: 'transparente', onclick: "ga('send','event','compare-button','click')" %>
         </div>
       </div>
     </div>
@@ -155,30 +155,27 @@
           <div class="col-md-3 logo-footer">
             <ul class="list-unstyled">
               <li>Un proyecto de</li>
-              <li><a href="//ciudadanointeligente.org" target="_blank"><img src="<%= image_url("logo-fci.png")%>" title="Fundación Ciudadano Inteligente"></a>
-              </li>
+              <li><a href="//ciudadanointeligente.org" target="_blank" onclick="ga('send', 'event', 'footer-logo'fci', 'click');"><img src="<%= image_url("logo-fci.png")%>" title="Fundación Ciudadano Inteligente"></a></li>
             </ul>
           </div>
           <div class="col-md-3 logo-footer">
             <ul class="list-unstyled">
               <li>Con el apoyo de</li>
-              <li><img src="<%= image_url("logo-undef.png")%>">
-              </li>
+              <li><img src="<%= image_url("logo-undef.png")%>" title="UNDEF"></li>
             </ul>
           </div>
           <div class="col-md-3 logo-footer">
             <ul class="list-unstyled">
               <li>Con la colaboración de</li>
-              <li><img src="<%= image_url("logo-cht.png")%>">
-              </li>
+              <li><img src="<%= image_url("logo-cht.png")%>" title="Chile Transparente"></li>
             </ul>
           </div>
           <div class="col-md-3">
             <ul class="list-unstyled">
-              <li><a href="mailto:info@ciudadanointeligente.org?Subject=Prensa%20de%20Partido%20Publico" class="email-prensa" target="_top"><i class="fa fa-envelope-o"></i> Mándanos un correo</a></li>
-              <li><a href="//github.com/ciudadanointeligente/partidopublico" target="_blank"><i class="fa fa-github-alt"></i> Revisa nuestro código</a></li>
-              <li><a href="//twitter.com/ciudadanoi" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> @Ciudadanoi</a></li>
-              <li><a href="//www.facebook.com/ciudadanointeligente" target="_blank"><i class="fa  fa-facebook" aria-hidden="true"></i> Ciudadano Inteligente</li></a>
+              <li><a href="mailto:info@ciudadanointeligente.org?Subject=Prensa%20de%20Partido%20Publico" class="email-prensa" target="_top" onclick="ga('send', 'event', 'footer-email', 'click');"><i class="fa fa-envelope-o"></i> Mándanos un correo</a></li>
+              <li><a href="//github.com/ciudadanointeligente/partidopublico" target="_blank" onclick="ga('send', 'event', 'footer-github', 'click');"><i class="fa fa-github-alt"></i> Revisa nuestro código</a></li>
+              <li><a href="//twitter.com/ciudadanoi" target="_blank" onclick="ga('send', 'event', 'footer-twitter', 'click');"><i class="fa fa-twitter" aria-hidden="true"></i> @Ciudadanoi</a></li>
+              <li><a href="//www.facebook.com/ciudadanointeligente" target="_blank" onclick="ga('send', 'event', 'footer-facebook', 'click');"><i class="fa  fa-facebook" aria-hidden="true"></i> Ciudadano Inteligente</li></a>
             </ul>
           </div>
         </div>

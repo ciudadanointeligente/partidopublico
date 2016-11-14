@@ -62,8 +62,8 @@ RSpec.describe PartidosController, type: :controller do
       get :regiones, {:partido_id => partido.to_param}, valid_session
 
       expect(assigns(:datos_total_nacional)).not_to be_empty
-      expect(assigns(:datos_total_nacional)[0]['hombres']).to eq(afiliacion_region_1.hombres + afiliacion_region_2.hombres + afiliacion_region_3.hombres)
-      expect(assigns(:datos_total_nacional)[0]['mujeres']).to eq(afiliacion_region_1.mujeres + afiliacion_region_2.mujeres + afiliacion_region_3.mujeres)
+      expect(assigns(:datos_total_nacional)[0]['hombres'].floor).to eq(afiliacion_region_1.hombres + afiliacion_region_2.hombres + afiliacion_region_3.hombres)
+      expect(assigns(:datos_total_nacional)[0]['mujeres'].floor).to eq(afiliacion_region_1.mujeres + afiliacion_region_2.mujeres + afiliacion_region_3.mujeres)
     end
 
     it "get an array of presencia de cargos" do
@@ -566,14 +566,8 @@ RSpec.describe PartidosController, type: :controller do
 
       get :intereses_patrimonios, {:partido_id => partido.to_param}, valid_session
 
-      cargos_candidato = partido.tipo_cargos.where(candidato:true)
-      expect(assigns(:intereses_patrimonios).count).to eq(cargos_candidato.count)
-
-      senador_id = cargos_candidato.where(titulo:"Senador")
-      expect(assigns(:intereses_patrimonios)[0]["cargos"].count).to eq(partido.cargos.where(tipo_cargo_id:senador_id).count)
-
-      ministro_id = cargos_candidato.where(titulo:"Ministro")
-      expect(assigns(:intereses_patrimonios)[0]["cargos"]).to_not include(cargo_ministro_1)
+      tc = partido.cargos.map{|c| c.tipo_cargo}.uniq
+      expect(assigns(:intereses_patrimonios).count).to eq(tc.count)
     end
 
     it "search by name" do
@@ -603,10 +597,11 @@ RSpec.describe PartidosController, type: :controller do
 
       get :intereses_patrimonios, {:partido_id => partido.to_param, :q => "Juana"}, valid_session
 
-      tc = partido.tipo_cargos.where(candidato:true)
+      tc = partido.tipo_cargos
       personas = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", "Juana".downcase, "Juana".downcase)
       result = partido.cargos.where(tipo_cargo_id: tc, persona_id: personas)
-      expect(assigns(:intereses_patrimonios)[0]["cargos"].count).to eq(result.count)
+
+      expect(assigns(:intereses_patrimonios)[0]['cargos']).to include(result.first)
     end
     it "return by region" do
       partido = create(:partido)
@@ -698,7 +693,7 @@ RSpec.describe PartidosController, type: :controller do
 
       get :publicacion_candidatos, {:partido_id => partido.to_param}, valid_session
 
-      cargos_candidato = partido.tipo_cargos.where(candidato:true)
+      cargos_candidato = partido.tipo_cargos.where candidato: true
       expect(assigns(:publicacion_candidatos).count).to eq(cargos_candidato.count)
 
       senador_id = cargos_candidato.where(titulo:"Senador")
@@ -735,7 +730,7 @@ RSpec.describe PartidosController, type: :controller do
 
       get :publicacion_candidatos, {:partido_id => partido.to_param, :q => "Juana"}, valid_session
 
-      tc = partido.tipo_cargos.where(candidato:true)
+      tc = partido.tipo_cargos
       personas = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", "Juana".downcase, "Juana".downcase)
       result = partido.cargos.where(tipo_cargo_id: tc, persona_id: personas)
       expect(assigns(:publicacion_candidatos)[0]["cargos"].count).to eq(result.count)

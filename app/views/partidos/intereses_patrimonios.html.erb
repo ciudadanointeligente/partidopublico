@@ -30,9 +30,7 @@
             <thead>
               <tr>
                 <th>Nombre</th>
-                <th>Región</th>
-                <th>Comuna</th>
-                <th>Circunscripción</th>
+                <th>Organismo o Lugar</th>
                 <th>URL Intereses</th>
                 <th>URL Patrimonios</th>
               </tr>
@@ -41,11 +39,9 @@
               <% ip["cargos"].each do |c|%>
               <tr>
                 <td><%= c.persona.nombre + " " +c.persona.apellidos %></td>
-                <td><%= c.region.nombre %></td>
-                <td><%= c.comuna.nombre %></td>
-                <td><%= c.circunscripcion_id %></td>
-                <td><%= c.persona.intereses ? link_to(c.persona.intereses, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %></td>
-                <td><%= c.persona.patrimonio ? link_to(c.persona.patrimonio, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %></td>
+                <td><%= c.lugar %></td>
+                <td><%= !c.persona.intereses.blank? ? link_to(c.persona.intereses, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %></td>
+                <td><%= !c.persona.patrimonio.blank? ? link_to(c.persona.patrimonio, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %></td>
               </tr>
               <% end %>
             </tbody>

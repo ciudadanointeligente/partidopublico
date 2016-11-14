@@ -10,7 +10,7 @@
 
 class Circunscripcion < ActiveRecord::Base
   has_many :distritos
-  
+
     def to_s
         self.nombre
     end

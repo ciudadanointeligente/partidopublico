@@ -42,7 +42,7 @@ class Documento < ActiveRecord::Base
         c.fecha = Date.today
         c.save
         (2..ods.sheet(s).last_row).each do |line|
-          puts line
+          #puts line
           i = ItemContable.new
           i.categoria_financiera = c
           i.concepto = ods.sheet(s).cell(line,1)

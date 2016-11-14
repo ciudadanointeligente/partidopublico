@@ -38,10 +38,10 @@
             <tbody>
               <% ip["cargos"].each do |c|%>
               <tr>
-                <td><%= c.persona.nombre + " " +c.persona.apellidos %></td>
-                <td><%= c.region.nombre %></td>
-                <td><%= c.comuna.nombre %></td>
-                <td><%= c.circunscripcion_id %></td>
+                <td><%= not_null(c.persona, 'nombre') + " " + not_null(c.persona, 'apellidos') %></td>
+                <td><%= not_null(c.region, 'nombre') %></td>
+                <td><%= not_null(c.comuna, 'nombre') %></td>
+                <td><%= (c.circunscripcion_id) %></td>
               </tr>
               <% end %>
             </tbody>

@@ -14,10 +14,12 @@
             <%= f.input :logo, as: :file, inline_label: true, wrapper: :horizontal_form  %>
             <% if !@partido.logo.blank? %>
             <img src="<%= @partido.logo.url(:thumb) %>" class="img-responsive" alt="<%= @partido.nombre %> - <%= @partido.lema %>">
-            <% end %>            
-            <%= f.input :front_logo, as: :file, inline_label: true, wrapper: :horizontal_form  %>
-            <% if !@partido.front_logo.blank? %>
-            <img src="<%= @partido.front_logo.url(:thumb) %>" class="img-responsive" alt="<%= @partido.nombre %> - <%= @partido.lema %>">
+            <% end %>
+            <% if current_admin.is_superadmin %>
+              <%= f.input :front_logo, as: :file, inline_label: true, wrapper: :horizontal_form  %>
+              <% if !@partido.front_logo.blank? %>
+                <img src="<%= @partido.front_logo.url(:thumb) %>" class="img-responsive" alt="<%= @partido.nombre %> - <%= @partido.lema %>">
+              <% end %>
             <% end %>
           </div>
         </div>

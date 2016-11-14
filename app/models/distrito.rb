@@ -15,8 +15,8 @@
 
 class Distrito < ActiveRecord::Base
   belongs_to :circunscripcion
-  
+
     def to_s
-        self.nombre
+        "D-" + self.nombre
     end
 end

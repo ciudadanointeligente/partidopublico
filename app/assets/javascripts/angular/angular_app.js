@@ -111,6 +111,11 @@ function cargosController($scope,$http,$location,$aside,$attrs){
   $scope.partido_id = $location.path().split("/")[2];
   $scope.pageSize = 5;
 
+  $scope.show_for_cargo = function() {
+    selected = $scope.tipo_cargos.filter(function(item) { return item.id == $scope.cargo.tipo_cargo_id })
+    $scope.cargo.tipo_cargo = selected[0]
+  }
+
   var save_or_update_cargo = function() {
     if($scope.cargo.id) {
       $http.put('/cargos/'+$scope.cargo.id, $scope.cargo)
@@ -224,6 +229,7 @@ function cargosController($scope,$http,$location,$aside,$attrs){
         data.fecha_desde = new Date(moment(data.fecha_desde).utc(-3));
         data.fecha_hasta = new Date(moment(data.fecha_hasta).utc(-3));
         $scope.cargo = data;
+        $scope.show_for_cargo();
       })
       .error( function(error_data){
         $scope.messages = {response: false, message: error_data}
@@ -233,6 +239,7 @@ function cargosController($scope,$http,$location,$aside,$attrs){
   $scope.getCargoModal = function(cargo_id){
     if(cargo_id) {
       getCargoInfo(cargo_id);
+
     } else {
       $scope.cargo = {
         partido_id: $scope.partido_id

@@ -34,7 +34,7 @@ class Transferencia < ActiveRecord::Base
     errores = 0
     CSV.foreach(file.path, headers: true) do |row|
       begin
-        puts "importin Transferencias"
+        #puts "importin Transferencias"
         new_row_hash = row.to_hash
         new_row_hash['fecha_datos'] = Date.new(new_row_hash['ano_datos'].to_i, new_row_hash['mes_datos'].to_i, 01)
         new_row_hash.delete('ano_datos')
@@ -45,13 +45,13 @@ class Transferencia < ActiveRecord::Base
         PaperTrail.whodunnit = email
         dato = Transferencia.new new_row_hash
         dato.partido = partido
-        puts "dato:"
-        puts dato
+        #puts "dato:"
+        #puts dato
         dato.save
         filas_importadas = filas_importadas + 1
       rescue Exception => e
-        puts e.message
-        puts e.backtrace.inspect
+        #puts e.message
+        #puts e.backtrace.inspect
         errores = errores + 1
       end
     end

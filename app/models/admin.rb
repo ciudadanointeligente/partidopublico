@@ -35,15 +35,15 @@ class Admin < ActiveRecord::Base
   after_create :initialize_permissions
 
   def after_database_authentication
-    puts "DateTime.now : " + DateTime.now.to_s
+    #puts "DateTime.now : " + DateTime.now.to_s
     AdminLogin.create(:fecha => DateTime.now, :ip => $request.remote_ip, :admin_id => self.id)
   end
 
   def initialize_permissions
-    puts self.email
+    #puts self.email
     if self.is_superadmin?
       Partido.all.each do |p|
-        puts p
+        #puts p
         p.admins << self
       end
     end
