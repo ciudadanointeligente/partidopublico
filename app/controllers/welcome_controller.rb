@@ -9,5 +9,8 @@ class WelcomeController < ApplicationController
        render layout: "welcome"
     end
 
+    def logo
+		render layout: "logo"
+	end
 
 end
