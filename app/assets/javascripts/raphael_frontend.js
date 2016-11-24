@@ -169,7 +169,12 @@ $(document).ready(function(){
     var paper = this;
     var bar_width = 300;
     var bar_height = 30;
-    var ingreso_width = (dato.value * (dato.percentage / 100)) * bar_width;
+    var ingreso_width = dato.percentage * bar_width;
+    if (ingreso_width < 1) {
+      ingreso_width = 1;
+    }
+    console.log(dato)
+    console.log(ingreso_width)
     var color = '#23DBB8';
 
     if(dato.text == "Aportes Estatales"){
