@@ -330,7 +330,7 @@ class PartidosController < ApplicationController
     @datos_ingresos_ordinarios = []
     ingresos_ordinarios.each do |io|
       val = (100 * (io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
-      line ={ 'text'=> io.concepto, 'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe, delimiter: "."), 'percentage' => val }
+      line ={ 'text'=> io.concepto, 'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe, delimiter: ""), 'percentage' => val }
       @datos_ingresos_ordinarios << line
     end
     total_publicos = ingresos_ordinarios.where(:concepto => "Aportes Estatales").first.importe rescue 0
@@ -540,7 +540,7 @@ class PartidosController < ApplicationController
       end
       @intereses_patrimonios << {"type" => tc.titulo, "cargos" => filter_by} unless filter_by.empty?
 
-      
+
     end
   end
 
