@@ -351,7 +351,7 @@ class PartidosController < ApplicationController
     egresos_ordinarios.each do |eo|
       val = (100 * ((eo.publico.to_f + eo.privado.to_f)/ max_value.to_f).to_f rescue 0).to_s
       line ={ 'text'=> eo.concepto, 'value_publico' => eo.publico, 'value_privado' => eo.privado,
-        'value' => ActiveSupport::NumberHelper::number_to_delimited(eo.privado + eo.publico, delimiter: "."), 'percentage' => val }
+        'value' => ActiveSupport::NumberHelper::number_to_delimited(eo.privado + eo.publico, delimiter: ""), 'percentage' => val }
       @datos_egresos_ordinarios << line
     end
     total_publicos = egresos_ordinarios.sum(:publico)

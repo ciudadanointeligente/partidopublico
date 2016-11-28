@@ -172,6 +172,9 @@ $(document).ready(function(){
     var ingreso_width = dato.percentage * bar_width;
     if (ingreso_width < 1) {
       ingreso_width = 1;
+      if (dato.value == 0) {
+        ingreso_width = 0;
+      }
     }
     console.log(dato)
     console.log(ingreso_width)
@@ -245,8 +248,22 @@ $(document).ready(function(){
     var paper = this;
     var bar_width = 300;
     var bar_height = 30;
-    var publico_width = (dato.value_publico / (dato.value_publico + dato.value_privado)) * bar_width * (dato.percentage / 100);
-    var privado_width = (bar_width - publico_width) *  (dato.percentage / 100);
+    var publico_percentage = dato.value_publico / dato.value;
+    var privado_percentage = dato.value_privado / dato.value;
+    var publico_width = bar_width * (dato.percentage / 100) * publico_percentage
+    if (publico_width < 1){
+      publico_width = 1;
+      if (dato.value_publico == 0) {
+        publico_width = 0;
+      }
+    }
+    var privado_width = (bar_width *  (dato.percentage / 100)) - publico_width;
+    if (privado_width < 1){
+      privado_width = 1;
+      if (dato.value_privado == 0) {
+        privado_width = 0;
+      }
+    }
 
     var publico_bar = paper.rect(0, 0, publico_width, bar_height).attr({
       "fill" : sky_light,
