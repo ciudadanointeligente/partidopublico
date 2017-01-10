@@ -19,3 +19,6 @@
 /public/system/*
 
 *.swp
+
+/etl/input_files/*
+/etl/log/*
