@@ -152,7 +152,7 @@ class FechaDatosTransformation
   def process(row)
     p row if @verbose
     ano = row['Año'];
-    mes = meses.index(row['Mes'].downcase) + 1
+    mes = (meses.index((row['Mes'] || '').downcase) || 0) + 1
     row[:fecha_datos] = Date.new(ano.to_i, mes.to_i, 01)
     p row if @verbose
     row

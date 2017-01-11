@@ -9,6 +9,8 @@ results[:fecha_errors] = 0
 results[:fecha_success] = 0
 results[:comuna_errors] = 0
 results[:comuna_success] = 0
+results[:comuna_id_errors] = 0
+results[:comuna_id_success] = 0
 
 results[:start_time] = 0
 results[:end_time] = 0
@@ -45,7 +47,7 @@ destination SedesDestination, results: results,
 
 limit ENV['LIMIT']
 
-# show_me!
+show_me!
 
 post_process do
   results[:end_time] = Time.now
