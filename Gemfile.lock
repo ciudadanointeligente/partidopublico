@@ -105,6 +105,7 @@ GEM
     docile (1.1.5)
     erubis (2.7.0)
     execjs (2.6.0)
+    facets (3.1.0)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.6.0)
@@ -313,6 +314,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   compass-rails
   devise
+  facets
   factory_girl_rails
   faker
   font-awesome-sass (~> 4.6.2)

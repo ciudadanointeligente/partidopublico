@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160930142741) do
+ActiveRecord::Schema.define(version: 20170111153500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -321,6 +321,24 @@ ActiveRecord::Schema.define(version: 20160930142741) do
 
   add_index "marco_internos", ["partido_id"], name: "index_marco_internos_on_partido_id", using: :btree
 
+  create_table "normas", force: :cascade do |t|
+    t.date     "fecha_datos"
+    t.string   "tipo_marco_normativo"
+    t.string   "tipo"
+    t.string   "numero"
+    t.string   "denominacion"
+    t.date     "fecha_publicacion"
+    t.string   "link"
+    t.date     "fecha_modificacion"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "partido_id"
+    t.integer  "marco_interno_id"
+  end
+
+  add_index "normas", ["marco_interno_id"], name: "index_normas_on_marco_interno_id", using: :btree
+  add_index "normas", ["partido_id"], name: "index_normas_on_partido_id", using: :btree
+
   create_table "organo_internos", force: :cascade do |t|
     t.string   "nombre"
     t.string   "funciones"
@@ -587,6 +605,8 @@ ActiveRecord::Schema.define(version: 20160930142741) do
   add_foreign_key "leys", "marco_generals"
   add_foreign_key "marco_generals", "partidos"
   add_foreign_key "marco_internos", "partidos"
+  add_foreign_key "normas", "marco_internos"
+  add_foreign_key "normas", "partidos"
   add_foreign_key "organo_internos", "partidos"
   add_foreign_key "participacion_entidads", "partidos"
   add_foreign_key "permissions", "admins"

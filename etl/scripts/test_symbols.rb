@@ -20,17 +20,17 @@ end
 
 input_path = "/home/jordi/development/partidopublico/etl/input_files"
 
-files = Dir[input_path + '/*Marco normativo*.csv']
+files = Dir[input_path + '/*Estructura Org*.csv']
 
 files.each_with_index do |file, index|
-  # p "Processing file : " + (index + 1).to_s + '/' + files.size.to_s
-  source CSVSource, filename: file,
+  p "Processing file : " + (index + 1).to_s + '/' + files.size.to_s
+  source SymbolsCSVSource, filename: file,
                     results: results
 end
 
-transform PartidoLookup, verbose: false
-
-transform FechaDatosTransformation, verbose: false
+# transform PartidoLookup, verbose: false
+#
+# transform FechaDatosTransformation, verbose: false
 
 # transform RegionLookup, verbose: false
 #
@@ -40,8 +40,8 @@ transform FechaDatosTransformation, verbose: false
 
 # transform ResultsTransformation, results: results
 
-destination NormasDestination, results: results,
-                              verbose: false
+# destination NormasDestination, results: results,
+#                               verbose: false
 
 limit ENV['LIMIT']
 

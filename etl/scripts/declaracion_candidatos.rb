@@ -49,7 +49,7 @@ destination CandidatosDestination, results: results,
 
 limit ENV['LIMIT']
 
-# show_me!
+show_me!
 
 post_process do
   results[:end_time] = Time.now

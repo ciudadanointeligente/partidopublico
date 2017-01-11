@@ -1,9 +1,38 @@
 require 'csv'
 require 'awesome_print'
+require 'facets/kernel/deep_copy'
 require_relative '../../config/environment'
 
 def meses
   ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiemre','octubre','noviembre','diciembre']
+end
+
+
+class NormalizingCsvSource
+  def initialize(filename:, results:)
+    @filename = filename
+    @results = results
+    #@csv = CSV.open(input_file, headers: true, header_converters: :symbol)
+    @total = CSV.read(@filename, headers: true).length
+    count
+  end
+
+  def count()
+      @results[:input_rows] = @results[:input_rows].nil? ? @total : @results[:input_rows] + @total
+  end
+
+  def each
+    csv = CSV.open(@filename, headers: true)
+    csv.each do |row|
+      row = row.to_hash
+      group = row['Personas que lo integran'] || ''
+      group.split("\n").each do |persona|
+        row[:filename] = @filename
+        yield(row.deep_copy.merge(persona: persona))
+      end
+    end
+    csv.close
+  end
 end
 
 class CSVSource
@@ -22,6 +51,30 @@ class CSVSource
 
   def each
     csv = CSV.open(@filename, headers: true)
+    csv.each do |row|
+      row[:filename] = @filename
+      yield row.to_hash
+    end
+    csv.close
+  end
+end
+
+class SymbolsCSVSource
+  @total = 0
+
+  def initialize(filename:, results:)
+    @filename = filename
+    @results = results
+    @total = CSV.read(@filename, headers: true).length
+    count
+  end
+
+  def count()
+      @results[:input_rows] = @results[:input_rows].nil? ? @total : @results[:input_rows] + @total
+   end
+
+  def each
+    csv = CSV.open(@filename, headers: true, header_converters: :symbol)
     csv.each do |row|
       row[:filename] = @filename
       yield row.to_hash
@@ -209,6 +262,45 @@ class SedesDestination
     @results[:sedes] = {:new_sedes => @new_sedes ,
                         :sedes_errors => @sedes_errors,
                         :found_sedes => @found_sedes}
+  end
+end
+
+class NormasDestination
+  def initialize(results:, verbose:)
+    @verbose = verbose
+    @new_normas = 0
+    @found_normas = 0
+    @normas_errors = 0
+    @results = results
+  end
+
+  def write(row)
+    norma = Norma.where(partido_id: row[:partido_id],
+                        denominacion: row['Denominación norma'],
+                        tipo: row['Tipo de norma'],
+                        numero: row['Número norma']).first_or_initialize
+
+    norma.tipo_marco_normativo = row['Tipo Marco normativo']
+    norma.fecha_publicacion = row['Fecha de publicación en el diario oficial o fecha de dictación (dd/mm/aaaa)']
+    norma.link = row['Enlace a la publicación o archivo correspondiente']
+    norma.fecha_modificacion = row['Fecha de última modificación o derogación (dd/mm/aaaa)']
+    norma.fecha_datos = row[:fecha_datos]
+    norma.marco_interno = MarcoInterno.where(partido_id: row[:partido_id]).first
+
+    if norma.id.nil?
+      @new_normas = @new_normas + 1 unless norma.errors.any?
+      @normas_errors = @normas_errors + 1 if norma.errors.any?
+    else
+      @found_normas = @found_normas + 1
+    end
+
+    norma.save
+  end
+
+  def close
+    @results[:normas] = {:new_normas => @new_normas ,
+                        :normas_errors => @normas_errors,
+                        :found_normas => @found_normas}
   end
 end
 
