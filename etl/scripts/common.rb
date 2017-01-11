@@ -7,9 +7,18 @@ def meses
 end
 
 class CSVSource
-  def initialize(filename:)
+  @total = 0
+
+  def initialize(filename:, results:)
     @filename = filename
+    @results = results
+    @total = CSV.read(@filename, headers: true).length
+    count
   end
+
+  def count()
+      @results[:input_rows] = @results[:input_rows].nil? ? @total : @results[:input_rows] + @total
+   end
 
   def each
     csv = CSV.open(@filename, headers: true)
@@ -22,6 +31,7 @@ class CSVSource
 end
 
 class PartidoLookup
+
   def initialize(verbose:)
     @verbose = verbose
 
@@ -57,7 +67,10 @@ class ComunaLookup
   end
 
   def process(row)
-    comuna = Comuna.find_by_nombre(row['Comuna'])
+    # comuna = Comuna.find_by_nombre(row['Comuna'])
+    string = row['Comuna'] || ''
+    comuna = Comuna.where('lower(nombre) = ?', string.downcase).first
+
     comuna_id = comuna.nil? ? nil : comuna.id
     region_id = comuna.nil? ? nil : comuna.provincia.region.id
     row[:comuna_id] = comuna_id
@@ -93,6 +106,50 @@ class FechaDatosTransformation
   end
 end
 
+class NombreTransformation
+  def initialize(verbose:)
+    @verbose = verbose
+  end
+
+  def process(row)
+    p row if @verbose
+    input = row['Nombre completo del candidato'];
+    words = input.split
+    if words.size > 3
+      row[:nombre] = words[0] + ' ' + words[1]
+      row[:apellidos] = words[2] + ' ' + words[3]
+    else
+      row[:nombre] = words[0]
+      row[:apellidos] = (words[1] || '') + ' ' + (words[2] || '')
+    end
+    p row if @verbose
+    row
+  end
+end
+
+class TerritorioElectoralTransformation
+  def initialize(verbose:)
+    @verbose = verbose
+  end
+
+  def process(row)
+    p row if @verbose
+    input = row['Tipo Elección'];
+
+    case input
+    when 'Concejal'
+      row['Comuna'] = row['Territorio electoral']
+    when 'Alcalde'
+      row['Comuna'] = row['Territorio electoral']
+    else
+      row[':comuna'] = nil
+    end
+
+    p row if @verbose
+    row
+  end
+end
+
 class ResultsTransformation
   def initialize(results:)
     @results = results
@@ -115,6 +172,11 @@ class ResultsTransformation
       @results[:fecha_success] = @results[:fecha_success] + 1
     end
     if row[:comuna_id].nil?
+      @results[:comuna_id_errors] = @results[:comuna_id_errors] + 1
+    else
+      @results[:comuna_id_success] = @results[:comuna_id_success] + 1
+    end
+    if row[:comuna].nil?
       @results[:comuna_errors] = @results[:comuna_errors] + 1
     else
       @results[:comuna_success] = @results[:comuna_success] + 1
@@ -127,7 +189,7 @@ class SedesDestination
   def initialize(results:, verbose:)
     @verbose = verbose
     @new_sedes = 0
-    @updated_sedes = 0
+    @found_sedes = 0
     @sedes_errors = 0
     @results = results
   end
@@ -139,13 +201,81 @@ class SedesDestination
       @new_sedes = @new_sedes + 1 unless sede.errors.any?
       @sedes_errors = @sedes_errors + 1 if sede.errors.any?
     else
-      @updated_sedes = @updated_sedes + 1
+      @found_sedes = @found_sedes + 1
     end
   end
 
   def close
-    @results[:new_sedes] = @new_sedes
-    @results[:sedes_errors] = @sedes_errors
+    @results[:sedes] = {:new_sedes => @new_sedes ,
+                        :sedes_errors => @sedes_errors,
+                        :found_sedes => @found_sedes}
+  end
+end
+
+class CandidatosDestination
+  def initialize(results:, verbose:)
+    @verbose = verbose
+    @new_candidatos = 0
+    @found_candidatos = 0
+    @candidatos_errors = 0
+    @new_tipo_cargos = 0
+    @found_tipo_cargos = 0
+    @tipo_cargos_errors = 0
+    @new_personas = 0
+    @found_personas = 0
+    @personas_errors = 0
+    @new_cargos = 0
+    @found_cargos = 0
+    @cargos_errors = 0
+    @results = results
+  end
+
+  def write(row)
+    tipo_cargo = TipoCargo.where(partido_id: row[:partido_id], titulo: row['Tipo Elección'], candidato: true).first_or_initialize
+    if tipo_cargo.id.nil?
+      tipo_cargo.save
+      @new_tipo_cargos = @new_tipo_cargos + 1 unless tipo_cargo.errors.any?
+      @tipo_cargos_errors = @tipo_cargos_errors + 1 if tipo_cargo.errors.any?
+    else
+      @found_tipo_cargos = @found_tipo_cargos + 1
+    end
+
+    persona = Persona.where(nombre: row[:nombre], apellidos: row[:apellidos], partido_id: row[:partido_id], rut:  row[:apellidos] +  row[:nombre] +  row[:partido_id].to_s).first_or_initialize
+    if persona.id.nil?
+      persona.save
+      @new_personas = @new_personas + 1 unless persona.errors.any?
+      @personas_errors = @personas_errors + 1 if persona.errors.any?
+    else
+      persona.intereses = row['Declaración de Intereses y Patrimonio']
+      persona.patrimonio = row['Declaración de Intereses y Patrimonio']
+      persona.save
+      @found_personas = @found_personas + 1
+    end
+
+    cargo = Cargo.where(persona: persona, tipo_cargo: tipo_cargo, comuna_id: row[:comuna_id]).first_or_initialize
+    if cargo.id.nil?
+      cargo.save
+      @new_cargos = @new_cargos + 1 unless cargo.errors.any?
+      @cargos_errors = @cargos_errors + 1 if cargo.errors.any?
+    else
+      @found_cargos = @found_cargos + 1
+    end
+
+  end
+
+  def close
+    @results[:candidatos] = {:new_candidatos => @new_candidatos ,
+                        :candidatos_errors => @candidatos_errors,
+                        :found_candidatos => @found_candidatos}
+    @results[:tipo_cargos] = {:new_tipo_cargos => @new_tipo_cargos ,
+                        :tipo_cargos_errors => @tipo_cargos_errors,
+                        :found_tipo_cargos => @found_tipo_cargos}
+    @results[:personas] = {:new_personas => @new_personas ,
+                        :personas_errors => @personas_errors,
+                        :found_personas => @found_personas}
+    @results[:cargos] = {:new_cargos => @new_cargos ,
+                        :cargos_errors => @cargos_errors,
+                        :found_cargos => @found_cargos}
   end
 end
 

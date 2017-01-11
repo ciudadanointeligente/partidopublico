@@ -9,6 +9,8 @@ results[:fecha_errors] = 0
 results[:fecha_success] = 0
 results[:comuna_errors] = 0
 results[:comuna_success] = 0
+results[:comuna_id_errors] = 0
+results[:comuna_id_success] = 0
 
 results[:start_time] = 0
 results[:end_time] = 0
@@ -20,7 +22,7 @@ end
 
 input_path = "/home/jordi/development/partidopublico/etl/input_files"
 
-files = Dir[input_path + '/*Domicilios*.csv']
+files = Dir[input_path + '/*Declaracion de candidatos*.csv']
 
 files.each_with_index do |file, index|
   # p "Processing file : " + (index + 1).to_s + '/' + files.size.to_s
@@ -32,15 +34,17 @@ transform PartidoLookup, verbose: false
 
 transform FechaDatosTransformation, verbose: false
 
-transform RegionLookup, verbose: false
+transform TerritorioElectoralTransformation, verbose: false
+
+# transform RegionLookup, verbose: false
 
 transform ComunaLookup, verbose: false
 
-transform AddressTransformation, verbose: false
+transform NombreTransformation, verbose: false
 
 transform ResultsTransformation, results: results
 
-destination SedesDestination, results: results,
+destination CandidatosDestination, results: results,
                               verbose: false
 
 limit ENV['LIMIT']

@@ -20,7 +20,7 @@ end
 
 input_path = "/home/jordi/development/partidopublico/etl/input_files"
 
-files = Dir[input_path + '/*Domicilios*.csv']
+files = Dir[input_path + '/*Marco normativo*.csv']
 
 files.each_with_index do |file, index|
   # p "Processing file : " + (index + 1).to_s + '/' + files.size.to_s
@@ -32,20 +32,20 @@ transform PartidoLookup, verbose: false
 
 transform FechaDatosTransformation, verbose: false
 
-transform RegionLookup, verbose: false
-
-transform ComunaLookup, verbose: false
-
-transform AddressTransformation, verbose: false
+# transform RegionLookup, verbose: false
+#
+# transform ComunaLookup, verbose: false
+#
+# transform AddressTransformation, verbose: false
 
 transform ResultsTransformation, results: results
 
-destination SedesDestination, results: results,
-                              verbose: false
+# destination SedesDestination, results: results,
+#                               verbose: false
 
 limit ENV['LIMIT']
 
-# show_me!
+show_me!
 
 post_process do
   results[:end_time] = Time.now
