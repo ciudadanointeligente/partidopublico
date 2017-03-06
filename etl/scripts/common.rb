@@ -63,6 +63,7 @@ class SymbolsCSVSource
   @total = 0
 
   def initialize(filename:, results:)
+    p "init SymbolsCSVSource"
     @filename = filename
     @results = results
     @total = CSV.read(@filename, headers: true).length
@@ -71,57 +72,97 @@ class SymbolsCSVSource
 
   def count()
       @results[:input_rows] = @results[:input_rows].nil? ? @total : @results[:input_rows] + @total
-   end
+  end
 
   def each
-    csv = CSV.open(@filename, headers: true, header_converters: :symbol)
+    csv = CSV.open(@filename, headers: true, :col_sep => ";", :row_sep => "\n", header_converters: :symbol, encoding: "iso-8859-1")
+    # csv = CSV.open(@filename, headers: true, header_converters: :symbol, :col_sep => ";",:row_sep => "\n")
+    # p "each SymbolsCSVSource :" + @filename
     csv.each do |row|
-      row[:filename] = @filename
       yield row.to_hash
     end
     csv.close
   end
 end
 
-class PartidoLookup
+class PartidoLookupAndInsert
 
-  def initialize(verbose:)
+  def initialize(verbose:, results:)
     @verbose = verbose
-
+    @results = results
   end
 
   def process(row)
-    sigla = row[:filename].split('-')[1].split('.')[0].strip
-    partido = Partido.find_by_sigla(sigla)
+    partido = Partido.where(cplt_code: row[:cdigo_del_organismo]).first_or_initialize
+    # p partido
+    partido.nombre = row[:nombre_del_organismo]
+    partido.lema = row[:lema_del_partido_poltico]
+    # {:cdigo_del_organismo=>"PP006", :nombre_del_organismo=>"Partido Movimiento Independiente Regionalista Agrario y Social (MIRAS)", :nombre_completo=>"Movimiento Independiente Regionalista Agrario y Social", :sigla=>"MIRAS", :lema_del_partido_poltico=>"Sin información", :filename=>"/home/jordi/development/partidopublico/etl/input_files/cplt/PP0002.csv"}
+    # p row
+    partido.sigla = row[:sigla]
+    partido.save
+    if partido.errors.any?
+      p partido.errors
+      p row
+      @results[:partido_errors] += 1
+    else
+      @results[:partido_success] += 1
+    end
     partido_id = partido.nil? ? nil : partido.id
     row[:partido_id] = partido_id
     row
   end
 end
 
-class RegionLookup
-  def initialize(verbose:)
+class PartidoLookup
+
+  def initialize(verbose:, results:)
     @verbose = verbose
+    @results = results
+  end
+
+  def process(row)
+    partido = Partido.where(cplt_code: row[:cdigo_del_organismo]).first_or_initialize
+
+    if partido.nil?
+      @results[:partido_errors] += 1
+    else
+      @results[:partido_success] += 1
+    end
+    row[:partido_id] = partido.id
+    row
+  end
+end
+
+class RegionLookup
+  def initialize(verbose:, results:)
+    @verbose = verbose
+    @results = results
   end
 
   def process(row)
     # p "row Region: " + row['Región']
-    region = Region.find_by_nombre(row['Región'])
-    region_id = region.nil? ? nil : region.id
-    row[:region_id] = region_id
+    region = Region.find_by_nombre(row[:regin])
+    if region.nil?
+      @results[:region_errors] += 1
+    else
+      @results[:region_success] += 1
+      row[:region_id] = region.id
+    end
     row
   end
 end
 
 class ComunaLookup
-  def initialize(verbose:)
+  def initialize(verbose:, results:)
     @verbose = verbose
+    @results = results
 
   end
 
   def process(row)
     # comuna = Comuna.find_by_nombre(row['Comuna'])
-    string = row['Comuna'] || ''
+    string = row[:comuna] || ''
     comuna = Comuna.where('lower(nombre) = ?', string.downcase).first
 
     comuna_id = comuna.nil? ? nil : comuna.id
@@ -139,7 +180,7 @@ class AddressTransformation
   end
 
   def process(row)
-    row[:address] = row['Avenida, Calle o Pasaje'].to_s + ' ' + row['Número del inmueble, depto u oficina'].to_s
+    row[:address] = row[:avenida_calle_o_pasaje].to_s + ' ' + row[:nmero_del_inmueble_depto_u_oficina].to_s
     row
   end
 end
@@ -251,6 +292,9 @@ class SedesDestination
     sede = Sede.where(partido_id: row[:partido_id], region_id: row[:region_id], comuna_id: row[:comuna_id], direccion: row[:address]).first_or_initialize
     if sede.id.nil?
       sede.save
+      if sede.errors.any?
+        p sede.errors
+      end
       @new_sedes = @new_sedes + 1 unless sede.errors.any?
       @sedes_errors = @sedes_errors + 1 if sede.errors.any?
     else
@@ -288,13 +332,14 @@ class NormasDestination
     norma.marco_interno = MarcoInterno.where(partido_id: row[:partido_id]).first
 
     if norma.id.nil?
+      norma.save
       @new_normas = @new_normas + 1 unless norma.errors.any?
       @normas_errors = @normas_errors + 1 if norma.errors.any?
     else
+      norma.save
       @found_normas = @found_normas + 1
     end
 
-    norma.save
   end
 
   def close

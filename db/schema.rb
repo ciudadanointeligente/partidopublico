@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170111153500) do
+ActiveRecord::Schema.define(version: 20170301223403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -397,6 +397,7 @@ ActiveRecord::Schema.define(version: 20170111153500) do
     t.string   "front_logo_content_type"
     t.integer  "front_logo_file_size"
     t.datetime "front_logo_updated_at"
+    t.string   "cplt_code"
   end
 
   create_table "partidos_regions", id: false, force: :cascade do |t|

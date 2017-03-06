@@ -20,23 +20,27 @@ pre_process do
   puts "*** Start MARCO_INTERNO MIGRATION #{results[:start_time]}***"
 end
 
-input_path = "/home/jordi/development/partidopublico/etl/input_files"
+input_path = "/home/jordi/development/partidopublico/etl/input_files/cplt/20170301/"
 
-files = Dir[input_path + '/*Domicilios*.csv']
+files = Dir[input_path + 'PP0003_2.csv']
 
 files.each_with_index do |file, index|
-  # p "Processing file : " + (index + 1).to_s + '/' + files.size.to_s
-  source CSVSource, filename: file,
+
+  p "Processing file : " + (index + 1).to_s + '/' + files.size.to_s
+
+  source SymbolsCSVSource, filename: file,
                     results: results
 end
 
-transform PartidoLookup, verbose: false
+transform PartidoLookup, verbose: false, results: results
 
-transform FechaDatosTransformation, verbose: false
+show_me!
 
-transform RegionLookup, verbose: false
+# transform FechaDatosTransformation, verbose: false
 
-transform ComunaLookup, verbose: false
+# transform RegionLookup, verbose: false, results: results
+
+transform ComunaLookup, verbose: false, results: results
 
 transform AddressTransformation, verbose: false
 

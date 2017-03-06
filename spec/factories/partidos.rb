@@ -18,6 +18,7 @@
 #  front_logo_content_type :string
 #  front_logo_file_size    :integer
 #  front_logo_updated_at   :datetime
+#  cplt_code               :string
 #
 
 FactoryGirl.define do
