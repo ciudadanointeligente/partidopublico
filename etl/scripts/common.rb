@@ -3,6 +3,23 @@ require 'awesome_print'
 require 'facets/kernel/deep_copy'
 require_relative '../../config/environment'
 
+def etl_path
+  # File.dirname(__FILE__).parent
+  File.dirname(File.expand_path('..', __FILE__))
+end
+
+def input_path
+  etl_path + "/input_files/cplt/20170301/"
+end
+
+def log_path
+  etl_path + "/log/"
+end
+
+def job_name
+  caller.first.split('/').last.split('.').first
+end
+
 def meses
   ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiemre','octubre','noviembre','diciembre']
 end
@@ -75,7 +92,7 @@ class SymbolsCSVSource
   end
 
   def each
-    csv = CSV.open(@filename, headers: true, :col_sep => ";", :row_sep => "\n", header_converters: :symbol, encoding: "iso-8859-1")
+    csv = CSV.open(@filename, headers: true, :col_sep => ";", :row_sep => "\n", header_converters: :symbol, encoding: 'auto')
     # csv = CSV.open(@filename, headers: true, header_converters: :symbol, :col_sep => ";",:row_sep => "\n")
     # p "each SymbolsCSVSource :" + @filename
     csv.each do |row|
@@ -294,6 +311,7 @@ class SedesDestination
       sede.save
       if sede.errors.any?
         p sede.errors
+        row[:error_log] = sede.errors.messages
       end
       @new_sedes = @new_sedes + 1 unless sede.errors.any?
       @sedes_errors = @sedes_errors + 1 if sede.errors.any?
@@ -413,6 +431,27 @@ class CandidatosDestination
     @results[:cargos] = {:new_cargos => @new_cargos ,
                         :cargos_errors => @cargos_errors,
                         :found_cargos => @found_cargos}
+  end
+end
+
+class ErrorCSVDestination
+  def initialize(filename:)
+    @csv = CSV.open(filename, 'w')
+    @headers_written = false
+  end
+
+  def write(row)
+    unless row[:error_log].nil?
+      unless @headers_written
+        @headers_written = true
+        @csv << row.keys
+      end
+      @csv << row.values
+    end
+  end
+
+  def close
+    @csv.close
   end
 end
 

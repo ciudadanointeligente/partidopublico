@@ -17,19 +17,18 @@ results[:end_time] = 0
 
 pre_process do
   results[:start_time] = Time.now
-  puts "*** Start MARCO_INTERNO MIGRATION #{results[:start_time]}***"
+  p "*** Start #{job_name}  MIGRATION #{results[:start_time]}***"
 end
 
-input_path = "/home/jordi/development/partidopublico/etl/input_files/cplt/20170301/"
-
-files = Dir[input_path + 'PP0003_2.csv']
+p input_path + "#{job_name}.csv"
+files = Dir[input_path + "#{job_name}.csv"]
+p files
 
 files.each_with_index do |file, index|
 
   p "Processing file : " + (index + 1).to_s + '/' + files.size.to_s
 
-  source SymbolsCSVSource, filename: file,
-                    results: results
+  source SymbolsCSVSource, filename: file, results: results
 end
 
 transform PartidoLookup, verbose: false, results: results
@@ -48,6 +47,10 @@ transform ResultsTransformation, results: results
 
 destination SedesDestination, results: results,
                               verbose: false
+
+destination ErrorCSVDestination, filename: log_path + job_name + run_date + '.log'
+
+
 
 limit ENV['LIMIT']
 
