@@ -23,13 +23,18 @@ end
 p input_path + "#{job_name}.csv"
 files = Dir[input_path + "#{job_name}.csv"]
 p files
-
+dos2unix = system("dos2unix #{input_path}#{job_name}.csv")
+cat_conversion1 = system("cat -v #{input_path}#{job_name}.csv > #{input_path}#{job_name}_2.csv")
+cat_conversion2 = system("cat -v #{input_path}#{job_name}_2.csv > #{input_path}#{job_name}.csv")
+p cat_conversion1
+p cat_conversion2
 files.each_with_index do |file, index|
 
   p "Processing file : " + (index + 1).to_s + '/' + files.size.to_s
 
   source SymbolsCSVSource, filename: file, results: results
 end
+
 
 transform PartidoLookup, verbose: false, results: results
 
@@ -48,7 +53,7 @@ transform ResultsTransformation, results: results
 destination SedesDestination, results: results,
                               verbose: false
 
-destination ErrorCSVDestination, filename: log_path + job_name + run_date + '.log'
+destination ErrorCSVDestination, filename: log_path + job_name + '.log'
 
 
 

@@ -80,6 +80,8 @@ class SymbolsCSVSource
   @total = 0
 
   def initialize(filename:, results:)
+    ver_encode = system("file -i #{input_path}")
+    p ver_encode
     p "init SymbolsCSVSource"
     @filename = filename
     @results = results
