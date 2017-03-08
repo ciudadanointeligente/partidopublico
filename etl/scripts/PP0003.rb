@@ -20,25 +20,28 @@ pre_process do
   p "*** Start #{job_name}  MIGRATION #{results[:start_time]}***"
 end
 
-p input_path + "#{job_name}.csv"
+# p input_path + "#{job_name}.csv"
 files = Dir[input_path + "#{job_name}.csv"]
-p files
-dos2unix = system("dos2unix #{input_path}#{job_name}.csv")
-cat_conversion1 = system("cat -v #{input_path}#{job_name}.csv > #{input_path}#{job_name}_2.csv")
-cat_conversion2 = system("cat -v #{input_path}#{job_name}_2.csv > #{input_path}#{job_name}.csv")
-p cat_conversion1
-p cat_conversion2
+# p files
+dos2unix
+encoding = find_encoding
+if encoding == 'unknown-8bit'
+  iconv(encoding: 'windows-1252')
+elsif encoding == 'iso-8859-1'
+  iconv(encoding: encoding)
+end
+
 files.each_with_index do |file, index|
 
   p "Processing file : " + (index + 1).to_s + '/' + files.size.to_s
 
-  source SymbolsCSVSource, filename: file, results: results
+  source SymbolsCSVSource, filename: file, results: results, print_headers: true
 end
 
 
 transform PartidoLookup, verbose: false, results: results
 
-show_me!
+# show_me!
 
 # transform FechaDatosTransformation, verbose: false
 
