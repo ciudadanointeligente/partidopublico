@@ -12,22 +12,24 @@ class PartidoLookupAndInsert
 
   def process(row)
     partido = Partido.where(cplt_code: row[:cdigo_del_organismo]).first_or_initialize
-    # p partido
+
     partido.nombre = row[:nombre_del_organismo]
-    partido.lema = row[:lema_del_partido_poltico]
-    # {:cdigo_del_organismo=>"PP006", :nombre_del_organismo=>"Partido Movimiento Independiente Regionalista Agrario y Social (MIRAS)", :nombre_completo=>"Movimiento Independiente Regionalista Agrario y Social", :sigla=>"MIRAS", :lema_del_partido_poltico=>"Sin información", :filename=>"/home/jordi/development/partidopublico/etl/input_files/cplt/PP0002.csv"}
-    # p row
     partido.sigla = row[:sigla]
+    partido.lema = row[:lema_del_partido_poltico]
+
+    if partido.nombre.in?(n_a_values) || partido.sigla.in?(n_a_values) || partido.lema.in?(n_a_values)
+      row[:error_log] = "N/A value on required field"
+    else
+
+    end
     partido.save
     if partido.errors.any?
-      p partido.errors
-      p row
       @results[:partido_errors] += 1
+      row[:error_log] = partido.errors.messages
     else
       @results[:partido_success] += 1
+      row[:partido_id] = partido.id
     end
-    partido_id = partido.nil? ? nil : partido.id
-    row[:partido_id] = partido_id
     row
   end
 end
@@ -41,13 +43,19 @@ class PartidoLookup
 
   def process(row)
     partido = Partido.where(cplt_code: row[:cdigo_del_organismo]).first_or_initialize
+    # [:cdigo_del_organismo, :nombre_del_organismo, :nombre_completo, :sigla, :lema_del_partido_poltico]
+    partido.nombre = row[:cdigo_del_organismo]
+    partido.sigla = row[:sigla]
+    partido.lema = row[:lema_del_partido_poltico]
 
-    if partido.nil?
+    partido.save
+    if partido.id.nil?
       @results[:partido_errors] += 1
+      row[:error_log] = partido.errors.messages
     else
       @results[:partido_success] += 1
+      row[:partido_id] = partido.id
     end
-    row[:partido_id] = partido.id
     row
   end
 end

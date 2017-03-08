@@ -6,6 +6,11 @@ require_relative 'sources'
 require_relative 'destinations'
 require_relative 'tranformations'
 
+def n_a_values
+  ['Sin información', 'Sin informacion', 'N/A']
+end
+
+
 def etl_path
   # File.dirname(__FILE__).parent
   File.dirname(File.expand_path('..', __FILE__))
