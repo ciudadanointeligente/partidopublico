@@ -4,7 +4,7 @@ require 'facets/kernel/deep_copy'
 require_relative '../../config/environment'
 require_relative 'sources'
 require_relative 'destinations'
-require_relative 'tranformations'
+require_relative 'transformations'
 
 def n_a_values
   ['Sin información', 'Sin informacion', 'N/A']
