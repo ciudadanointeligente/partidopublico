@@ -18,7 +18,13 @@ end
 
 def input_path
   date = ENV['DATE']
-  etl_path + "/input_files/cplt/#{date}/"
+  if date == nil
+    fecha_de_hoy = DateTime.now.to_date.to_s
+    fecha_de_hoy.delete! '-'
+    etl_path + "/input_files/cplt/"+fecha_de_hoy+"/"
+  else
+    etl_path + "/input_files/cplt/#{date}/"
+  end
 end
 
 def log_path
