@@ -4,8 +4,8 @@
 #
 #  id                      :integer          not null, primary key
 #  nombre                  :string           not null
-#  sigla                   :string           not null
-#  lema                    :string           not null
+#  sigla                   :string
+#  lema                    :string
 #  fecha_fundacion         :date
 #  texto                   :text
 #  created_at              :datetime         not null
@@ -31,8 +31,8 @@ class Partido < ActiveRecord::Base
     validates_attachment :front_logo,
         content_type: { content_type:  /\Aimage\/.*\Z/ },
         size: { in: 0..500.kilobytes }
-    validates_presence_of :nombre, :sigla, :message => "debe rellenar"
-    validates_uniqueness_of :nombre, :sigla, :message => "already exists"
+    validates_presence_of :nombre, :message => "debe rellenar"
+    validates_uniqueness_of :nombre, :message => "already exists"
 
     has_many :admins, {:through=>:permissions, :source=>"admin"}
 
@@ -206,6 +206,6 @@ class Partido < ActiveRecord::Base
       last_date = Afiliacion.where(partido_id: self).uniq.pluck(:fecha_datos).sort.last
       datos_afiliacion = Afiliacion.where(partido_id: self, fecha_datos: last_date)
 
-      num_afiliados = datos_afiliacion.to_a.sum(&:total)    
+      num_afiliados = datos_afiliacion.to_a.sum(&:total)
     end
 end

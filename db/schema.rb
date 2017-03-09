@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170301223403) do
+ActiveRecord::Schema.define(version: 20170309200706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -383,8 +383,8 @@ ActiveRecord::Schema.define(version: 20170301223403) do
 
   create_table "partidos", force: :cascade do |t|
     t.string   "nombre",                  null: false
-    t.string   "sigla",                   null: false
-    t.string   "lema",                    null: false
+    t.string   "sigla"
+    t.string   "lema"
     t.date     "fecha_fundacion"
     t.text     "texto"
     t.datetime "created_at",              null: false
@@ -520,6 +520,14 @@ ActiveRecord::Schema.define(version: 20170301223403) do
   add_index "sedes", ["comuna_id"], name: "index_sedes_on_comuna_id", using: :btree
   add_index "sedes", ["partido_id"], name: "index_sedes_on_partido_id", using: :btree
 
+  create_table "sedes_trimestre_informados", id: false, force: :cascade do |t|
+    t.integer "sede_id",                null: false
+    t.integer "trimestre_informado_id", null: false
+  end
+
+  add_index "sedes_trimestre_informados", ["sede_id"], name: "index_sedes_trimestre_informados_on_sede_id", using: :btree
+  add_index "sedes_trimestre_informados", ["trimestre_informado_id"], name: "index_sedes_trimestre_informados_on_trimestre_informado_id", using: :btree
+
   create_table "tipo_cargos", force: :cascade do |t|
     t.string   "titulo"
     t.datetime "created_at",    null: false
@@ -566,6 +574,13 @@ ActiveRecord::Schema.define(version: 20170301223403) do
 
   add_index "transferencias", ["partido_id"], name: "index_transferencias_on_partido_id", using: :btree
   add_index "transferencias", ["region_id"], name: "index_transferencias_on_region_id", using: :btree
+
+  create_table "trimestre_informados", force: :cascade do |t|
+    t.integer  "ano"
+    t.string   "trimestre"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "versions", force: :cascade do |t|
     t.string   "item_type",  null: false

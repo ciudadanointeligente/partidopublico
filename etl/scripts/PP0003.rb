@@ -33,9 +33,9 @@ end
 
 files.each_with_index do |file, index|
 
-  p "Processing file : " + (index + 1).to_s + '/' + files.size.to_s
+  p "Processing file : " + file.to_s
 
-  source SymbolsCSVSource, filename: file, results: results, print_headers: true
+  source SymbolsCSVSource, filename: file, results: results, print_headers: false
 end
 
 
@@ -43,7 +43,7 @@ transform PartidoLookup, verbose: false, results: results
 
 # show_me!
 
-# transform FechaDatosTransformation, verbose: false
+transform TrimestreInformadoTransformation, verbose: false
 
 # transform RegionLookup, verbose: false, results: results
 

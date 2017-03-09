@@ -23,6 +23,8 @@ class Sede < ActiveRecord::Base
     belongs_to :region
     belongs_to :comuna
 
+    has_and_belongs_to_many :trimestre_informados
+
     validates_presence_of :direccion, :region_id, :comuna_id
 
 end

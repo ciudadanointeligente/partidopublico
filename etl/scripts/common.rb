@@ -17,7 +17,8 @@ def etl_path
 end
 
 def input_path
-  etl_path + "/input_files/cplt/20170303/"
+  date = ENV['DATE']
+  etl_path + "/input_files/cplt/#{date}/"
 end
 
 def log_path

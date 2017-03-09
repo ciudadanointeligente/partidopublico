@@ -1,13 +1,11 @@
 require_relative 'common'
 
 results = {}
-results[:partido_errors] = 0
-results[:partido_success] = 0
-results[:fecha_errors] = 0
-results[:fecha_success] = 0
-
 results[:start_time] = 0
 results[:end_time] = 0
+results[:partidos] = {:new_partidos => 0 ,
+                    :partidos_errors => 0,
+                    :found_partidos => 0}
 
 pre_process do
   results[:start_time] = Time.now
@@ -30,14 +28,14 @@ files.each_with_index do |file, index|
   p "Processing file : " + (index + 1).to_s + '/' + files.size.to_s
 
   source SymbolsCSVSource, filename: file,
-                    results: results , print_headers: true
+                    results: results , print_headers: false
 end
 
 transform PartidoLookupAndInsert, verbose: false, results: results
 
 destination ErrorCSVDestination, filename: log_path + job_name + '.log'
 
-show_me!
+# show_me!
 
 post_process do
   results[:end_time] = Time.now

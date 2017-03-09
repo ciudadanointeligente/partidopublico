@@ -13,16 +13,21 @@ class SedesDestination
   end
 
   def write(row)
-    sede = Sede.where(partido_id: row[:partido_id], region_id: row[:region_id], comuna_id: row[:comuna_id], direccion: row[:address]).first_or_initialize
+    sede = Sede.where(partido_id: row[:partido_id], region_id: row[:region_id],
+                      comuna_id: row[:comuna_id], direccion: row[:address]).first_or_initialize
+    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
     if sede.id.nil?
       sede.save
       if sede.errors.any?
         # p sede.errors
-        row[:error_log] = sede.errors.messages
+        row[:error_log] = row[:error_log].to_s + ', ' + sede.errors.messages.to_s
+        @sedes_errors = @sedes_errors + 1
+      else
+        sede.trimestre_informados << trimestre_informado unless trimestre_informado.in?(sede.trimestre_informados)
+        @new_sedes = @new_sedes + 1 unless sede.errors.any?
       end
-      @new_sedes = @new_sedes + 1 unless sede.errors.any?
-      @sedes_errors = @sedes_errors + 1 if sede.errors.any?
     else
+      sede.trimestre_informados << trimestre_informado unless trimestre_informado.in?(sede.trimestre_informados)
       @found_sedes = @found_sedes + 1
     end
   end

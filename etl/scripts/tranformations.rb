@@ -17,18 +17,23 @@ class PartidoLookupAndInsert
     partido.sigla = row[:sigla]
     partido.lema = row[:lema_del_partido_poltico]
 
-    if partido.nombre.in?(n_a_values) || partido.sigla.in?(n_a_values) || partido.lema.in?(n_a_values)
+    found = !partido.id.nil?
+    if partido.nombre.in?(n_a_values)
+      @results[:partido_errors] += 1
       row[:error_log] = "N/A value on required field"
     else
-
-    end
-    partido.save
-    if partido.errors.any?
-      @results[:partido_errors] += 1
-      row[:error_log] = partido.errors.messages
-    else
-      @results[:partido_success] += 1
-      row[:partido_id] = partido.id
+      partido.save
+      if partido.errors.any?
+        @results[:partidos][:partidos_errors] += 1
+        row[:error_log] = partido.errors.messages
+      else
+        if found
+          @results[:partidos][:found_partidos] += 1
+        else
+          @results[:partidos][:new_partidos] += 1
+        end
+        row[:partido_id] = partido.id
+      end
     end
     row
   end
@@ -43,19 +48,31 @@ class PartidoLookup
 
   def process(row)
     partido = Partido.where(cplt_code: row[:cdigo_del_organismo]).first_or_initialize
-    # [:cdigo_del_organismo, :nombre_del_organismo, :nombre_completo, :sigla, :lema_del_partido_poltico]
-    partido.nombre = row[:cdigo_del_organismo]
-    partido.sigla = row[:sigla]
-    partido.lema = row[:lema_del_partido_poltico]
-
-    partido.save
     if partido.id.nil?
       @results[:partido_errors] += 1
-      row[:error_log] = partido.errors.messages
+      row[:error_log] = "Partido NOT FOUND IN DB"
     else
       @results[:partido_success] += 1
       row[:partido_id] = partido.id
     end
+    row
+  end
+end
+
+
+class TrimestreInformadoTransformation
+  def initialize(verbose:)
+    @verbose = verbose
+  end
+
+  def process(row)
+    p row if @verbose
+    ano = row[:ao_informado].to_i;
+    trimestre = row[:trimestre_informado];
+
+    trimestre_informado = TrimestreInformado.where(ano: ano, trimestre: trimestre).first_or_create
+    row[:trimestre_informado_id] = trimestre_informado.id
+    p row if @verbose
     row
   end
 end
@@ -106,7 +123,9 @@ class AddressTransformation
   end
 
   def process(row)
+    p row if @verbose
     row[:address] = row[:avenida_calle_o_pasaje].to_s + ' ' + row[:nmero_del_inmueble_depto_u_oficina].to_s
+    p row if @verbose
     row
   end
 end

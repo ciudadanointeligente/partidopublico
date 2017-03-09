@@ -4,8 +4,8 @@
 #
 #  id                      :integer          not null, primary key
 #  nombre                  :string           not null
-#  sigla                   :string           not null
-#  lema                    :string           not null
+#  sigla                   :string
+#  lema                    :string
 #  fecha_fundacion         :date
 #  texto                   :text
 #  created_at              :datetime         not null
