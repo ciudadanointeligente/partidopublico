@@ -18,12 +18,13 @@
 
 class OrganoInterno < ActiveRecord::Base
     has_paper_trail
-    belongs_to :partido
+    belongs_to :partido, required: true
     has_many :personas, as: :personable
     has_many :eleccion_interna, dependent: :destroy
     has_many :acuerdos, dependent: :destroy
     has_many :cargos, dependent: :destroy
 
+    has_and_belongs_to_many :trimestre_informados
 
     accepts_nested_attributes_for :personas, reject_if: proc { |attributes| attributes['apellidos'].blank? }, allow_destroy: true
 

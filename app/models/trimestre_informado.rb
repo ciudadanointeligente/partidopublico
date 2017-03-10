@@ -11,4 +11,6 @@
 
 class TrimestreInformado < ActiveRecord::Base
   has_and_belongs_to_many :sedes
+  has_and_belongs_to_many :organo_internos
+
 end

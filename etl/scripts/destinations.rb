@@ -39,12 +39,43 @@ class SedesDestination
   end
 end
 
-class OrganoInternosDestinations
+class OrganoInternosDestination
   def initialize(results:, verbose:)
     @verbose = verbose
     @results = results
+    @organo_internos_errors = 0
+    @new_organo_internos = 0
+    @found_organo_internos = 0
   end
-    #organo_internos = OrganoInterno.where()
+
+  #nombre_desde_el_modelo: row[:nombre_desde_headers]
+  def write(row)
+    organo_interno = OrganoInterno.where(partido_id: row[:partido_id],
+                                         nombre: row[:unidades_u_rganos_internos],
+                                         funciones: row[:facultades_funciones_y_atribuciones]).first_or_initialize
+                                         trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+
+    if organo_interno.id.nil?
+      organo_interno.save
+      if organo_interno.errors.any?
+        #p organo_interno.errors
+        row[:error_log] = row[:error_log].to_s + ', ' + organo_interno.errors.messages.to_s
+        @organo_internos_errors = @organo_internos_errors + 1
+      else
+        organo_interno.trimestre_informados << trimestre_informado unless trimestre_informado.in?(organo_interno.trimestre_informados)
+        @new_organo_internos = @new_organo_internos + 1
+      end
+    else
+      organo_interno.trimestre_informados << trimestre_informado unless trimestre_informado.in?(organo_interno.trimestre_informados)
+      @found_organo_internos = @found_organo_internos + 1
+    end
+  end
+
+  def close
+  @results[:organo_internos] = {:new_organo_internos => @new_organo_internos,
+    :organo_internos_errors => @organo_internos_errors,
+    :found_organo_internos => @found_organo_internos}
+  end
 end
 
 class NormasDestination

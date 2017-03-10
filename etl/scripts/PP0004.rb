@@ -50,7 +50,7 @@ transform TrimestreInformadoTransformation, verbose: false
 
 #transform ResultsTransformation, results: results
 
-#destination SedesDestination, results: results, verbose: false
+destination OrganoInternosDestination, results: results, verbose: true
 
 destination ErrorCSVDestination, filename: log_path + job_name + '.log'
 
