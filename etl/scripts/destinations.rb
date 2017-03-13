@@ -50,7 +50,7 @@ class OrganoInternosDestination
 
   #nombre_desde_el_modelo: row[:nombre_desde_headers]
   def write(row)
-    organo_interno = OrganoInterno.where(partido_id: row[:partido_id],
+  organo_interno = OrganoInterno.where(partido_id: row[:partido_id],
                                          nombre: row[:unidades_u_rganos_internos],
                                          funciones: row[:facultades_funciones_y_atribuciones]).first_or_initialize
                                          trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
@@ -77,6 +77,23 @@ class OrganoInternosDestination
     :found_organo_internos => @found_organo_internos}
   end
 end
+
+# class CargosDestination
+#   def initialize(results:, verbose:)
+#     @verbose = verbose
+#     @results = results
+#     @cargos_errors = 0
+#     @new_cargos = 0
+#     @found_cargos = 0
+#   end
+#
+# #nombre_desde_el_modelo: row[:nombre_desde_headers]
+#   def write(row)
+#     cargo = Cargo.where(partido_id: row[:partido_id],
+#                         organo_interno: row[:]  )
+#
+#   end
+# end
 
 class NormasDestination
   def initialize(results:, verbose:)
@@ -116,11 +133,11 @@ class NormasDestination
       :normas_errors => @normas_errors,
       :found_normas => @found_normas}
     end
-  end
+end
 
-  class CandidatosDestination
-    def initialize(results:, verbose:)
-      @verbose = verbose
+class CandidatosDestination
+  def initialize(results:, verbose:)
+    @verbose = verbose
       @new_candidatos = 0
       @found_candidatos = 0
       @candidatos_errors = 0

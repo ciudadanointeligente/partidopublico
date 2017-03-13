@@ -77,6 +77,64 @@ class TrimestreInformadoTransformation
   end
 end
 
+class OrganoInternoTransformation
+  def initialize(verbose:)
+    @verbose = verbose
+  end
+
+  def process(row)
+    p row if @verbose
+    nombre = row[:unidades_u_rganos_internos]
+
+    organo_interno = OrganoInterno.where(partido_id: row[:partido_id], nombre: nombre).first_or_initialize
+    row[:organo_interno_id] = organo_interno.id
+    #p "organo_interno: " + organo_interno.to_s
+    p row if @verbose
+    row
+  end
+end
+
+class TipoCargoTransformation
+   def initialize(verbose:)
+     @verbose = verbose
+   end
+
+   def process(row)
+     p row if @verbose
+     titulo = [:cargo]
+     cargo_interno = [:cargo_interno]
+     representante = [:representante]
+     autoridad = [:autoridad]
+     candidato = [:candidato]
+
+     tipo_cargo = TipoCargo.where(partido_id: row[:partido_id], titulo: row[:cargo]).first_or_create
+     row[:tipo_cargo_id] = tipo_cargo.id
+     #p "tipo de cargo: " + tipo_cargo.to_s
+
+     p row if @verbose
+     row
+   end
+ end
+
+class PersonaTransformation
+   def initialize(verbose:)
+     @verbose = verbose
+   end
+
+   def process(row)
+     p row if @verbose
+     nombre = [:nombre]
+     apellidos = [:apellidos]
+     rut = [:rut]
+
+     persona = Persona.where(partido_id: row[:partido_id], nombre: row[:persona]).first_or_initialize
+     row[:una_persona_id] = persona.id
+     #p "persona: " + persona.nombre
+     p row if @verbose
+     row
+   end
+ end
+
 class RegionLookup
   def initialize(verbose:, results:)
     @verbose = verbose
