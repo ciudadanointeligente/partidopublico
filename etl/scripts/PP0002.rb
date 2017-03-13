@@ -9,7 +9,7 @@ results[:partidos] = {:new_partidos => 0 ,
 
 pre_process do
   results[:start_time] = Time.now
-  puts "*** Start PP0002 - Party Basic Info MIGRATION #{results[:start_time]}***"
+  puts "*** Start #{job_name} - Party Basic Info MIGRATION #{results[:start_time]}***"
 end
 
 files = Dir[input_path + "#{job_name}.csv"]
@@ -29,7 +29,7 @@ files.each_with_index do |file, index|
   p "Processing file : " + file.to_s
 
   source SymbolsCSVSource, filename: file,
-                    results: results , print_headers: false
+                    results: results , print_headers: true
 end
 
 transform PartidoLookupAndInsert, verbose: false, results: results

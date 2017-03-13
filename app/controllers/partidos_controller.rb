@@ -489,6 +489,7 @@ class PartidosController < ApplicationController
     @datos = []
 
     organos_internos.each do |o|
+      p o
       members = []
       data = o.cargos
       if !params[:region].blank?
@@ -514,6 +515,7 @@ class PartidosController < ApplicationController
       end
       @datos << {:organo_interno => o, :miembros => members}
     end
+    p 'imprimiendo los datos aquí >>>>>' + @datos.to_s
 
   end
 

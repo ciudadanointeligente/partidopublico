@@ -5,9 +5,9 @@ results[:partido_errors] = 0
 results[:partido_success] = 0
 results[:fecha_errors] = 0
 results[:fecha_success] = 0
-results[:organo_internos] = {:new_organo_internos => 0 ,
-                    :organo_internos_errors => 0,
-                    :found_organo_internos => 0}
+results[:organo_internos] = { :new_organo_internos => 0 ,
+                              :organo_internos_errors => 0,
+                              :found_organo_internos => 0 }
 
 results[:start_time] = 0
 results[:end_time] = 0
