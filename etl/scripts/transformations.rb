@@ -60,7 +60,7 @@ class PartidoLookup
 end
 
 
-class TrimestreInformadoTransformation
+class TrimestreInformadoLookup
   def initialize(verbose:)
     @verbose = verbose
   end
@@ -77,7 +77,7 @@ class TrimestreInformadoTransformation
   end
 end
 
-class OrganoInternoTransformation
+class OrganoInternoLookup
   def initialize(verbose:)
     @verbose = verbose
   end
@@ -88,13 +88,13 @@ class OrganoInternoTransformation
 
     organo_interno = OrganoInterno.where(partido_id: row[:partido_id], nombre: nombre).first_or_initialize
     row[:organo_interno_id] = organo_interno.id
-    #p "organo_interno: " + organo_interno.to_s
+    # p "organo_interno: " + organo_interno.to_s
     p row if @verbose
     row
   end
 end
 
-class TipoCargoTransformation
+class TipoCargoLookup
    def initialize(verbose:)
      @verbose = verbose
    end
@@ -109,7 +109,7 @@ class TipoCargoTransformation
 
      tipo_cargo = TipoCargo.where(partido_id: row[:partido_id], titulo: row[:cargo]).first_or_create
      row[:tipo_cargo_id] = tipo_cargo.id
-     #p "tipo de cargo: " + tipo_cargo.to_s
+    #  p "tipo_cargo: " + tipo_cargo.to_s
 
      p row if @verbose
      row
@@ -123,13 +123,34 @@ class PersonaTransformation
 
    def process(row)
      p row if @verbose
-     nombre = [:nombre]
-     apellidos = [:apellidos]
-     rut = [:rut]
+    #  nombre = [:nombre]
+    #  apellidos = [:apellidos]
+    #  rut = [:rut]
 
      persona = Persona.where(partido_id: row[:partido_id], nombre: row[:persona]).first_or_initialize
      row[:una_persona_id] = persona.id
-     #p "persona: " + persona.nombre
+    #  p "persona: " + persona.nombre
+     p row if @verbose
+     row
+   end
+ end
+
+ class NombreTransformation
+   def initialize(verbose:)
+     @verbose = verbose
+   end
+
+   def process(row)
+     p row if @verbose
+     input = row['Nombre completo del candidato'];
+     words = input.split
+     if words.size > 3
+       row[:nombre] = words[0] + ' ' + words[1]
+       row[:apellidos] = words[2] + ' ' + words[3]
+     else
+       row[:nombre] = words[0]
+       row[:apellidos] = (words[1] || '') + ' ' + (words[2] || '')
+     end
      p row if @verbose
      row
    end
@@ -198,27 +219,6 @@ class FechaDatosTransformation
     ano = row['Año'];
     mes = (meses.index((row['Mes'] || '').downcase) || 0) + 1
     row[:fecha_datos] = Date.new(ano.to_i, mes.to_i, 01)
-    p row if @verbose
-    row
-  end
-end
-
-class NombreTransformation
-  def initialize(verbose:)
-    @verbose = verbose
-  end
-
-  def process(row)
-    p row if @verbose
-    input = row['Nombre completo del candidato'];
-    words = input.split
-    if words.size > 3
-      row[:nombre] = words[0] + ' ' + words[1]
-      row[:apellidos] = words[2] + ' ' + words[3]
-    else
-      row[:nombre] = words[0]
-      row[:apellidos] = (words[1] || '') + ' ' + (words[2] || '')
-    end
     p row if @verbose
     row
   end

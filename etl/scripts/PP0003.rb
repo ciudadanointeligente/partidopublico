@@ -43,7 +43,7 @@ transform PartidoLookup, verbose: false, results: results
 
 # show_me!
 
-transform TrimestreInformadoTransformation, verbose: false
+transform TrimestreInformadoLookup, verbose: false
 
 # transform RegionLookup, verbose: false, results: results
 

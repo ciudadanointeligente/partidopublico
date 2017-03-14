@@ -5,9 +5,9 @@ results[:partido_errors] = 0
 results[:partido_success] = 0
 results[:fecha_errors] = 0
 results[:fecha_success] = 0
-results[:organo_internos] = { :new_organo_internos => 0 ,
-                              :organo_internos_errors => 0,
-                              :found_organo_internos => 0 }
+results[:cargos] = { :new_cargos => 0 ,
+                     :cargos_errors => 0,
+                     :found_cargos => 0 }
 
 results[:start_time] = 0
 results[:end_time] = 0
@@ -40,11 +40,11 @@ transform PartidoLookup, verbose: false, results: results
 
 # show_me!
 
-transform TrimestreInformadoTransformation, verbose: false
+transform TrimestreInformadoLookup, verbose: false
 
-transform OrganoInternoTransformation, verbose: false
+transform OrganoInternoLookup, verbose: false
 
-transform TipoCargoTransformation, verbose: false
+transform TipoCargoLookup, verbose: false
 
 # transform NombreTransformation, verbose: false
 
@@ -56,7 +56,7 @@ transform PersonaTransformation, verbose: false
 
 #transform ResultsTransformation, results: results
 
-# destination OrganoInternosDestination, results: results, verbose: true
+# destination CargosDestination, results: results, verbose: true
 
 destination ErrorCSVDestination, filename: log_path + job_name + '.log'
 
