@@ -78,40 +78,43 @@ class OrganoInternosDestination
   end
 end
 
-# class CargosDestination
-#   def initialize(results:, verbose:)
-#     @verbose = verbose
-#     @results = results
-#     @cargos_errors = 0
-#     @new_cargos = 0
-#     @found_cargos = 0
-#   end
-#
-# #nombre_desde_el_modelo: row[:nombre_desde_headers]
-#   def write(row)
-#     cargo = Cargo.where(partido_id: row[:partido_id]).first_or_initialize,
-#
-#     if cargo.id.nil?
-#       cargo.save
-#       if cargo.errors.any?
-#         row[:error_log] = row[:error_log].to_s + ', ' + cargo.errors.messages.to_s
-#         @cargos_errors = @cargos_errors + 1
-#       else
-#         # cargo.trimestre_informados << trimestre_informado unless trimestre_informado.in?(cargo.trimestre_informados)
-#         @new_cargos = @new_cargos + 1
-#       end
-#     else
-#       # cargo.trimestre_informados << trimestre_informado unless trimestre_informado.in?(cargo.trimestre_informados)
-#       @found_cargos = @found_cargos + 1
-#     end
-#   end
-#
-#   def close
-#     @results[:cargos] = { :new_cargos => @new_cargos ,
-#                           :cargos_errors => @cargos_errors,
-#                           :found_cargos => @found_cargos }
-#   end
-# end
+class CargosDestination
+  def initialize(results:, verbose:)
+    @verbose = verbose
+    @results = results
+    @cargos_errors = 0
+    @new_cargos = 0
+    @found_cargos = 0
+  end
+
+#nombre_desde_el_modelo: row[:nombre_desde_headers]
+  def write(row)
+    cargo = Cargo.where(partido_id: row[:partido_id],
+                        persona_id: row[:persona_id],
+                        organo_interno_id: row[:organo_interno_id],
+                        tipo_cargo_id: row[:tipo_cargo_id]).first_or_initialize
+
+    if cargo.id.nil?
+      cargo.save
+      if cargo.errors.any?
+        row[:error_log] = row[:error_log].to_s + ', ' + cargo.errors.messages.to_s
+        @cargos_errors = @cargos_errors + 1
+      else
+        # cargo.trimestre_informados << trimestre_informado unless trimestre_informado.in?(cargo.trimestre_informados)
+        @new_cargos = @new_cargos + 1
+      end
+    else
+      # cargo.trimestre_informados << trimestre_informado unless trimestre_informado.in?(cargo.trimestre_informados)
+      @found_cargos = @found_cargos + 1
+    end
+  end
+
+  def close
+    @results[:cargos] = { :new_cargos => @new_cargos ,
+                          :cargos_errors => @cargos_errors,
+                          :found_cargos => @found_cargos }
+  end
+end
 
 class NormasDestination
   def initialize(results:, verbose:)

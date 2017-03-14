@@ -59,7 +59,7 @@ transform PersonaLookupAndInsert, verbose: false, results: results
 
 #transform ResultsTransformation, results: results
 
-# destination CargosDestination, results: results, verbose: true
+destination CargosDestination, results: results, verbose: true
 
 destination ErrorCSVDestination, filename: log_path + job_name + '.log'
 
