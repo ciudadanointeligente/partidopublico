@@ -116,9 +116,10 @@ class TipoCargoLookup
    end
  end
 
-class PersonaTransformation
-   def initialize(verbose:)
+class PersonaLookupAndInsert
+   def initialize(verbose:, results:)
      @verbose = verbose
+     @results = results
    end
 
    def process(row)
@@ -127,9 +128,23 @@ class PersonaTransformation
     #  apellidos = [:apellidos]
     #  rut = [:rut]
 
-     persona = Persona.where(partido_id: row[:partido_id], nombre: row[:persona]).first_or_initialize
-     row[:una_persona_id] = persona.id
-    #  p "persona: " + persona.nombre
+     persona = Persona.where(partido_id: row[:partido_id], nombre: row[:nombre],
+     apellidos: row[:apellidos]).first_or_initialize
+     if persona.id.nil?
+       persona.rut = SecureRandom.uuid
+       persona.save
+       if persona.errors.any?
+         row[:error_log] = row[:error_log].to_s + ', ' + persona.errors.messages.to_s
+         @results[:personas][:personas_errors] += 1
+       else
+         row[:persona_id] = persona.id
+        #  p "persona: " + persona.to_s
+        @results[:personas][:new_personas] += 1
+       end
+     else
+       row[:persona_id] = persona.id
+       @results[:personas][:found_personas] += 1
+      end
      p row if @verbose
      row
    end
@@ -142,7 +157,7 @@ class PersonaTransformation
 
    def process(row)
      p row if @verbose
-     input = row['Nombre completo del candidato'];
+     input = row[:persona];
      words = input.split
      if words.size > 3
        row[:nombre] = words[0] + ' ' + words[1]

@@ -8,6 +8,9 @@ results[:fecha_success] = 0
 results[:cargos] = { :new_cargos => 0 ,
                      :cargos_errors => 0,
                      :found_cargos => 0 }
+results[:personas] = { :new_personas => 0 ,
+                     :personas_errors => 0,
+                     :found_personas => 0 }
 
 results[:start_time] = 0
 results[:end_time] = 0
@@ -46,9 +49,9 @@ transform OrganoInternoLookup, verbose: false
 
 transform TipoCargoLookup, verbose: false
 
-# transform NombreTransformation, verbose: false
+transform NombreTransformation, verbose: false
 
-transform PersonaTransformation, verbose: false
+transform PersonaLookupAndInsert, verbose: false, results: results
 
 #transform ComunaLookup, verbose: false, results: results
 
