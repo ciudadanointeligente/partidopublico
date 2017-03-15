@@ -93,19 +93,25 @@ class CargosDestination
                         persona_id: row[:persona_id],
                         organo_interno_id: row[:organo_interno_id],
                         tipo_cargo_id: row[:tipo_cargo_id]).first_or_initialize
+    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
 
-    if cargo.id.nil?
-      cargo.save
-      if cargo.errors.any?
-        row[:error_log] = row[:error_log].to_s + ', ' + cargo.errors.messages.to_s
-        @cargos_errors = @cargos_errors + 1
-      else
-        # cargo.trimestre_informados << trimestre_informado unless trimestre_informado.in?(cargo.trimestre_informados)
-        @new_cargos = @new_cargos + 1
-      end
+    if row[:organo_interno_id].nil?
+      row[:error_log] = row[:error_log].to_s + 'Cannot save Cargo without Organo Interno, ' + cargo.errors.messages.to_s
+      @cargos_errors = @cargos_errors + 1
     else
-      # cargo.trimestre_informados << trimestre_informado unless trimestre_informado.in?(cargo.trimestre_informados)
-      @found_cargos = @found_cargos + 1
+      if cargo.id.nil?
+        cargo.save
+        if cargo.errors.any?
+          row[:error_log] = row[:error_log].to_s + ', ' + cargo.errors.messages.to_s
+          @cargos_errors = @cargos_errors + 1
+        else
+          cargo.trimestre_informados << trimestre_informado unless trimestre_informado.in?(cargo.trimestre_informados)
+          @new_cargos = @new_cargos + 1
+        end
+      else
+        cargo.trimestre_informados << trimestre_informado unless trimestre_informado.in?(cargo.trimestre_informados)
+        @found_cargos = @found_cargos + 1
+      end
     end
   end
 

@@ -78,43 +78,76 @@ class TrimestreInformadoLookup
 end
 
 class OrganoInternoLookup
-  def initialize(verbose:)
+  def initialize(verbose:, results:)
     @verbose = verbose
+    @results = results
   end
 
   def process(row)
     p row if @verbose
+    input = row.clone if @verbose
     nombre = row[:unidades_u_rganos_internos]
 
-    organo_interno = OrganoInterno.where(partido_id: row[:partido_id], nombre: nombre).first_or_initialize
+    organo_interno = OrganoInterno.where(partido_id: row[:partido_id],
+                                         nombre: nombre).first_or_initialize
+
+    if organo_interno.id.nil?
+      @results[:organo_internos][:not_found_organo_internos] += 1
+    else
+      @results[:organo_internos][:found_organo_internos] += 1
+    end
     row[:organo_interno_id] = organo_interno.id
-    # p "organo_interno: " + organo_interno.to_s
-    p row if @verbose
+    if @verbose
+      output = row.clone
+      p 'ORGANO INTERNO LOOKUP >>'
+      input.map{|k, v| output.delete(k)}
+      p output
+    end
     row
   end
 end
 
 class TipoCargoLookup
-   def initialize(verbose:)
-     @verbose = verbose
-   end
+  def initialize(verbose:, results:)
+    @verbose = verbose
+    @results = results
+  end
 
-   def process(row)
-     p row if @verbose
-     titulo = [:cargo]
-     cargo_interno = [:cargo_interno]
-     representante = [:representante]
-     autoridad = [:autoridad]
-     candidato = [:candidato]
+  def process(row)
+    # p row if @verbose
+    input = row.clone if @verbose
+    titulo = row[:cargo]
+    #  cargo_interno = [:cargo_interno]
+    #  representante = [:representante]
+    #  autoridad = [:autoridad]
+    #  candidato = [:candidato]
 
-     tipo_cargo = TipoCargo.where(partido_id: row[:partido_id], titulo: row[:cargo]).first_or_create
-     row[:tipo_cargo_id] = tipo_cargo.id
-    #  p "tipo_cargo: " + tipo_cargo.to_s
+    tipo_cargo = TipoCargo.where(partido_id: row[:partido_id], titulo: titulo,
+                                cargo_interno: true).first_or_initialize
 
-     p row if @verbose
-     row
-   end
- end
+    if tipo_cargo.id.nil?
+      tipo_cargo.save
+      if tipo_cargo.errors.any?
+        row[:error_log] = row[:error_log].to_s + ', ' + tipo_cargo.errors.messages.to_s
+        @results[:tipo_cargos][:tipo_cargos_errors] += 1
+      else
+        row[:tipo_cargo_id] = tipo_cargo.id
+        @results[:tipo_cargos][:new_tipo_cargos] += 1
+      end
+    else
+      row[:tipo_cargo_id] = tipo_cargo.id
+      @results[:tipo_cargos][:found_tipo_cargos] += 1
+    end
+
+    if @verbose
+      output = row.clone
+      p 'TIPO CARGO LOOKUP >>'
+      input.map{|k, v| output.delete(k)}
+      p output
+    end
+    row
+  end
+end
 
 class PersonaLookupAndInsert
    def initialize(verbose:, results:)
@@ -123,10 +156,10 @@ class PersonaLookupAndInsert
    end
 
    def process(row)
-     p row if @verbose
     #  nombre = [:nombre]
     #  apellidos = [:apellidos]
     #  rut = [:rut]
+     input = row.clone if @verbose
 
      persona = Persona.where(partido_id: row[:partido_id], nombre: row[:nombre],
      apellidos: row[:apellidos]).first_or_initialize
@@ -145,7 +178,12 @@ class PersonaLookupAndInsert
        row[:persona_id] = persona.id
        @results[:personas][:found_personas] += 1
       end
-     p row if @verbose
+      if @verbose
+        output = row.clone
+        p 'PERSONA LOOKUP >>'
+        input.map{|k, v| output.delete(k)}
+        p output
+      end
      row
    end
  end
@@ -157,7 +195,7 @@ class PersonaLookupAndInsert
 
    def process(row)
      p row if @verbose
-     input = row[:persona];
+     input = row[:persona]
      words = input.split
      if words.size > 3
        row[:nombre] = words[0] + ' ' + words[1]

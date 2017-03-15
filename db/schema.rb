@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170310152447) do
+ActiveRecord::Schema.define(version: 20170315134831) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,6 +126,14 @@ ActiveRecord::Schema.define(version: 20170310152447) do
   add_index "cargos", ["persona_id"], name: "index_cargos_on_persona_id", using: :btree
   add_index "cargos", ["region_id"], name: "index_cargos_on_region_id", using: :btree
   add_index "cargos", ["tipo_cargo_id"], name: "index_cargos_on_tipo_cargo_id", using: :btree
+
+  create_table "cargos_trimestre_informados", id: false, force: :cascade do |t|
+    t.integer "cargo_id",               null: false
+    t.integer "trimestre_informado_id", null: false
+  end
+
+  add_index "cargos_trimestre_informados", ["cargo_id"], name: "t_i_cargo_id", using: :btree
+  add_index "cargos_trimestre_informados", ["trimestre_informado_id"], name: "t_i_c_trimestre_id", using: :btree
 
   create_table "categoria_financieras", force: :cascade do |t|
     t.integer  "partido_id"

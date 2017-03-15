@@ -121,45 +121,45 @@ class Partido < ActiveRecord::Base
       end
 
       #self.marco_general = MarcoGeneral.new
-      self.marco_interno = MarcoInterno.new
-      # self.marco_interno.documentos << Documento.new(descripcion:"Marco Normativo Interno", obligatorio: true)
-      # self.marco_interno.documentos << Documento.new(descripcion:"Código de Ética", obligatorio: false)
-      # self.marco_interno.documentos << Documento.new(descripcion:"Procedimiento de Prevención de la Corrupción", obligatorio: false)
-      # self.marco_interno.documentos << Documento.new(descripcion:"Reseña Histórica", obligatorio: false)
-      # self.marco_interno.documentos << Documento.new(descripcion:"Declaración de Principios", obligatorio: true)
-      # self.marco_interno.documentos << Documento.new(descripcion:"Programa Base", obligatorio: false)
-      # self.marco_interno.documentos << Documento.new(descripcion:"Estructura Orgánica", obligatorio: true)
-      self.marco_interno.documentos << Documento.new(descripcion:"Estatutos del partido", obligatorio: true)
-      self.marco_interno.documentos << Documento.new(descripcion:"Declaración de principios", obligatorio: true)
-      self.marco_interno.documentos << Documento.new(descripcion:"Reglamiento interno", obligatorio: true)
-
-      self.organo_internos << OrganoInterno.new(nombre:"Órgano ejecutivo")
-      self.organo_internos << OrganoInterno.new(nombre:"Órgano intermedio colegiado")
-      self.organo_internos << OrganoInterno.new(nombre:"Tribunal supremo")
-      self.tramites << Tramite.new(nombre:"Afiliación")
-      self.tramites << Tramite.new(nombre:"Desfiliación")
-      self.personas << Persona.new( rut:"14132725-"+self.id.to_s,
-                                    nombre:"Ejemplo",
-                                    apellidos:"Ejemplo Ejemplo",
-                                    genero:"Otro",
-                                    telefono:"+56912345678",
-                                    email:"ejemplo@ejemplo.com",
-                                    intereses:"http://www.servel.cl/intereses",
-                                    patrimonio:"http://www.servel.cl/patrimonio",
-                                    fecha_nacimiento:Date.new(1900, 01, 01),
-                                    nivel_estudios:"Ejemplo",
-                                    afiliado:true,
-                                    ano_inicio_militancia:"1950",
-                                    bio:"Ejemplo Biografía"
-                                    )
-      self.tipo_cargos << TipoCargo.new(titulo:"Alcalde", representante: true)
-      self.tipo_cargos << TipoCargo.new(titulo:"Concejal", representante: true)
-      self.tipo_cargos << TipoCargo.new(titulo:"Senador", representante: true)
-      self.tipo_cargos << TipoCargo.new(titulo:"Diputado", representante: true)
-      self.tipo_cargos << TipoCargo.new(titulo:"Presidente", representante: true)
-      self.tipo_cargos << TipoCargo.new(titulo:"Consejero Regional", representante: true)
-
-      self.save
+      # self.marco_interno = MarcoInterno.new
+      # # self.marco_interno.documentos << Documento.new(descripcion:"Marco Normativo Interno", obligatorio: true)
+      # # self.marco_interno.documentos << Documento.new(descripcion:"Código de Ética", obligatorio: false)
+      # # self.marco_interno.documentos << Documento.new(descripcion:"Procedimiento de Prevención de la Corrupción", obligatorio: false)
+      # # self.marco_interno.documentos << Documento.new(descripcion:"Reseña Histórica", obligatorio: false)
+      # # self.marco_interno.documentos << Documento.new(descripcion:"Declaración de Principios", obligatorio: true)
+      # # self.marco_interno.documentos << Documento.new(descripcion:"Programa Base", obligatorio: false)
+      # # self.marco_interno.documentos << Documento.new(descripcion:"Estructura Orgánica", obligatorio: true)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Estatutos del partido", obligatorio: true)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Declaración de principios", obligatorio: true)
+      # self.marco_interno.documentos << Documento.new(descripcion:"Reglamiento interno", obligatorio: true)
+      #
+      # self.organo_internos << OrganoInterno.new(nombre:"Órgano ejecutivo")
+      # self.organo_internos << OrganoInterno.new(nombre:"Órgano intermedio colegiado")
+      # self.organo_internos << OrganoInterno.new(nombre:"Tribunal supremo")
+      # self.tramites << Tramite.new(nombre:"Afiliación")
+      # self.tramites << Tramite.new(nombre:"Desfiliación")
+      # self.personas << Persona.new( rut:"14132725-"+self.id.to_s,
+      #                               nombre:"Ejemplo",
+      #                               apellidos:"Ejemplo Ejemplo",
+      #                               genero:"Otro",
+      #                               telefono:"+56912345678",
+      #                               email:"ejemplo@ejemplo.com",
+      #                               intereses:"http://www.servel.cl/intereses",
+      #                               patrimonio:"http://www.servel.cl/patrimonio",
+      #                               fecha_nacimiento:Date.new(1900, 01, 01),
+      #                               nivel_estudios:"Ejemplo",
+      #                               afiliado:true,
+      #                               ano_inicio_militancia:"1950",
+      #                               bio:"Ejemplo Biografía"
+      #                               )
+      # self.tipo_cargos << TipoCargo.new(titulo:"Alcalde", representante: true)
+      # self.tipo_cargos << TipoCargo.new(titulo:"Concejal", representante: true)
+      # self.tipo_cargos << TipoCargo.new(titulo:"Senador", representante: true)
+      # self.tipo_cargos << TipoCargo.new(titulo:"Diputado", representante: true)
+      # self.tipo_cargos << TipoCargo.new(titulo:"Presidente", representante: true)
+      # self.tipo_cargos << TipoCargo.new(titulo:"Consejero Regional", representante: true)
+      #
+      # self.save
     end
 
     def to_s

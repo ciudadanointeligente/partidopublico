@@ -5,10 +5,19 @@ results[:partido_errors] = 0
 results[:partido_success] = 0
 results[:fecha_errors] = 0
 results[:fecha_success] = 0
-results[:cargos] = { :new_cargos => 0 ,
+
+results[:organo_internos] = { :not_found_organo_internos => 0,
+                              :found_organo_internos => 0 }
+
+results[:cargos] = { :new_cargos => 0,
                      :cargos_errors => 0,
                      :found_cargos => 0 }
-results[:personas] = { :new_personas => 0 ,
+
+results[:tipo_cargos] = { :new_tipo_cargos => 0,
+                     :tipo_cargos_errors => 0,
+                     :found_tipo_cargos => 0 }
+
+results[:personas] = { :new_personas => 0,
                      :personas_errors => 0,
                      :found_personas => 0 }
 
@@ -45,9 +54,9 @@ transform PartidoLookup, verbose: false, results: results
 
 transform TrimestreInformadoLookup, verbose: false
 
-transform OrganoInternoLookup, verbose: false
+transform OrganoInternoLookup, verbose: true, results: results
 
-transform TipoCargoLookup, verbose: false
+transform TipoCargoLookup, verbose: false, results: results
 
 transform NombreTransformation, verbose: false
 

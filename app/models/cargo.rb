@@ -40,6 +40,8 @@ class Cargo < ActiveRecord::Base
   belongs_to :distrito
   belongs_to :organo_interno
 
+  has_and_belongs_to_many :trimestre_informados
+
   def lugar
     if !self.comuna.blank? || !self.region.blank?
       return self.comuna.to_s + " - " + self.region.to_s
