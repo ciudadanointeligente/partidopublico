@@ -148,9 +148,11 @@ class PartidosController < ApplicationController
 
   def normas_internas
     @normas_internas = []
-    @partido.marco_interno.documentos.each do |d|
-      if !d.archivo_file_name.nil?
-        @normas_internas.push d
+    unless @partido.marco_interno.nil?
+      @partido.marco_interno.documentos.each do |d|
+        if !d.archivo_file_name.nil?
+          @normas_internas.push d
+        end
       end
     end
   end

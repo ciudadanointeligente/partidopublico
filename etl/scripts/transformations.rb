@@ -195,7 +195,7 @@ class PersonaLookupAndInsert
 
    def process(row)
      p row if @verbose
-     input = row[:persona]
+     input = row[:persona].downcase.titleize
      words = input.split
      if words.size > 3
        row[:nombre] = words[0] + ' ' + words[1]
