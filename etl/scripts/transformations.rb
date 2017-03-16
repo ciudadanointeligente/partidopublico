@@ -116,14 +116,16 @@ class TipoCargoLookup
   def process(row)
     # p row if @verbose
     input = row.clone if @verbose
-    titulo = row[:cargo]
-    #  cargo_interno = [:cargo_interno]
-    #  representante = [:representante]
-    #  autoridad = [:autoridad]
-    #  candidato = [:candidato]
+    if !row[:cargo].nil?
+      titulo = row[:cargo]
 
-    tipo_cargo = TipoCargo.where(partido_id: row[:partido_id], titulo: titulo,
-                                cargo_interno: true).first_or_initialize
+      tipo_cargo = TipoCargo.where(partido_id: row[:partido_id], titulo: titulo,
+                                  cargo_interno: true).first_or_initialize
+    else
+      titulo = 'candidato a ' + row[:tipo_eleccin].to_s + ' por ' + row[:territorio_electoral].to_s
+      tipo_cargo = TipoCargo.where(partido_id: row[:partido_id], titulo: titulo,
+                                  candidato: true).first_or_initialize
+    end
 
     if tipo_cargo.id.nil?
       tipo_cargo.save
@@ -195,7 +197,7 @@ class PersonaLookupAndInsert
 
    def process(row)
      p row if @verbose
-     input = row[:persona].downcase.titleize
+     input = (row[:persona] || row[:nombre_completo_del_candidato]).downcase.titleize
      words = input.split
      if words.size > 3
        row[:nombre] = words[0] + ' ' + words[1]
@@ -232,18 +234,23 @@ class ComunaLookup
   def initialize(verbose:, results:)
     @verbose = verbose
     @results = results
-
   end
 
   def process(row)
     # comuna = Comuna.find_by_nombre(row['Comuna'])
-    string = row[:comuna] || ''
+    string = row[:nombre_comuna] || ''
     comuna = Comuna.where('lower(nombre) = ?', string.downcase).first
 
-    comuna_id = comuna.nil? ? nil : comuna.id
-    region_id = comuna.nil? ? nil : comuna.provincia.region.id
-    row[:comuna_id] = comuna_id
-    row[:region_id] = region_id
+    if comuna.nil?
+      row[:comuna_id] = nil
+      @results[:comunas][:comunas_errors] += 1
+    else
+      row[:comuna_id] = comuna.id
+      @results[:comunas][:found_comunas] += 1
+    end
+
+    # region_id = comuna.nil? ? nil : comuna.provincia.region.id
+    # row[:region_id] = region_id
     row
   end
 end
@@ -269,7 +276,7 @@ class FechaDatosTransformation
 
   def process(row)
     p row if @verbose
-    ano = row['Año'];
+    ano = row['Año']
     mes = (meses.index((row['Mes'] || '').downcase) || 0) + 1
     row[:fecha_datos] = Date.new(ano.to_i, mes.to_i, 01)
     p row if @verbose
@@ -278,21 +285,23 @@ class FechaDatosTransformation
 end
 
 class TerritorioElectoralTransformation
-  def initialize(verbose:)
+  def initialize(verbose:, results:)
     @verbose = verbose
+    @results = results
   end
 
   def process(row)
     p row if @verbose
-    input = row['Tipo Elección'];
+    input = row[:tipo_eleccin].downcase
 
     case input
-    when 'Concejal'
-      row['Comuna'] = row['Territorio electoral']
-    when 'Alcalde'
-      row['Comuna'] = row['Territorio electoral']
+    when 'concejal'
+      row[:nombre_comuna] = row[:territorio_electoral].downcase
+
+    when 'alcaldicia'
+      row[:nombre_comuna] = row[:territorio_electoral].downcase
     else
-      row[':comuna'] = nil
+      row[:nombre_comuna] = nil
     end
 
     p row if @verbose
@@ -321,16 +330,16 @@ class ResultsTransformation
     else
       @results[:fecha_success] = @results[:fecha_success] + 1
     end
-    if row[:comuna_id].nil?
-      @results[:comuna_id_errors] = @results[:comuna_id_errors] + 1
-    else
-      @results[:comuna_id_success] = @results[:comuna_id_success] + 1
-    end
-    if row[:comuna].nil?
-      @results[:comuna_errors] = @results[:comuna_errors] + 1
-    else
-      @results[:comuna_success] = @results[:comuna_success] + 1
-    end
+    # if row[:comuna_id].nil?
+    #   @results[:comuna_id_errors] = @results[:comuna_id_errors] + 1
+    # else
+    #   @results[:comuna_id_success] = @results[:comuna_id_success] + 1
+    # end
+    # if row[:comuna].nil?
+    #   @results[:comuna_errors] = @results[:comuna_errors] + 1
+    # else
+    #   @results[:comuna_success] = @results[:comuna_success] + 1
+    # end
     row
   end
 end

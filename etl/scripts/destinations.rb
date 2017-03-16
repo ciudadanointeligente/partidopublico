@@ -89,16 +89,24 @@ class CargosDestination
 
 #nombre_desde_el_modelo: row[:nombre_desde_headers]
   def write(row)
-    cargo = Cargo.where(partido_id: row[:partido_id],
-                        persona_id: row[:persona_id],
-                        organo_interno_id: row[:organo_interno_id],
-                        tipo_cargo_id: row[:tipo_cargo_id]).first_or_initialize
+
+    if !row[:organo_interno_id].nil?
+      cargo = Cargo.where(partido_id: row[:partido_id],
+                          persona_id: row[:persona_id],
+                          organo_interno_id: row[:organo_interno_id],
+                          tipo_cargo_id: row[:tipo_cargo_id]).first_or_initialize
+    else
+      cargo = Cargo.where(partido_id: row[:partido_id],
+                          persona_id: row[:persona_id],
+                          comuna_id: row[:comuna_id],
+                          tipo_cargo_id: row[:tipo_cargo_id]).first_or_initialize
+    end
     trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
 
-    if row[:organo_interno_id].nil?
-      row[:error_log] = row[:error_log].to_s + 'Cannot save Cargo without Organo Interno, ' + cargo.errors.messages.to_s
-      @cargos_errors = @cargos_errors + 1
-    else
+    # if (row[:organo_interno_id] || row[:comuna_id]).nil?
+    #   row[:error_log] = row[:error_log].to_s + 'Cannot save Cargo without Organo Interno, ' + cargo.errors.messages.to_s
+    #   @cargos_errors = @cargos_errors + 1
+    # else
       if cargo.id.nil?
         cargo.save
         if cargo.errors.any?
@@ -112,7 +120,7 @@ class CargosDestination
         cargo.trimestre_informados << trimestre_informado unless trimestre_informado.in?(cargo.trimestre_informados)
         @found_cargos = @found_cargos + 1
       end
-    end
+    # end
   end
 
   def close

@@ -54,7 +54,7 @@ transform PartidoLookup, verbose: false, results: results
 
 transform TrimestreInformadoLookup, verbose: false
 
-transform OrganoInternoLookup, verbose: true, results: results
+transform OrganoInternoLookup, verbose: false, results: results
 
 transform TipoCargoLookup, verbose: false, results: results
 

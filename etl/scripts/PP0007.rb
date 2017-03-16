@@ -10,6 +10,10 @@ results[:territorios_electorales] = { :new_territorios_electorales => 0,
                      :territorios_electorales_errors => 0,
                      :found_territorios_electorales => 0 }
 
+results[:cargos] = { :new_cargos => 0,
+                     :cargos_errors => 0,
+                     :found_cargos => 0 }
+
 results[:tipo_cargos] = { :new_tipo_cargos => 0,
                      :tipo_cargos_errors => 0,
                      :found_tipo_cargos => 0 }
@@ -17,6 +21,9 @@ results[:tipo_cargos] = { :new_tipo_cargos => 0,
 results[:personas] = { :new_personas => 0,
                      :personas_errors => 0,
                      :found_personas => 0 }
+
+results[:comunas] = { :comunas_errors => 0,
+                     :found_comunas => 0 }
 
 results[:start_time] = 0
 results[:end_time] = 0
@@ -47,7 +54,10 @@ end
 
 transform PartidoLookup, verbose: false, results: results
 
+transform TerritorioElectoralTransformation, verbose: false, results: results
 # show_me!
+
+transform ComunaLookup, verbose: false, results: results
 
 transform TrimestreInformadoLookup, verbose: false
 
@@ -57,13 +67,13 @@ transform NombreTransformation, verbose: false
 
 transform PersonaLookupAndInsert, verbose: false, results: results
 
-# transform ComunaLookup, verbose: false, results: results
+
 
 #transform AddressTransformation, verbose: false
 
 #transform ResultsTransformation, results: results
 
-destination CargosDestination, results: results, verbose: true
+destination CargosDestination, results: results, verbose: false
 
 destination ErrorCSVDestination, filename: log_path + job_name + '.log'
 
