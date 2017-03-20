@@ -2,71 +2,71 @@
 <h3>Estructura orgánica</h3>
 
 <%= form_tag partido_estructura_organica_path, :method =>  :get, class: 'form-inline' do |f| %>
-  <%= text_field_tag :q, nil, placeholder: "Ingresar nombre o apellido" %>
-  <%= select_tag :region, options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Seleccionar región", class: "form-control" %>
-  <!-- <%= select_tag :genero, options_for_select(["Masculino", "Femenino"], params[:genero] || ""), include_blank: "Seleccionar género", class: "form-control" %> -->
-  <%= submit_tag 'Filtrar' %>
+<%= text_field_tag :q, nil, placeholder: "Ingresar nombre o apellido" %>
+<%= select_tag :region, options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Seleccionar región", class: "form-control" %>
+<!-- <%= select_tag :genero, options_for_select(["Masculino", "Femenino"], params[:genero] || ""), include_blank: "Seleccionar género", class: "form-control" %> -->
+<%= submit_tag 'Filtrar' %>
 <% end %>
 
 <% cnt = 0 %>
 <% @datos.each_with_index do |a, index| %>
-  <div class="panel-group" id="accordion" role="tablist">
-    <div class="panel panel-default">
-      <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
-        <h4 class="panel-title intern">
-          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
-            <%= a[:organo_interno].nombre %> <span class="badge"><%= a[:miembros].count %></span><span class="sr-only"><p>Se han encontrado <%= a[:miembros].count %> miembros.</p></span>
-          </a>
-          <a class="pull-right "data-toggle="modal" data-target="#myModal-<%= index %>">
-            <i class="fa fa-info-circle" aria-hidden="true"></i>
-          </a>
-        </h4>
-      </div>
-      <% if a[:miembros].any? %>
-      <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
-        <div class="panel-body">
-          <div class="table-responsive">
-            <table class="table">
-                <thead>
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Cargo</th>
-                    <th>Intereses</th>
-                    <th>Patrimoni0</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% a[:miembros].each do |cargo| %>
-                  <tr>
-                    <td><%= cargo[:persona].nombre + ' ' + cargo[:persona].apellidos  %></td>
-                    <td><%= cargo[:tipo_cargo].titulo  %></td>
-                    <td><%= !cargo[:persona].intereses.blank?  ? link_to(cargo[:persona].intereses, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %> </td>
-                    <td><%= !cargo[:persona].patrimonio.blank? ? link_to(cargo[:persona].patrimonio, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %> </td>
-                  </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
+<div class="panel-group" id="accordion" role="tablist">
+  <div class="panel panel-default">
+    <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
+      <h4 class="panel-title intern">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
+          <%= a[:organo_interno].nombre %> <span class="badge"><%= a[:miembros].count %></span><span class="sr-only"><p>Se han encontrado <%= a[:miembros].count %> miembros.</p></span>
+        </a>
+        <a class="pull-right "data-toggle="modal" data-target="#myModal-<%= index %>">
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+        </a>
+      </h4>
+    </div>
+    <% if a[:miembros].any? %>
+    <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Cargo</th>
+                <th>Intereses</th>
+                <th>Patrimoni0</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% a[:miembros].each do |cargo| %>
+              <tr>
+                <td><%= cargo[:persona].nombre + ' ' + cargo[:persona].apellidos  %></td>
+                <td><%= cargo[:tipo_cargo].titulo  %></td>
+                <td><%= !cargo[:persona].intereses.blank?  ? link_to(cargo[:persona].intereses, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %> </td>
+                <td><%= !cargo[:persona].patrimonio.blank? ? link_to(cargo[:persona].patrimonio, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %> </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
         </div>
       </div>
-      <% end %>
     </div>
+    <% end %>
+  </div>
 
-    <div class="modal fade" id="myModal-<%= index %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-<%= index %>">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel-<%= index %>"><h4>Funciones del <%= a[:organo_interno].nombre %></h4></h4>
-          </div>
-          <div class="modal-body">
-            <%= a[:organo_interno].funciones %>
-          </div>
+  <div class="modal fade" id="myModal-<%= index %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-<%= index %>">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel-<%= index %>"><h4>Funciones del <%= a[:organo_interno].nombre %></h4></h4>
+        </div>
+        <div class="modal-body">
+          <%= a[:organo_interno].funciones %>
         </div>
       </div>
     </div>
   </div>
-  <% cnt = cnt + 1 %>
+</div>
+<% cnt = cnt + 1 %>
 <% end %>
 <% if cnt == 0 %>
 <p class="text-info"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> No se encontraron registros</p>

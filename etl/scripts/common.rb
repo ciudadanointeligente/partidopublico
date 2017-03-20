@@ -36,7 +36,7 @@ def job_name
 end
 
 def meses
-  ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiemre','octubre','noviembre','diciembre']
+  ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
 end
 
 def dos2unix

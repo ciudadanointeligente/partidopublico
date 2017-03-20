@@ -197,7 +197,11 @@ class PersonaLookupAndInsert
 
    def process(row)
      p row if @verbose
-     input = (row[:persona] || row[:nombre_completo_del_candidato]).downcase.titleize
+     if !row[:persona].nil?
+       input = row[:persona].downcase.titleize
+     else
+       input = row[:nombre_completo_del_candidato].downcase.titleize
+     end
      words = input.split
      if words.size > 3
        row[:nombre] = words[0] + ' ' + words[1]
@@ -238,8 +242,16 @@ class ComunaLookup
 
   def process(row)
     # comuna = Comuna.find_by_nombre(row['Comuna'])
-    string = row[:nombre_comuna] || ''
-    comuna = Comuna.where('lower(nombre) = ?', string.downcase).first
+    if !row[:nombre_comuna].nil?
+      string = row[:nombre_comuna] || ''
+      comuna = Comuna.where('lower(nombre) = ?', string.downcase).first
+    else
+      string = row[:comuna]
+      comuna = Comuna.where('lower(nombre) = ?', string.downcase).first
+    end
+
+    region_id = comuna.nil? ? nil : comuna.provincia.region.id
+    row[:region_id] = region_id
 
     if comuna.nil?
       row[:comuna_id] = nil
@@ -249,8 +261,7 @@ class ComunaLookup
       @results[:comunas][:found_comunas] += 1
     end
 
-    # region_id = comuna.nil? ? nil : comuna.provincia.region.id
-    # row[:region_id] = region_id
+    p row if @verbose
     row
   end
 end

@@ -32,6 +32,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Paginación
+gem 'kaminari'
+
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 gem 'rails-i18n'

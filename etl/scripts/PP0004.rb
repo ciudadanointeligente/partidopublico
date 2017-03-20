@@ -5,7 +5,7 @@ results[:partido_errors] = 0
 results[:partido_success] = 0
 results[:fecha_errors] = 0
 results[:fecha_success] = 0
-results[:organo_internos] = { :new_organo_internos => 0 ,
+results[:organo_internos] = { :new_organo_internos => 0,
                               :organo_internos_errors => 0,
                               :found_organo_internos => 0 }
 
@@ -17,11 +17,11 @@ pre_process do
   p "*** Start #{job_name}  MIGRATION #{results[:start_time]}***"
 end
 
-# p input_path + "#{job_name}.csv"
 files = Dir[input_path + "#{job_name}.csv"]
-# p files
+
 dos2unix
 encoding = find_encoding
+
 if encoding == 'unknown-8bit'
   iconv(encoding: 'windows-1252')
 elsif encoding == 'iso-8859-1'

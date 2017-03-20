@@ -518,9 +518,9 @@ class PartidosController < ApplicationController
       @datos << {:organo_interno => o, :miembros => members}
     end
     # p 'imprimiendo los datos aquí >>>>>' + @datos.to_s
-
+    # @organos_internos = OrganoInterno.page(params[:page]).per(10)
+    # @miembros = Persona.page(params[:page]).per(10)
   end
-
   def actividades_publicas
   end
 
