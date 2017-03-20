@@ -5,16 +5,16 @@ results[:partido_errors] = 0
 results[:partido_success] = 0
 results[:fecha_errors] = 0
 results[:fecha_success] = 0
-results[:organo_internos] = { :new_organo_internos => 0,
+results[:organo_internos] = {:new_organo_internos => 0,
                               :organo_internos_errors => 0,
-                              :found_organo_internos => 0 }
+                              :found_organo_internos => 0}
 
 results[:start_time] = 0
 results[:end_time] = 0
 
 pre_process do
   results[:start_time] = Time.now
-  p "*** Start #{job_name}  MIGRATION #{results[:start_time]}***"
+  p "*** Start #{job_name} Organos Internos MIGRATION #{results[:start_time]}***"
 end
 
 files = Dir[input_path + "#{job_name}.csv"]
@@ -35,28 +35,17 @@ files.each_with_index do |file, index|
   source SymbolsCSVSource, filename: file, results: results, print_headers: true
 end
 
+transform PartidoLookup, verbose: verbosing, results: results
 
-transform PartidoLookup, verbose: false, results: results
+transform TrimestreInformadoLookup, verbose: verbosing
 
-# show_me!
-
-transform TrimestreInformadoLookup, verbose: false
-
-# transform RegionLookup, verbose: false, results: results
-
-#transform ComunaLookup, verbose: false, results: results
-
-#transform AddressTransformation, verbose: false
-
-#transform ResultsTransformation, results: results
-
-destination OrganoInternosDestination, results: results, verbose: true
+destination OrganoInternosDestination, verbose: verbosing, results: results
 
 destination ErrorCSVDestination, filename: log_path + job_name + '.log'
 
-limit ENV['LIMIT']
-
 # show_me!
+
+limit ENV['LIMIT']
 
 post_process do
   results[:end_time] = Time.now

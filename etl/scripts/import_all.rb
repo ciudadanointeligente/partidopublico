@@ -1,4 +1,3 @@
-
 date = ENV['DATE']
 if date == nil
   system("bundle exec kiba etl/scripts/PP0002.rb")

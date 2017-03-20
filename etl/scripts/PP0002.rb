@@ -30,7 +30,7 @@ files.each_with_index do |file, index|
   source SymbolsCSVSource, filename: file, results: results , print_headers: true
 end
 
-transform PartidoLookupAndInsert, verbose: false, results: results
+transform PartidoLookupAndInsert, verbose: verbosing, results: results
 
 destination ErrorCSVDestination, filename: log_path + job_name + '.log'
 

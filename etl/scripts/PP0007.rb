@@ -6,38 +6,38 @@ results[:partido_success] = 0
 results[:fecha_errors] = 0
 results[:fecha_success] = 0
 
-results[:territorios_electorales] = { :new_territorios_electorales => 0,
-                     :territorios_electorales_errors => 0,
-                     :found_territorios_electorales => 0 }
+results[:territorios_electorales] = {:new_territorios_electorales => 0,
+                                     :territorios_electorales_errors => 0,
+                                     :found_territorios_electorales => 0}
 
-results[:cargos] = { :new_cargos => 0,
-                     :cargos_errors => 0,
-                     :found_cargos => 0 }
+results[:cargos] = {:new_cargos => 0,
+                    :cargos_errors => 0,
+                    :found_cargos => 0}
 
-results[:tipo_cargos] = { :new_tipo_cargos => 0,
-                     :tipo_cargos_errors => 0,
-                     :found_tipo_cargos => 0 }
+results[:tipo_cargos] = {:new_tipo_cargos => 0,
+                         :tipo_cargos_errors => 0,
+                         :found_tipo_cargos => 0}
 
-results[:personas] = { :new_personas => 0,
-                     :personas_errors => 0,
-                     :found_personas => 0 }
+results[:personas] = {:new_personas => 0,
+                      :personas_errors => 0,
+                      :found_personas => 0}
 
-results[:comunas] = { :comunas_errors => 0,
-                     :found_comunas => 0 }
+results[:comunas] = {:comunas_errors => 0,
+                     :found_comunas => 0}
 
 results[:start_time] = 0
 results[:end_time] = 0
 
 pre_process do
   results[:start_time] = Time.now
-  p "*** Start #{job_name}  MIGRATION #{results[:start_time]}***"
+  p "*** Start #{job_name} Candidatos MIGRATION #{results[:start_time]}***"
 end
 
-# p input_path + "#{job_name}.csv"
 files = Dir[input_path + "#{job_name}.csv"]
-# p files
+
 dos2unix
 encoding = find_encoding
+
 if encoding == 'unknown-8bit'
   iconv(encoding: 'windows-1252')
 elsif encoding == 'iso-8859-1'
@@ -52,34 +52,27 @@ files.each_with_index do |file, index|
 end
 
 
-transform PartidoLookup, verbose: false, results: results
+transform PartidoLookup, verbose: verbosing, results: results
 
-transform TerritorioElectoralTransformation, verbose: false, results: results
-# show_me!
+transform TerritorioElectoralTransformation, verbose: verbosing, results: results
 
-transform ComunaLookup, verbose: false, results: results
+transform ComunaLookup, verbose: verbosing, results: results
 
-transform TrimestreInformadoLookup, verbose: false
+transform TrimestreInformadoLookup, verbose: verbosing
 
-transform TipoCargoLookup, verbose: false, results: results
+transform TipoCargoLookup, verbose: verbosing, results: results
 
-transform NombreTransformation, verbose: false
+transform NombreTransformation, verbose: verbosing
 
-transform PersonaLookupAndInsert, verbose: false, results: results
+transform PersonaLookupAndInsert, verbose: verbosing, results: results
 
-
-
-#transform AddressTransformation, verbose: false
-
-#transform ResultsTransformation, results: results
-
-destination CargosDestination, results: results, verbose: false
+destination CargosDestination, verbose: verbosing, results: results
 
 destination ErrorCSVDestination, filename: log_path + job_name + '.log'
 
-limit ENV['LIMIT']
-
 # show_me!
+
+limit ENV['LIMIT']
 
 post_process do
   results[:end_time] = Time.now

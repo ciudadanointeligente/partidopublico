@@ -10,6 +10,22 @@ def n_a_values
   ['Sin información', 'Sin informacion', 'N/A']
 end
 
+def verbosing
+  verbose = ENV['VERBOSE']
+
+  unless verbose.nil?
+    verbose = verbose.downcase
+  end
+
+  if verbose == 'true'
+    verbose = true
+  elsif verbose.nil?
+    verbose = false
+  else
+    verbose = false
+  end
+  @verbose = verbose
+end
 
 def etl_path
   # File.dirname(__FILE__).parent

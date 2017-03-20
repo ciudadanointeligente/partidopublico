@@ -7,24 +7,22 @@ results[:partido_errors] = 0
 results[:partido_success] = 0
 results[:fecha_errors] = 0
 results[:fecha_success] = 0
-# results[:comuna_id_errors] = 0
-# results[:comuna_id_success] = 0
-results[:comunas] = { :comunas_errors => 0,
-                     :found_comunas => 0 }
+results[:comunas] = {:comunas_errors => 0,
+                     :found_comunas => 0}
 
 results[:start_time] = 0
 results[:end_time] = 0
 
 pre_process do
   results[:start_time] = Time.now
-  p "*** Start #{job_name}  MIGRATION #{results[:start_time]}***"
+  p "*** Start #{job_name} Sedes MIGRATION #{results[:start_time]}***"
 end
 
-# p input_path + "#{job_name}.csv"
 files = Dir[input_path + "#{job_name}.csv"]
-# p files
+
 dos2unix
 encoding = find_encoding
+
 if encoding == 'unknown-8bit'
   iconv(encoding: 'windows-1252')
 elsif encoding == 'iso-8859-1'
@@ -38,31 +36,23 @@ files.each_with_index do |file, index|
   source SymbolsCSVSource, filename: file, results: results, print_headers: true
 end
 
+transform PartidoLookup, verbose: verbosing, results: results
 
-transform PartidoLookup, verbose: false, results: results
+transform TrimestreInformadoLookup, verbose: verbosing
 
-# show_me!
+transform ComunaLookup, verbose: verbosing, results: results
 
-transform TrimestreInformadoLookup, verbose: false
-
-# transform RegionLookup, verbose: false, results: results
-
-transform ComunaLookup, verbose: false, results: results
-
-transform AddressTransformation, verbose: false
+transform AddressTransformation, verbose: verbosing
 
 transform ResultsTransformation, results: results
 
-destination SedesDestination, results: results,
-                              verbose: false
+destination SedesDestination, verbose: verbosing, results: results
 
 destination ErrorCSVDestination, filename: log_path + job_name + '.log'
 
-
+# show_me!
 
 limit ENV['LIMIT']
-
-# show_me!
 
 post_process do
   results[:end_time] = Time.now
