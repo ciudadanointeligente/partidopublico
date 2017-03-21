@@ -4,6 +4,7 @@
 <%= form_tag partido_estructura_organica_path, :method =>  :get, class: 'form-inline' do |f| %>
 <%= text_field_tag :q, nil, placeholder: "Ingresar nombre o apellido" %>
 <%= select_tag :region, options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Seleccionar región", class: "form-control" %>
+<%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s"), include_blank: false, class: "form-control" %>
 <!-- <%= select_tag :genero, options_for_select(["Masculino", "Femenino"], params[:genero] || ""), include_blank: "Seleccionar género", class: "form-control" %> -->
 <%= submit_tag 'Filtrar' %>
 <% end %>
@@ -68,6 +69,8 @@
 </div>
 <% cnt = cnt + 1 %>
 <% end %>
+<%= paginate @organos_internos %>
+<%= page_entries_info @organos_internos %>
 <% if cnt == 0 %>
 <p class="text-info"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> No se encontraron registros</p>
 <% end %>

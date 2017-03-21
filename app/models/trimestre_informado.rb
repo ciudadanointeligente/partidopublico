@@ -14,4 +14,8 @@ class TrimestreInformado < ActiveRecord::Base
   has_and_belongs_to_many :organo_internos
   has_and_belongs_to_many :cargos
 
+  def to_s
+    self.ano.to_s + ' ' + self.trimestre.to_s
+  end
+  
 end
