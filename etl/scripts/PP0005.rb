@@ -21,6 +21,10 @@ results[:personas] = {:new_personas => 0,
                       :personas_errors => 0,
                       :found_personas => 0}
 
+results[:trimestres_informados] = {:new => 0,
+                                   :errors => 0,
+                                   :found => 0}
+
 results[:start_time] = 0
 results[:end_time] = 0
 
@@ -42,7 +46,7 @@ end
 
 files.each_with_index do |file, index|
 
-  p "Processing file : " + file.to_s
+  # p "Processing file : " + file.to_s
 
   source SymbolsCSVSource, filename: file, results: results, print_headers: true
 end
@@ -50,7 +54,7 @@ end
 
 transform PartidoLookup, verbose: verbosing, results: results
 
-transform TrimestreInformadoLookup, verbose: verbosing
+transform TrimestreInformadoLookup, verbose: verbosing,  results: results
 
 transform OrganoInternoLookup, verbose: verbosing, results: results
 

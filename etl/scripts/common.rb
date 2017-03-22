@@ -10,6 +10,10 @@ def n_a_values
   ['Sin información', 'Sin informacion', 'N/A']
 end
 
+def ordinal_trimestres
+  ['e', 'a', 'j', 'o']
+end
+
 def verbosing
   verbose = ENV['VERBOSE']
 

@@ -53,7 +53,7 @@ class OrganoInternosDestination
   organo_interno = OrganoInterno.where(partido_id: row[:partido_id],
                                          nombre: row[:unidades_u_rganos_internos],
                                          funciones: row[:facultades_funciones_y_atribuciones]).first_or_initialize
-  trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+  trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id]) unless row[:trimestre_informado_id].nil?
 
     if organo_interno.id.nil?
       organo_interno.save
@@ -62,12 +62,16 @@ class OrganoInternosDestination
         row[:error_log] = row[:error_log].to_s + ', ' + organo_interno.errors.messages.to_s
         @organo_internos_errors = @organo_internos_errors + 1
       else
-        organo_interno.trimestre_informados << trimestre_informado unless trimestre_informado.in?(organo_interno.trimestre_informados)
+        unless trimestre_informado.nil?
+          organo_interno.trimestre_informados << trimestre_informado unless trimestre_informado.in?(organo_interno.trimestre_informados)
+        end
         @new_organo_internos = @new_organo_internos + 1
       end
     else
-      organo_interno.trimestre_informados << trimestre_informado unless trimestre_informado.in?(organo_interno.trimestre_informados)
-      @found_organo_internos = @found_organo_internos + 1
+      unless trimestre_informado.nil?
+        organo_interno.trimestre_informados << trimestre_informado unless trimestre_informado.in?(organo_interno.trimestre_informados)
+      end
+    @found_organo_internos = @found_organo_internos + 1
     end
   end
 

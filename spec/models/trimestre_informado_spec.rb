@@ -7,6 +7,7 @@
 #  trimestre  :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  ordinal    :integer
 #
 
 require 'rails_helper'

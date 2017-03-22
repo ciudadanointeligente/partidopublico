@@ -61,17 +61,43 @@ end
 
 
 class TrimestreInformadoLookup
-  def initialize(verbose:)
+  def initialize(verbose:, results:)
     @verbose = verbose
+    @results = results
   end
 
   def process(row)
     p row if @verbose
     ano = row[:ao_informado].to_i;
     trimestre = row[:trimestre_informado];
+    # p "TRIMESTRE >>> " + trimestre.to_s
+    ordinal_trimestre = ordinal_trimestres.index(trimestre[0].downcase) unless trimestre.nil?
 
-    trimestre_informado = TrimestreInformado.where(ano: ano, trimestre: trimestre).first_or_create
-    row[:trimestre_informado_id] = trimestre_informado.id
+    if ordinal_trimestre.nil?
+      row[:error_log] = row[:error_log].to_s + ', trimestre_informado no válido'
+      @results[:trimestres_informados][:errors] += 1
+    else
+      # p "AÑÑO>>>" + ano.to_s
+      # p "TRIMES3>>>>" + trimestre.to_s
+      # p "ORDINAL>>>>" + ordinal_trimestre.to_s
+      trimestre_informado = TrimestreInformado.where(ano: ano, trimestre: trimestre,
+                                                      ordinal: ordinal_trimestre).first_or_initialize
+
+      if trimestre_informado.id.nil?
+        trimestre_informado.save
+        if trimestre_informado.errors.any?
+          row[:error_log] = row[:error_log].to_s + ', ' + trimestre_informado.errors.messages.to_s
+          @results[:trimestres_informados][:errors] += 1
+          row[:trimestre_informado_id] = nil
+        else
+          row[:trimestre_informado_id] = trimestre_informado.id
+          @results[:trimestres_informados][:new] += 1
+        end
+      else
+        row[:trimestre_informado_id] = trimestre_informado.id
+        @results[:trimestres_informados][:found] += 1
+      end
+    end
     p row if @verbose
     row
   end
@@ -99,7 +125,7 @@ class OrganoInternoLookup
     row[:organo_interno_id] = organo_interno.id
     if @verbose
       output = row.clone
-      p 'ORGANO INTERNO LOOKUP >>'
+      # p 'ORGANO INTERNO LOOKUP >>'
       input.map{|k, v| output.delete(k)}
       p output
     end
@@ -143,7 +169,7 @@ class TipoCargoLookup
 
     if @verbose
       output = row.clone
-      p 'TIPO CARGO LOOKUP >>'
+      # p 'TIPO CARGO LOOKUP >>'
       input.map{|k, v| output.delete(k)}
       p output
     end

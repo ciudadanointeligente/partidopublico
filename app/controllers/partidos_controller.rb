@@ -487,20 +487,23 @@ class PartidosController < ApplicationController
   end
 
   def estructura_organica
-    @organos_internos = OrganoInterno.where(:partido_id => @partido.id).page(params[:page]).per(3)
-    @datos = []
-    @trimestres_informados = []
 
+    temp_trimestres_informados = []
     @partido.organo_internos.each do |o|
-
       o.trimestre_informados.each do |t|
 
-        hash_trimestre_informados = {id: t.id, trimestre: t.ano.to_s + ' ' + t.trimestre.to_s}
-        @trimestres_informados.push(t)
-        @trimestres_informados.uniq!
+        temp_trimestres_informados.push(t)
 
       end
     end
+
+    @trimestres_informados = temp_trimestres_informados.uniq.sort.reverse
+    # p "TRIMESTRES INFORMADOOOOOSSSS>>>>" + @trimestres_informados.to_s
+    params[:trimestre_informado_id] = @trimestres_informados.last.id if params[:trimestre_informado_id].nil?
+    @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+    @organos_internos = @trimestre_informado.organo_internos.where(:partido_id => @partido.id).page(params[:page]).per(3)
+    @datos = []
+
 
     @organos_internos.each_with_index do |o, i|
       # p o

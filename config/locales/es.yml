@@ -77,8 +77,8 @@ es:
         desc: "↓"
   views:
     pagination:
-      next: "Siguiente"
-      previous: "Anterior"
+      next: "->"
+      previous: "<-"
       last: "Fin"
       first: "Inicio"
       truncate: "&hellip;"
