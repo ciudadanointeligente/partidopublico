@@ -499,16 +499,15 @@ class PartidosController < ApplicationController
 
     @trimestres_informados = temp_trimestres_informados.uniq.sort.reverse
     # p "TRIMESTRES INFORMADOOOOOSSSS>>>>" + @trimestres_informados.to_s
-    params[:trimestre_informado_id] = @trimestres_informados.last.id if params[:trimestre_informado_id].nil?
+    params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
     @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
     @organos_internos = @trimestre_informado.organo_internos.where(:partido_id => @partido.id).page(params[:page]).per(3)
     @datos = []
 
 
     @organos_internos.each_with_index do |o, i|
-      # p o
       members = []
-      data = o.cargos
+      data = @trimestre_informado.cargos.where(partido: @partido, organo_interno: o)
       if !params[:region].blank?
         data = data.where(region_id: params[:region])
       end
