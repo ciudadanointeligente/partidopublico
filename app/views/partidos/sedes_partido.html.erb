@@ -1,5 +1,9 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Presencia nacional</li><li>Domicilio y sedes de contacto</li></ol>
 <h3>Domicilio y sedes de contacto</h3>
+<%= form_tag partido_sedes_partido_path, :method =>  :get, class: 'form-inline' do |f| %>
+  <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
+  <%= submit_tag 'Filtrar', class: "btn" %>
+<% end %>
 <div class="table-responsive">
   <table class="table">
     <thead>

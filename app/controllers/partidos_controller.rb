@@ -264,10 +264,27 @@ class PartidosController < ApplicationController
   end
 
   def sedes_partido
+
+    temp_trimestres_informados = []
+    @partido.sedes.each do |s|
+      s.trimestre_informados.each do |t|
+
+        temp_trimestres_informados.push(t)
+
+      end
+    end
+
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
+    # p "TRIMESTRES INFORMADOOOOOSSSS>>>>" + @trimestres_informados.to_s
+    params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+    @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
     @datos_sedes = []
     region_ids_with_sede = @partido.sedes.select(:region_id).uniq.map(&:region_id)
     region_ids_with_sede.each do |r|
-      sedes = @partido.sedes.where(region_id: r)
+      sedes = @trimestre_informado.sedes.where(region_id: r)
+      # filter_by = @trimestre_informado.sedes.where(sede_id: r)
       all_sedes = []
       sedes.each do |s|
         all_sedes.push( { 'direccion' => s.direccion, 'contacto' => s.contacto, 'comuna' => s.comuna.nombre } )
