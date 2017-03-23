@@ -113,6 +113,17 @@ class Partido < ActiveRecord::Base
       return cargos_internos
     end
 
+    def candidatos
+      cargos = Cargo.where partido: self.id
+      candidatos = []
+      cargos.each do |c|
+        if c.tipo_cargo.candidato
+          candidatos << c
+        end
+      end
+      return candidatos
+    end
+
     def initialize_transparency_settings
 
       superadmins = Admin.where is_superadmin: true

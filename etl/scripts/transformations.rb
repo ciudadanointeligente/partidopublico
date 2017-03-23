@@ -148,7 +148,7 @@ class TipoCargoLookup
       tipo_cargo = TipoCargo.where(partido_id: row[:partido_id], titulo: titulo,
                                   cargo_interno: true).first_or_initialize
     else
-      titulo = 'candidato a ' + row[:tipo_eleccin].to_s + ' por ' + row[:territorio_electoral].to_s
+      titulo = 'Candidato a ' + row[:tipo_eleccin].to_s + ' ' + row[:ao_eleccin]
       tipo_cargo = TipoCargo.where(partido_id: row[:partido_id], titulo: titulo,
                                   candidato: true).first_or_initialize
     end

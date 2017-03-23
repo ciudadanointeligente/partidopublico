@@ -497,7 +497,8 @@ class PartidosController < ApplicationController
       end
     end
 
-    @trimestres_informados = temp_trimestres_informados.uniq.sort.reverse
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
     # p "TRIMESTRES INFORMADOOOOOSSSS>>>>" + @trimestres_informados.to_s
     params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
     @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
@@ -563,10 +564,26 @@ class PartidosController < ApplicationController
   end
 
   def publicacion_candidatos
+
+    temp_trimestres_informados = []
+    @partido.candidatos.each do |c|
+      c.trimestre_informados.each do |t|
+
+        temp_trimestres_informados.push(t)
+
+      end
+    end
+
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
+    # p "TRIMESTRES INFORMADOOOOOSSSS>>>>" + @trimestres_informados.to_s
+    params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+    @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
     @publicacion_candidatos = []
     tc_candidatos = @partido.tipo_cargos.where(candidato:true)
     tc_candidatos.each do |tc|
-      filter_by = @partido.cargos.where(tipo_cargo_id:tc)
+      filter_by = @trimestre_informado.cargos.where(tipo_cargo_id:tc)
       if !params[:q].blank?
         n = params[:q].split(" ")[0]
         a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
