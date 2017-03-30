@@ -276,7 +276,6 @@ class PartidosController < ApplicationController
 
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
-    # p "TRIMESTRES INFORMADOOOOOSSSS>>>>" + @trimestres_informados.to_s
     params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
     @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
@@ -284,7 +283,6 @@ class PartidosController < ApplicationController
     region_ids_with_sede = @partido.sedes.select(:region_id).uniq.map(&:region_id)
     region_ids_with_sede.each do |r|
       sedes = @trimestre_informado.sedes.where(region_id: r)
-      # filter_by = @trimestre_informado.sedes.where(sede_id: r)
       all_sedes = []
       sedes.each do |s|
         all_sedes.push( { 'direccion' => s.direccion, 'contacto' => s.contacto, 'comuna' => s.comuna.nombre } )
@@ -593,7 +591,6 @@ class PartidosController < ApplicationController
 
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
-    # p "TRIMESTRES INFORMADOOOOOSSSS>>>>" + @trimestres_informados.to_s
     params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
     @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 

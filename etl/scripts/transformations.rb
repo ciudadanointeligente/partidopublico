@@ -125,7 +125,6 @@ class OrganoInternoLookup
     row[:organo_interno_id] = organo_interno.id
     if @verbose
       output = row.clone
-      # p 'ORGANO INTERNO LOOKUP >>'
       input.map{|k, v| output.delete(k)}
       p output
     end
@@ -317,6 +316,38 @@ class FechaDatosTransformation
     mes = (meses.index((row['Mes'] || '').downcase) || 0) + 1
     row[:fecha_datos] = Date.new(ano.to_i, mes.to_i, 01)
     p row if @verbose
+    row
+  end
+end
+
+class IngresoOrdinarioLookup
+  def initialize(verbose:, results:)
+    @verbose = verbose
+    @results = results
+  end
+
+  def process(row)
+    p row if @verbose
+    concepto = row[:item].downcase.titleize
+    importe = row[:monto]
+
+    ingreso_ordinario = IngresoOrdinario.where(partido_id: row[:partido_id],
+                                               concepto: concepto,
+                                               importe: importe).first_or_initialize
+
+    if ingreso_ordinario.id.nil?
+      ingreso_ordinario.save
+      if ingreso_ordinario.errors.any?
+        row[:error_log] = row[:error_log].to_s + ', ' + ingreso_ordinario.errors.messages.to_s
+        @results[:ingreso_ordinarios][:errors] += 1
+      else
+        row[:ingreso_ordinario_id] = ingreso_ordinario.id
+        @results[:ingreso_ordinarios][:new] += 1
+      end
+    else
+      row[:ingreso_ordinario_id] = ingreso_ordinario.id
+      @results[:ingreso_ordinario][:found] += 1
+    end
     row
   end
 end
