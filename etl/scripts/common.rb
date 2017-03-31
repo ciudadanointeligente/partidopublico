@@ -6,6 +6,12 @@ require_relative 'sources'
 require_relative 'destinations'
 require_relative 'transformations'
 
+def clean_number(string)
+string = string.to_s
+string.delete! ','
+string.delete! '.'
+end
+
 def n_a_values
   ['Sin información', 'Sin informacion', 'N/A']
 end

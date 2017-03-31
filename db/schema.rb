@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170322153158) do
+ActiveRecord::Schema.define(version: 20170331182846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -288,6 +288,14 @@ ActiveRecord::Schema.define(version: 20170322153158) do
   end
 
   add_index "ingreso_ordinarios", ["partido_id"], name: "index_ingreso_ordinarios_on_partido_id", using: :btree
+
+  create_table "ingreso_ordinarios_trimestre_informados", id: false, force: :cascade do |t|
+    t.integer "ingreso_ordinario_id",   null: false
+    t.integer "trimestre_informado_id", null: false
+  end
+
+  add_index "ingreso_ordinarios_trimestre_informados", ["ingreso_ordinario_id"], name: "t_i_ingreso_ordinario_id", using: :btree
+  add_index "ingreso_ordinarios_trimestre_informados", ["trimestre_informado_id"], name: "t_i_i_o_trimestre_id", using: :btree
 
   create_table "item_contables", force: :cascade do |t|
     t.integer  "categoria_financiera_id"

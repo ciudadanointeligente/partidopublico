@@ -1,6 +1,7 @@
 require 'csv'
 require 'awesome_print'
 require 'facets/kernel/deep_copy'
+require_relative 'common'
 require_relative '../../config/environment'
 
 class SedesDestination
@@ -131,6 +132,48 @@ class CargosDestination
     @results[:cargos] = { :new_cargos => @new_cargos ,
                           :cargos_errors => @cargos_errors,
                           :found_cargos => @found_cargos }
+  end
+end
+
+class IngresoOrdinarioDestination
+  def initialize(results:, verbose:)
+    @verbose = verbose
+    @results = results
+    @new = 0
+    @errors = 0
+    @found = 0
+  end
+
+  def write(row)
+
+    monto = clean_number(row[:monto])
+    ingreso_ordinario = IngresoOrdinario.where(partido_id: row[:partido_id],
+                                               concepto: row[:item].downcase,
+                                               importe: row[:monto]).first_or_initialize
+
+    p 'CONCEPTO >>>' + row[:item].to_s
+    p 'IMPORTE >>>>' + row[:monto].to_s
+    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+
+    if ingreso_ordinario.id.nil?
+      ingreso_ordinario.save
+      if ingreso_ordinario.errors.any?
+        row[:error_log] = row[:error_log].to_s + ', ' + ingreso_ordinario.errors.messages.to_s
+        @results[:ingreso_ordinarios][:errors] += 1
+      else
+        ingreso_ordinario.trimestre_informados << trimestre_informado unless trimestre_informado.in?(ingreso_ordinario.trimestre_informados)
+        @results[:ingreso_ordinarios][:new] += 1
+      end
+    else
+      ingreso_ordinario.trimestre_informados << trimestre_informado unless trimestre_informado.in?(ingreso_ordinario.trimestre_informados)
+      @results[:ingreso_ordinarios][:found] += 1
+    end
+  end
+
+  def close
+    @results[:ingreso_ordinarios] = {new: @results[:ingreso_ordinarios][:new],
+                       errors: @results[:ingreso_ordinarios][:errors],
+                       found: @results[:ingreso_ordinarios][:found]}
   end
 end
 

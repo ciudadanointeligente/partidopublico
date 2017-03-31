@@ -336,7 +336,7 @@ class IngresoOrdinarioLookup
                                                importe: importe).first_or_initialize
 
     if ingreso_ordinario.id.nil?
-      ingreso_ordinario.save
+      # ingreso_ordinario.save
       if ingreso_ordinario.errors.any?
         row[:error_log] = row[:error_log].to_s + ', ' + ingreso_ordinario.errors.messages.to_s
         @results[:ingreso_ordinarios][:errors] += 1
