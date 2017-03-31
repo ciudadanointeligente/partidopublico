@@ -346,7 +346,7 @@ class IngresoOrdinarioLookup
       end
     else
       row[:ingreso_ordinario_id] = ingreso_ordinario.id
-      @results[:ingreso_ordinario][:found] += 1
+      @results[:ingreso_ordinarios][:found] += 1
     end
     row
   end
