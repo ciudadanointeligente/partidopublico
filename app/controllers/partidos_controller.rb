@@ -336,16 +336,32 @@ class PartidosController < ApplicationController
   end
 
   def finanzas_1
-    @fechas_datos = IngresoOrdinario.where(partido: @partido).uniq.pluck(:fecha_datos).sort
-    if params[:fecha_datos]
-      @fecha = Date.new(params[:fecha_datos].split("-")[0].to_i, params[:fecha_datos].split("-")[1].to_i, params[:fecha_datos].split("-")[2].to_i)
-    else
-      @fecha = @fechas_datos.last
+    # @fechas_datos = IngresoOrdinario.where(partido: @partido).uniq.pluck(:fecha_datos).sort
+    # if params[:fecha_datos]
+    #   @fecha = Date.new(params[:fecha_datos].split("-")[0].to_i, params[:fecha_datos].split("-")[1].to_i, params[:fecha_datos].split("-")[2].to_i)
+    # else
+    #   @fecha = @fechas_datos.last
+    # end
+
+    temp_trimestres_informados = []
+    @partido.ingreso_ordinarios.each do |io|
+      io.trimestre_informados.each do |t|
+
+        temp_trimestres_informados.push(t)
+
+      end
     end
-    ingresos_ordinarios = IngresoOrdinario.where(:partido => @partido, :fecha_datos => @fecha )
+
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
+    params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+    @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+    ingresos_ordinarios = @trimestre_informado.ingreso_ordinarios.where(:partido_id => @partido.id)
     max_value = ingresos_ordinarios.maximum(:importe)
     @datos_ingresos_ordinarios = []
     ingresos_ordinarios.each do |io|
+      filter_by = @trimestre_informado.ingreso_ordinarios.where(ingreso_ordinario_id: io)
       val = (100 * (io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
       line ={ 'text'=> io.concepto, 'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe, delimiter: ""), 'percentage' => val }
       @datos_ingresos_ordinarios << line

@@ -151,8 +151,6 @@ class IngresoOrdinarioDestination
                                                concepto: row[:item].downcase,
                                                importe: row[:monto]).first_or_initialize
 
-    p 'CONCEPTO >>>' + row[:item].to_s
-    p 'IMPORTE >>>>' + row[:monto].to_s
     trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
 
     if ingreso_ordinario.id.nil?
@@ -168,6 +166,7 @@ class IngresoOrdinarioDestination
       ingreso_ordinario.trimestre_informados << trimestre_informado unless trimestre_informado.in?(ingreso_ordinario.trimestre_informados)
       @results[:ingreso_ordinarios][:found] += 1
     end
+      p 'TRIMESTRES INFORMADOSSS >>>>' + trimestre_informado.to_s
   end
 
   def close
