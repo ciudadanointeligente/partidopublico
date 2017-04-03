@@ -166,7 +166,6 @@ class IngresoOrdinarioDestination
       ingreso_ordinario.trimestre_informados << trimestre_informado unless trimestre_informado.in?(ingreso_ordinario.trimestre_informados)
       @results[:ingreso_ordinarios][:found] += 1
     end
-      p 'TRIMESTRES INFORMADOSSS >>>>' + trimestre_informado.to_s
   end
 
   def close

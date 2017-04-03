@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170331182846) do
+ActiveRecord::Schema.define(version: 20170403204402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -258,6 +258,16 @@ ActiveRecord::Schema.define(version: 20170331182846) do
   end
 
   add_index "eleccion_populars", ["partido_id"], name: "index_eleccion_populars_on_partido_id", using: :btree
+
+  create_table "etl_runs", force: :cascade do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string   "job_name"
+    t.text     "results"
+    t.integer  "input_rows"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "ingreso_campanas", force: :cascade do |t|
     t.integer  "partido_id"

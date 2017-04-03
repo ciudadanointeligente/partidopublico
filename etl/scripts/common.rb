@@ -7,9 +7,17 @@ require_relative 'destinations'
 require_relative 'transformations'
 
 def clean_number(string)
-string = string.to_s
-string.delete! ','
-string.delete! '.'
+  string = string.to_s
+  string.delete! ','
+  string.delete! '.'
+end
+
+def save_etl_run(job_name, results)
+  EtlRun.create(start_time: results[:start_time],
+                end_time: results[:end_time],
+                job_name: job_name,
+                results: results.to_s,
+                input_rows:results[:input_rows])
 end
 
 def n_a_values
