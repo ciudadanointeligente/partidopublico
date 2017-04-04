@@ -2,19 +2,20 @@
 #
 # Table name: transferencias
 #
-#  id           :integer          not null, primary key
-#  partido_id   :integer
-#  fecha_datos  :date
-#  numero       :string
-#  razon_social :string
-#  rut          :string
-#  region_id    :integer
-#  descripcion  :string
-#  monto        :integer
-#  categoria    :string
-#  fecha        :date
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  id              :integer          not null, primary key
+#  partido_id      :integer
+#  fecha_datos     :date
+#  numero          :string
+#  razon_social    :string
+#  rut             :string
+#  region_id       :integer
+#  descripcion     :string
+#  monto           :integer
+#  categoria       :string
+#  fecha           :date
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  persona_natural :string
 #
 # Indexes
 #
@@ -27,6 +28,7 @@ class Transferencia < ActiveRecord::Base
   belongs_to :partido
   belongs_to :region
 
+  has_and_belongs_to_many :trimestre_informados
 
   def self.import(file, partido_id, email)
     partido = Partido.find partido_id

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170403204402) do
+ActiveRecord::Schema.define(version: 20170404184342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -602,12 +602,21 @@ ActiveRecord::Schema.define(version: 20170403204402) do
     t.integer  "monto"
     t.string   "categoria"
     t.date     "fecha"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "persona_natural"
   end
 
   add_index "transferencias", ["partido_id"], name: "index_transferencias_on_partido_id", using: :btree
   add_index "transferencias", ["region_id"], name: "index_transferencias_on_region_id", using: :btree
+
+  create_table "transferencias_trimestre_informados", id: false, force: :cascade do |t|
+    t.integer "transferencia_id",       null: false
+    t.integer "trimestre_informado_id", null: false
+  end
+
+  add_index "transferencias_trimestre_informados", ["transferencia_id"], name: "t_i_transferencia_id", using: :btree
+  add_index "transferencias_trimestre_informados", ["trimestre_informado_id"], name: "t_i_t_trimestre_id", using: :btree
 
   create_table "trimestre_informados", force: :cascade do |t|
     t.integer  "ano"

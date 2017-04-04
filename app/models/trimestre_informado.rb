@@ -15,6 +15,7 @@ class TrimestreInformado < ActiveRecord::Base
   has_and_belongs_to_many :organo_internos
   has_and_belongs_to_many :cargos
   has_and_belongs_to_many :ingreso_ordinarios
+  has_and_belongs_to_many :transferencias
   validates_presence_of :ordinal
 
   def to_s

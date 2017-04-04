@@ -10,7 +10,7 @@ results[:trimestres_informados] = {:new => 0,
                                   :errors => 0,
                                   :found => 0}
 
-results[:ingreso_ordinarios] = {new: 0,
+results[:transferencias] = {new: 0,
                    errors: 0,
                    found: 0}
 
@@ -44,9 +44,7 @@ transform PartidoLookup, verbose: verbosing, results: results
 
 transform TrimestreInformadoLookup, verbose: verbosing,  results: results
 
-# transform IngresoOrdinarioLookup, verbose: verbosing, results: results
-
-destination IngresoOrdinarioDestination, verbose: verbosing, results: results
+destination TransferenciaDestination, verbose: verbosing, results: results
 
 destination ErrorCSVDestination, filename: log_path + job_name + '.log'
 

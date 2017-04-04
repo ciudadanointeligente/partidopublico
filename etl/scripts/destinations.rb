@@ -92,7 +92,7 @@ class CargosDestination
     @found_cargos = 0
   end
 
-#nombre_desde_el_modelo: row[:nombre_desde_headers]
+  #nombre_desde_el_modelo: row[:nombre_desde_headers]
   def write(row)
 
     if !row[:organo_interno_id].nil?
@@ -172,6 +172,49 @@ class IngresoOrdinarioDestination
     @results[:ingreso_ordinarios] = {new: @results[:ingreso_ordinarios][:new],
                        errors: @results[:ingreso_ordinarios][:errors],
                        found: @results[:ingreso_ordinarios][:found]}
+  end
+end
+
+class TransferenciaDestination
+  def initialize(results:, verbose:)
+    @verbose = verbose
+    @results = results
+    @new = 0
+    @errors = 0
+    @found = 0
+  end
+  #nombre_desde_el_modelo: row[:nombre_desde_headers]
+  def write(row)
+    monto = clean_number(row[:monto])
+    transferencia = Transferencia.where(partido_id: row[:partido_id],
+                                        # fecha: row[:fecha_transferencia],
+                                        monto: row[:monto],
+                                        descripcion: row[:objeto_de_la_transferencia],
+                                        razon_social: row[:persona_jurdica_receptora],
+                                        rut: row[:rut_persona_jurdica],
+                                        persona_natural: row[:persona_natural_receptora].downcase.titleize).first_or_initialize
+
+    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+
+    if transferencia.id.nil?
+      transferencia.save
+      if transferencia.errors.any?
+        row[:error_log] = row[:error_log].to_s + ', ' + transferencia.errors.messages.to_s
+        @results[:transferencias][:errors] += 1
+      else
+        transferencia.trimestre_informados << trimestre_informado unless trimestre_informado.in?(transferencia.trimestre_informados)
+        @results[:transferencias][:new] += 1
+      end
+    else
+      transferencia.trimestre_informados << trimestre_informado unless trimestre_informado.in?(transferencia.trimestre_informados)
+      @results[:transferencias][:found] += 1
+    end
+  end
+
+  def close
+    @results[:transferencias] = {new: @results[:transferencias][:new],
+                       errors: @results[:transferencias][:errors],
+                       found: @results[:transferencias][:found]}
   end
 end
 
