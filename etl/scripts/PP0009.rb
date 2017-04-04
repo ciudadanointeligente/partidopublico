@@ -6,28 +6,13 @@ results[:partido_success] = 0
 results[:fecha_errors] = 0
 results[:fecha_success] = 0
 
-results[:territorios_electorales] = {:new_territorios_electorales => 0,
-                                     :territorios_electorales_errors => 0,
-                                     :found_territorios_electorales => 0}
-
-results[:cargos] = {:new_cargos => 0,
-                    :cargos_errors => 0,
-                    :found_cargos => 0}
-
-results[:tipo_cargos] = {:new_tipo_cargos => 0,
-                         :tipo_cargos_errors => 0,
-                         :found_tipo_cargos => 0}
-
-results[:personas] = {:new_personas => 0,
-                      :personas_errors => 0,
-                      :found_personas => 0}
-
-results[:comunas] = {:comunas_errors => 0,
-                     :found_comunas => 0}
-
 results[:trimestres_informados] = {:new => 0,
                                   :errors => 0,
                                   :found => 0}
+
+results[:ingreso_ordinarios] = {new: 0,
+                   errors: 0,
+                   found: 0}
 
 results[:start_time] = 0
 results[:end_time] = 0
@@ -55,22 +40,13 @@ files.each_with_index do |file, index|
   source SymbolsCSVSource, filename: file, results: results, print_headers: true
 end
 
-
 transform PartidoLookup, verbose: verbosing, results: results
-
-transform TerritorioElectoralTransformation, verbose: verbosing, results: results
-
-transform ComunaLookup, verbose: verbosing, results: results
 
 transform TrimestreInformadoLookup, verbose: verbosing,  results: results
 
-transform TipoCargoLookup, verbose: verbosing, results: results
+# transform IngresoOrdinarioLookup, verbose: verbosing, results: results
 
-transform NombreTransformation, verbose: verbosing
-
-transform PersonaLookupAndInsert, verbose: verbosing, results: results
-
-destination CargosDestination, verbose: verbosing, results: results
+destination IngresoOrdinarioDestination, verbose: verbosing, results: results
 
 destination ErrorCSVDestination, filename: log_path + job_name + '.log'
 

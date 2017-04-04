@@ -41,4 +41,5 @@ post_process do
   ap results
   duration_in_minutes = (results[:end_time] - results[:start_time])/60
   puts "*** Duration (min): #{duration_in_minutes.round(2)}"
+  save_etl_run(job_name, results)
 end

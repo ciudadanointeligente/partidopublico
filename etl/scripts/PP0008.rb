@@ -44,8 +44,6 @@ transform PartidoLookup, verbose: verbosing, results: results
 
 transform TrimestreInformadoLookup, verbose: verbosing,  results: results
 
-# transform IngresoOrdinarioLookup, verbose: verbosing, results: results
-
 destination IngresoOrdinarioDestination, verbose: verbosing, results: results
 
 destination ErrorCSVDestination, filename: log_path + job_name + '.log'
