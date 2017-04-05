@@ -35,9 +35,8 @@ end
 
 files.each_with_index do |file, index|
 
-  # p "Processing file : " + file.to_s
-
   source SymbolsCSVSource, filename: file, results: results, print_headers: true
+
 end
 
 transform PartidoLookup, verbose: verbosing, results: results

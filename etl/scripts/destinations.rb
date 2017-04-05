@@ -146,10 +146,9 @@ class IngresoOrdinarioDestination
 
   def write(row)
 
-    monto = clean_number(row[:monto])
     ingreso_ordinario = IngresoOrdinario.where(partido_id: row[:partido_id],
                                                concepto: row[:item].downcase,
-                                               importe: row[:monto]).first_or_initialize
+                                               importe: clean_number(row[:monto])).first_or_initialize
 
     trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
 
@@ -185,10 +184,10 @@ class TransferenciaDestination
   end
   #nombre_desde_el_modelo: row[:nombre_desde_headers]
   def write(row)
-    monto = clean_number(row[:monto])
+
     transferencia = Transferencia.where(partido_id: row[:partido_id],
-                                        # fecha: row[:fecha_transferencia],
-                                        monto: row[:monto],
+                                        fecha: row[:fecha_transferencia].to_date,
+                                        monto: clean_number(row[:monto]),
                                         descripcion: row[:objeto_de_la_transferencia],
                                         razon_social: row[:persona_jurdica_receptora],
                                         rut: row[:rut_persona_jurdica],

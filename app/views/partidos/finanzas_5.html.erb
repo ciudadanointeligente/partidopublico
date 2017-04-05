@@ -4,13 +4,13 @@
 <div class="row">
   <div class="col-md-12">
     <%= form_tag partido_finanzas_5_path, :method => :get, class: 'form-inline' do |f| %>
-    <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar Fecha", onchange: "this.form.submit();", class: "form-control"  %>
+    <%= select_tag :fecha_datos, options_for_select(@fecha), prompt: "Seleccionar Fecha", onchange: "this.form.submit();", class: "form-control"  %>
     <% end %>
   </div>
 </div>
 
 <div>
-  <h4>Datos correspondientes al <%=  @fecha %></h4>
+  <h4>Datos correspondientes al <%=  @fecha_datos %></h4>
   <span id="header"></span>
   <div class="table-responsive">
     <table class="table">

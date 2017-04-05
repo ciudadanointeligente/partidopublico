@@ -392,15 +392,45 @@ class PartidosController < ApplicationController
     @datos_egresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
   end
 
+  # MÉTODO ANTIGUO
+  # def finanzas_5
+  #   @fechas_datos = Transferencia.where(partido: @partido).uniq.pluck(:fecha_datos).sort
+  #   if params[:fecha_datos]
+  #     @fecha = Date.new(params[:fecha_datos].split("-")[0].to_i, params[:fecha_datos].split("-")[1].to_i, params[:fecha_datos].split("-")[2].to_i)
+  #   else
+  #     @fecha = @fechas_datos.last
+  #   end
+  #
+  #   datos_eficientes_transferencias = Transferencia.where(partido: @partido, :fecha_datos => @fecha).group(:categoria).
+  #   select("categoria, count(1) as count, sum(monto) as total").order(:categoria)
+  #
+  #   max_value = Transferencia.where(partido: @partido, :fecha_datos => @fecha).group(:categoria).select("sum(monto) as total").order("total DESC").first.attributes.symbolize_keys![:total] rescue 0
+  #
+  #
+  #   datos_eficientes_transferencias.each do |d|
+  #     d.attributes.symbolize_keys!
+  #   end
+  #   total = 0
+  #   @datos_transferencias = []
+  #   datos_eficientes_transferencias.each do |t|
+  #     total = total + t.total
+  #     val = (100 * ((t.total.to_f)/ max_value.to_f).to_f rescue 0).to_s
+  #     line ={ 'text'=> t.categoria,
+  #       'value' => ActiveSupport::NumberHelper::number_to_delimited(t.total, delimiter: "."), 'percentage' => val }
+  #     @datos_transferencias << line
+  #   end
+  #   @datos_transferencias_totals = { :total => total }
+  # end
+
   def finanzas_5
-    @fechas_datos = Transferencia.where(partido: @partido).uniq.pluck(:fecha_datos).sort
+    @fecha = Transferencia.where(partido: @partido).uniq.pluck(:fecha).sort.reverse
     if params[:fecha_datos]
-      @fecha = Date.new(params[:fecha_datos].split("-")[0].to_i, params[:fecha_datos].split("-")[1].to_i, params[:fecha_datos].split("-")[2].to_i)
+      @fecha_datos = Date.new(params[:fecha_datos].split("-")[0].to_i, params[:fecha_datos].split("-")[1].to_i, params[:fecha_datos].split("-")[2].to_i)
     else
-      @fecha = @fechas_datos.last
+      @fecha_datos = @fecha.first
     end
 
-    datos_eficientes_transferencias = Transferencia.where(partido: @partido, :fecha_datos => @fecha).group(:categoria).
+    datos_eficientes_transferencias = Transferencia.where(partido: @partido, :fecha => @fecha_datos).group(:categoria).
     select("categoria, count(1) as count, sum(monto) as total").order(:categoria)
 
     max_value = Transferencia.where(partido: @partido, :fecha_datos => @fecha).group(:categoria).select("sum(monto) as total").order("total DESC").first.attributes.symbolize_keys![:total] rescue 0

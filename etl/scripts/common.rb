@@ -6,10 +6,11 @@ require_relative 'sources'
 require_relative 'destinations'
 require_relative 'transformations'
 
-def clean_number(string)
-  string = string.to_s
-  string.delete! ','
-  string.delete! '.'
+def clean_number(numero)
+  numero = numero.to_s
+  numero.delete! ','
+  numero.delete! '.'
+  numero.to_i
 end
 
 def save_etl_run(job_name, results)
