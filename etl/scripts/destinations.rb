@@ -185,13 +185,23 @@ class TransferenciaDestination
   #nombre_desde_el_modelo: row[:nombre_desde_headers]
   def write(row)
 
+    if !row[:fecha_transferencia].nil?
     transferencia = Transferencia.where(partido_id: row[:partido_id],
                                         fecha: row[:fecha_transferencia].to_date,
                                         monto: clean_number(row[:monto]),
+                                        categoria: 'Sin Categoría',
                                         descripcion: row[:objeto_de_la_transferencia],
                                         razon_social: row[:persona_jurdica_receptora],
                                         rut: row[:rut_persona_jurdica],
                                         persona_natural: row[:persona_natural_receptora].downcase.titleize).first_or_initialize
+    else
+      transferencia = Transferencia.where(partido_id: row[:partido_id],
+                                          monto: clean_number(row[:monto]),
+                                          descripcion: row[:objeto_de_la_transferencia],
+                                          razon_social: row[:persona_jurdica_receptora],
+                                          rut: row[:rut_persona_jurdica],
+                                          persona_natural: row[:persona_natural_receptora].downcase.titleize).first_or_initialize
+    end
 
     trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
 

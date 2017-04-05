@@ -423,9 +423,10 @@ class PartidosController < ApplicationController
   # end
 
   def finanzas_5
+
     @fecha = Transferencia.where(partido: @partido).uniq.pluck(:fecha).sort.reverse
-    if params[:fecha_datos]
-      @fecha_datos = Date.new(params[:fecha_datos].split("-")[0].to_i, params[:fecha_datos].split("-")[1].to_i, params[:fecha_datos].split("-")[2].to_i)
+    if params[:fecha]
+      @fecha_datos = Date.new(params[:fecha].split("-")[0].to_i, params[:fecha].split("-")[1].to_i, params[:fecha].split("-")[2].to_i)
     else
       @fecha_datos = @fecha.first
     end
@@ -433,7 +434,7 @@ class PartidosController < ApplicationController
     datos_eficientes_transferencias = Transferencia.where(partido: @partido, :fecha => @fecha_datos).group(:categoria).
     select("categoria, count(1) as count, sum(monto) as total").order(:categoria)
 
-    max_value = Transferencia.where(partido: @partido, :fecha_datos => @fecha).group(:categoria).select("sum(monto) as total").order("total DESC").first.attributes.symbolize_keys![:total] rescue 0
+    max_value = Transferencia.where(partido: @partido, :fecha => @fecha_datos).group(:categoria).select("sum(monto) as total").order("total DESC").first.attributes.symbolize_keys![:total] rescue 0
 
 
     datos_eficientes_transferencias.each do |d|
@@ -445,7 +446,7 @@ class PartidosController < ApplicationController
       total = total + t.total
       val = (100 * ((t.total.to_f)/ max_value.to_f).to_f rescue 0).to_s
       line ={ 'text'=> t.categoria,
-        'value' => ActiveSupport::NumberHelper::number_to_delimited(t.total, delimiter: "."), 'percentage' => val }
+        'value' => t.total, 'percentage' => val }
       @datos_transferencias << line
     end
     @datos_transferencias_totals = { :total => total }

@@ -4,7 +4,7 @@
 <div class="row">
   <div class="col-md-12">
     <%= form_tag partido_finanzas_5_path, :method => :get, class: 'form-inline' do |f| %>
-    <%= select_tag :fecha_datos, options_for_select(@fecha), prompt: "Seleccionar Fecha", onchange: "this.form.submit();", class: "form-control"  %>
+    <%= select_tag :fecha, options_for_select(@fecha), prompt: "Seleccionar Fecha", onchange: "this.form.submit();", class: "form-control"  %>
     <% end %>
   </div>
 </div>
