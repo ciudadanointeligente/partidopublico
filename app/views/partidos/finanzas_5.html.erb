@@ -4,7 +4,8 @@
 <div class="row">
   <div class="col-md-12">
     <%= form_tag partido_finanzas_5_path, :method => :get, class: 'form-inline' do |f| %>
-    <%= select_tag :fecha, options_for_select(@fecha), prompt: "Seleccionar Fecha", onchange: "this.form.submit();", class: "form-control"  %>
+    <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
+    <%= submit_tag 'Filtrar', class: "btn" %>
     <% end %>
   </div>
 </div>
@@ -22,7 +23,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @datos_transferencias.each_with_index do |linea, i| %>
+        <% @datos_temp_transferencias.each_with_index do |linea, i| %>
         <tr>
           <td><%= linea['text'] %></td>
           <td><span id="barras_<%= i.to_s %>"></span></td>

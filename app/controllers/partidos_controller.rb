@@ -361,7 +361,6 @@ class PartidosController < ApplicationController
     max_value = ingresos_ordinarios.maximum(:importe)
     @datos_ingresos_ordinarios = []
     ingresos_ordinarios.each do |io|
-      filter_by = @trimestre_informado.ingreso_ordinarios.where(ingreso_ordinario_id: io)
       val = (100 * (io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
       line ={ 'text'=> io.concepto, 'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe, delimiter: ""), 'percentage' => val }
       @datos_ingresos_ordinarios << line
@@ -401,8 +400,8 @@ class PartidosController < ApplicationController
   #     @fecha = @fechas_datos.last
   #   end
   #
-  #   datos_eficientes_transferencias = Transferencia.where(partido: @partido, :fecha_datos => @fecha).group(:categoria).
-  #   select("categoria, count(1) as count, sum(monto) as total").order(:categoria)
+  # datos_eficientes_transferencias = Transferencia.where(partido: @partido, :fecha_datos => @fecha).group(:categoria).
+  # select("categoria, count(1) as count, sum(monto) as total").order(:categoria)
   #
   #   max_value = Transferencia.where(partido: @partido, :fecha_datos => @fecha).group(:categoria).select("sum(monto) as total").order("total DESC").first.attributes.symbolize_keys![:total] rescue 0
   #
@@ -424,30 +423,37 @@ class PartidosController < ApplicationController
 
   def finanzas_5
 
-    @fecha = Transferencia.where(partido: @partido).uniq.pluck(:fecha).sort.reverse
-    if params[:fecha]
-      @fecha_datos = Date.new(params[:fecha].split("-")[0].to_i, params[:fecha].split("-")[1].to_i, params[:fecha].split("-")[2].to_i)
-    else
-      @fecha_datos = @fecha.first
+      temp_trimestres_informados = []
+    @partido.transferencias.each do |tr|
+      tr.trimestre_informados.each do |t|
+
+        temp_trimestres_informados.push(t)
+
+      end
     end
 
-    datos_eficientes_transferencias = Transferencia.where(partido: @partido, :fecha => @fecha_datos).group(:categoria).
-    select("categoria, count(1) as count, sum(monto) as total").order(:categoria)
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
+    params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+    @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
-    max_value = Transferencia.where(partido: @partido, :fecha => @fecha_datos).group(:categoria).select("sum(monto) as total").order("total DESC").first.attributes.symbolize_keys![:total] rescue 0
+    temp_transferencias = @trimestre_informado.transferencias.where(:partido_id => @partido.id)
+    .select('extract(year from fecha) as year, extract(month from fecha) as month, sum(monto)')
+    .group('extract(year from fecha),extract(month from fecha)')
+    .order('extract(year from fecha),extract(month from fecha)')
 
+    # max_value = temp_transferencias.maximum('sum')  <- WIP
 
-    datos_eficientes_transferencias.each do |d|
-      d.attributes.symbolize_keys!
-    end
+    # p max_value.to_s
     total = 0
-    @datos_transferencias = []
-    datos_eficientes_transferencias.each do |t|
-      total = total + t.total
-      val = (100 * ((t.total.to_f)/ max_value.to_f).to_f rescue 0).to_s
-      line ={ 'text'=> t.categoria,
-        'value' => t.total, 'percentage' => val }
-      @datos_transferencias << line
+    @datos_temp_transferencias = []
+    temp_transferencias.each do |tr|
+      p " AQUIIIIII >>>" + tr.attributes.to_s
+      val = (100 * ((t.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+      # val = 100.to_s    <- WIP
+      line = {'text'=>tr.year.to_s + tr.month.to_s, 'value' => tr.sum, 'percentage' => val}
+      @datos_temp_transferencias << line
+      total += tr.sum
     end
     @datos_transferencias_totals = { :total => total }
   end
