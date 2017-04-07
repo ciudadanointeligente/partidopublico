@@ -1,4 +1,5 @@
 class PartidosController < ApplicationController
+  include PartidosHelper
   before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy, :admin]
   before_filter :authenticate_superadmin, only: [:new, :edit, :create, :update, :destroy]
   before_action :set_partido, except: [:index, :new, :create, :admin]
@@ -448,10 +449,11 @@ class PartidosController < ApplicationController
     total = 0
     @datos_temp_transferencias = []
     temp_transferencias.each do |tr|
-      p " AQUIIIIII >>>" + tr.attributes.to_s
+      mes = get_month(tr.month.round(0))
+      año = tr.year.round(0).to_s
       val = (100 * ((t.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
       # val = 100.to_s    <- WIP
-      line = {'text'=>tr.year.to_s + tr.month.to_s, 'value' => tr.sum, 'percentage' => val}
+      line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
       @datos_temp_transferencias << line
       total += tr.sum
     end

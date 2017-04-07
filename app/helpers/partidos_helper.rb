@@ -6,4 +6,10 @@ module PartidosHelper
       object[attr]
     end
   end
+
+  def get_month(month_number)
+    meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+             'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+    meses[month_number-1]
+  end
 end
