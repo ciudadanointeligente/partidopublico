@@ -443,7 +443,7 @@ class PartidosController < ApplicationController
     .group('extract(year from fecha),extract(month from fecha)')
     .order('extract(year from fecha),extract(month from fecha)')
 
-    # max_value = temp_transferencias.maximum('sum')  <- WIP
+    max_value = 2
 
     # p max_value.to_s
     total = 0

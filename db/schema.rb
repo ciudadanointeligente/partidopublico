@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170404184342) do
+ActiveRecord::Schema.define(version: 20170410193607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -177,6 +177,14 @@ ActiveRecord::Schema.define(version: 20170404184342) do
   end
 
   add_index "contratacions", ["partido_id"], name: "index_contratacions_on_partido_id", using: :btree
+
+  create_table "contratacions_trimestre_informados", id: false, force: :cascade do |t|
+    t.integer "contratacion_id",        null: false
+    t.integer "trimestre_informado_id", null: false
+  end
+
+  add_index "contratacions_trimestre_informados", ["contratacion_id"], name: "t_i_contratacion_id", using: :btree
+  add_index "contratacions_trimestre_informados", ["trimestre_informado_id"], name: "t_i_contr_trimestre_id", using: :btree
 
   create_table "distritos", force: :cascade do |t|
     t.integer  "circunscripcion_id"

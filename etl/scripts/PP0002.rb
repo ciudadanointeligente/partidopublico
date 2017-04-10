@@ -9,10 +9,10 @@ results[:partidos] = {:new_partidos => 0,
 
 pre_process do
   results[:start_time] = Time.now
-  puts "*** Start #{job_name} - Party Basic Info MIGRATION #{results[:start_time]}***"
+  puts "*** Start #{job_name}_extra - Party Basic Info MIGRATION #{results[:start_time]}***"
 end
 
-files = Dir[input_path + "#{job_name}.csv"]
+files = Dir[input_path + "#{job_name}_extra.csv"]
 
 dos2unix
 encoding = find_encoding

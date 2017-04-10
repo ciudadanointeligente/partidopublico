@@ -27,6 +27,8 @@ class Contratacion < ActiveRecord::Base
   has_paper_trail
   belongs_to :partido
 
+  has_and_belongs_to_many :trimestre_informados
+
   def self.import(file, partido_id, email)
     partido = Partido.find partido_id
     filas_importadas = 0
