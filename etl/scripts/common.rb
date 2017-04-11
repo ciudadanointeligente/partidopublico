@@ -13,6 +13,11 @@ def clean_number(numero)
   numero.to_i
 end
 
+def vali_date(fecha_inicio, fecha_termino)
+    p 'Fecha de inicio: ' + fecha_inicio + ' Fecha de término: ' +
+    fecha_termino
+end
+
 def save_etl_run(job_name, results)
   EtlRun.create(start_time: results[:start_time],
                 end_time: results[:end_time],

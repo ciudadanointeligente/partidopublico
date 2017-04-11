@@ -185,18 +185,22 @@ class ContratacionDestination
 
   def write(row)
 
-  contratacion = Contratacion.where(partido_id: row[:partido_id],
+    fecha_inicio = row[:fecha_de_inicio_del_contrato].to_s
+    fecha_termino = row[:fecha_de_trmino_del_contrato].to_s
+    vali_date(fecha_inicio, fecha_termino)
+
+    contratacion = Contratacion.where(partido_id: row[:partido_id],
                                     individualizacion: row[:individualizacin_del_contrato],
                                     razon_social: row[:contratista],
                                     rut: row[:rut],
                                     titulares: row[:socios_o_accionistas],
                                     descripcion: row[:objeto_de_la_contratacin],
-                                    monto: row[:row],
-                                    # fecha_inicio: row[:fecha_de_inicio_del_contrato].to_date,
-                                    # fecha_termino: row[:fecha_de_trmino_del_contrato].to_date,
+                                    monto: row[:monto],
+                                    # fecha_inicio: row[:fecha_de_inicio_del_contrato].to_date || nil,
+                                    # fecha_termino: row[:fecha_de_trmino_del_contrato].to_date || nil,
                                     link: row[:link_al_contrato]).first_or_initialize
 
-  trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
 
     if contratacion.id.nil?
       contratacion.save
