@@ -13,9 +13,17 @@ def clean_number(numero)
   numero.to_i
 end
 
-def vali_date(fecha_inicio, fecha_termino)
-    p 'Fecha de inicio: ' + fecha_inicio + ' Fecha de término: ' +
-    fecha_termino
+def vali_date(fecha, handler)
+  fecha.gsub("/", '-').to_s
+  if fecha.length < 10
+    fecha.insert(6, '20')
+  end
+  begin
+    fecha.to_date
+  rescue => e
+    handled_error = e.message + ': ' +fecha.to_s
+    return nil, handled_error
+  end
 end
 
 def save_etl_run(job_name, results)

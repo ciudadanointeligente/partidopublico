@@ -185,9 +185,12 @@ class ContratacionDestination
 
   def write(row)
 
-    fecha_inicio = row[:fecha_de_inicio_del_contrato].to_s
-    fecha_termino = row[:fecha_de_trmino_del_contrato].to_s
-    vali_date(fecha_inicio, fecha_termino)
+    fecha_inicio, handler = vali_date(row[:fecha_de_inicio_del_contrato], handler)
+    fecha_termino, handler = vali_date(row[:fecha_de_trmino_del_contrato], handler)
+    if handler != nil
+      row[:error_log] = row[:error_log].to_s + handler
+      @results[:contratacions][:errors] += 1
+    end
 
     contratacion = Contratacion.where(partido_id: row[:partido_id],
                                     individualizacion: row[:individualizacin_del_contrato],
@@ -196,8 +199,8 @@ class ContratacionDestination
                                     titulares: row[:socios_o_accionistas],
                                     descripcion: row[:objeto_de_la_contratacin],
                                     monto: row[:monto],
-                                    # fecha_inicio: row[:fecha_de_inicio_del_contrato].to_date || nil,
-                                    # fecha_termino: row[:fecha_de_trmino_del_contrato].to_date || nil,
+                                    fecha_inicio: fecha_inicio,
+                                    fecha_termino: fecha_termino,
                                     link: row[:link_al_contrato]).first_or_initialize
 
     trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
