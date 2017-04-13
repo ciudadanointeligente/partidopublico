@@ -17,6 +17,8 @@ class TrimestreInformado < ActiveRecord::Base
   has_and_belongs_to_many :ingreso_ordinarios
   has_and_belongs_to_many :transferencias
   has_and_belongs_to_many :contratacions
+  has_and_belongs_to_many :egreso_campanas
+  has_and_belongs_to_many :ingreso_campanas
   validates_presence_of :ordinal
 
   def to_s

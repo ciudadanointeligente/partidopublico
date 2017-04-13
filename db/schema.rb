@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170410193607) do
+ActiveRecord::Schema.define(version: 20170413164912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -227,9 +227,20 @@ ActiveRecord::Schema.define(version: 20170410193607) do
     t.integer  "monto"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.string   "tipo_campana"
+    t.string   "item"
+    t.string   "estado"
   end
 
   add_index "egreso_campanas", ["partido_id"], name: "index_egreso_campanas_on_partido_id", using: :btree
+
+  create_table "egreso_campanas_trimestre_informados", id: false, force: :cascade do |t|
+    t.integer "egreso_campana_id",      null: false
+    t.integer "trimestre_informado_id", null: false
+  end
+
+  add_index "egreso_campanas_trimestre_informados", ["egreso_campana_id"], name: "t_i_egreso_campana_id", using: :btree
+  add_index "egreso_campanas_trimestre_informados", ["trimestre_informado_id"], name: "t_i_e_c_trimestre_id", using: :btree
 
   create_table "egreso_ordinarios", force: :cascade do |t|
     t.integer  "partido_id"
@@ -292,9 +303,18 @@ ActiveRecord::Schema.define(version: 20170410193607) do
     t.integer  "monto"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.string   "tipo_aporte"
   end
 
   add_index "ingreso_campanas", ["partido_id"], name: "index_ingreso_campanas_on_partido_id", using: :btree
+
+  create_table "ingreso_campanas_trimestre_informados", id: false, force: :cascade do |t|
+    t.integer "ingreso_campana_id",     null: false
+    t.integer "trimestre_informado_id", null: false
+  end
+
+  add_index "ingreso_campanas_trimestre_informados", ["ingreso_campana_id"], name: "t_i_ingreso_campana_id", using: :btree
+  add_index "ingreso_campanas_trimestre_informados", ["trimestre_informado_id"], name: "t_i_i_c_trimestre_id", using: :btree
 
   create_table "ingreso_ordinarios", force: :cascade do |t|
     t.date     "fecha_datos"

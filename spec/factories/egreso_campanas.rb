@@ -18,6 +18,9 @@
 #  monto            :integer
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  tipo_campana     :string
+#  item             :string
+#  estado           :string
 #
 # Indexes
 #

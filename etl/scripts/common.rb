@@ -21,7 +21,7 @@ def vali_date(fecha, handler)
   begin
     fecha.to_date
   rescue => e
-    handled_error = e.message + ': ' +fecha.to_s
+    handled_error = ' ' + e.message + ': ' +fecha.to_s
     return nil, handled_error
   end
 end

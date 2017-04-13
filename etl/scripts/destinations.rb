@@ -227,6 +227,89 @@ class ContratacionDestination
   end
 end
 
+class EgresoCampanaDestination
+  def initialize(results:, verbose:)
+    @verbose = verbose
+    @results = results
+    @new = 0
+    @errors = 0
+    @found = 0
+  end
+
+  def write(row)
+
+    monto = clean_number(row[:monto])
+    egreso_campana = EgresoCampana.where(partido_id: row[:partido_id],
+                                         tipo_campana: row[:tipo_de_campaa],
+                                         item: row[:item],
+                                         monto: monto,
+                                         estado: row[:estado]).first_or_initialize
+
+    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+
+    if egreso_campana.id.nil?
+      egreso_campana.save
+      if egreso_campana.errors.any?
+        row[:error_log] = row[:error_log].to_s + ', ' + egreso_campana.errors.messages.to_s
+        @results[:egreso_campanas][:errors] += 1
+      else
+        egreso_campana.trimestre_informados << trimestre_informado unless trimestre_informado.in?(egreso_campana.trimestre_informados)
+        @results[:egreso_campanas][:new] += 1
+      end
+    else
+      egreso_campana.trimestre_informados << trimestre_informado unless trimestre_informado.in?(egreso_campana.trimestre_informados)
+      @results[:egreso_campanas][:found] += 1
+    end
+  end
+
+  def close
+    @results[:egreso_campanas] = {new: @results[:egreso_campanas][:new],
+                                 errors: @results[:egreso_campanas][:errors],
+                                 found: @results[:egreso_campanas][:found]}
+  end
+end
+
+class IngresoCampanaDestination
+  def initialize(results:, verbose:)
+    @verbose = verbose
+    @results = results
+    @new = 0
+    @errors = 0
+    @found = 0
+  end
+
+  def write(row)
+
+    monto = clean_number(row[:valorizacin_en_pesos])
+    ingreso_campana = IngresoCampana.where(partido_id: row[:partido_id],
+                                         nombre_donante: row[:persona_efecta_aporte].titleize,
+                                         tipo_aporte: row[:tipo_de_aporte],
+                                         monto: monto).first_or_initialize
+
+    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+
+    if ingreso_campana.id.nil?
+      ingreso_campana.save
+      if ingreso_campana.errors.any?
+        row[:error_log] = row[:error_log].to_s + ', ' + ingreso_campana.errors.messages.to_s
+        @results[:ingreso_campanas][:errors] += 1
+      else
+        ingreso_campana.trimestre_informados << trimestre_informado unless trimestre_informado.in?(ingreso_campana.trimestre_informados)
+        @results[:ingreso_campanas][:new] += 1
+      end
+    else
+      ingreso_campana.trimestre_informados << trimestre_informado unless trimestre_informado.in?(ingreso_campana.trimestre_informados)
+      @results[:ingreso_campanas][:found] += 1
+    end
+  end
+
+  def close
+    @results[:ingreso_campanas] = {new: @results[:ingreso_campanas][:new],
+                                 errors: @results[:ingreso_campanas][:errors],
+                                 found: @results[:ingreso_campanas][:found]}
+  end
+end
+
 class TransferenciaDestination
   def initialize(results:, verbose:)
     @verbose = verbose

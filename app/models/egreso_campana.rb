@@ -18,6 +18,9 @@
 #  monto            :integer
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  tipo_campana     :string
+#  item             :string
+#  estado           :string
 #
 # Indexes
 #
@@ -27,6 +30,7 @@
 class EgresoCampana < ActiveRecord::Base
   has_paper_trail
   belongs_to :partido
+  has_and_belongs_to_many :trimestre_informados
 
   def self.import(file, partido_id, email)
     partido = Partido.find partido_id

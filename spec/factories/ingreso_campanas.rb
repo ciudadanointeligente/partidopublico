@@ -17,6 +17,7 @@
 #  monto            :integer
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  tipo_aporte      :string
 #
 # Indexes
 #
