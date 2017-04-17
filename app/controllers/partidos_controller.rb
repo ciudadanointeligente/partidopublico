@@ -353,22 +353,35 @@ class PartidosController < ApplicationController
       end
     end
 
+
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
-    params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
-    @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
-    ingresos_ordinarios = @trimestre_informado.ingreso_ordinarios.where(:partido_id => @partido.id)
-    max_value = ingresos_ordinarios.maximum(:importe)
-    @datos_ingresos_ordinarios = []
-    ingresos_ordinarios.each do |io|
-      val = (100 * (io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
-      line ={ 'text'=> io.concepto, 'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe, delimiter: ""), 'percentage' => val }
+    if @trimestres_informados.count == 0
+      @trimestres_informados = []
+      @datos_ingresos_ordinarios = []
+      line ={ 'text'=> 'Sin información', 'value' => 0, 'percentage' => 0 }
       @datos_ingresos_ordinarios << line
+      @datos_ingresos_ordinarios_totals = {'publicos' => 0, 'privados' => 0}
+      @sin_datos = true
+    else
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+      ingresos_ordinarios = @trimestre_informado.ingreso_ordinarios.where(:partido_id => @partido.id)
+      max_value = ingresos_ordinarios.maximum(:importe)
+      @datos_ingresos_ordinarios = []
+      ingresos_ordinarios.each do |io|
+        val = (100 * (io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
+        line ={ 'text'=> io.concepto, 'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe, delimiter: ""), 'percentage' => val }
+        @datos_ingresos_ordinarios << line
+      end
+      total_publicos = ingresos_ordinarios.where(:concepto => "Aportes Estatales").first.importe rescue 0
+      total_privados = ingresos_ordinarios.sum(:importe) - total_publicos
+      @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
+      @sin_datos = false
     end
-    total_publicos = ingresos_ordinarios.where(:concepto => "Aportes Estatales").first.importe rescue 0
-    total_privados = ingresos_ordinarios.sum(:importe) - total_publicos
-    @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
+
   end
 
   def finanzas_2
@@ -449,11 +462,15 @@ class PartidosController < ApplicationController
     total = 0
     @datos_temp_transferencias = []
     temp_transferencias.each do |tr|
-      mes = get_month(tr.month.round(0))
-      año = tr.year.round(0).to_s
-      val = (100 * ((t.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-      # val = 100.to_s    <- WIP
-      line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+      if tr.month.nil?
+        line = {'text' => "Sin información", 'value' => tr.sum}
+      else
+        mes = get_month(tr.month.round(0))
+        año = tr.year.round(0).to_s
+        val = (100 * ((t.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+        # val = 100.to_s    <- WIP
+        line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+      end
       @datos_temp_transferencias << line
       total += tr.sum
     end

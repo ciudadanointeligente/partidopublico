@@ -2,56 +2,59 @@
 <h3>Ingresos ordinarios</h3>
 
 <div class="row">
-  <div class="col-md-12">
+  <% if @sin_datos %>
+    <%= render 'sin_datos' %>
+  <% else %>
+    <div class="col-md-12">
     <%= form_tag partido_finanzas_1_path, :method =>  :get, class: 'form-inline' do |f| %>
-    <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
+    <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id] || ''), include_blank: false, class: "form-control" %>
     <%= submit_tag 'Filtrar', class: "btn" %>
     <% end %>
+    </div>
   </div>
-</div>
 
-<div>
-  <h4>Datos correspondientes al <%=  @fecha %></h4>
-  <!-- <div class="leyenda-finanzas">
-    <p><i class="fa fa-circle fa-lg circle-lg" aria-hidden="true"></i>Aportes públicos</p>
-    <p><i class="fa fa-circle fa-lg circle-gd" aria-hidden="true"></i>Aportes privados<p>
-  </div> -->
-  <span id="header"></span>
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Concepto</th>
-          <th>&nbsp;</th>
-          <th>Monto Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @datos_ingresos_ordinarios.each_with_index do |linea, i| %>
-        <tr>
-          <td>
-            <%= linea['text'] %>
-          </td>
-          <td>
-            <div id="barras_<%= i.to_s %>"></div>
-          </td>
-          <td class="monto">
-            <%= number_to_currency(linea['value'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %>
-          </td>
-        </tr>
-        <% end %>
-      </tbody>
-      <tfoot>
-        <tr>
-          <th class="total">Total</th>
-          <th><span id='footer'></span></th>
-          <th class="total monto"><%= number_to_currency(@datos_ingresos_ordinarios_totals['publicos'] + @datos_ingresos_ordinarios_totals['privados'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %></th>
-        </tr>
-      </tfoot>
-    </table>
+  <div>
+    <h4>Datos correspondientes al <%=  @fecha %></h4>
+    <!-- <div class="leyenda-finanzas">
+      <p><i class="fa fa-circle fa-lg circle-lg" aria-hidden="true"></i>Aportes públicos</p>
+      <p><i class="fa fa-circle fa-lg circle-gd" aria-hidden="true"></i>Aportes privados<p>
+    </div> -->
+    <span id="header"></span>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Concepto</th>
+            <th>&nbsp;</th>
+            <th>Monto Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @datos_ingresos_ordinarios.each_with_index do |linea, i| %>
+          <tr>
+            <td>
+              <%= linea['text'] %>
+            </td>
+            <td>
+              <div id="barras_<%= i.to_s %>"></div>
+            </td>
+            <td class="monto">
+              <%= number_to_currency(linea['value'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th class="total">Total</th>
+            <th><span id='footer'></span></th>
+            <th class="total monto"><%= number_to_currency(@datos_ingresos_ordinarios_totals['publicos'] + @datos_ingresos_ordinarios_totals['privados'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %></th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
   </div>
-</div>
-
+  <% end %>
 <script>
 $(document).ready(function(){
   var data = <%=  @datos_ingresos_ordinarios.to_json.html_safe %>;
