@@ -277,19 +277,27 @@ class PartidosController < ApplicationController
 
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
-    params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
-    @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
-    @datos_sedes = []
-    region_ids_with_sede = @partido.sedes.select(:region_id).uniq.map(&:region_id)
-    region_ids_with_sede.each do |r|
-      sedes = @trimestre_informado.sedes.where(region_id: r)
-      all_sedes = []
-      sedes.each do |s|
-        all_sedes.push( { 'direccion' => s.direccion, 'contacto' => s.contacto, 'comuna' => s.comuna.nombre } )
+    if @trimestres_informados.count == 0
+      @trimestres_informados = []
+      @datos_sedes = []
+      @sin_datos = true
+    else
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+      @datos_sedes = []
+      region_ids_with_sede = @partido.sedes.select(:region_id).uniq.map(&:region_id)
+      region_ids_with_sede.each do |r|
+        sedes = @trimestre_informado.sedes.where(region_id: r)
+        all_sedes = []
+        sedes.each do |s|
+          all_sedes.push( { 'direccion' => s.direccion, 'contacto' => s.contacto, 'comuna' => s.comuna.nombre } )
+        end
+        region = Region.find r
+        @datos_sedes.push( {'region' => region.nombre, 'sedes' => all_sedes} )
+        @sin_datos = false
       end
-      region = Region.find r
-      @datos_sedes.push( {'region' => region.nombre, 'sedes' => all_sedes} )
     end
   end
 
@@ -381,7 +389,6 @@ class PartidosController < ApplicationController
       @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
       @sin_datos = false
     end
-
   end
 
   def finanzas_2
@@ -448,33 +455,42 @@ class PartidosController < ApplicationController
 
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
-    params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
-    @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
-    temp_transferencias = @trimestre_informado.transferencias.where(:partido_id => @partido.id)
-    .select('extract(year from fecha) as year, extract(month from fecha) as month, sum(monto)')
-    .group('extract(year from fecha),extract(month from fecha)')
-    .order('extract(year from fecha),extract(month from fecha)')
+    if @trimestres_informados.count == 0
+      @trimestres_informados = []
+      # @datos_temp_transferencias = []
+      @datos_transferencias_totals = []
+      @sin_datos = true
+    else
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
-    max_value = 2
+      temp_transferencias = @trimestre_informado.transferencias.where(:partido_id => @partido.id)
+      .select('extract(year from fecha) as year, extract(month from fecha) as month, sum(monto)')
+      .group('extract(year from fecha),extract(month from fecha)')
+      .order('extract(year from fecha),extract(month from fecha)')
 
-    # p max_value.to_s
-    total = 0
-    @datos_temp_transferencias = []
-    temp_transferencias.each do |tr|
-      if tr.month.nil?
-        line = {'text' => "Sin información", 'value' => tr.sum}
-      else
-        mes = get_month(tr.month.round(0))
-        año = tr.year.round(0).to_s
-        val = (100 * ((t.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-        # val = 100.to_s    <- WIP
-        line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+      max_value = 2
+
+      # p max_value.to_s
+      total = 0
+      @datos_temp_transferencias = []
+      temp_transferencias.each do |tr|
+        if tr.month.nil?
+          line = {'text' => "Sin información", 'value' => tr.sum}
+        else
+          mes = get_month(tr.month.round(0))
+          año = tr.year.round(0).to_s
+          val = (100 * ((t.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+          # val = 100.to_s    <- WIP
+          line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+        end
+        @datos_temp_transferencias << line
+        total += tr.sum
       end
-      @datos_temp_transferencias << line
-      total += tr.sum
+      @datos_transferencias_totals = { :total => total }
+      @sin_datos = false
     end
-    @datos_transferencias_totals = { :total => total }
   end
 
   def afiliacion_desafiliacion
@@ -586,40 +602,47 @@ class PartidosController < ApplicationController
 
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
-    # p "TRIMESTRES INFORMADOOOOOSSSS>>>>" + @trimestres_informados.to_s
-    params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
-    @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
-    @organos_internos = @trimestre_informado.organo_internos.where(:partido_id => @partido.id).page(params[:page]).per(3)
-    @datos = []
+
+    if @trimestres_informados.count == 0
+      @trimestres_informados = []
+      @organos_internos = []
+      @datos = []
+      @sin_datos = true
+    else
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+      @organos_internos = @trimestre_informado.organo_internos.where(:partido_id => @partido.id).page(params[:page]).per(3)
+      @datos = []
 
 
-    @organos_internos.each_with_index do |o, i|
-      members = []
-      data = @trimestre_informado.cargos.where(partido: @partido, organo_interno: o)
-      if !params[:region].blank?
-        data = data.where(region_id: params[:region])
-      end
-
-      if !params[:genero].blank?
-        by_gender = @partido.personas.where(:genero => params[:genero])
-        data = data.where(persona_id: by_gender)
-      end
-
-      data.each do |m|
-        if !params[:q].blank?
-          n = params[:q].split(" ")[0]
-          a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
-          if m.persona.nombre.downcase.include?(n.downcase) || m.persona.apellidos.downcase.include?(a.downcase)
-            members << {:cargo => m, :persona => m.persona, :tipo_cargo => m.tipo_cargo}
-          end
-        else
-          members << {:cargo => m, :persona => m.persona, :tipo_cargo => m.tipo_cargo}
+      @organos_internos.each_with_index do |o, i|
+        members = []
+        data = @trimestre_informado.cargos.where(partido: @partido, organo_interno: o)
+        if !params[:region].blank?
+          data = data.where(region_id: params[:region])
         end
 
+        if !params[:genero].blank?
+          by_gender = @partido.personas.where(:genero => params[:genero])
+          data = data.where(persona_id: by_gender)
+        end
+
+        data.each do |m|
+          if !params[:q].blank?
+            n = params[:q].split(" ")[0]
+            a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
+            if m.persona.nombre.downcase.include?(n.downcase) || m.persona.apellidos.downcase.include?(a.downcase)
+              members << {:cargo => m, :persona => m.persona, :tipo_cargo => m.tipo_cargo}
+            end
+          else
+            members << {:cargo => m, :persona => m.persona, :tipo_cargo => m.tipo_cargo}
+          end
+
+        end
+        @datos << {:organo_interno => o, :miembros => members}
       end
-      @datos << {:organo_interno => o, :miembros => members}
+      @sin_datos = false
     end
-    # p 'imprimiendo los datos aquí >>>>>' + @datos.to_s
     # @organos_internos = OrganoInterno.page(params[:page]).per(10)
     # @miembros = Persona.page(params[:page]).per(10)
   end
@@ -663,27 +686,35 @@ class PartidosController < ApplicationController
 
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
-    params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
-    @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
-    @publicacion_candidatos = []
-    tc_candidatos = @partido.tipo_cargos.where(candidato:true)
-    tc_candidatos.each do |tc|
-      filter_by = @trimestre_informado.cargos.where(tipo_cargo_id:tc)
-      if !params[:q].blank?
-        n = params[:q].split(" ")[0]
-        a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
-        personas = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", n.downcase, a.downcase)
-        filter_by = filter_by.where(:persona_id => personas)
+    if @trimestres_informados.count == 0
+      @trimestres_informados = []
+      @publicacion_candidatos = []
+      @sin_datos = true
+    else
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+      @publicacion_candidatos = []
+      tc_candidatos = @partido.tipo_cargos.where(candidato:true)
+      tc_candidatos.each do |tc|
+        filter_by = @trimestre_informado.cargos.where(tipo_cargo_id:tc)
+        if !params[:q].blank?
+          n = params[:q].split(" ")[0]
+          a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
+          personas = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", n.downcase, a.downcase)
+          filter_by = filter_by.where(:persona_id => personas)
+        end
+        if !params[:region].blank?
+          filter_by = filter_by.where(:region_id => params["region"])
+        end
+        if !params[:genero].blank?
+          by_gender = @partido.personas.where(:genero => params[:genero])
+          filter_by = filter_by.where(:persona_id => by_gender)
+        end
+        @publicacion_candidatos << {"type" => tc.titulo, "cargos" => filter_by}
       end
-      if !params[:region].blank?
-        filter_by = filter_by.where(:region_id => params["region"])
-      end
-      if !params[:genero].blank?
-        by_gender = @partido.personas.where(:genero => params[:genero])
-        filter_by = filter_by.where(:persona_id => by_gender)
-      end
-      @publicacion_candidatos << {"type" => tc.titulo, "cargos" => filter_by}
+      @sin_datos = false
     end
   end
 

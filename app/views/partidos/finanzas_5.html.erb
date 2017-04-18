@@ -1,50 +1,53 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Finanzas</li><li>Transferencias de fondos públicos</li></ol>
 <h3>Transferencias de fondos públicos</h3>
-
-<div class="row">
-  <div class="col-md-12">
-    <%= form_tag partido_finanzas_5_path, :method => :get, class: 'form-inline' do |f| %>
-    <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
-    <%= submit_tag 'Filtrar', class: "btn" %>
-    <% end %>
+<% if @sin_datos %>
+  <%= render 'sin_datos' %>
+<% else %>
+  <div class="row">
+    <div class="col-md-12">
+      <%= form_tag partido_finanzas_5_path, :method => :get, class: 'form-inline' do |f| %>
+      <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
+      <%= submit_tag 'Filtrar', class: "btn" %>
+      <% end %>
+    </div>
   </div>
-</div>
 
-<div>
-  <h4>Datos correspondientes al <%=  @fecha_datos %></h4>
-  <span id="header"></span>
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Concepto</th>
-          <th>&nbsp;</th>
-          <th>Monto Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @datos_temp_transferencias.each_with_index do |linea, i| %>
-        <tr>
-          <td><%= linea['text'] %></td>
-          <td><span id="barras_<%= i.to_s %>"></span></td>
-          <td class="monto">
-            <%= number_to_currency(linea['value'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %>
-          </td>
-        </tr>
-        <% end %>
-      </tbody>
-      <tfoot>
-        <tr>
-          <th class="total">Total</th>
-          <th>&nbsp;</th>
-          <th class="total monto"> <%=  number_to_currency(@datos_transferencias_totals[:total], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %> </th>
-        </tr>
-      </tfoot>
-    </table>
+  <div>
+    <h4>Datos correspondientes al <%=  @fecha_datos %></h4>
+    <span id="header"></span>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Concepto</th>
+            <th>&nbsp;</th>
+            <th>Monto Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @datos_temp_transferencias.each_with_index do |linea, i| %>
+          <tr>
+            <td><%= linea['text'] %></td>
+            <td><span id="barras_<%= i.to_s %>"></span></td>
+            <td class="monto">
+              <%= number_to_currency(linea['value'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th class="total">Total</th>
+            <th>&nbsp;</th>
+            <th class="total monto"> <%=  number_to_currency(@datos_transferencias_totals[:total], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %> </th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
   </div>
-</div>
 
-<div id="barras"></div>
+  <div id="barras"></div>
+<% end %>
 
 <script>
 $(document).ready(function(){

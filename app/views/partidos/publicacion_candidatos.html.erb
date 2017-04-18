@@ -1,56 +1,59 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Últimas decisiones</li><li>Publicación de los candidatos</li></ol>
 <h3>Publicación de los candidatos</h3>
+<% if @sin_datos %>
+  <%= render 'sin_datos' %>
+<% else %>
+  <%= form_tag partido_publicacion_candidatos_path, :method =>  :get, class: 'form-inline' do |f| %>
+    <%= text_field_tag :q, params[:q] || "", class: "form-control", placeholder: "Ingresar nombre o apellido" %>
+    <%= select_tag "region", options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Seleccionar región", class: "form-control" %>
+    <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
+    <!-- <%= select_tag "genero", options_for_select(["Masculino", "Femenino"], params[:genero] || ""), include_blank: "Seleccionar género", class: "form-control" %> -->
+    <%= submit_tag 'Filtrar', class: "btn" %>
+    <%= hidden_field_tag 'menu', params[:menu] %>
+  <% end %>
 
-<%= form_tag partido_publicacion_candidatos_path, :method =>  :get, class: 'form-inline' do |f| %>
-  <%= text_field_tag :q, params[:q] || "", class: "form-control", placeholder: "Ingresar nombre o apellido" %>
-  <%= select_tag "region", options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Seleccionar región", class: "form-control" %>
-  <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
-  <!-- <%= select_tag "genero", options_for_select(["Masculino", "Femenino"], params[:genero] || ""), include_blank: "Seleccionar género", class: "form-control" %> -->
-  <%= submit_tag 'Filtrar', class: "btn" %>
-  <%= hidden_field_tag 'menu', params[:menu] %>
-<% end %>
-
-<% cnt = 0 %>
-<% @publicacion_candidatos.each_with_index do |ip, index| %>
-  <% if ip["cargos"].any? %>
-  <% cnt = cnt + 1 %>
-  <div class="panel panel-default">
-    <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
-      <h4 class="panel-title intern">
-        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
-          <%= ip["type"] %>
-        </a>
-        <span class="badge"><%= ip["cargos"].count %></span>
-      </h4>
-      <span class="sr-only"><p>Se han enconttrado <%= ip["cargos"].count %> candidatos para <%= ip["type"] %></p></span>
-    </div>
-    <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
-      <div class="panel-body">
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Región</th>
-                <th>Comuna</th>
-                <th>Circunscripción</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% ip["cargos"].each do |c|%>
-              <tr>
-                <td><%= not_null(c.persona, 'nombre') + " " + not_null(c.persona, 'apellidos') %></td>
-                <td><%= not_null(c.region, 'nombre') %></td>
-                <td><%= not_null(c.comuna, 'nombre') %></td>
-                <td><%= (c.circunscripcion_id) %></td>
-              </tr>
-              <% end %>
-            </tbody>
-          </table>
+  <% cnt = 0 %>
+  <% @publicacion_candidatos.each_with_index do |ip, index| %>
+    <% if ip["cargos"].any? %>
+    <% cnt = cnt + 1 %>
+    <div class="panel panel-default">
+      <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
+        <h4 class="panel-title intern">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
+            <%= ip["type"] %>
+          </a>
+          <span class="badge"><%= ip["cargos"].count %></span>
+        </h4>
+        <span class="sr-only"><p>Se han enconttrado <%= ip["cargos"].count %> candidatos para <%= ip["type"] %></p></span>
+      </div>
+      <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Región</th>
+                  <th>Comuna</th>
+                  <th>Circunscripción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% ip["cargos"].each do |c|%>
+                <tr>
+                  <td><%= not_null(c.persona, 'nombre') + " " + not_null(c.persona, 'apellidos') %></td>
+                  <td><%= not_null(c.region, 'nombre') %></td>
+                  <td><%= not_null(c.comuna, 'nombre') %></td>
+                  <td><%= (c.circunscripcion_id) %></td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+    <% end %>
   <% end %>
 <% end %>
 

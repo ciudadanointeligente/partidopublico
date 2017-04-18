@@ -1,29 +1,33 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Presencia nacional</li><li>Domicilio y sedes de contacto</li></ol>
 <h3>Domicilio y sedes de contacto</h3>
-<%= form_tag partido_sedes_partido_path, :method =>  :get, class: 'form-inline' do |f| %>
-  <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
-  <%= submit_tag 'Filtrar', class: "btn" %>
-<% end %>
-<div class="table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Región</th>
-        <th>Comuna</th>
-        <th>Dirección</th>
-        <th>Contacto</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @datos_sedes.each do |r| %>
-        <% if r['sedes'].any? %>
-          <% r['sedes'].each do |s| %>
-          <tr>
-            <td><%= r['region'] %></td>
-            <td><%= s['comuna'] %></td>
-            <td><%= s['direccion'] %></td>
-            <td><%= s['contacto'] %></td>
-          </tr>
+<% if @sin_datos %>
+  <%= render 'sin_datos' %>
+<% else %>
+  <%= form_tag partido_sedes_partido_path, :method =>  :get, class: 'form-inline' do |f| %>
+    <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
+    <%= submit_tag 'Filtrar', class: "btn" %>
+  <% end %>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Región</th>
+          <th>Comuna</th>
+          <th>Dirección</th>
+          <th>Contacto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @datos_sedes.each do |r| %>
+          <% if r['sedes'].any? %>
+            <% r['sedes'].each do |s| %>
+            <tr>
+              <td><%= r['region'] %></td>
+              <td><%= s['comuna'] %></td>
+              <td><%= s['direccion'] %></td>
+              <td><%= s['contacto'] %></td>
+            </tr>
+            <% end %>
           <% end %>
         <% end %>
       <% end %>
