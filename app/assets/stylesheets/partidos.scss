@@ -1,11 +1,15 @@
 // Place all the styles related to the partidos controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.no_data {
+.no_data_big_message {
   color: #000000 !important;
-  letter-spacing: 1.2px;
   font-size: 12px;
   text-transform: uppercase;
   font-weight: 700;
-  font-family: 'Montserrat', sans-serif;
+  font-family: normal normal normal 14px/1 FontAwesome;
+}
+
+.no_data_small_message {
+  font-size: inherit;
+  font-family: normal normal normal 14px/1 FontAwesome;
 }

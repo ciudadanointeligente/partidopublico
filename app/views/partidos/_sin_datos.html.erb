@@ -1,1 +1,7 @@
-<p class="no_data"> <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> El partido no ha entregado la planilla correspondiente a la información solicitada </p>
+<p class="no_data_big_message"> <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+  El <%= @partido.nombre %> no ha entregado la planilla correspondiente a la
+  información solicitada. Esto puede ser una omisión o porque este ítem no
+  aplica al <%= @partido.nombre %>.</p>
+  <p class="no_data_small_message">Pregúntale al <%= @partido.nombre %>
+  por qué no ha entregado esta planilla o exígele que lo haga enviando un
+  correo a: [correo_contacto_partido]".</p>
