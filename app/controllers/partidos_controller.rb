@@ -558,27 +558,31 @@ end
   def elecciones_internas
     @elecciones = []
     organos = @partido.organo_internos
-    if_data = organos.first.eleccion_interna
-    if if_data.count == 0
-      @sin_datos = true
-    else
-      organos.each do |o|
-        elecciones = o.eleccion_interna
-        tmp_elecciones = []
-        elecciones.each do |e|
-          tmp_procedimientos = []
-          e.procedimientos.each do |p|
-            tmp_procedimientos << {"descripcion" => p.descripcion}
+    if organos.nil?
+      if_data = organos.first.eleccion_interna
+      if if_data.count == 0
+        @sin_datos = true
+      else
+        organos.each do |o|
+          elecciones = o.eleccion_interna
+          tmp_elecciones = []
+          elecciones.each do |e|
+            tmp_procedimientos = []
+            e.procedimientos.each do |p|
+              tmp_procedimientos << {"descripcion" => p.descripcion}
+            end
+            tmp_requisitos = []
+            e.requisitos.each do |r|
+              tmp_requisitos << {"descripcion" => r.descripcion}
+            end
+            tmp_elecciones << {"cargo" => e.cargo, "fecha_eleccion" => e.fecha_eleccion, "fecha_limite_inscripcion" => e.fecha_limite_inscripcion, "procedimientos" => tmp_procedimientos, "requisitos" => tmp_requisitos}
           end
-          tmp_requisitos = []
-          e.requisitos.each do |r|
-            tmp_requisitos << {"descripcion" => r.descripcion}
-          end
-          tmp_elecciones << {"cargo" => e.cargo, "fecha_eleccion" => e.fecha_eleccion, "fecha_limite_inscripcion" => e.fecha_limite_inscripcion, "procedimientos" => tmp_procedimientos, "requisitos" => tmp_requisitos}
+          @elecciones << {"organo" => o.nombre, "elecciones_internas" => tmp_elecciones}
         end
-        @elecciones << {"organo" => o.nombre, "elecciones_internas" => tmp_elecciones}
+        @sin_datos = false
       end
-      @sin_datos = false
+    else
+      @sin_datos = true
     end
   end
 
