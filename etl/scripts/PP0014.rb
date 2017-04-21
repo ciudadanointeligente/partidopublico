@@ -19,7 +19,7 @@ results[:end_time] = 0
 
 pre_process do
   results[:start_time] = Time.now
-  p "*** Start #{job_name} Contrataciones MIGRATION #{results[:start_time]}***"
+  p "*** Start #{job_name} Ingresos de Campañas MIGRATION #{results[:start_time]}***"
 end
 
 files = Dir[input_path + "#{job_name}.csv"]

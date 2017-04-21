@@ -14,8 +14,12 @@ class SedesDestination
   end
 
   def write(row)
-    sede = Sede.where(partido_id: row[:partido_id], region_id: row[:region_id],
-    comuna_id: row[:comuna_id], direccion: row[:address]).first_or_initialize
+
+    sede = Sede.where(partido_id: row[:partido_id],
+                      region_id: row[:region_id],
+                      comuna_id: row[:comuna_id],
+                      direccion: row[:address]).first_or_initialize
+
     trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
     if sede.id.nil?
       sede.save

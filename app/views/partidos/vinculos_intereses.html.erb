@@ -1,5 +1,8 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Vínculos e intereses</li><li>Entidades en las que tenga participación</li></ol>
 <h3>Entidades en que tenga participación</h3>
+<% if @sin_datos %>
+  <%= render 'sin_datos' %>
+<% else %>
 <div class="table-responsive">
   <table class="table">
     <thead>
@@ -33,3 +36,4 @@
     </tbody>
   </table>
 </div>
+<% end %>

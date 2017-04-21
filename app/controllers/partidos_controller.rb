@@ -304,22 +304,27 @@ class PartidosController < ApplicationController
   def autoridades
     @autoridades = []
     t_cargos = @partido.tipo_cargos.where(autoridad: true)
-    t_cargos.each do |tc|
-      cargos = @partido.cargos.where(tipo_cargo_id: tc)
-      if !params["region"].blank?
-        cargos = cargos.where(region_id: params["region"])
+    if t_cargos.count == 0
+      @sin_datos = true
+    else
+      t_cargos.each do |tc|
+        cargos = @partido.cargos.where(tipo_cargo_id: tc)
+        if !params["region"].blank?
+          cargos = cargos.where(region_id: params["region"])
+        end
+        if !params["genero"].blank?
+          personas_id = @partido.personas.where(genero: params["genero"])
+          cargos = cargos.where(persona_id: personas_id)
+        end
+        if !params["q"].blank?
+          n = params[:q].split(" ")[0]
+          a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
+          personas_id = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", n.downcase, a.downcase)
+          cargos = cargos.where(persona_id: personas_id)
+        end
+        @autoridades << {"type" => tc.titulo, "cargos" => cargos}
       end
-      if !params["genero"].blank?
-        personas_id = @partido.personas.where(genero: params["genero"])
-        cargos = cargos.where(persona_id: personas_id)
-      end
-      if !params["q"].blank?
-        n = params[:q].split(" ")[0]
-        a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
-        personas_id = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", n.downcase, a.downcase)
-        cargos = cargos.where(persona_id: personas_id)
-      end
-      @autoridades << {"type" => tc.titulo, "cargos" => cargos}
+      @sin_datos = false
     end
   end
 
@@ -328,6 +333,11 @@ class PartidosController < ApplicationController
     @partido.participacion_entidads.each do |p|
       @entidades.push p
     end
+    if @entidades.count == 0
+      @sin_datos = true
+    else
+      @sin_datos = false
+    end
   end
 
   def pactos
@@ -335,12 +345,22 @@ class PartidosController < ApplicationController
     @partido.pacto_electorals.each do |p|
       @pactos.push p
     end
+    if @pactos.count == 0
+      @sin_datos = true
+    else
+      @sin_datos = false
+    end
   end
 
   def sanciones
     @sanciones = []
     @partido.sancions.each do |s|
       @sanciones.push s
+    end
+    if @sanciones.count == 0
+      @sin_datos = true
+    else
+      @sin_datos = false
     end
   end
 
@@ -399,17 +419,22 @@ class PartidosController < ApplicationController
       @fecha = @fechas_datos.last
     end
     egresos_ordinarios = EgresoOrdinario.where(:partido => @partido, :fecha_datos => @fecha )
-    max_value = egresos_ordinarios.maximum("privado + publico")
-    @datos_egresos_ordinarios = []
-    egresos_ordinarios.each do |eo|
-      val = (100 * ((eo.publico.to_f + eo.privado.to_f)/ max_value.to_f).to_f rescue 0).to_s
-      line ={ 'text'=> eo.concepto, 'value_publico' => eo.publico, 'value_privado' => eo.privado,
-        'value' => ActiveSupport::NumberHelper::number_to_delimited(eo.privado + eo.publico, delimiter: ""), 'percentage' => val }
-      @datos_egresos_ordinarios << line
+    if egresos_ordinarios.count == 0
+      @sin_datos = true
+    else
+      max_value = egresos_ordinarios.maximum("privado + publico")
+      @datos_egresos_ordinarios = []
+      egresos_ordinarios.each do |eo|
+        val = (100 * ((eo.publico.to_f + eo.privado.to_f)/ max_value.to_f).to_f rescue 0).to_s
+        line ={ 'text'=> eo.concepto, 'value_publico' => eo.publico, 'value_privado' => eo.privado,
+          'value' => ActiveSupport::NumberHelper::number_to_delimited(eo.privado + eo.publico, delimiter: ""), 'percentage' => val }
+        @datos_egresos_ordinarios << line
+      end
+      total_publicos = egresos_ordinarios.sum(:publico)
+      total_privados = egresos_ordinarios.sum(:privado)
+      @datos_egresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
+      @sin_datos = false
     end
-    total_publicos = egresos_ordinarios.sum(:publico)
-    total_privados = egresos_ordinarios.sum(:privado)
-    @datos_egresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
   end
 
   # MÉTODO ANTIGUO
@@ -495,6 +520,7 @@ class PartidosController < ApplicationController
 
   def afiliacion_desafiliacion
     @tramites = @partido.tramites
+    @sin_datos = true
   end
 
   def eleccion_popular
@@ -503,23 +529,27 @@ class PartidosController < ApplicationController
     e_popular = []
     cargos.each do |c|
       query = @partido.eleccion_populars.where(cargo: c)
-      tmp = []
-      query.each do |q|
-        procedimiento = []
-        q.procedimientos.each do |p|
-          procedimiento << {"descripcion" => p.descripcion}
+      if query.count == 0
+        @sin_datos = true
+      else
+        tmp = []
+        query.each do |q|
+          procedimiento = []
+          q.procedimientos.each do |p|
+            procedimiento << {"descripcion" => p.descripcion}
+          end
+          requisito = []
+          q.requisitos.each do |r|
+            requisito << {"descripcion" => r.descripcion}
+          end
+          tmp <<  {"fecha_eleccion" => q.fecha_eleccion, "dias" => q.dias, "procedimientos" => procedimiento, "requisitos" => requisito}
         end
-        requisito = []
-        q.requisitos.each do |r|
-          requisito << {"descripcion" => r.descripcion}
-        end
-        tmp <<  {"fecha_eleccion" => q.fecha_eleccion, "dias" => q.dias, "procedimientos" => procedimiento, "requisitos" => requisito}
+        e_popular << { "type" => c, "dates" => tmp }
+        @sin_datos = true
       end
-      e_popular << { "type" => c, "dates" => tmp }
-    end
-
     @e_popular = e_popular
   end
+end
 
   def organos_internos
     @organos = @partido.organo_internos
@@ -528,65 +558,80 @@ class PartidosController < ApplicationController
   def elecciones_internas
     @elecciones = []
     organos = @partido.organo_internos
-    organos.each do |o|
-      elecciones = o.eleccion_interna
-      tmp_elecciones = []
-      elecciones.each do |e|
-        tmp_procedimientos = []
-        e.procedimientos.each do |p|
-          tmp_procedimientos << {"descripcion" => p.descripcion}
+    if_data = organos.first.eleccion_interna
+    if if_data.count == 0
+      @sin_datos = true
+    else
+      organos.each do |o|
+        elecciones = o.eleccion_interna
+        tmp_elecciones = []
+        elecciones.each do |e|
+          tmp_procedimientos = []
+          e.procedimientos.each do |p|
+            tmp_procedimientos << {"descripcion" => p.descripcion}
+          end
+          tmp_requisitos = []
+          e.requisitos.each do |r|
+            tmp_requisitos << {"descripcion" => r.descripcion}
+          end
+          tmp_elecciones << {"cargo" => e.cargo, "fecha_eleccion" => e.fecha_eleccion, "fecha_limite_inscripcion" => e.fecha_limite_inscripcion, "procedimientos" => tmp_procedimientos, "requisitos" => tmp_requisitos}
         end
-        tmp_requisitos = []
-        e.requisitos.each do |r|
-          tmp_requisitos << {"descripcion" => r.descripcion}
-        end
-        tmp_elecciones << {"cargo" => e.cargo, "fecha_eleccion" => e.fecha_eleccion, "fecha_limite_inscripcion" => e.fecha_limite_inscripcion, "procedimientos" => tmp_procedimientos, "requisitos" => tmp_requisitos}
+        @elecciones << {"organo" => o.nombre, "elecciones_internas" => tmp_elecciones}
       end
-      @elecciones << {"organo" => o.nombre, "elecciones_internas" => tmp_elecciones}
+      @sin_datos = false
     end
   end
 
   def representantes
     @representantes = []
     t_cargos = @partido.tipo_cargos.where(representante: true)
-    by_gender = []
-    t_cargos.each do |tc|
-      filter_by = @partido.cargos.where(:tipo_cargo_id => tc.id)
-      if !params[:q].blank?
-        n = params[:q].split(" ")[0]
-        a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
-        personas = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", n.downcase, a.downcase)
-        filter_by = filter_by.where(:persona_id => personas)
+    if t_cargos.count == 0
+      @sin_datos = true
+    else
+      by_gender = []
+      t_cargos.each do |tc|
+        filter_by = @partido.cargos.where(:tipo_cargo_id => tc.id)
+        if !params[:q].blank?
+          n = params[:q].split(" ")[0]
+          a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
+          personas = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", n.downcase, a.downcase)
+          filter_by = filter_by.where(:persona_id => personas)
+        end
+        if !params[:genero].blank?
+          by_gender = @partido.personas.where(:genero => params[:genero])
+          filter_by = filter_by.where(:persona_id => by_gender)
+        end
+        if !params[:region].blank?
+          filter_by = filter_by.where(:region_id => params[:region])
+        end
+        @representantes << {"type" => tc.titulo, "representatives" => filter_by}
       end
-      if !params[:genero].blank?
-        by_gender = @partido.personas.where(:genero => params[:genero])
-        filter_by = filter_by.where(:persona_id => by_gender)
-      end
-      if !params[:region].blank?
-        filter_by = filter_by.where(:region_id => params[:region])
-      end
-      @representantes << {"type" => tc.titulo, "representatives" => filter_by}
+      @sin_datos = false
     end
-
   end
 
   def acuerdos_organos
     @acuerdos = []
-    tipos = %w(Acta Programatico Electoral Funcionamiento\ Interno)
-
-    tipos.each do |t|
-      acuerdos = []
-      @partido.acuerdos.where(tipo: t).each do |a|
-        ##puts a.region.to_i
-        region = a.region.to_i == 0 ? "" : Region.find(a.region.to_i).nombre
-        organo_interno  = a.organo_interno.nil? ? "" :  a.organo_interno.nombre
-        documento_file_name = a.documento_file_name.nil? ? "" : a.documento_file_name
-        documento_url = a.documento.url.nil? ? "" : a.documento.url
-        acuerdos << {"numero" => a.numero, "tema" => a.tema, "fecha" => a.fecha, "region" => region, "organo_interno" => organo_interno, "documento" => documento_file_name, "documento_url" => documento_url}
+    acuerdo = @partido.acuerdos.where(tipo: t)
+    if acuerdo.count == 0
+      @sin_datos = true
+    else
+      tipos = %w(Acta Programatico Electoral Funcionamiento\ Interno)
+      tipos.each do |t|
+        acuerdos = []
+        @partido.acuerdos.where(tipo: t).each do |a|
+          ##puts a.region.to_i
+          region = a.region.to_i == 0 ? "" : Region.find(a.region.to_i).nombre
+          organo_interno  = a.organo_interno.nil? ? "" :  a.organo_interno.nombre
+          documento_file_name = a.documento_file_name.nil? ? "" : a.documento_file_name
+          documento_url = a.documento.url.nil? ? "" : a.documento.url
+          acuerdos << {"numero" => a.numero, "tema" => a.tema, "fecha" => a.fecha, "region" => region, "organo_interno" => organo_interno, "documento" => documento_file_name, "documento_url" => documento_url}
+          @acuerdos << { "type" => t, "agreements" => acuerdos }
+        end
       end
-      @acuerdos << { "type" => t, "agreements" => acuerdos }
+      @sin_datos = false
     end
-
+    p 'AQUIIIIIII >>>>> ' + @sin_datos.to_s + ' <<<<<<'
   end
 
   def estructura_organica
@@ -652,24 +697,27 @@ class PartidosController < ApplicationController
   def intereses_patrimonios
     @intereses_patrimonios = []
     tc_candidatos = @partido.tipo_cargos#.where(candidato:true)
-    tc_candidatos.each do |tc|
-      filter_by = @partido.cargos.where(tipo_cargo_id:tc)
-      if !params[:q].blank?
-        n = params[:q].split(" ")[0]
-        a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
-        personas = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", n.downcase, a.downcase)
-        filter_by = filter_by.where(:persona_id => personas)
+    if tc_candidatos.count == 0
+      @sin_datos = true
+    else
+      tc_candidatos.each do |tc|
+        filter_by = @partido.cargos.where(tipo_cargo_id:tc)
+        if !params[:q].blank?
+          n = params[:q].split(" ")[0]
+          a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
+          personas = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", n.downcase, a.downcase)
+          filter_by = filter_by.where(:persona_id => personas)
+        end
+        if !params[:region].blank?
+          filter_by = filter_by.where(:region_id => params["region"])
+        end
+        if !params[:genero].blank?
+          by_gender = @partido.personas.where(:genero => params[:genero])
+          filter_by = filter_by.where(:persona_id => by_gender)
+        end
+        @intereses_patrimonios << {"type" => tc.titulo, "cargos" => filter_by} unless filter_by.empty?
       end
-      if !params[:region].blank?
-        filter_by = filter_by.where(:region_id => params["region"])
-      end
-      if !params[:genero].blank?
-        by_gender = @partido.personas.where(:genero => params[:genero])
-        filter_by = filter_by.where(:persona_id => by_gender)
-      end
-      @intereses_patrimonios << {"type" => tc.titulo, "cargos" => filter_by} unless filter_by.empty?
-
-
+      @sin_datos = false
     end
   end
 

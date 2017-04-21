@@ -1,41 +1,45 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Cómo participar</li><li>Afiliación y desafiliación</li></ol>
 <h3>Afiliación y desafiliación</h3>
-<h4 style="float:left;margin:16px 10px 0 0;">Total de afiliados:</h4> <p class="total-max"><%=@partido.afiliados%></p>
-<hr>
-<% @tramites.each do |t| %>
-  <h4><%= t.nombre %></h4>
-  <p><%= t.descripcion %></p>
-  <% if t.documento_file_name %>
-    <%= link_to t.documento.url, class: "btn btn-default" do %>
-      <i class="fa fa-download"></i> <%= t.documento_file_name %>
+<% if @sin_datos %>
+  <%= render 'sin_datos' %>
+<% else %>
+  <h4 style="float:left;margin:16px 10px 0 0;">Total de afiliados:</h4> <p class="total-max"><%=@partido.afiliados%></p>
+  <hr>
+  <% @tramites.each do |t| %>
+    <h4><%= t.nombre %></h4>
+    <p><%= t.descripcion %></p>
+    <% if t.documento_file_name %>
+      <%= link_to t.documento.url, class: "btn btn-default" do %>
+        <i class="fa fa-download"></i> <%= t.documento_file_name %>
+      <% end %>
     <% end %>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Procedimientos</th>
+            <th>Requisitos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <ul>
+              <% t.procedimientos.each do |p| %>
+                <li><%= p.descripcion %></li>
+              <% end %>
+              </ul>
+            </td>
+            <td>
+              <ul>
+              <% t.requisitos.each do |r| %>
+                <li><%= r.descripcion %></li>
+              <% end %>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   <% end %>
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Procedimientos</th>
-          <th>Requisitos</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <ul>
-            <% t.procedimientos.each do |p| %>
-              <li><%= p.descripcion %></li>
-            <% end %>
-            </ul>
-          </td>
-          <td>
-            <ul>
-            <% t.requisitos.each do |r| %>
-              <li><%= r.descripcion %></li>
-            <% end %>
-            </ul>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
 <% end %>
