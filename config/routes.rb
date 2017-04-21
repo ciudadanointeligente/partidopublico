@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'pages/twittea'
+
   #get 'compare', to: 'comparisons#index'
   resources :comparisons
   resources :egreso_campanas
