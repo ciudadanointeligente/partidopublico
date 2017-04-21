@@ -174,7 +174,16 @@ class PartidosController < ApplicationController
     pnm = 0 #promedio nacional mujeres
     pno = 0
 
-    nacional = { "region" => "nacional", "ordinal" => "nacional", "hombres" => 0, "mujeres" => 0, "otros" => 0, "porcentaje_hombres" => 0, "porcentaje_mujeres" => 0, "porcentaje_otros" => 0, "total" => 0, "desgloce" => [] }
+    nacional = { "region" => "nacional",
+                 "ordinal" => "nacional",
+                 "hombres" => 0,
+                 "mujeres" => 0,
+                 "otros" => 0,
+                 "porcentaje_hombres" => 0,
+                 "porcentaje_mujeres" => 0,
+                 "porcentaje_otros" => 0,
+                 "total" => 0,
+                 "desgloce" => [] }
 
     last_date = Afiliacion.where(partido_id: @partido).uniq.pluck(:fecha_datos).sort.last
 

@@ -44,6 +44,33 @@ class SedesDestination
   end
 end
 
+class RegionPorPartidoDestination
+  def initialize(results:)
+    @results = results
+  end
+
+  def write(row)
+
+    sede = Sede.where(partido_id: row[:partido_id],
+                      region_id: row[:region_id],
+                      comuna_id: row[:comuna_id],
+                      direccion: row[:address]).first_or_initialize
+
+    partido = Partido.find(row[:partido_id])
+
+    p row[:region_id].to_s
+
+    unless row[:region_id].nil?
+      region = Region.find(row[:region_id])
+      partido.regions << region unless region.in?(partido.regions)
+    end
+  end
+
+  def close
+  end
+
+end
+
 class OrganoInternosDestination
   def initialize(results:, verbose:)
     @verbose = verbose

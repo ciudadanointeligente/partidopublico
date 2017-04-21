@@ -49,6 +49,8 @@ transform AddressTransformation, verbose: verbosing
 
 transform ResultsTransformation, results: results
 
+destination RegionPorPartidoDestination, results: results
+
 destination SedesDestination, verbose: verbosing, results: results
 
 destination ErrorCSVDestination, filename: log_path + job_name + '.log'
