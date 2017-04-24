@@ -2,16 +2,17 @@
 #
 # Table name: afiliacions
 #
-#  id             :integer          not null, primary key
-#  hombres        :integer
-#  mujeres        :integer
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  partido_id     :integer
-#  region_id      :integer
-#  fecha_datos    :date
-#  ano_nacimiento :integer
-#  otros          :integer
+#  id                  :integer          not null, primary key
+#  hombres             :integer
+#  mujeres             :integer
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  partido_id          :integer
+#  region_id           :integer
+#  fecha_datos         :date
+#  ano_nacimiento      :integer
+#  otros               :integer
+#  trimestre_informado :string
 #
 # Indexes
 #
@@ -23,6 +24,8 @@ class Afiliacion < ActiveRecord::Base
   has_paper_trail
   belongs_to :partido
   belongs_to :region
+
+  has_and_belongs_to_many :trimestre_informados
 
   # validates_presence_of :partido_id, :fecha_datos, :region_id, :ano_nacimiento
   validates_presence_of :partido_id

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170413164912) do
+ActiveRecord::Schema.define(version: 20170424183240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,17 +79,26 @@ ActiveRecord::Schema.define(version: 20170413164912) do
   create_table "afiliacions", force: :cascade do |t|
     t.integer  "hombres"
     t.integer  "mujeres"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.integer  "partido_id"
     t.integer  "region_id"
     t.date     "fecha_datos"
     t.integer  "ano_nacimiento"
     t.integer  "otros"
+    t.string   "trimestre_informado"
   end
 
   add_index "afiliacions", ["partido_id"], name: "index_afiliacions_on_partido_id", using: :btree
   add_index "afiliacions", ["region_id"], name: "index_afiliacions_on_region_id", using: :btree
+
+  create_table "afiliacions_trimestre_informados", id: false, force: :cascade do |t|
+    t.integer "afiliacion_id",          null: false
+    t.integer "trimestre_informado_id", null: false
+  end
+
+  add_index "afiliacions_trimestre_informados", ["afiliacion_id"], name: "t_i_afiliacion_id", using: :btree
+  add_index "afiliacions_trimestre_informados", ["trimestre_informado_id"], name: "t_i_a_trimestre_id", using: :btree
 
   create_table "balance_anuals", force: :cascade do |t|
     t.integer  "partido_id"

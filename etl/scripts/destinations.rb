@@ -409,7 +409,7 @@ class AfiliacionDestination
     afiliacion = Afiliacion.where(partido_id: row[:partido_id],
                                   otros: total_afiliados).first_or_initialize
 
-    # trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
 
     if afiliacion.id.nil?
       afiliacion.save
@@ -417,11 +417,11 @@ class AfiliacionDestination
         row[:error_log] = row[:error_log].to_s + ', ' + afiliacion.errors.messages.to_s
         @results[:afiliacions][:errors] += 1
       else
-        # afiliacion.trimestre_informados << trimestre_informado unless trimestre_informado.in?(afiliacion.trimestre_informados)
+        afiliacion.trimestre_informados << trimestre_informado unless trimestre_informado.in?(afiliacion.trimestre_informados)
         @results[:afiliacions][:new] += 1
       end
     else
-      # afiliacion.trimestre_informados << trimestre_informado unless trimestre_informado.in?(afiliacion.trimestre_informados)
+      afiliacion.trimestre_informados << trimestre_informado unless trimestre_informado.in?(afiliacion.trimestre_informados)
       @results[:afiliacions][:found] += 1
     end
   end

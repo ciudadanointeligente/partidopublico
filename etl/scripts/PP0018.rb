@@ -41,7 +41,7 @@ end
 
 transform PartidoLookup, verbose: verbosing, results: results
 
-# transform TrimestreInformadoLookup, verbose: verbosing,  results: results
+transform TrimestreInformadoLookup, verbose: verbosing,  results: results
 
 destination AfiliacionDestination, verbose: verbosing, results: results
 

@@ -276,7 +276,28 @@ class PartidosController < ApplicationController
   def regiones_all
     @datos_nacional = []
 
-    @cantidad_afiliados = @partido.afiliacions.last.total
+    temp_trimestres_informados = []
+    @partido.sedes.each do |s|
+      s.trimestre_informados.each do |t|
+
+        temp_trimestres_informados.push(t)
+
+      end
+    end
+
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
+
+    if @trimestres_informados.count == 0
+      @trimestres_informados = []
+      @sin_datos = true
+    else
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+      @cantidad_afiliados = @partido.afiliacions.last.total
+      @sin_datos = false
+    end
   end
 
   def sedes_partido

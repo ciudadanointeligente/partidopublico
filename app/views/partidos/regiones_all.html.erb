@@ -1,521 +1,527 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Presencia nacional</li><li>Regiones constituido y número de afiliados</li></ol>
+<h3>Regiones constituido y número de afiliados</h3>
 <div class="row">
   <div class="col-md-12">
-    <h3>Regiones constituido y número de afiliados</h3>
+    <% if @sin_datos %>
+    <%= render 'sin_datos' %>
+    <% else %>
+    <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
+    <%= submit_tag 'Filtrar' %>
   </div>
 
   <div class="hidden-xs hidden-sm col-md-4">
     <%= render 'svg_map_all' %>
   </div>
   <div class="col-md-8 text-center">
-    <style>
-      .showData { display: '' }
-      .hideData { display: none }
-    </style>
+  <style>
+  .showData { display: '' }
+  .hideData { display: none }
+  </style>
 
-    <div id="region-nacional" class="showData">
-      <div>
-        <h4>Cantidad afiliados:  </h4>
-        <span class="total-max"><%= @cantidad_afiliados%></span>
-      </div>
-      <br>
+  <div id="region-nacional" class="showData">
+    <div>
+      <h4>Cantidad afiliados:  </h4>
+      <span class="total-max"><%= @cantidad_afiliados%></span>
     </div>
-    <div id="region-1" class="hideData">
-      <div>
-        <h4></h4>
-        <span class="total-max"></span>
+    <br>
+  </div>
+  <div id="region-1" class="hideData">
+    <div>
+      <h4></h4>
+      <span class="total-max"></span>
+    </div>
+    <div class="row">
+      <h4>Cargos</h4>
+      <div class="col-sm-5">
+        <div id="cargos-1"></div>
       </div>
-      <div class="row">
-        <h4>Cargos</h4>
-        <div class="col-sm-5">
-          <div id="cargos-1"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-cargos"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Género</h4>
-        <div class="col-sm-5">
-          <div id="circulo-1"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Rango etario</h4>
-        <div class="col-sm-5">
-          <div id="desgloce-1"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-desgloce"></ul>
-        </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-cargos"></ul>
       </div>
     </div>
-    <div id="region-2" class="hideData">
-      <div>
-        <h4></h4>
-        <span class="total-max"></span>
+    <div class="row">
+      <h4>Género</h4>
+      <div class="col-sm-5">
+        <div id="circulo-1"></div>
       </div>
-      <div class="row">
-        <h4>Cargos</h4>
-        <div class="col-sm-5">
-          <div id="cargos-2"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-cargos"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Género</h4>
-        <div class="col-sm-5">
-          <div id="circulo-2"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Rango etario</h4>
-        <div class="col-sm-5">
-          <div id="desgloce-2"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-desgloce"></ul>
-        </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda"></ul>
       </div>
     </div>
-    <div id="region-3" class="hideData">
-      <div>
-        <h4></h4>
-        <span class="total-max"></span>
+    <div class="row">
+      <h4>Rango etario</h4>
+      <div class="col-sm-5">
+        <div id="desgloce-1"></div>
       </div>
-      <div class="row">
-        <h4>Cargos</h4>
-        <div class="col-sm-5">
-          <div id="cargos-3"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-cargos"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Género</h4>
-        <div class="col-sm-5">
-          <div id="circulo-3"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Rango etario</h4>
-        <div class="col-sm-5">
-          <div id="desgloce-3"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-desgloce"></ul>
-        </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-desgloce"></ul>
       </div>
     </div>
-    <div id="region-4" class="hideData">
-      <div>
-        <h4></h4>
-        <span class="total-max"></span>
+  </div>
+  <div id="region-2" class="hideData">
+    <div>
+      <h4></h4>
+      <span class="total-max"></span>
+    </div>
+    <div class="row">
+      <h4>Cargos</h4>
+      <div class="col-sm-5">
+        <div id="cargos-2"></div>
       </div>
-      <div class="row">
-        <h4>Cargos</h4>
-        <div class="col-sm-5">
-          <div id="cargos-4"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-cargos"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Género</h4>
-        <div class="col-sm-5">
-          <div id="circulo-4"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Rango etario</h4>
-        <div class="col-sm-5">
-          <div id="desgloce-4"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-desgloce"></ul>
-        </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-cargos"></ul>
       </div>
     </div>
-    <div id="region-5" class="hideData">
-      <div>
-        <h4></h4>
-        <span class="total-max"></span>
+    <div class="row">
+      <h4>Género</h4>
+      <div class="col-sm-5">
+        <div id="circulo-2"></div>
       </div>
-      <div class="row">
-        <h4>Cargos</h4>
-        <div class="col-sm-5">
-          <div id="cargos-5"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-cargos"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Género</h4>
-        <div class="col-sm-5">
-          <div id="circulo-5"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Rango etario</h4>
-        <div class="col-sm-5">
-          <div id="desgloce-5"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-desgloce"></ul>
-        </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda"></ul>
       </div>
     </div>
-    <div id="region-6" class="hideData">
-      <div>
-        <h4></h4>
-        <span class="total-max"></span>
+    <div class="row">
+      <h4>Rango etario</h4>
+      <div class="col-sm-5">
+        <div id="desgloce-2"></div>
       </div>
-      <div class="row">
-        <h4>Cargos</h4>
-        <div class="col-sm-5">
-          <div id="cargos-6"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-cargos"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Género</h4>
-        <div class="col-sm-5">
-          <div id="circulo-6"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Rango etario</h4>
-        <div class="col-sm-5">
-          <div id="desgloce-6"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-desgloce"></ul>
-        </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-desgloce"></ul>
       </div>
     </div>
-    <div id="region-7" class="hideData">
-      <div>
-        <h4></h4>
-        <span class="total-max"></span>
+  </div>
+  <div id="region-3" class="hideData">
+    <div>
+      <h4></h4>
+      <span class="total-max"></span>
+    </div>
+    <div class="row">
+      <h4>Cargos</h4>
+      <div class="col-sm-5">
+        <div id="cargos-3"></div>
       </div>
-      <div class="row">
-        <h4>Cargos</h4>
-        <div class="col-sm-5">
-          <div id="cargos-7"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-cargos"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Género</h4>
-        <div class="col-sm-5">
-          <div id="circulo-7"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Rango etario</h4>
-        <div class="col-sm-5">
-          <div id="desgloce-7"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-desgloce"></ul>
-        </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-cargos"></ul>
       </div>
     </div>
-    <div id="region-8" class="hideData">
-      <div>
-        <h4></h4>
-        <span class="total-max"></span>
+    <div class="row">
+      <h4>Género</h4>
+      <div class="col-sm-5">
+        <div id="circulo-3"></div>
       </div>
-      <div class="row">
-        <h4>Cargos</h4>
-        <div class="col-sm-5">
-          <div id="cargos-8"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-cargos"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Género</h4>
-        <div class="col-sm-5">
-          <div id="circulo-8"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Rango etario</h4>
-        <div class="col-sm-5">
-          <div id="desgloce-8"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-desgloce"></ul>
-        </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda"></ul>
       </div>
     </div>
-    <div id="region-9" class="hideData">
-      <div>
-        <h4></h4>
-        <span class="total-max"></span>
+    <div class="row">
+      <h4>Rango etario</h4>
+      <div class="col-sm-5">
+        <div id="desgloce-3"></div>
       </div>
-      <div class="row">
-        <h4>Cargos</h4>
-        <div class="col-sm-5">
-          <div id="cargos-9"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-cargos"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Género</h4>
-        <div class="col-sm-5">
-          <div id="circulo-9"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Rango etario</h4>
-        <div class="col-sm-5">
-          <div id="desgloce-9"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-desgloce"></ul>
-        </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-desgloce"></ul>
       </div>
     </div>
-    <div id="region-10" class="hideData">
-      <div>
-        <h4></h4>
-        <span class="total-max"></span>
+  </div>
+  <div id="region-4" class="hideData">
+    <div>
+      <h4></h4>
+      <span class="total-max"></span>
+    </div>
+    <div class="row">
+      <h4>Cargos</h4>
+      <div class="col-sm-5">
+        <div id="cargos-4"></div>
       </div>
-      <div class="row">
-        <h4>Cargos</h4>
-        <div class="col-sm-5">
-          <div id="cargos-10"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-cargos"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Género</h4>
-        <div class="col-sm-5">
-          <div id="circulo-10"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Rango etario</h4>
-        <div class="col-sm-5">
-          <div id="desgloce-10"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-desgloce"></ul>
-        </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-cargos"></ul>
       </div>
     </div>
-    <div id="region-11" class="hideData">
-      <div>
-        <h4></h4>
-        <span class="total-max"></span>
+    <div class="row">
+      <h4>Género</h4>
+      <div class="col-sm-5">
+        <div id="circulo-4"></div>
       </div>
-      <div class="row">
-        <h4>Cargos</h4>
-        <div class="col-sm-5">
-          <div id="cargos-11"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-cargos"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Género</h4>
-        <div class="col-sm-5">
-          <div id="circulo-11"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Rango etario</h4>
-        <div class="col-sm-5">
-          <div id="desgloce-11"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-desgloce"></ul>
-        </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda"></ul>
       </div>
     </div>
-    <div id="region-12" class="hideData">
-      <div>
-        <h4></h4>
-        <span class="total-max"></span>
+    <div class="row">
+      <h4>Rango etario</h4>
+      <div class="col-sm-5">
+        <div id="desgloce-4"></div>
       </div>
-      <div class="row">
-        <h4>Cargos</h4>
-        <div class="col-sm-5">
-          <div id="cargos-12"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-cargos"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Género</h4>
-        <div class="col-sm-5">
-          <div id="circulo-12"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Rango etario</h4>
-        <div class="col-sm-5">
-          <div id="desgloce-12"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-desgloce"></ul>
-        </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-desgloce"></ul>
       </div>
     </div>
-    <div id="region-13" class="hideData">
-      <div>
-        <h4></h4>
-        <span class="total-max"></span>
+  </div>
+  <div id="region-5" class="hideData">
+    <div>
+      <h4></h4>
+      <span class="total-max"></span>
+    </div>
+    <div class="row">
+      <h4>Cargos</h4>
+      <div class="col-sm-5">
+        <div id="cargos-5"></div>
       </div>
-      <div class="row">
-        <h4>Cargos</h4>
-        <div class="col-sm-5">
-          <div id="cargos-13"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-cargos"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Género</h4>
-        <div class="col-sm-5">
-          <div id="circulo-13"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Rango etario</h4>
-        <div class="col-sm-5">
-          <div id="desgloce-13"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-desgloce"></ul>
-        </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-cargos"></ul>
       </div>
     </div>
-    <div id="region-14" class="hideData">
-      <div>
-        <h4></h4>
-        <span class="total-max"></span>
+    <div class="row">
+      <h4>Género</h4>
+      <div class="col-sm-5">
+        <div id="circulo-5"></div>
       </div>
-      <div class="row">
-        <h4>Cargos</h4>
-        <div class="col-sm-5">
-          <div id="cargos-14"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-cargos"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Género</h4>
-        <div class="col-sm-5">
-          <div id="circulo-14"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda"></ul>
-        </div>
-      </div>
-      <div class="row">
-        <h4>Rango etario</h4>
-        <div class="col-sm-5">
-          <div id="desgloce-14"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-desgloce"></ul>
-        </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda"></ul>
       </div>
     </div>
-    <div id="region-15" class="hideData">
-      <div>
-        <h4></h4>
-        <span class="total-max"></span>
+    <div class="row">
+      <h4>Rango etario</h4>
+      <div class="col-sm-5">
+        <div id="desgloce-5"></div>
       </div>
-      <div class="row">
-        <h4>Cargos</h4>
-        <div class="col-sm-5">
-          <div id="cargos-15"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-cargos"></ul>
-        </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-desgloce"></ul>
       </div>
-      <div class="row">
-        <h4>Género</h4>
-        <div class="col-sm-5">
-          <div id="circulo-15"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda"></ul>
-        </div>
+    </div>
+  </div>
+  <div id="region-6" class="hideData">
+    <div>
+      <h4></h4>
+      <span class="total-max"></span>
+    </div>
+    <div class="row">
+      <h4>Cargos</h4>
+      <div class="col-sm-5">
+        <div id="cargos-6"></div>
       </div>
-      <div class="row">
-        <h4>Rango etario</h4>
-        <div class="col-sm-5">
-          <div id="desgloce-15"></div>
-        </div>
-        <div class="col-sm-7">
-          <ul class="list-unstyled leyenda-desgloce"></ul>
-        </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-cargos"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Género</h4>
+      <div class="col-sm-5">
+        <div id="circulo-6"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Rango etario</h4>
+      <div class="col-sm-5">
+        <div id="desgloce-6"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-desgloce"></ul>
+      </div>
+    </div>
+  </div>
+  <div id="region-7" class="hideData">
+    <div>
+      <h4></h4>
+      <span class="total-max"></span>
+    </div>
+    <div class="row">
+      <h4>Cargos</h4>
+      <div class="col-sm-5">
+        <div id="cargos-7"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-cargos"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Género</h4>
+      <div class="col-sm-5">
+        <div id="circulo-7"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Rango etario</h4>
+      <div class="col-sm-5">
+        <div id="desgloce-7"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-desgloce"></ul>
+      </div>
+    </div>
+  </div>
+  <div id="region-8" class="hideData">
+    <div>
+      <h4></h4>
+      <span class="total-max"></span>
+    </div>
+    <div class="row">
+      <h4>Cargos</h4>
+      <div class="col-sm-5">
+        <div id="cargos-8"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-cargos"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Género</h4>
+      <div class="col-sm-5">
+        <div id="circulo-8"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Rango etario</h4>
+      <div class="col-sm-5">
+        <div id="desgloce-8"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-desgloce"></ul>
+      </div>
+    </div>
+  </div>
+  <div id="region-9" class="hideData">
+    <div>
+      <h4></h4>
+      <span class="total-max"></span>
+    </div>
+    <div class="row">
+      <h4>Cargos</h4>
+      <div class="col-sm-5">
+        <div id="cargos-9"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-cargos"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Género</h4>
+      <div class="col-sm-5">
+        <div id="circulo-9"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Rango etario</h4>
+      <div class="col-sm-5">
+        <div id="desgloce-9"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-desgloce"></ul>
+      </div>
+    </div>
+  </div>
+  <div id="region-10" class="hideData">
+    <div>
+      <h4></h4>
+      <span class="total-max"></span>
+    </div>
+    <div class="row">
+      <h4>Cargos</h4>
+      <div class="col-sm-5">
+        <div id="cargos-10"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-cargos"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Género</h4>
+      <div class="col-sm-5">
+        <div id="circulo-10"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Rango etario</h4>
+      <div class="col-sm-5">
+        <div id="desgloce-10"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-desgloce"></ul>
+      </div>
+    </div>
+  </div>
+  <div id="region-11" class="hideData">
+    <div>
+      <h4></h4>
+      <span class="total-max"></span>
+    </div>
+    <div class="row">
+      <h4>Cargos</h4>
+      <div class="col-sm-5">
+        <div id="cargos-11"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-cargos"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Género</h4>
+      <div class="col-sm-5">
+        <div id="circulo-11"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Rango etario</h4>
+      <div class="col-sm-5">
+        <div id="desgloce-11"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-desgloce"></ul>
+      </div>
+    </div>
+  </div>
+  <div id="region-12" class="hideData">
+    <div>
+      <h4></h4>
+      <span class="total-max"></span>
+    </div>
+    <div class="row">
+      <h4>Cargos</h4>
+      <div class="col-sm-5">
+        <div id="cargos-12"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-cargos"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Género</h4>
+      <div class="col-sm-5">
+        <div id="circulo-12"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Rango etario</h4>
+      <div class="col-sm-5">
+        <div id="desgloce-12"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-desgloce"></ul>
+      </div>
+    </div>
+  </div>
+  <div id="region-13" class="hideData">
+    <div>
+      <h4></h4>
+      <span class="total-max"></span>
+    </div>
+    <div class="row">
+      <h4>Cargos</h4>
+      <div class="col-sm-5">
+        <div id="cargos-13"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-cargos"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Género</h4>
+      <div class="col-sm-5">
+        <div id="circulo-13"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Rango etario</h4>
+      <div class="col-sm-5">
+        <div id="desgloce-13"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-desgloce"></ul>
+      </div>
+    </div>
+  </div>
+  <div id="region-14" class="hideData">
+    <div>
+      <h4></h4>
+      <span class="total-max"></span>
+    </div>
+    <div class="row">
+      <h4>Cargos</h4>
+      <div class="col-sm-5">
+        <div id="cargos-14"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-cargos"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Género</h4>
+      <div class="col-sm-5">
+        <div id="circulo-14"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Rango etario</h4>
+      <div class="col-sm-5">
+        <div id="desgloce-14"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-desgloce"></ul>
+      </div>
+    </div>
+  </div>
+  <div id="region-15" class="hideData">
+    <div>
+      <h4></h4>
+      <span class="total-max"></span>
+    </div>
+    <div class="row">
+      <h4>Cargos</h4>
+      <div class="col-sm-5">
+        <div id="cargos-15"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-cargos"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Género</h4>
+      <div class="col-sm-5">
+        <div id="circulo-15"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda"></ul>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Rango etario</h4>
+      <div class="col-sm-5">
+        <div id="desgloce-15"></div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="list-unstyled leyenda-desgloce"></ul>
       </div>
     </div>
   </div>
 </div>
+</div>
 <p class="no_data_small_message"><img/ class="square-or"> Región en la cual se encuentra constituido</p>
 <p class="no_data_small_message"><img/ class="square-gr"> Región en la cual no se encuentra constituido</p>
+<% end %>
