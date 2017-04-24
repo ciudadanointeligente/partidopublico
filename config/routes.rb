@@ -70,7 +70,7 @@ Rails.application.routes.draw do
   resources :marco_generals
   resources :partidos do
     get "/normas_internas", to: 'partidos#normas_internas'
-    get "/regiones", to: 'partidos#regiones'
+    get "/regiones_all", to: 'partidos#regiones_all'
     get "/sedes_partido", to: 'partidos#sedes_partido'
     get "/autoridades", to: 'partidos#autoridades'
     get "/representantes", to: 'partidos#representantes'

@@ -35,7 +35,7 @@
         <td><span id="barras_<%= i.to_s %>"></span></td>
         <td class="text-center total"><%= linea[:total].nil? ? 'NA' : number_with_precision(linea[:total], precision: 0, delimiter: ".") %></td>
         <td class="text-center">
-          <%= link_to "Ver", partido_regiones_path(:partido_id => linea[:partido_id], :menu => 1), class: 'btn-view-detail btn btn-default btn-xs' %>
+          <%= link_to "Ver", partido_regiones_all_path(:partido_id => linea[:partido_id], :menu => 1), class: 'btn-view-detail btn btn-default btn-xs' %>
         </td>
       </tr>
       <% end %>

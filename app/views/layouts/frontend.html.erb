@@ -128,8 +128,8 @@
       <li class="principal">
         <p>Presencia nacional</p>
         <ul>
-          <li class="<% if current_page?(:controller => 'partidos', :action => 'regiones') %>current<% end %>">
-            <%= link_to "Regiones constituido y número de afiliados", partido_regiones_path(:menu => 1), onclick: "ga('send', 'event', 'mobile-partido-regiones', 'click');" %>
+          <li class="<% if current_page?(:controller => 'partidos', :action => 'regiones_all') %>current<% end %>">
+            <%= link_to "Regiones constituido y número de afiliados", partido_regiones_all_path(:menu => 1), onclick: "ga('send', 'event', 'mobile-partido-regiones', 'click');" %>
           </li>
           <li class="<% if current_page?(:controller => 'partidos', :action => 'sedes_partido') %>current<% end %>">
             <%= link_to "Domicilio y sedes de contacto", partido_sedes_partido_path(:menu => 1), onclick: "ga('send', 'event', 'mobile-partido-domicilio-sedes', 'click');" %>
@@ -233,8 +233,8 @@
           <li class="principal">
             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#aside-menu-two" aria-expanded="false" aria-controls="aside-menu-two">Presencia nacional</a>
             <ul id="aside-menu-two" class="collapse <%= @menu == 1 ? 'in' : '' %>" role="tab" aria-labelledby="aside-menu-two">
-              <li class="<% if current_page?(:controller => 'partidos', :action => 'regiones') %>current<% end %>">
-                <%= link_to "Regiones constituido y número de afiliados", partido_regiones_path(:menu => 1), onclick: "ga('send', 'event', 'desktop-partido-regiones', 'click');" %>
+              <li class="<% if current_page?(:controller => 'partidos', :action => 'regiones_all') %>current<% end %>">
+                <%= link_to "Regiones constituido y número de afiliados", partido_regiones_all_path(:menu => 1), onclick: "ga('send', 'event', 'desktop-partido-regiones', 'click');" %>
               </li>
               <li class="<% if current_page?(:controller => 'partidos', :action => 'sedes_partido') %>current<% end %>">
                 <%= link_to "Domicilio y sedes de contacto", partido_sedes_partido_path(:menu => 1), onclick: "ga('send', 'event', 'desktop-partido-domicilio-sedes', 'click');" %>

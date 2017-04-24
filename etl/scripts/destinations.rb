@@ -394,6 +394,46 @@ class TransferenciaDestination
   end
 end
 
+class AfiliacionDestination
+  def initialize(results:, verbose:)
+    @verbose = verbose
+    @results = results
+    @new = 0
+    @errors = 0
+    @found = 0
+  end
+
+  def write(row)
+
+    total_afiliados = clean_number(row[:nmero_total_de_afiliados])
+    afiliacion = Afiliacion.where(partido_id: row[:partido_id],
+                                  otros: total_afiliados).first_or_initialize
+
+    # trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+
+    if afiliacion.id.nil?
+      afiliacion.save
+      if afiliacion.errors.any?
+        row[:error_log] = row[:error_log].to_s + ', ' + afiliacion.errors.messages.to_s
+        @results[:afiliacions][:errors] += 1
+      else
+        # afiliacion.trimestre_informados << trimestre_informado unless trimestre_informado.in?(afiliacion.trimestre_informados)
+        @results[:afiliacions][:new] += 1
+      end
+    else
+      # afiliacion.trimestre_informados << trimestre_informado unless trimestre_informado.in?(afiliacion.trimestre_informados)
+      @results[:afiliacions][:found] += 1
+    end
+  end
+
+  def close
+    @results[:afiliacions] = {new: @results[:afiliacions][:new],
+                                 errors: @results[:afiliacions][:errors],
+                                 found: @results[:afiliacions][:found]}
+  end
+end
+
+
 class NormasDestination
   def initialize(results:, verbose:)
     @verbose = verbose

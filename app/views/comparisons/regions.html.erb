@@ -22,7 +22,7 @@
           <td class="text-center"><% if region %><i class="fa fa-circle <%= region ? 'icon-green' : 'icon-gray' %>" aria-hidden="true"></i><% end %></td>
         <% end %>
         <td class="text-center">
-          <button class="btn-view-detail btn btn-default btn-xs" type="submit"><%= link_to "Ver", partido_regiones_path(:partido_id => linea[:partido_id], :menu => 1) %></button>
+          <button class="btn-view-detail btn btn-default btn-xs" type="submit"><%= link_to "Ver", partido_regiones_all_path(:partido_id => linea[:partido_id], :menu => 1) %></button>
         </td>
       </tr>
       <% end %>

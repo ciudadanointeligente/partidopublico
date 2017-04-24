@@ -24,10 +24,11 @@ class Afiliacion < ActiveRecord::Base
   belongs_to :partido
   belongs_to :region
 
-  validates_presence_of :partido_id, :fecha_datos, :region_id, :ano_nacimiento
+  # validates_presence_of :partido_id, :fecha_datos, :region_id, :ano_nacimiento
+  validates_presence_of :partido_id
 
   before_save :default_afiliados
-  before_save :corregir_fecha
+  # before_save :corregir_fecha
 
   def default_afiliados
      self.hombres ||= 0
@@ -39,11 +40,11 @@ class Afiliacion < ActiveRecord::Base
      self.hombres + self.mujeres + self.otros
   end
 
-  def corregir_fecha
-    year = self.fecha_datos.strftime("%Y")
-    month = self.fecha_datos.strftime("%m")
-    self.fecha_datos = Date.new(year.to_i, month.to_i, 01)
-  end
+  # def corregir_fecha
+  #   year = self.fecha_datos.strftime("%Y")
+  #   month = self.fecha_datos.strftime("%m")
+  #   self.fecha_datos = Date.new(year.to_i, month.to_i, 01)
+  # end
 
   # a class method import, with file passed through as an argument
   def self.import(file, partido_id, email)
