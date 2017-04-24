@@ -178,12 +178,23 @@ $(document).ready(function(){
     }
     console.log(dato)
     console.log(ingreso_width)
-    var color = '#23DBB8';
+    console.log(dato.text)
+    // var color = '#23DBB8';
 
-    if(dato.text == "Aportes Estatales"){
+    if(dato.text == "Aportes Del Estado (Art. 33 Bis Ley N°18603)" ||
+                    "Otras Transferencias Públicas" ||
+                    "Aportes Del Estado (Art. 33 Bis Ley N 18603)" ||
+                    "Aportes Del Estado (Art. 33 Bis Ley Nª18603)"){
       color = '#23DBB8';
-    } else {
+      console.log("DENTRO IF" + dato.text)
+    } else if (dato.text == "Cotizaciones" ||
+                           "Donaciones" ||
+                           "Asignaciones Testamentarias" ||
+                           "Frutos Y Productos De Los Bienes Patrimoniales" ||
+                           "Otras Transferencias Privadas" ||
+                           "Ingresos Militantes") {
       color = '#19a58a';
+      console.log("DENTRO ELSE IF" + dato.text)
     }
 
     var bar = paper.rect(0, 0, ingreso_width, bar_height).attr({

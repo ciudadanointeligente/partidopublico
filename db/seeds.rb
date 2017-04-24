@@ -509,6 +509,6 @@ Admin.create!([
   {email: "papu@ciudadanointeligente.org", password: "xxxxxxxx", password_confirmation: "xxxxxxxx", is_superadmin: true}
 ])
 
-Partido.create!([
-  {nombre: "Partido Revolución Democrática", sigla: "PRD", lema: "Partido Revolución Democrática"},
-])
+# Partido.create!([
+#   {nombre: "Partido Revolución Democrática", sigla: "PRD", lema: "Partido Revolución Democrática"},
+# ])
