@@ -15,11 +15,15 @@ end
 
 def vali_date(fecha, handler)
   fecha.gsub("/", '-').to_s
-  if fecha.length < 10
+  if fecha.length < 3
+    fecha = nil
+  elsif fecha.length < 10 && fecha.length > 5
     fecha.insert(6, '20')
+  else
+    fecha = nil
   end
   begin
-    fecha.to_date
+      fecha.to_date
   rescue => e
     handled_error = ' ' + e.message + ': ' +fecha.to_s
     return nil, handled_error

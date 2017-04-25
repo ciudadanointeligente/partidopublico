@@ -181,18 +181,18 @@ $(document).ready(function(){
     console.log(dato.text)
     // var color = '#23DBB8';
 
-    if(dato.text == "Aportes Del Estado (Art. 33 Bis Ley N°18603)" ||
+    if(dato.text == ("Aportes Del Estado (Art. 33 Bis Ley N°18603)" ||
                     "Otras Transferencias Públicas" ||
                     "Aportes Del Estado (Art. 33 Bis Ley N 18603)" ||
-                    "Aportes Del Estado (Art. 33 Bis Ley Nª18603)"){
+                    "Aportes Del Estado (Art. 33 Bis Ley Nª18603)")){
       color = '#23DBB8';
       console.log("DENTRO IF" + dato.text)
-    } else if (dato.text == "Cotizaciones" ||
+    } else if (dato.text == ("Cotizaciones" ||
                            "Donaciones" ||
                            "Asignaciones Testamentarias" ||
                            "Frutos Y Productos De Los Bienes Patrimoniales" ||
                            "Otras Transferencias Privadas" ||
-                           "Ingresos Militantes") {
+                           "Ingresos Militantes")) {
       color = '#19a58a';
       console.log("DENTRO ELSE IF" + dato.text)
     }

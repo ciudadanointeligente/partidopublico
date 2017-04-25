@@ -56,9 +56,11 @@ class RegionPorPartidoDestination
                       comuna_id: row[:comuna_id],
                       direccion: row[:address]).first_or_initialize
 
-    partido = Partido.find(row[:partido_id])
+    # p "ID REGION " + row[:region_id].to_s
+    # p "ID PARTIDO " + row[:partido_id].to_s
+    # p "ROW " + row.to_s
 
-    p row[:region_id].to_s
+    partido = Partido.find(row[:partido_id])
 
     unless row[:region_id].nil?
       region = Region.find(row[:region_id])
