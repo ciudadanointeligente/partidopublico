@@ -19,4 +19,8 @@ class EtlRun < ActiveRecord::Base
     end_time - start_time
   end
 
+  def self.max_fecha_datos
+    EtlRun.maximum("fecha_datos")
+  end
+
 end
