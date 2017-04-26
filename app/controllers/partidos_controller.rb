@@ -5,6 +5,7 @@ class PartidosController < ApplicationController
   before_action :set_partido, except: [:index, :new, :create, :admin]
   before_action :get_partidos, except: [:index, :new, :create, :admin]
   before_action :set_menu
+  before_action :set_fecha_datos
   layout "frontend", only: [:normas_internas, :regiones_all, :sedes_partido, :autoridades,
                             :vinculos_intereses, :pactos, :sanciones,
                             :finanzas_1, :finanzas_2, :finanzas_5,
@@ -450,7 +451,7 @@ class PartidosController < ApplicationController
                                                               "Frutos Y Productos De Los Bienes Patrimoniales" ||
                                                               "Otras Transferencias Privadas" ||
                                                               "Ingresos Militantes").first.importe rescue 0
-                                                              
+
       @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
       @sin_datos = false
     end
@@ -835,6 +836,12 @@ end
     def set_menu
       ###puts params
         @menu = params[:menu].nil? ? 0 : params[:menu].to_i
+
+    end
+
+    def set_fecha_datos
+      ###puts params
+        @fecha_datos = l(EtlRun.max_fecha_datos, format: '%A %d de %B del %Y')
 
     end
 
