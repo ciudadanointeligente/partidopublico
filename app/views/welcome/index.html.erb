@@ -197,7 +197,7 @@ $('#memberModal').modal('show');
     </div>
     <div class="row text-center">
         <% @partidos.each do |partido| %>
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-12">
           <div class="thumbnail">
             <%= link_to partido_normas_internas_path(partido), :class => 'btn btn-xs parties', :onclick => "ga('send', 'event', 'welcome-access-button-"+ partido.nombre+"', 'click');" do %>
               <%= partido.nombre %>
