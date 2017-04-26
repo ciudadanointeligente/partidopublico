@@ -38,7 +38,8 @@ destination ErrorCSVDestination, filename: log_path + job_name + '.log'
 post_process do
   results[:end_time] = Time.now
   ap results
+  date = ENV['DATE']
+  save_etl_run(job_name, results, date)
   duration_in_minutes = (results[:end_time] - results[:start_time])/60
   puts "*** Duration (min): #{duration_in_minutes.round(2)}"
-  save_etl_run(job_name, results)
 end
