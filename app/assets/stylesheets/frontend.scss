@@ -56,6 +56,7 @@ span{
 	border-radius: 0px;
 	border: none;
 	font-family: 'Montserrat', sans-serif;
+	margin-bottom: -30px;
 }
 
 .navbar-default .navbar-nav > li > a {
@@ -256,6 +257,34 @@ section{
 	font-size: 12px;
 	height: 34px;
 	&.basic{
+		background-color: white;
+		border: 3px solid white;
+		color: $blue;
+		margin-top: 60px;
+		a{
+			color: $blue;
+			&:focus{
+				color: $blue;
+			}
+		}
+		&:hover{
+			background-color: $orange;
+			border: 3px solid $orange;
+			a{
+				color: white;
+				text-decoration: none;
+			}
+		}
+		&:focus{
+			background-color: $orange;
+			border: 3px solid $orange;
+			a{
+				color: white;
+				text-decoration: none;
+			}
+		}
+	}
+	&.basic-inverse{
 		background-color: $nude;
 		border: 3px solid $nude;
 		color: $blue;
