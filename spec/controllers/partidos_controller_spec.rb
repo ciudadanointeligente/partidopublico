@@ -12,6 +12,7 @@ RSpec.describe PartidosController, type: :controller do
     it "get an array of normas internas" do
       partido = create(:partido)
       new_document = create(:documento)
+      partido.marco_interno = create(:marco_interno)
       partido.marco_interno.documentos << new_document
       normas_internas = []
       partido.marco_interno.documentos.each do |d|
