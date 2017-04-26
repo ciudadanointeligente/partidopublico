@@ -56,9 +56,11 @@ class RegionPorPartidoDestination
                       comuna_id: row[:comuna_id],
                       direccion: row[:address]).first_or_initialize
 
-    partido = Partido.find(row[:partido_id])
+    # p "ID REGION " + row[:region_id].to_s
+    # p "ID PARTIDO " + row[:partido_id].to_s
+    # p "ROW " + row.to_s
 
-    p row[:region_id].to_s
+    partido = Partido.find(row[:partido_id])
 
     unless row[:region_id].nil?
       region = Region.find(row[:region_id])
@@ -178,7 +180,7 @@ class IngresoOrdinarioDestination
   def write(row)
 
     ingreso_ordinario = IngresoOrdinario.where(partido_id: row[:partido_id],
-                                               concepto: row[:item].downcase,
+                                               concepto: row[:item].titleize,
                                                importe: clean_number(row[:monto])).first_or_initialize
 
     trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])

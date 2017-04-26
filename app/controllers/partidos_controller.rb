@@ -440,8 +440,17 @@ class PartidosController < ApplicationController
         line ={ 'text'=> io.concepto, 'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe, delimiter: ""), 'percentage' => val }
         @datos_ingresos_ordinarios << line
       end
-      total_publicos = ingresos_ordinarios.where(:concepto => "Aportes Estatales").first.importe rescue 0
-      total_privados = ingresos_ordinarios.sum(:importe) - total_publicos
+      total_publicos = ingresos_ordinarios.where(:concepto => "Aportes Del Estado (Art. 33 Bis Ley N°18603)" ||
+                                                              "Otras Transferencias Públicas" ||
+                                                              "Aportes Del Estado (Art. 33 Bis Ley N 18603)" ||
+                                                              "Aportes Del Estado (Art. 33 Bis Ley Nª18603)").first.importe rescue 0
+      total_privados = ingresos_ordinarios.where(:concepto => "Cotizaciones" ||
+                                                              "Donaciones" ||
+                                                              "Asignaciones Testamentarias" ||
+                                                              "Frutos Y Productos De Los Bienes Patrimoniales" ||
+                                                              "Otras Transferencias Privadas" ||
+                                                              "Ingresos Militantes").first.importe rescue 0
+                                                              
       @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
       @sin_datos = false
     end

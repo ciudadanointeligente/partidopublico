@@ -16,6 +16,7 @@ class PartidoLookupAndInsert
     partido.nombre = row[:nombre_del_organismo]
     partido.sigla = row[:sigla]
     partido.lema = row[:lema_del_partido_poltico]
+    partido.url = row[:sitio_del_partido]
 
     found = !partido.id.nil?
     if partido.nombre.in?(n_a_values)

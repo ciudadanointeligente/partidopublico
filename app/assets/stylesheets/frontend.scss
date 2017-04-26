@@ -225,13 +225,13 @@ section#que-es{
 	background: asset-url('images/ciudadanos.svg') 70% 120% no-repeat $nude;
 }
 section#fechas{
-	background: asset-url('images/fechas.svg') 80% 104% no-repeat white;
+	background: asset-url('images/fechas.svg') 80% 104% no-repeat $nude;
 }
 section#funciones{
-	background-color: $nude;
+	background-color: white;
 }
 section#partidos{
-	background-color: white;
+	background-color: $nude;
 	margin-bottom: -70px;
 }
 

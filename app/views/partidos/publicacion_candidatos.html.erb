@@ -5,7 +5,7 @@
 <% else %>
   <%= form_tag partido_publicacion_candidatos_path, :method =>  :get, class: 'form-inline' do |f| %>
     <%= text_field_tag :q, params[:q] || "", class: "form-control", placeholder: "Ingresar nombre o apellido" %>
-    <%= select_tag "region", options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Seleccionar región", class: "form-control" %>
+    <!-- <%= select_tag "region", options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Seleccionar región", class: "form-control" %> -->
     <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
     <!-- <%= select_tag "genero", options_for_select(["Masculino", "Femenino"], params[:genero] || ""), include_blank: "Seleccionar género", class: "form-control" %> -->
     <%= submit_tag 'Filtrar', class: "btn" %>
@@ -35,16 +35,14 @@
                   <th>Nombre</th>
                   <th>Región</th>
                   <th>Comuna</th>
-                  <th>Circunscripción</th>
                 </tr>
               </thead>
               <tbody>
                 <% ip["cargos"].each do |c|%>
                 <tr>
                   <td><%= not_null(c.persona, 'nombre') + " " + not_null(c.persona, 'apellidos') %></td>
-                  <td><%= not_null(c.region, 'nombre') %></td>
+                  <td><%= not_null(c.comuna.provincia.region, 'nombre') unless c.comuna == nil %></td>
                   <td><%= not_null(c.comuna, 'nombre') %></td>
-                  <td><%= (c.circunscripcion_id) %></td>
                 </tr>
                 <% end %>
               </tbody>
