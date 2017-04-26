@@ -1,4 +1,28 @@
 <!-- Welcome -->
+<!-- Modal -->
+<div class="modal fade popup" id="memberModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <%= image_tag("logo-blanco.svg")%>
+        <p><br>Partidos Públicos es la <span>única cancha</span> que ofrece a los partidos políticos la posibilidad de entregar a la ciudadanía su información a través de visualizaciones ordenadas, comprensibles y comparables, basada en los más altos estándares internacionales.</p>
+        <p><span>La cancha está disponible, sólo falta que los partidos entreguen su información de la manera correcta.<br> ¡Exijamos la verdadera transparencia!</span></p>
+      </div>
+      <div class="modal-body text-center">
+        <p>¿Te gustaría que la información estuviera completa en Partidos Públicos?<br><span>Envíale el manual de transparencia a los partidos políticos<span></p>
+        <%= link_to "Enviar manual", root_path + "exigeles", class: 'btn btn-default popup', onclick: "ga('send', 'event', 'enviar-manual', 'click');", target:'_blank' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+<!--
+$('#memberModal').modal('show');
+//-->
+</script>
+
 <section>
   <div class="jumbotron">
     <div class="container">
@@ -8,7 +32,7 @@
           <mark>#AbramosLaCancha</mark></h1>
         </div>
         <div class="col-md-12">
-          <a class="btn btn-lg anchor-button" href="#partidos" role="button" onclick="ga('send','event','welcome-partidos-comprometidos','click')">Partidos comprometidos</a>
+          <a class="btn btn-lg anchor-button" href="#partidos" role="button" onclick="ga('send','event','welcome-partidos-comprometidos','click')">Partidos activos</a>
           <a class="btn btn-lg anchor-button" href="#funciones" role="button" onclick="ga('send','event','welcome-como-funciona','click')">¿Cómo funciona?</a>
         </div>
       </div>
@@ -22,7 +46,7 @@
       <h2 class="text-center">¿Qué es?</h2>
       <div class="col-md-8 col-md-offset-2">
         <p>Partidos Públicos es una plataforma inédita de transparencia de partidos políticos, que te permite visualizar y comparar fácilmente información financiera, de afiliados y presencia nacional, entre otros. Esta plataforma empuja al cumplimiento de la nueva Ley de Partidos Políticos y de estándares internacionales de apertura de datos.</p>
-        <%= link_to "¿Cuál es la transparencia que queremos?", asset_path("la-transparencia-que-queremos.pdf"), class: 'btn btn-primary basic', onclick: "ga('send', 'event', 'welcome-cual-es-la-transparencia', 'click');" %>
+        <%= link_to "¿Cuál es la transparencia que queremos?", asset_path("la-transparencia-que-queremos.pdf"), class: 'btn btn-primary basic-inverse', onclick: "ga('send', 'event', 'welcome-cual-es-la-transparencia', 'click');" %>
       </div>
     </div>
   </div>
@@ -84,7 +108,7 @@
       </div>
     </div>
   </div>
-</section> --> -->
+</section> -->
 
 <section id="funciones">
   <div class="container">
@@ -173,20 +197,12 @@
     </div>
     <div class="row text-center">
         <% @partidos.each do |partido| %>
-        <div class="col-md-4 col-sm-6 hero-feature">
-            <div class="thumbnail">
-                <% if !partido.front_logo.blank? %>
-                <div class="logo">
-                    <%= image_tag partido.front_logo.url(:medium), :class => "img-responsive", :alt => partido.nombre + ' - ' + partido.lema, onclick: "ga('send', 'event', 'welcome-access-logo-"+ partido.nombre+"', 'click');" %>
-                </div>
-                <% end %>
-                <div class="caption">
-                    <p class="versalitas"><%= partido.nombre %></p>
-                </div>
-                <div class="buttons">
-                    <%= link_to "Activo", partido_normas_internas_path(partido), :class => 'btn btn-xs parties', :onclick => "ga('send', 'event', 'welcome-access-button-"+ partido.nombre+"', 'click');" %>
-                </div>
-            </div>
+        <div class="col-md-6 col-md-offset-3">
+          <div class="thumbnail">
+            <%= link_to partido_normas_internas_path(partido), :class => 'btn btn-xs parties', :onclick => "ga('send', 'event', 'welcome-access-button-"+ partido.nombre+"', 'click');" do %>
+              <%= partido.nombre %>
+            <% end %>
+          </div>
         </div>
         <% end %>
         <!-- <div class="col-md-4 col-sm-6 hero-feature">
