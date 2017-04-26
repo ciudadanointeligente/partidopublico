@@ -938,6 +938,36 @@ i.fa.fa-circle.icon-green{
 	border: none;
 }
 
+.popup{
+	.modal-header{
+		border-bottom: none;
+		background-color: $sky-dark;
+		color: white;
+	}
+	.modal-content{
+		border-radius: 0;
+		box-shadow: none;
+		border: none;
+		background-color: white;
+		font-size: 18px;;
+		color: $blue;
+	}
+	.btn-default{
+		background-color: white;
+		border: none;
+		border-radius: 20px;
+		color: $green;
+		font-weight: 700;
+		letter-spacing: 1.2px;
+		font-size: 12px;
+		border: 2px solid $green;
+		&:hover{
+			background-color: $green;
+			color: white;
+		}
+	}
+}
+
 /*TABLES & COMPARATIVES*/
 th{
 	color: $blue;

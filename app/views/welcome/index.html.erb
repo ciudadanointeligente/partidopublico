@@ -1,4 +1,29 @@
 <!-- Welcome -->
+<!-- Modal -->
+<div class="modal fade popup" id="memberModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <img class="event" src="img/logo-blanco.svg">
+        <p>Partidos Públicos es la <span>única cancha</span> que ofrece a los partidos políticos la posibilidad de entregar a la ciudadanía su información a través de visualizaciones ordenadas, comprensibles y comparables, basada en los más altos estándares internacionales.</p>
+        <p><span>La cancha está disponible, sólo falta que los partidos entreguen su información de la manera correcta.<br> ¡Exijamos la verdadera transparencia!</span></p>
+      </div>
+      <div class="modal-body text-center">
+        <p><span>¿Te gustaría que la información estuviera completa en Partidos Públicos? Envíale el manual de transparencia a los partidos políticos<span></p>
+        <%= link_to "Enviar manual", root_path + "exigeles", class: 'btn btn-default popup', onclick: "ga('send', 'event', 'enviar-manual', 'click');", target:'_blank' %>
+        <img class="event" src="img/carta.svg">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+<!--
+$('#memberModal').modal('show');
+//-->
+</script>
+
 <section>
   <div class="jumbotron">
     <div class="container">
@@ -84,7 +109,7 @@
       </div>
     </div>
   </div>
-</section> --> -->
+</section> -->
 
 <section id="funciones">
   <div class="container">
