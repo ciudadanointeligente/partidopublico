@@ -181,6 +181,7 @@ RSpec.describe PartidosController, type: :controller do
       region = create(:region)
       comuna = create(:comuna)
       sede_1 = create(:sede, :region_id => region.id, :comuna_id => comuna.id)
+      sede_1.trimestre_informados << create(:trimestre_informado, :ordinal => 1)
       partido.sedes << sede_1
       partido.regions << region
 
