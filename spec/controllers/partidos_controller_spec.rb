@@ -381,10 +381,7 @@ RSpec.describe PartidosController, type: :controller do
       org_interno = create(:organo_interno, :partido_id => partido.id)
       eleccion_interna = create(:eleccion_interna, :partido_id => partido.id, :organo_interno_id => org_interno.id)
 
-      elecciones = [{"organo"=>"Órgano ejecutivo", "elecciones_internas"=>[]},
-                    {"organo"=>"Órgano intermedio colegiado", "elecciones_internas"=>[]},
-                    {"organo"=>"Tribunal supremo", "elecciones_internas"=>[]},
-                    {"organo"=>org_interno.nombre, "elecciones_internas"=>[{"cargo"=>eleccion_interna.cargo, "fecha_eleccion"=>eleccion_interna.fecha_eleccion, "fecha_limite_inscripcion"=>eleccion_interna.fecha_limite_inscripcion, "procedimientos"=>[], "requisitos"=>[]}]}]
+      elecciones = [{"organo"=>org_interno.nombre, "elecciones_internas"=>[{"cargo"=>eleccion_interna.cargo, "fecha_eleccion"=>eleccion_interna.fecha_eleccion, "fecha_limite_inscripcion"=>eleccion_interna.fecha_limite_inscripcion, "procedimientos"=>[], "requisitos"=>[]}]}]
 
       get :elecciones_internas, {:partido_id => partido.to_param}, valid_session
 
@@ -395,8 +392,19 @@ RSpec.describe PartidosController, type: :controller do
   describe "GET #finanzas_1" do
     it "return publicos y privados" do
       partido = create(:partido)
-      ingreso_1 = create(:ingreso_ordinario, :partido_id => partido.id, :fecha_datos => "2016-01-01", :concepto => "concepto 01", :importe => 1000)
-      ingreso_2 = create(:ingreso_ordinario, :partido_id => partido.id, :fecha_datos => "2016-01-01", :concepto => "Aportes Estatales", :importe => 2000)
+      trimestre_informado = create(:trimestre_informado, :ordinal => 1)
+      ingreso_1 = create(:ingreso_ordinario,
+                         :partido_id => partido.id,
+                         :fecha_datos => "2016-01-01",
+                         :concepto => "concepto 01",
+                         :importe => 1000)
+      ingreso_1.trimestre_informados << trimestre_informado
+      ingreso_2 = create(:ingreso_ordinario,
+                         :partido_id => partido.id,
+                         :fecha_datos => "2016-01-01",
+                         :concepto => "Aportes Estatales",
+                         :importe => 2000)
+      ingreso_2.trimestre_informados << trimestre_informado
 
       ingresos_ordinarios = { 'publicos'=> ingreso_2.importe, 'privados' => ingreso_1.importe}
 
@@ -421,7 +429,7 @@ RSpec.describe PartidosController, type: :controller do
   describe "GET finanzas_5" do
     it "return finanzas_5" do
       partido = create(:partido)
-      transferencia_1 = create(:transferencia, :partido_id => partido.id)
+      transferencia_1 = create(:transferencia, :partido_id => partido.id, :fecha_datos => "2016-01-01")
 
       get :finanzas_5, {:partido_id => partido.to_param}, valid_session
 
