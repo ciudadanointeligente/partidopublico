@@ -1,8 +1,12 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Transparencia</li><li>Sanciones</li></ol>
 <h3>Sanciones aplicadas al partido</h3>
-<% if @sin_datos %>
-  <%= render 'sin_datos' %>
-<% else %>
+<p class="no_data_big_message"> <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+  ¡Sección en Desarrollo!</p>
+  <p class="no_data_small_message">Los partidos ya han enviado esta
+  información y podrás encontrarla aquí dentro de los próximos días.</p>
+<!-- # <% if @sin_datos %>
+#   <%= render 'sin_datos' %>
+# <% else %> -->
   <span class="sr-only"><p>Se han encontrado <%=@sanciones.count %> sanciones al partido. A continuación se detallan</p></span>
 
   <div class="table-responsive">
@@ -42,4 +46,4 @@
       </tbody>
     </table>
   </div>
-<% end %>
+<!-- # <% end %> -->

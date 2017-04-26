@@ -434,7 +434,7 @@ class PartidosController < ApplicationController
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
       ingresos_ordinarios = @trimestre_informado.ingreso_ordinarios.where(:partido_id => @partido.id)
-      max_value = ingresos_ordinarios.maximum(:importe)
+      max_value = IngresoOrdinario.maximum(:importe)
       @datos_ingresos_ordinarios = []
       ingresos_ordinarios.each do |io|
         val = (100 * (io.importe.to_f / max_value.to_f).to_f rescue 0).to_s

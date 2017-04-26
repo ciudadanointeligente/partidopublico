@@ -1,8 +1,12 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Cómo participar</li><li>Postular a cargos de dirección interna</li></ol>
 <h3>Postular a cargos de dirección interna</h3>
-<% if @sin_datos %>
-  <%= render 'sin_datos' %>
-<% else %>
+<p class="no_data_big_message"> <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+  ¡Sección en Desarrollo!</p>
+  <p class="no_data_small_message">Los partidos ya han enviado esta
+  información y podrás encontrarla aquí dentro de los próximos días.</p>
+<!-- # <% if @sin_datos %>
+#   <%= render 'sin_datos' %>
+# <% else %> -->
   <h4>Postulaciones</h4>
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     <% @elecciones.each_with_index do |e, index| %>
@@ -57,4 +61,4 @@
       <% end %>
     <% end %>
   </div>
-<% end %>
+<!-- # <% end %> -->
