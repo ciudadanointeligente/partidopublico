@@ -528,6 +528,7 @@ class PartidosController < ApplicationController
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
 
+
     if @trimestres_informados.count == 0
       @trimestres_informados = []
       # @datos_temp_transferencias = []
@@ -806,7 +807,7 @@ end
         filter_by = @trimestre_informado.cargos.where(tipo_cargo_id:tc)
         if !params[:q].blank?
           n = params[:q].split(" ")[0]
-          a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
+          a = params[:q].split(" ")[1] || n
           personas = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", n.downcase, a.downcase)
           filter_by = filter_by.where(:persona_id => personas)
         end
