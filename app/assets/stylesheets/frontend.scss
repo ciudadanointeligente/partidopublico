@@ -222,16 +222,16 @@ h6{
 /*HOME*/
 section#que-es{
 	margin-top: -110px;
-	background: asset-url('images/ciudadanos.svg') 70% 120% no-repeat $nude;
+	background: asset-url('images/ciudadanos.svg') 70% 120% no-repeat white;
 }
 section#fechas{
 	background: asset-url('images/fechas.svg') 80% 104% no-repeat $nude;
 }
 section#funciones{
-	background-color: white;
+	background-color: $nude;
 }
 section#partidos{
-	background-color: $nude;
+	background-color: white;
 	margin-bottom: -70px;
 }
 
@@ -256,14 +256,14 @@ section{
 	font-size: 12px;
 	height: 34px;
 	&.basic{
-		background-color: white;
-		border: 3px solid white;
+		background-color: $nude;
+		border: 3px solid $nude;
 		color: $blue;
 		margin-top: 60px;
 		a{
 			color: $blue;
 			&:focus{
-				color: white;
+				color: $blue;
 			}
 		}
 		&:hover{
@@ -448,10 +448,19 @@ section{
 /*PARTIES SECTION*/
 .thumbnail{
 	border: none;
-	margin-bottom: 40px;
+	margin-bottom: 5px;
 	img{
 		margin: auto;
 	}
+}
+
+.caption{
+	text-transform: uppercase;
+	letter-spacing: 1.2px;
+	font-size: 14px;
+	font-weight: 700;
+	font-family: 'Montserrat', sans-serif;
+	color: $blue;
 }
 
 a.btn.btn-xs.parties{
@@ -462,9 +471,11 @@ a.btn.btn-xs.parties{
 	border-radius: 12px;
 	letter-spacing: 1.2px;
 	font-weight: 700;
-	font-size: 11px;
+	font-size: 14px;
 	line-height: 17px;
 	margin-top: -12px;
+	padding: 1px 8px;
+	font-family: 'Montserrat', sans-serif;
 	&:hover{
 		color: $green;
 		background-color: transparent;
@@ -1115,12 +1126,6 @@ p.edades{
 @media (max-width: 990px) {
 		section.aviso{
 			padding: 14px;
-	}
-	section#que-es{
-		background: $nude;
-	}
-	section#fechas{
-		background: white;
 	}
 }
 

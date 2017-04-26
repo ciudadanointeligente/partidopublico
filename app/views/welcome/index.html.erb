@@ -33,7 +33,7 @@ $('#memberModal').modal('show');
           <mark>#AbramosLaCancha</mark></h1>
         </div>
         <div class="col-md-12">
-          <a class="btn btn-lg anchor-button" href="#partidos" role="button" onclick="ga('send','event','welcome-partidos-comprometidos','click')">Partidos comprometidos</a>
+          <a class="btn btn-lg anchor-button" href="#partidos" role="button" onclick="ga('send','event','welcome-partidos-comprometidos','click')">Partidos activos</a>
           <a class="btn btn-lg anchor-button" href="#funciones" role="button" onclick="ga('send','event','welcome-como-funciona','click')">¿Cómo funciona?</a>
         </div>
       </div>
@@ -198,20 +198,12 @@ $('#memberModal').modal('show');
     </div>
     <div class="row text-center">
         <% @partidos.each do |partido| %>
-        <div class="col-md-4 col-sm-6 hero-feature">
-            <div class="thumbnail">
-                <% if !partido.front_logo.blank? %>
-                <div class="logo">
-                    <%= image_tag partido.front_logo.url(:medium), :class => "img-responsive", :alt => partido.nombre + ' - ' + partido.lema, onclick: "ga('send', 'event', 'welcome-access-logo-"+ partido.nombre+"', 'click');" %>
-                </div>
-                <% end %>
-                <div class="caption">
-                    <p class="versalitas"><%= partido.nombre %></p>
-                </div>
-                <div class="buttons">
-                    <%= link_to "Activo", partido_normas_internas_path(partido), :class => 'btn btn-xs parties', :onclick => "ga('send', 'event', 'welcome-access-button-"+ partido.nombre+"', 'click');" %>
-                </div>
-            </div>
+        <div class="col-md-6 col-md-offset-3">
+          <div class="thumbnail">
+            <%= link_to partido_normas_internas_path(partido), :class => 'btn btn-xs parties', :onclick => "ga('send', 'event', 'welcome-access-button-"+ partido.nombre+"', 'click');" do %>
+              <%= partido.nombre %>
+            <% end %>
+          </div>
         </div>
         <% end %>
         <!-- <div class="col-md-4 col-sm-6 hero-feature">
