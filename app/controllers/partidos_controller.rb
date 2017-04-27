@@ -434,7 +434,18 @@ class PartidosController < ApplicationController
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
       ingresos_ordinarios = @trimestre_informado.ingreso_ordinarios.where(:partido_id => @partido.id)
-      max_value = ingresos_ordinarios.maximum(:importe)
+
+      total_publicos = ingresos_ordinarios.where(:partido_id => @partido.id,
+                                                  :concepto => (["Aportes del Estado (Art. 33 Bis Ley N° 18603)",
+                                                                 "Otras Transferencias Públicas"])).sum(:importe) rescue 0
+      total_privados = ingresos_ordinarios.where(:partido_id => @partido.id,
+                                                  :concepto => (["Cotizaciones",
+                                                                 "Donaciones",
+                                                                 "Asignaciones Testamentarias",
+                                                                 "Frutos y Productos de los Bienes Patrimoniales",
+                                                                 "Otras Transferencias Privadas",
+                                                                 "Ingresos Militantes"])).sum(:importe) rescue 0
+      max_value = total_publicos + total_privados
       @datos_ingresos_ordinarios = []
       ingresos_ordinarios.each do |io|
         val = ((io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
@@ -442,12 +453,6 @@ class PartidosController < ApplicationController
         line ={ 'text'=> io.concepto, 'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe, delimiter: ""), 'percentage' => val }
         @datos_ingresos_ordinarios << line
       end
-
-      total_publicos = ingresos_ordinarios.where(:partido_id => @partido.id,
-                                                  :concepto => (["Aportes del Estado (Art. 33 Bis Ley N° 18603)", "Otras Transferencias Públicas"])).sum(:importe) rescue 0
-      total_privados = ingresos_ordinarios.where(:partido_id => @partido.id,
-                                                  :concepto => (["Cotizaciones","Donaciones","Asignaciones Testamentarias","Frutos y Productos de los Bienes Patrimoniales","Otras Transferencias Privadas","Ingresos Militantes"])).sum(:importe) rescue 0
-
 
       # p "CCOONNCCEPPTTO >>>>>" + ingresos_ordinarios.map{|i| i.concepto.to_s + ',' + i.importe.to_s}
       p "ingresos_ordinarios >>>>>" + ingresos_ordinarios.map{|i| i.concepto.to_s + ',' + i.importe.to_s}.to_s
@@ -550,6 +555,9 @@ class PartidosController < ApplicationController
       total = 0
       @datos_temp_transferencias = []
       temp_transferencias.each do |tr|
+        if tr.sum < 0
+          tr.sum = tr.sum * -1
+        end
         if tr.month.nil?
           line = {'text' => "Sin información", 'value' => tr.sum}
         else
@@ -563,6 +571,9 @@ class PartidosController < ApplicationController
         total += tr.sum
       end
       @datos_transferencias_totals = { :total => total }
+      if @datos_transferencias_totals[:total] < 0
+        @datos_transferencias_totals[:total] = @datos_transferencias_totals[:total] * -1
+      end
       @sin_datos = false
     end
   end
