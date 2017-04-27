@@ -1345,6 +1345,12 @@ p.edades{
 	}
 }
 
+@media screen and (max-width: 470px) {
+	a.btn.btn-xs.parties{
+		font-size: 9px;
+	}
+}
+
 @media (max-width: 461px) {
 	section.aviso{
 		padding: 10px;
