@@ -30,7 +30,7 @@
 </head>
 <body>
   <header>
-      <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
@@ -101,15 +101,16 @@
     }
   }
 </script>
-<!-- <section class="aviso hidden">
+
+<section class="aviso">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-      <p class="text-center">La información será subida de forma progresiva según lo que estipula la nueva Ley de Partidos Políticos <%= link_to "Revisa las fechas clave", root_path(anchor: "fechas"), class: "btn btn-primary btn-xs", onclick: "ga('send','event','comparison-fechas-claves','click')" %></p>
+      <p class="text-center">Todavía estamos cargando la información entregada por los partidos. Si quieres, puedes descargar las planillas enviadas <%= link_to "aquí", root_path(anchor: "fechas"), class: "btn btn-primary btn-xs", onclick: "ga('send','event','info-sin-editar','click')" %></p>
       </div>
     </div>
   </div>
-</section> -->
+</section>
 
 
   <section class="comparacion">
@@ -198,6 +199,5 @@
 
   </script>
 
-  <script src="//my.hellobar.com/171d1ac5f34266f898b490ab3830c156dc60b0fe.js" type="text/javascript" charset="utf-8" async="async"></script>
 </body>
 </html>
