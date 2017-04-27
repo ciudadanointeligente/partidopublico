@@ -1,8 +1,12 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Últimas decisiones</li><li>Acuerdos órganos intermedios colegiados</li></ol>
 <h3>Acuerdos órganos intermedios colegiados</h3>
-<% if @sin_datos %>
-  <%= render 'sin_datos' %>
-<% else %>
+<p class="no_data_big_message"> <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+  ¡Sección en Desarrollo!</p>
+  <p class="no_data_small_message">Los partidos ya han enviado esta
+  información y podrás encontrarla aquí dentro de los próximos días.</p>
+<!-- # <% if @sin_datos %>
+#   <%= render 'sin_datos' %>
+# <% else %> -->
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     <% @acuerdos.each_with_index do |a, index| %>
       <% if a['agreements'].count > 0 %>
@@ -49,4 +53,4 @@
       <% end %>
     <% end %>
   </div>
-<% end %>
+<!-- # <% end %> -->

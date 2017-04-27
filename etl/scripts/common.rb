@@ -13,6 +13,10 @@ def clean_number(numero)
   numero.to_i
 end
 
+def today
+  date = Time.now().strftime("%Y%m%d")
+end
+
 def vali_date(fecha, handler)
   fecha.gsub("/", '-').to_s
   if fecha.length < 3
@@ -30,12 +34,13 @@ def vali_date(fecha, handler)
   end
 end
 
-def save_etl_run(job_name, results)
+def save_etl_run(job_name, results, date)
   EtlRun.create(start_time: results[:start_time],
                 end_time: results[:end_time],
                 job_name: job_name,
                 results: results.to_s,
-                input_rows:results[:input_rows])
+                input_rows: results[:input_rows],
+                fecha_datos: date)
 end
 
 def n_a_values
@@ -71,9 +76,8 @@ end
 def input_path
   date = ENV['DATE']
   if date == nil
-    fecha_de_hoy = DateTime.now.to_date.to_s
-    fecha_de_hoy.delete! '-'
-    etl_path + "/input_files/cplt/"+fecha_de_hoy+"/"
+    date = Time.now().strftime("%Y%m%d")
+    etl_path + "/input_files/cplt/"+date+"/"
   else
     etl_path + "/input_files/cplt/#{date}/"
   end

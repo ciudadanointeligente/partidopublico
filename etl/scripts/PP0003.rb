@@ -20,6 +20,7 @@ results[:end_time] = 0
 pre_process do
   results[:start_time] = Time.now
   p "*** Start #{job_name} Sedes MIGRATION #{results[:start_time]}***"
+  p ENV['DATE']
 end
 
 files = Dir[input_path + "#{job_name}.csv"]
@@ -62,7 +63,8 @@ limit ENV['LIMIT']
 post_process do
   results[:end_time] = Time.now
   ap results
+  date = ENV['DATE']
+  save_etl_run(job_name, results, date)
   duration_in_minutes = (results[:end_time] - results[:start_time])/60
   puts "*** Duration (min): #{duration_in_minutes.round(2)}"
-  save_etl_run(job_name, results)
 end

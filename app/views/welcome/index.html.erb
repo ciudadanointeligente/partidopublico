@@ -29,7 +29,7 @@ $('#memberModal').modal('show');
       <div class="row">
         <div class="col-md-4">
           <h1>Porque la ciudadanía exige más
-          <mark>#AbramosLaCancha</mark></h1>
+          <mark>#QuieroMejorTransparencia</mark></h1>
         </div>
         <div class="col-md-12">
           <a class="btn btn-lg anchor-button" href="#partidos" role="button" onclick="ga('send','event','welcome-partidos-comprometidos','click')">Partidos activos</a>
@@ -197,7 +197,7 @@ $('#memberModal').modal('show');
     </div>
     <div class="row text-center">
         <% @partidos.each do |partido| %>
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-12">
           <div class="thumbnail">
             <%= link_to partido_normas_internas_path(partido), :class => 'btn btn-xs parties', :onclick => "ga('send', 'event', 'welcome-access-button-"+ partido.nombre+"', 'click');" do %>
               <%= partido.nombre %>

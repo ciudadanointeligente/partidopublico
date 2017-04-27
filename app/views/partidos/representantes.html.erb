@@ -1,8 +1,12 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Presencia nacional</li><li>Representantes electos</li></ol>
 <h3>Representantes electos</h3>
-<% if @sin_datos %>
-  <%= render 'sin_datos' %>
-<% else %>
+<p class="no_data_big_message"> <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+  ¡Sección en Desarrollo!</p>
+  <p class="no_data_small_message">Los partidos ya han enviado esta
+  información y podrás encontrarla aquí dentro de los próximos días.</p>
+<!-- # <% if @sin_datos %>
+#   <%= render 'sin_datos' %>
+# <% else %> -->
   <%= form_tag partido_representantes_path, :method =>  :get, class: 'form-inline' do |f| %>
     <%= text_field_tag :q, params[:q] || "", class: "form-control", placeholder: "Ingresar nombre o apellido" %>
     <%= select_tag "region", options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Seleccionar región", class: "form-control" %>
@@ -52,7 +56,7 @@
     </div>
     <% end %>
   <% end %>
-<% end %>
+<!-- # <% end %> -->
 
 <% if cnt == 0 %>
 <p class="text-info"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> No se encontraron registros</p>
