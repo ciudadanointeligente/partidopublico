@@ -179,8 +179,9 @@ class IngresoOrdinarioDestination
 
   def write(row)
 
+    concepto = clean_phrase(row[:item])
     ingreso_ordinario = IngresoOrdinario.where(partido_id: row[:partido_id],
-                                               concepto: row[:item].titleize,
+                                               concepto: concepto,
                                                importe: clean_number(row[:monto])).first_or_initialize
 
     trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])

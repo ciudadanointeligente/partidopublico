@@ -13,6 +13,40 @@ def clean_number(numero)
   numero.to_i
 end
 
+def clean_phrase(frase)
+  frase.downcase!
+  # p "downcased phrase -> " + frase
+  frase.gsub(/[^0-9a-z ]/i, '')
+  # p "cleaned phrase -> " + frase
+
+  if frase.include? "cotizaciones"
+    frase = frase.titleize
+    # p "Cotizaciones -> " + frase
+  elsif frase.include? "donaciones"
+    frase = frase.titleize
+    # p "Donaciones-> " + frase
+  elsif frase.include? "testamentarias"
+    frase = frase.titleize
+  elsif frase.include? "frutos y productos"
+    frase = "Frutos y Productos de los Bienes Patrimoniales"
+    # p "Frutos y Productos de los Bienes Patrimoniales -> " + frase
+  elsif frase.include? "aportes del estado"
+    frase = "Aportes del Estado (Art. 33 Bis Ley N° 18603)"
+    # p "Aportes del Estado (Art. 33 Bis Ley N° 18603) -> " + frase
+  elsif frase.include? "blicas"
+    frase = "Otras Transferencias Públicas"
+    # p "Otras Transferencias Públicas -> " + frase
+  elsif frase.include? "privadas"
+    frase = "Otras Transferencias Privadas"
+    # p "Otras Transferencias Privadas -> " + frase
+  elsif frase.include? "militantes"
+    frase = "Ingresos Militantes"
+    # p "Ingresos Militantes -> " + frase
+  end
+
+  frase
+end
+
 def today
   date = Time.now().strftime("%Y%m%d")
 end

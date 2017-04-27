@@ -425,8 +425,8 @@ class PartidosController < ApplicationController
     if @trimestres_informados.count == 0
       @trimestres_informados = []
       @datos_ingresos_ordinarios = []
-      line ={ 'text'=> 'Sin información', 'value' => 0, 'percentage' => 0 }
-      @datos_ingresos_ordinarios << line
+      # line ={ 'text'=> 'Sin información', 'value' => 0, 'percentage' => 0 }
+      # @datos_ingresos_ordinarios << line
       @datos_ingresos_ordinarios_totals = {'publicos' => 0, 'privados' => 0}
       @sin_datos = true
     else
@@ -434,24 +434,27 @@ class PartidosController < ApplicationController
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
       ingresos_ordinarios = @trimestre_informado.ingreso_ordinarios.where(:partido_id => @partido.id)
-      max_value = IngresoOrdinario.maximum(:importe)
+      max_value = ingresos_ordinarios.maximum(:importe)
       @datos_ingresos_ordinarios = []
       ingresos_ordinarios.each do |io|
-        val = (100 * (io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
+        val = ((io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
+        p "IO IMPORTEEE >>>>" + io.importe.to_s + " / " + max_value.to_s + " = " + val.to_s
         line ={ 'text'=> io.concepto, 'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe, delimiter: ""), 'percentage' => val }
         @datos_ingresos_ordinarios << line
       end
-      total_publicos = ingresos_ordinarios.where(:concepto => "Aportes Del Estado (Art. 33 Bis Ley N°18603)" ||
-                                                              "Otras Transferencias Públicas" ||
-                                                              "Aportes Del Estado (Art. 33 Bis Ley N 18603)" ||
-                                                              "Aportes Del Estado (Art. 33 Bis Ley Nª18603)").first.importe rescue 0
-      total_privados = ingresos_ordinarios.where(:concepto => "Cotizaciones" ||
-                                                              "Donaciones" ||
-                                                              "Asignaciones Testamentarias" ||
-                                                              "Frutos Y Productos De Los Bienes Patrimoniales" ||
-                                                              "Otras Transferencias Privadas" ||
-                                                              "Ingresos Militantes").first.importe rescue 0
 
+      total_publicos = ingresos_ordinarios.where(:partido_id => @partido.id,
+                                                  :concepto => (["Aportes del Estado (Art. 33 Bis Ley N° 18603)", "Otras Transferencias Públicas"])).sum(:importe) rescue 0
+      total_privados = ingresos_ordinarios.where(:partido_id => @partido.id,
+                                                  :concepto => (["Cotizaciones","Donaciones","Asignaciones Testamentarias","Frutos y Productos de los Bienes Patrimoniales","Otras Transferencias Privadas","Ingresos Militantes"])).sum(:importe) rescue 0
+
+
+      # p "CCOONNCCEPPTTO >>>>>" + ingresos_ordinarios.map{|i| i.concepto.to_s + ',' + i.importe.to_s}
+      p "ingresos_ordinarios >>>>>" + ingresos_ordinarios.map{|i| i.concepto.to_s + ',' + i.importe.to_s}.to_s
+      p "IIMMPPOORRTTEE >>>>>" + ingresos_ordinarios.map{|i| i.importe}.to_s
+      p "IMPORTE MAXIMO >>>>>" + max_value.to_s
+      p "TOTAL PUBLICOS >>>>>" + total_publicos.to_s
+      p "TOTAL PRIVADOS >>>>>" + total_privados.to_s
       @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
       @sin_datos = false
     end
