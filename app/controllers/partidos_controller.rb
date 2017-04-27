@@ -455,11 +455,11 @@ class PartidosController < ApplicationController
       end
 
       # p "CCOONNCCEPPTTO >>>>>" + ingresos_ordinarios.map{|i| i.concepto.to_s + ',' + i.importe.to_s}
-      p "ingresos_ordinarios >>>>>" + ingresos_ordinarios.map{|i| i.concepto.to_s + ',' + i.importe.to_s}.to_s
-      p "IIMMPPOORRTTEE >>>>>" + ingresos_ordinarios.map{|i| i.importe}.to_s
-      p "IMPORTE MAXIMO >>>>>" + max_value.to_s
-      p "TOTAL PUBLICOS >>>>>" + total_publicos.to_s
-      p "TOTAL PRIVADOS >>>>>" + total_privados.to_s
+      # p "ingresos_ordinarios >>>>>" + ingresos_ordinarios.map{|i| i.concepto.to_s + ',' + i.importe.to_s}.to_s
+      # p "IIMMPPOORRTTEE >>>>>" + ingresos_ordinarios.map{|i| i.importe}.to_s
+      # p "IMPORTE MAXIMO >>>>>" + max_value.to_s
+      # p "TOTAL PUBLICOS >>>>>" + total_publicos.to_s
+      # p "TOTAL PRIVADOS >>>>>" + total_privados.to_s
       @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
       @sin_datos = false
     end
