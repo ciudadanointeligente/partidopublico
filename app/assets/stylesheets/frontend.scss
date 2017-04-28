@@ -758,7 +758,7 @@ aside.col-sm-3.col-md-3{
 
 .leyenda-desgloce{
 	text-align: left;
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 .circle-lg{
@@ -775,12 +775,14 @@ aside.col-sm-3.col-md-3{
 
 .square-or {
   border: solid 10px #FAC5BE;
+	float: left;
   width: 10px;
   height: 10px;
 }
 
 .square-gr {
   border: solid 10px #E9DEDF;
+	float: left;
   width: 10px;
   height: 10px;
 }
