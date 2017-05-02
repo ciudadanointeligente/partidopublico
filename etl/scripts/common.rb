@@ -129,6 +129,13 @@ def iconv(encoding:)
   system command
 end
 
+def remove_ctrl_m
+  job_name = caller.first.split('/').last.split('.').first
+  command = "sed -i \"s/^M//g\" #{input_path}#{job_name}.csv"
+  p command
+  system command
+end
+
 def show_me!
   transform do |row|
     ap row

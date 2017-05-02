@@ -10,6 +10,7 @@ results[:partidos] = {:new_partidos => 0,
 pre_process do
   results[:start_time] = Time.now
   puts "*** Start #{job_name}_extra - Party Basic Info MIGRATION #{results[:start_time]}***"
+  p input_path + "#{job_name}_extra.csv"
 end
 
 files = Dir[input_path + "#{job_name}_extra.csv"]
@@ -17,11 +18,14 @@ files = Dir[input_path + "#{job_name}_extra.csv"]
 dos2unix
 encoding = find_encoding
 
+p "FOUND ENCODING: " + encoding
 if encoding == 'unknown-8bit'
   iconv(encoding: 'windows-1252')
 elsif encoding == 'iso-8859-1'
   iconv(encoding: encoding)
 end
+
+remove_ctrl_m
 
 files.each_with_index do |file, index|
 
