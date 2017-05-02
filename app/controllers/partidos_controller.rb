@@ -425,8 +425,8 @@ class PartidosController < ApplicationController
     if @trimestres_informados.count == 0
       @trimestres_informados = []
       @datos_ingresos_ordinarios = []
-      line ={ 'text'=> 'Sin información', 'value' => 0, 'percentage' => 0 }
-      @datos_ingresos_ordinarios << line
+      # line ={ 'text'=> 'Sin información', 'value' => 0, 'percentage' => 0 }
+      # @datos_ingresos_ordinarios << line
       @datos_ingresos_ordinarios_totals = {'publicos' => 0, 'privados' => 0}
       @sin_datos = true
     else
@@ -434,23 +434,24 @@ class PartidosController < ApplicationController
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
       ingresos_ordinarios = @trimestre_informado.ingreso_ordinarios.where(:partido_id => @partido.id)
-      max_value = IngresoOrdinario.maximum(:importe)
+
+      total_publicos = ingresos_ordinarios.where(:partido_id => @partido.id,
+                                                  :concepto => (["Aportes del Estado (Art. 33 Bis Ley N° 18603)",
+                                                                 "Otras Transferencias Públicas"])).sum(:importe) rescue 0
+      total_privados = ingresos_ordinarios.where(:partido_id => @partido.id,
+                                                  :concepto => (["Cotizaciones",
+                                                                 "Donaciones",
+                                                                 "Asignaciones Testamentarias",
+                                                                 "Frutos y Productos de los Bienes Patrimoniales",
+                                                                 "Otras Transferencias Privadas",
+                                                                 "Ingresos Militantes"])).sum(:importe) rescue 0
+      max_value = total_publicos + total_privados
       @datos_ingresos_ordinarios = []
       ingresos_ordinarios.each do |io|
-        val = (100 * (io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
+        val = ((io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
         line ={ 'text'=> io.concepto, 'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe, delimiter: ""), 'percentage' => val }
         @datos_ingresos_ordinarios << line
       end
-      total_publicos = ingresos_ordinarios.where(:concepto => "Aportes Del Estado (Art. 33 Bis Ley N°18603)" ||
-                                                              "Otras Transferencias Públicas" ||
-                                                              "Aportes Del Estado (Art. 33 Bis Ley N 18603)" ||
-                                                              "Aportes Del Estado (Art. 33 Bis Ley Nª18603)").first.importe rescue 0
-      total_privados = ingresos_ordinarios.where(:concepto => "Cotizaciones" ||
-                                                              "Donaciones" ||
-                                                              "Asignaciones Testamentarias" ||
-                                                              "Frutos Y Productos De Los Bienes Patrimoniales" ||
-                                                              "Otras Transferencias Privadas" ||
-                                                              "Ingresos Militantes").first.importe rescue 0
 
       @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
       @sin_datos = false
@@ -547,6 +548,9 @@ class PartidosController < ApplicationController
       total = 0
       @datos_temp_transferencias = []
       temp_transferencias.each do |tr|
+        if tr.sum < 0
+          tr.sum = tr.sum * -1
+        end
         if tr.month.nil?
           line = {'text' => "Sin información", 'value' => tr.sum}
         else
@@ -560,6 +564,9 @@ class PartidosController < ApplicationController
         total += tr.sum
       end
       @datos_transferencias_totals = { :total => total }
+      if @datos_transferencias_totals[:total] < 0
+        @datos_transferencias_totals[:total] = @datos_transferencias_totals[:total] * -1
+      end
       @sin_datos = false
     end
   end

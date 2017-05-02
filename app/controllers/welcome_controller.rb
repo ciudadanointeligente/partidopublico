@@ -4,10 +4,6 @@ class WelcomeController < ApplicationController
 
        render layout: "welcome"
     end
-    def que_es
-      @partidos = Partido.all
-       render layout: "welcome"
-    end
 
     def logo
 		render layout: "logo"

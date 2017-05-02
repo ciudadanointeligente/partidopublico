@@ -761,6 +761,12 @@ aside.col-sm-3.col-md-3{
 	margin-top: 20px;
 }
 
+.leyenda-colores-mapa{
+	text-align: left;
+	margin-top: 10px;
+	margin-left: 25px;
+}
+
 .circle-lg{
 	color: $green-light;
 	float: left;
@@ -775,12 +781,14 @@ aside.col-sm-3.col-md-3{
 
 .square-or {
   border: solid 10px #FAC5BE;
+	float: left;
   width: 10px;
   height: 10px;
 }
 
 .square-gr {
   border: solid 10px #E9DEDF;
+	float: left;
   width: 10px;
   height: 10px;
 }
@@ -1086,6 +1094,16 @@ th{
 	}
 }
 
+.exigeles{
+	background-color: $orange-dark;
+	margin: 70px 0 40px 0;
+	padding: 60px 0 20px;
+	h2, h4{
+		color: white;
+	}
+}
+
+
 p.edades{
 	text-align: center;
 	width: 30px;
@@ -1332,6 +1350,12 @@ p.edades{
 @media (max-width: 503px) {
 	.vistas{
 		min-height: 135px;
+	}
+}
+
+@media screen and (max-width: 470px) {
+	a.btn.btn-xs.parties{
+		font-size: 9px;
 	}
 }
 

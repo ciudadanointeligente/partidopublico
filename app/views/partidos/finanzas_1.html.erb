@@ -13,7 +13,6 @@
   </div>
 
   <div>
-    <h4>Datos correspondientes al <%=  @fecha %></h4>
     <!-- <div class="leyenda-finanzas">
       <p><i class="fa fa-circle fa-lg circle-lg" aria-hidden="true"></i>Aportes públicos</p>
       <p><i class="fa fa-circle fa-lg circle-gd" aria-hidden="true"></i>Aportes privados<p>
@@ -64,6 +63,7 @@ $(document).ready(function(){
   Raphael("header",340, 40 ).ingreso_ord_front_header();
 
   for(var i=0; i < data.length; i++){
+    console.log(data[i]);
     Raphael("barras_" + i,300, 30 ).ingreso_ord_front_bar(data[i]);
   }
 

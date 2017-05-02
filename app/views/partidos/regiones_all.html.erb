@@ -9,20 +9,30 @@
     <%= submit_tag 'Filtrar' %>
   </div>
 
-  <div class="hidden-xs hidden-sm col-md-4">
-    <%= render 'svg_map_all' %>
-  </div>
-  <div class="col-md-8 text-center">
+  <!-- <div class="hidden-xs hidden-sm col-md-4"> -->
+  <!-- </div> -->
+  <div class="col-md-12 text-center">
   <style>
   .showData { display: '' }
   .hideData { display: none }
   </style>
 
   <div id="region-nacional" class="showData">
+      <img/ class="square-or">
+      <p class="leyenda-colores-mapa">
+        Región en la cual se encuentra constituido
+      </p>
+        <img/ class="square-gr">
+        <p class="leyenda-colores-mapa">
+          Región en la cual no se encuentra constituido
+        </p>
     <div>
       <h4>Cantidad afiliados:  </h4>
       <span class="total-max"><%= @cantidad_afiliados%></span>
     </div>
+    <div class="col-md-6 col-md-offset-3 text-center">
+          <%= render 'svg_map_all' %>
+        </div>
     <br>
   </div>
   <div id="region-1" class="hideData">
@@ -522,6 +532,4 @@
   </div>
 </div>
 </div>
-<p class="no_data_small_message"><img/ class="square-or"> Región en la cual se encuentra constituido</p>
-<p class="no_data_small_message"><img/ class="square-gr"> Región en la cual no se encuentra constituido</p>
 <% end %>
