@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe PartidosController, type: :controller do
+  before(:all) do
+    @etl = create(:etl_run, :fecha_datos => '12/03/2017')
+
+  end
 
   let(:valid_attributes) {
     skip("Add a hash of attributes valid for your model")
