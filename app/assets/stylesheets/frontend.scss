@@ -96,6 +96,7 @@ span{
 
 li.redes{
 	margin-top: -5px;
+	float: left;
 }
 
 .dropdown-menu > li > a{
@@ -261,7 +262,7 @@ section{
 	text-transform: uppercase;
 	letter-spacing: 1.4px;
 	font-weight: 700;
-	font-size: 12px;
+	font-size: 11px;
 	height: 34px;
 	&.basic{
 		background-color: white;
@@ -503,14 +504,16 @@ a.btn.btn-xs.parties{
 	background-color: $green;
 	color: white;
 	border: 2px solid $green;
-	height: 24px;
+	display: inline-block;
+	word-wrap: break-word;
+	white-space: normal;
 	border-radius: 12px;
 	letter-spacing: 1.2px;
 	font-weight: 700;
 	font-size: 14px;
 	line-height: 17px;
 	margin-top: -12px;
-	padding: 1px 8px;
+	padding: 1px 5px;
 	font-family: 'Montserrat', sans-serif;
 	&:hover{
 		color: $green;
@@ -1371,7 +1374,7 @@ p.edades{
 		font-size: 46px;
 	}
 	mark{
-		font-size: 24px;
+		font-size: 22px;
 	}
 	.btn-primary.basic a{
 		font-size: 11px;
@@ -1379,6 +1382,9 @@ p.edades{
 	}
 	.dropdown-menu li {
 		margin-bottom: 5px;
+ }
+ .nav li {
+	 margin-bottom: 5px;
  }
 }
 
