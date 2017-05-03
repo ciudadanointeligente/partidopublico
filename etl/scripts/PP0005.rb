@@ -38,11 +38,15 @@ files = Dir[input_path + "#{job_name}.csv"]
 dos2unix
 encoding = find_encoding
 
+p "FOUND ENCODING: " + encoding
+
 if encoding == 'unknown-8bit'
   iconv(encoding: 'windows-1252')
 elsif encoding == 'iso-8859-1'
   iconv(encoding: encoding)
 end
+
+remove_ctrl_m
 
 files.each_with_index do |file, index|
 
