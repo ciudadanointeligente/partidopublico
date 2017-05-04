@@ -1384,7 +1384,13 @@ p.edades{
 		margin-bottom: 5px;
  }
  .nav li {
-	 margin-bottom: 5px;
+	 margin-bottom: 3px;
+ }
+ .table-responsive th, td{
+		width: 300px;
+ 		word-wrap: break-word;
+ 		white-space: normal !important;
+		margin-bottom: 5px;
  }
 }
 
