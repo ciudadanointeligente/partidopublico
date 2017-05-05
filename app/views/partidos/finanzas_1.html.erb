@@ -34,7 +34,8 @@
               <%= linea['text'] %>
             </td>
             <td>
-              <div id="barras_<%= i.to_s %>"></div>
+              <div id="barras_<%= i.to_s %>" class="graph-desktop"></div>
+              <div class="graph-mobile"><%= linea['percentage'] %></div>
             </td>
             <td class="monto">
               <%= number_to_currency(linea['value'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %>

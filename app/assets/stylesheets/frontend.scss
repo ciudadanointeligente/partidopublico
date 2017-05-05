@@ -1039,6 +1039,10 @@ th{
 	border-bottom: 1px solid $blue;
 }
 
+.graph-mobile{
+	display: none;
+}
+
 .total-max{
 	color: $blue;
 	font-size: 40px;
@@ -1205,6 +1209,48 @@ p.edades{
 		top: 24px;
 	}
 }
+
+@media only screen and (max-width: 767px) {
+
+    .graph-desktop{
+        display: none;
+    }
+
+		.graph-mobile{
+			display: inline;
+		}
+
+		th{
+			color: $blue;
+			font-size: 10px;
+			letter-spacing: 1.2px;
+			text-transform: uppercase;
+			width: 100px;
+		}
+
+		.total-max{
+			color: $blue;
+			font-size: 40px;
+			font-weight: 700;
+		}
+
+		.monto{
+			color: $blue;
+			font-size: 18px;
+			font-weight: 700;
+			text-align: right;
+		}
+
+		.total{
+			color: $blue;
+			font-size: 22px;
+			font-weight: 700;
+			&.monto{
+				text-align: right;
+			}
+		}
+}
+
 @media (max-width: 767px) {
 	.navbar-toggle{
 		margin-top: -1px;
@@ -1387,13 +1433,12 @@ p.edades{
 	 margin-bottom: 3px;
  }
  .table-responsive th, td{
-		width: 300px;
  		word-wrap: break-word;
+		width: 150px;
  		white-space: normal !important;
-		margin-bottom: 5px;
+ 		margin-bottom: 5px;
  }
 }
-
 @media (max-width: 336px) {
 	section.aviso{
 		height: 98px;
