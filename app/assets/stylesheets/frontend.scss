@@ -1032,7 +1032,8 @@ th{
 	font-size: 10px;
 	letter-spacing: 1.2px;
 	text-transform: uppercase;
-	width: 200px;
+	width: auto;
+	text-align: right;
 }
 
 .table > thead > tr > th {
@@ -1041,6 +1042,10 @@ th{
 
 .graph-mobile{
 	display: none;
+}
+
+.concepto{
+	text-align: left;
 }
 
 .total-max{
@@ -1060,6 +1065,7 @@ th{
 	color: $blue;
 	font-size: 22px;
 	font-weight: 700;
+	text-align: left;
 	&.monto{
 		text-align: right;
 	}
@@ -1212,38 +1218,56 @@ p.edades{
 
 @media only screen and (max-width: 767px) {
 
-    .graph-desktop{
-        display: none;
-    }
-
 		.graph-mobile{
 			display: inline;
+			text-transform: uppercase;
+			font-size: 14px;
+			font-weight: 700;
 		}
 
-		th{
+		.table-responsive {
+			width: auto;
+			table-layout: fixed;
+		}
+
+		.table-responsive th{
 			color: $blue;
-			font-size: 10px;
+			font-size: 12px;
 			letter-spacing: 1.2px;
 			text-transform: uppercase;
-			width: 100px;
+			text-align: center;
+		}
+
+		 td{
+		 		word-wrap: break-word;
+				width: 100px;
+		 		white-space: normal !important;
+				text-align: center;
+				vertical-align: middle;
+		 		margin-bottom: 5px;
+		 }
+
+		.concepto{
+			text-align: center;
 		}
 
 		.total-max{
 			color: $blue;
-			font-size: 40px;
+			font-size: 16px;
 			font-weight: 700;
 		}
 
 		.monto{
 			color: $blue;
-			font-size: 18px;
+			font-size: 16px;
 			font-weight: 700;
 			text-align: right;
+			width: inherit;
 		}
 
 		.total{
 			color: $blue;
-			font-size: 22px;
+			font-size: 14px !important;
 			font-weight: 700;
 			&.monto{
 				text-align: right;
@@ -1431,12 +1455,6 @@ p.edades{
  }
  .nav li {
 	 margin-bottom: 3px;
- }
- .table-responsive th, td{
- 		word-wrap: break-word;
-		width: 150px;
- 		white-space: normal !important;
- 		margin-bottom: 5px;
  }
 }
 @media (max-width: 336px) {

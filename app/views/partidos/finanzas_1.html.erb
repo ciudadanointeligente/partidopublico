@@ -22,8 +22,8 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Concepto</th>
-            <th>&nbsp;</th>
+            <th class="concepto">Concepto</th>
+            <th>&nbsp;<div class="visible-xs">Porcentaje</div></th>
             <th>Monto Total</th>
           </tr>
         </thead>
@@ -34,8 +34,10 @@
               <%= linea['text'] %>
             </td>
             <td>
-              <div id="barras_<%= i.to_s %>" class="graph-desktop"></div>
-              <div class="graph-mobile"><%= linea['percentage'] %></div>
+              <div id="barras_<%= i.to_s %>" class="hidden-xs"></div>
+              <div class="graph-mobile"> <%=
+                (linea['percentage'].to_f*100).round(2).to_s + '%'
+              %></div>
             </td>
             <td class="monto">
               <%= number_to_currency(linea['value'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %>
@@ -60,14 +62,15 @@ $(document).ready(function(){
   var data_totals = <%=  @datos_ingresos_ordinarios_totals.to_json.html_safe %>;
   var fechas = <%=  @fechas_datos.to_json.html_safe %>;
   var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
-
   Raphael("header",340, 40 ).ingreso_ord_front_header();
-
   for(var i=0; i < data.length; i++){
     console.log(data[i]);
     Raphael("barras_" + i,300, 30 ).ingreso_ord_front_bar(data[i]);
   }
-
-  Raphael("footer",500, 40 ).ingreso_ord_front_footer(data_totals);
+  if(screen.width > 767)
+    Raphael("footer",500, 40 ).ingreso_ord_front_footer(data_totals);
+  else {
+    Raphael("footer",1, 1 ).ingreso_ord_front_footer(data_totals);
+    }
 });
 </script>
