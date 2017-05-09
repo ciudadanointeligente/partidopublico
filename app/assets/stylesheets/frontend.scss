@@ -1040,11 +1040,11 @@ th{
 	border-bottom: 1px solid $blue;
 }
 
-.graph-mobile{
+.porcentaje-movil{
 	display: none;
 }
 
-.concepto{
+.concepto-th{
 	text-align: left;
 }
 
@@ -1218,10 +1218,10 @@ p.edades{
 
 @media only screen and (max-width: 767px) {
 
-		.graph-mobile{
+		.porcentaje-movil{
 			display: inline;
 			text-transform: uppercase;
-			font-size: 14px;
+			font-size: 13px;
 			font-weight: 700;
 		}
 
@@ -1235,7 +1235,6 @@ p.edades{
 			font-size: 12px;
 			letter-spacing: 1.2px;
 			text-transform: uppercase;
-			text-align: center;
 		}
 
 		 td{
@@ -1247,19 +1246,22 @@ p.edades{
 		 		margin-bottom: 5px;
 		 }
 
-		.concepto{
-			text-align: center;
+		.concepto-th{
+			text-align: left;
 		}
 
-		.total-max{
-			color: $blue;
-			font-size: 16px;
-			font-weight: 700;
+		.monto-th{
+			text-align: right;
+		}
+
+		.concepto{
+			font-size: 13px;
+			text-align: left;
 		}
 
 		.monto{
 			color: $blue;
-			font-size: 16px;
+			font-size: 13px;
 			font-weight: 700;
 			text-align: right;
 			width: inherit;

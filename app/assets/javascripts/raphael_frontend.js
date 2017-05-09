@@ -205,8 +205,14 @@ $(document).ready(function(){
 
   Raphael.fn.ingreso_ord_front_footer = function(dato){
     var paper = this;
-    var bar_width = 300;
-    var bar_height = 30;
+    if (screen.width > 760) {
+      var bar_width = 300;
+      var bar_height = 30;
+    }
+    else {
+      var bar_width = 80
+      var bar_height = 20
+    }
     var publico_width = (dato.publicos / (dato.publicos + dato.privados)) * bar_width;
     var privado_width = bar_width - publico_width;
 
