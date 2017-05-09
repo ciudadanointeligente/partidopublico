@@ -449,8 +449,11 @@ class PartidosController < ApplicationController
       @datos_ingresos_ordinarios = []
       ingresos_ordinarios.each do |io|
         val = ((io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
-        line ={ 'text'=> io.concepto, 'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe, delimiter: ""), 'percentage' => val }
-        @datos_ingresos_ordinarios << line
+        line ={ 'text'=> io.concepto,
+                'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe,
+                                                                            delimiter: ""),
+                'percentage' => val }
+        @datos_ingresos_ordinarios << line unless io.importe == 0
       end
 
       @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
