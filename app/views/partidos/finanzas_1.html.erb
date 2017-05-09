@@ -34,10 +34,10 @@
               <%= linea['text'] %>
             </td>
             <td>
-              <div id="barras_<%= i.to_s %>" class="hidden-xs"></div>
               <div class="porcentaje-movil"> <%=
                 (linea['percentage'].to_f*100).round(2).to_s + '%'
               %></div>
+              <div id="barras_<%= i.to_s %>"></div>
             </td>
             <td class="monto">
               <%= number_to_currency(linea['value'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %>
@@ -65,7 +65,11 @@ $(document).ready(function(){
   Raphael("header",340, 40 ).ingreso_ord_front_header();
   for(var i=0; i < data.length; i++){
     console.log(data[i]);
-    Raphael("barras_" + i,300, 30 ).ingreso_ord_front_bar(data[i]);
+    if(screen.width > 767) {
+      Raphael("barras_" + i,300, 30 ).ingreso_ord_front_bar(data[i]);
+    } else {
+      Raphael("barras_" + i,80, 40 ).ingreso_ord_front_bar(data[i]);
+    }
   }
   if(screen.width > 767)
     Raphael("footer",500, 40 ).ingreso_ord_front_footer(data_totals);

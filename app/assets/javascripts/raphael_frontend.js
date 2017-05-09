@@ -167,8 +167,13 @@ $(document).ready(function(){
 
   Raphael.fn.ingreso_ord_front_bar = function(dato){
     var paper = this;
-    var bar_width = 300;
-    var bar_height = 30;
+    if(screen.width > 760) {
+      var bar_width = 300;
+      var bar_height = 30;
+    } else {
+      var bar_width = 80
+      var bar_height = 20
+    }
     var ingreso_width = dato.percentage * bar_width;
     if (ingreso_width < 1) {
       ingreso_width = 1;
