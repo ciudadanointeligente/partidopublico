@@ -1040,6 +1040,10 @@ th{
 	border-bottom: 1px solid $blue;
 }
 
+.table td{
+	width: 33.3%;
+}
+
 .porcentaje-movil{
 	display: none;
 }
@@ -1317,7 +1321,7 @@ p.edades{
 	}
 
 	.table-responsive {
-		width: auto;
+		width: 100%; 
 		table-layout: fixed;
 	}
 
