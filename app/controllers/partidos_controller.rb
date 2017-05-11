@@ -289,8 +289,9 @@ class PartidosController < ApplicationController
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
 
-    if @trimestres_informados.count == 0
+    if (@trimestres_informados.count == 0 || @partido.afiliacions.last == nil)
       @trimestres_informados = []
+      @cantidad_afiliados = []
       @sin_datos = true
     else
       params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
