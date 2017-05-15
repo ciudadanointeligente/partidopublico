@@ -42,10 +42,12 @@
               <tbody>
                 <% a[:miembros].each do |cargo| %>
                 <tr>
-                  <td><%= cargo[:persona].nombre + ' ' + cargo[:persona].apellidos  %></td>
-                  <td><%= cargo[:tipo_cargo].titulo  %></td>
-                  <td><%= !cargo[:persona].intereses.blank?  ? link_to(cargo[:persona].intereses, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %> </td>
-                  <td><%= !cargo[:persona].patrimonio.blank? ? link_to(cargo[:persona].patrimonio, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %> </td>
+                  <% unless cargo[:persona].nil? %>
+                    <td><%= cargo[:persona].nombre + ' ' + cargo[:persona].apellidos %></td>
+                    <td><%= cargo[:tipo_cargo].titulo  %></td>
+                    <td><%= !cargo[:persona].intereses.blank?  ? link_to(cargo[:persona].intereses, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %> </td>
+                    <td><%= !cargo[:persona].patrimonio.blank? ? link_to(cargo[:persona].patrimonio, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %> </td>
+                  <% end %>
                 </tr>
                 <% end %>
               </tbody>

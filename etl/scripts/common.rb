@@ -10,6 +10,7 @@ def clean_number(numero)
   numero = numero.to_s
   numero.delete! ','
   numero.delete! '.'
+  # numero.delete! '-'
   numero.to_i
 end
 

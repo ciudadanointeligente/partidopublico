@@ -552,6 +552,7 @@ class PartidosController < ApplicationController
       total = 0
       @datos_temp_transferencias = []
       temp_transferencias.each do |tr|
+        # p tr.sum
         if tr.sum < 0
           tr.sum = tr.sum * -1
         end
@@ -757,7 +758,7 @@ end
 
   def intereses_patrimonios
     @intereses_patrimonios = []
-    tc_candidatos = @partido.tipo_cargos#.where(candidato:true)
+    tc_candidatos = @partido.tipo_cargos.where(candidato:true)
     if tc_candidatos.count == 0
       @sin_datos = true
     else
