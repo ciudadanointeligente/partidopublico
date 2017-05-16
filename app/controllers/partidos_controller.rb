@@ -559,11 +559,13 @@ class PartidosController < ApplicationController
         if tr.month.nil?
           line = {'text' => "Sin información", 'value' => tr.sum}
         else
-          mes = get_month(tr.month.round(0))
-          año = tr.year.round(0).to_s
-          val = (100 * ((t.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-          # val = 100.to_s    <- WIP
-          line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+          if tr.year == @trimestre_informado.ano
+            mes = get_month(tr.month.round(0))
+            año = tr.year.round(0).to_s
+            val = (100 * ((t.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+            # val = 100.to_s    <- WIP
+            line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+          end
         end
         @datos_temp_transferencias << line
         total += tr.sum
