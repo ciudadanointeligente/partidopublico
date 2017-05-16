@@ -56,6 +56,8 @@
     </div>
   </div>
   <% end %>
+  <p class="mark-date"> Estos datos corresponden a lo publicado por este
+      Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
 <script>
 $(document).ready(function(){
   var data = <%=  @datos_ingresos_ordinarios.to_json.html_safe %>;
