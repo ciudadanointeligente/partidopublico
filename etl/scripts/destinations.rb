@@ -351,29 +351,39 @@ class TransferenciaDestination
     @new = 0
     @errors = 0
     @found = 0
+    @last_transf = Transferencia.last
+    @count_initial = Transferencia.count
+    @trims = []
+    @partidos = []
   end
   #nombre_desde_el_modelo: row[:nombre_desde_headers]
   def write(row)
 
-    if !row[:fecha_transferencia].nil?
-    transferencia = Transferencia.where(partido_id: row[:partido_id],
-                                        fecha: row[:fecha_transferencia].to_date,
+    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+
+    @partidos << row[:partido_id] unless row[:partido_id].in?(@partidos)
+
+
+    # if !row[:fecha_transferencia].nil?
+    fecha = row[:fecha_transferencia].to_date unless row[:fecha_transferencia].nil?
+    transferencia = Transferencia.new(partido_id: row[:partido_id],
+                                        # fecha: row[:fecha_transferencia].to_date unless row[:fecha_transferencia].nil?,
+                                        fecha: fecha,
                                         monto: clean_number(row[:monto]),
-                                        categoria: 'Sin Categoría',
                                         descripcion: row[:objeto_de_la_transferencia],
                                         razon_social: row[:persona_jurdica_receptora],
                                         rut: row[:rut_persona_jurdica],
-                                        persona_natural: row[:persona_natural_receptora].downcase.titleize).first_or_initialize
-    else
-      transferencia = Transferencia.where(partido_id: row[:partido_id],
-                                          monto: clean_number(row[:monto]),
-                                          descripcion: row[:objeto_de_la_transferencia],
-                                          razon_social: row[:persona_jurdica_receptora],
-                                          rut: row[:rut_persona_jurdica],
-                                          persona_natural: row[:persona_natural_receptora].downcase.titleize).first_or_initialize
-    end
+                                        persona_natural: row[:persona_natural_receptora].downcase.titleize)
+    # else
+    #   transferencia = Transferencia.where(partido_id: row[:partido_id],
+    #                                       monto: clean_number(row[:monto]),
+    #                                       descripcion: row[:objeto_de_la_transferencia],
+    #                                       razon_social: row[:persona_jurdica_receptora],
+    #                                       rut: row[:rut_persona_jurdica],
+    #                                       persona_natural: row[:persona_natural_receptora].downcase.titleize).first_or_initialize
+    # end
 
-    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+    # trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
 
     if transferencia.id.nil?
       transferencia.save
@@ -382,10 +392,12 @@ class TransferenciaDestination
         @results[:transferencias][:errors] += 1
       else
         transferencia.trimestre_informados << trimestre_informado unless trimestre_informado.in?(transferencia.trimestre_informados)
+        @trims << trimestre_informado unless trimestre_informado.in?(@trims)
         @results[:transferencias][:new] += 1
       end
     else
       transferencia.trimestre_informados << trimestre_informado unless trimestre_informado.in?(transferencia.trimestre_informados)
+      @trims << trimestre_informado unless trimestre_informado.in?(@trims)
       @results[:transferencias][:found] += 1
     end
   end
@@ -394,6 +406,11 @@ class TransferenciaDestination
     @results[:transferencias] = {new: @results[:transferencias][:new],
                        errors: @results[:transferencias][:errors],
                        found: @results[:transferencias][:found]}
+    p @count_initial
+    p Transferencia.count
+    @trims.map{|t| t.transferencias.where("id < ?", @last_transf.id).where(:partido_id => @partidos.compact).destroy_all}
+    p Transferencia.count
+
   end
 end
 
