@@ -1239,6 +1239,10 @@ p.edades{
 	.rtable > thead > tr > th{
 		border-bottom: none;
 		border-right: 1px solid $blue;
+		font-size: 12px;
+		word-wrap: break-word !important;
+		white-space: normal !important;
+		width: auto;
 	}
 
 	.rtable, .rtable--flip tbody {
@@ -1276,6 +1280,8 @@ p.edades{
 	  display: flex;
 	  flex-shrink: 0;
 	  min-width: min-content;
+		max-width: 30% !important;
+		// width: 70% !important;
 	}
 
 	.rtable--flip tbody {
@@ -1311,14 +1317,6 @@ p.edades{
 	.rtable--flip th:not(:last-child), .rtable--flip td:not(:last-child) {
 	  border-bottom: 0;
 	}
-
-	// .th-intereses-y-patrimonios {
-	// 	word-wrap: break-word !important;
-	// 	white-space: normal !important;
-	// 	width: 30% !important;
-	// 	display: inline !important;
-	// 	font-size: 10px !important;
-	// }
 
 	.porcentaje-movil{
 		display: inline;
