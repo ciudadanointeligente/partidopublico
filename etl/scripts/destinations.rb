@@ -408,7 +408,9 @@ class TransferenciaDestination
                        found: @results[:transferencias][:found]}
     p @count_initial
     p Transferencia.count
-    @trims.map{|t| t.transferencias.where("id < ?", @last_transf.id).where(:partido_id => @partidos.compact).destroy_all}
+    if @last_transf.id != nil
+      @trims.map{|t| t.transferencias.where("id <= ?", @last_transf.id).where(:partido_id => @partidos.compact).destroy_all}
+    end
     p Transferencia.count
 
   end
