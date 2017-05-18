@@ -139,6 +139,9 @@ Rails.application.routes.draw do
     get 'export_personas', to: 'partido_steps#export_personas'
     resources :partido_steps
   end
+
+  get 'run_etl', to: 'partido_steps#run_etl'
+
   # resources :partido_steps
   get 'formulario/update_comunas', as: 'update_comunas'
   get 'formulario/update_distritos', as: 'update_distritos'

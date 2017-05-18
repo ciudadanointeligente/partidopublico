@@ -31,7 +31,8 @@
   <% if admin_signed_in? && current_admin.is_superadmin?%>
 
     <h1>Acciones : </h1>
-      <%= link_to "Crear nuevo partido", new_partido_path %>
+      <%= link_to "Crear nuevo partido", new_partido_path %> <br>
+      <%= link_to "Cargar datos del cplt", run_etl_path%>
 
     <h1>Últimos Accesos : </h1>
 
