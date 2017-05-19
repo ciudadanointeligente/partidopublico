@@ -43,7 +43,7 @@
                   <% unless c.persona.nil? %>
                     <td><%= c.persona.nombre + " " +c.persona.apellidos %></td>
                     <td><%= c.lugar.chomp(" - ") %></td>
-                    <td><%= !c.persona.intereses.blank? ? link_to(c.persona.intereses, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %></td>
+                    <td class="link-intereses-patrimonio"><%= !c.persona.intereses.blank? ? link_to(c.persona.intereses, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %></td>
                     <!-- <td><%= !c.persona.patrimonio.blank? ? link_to(c.persona.patrimonio, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %></td> -->
                   <% end %>
                 </tr>

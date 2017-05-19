@@ -123,11 +123,13 @@ class PartidoStepsController < ApplicationController
     end
 
     def run_etl
-      command = "RAILSENV=development bundle exec kiba etl/scripts/import_all.rb"
+      command = "RAILS_ENV=development bundle exec kiba etl/scripts/import_all.rb"
       result = system command
       p "etl_running from administrator"
-      p result 
+      p result
     end
+
+    handle_asynchronously :run_etl
 
     private
         # Use callbacks to share common setup or constraints between actions.

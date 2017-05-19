@@ -35,6 +35,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Paginación
 gem 'kaminari'
 
+#Delayed jobs
+gem 'delayed_job_active_record'
+
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 gem 'rails-i18n'
