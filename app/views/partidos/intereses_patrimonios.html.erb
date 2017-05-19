@@ -30,11 +30,11 @@
           <div class="table-responsive">
             <table class="table rtable rtable--flip">
               <thead>
-                <tr class="th-intereses-y-patrimonios">
+                <tr>
                   <th>Nombre</th>
                   <th>Organismo o Lugar</th>
-                  <th>URL Intereses</th>
-                  <th>URL Patrimonios</th>
+                  <th>URL Intereses y Patrimonio</th>
+                  <!-- <th>URL Patrimonios</th> -->
                 </tr>
               </thead>
               <tbody>
@@ -44,7 +44,7 @@
                     <td><%= c.persona.nombre + " " +c.persona.apellidos %></td>
                     <td><%= c.lugar.chomp(" - ") %></td>
                     <td><%= !c.persona.intereses.blank? ? link_to(c.persona.intereses, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %></td>
-                    <td><%= !c.persona.patrimonio.blank? ? link_to(c.persona.patrimonio, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %></td>
+                    <!-- <td><%= !c.persona.patrimonio.blank? ? link_to(c.persona.patrimonio, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %></td> -->
                   <% end %>
                 </tr>
                 <% end %>

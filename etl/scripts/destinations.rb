@@ -59,12 +59,13 @@ class RegionPorPartidoDestination
     # p "ID REGION " + row[:region_id].to_s
     # p "ID PARTIDO " + row[:partido_id].to_s
     # p "ROW " + row.to_s
+    if !row[:partido_id].nil?
+      partido = Partido.find(row[:partido_id])
 
-    partido = Partido.find(row[:partido_id])
-
-    unless row[:region_id].nil?
-      region = Region.find(row[:region_id])
-      partido.regions << region unless region.in?(partido.regions)
+      unless row[:region_id].nil?
+        region = Region.find(row[:region_id])
+        partido.regions << region unless region.in?(partido.regions)
+      end
     end
   end
 
@@ -408,7 +409,7 @@ class TransferenciaDestination
                        found: @results[:transferencias][:found]}
     p @count_initial
     p Transferencia.count
-    if @last_transf.id != nil
+    if @last_transf
       @trims.map{|t| t.transferencias.where("id <= ?", @last_transf.id).where(:partido_id => @partidos.compact).destroy_all}
     end
     p Transferencia.count
