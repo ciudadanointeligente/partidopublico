@@ -129,7 +129,7 @@ class PartidoStepsController < ApplicationController
       p result
     end
 
-    handle_asynchronously :run_etl
+    # handle_asynchronously :run_etl
 
     private
         # Use callbacks to share common setup or constraints between actions.

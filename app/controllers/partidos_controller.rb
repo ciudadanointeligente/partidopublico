@@ -552,23 +552,22 @@ class PartidosController < ApplicationController
       total = 0
       @datos_temp_transferencias = []
       temp_transferencias.each do |tr|
-        # p tr.sum
-        if tr.sum < 0
-          tr.sum = tr.sum * -1
-        end
-        if tr.month.nil?
-          line = {'text' => "Sin información", 'value' => tr.sum}
-        else
-          if tr.year == @trimestre_informado.ano
-            mes = get_month(tr.month.round(0))
-            año = tr.year.round(0).to_s
-            val = (100 * ((t.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-            # val = 100.to_s    <- WIP
-            line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+        if tr.year == @trimestre_informado.ano
+          if tr.sum < 0
+            tr.sum = tr.sum * -1
           end
+          if tr.month.nil?
+            line = {'text' => "Sin información", 'value' => tr.sum}
+          else
+              mes = get_month(tr.month.round(0))
+              año = tr.year.round(0).to_s
+              val = (100 * ((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+              # val = 100.to_s    <- WIP
+              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+          end
+          total += tr.sum
         end
         @datos_temp_transferencias << line
-        total += tr.sum
       end
       @datos_transferencias_totals = { :total => total }
       if @datos_transferencias_totals[:total] < 0

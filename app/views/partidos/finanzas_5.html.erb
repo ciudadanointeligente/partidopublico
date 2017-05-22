@@ -26,10 +26,10 @@
         <tbody>
           <% @datos_temp_transferencias.each_with_index do |linea, i| %>
           <tr>
-            <td class="concepto"><%= linea['text'] %></td>
+            <td class="concepto"><%= linea['text'] unless linea.nil? %></td>
             <td><span id="barras_<%= i.to_s %>"></span></td>
             <td class="monto">
-              <%= number_to_currency(linea['value'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %>
+              <%= number_to_currency(linea['value'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") unless linea.nil? %>
             </td>
           </tr>
           <% end %>
