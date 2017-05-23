@@ -123,9 +123,9 @@ class PartidoStepsController < ApplicationController
     end
 
     def run_etl
-      command = "RAILS_ENV=development bundle exec kiba etl/scripts/import_all.rb"
+      command = "RAILSENV=development bundle exec kiba etl/scripts/import_all.rb"
       result = system command
-      p "etl_running from administrator"
+      p "ETL Running from Administrator"
       p result
     end
 
