@@ -1,0 +1,103 @@
+<div class="container">
+
+  <p id="notice"><%= notice %></p>
+
+  <h1>ETL ejecutada con éxito</h1>
+  <h1>Partidos que puedes editar</h1>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Partido</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @partidos.each do |partido| %>
+        <tr>
+          <td><%= link_to partido.sigla, partido_steps_path(partido), target: '_self' %></td>
+          <td>
+            <%= link_to partido_steps_path(partido), target: '_self' do %>
+              <div class="fa fa-edit"></div>
+            <% end %>
+            <%= link_to partido, method: :delete, data: { confirm: 'Are you sure?' } do %>
+              <div class="fa fa-trash"></div>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <% if admin_signed_in? && current_admin.is_superadmin?%>
+
+    <h1>Acciones : </h1>
+      <%= link_to "Crear nuevo partido", new_partido_path %> <br>
+      <%= link_to "Cargar datos del cplt", run_etl_path%>
+
+    <h1>Últimos Accesos : </h1>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>SuperAdmin</th>
+          <th>Cuenta</th>
+          <th>Accesos y Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @login_data.each do |line| %>
+          <tr>
+            <td><%= line[:email] %></td>
+            <td><%= line[:is_superadmin] %></td>
+            <td><%= line[:login_count] %></td>
+            <td>
+            <% if line[:logins].any? %>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>IP</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% line[:logins].each do |login| %>
+                    <tr>
+                      <td> <%= login[:fecha] %> </td>
+                      <td> <%= login[:ip] %> </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+                <% if line[:last_actions].any? %>
+                        <thead>
+                          <tr>
+                            <th>Item</th>
+                            <th>Evento</th>
+                            <th>Fecha</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% line[:last_actions].each do |action| %>
+                            <tr>
+                              <td> <%= action.item_type %> </td>
+                              <td> <%= action.event %> </td>
+                              <td> <%= action.created_at %> </td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                <% end %>
+              </table>
+            <% end %>
+            </td>
+          </tr>
+        <% end %>
+
+      </tbody>
+    </table>
+
+  <% end %>
+
+
+
+</div>

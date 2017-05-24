@@ -127,6 +127,7 @@ class PartidoStepsController < ApplicationController
       result = system command
       p "ETL Running from Administrator"
       p result
+      redirect_to('/admin')
     end
 
     # handle_asynchronously :run_etl
