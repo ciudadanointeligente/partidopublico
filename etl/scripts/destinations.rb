@@ -319,6 +319,84 @@ class EgresoCampanaDestination
   end
 end
 
+class EgresoOrdinarioDestination
+  def initialize(results:, verbose:)
+    @verbose = verbose
+    @results = results
+    @new = 0
+    @errors = 0
+    @found = 0
+    @last_egresoordinario = EgresoOrdinario.last
+    @count_initial = EgresoOrdinario.count
+    @trimestres = []
+    @partidos = []
+  end
+
+  def write(row)
+
+    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+
+    @partidos << row[:partido_id] unless row[:partido_id].in?(@partidos)
+
+    enero = clean_number(row[:enero])
+    febrero = clean_number(row[:febrero])
+    marzo = clean_number(row[:marzo])
+    abril = clean_number(row[:abril])
+    mayo = clean_number(row[:mayo])
+    junio = clean_number(row[:junio])
+    julio = clean_number(row[:julio])
+    agosto = clean_number(row[:agosto])
+    septiembre = clean_number(row[:septiembre])
+    octubre = clean_number(row[:octubre])
+    noviembre = clean_number(row[:noviembre])
+    diciembre = clean_number(row[:diciembre])
+
+    egreso_ordinario = EgresoOrdinario.new(partido_id: row[:partido_id],
+                                         concepto: row[:item_de_gastos],
+                                         enero: enero,
+                                         febrero: febrero,
+                                         marzo: marzo,
+                                         abril: abril,
+                                         mayo: mayo,
+                                         junio: junio,
+                                         julio: julio,
+                                         agosto: agosto,
+                                         septiembre: septiembre,
+                                         octubre: octubre,
+                                         noviembre: noviembre,
+                                         diciembre: diciembre)
+
+    if egreso_ordinario.id.nil?
+      egreso_ordinario.save
+      if egreso_ordinario.errors.any?
+        row[:error_log] = row[:error_log].to_s + ', ' + egreso_ordinario.errors.messages.to_s
+        @results[:egreso_ordinarios][:errors] += 1
+      else
+        egreso_ordinario.trimestre_informados << trimestre_informado unless trimestre_informado.in?(egreso_ordinario.trimestre_informados)
+        @trimestres << trimestre_informado unless trimestre_informado.in?(@trimestres)
+        @results[:egreso_ordinarios][:new] += 1
+      end
+    else
+      egreso_ordinario.trimestre_informados << trimestre_informado unless trimestre_informado.in?(egreso_ordinario.trimestre_informados)
+      @trimestres << trimestre_informado unless trimestre_informado.in?(@trimestres)
+      @results[:egreso_ordinarios][:found] += 1
+    end
+  end
+
+  def close
+    @results[:egreso_ordinarios] = {new: @results[:egreso_ordinarios][:new],
+                                 errors: @results[:egreso_ordinarios][:errors],
+                                 found: @results[:egreso_ordinarios][:found]}
+    p @count_initial
+    p EgresoOrdinario.count
+    if @last_egresoordinario
+      @trimestres.map{|ec| ec.egreso_ordinarios.where("id <= ?", @last_egresoordinario.id).where(:partido_id => @partidos.compact).destroy_all}
+    end
+    p EgresoOrdinario.count
+
+  end
+end
+
 class IngresoCampanaDestination
   def initialize(results:, verbose:)
     @verbose = verbose

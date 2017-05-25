@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170519185947) do
+ActiveRecord::Schema.define(version: 20170525194017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -275,9 +275,29 @@ ActiveRecord::Schema.define(version: 20170519185947) do
     t.integer  "publico"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "enero"
+    t.integer  "febrero"
+    t.integer  "marzo"
+    t.integer  "abril"
+    t.integer  "mayo"
+    t.integer  "junio"
+    t.integer  "julio"
+    t.integer  "agosto"
+    t.integer  "septiembre"
+    t.integer  "octubre"
+    t.integer  "noviembre"
+    t.integer  "diciembre"
   end
 
   add_index "egreso_ordinarios", ["partido_id"], name: "index_egreso_ordinarios_on_partido_id", using: :btree
+
+  create_table "egreso_ordinarios_trimestre_informados", id: false, force: :cascade do |t|
+    t.integer "egreso_ordinario_id",    null: false
+    t.integer "trimestre_informado_id", null: false
+  end
+
+  add_index "egreso_ordinarios_trimestre_informados", ["egreso_ordinario_id"], name: "t_i_egreso_ordinario_id", using: :btree
+  add_index "egreso_ordinarios_trimestre_informados", ["trimestre_informado_id"], name: "t_i_eg_o_trimestre_id", using: :btree
 
   create_table "eleccion_internas", force: :cascade do |t|
     t.integer  "organo_interno_id"

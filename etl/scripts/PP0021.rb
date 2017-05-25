@@ -10,7 +10,7 @@ results[:trimestres_informados] = {:new => 0,
                                   :errors => 0,
                                   :found => 0}
 
-results[:ingreso_campanas] = {new: 0,
+results[:egreso_ordinarios] = {new: 0,
                    errors: 0,
                    found: 0}
 
@@ -19,7 +19,7 @@ results[:end_time] = 0
 
 pre_process do
   results[:start_time] = Time.now
-  p "*** Start #{job_name} Aportes de Campañas MIGRATION #{results[:start_time]}***"
+  p "*** Start #{job_name} Egresos Ordinarios MIGRATION #{results[:start_time]}***"
 end
 
 files = Dir[input_path + "#{job_name}.csv"]
@@ -45,7 +45,7 @@ transform PartidoLookup, verbose: verbosing, results: results
 
 transform TrimestreInformadoLookup, verbose: verbosing,  results: results
 
-destination IngresoCampanaDestination, verbose: verbosing, results: results
+destination EgresoOrdinarioDestination, verbose: verbosing, results: results
 
 destination ErrorCSVDestination, filename: log_path + job_name + '.log'
 

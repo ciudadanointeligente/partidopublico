@@ -419,7 +419,6 @@ class PartidosController < ApplicationController
       end
     end
 
-
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
 
@@ -462,28 +461,74 @@ class PartidosController < ApplicationController
     end
   end
 
+  # MÉTODO ANTIGUO
+  # def finanzas_2
+  #   @fechas_datos = EgresoOrdinario.where(partido: @partido).uniq.pluck(:fecha_datos).sort
+  #   if params[:fecha_datos]
+  #     @fecha = Date.new(params[:fecha_datos].split("-")[0].to_i, params[:fecha_datos].split("-")[1].to_i, params[:fecha_datos].split("-")[2].to_i)
+  #   else
+  #     @fecha = @fechas_datos.last
+  #   end
+  #   egresos_ordinarios = EgresoOrdinario.where(:partido => @partido, :fecha_datos => @fecha )
+  #   if egresos_ordinarios.count == 0
+  #     @sin_datos = true
+  #   else
+  #     max_value = egresos_ordinarios.maximum("privado + publico")
+  #     @datos_egresos_ordinarios = []
+  #     egresos_ordinarios.each do |eo|
+  #       val = (100 * ((eo.publico.to_f + eo.privado.to_f)/ max_value.to_f).to_f rescue 0).to_s
+  #       line ={ 'text'=> eo.concepto, 'value_publico' => eo.publico, 'value_privado' => eo.privado,
+  #               'value' => ActiveSupport::NumberHelper::number_to_delimited(eo.privado + eo.publico, delimiter: ""), 'percentage' => val }
+  #       @datos_egresos_ordinarios << line
+  #     end
+  #     total_publicos = egresos_ordinarios.sum(:publico)
+  #     total_privados = egresos_ordinarios.sum(:privado)
+  #     @datos_egresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
+  #     @sin_datos = false
+  #   end
+  # end
+
   def finanzas_2
-    @fechas_datos = EgresoOrdinario.where(partido: @partido).uniq.pluck(:fecha_datos).sort
-    if params[:fecha_datos]
-      @fecha = Date.new(params[:fecha_datos].split("-")[0].to_i, params[:fecha_datos].split("-")[1].to_i, params[:fecha_datos].split("-")[2].to_i)
-    else
-      @fecha = @fechas_datos.last
+
+    temp_trimestres_informados = []
+    @partido.egreso_ordinarios.each do |eo|
+      eo.trimestre_informados.each do |t|
+
+        temp_trimestres_informados.push(t)
+
+      end
     end
-    egresos_ordinarios = EgresoOrdinario.where(:partido => @partido, :fecha_datos => @fecha )
-    if egresos_ordinarios.count == 0
+
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
+
+    if @trimestres_informados.count == 0
+      @trimestres_informados = []
+      @datos_egresos_ordinarios = []
+      @datos_egresos_ordinarios_totals = {'publicos' => 0, 'privados' => 0}
       @sin_datos = true
     else
-      max_value = egresos_ordinarios.maximum("privado + publico")
-      @datos_egresos_ordinarios = []
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+      egresos_ordinarios = @trimestre_informado.egreso_ordinarios.where(:partido_id => @partido.id)
+
+      total_publicos = egresos_ordinarios.where(:partido_id => @partido.id).sum(:enero) rescue 0
+
+      total_privados = egresos_ordinarios.where(:partido => @partido.id).sum(:enero) rescue 0
+
+      max_value = total_publicos + total_privados
+      @datos_egresos_ordinarios =[]
       egresos_ordinarios.each do |eo|
-        val = (100 * ((eo.publico.to_f + eo.privado.to_f)/ max_value.to_f).to_f rescue 0).to_s
-        line ={ 'text'=> eo.concepto, 'value_publico' => eo.publico, 'value_privado' => eo.privado,
-          'value' => ActiveSupport::NumberHelper::number_to_delimited(eo.privado + eo.publico, delimiter: ""), 'percentage' => val }
-        @datos_egresos_ordinarios << line
+        val = ((eo.enero.to_f / max_value.to_f).to_f rescue 0).to_s
+        line = {'text' => eo.concepto,
+                'value' => ActiveSupport::NumberHelper::number_to_delimited(eo.enero,
+                                                                            delimiter: ""),
+                'percentage' => val }
+        @datos_egresos_ordinarios << line unless eo.enero == 0
       end
-      total_publicos = egresos_ordinarios.sum(:publico)
-      total_privados = egresos_ordinarios.sum(:privado)
-      @datos_egresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
+
+      @datos_egresos_ordinarios_totals = {'publicos' => total_publicos, 'privados' => total_privados}
       @sin_datos = false
     end
   end
