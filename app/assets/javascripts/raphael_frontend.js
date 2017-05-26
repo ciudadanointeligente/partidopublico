@@ -184,7 +184,6 @@ $(document).ready(function(){
     console.log(dato)
     console.log(ingreso_width)
     console.log(dato.text)
-    // var color = '#23DBB8';
 
     if(dato.text == "Aportes del Estado (Art. 33 Bis Ley N° 18603)" ||
        dato.text ==  "Otras Transferencias Públicas"){
@@ -267,32 +266,34 @@ $(document).ready(function(){
 
   Raphael.fn.egreso_ord_front_bar = function(dato){
     var paper = this;
-    var bar_width = 300;
-    var bar_height = 30;
-    var publico_percentage = dato.value_publico / dato.value;
-    var privado_percentage = dato.value_privado / dato.value;
-    var publico_width = bar_width * (dato.percentage / 100) * publico_percentage
-    if (publico_width < 1){
-      publico_width = 1;
-      if (dato.value_publico == 0) {
-        publico_width = 0;
+    if(screen.width > 760) {
+      var bar_width = 300;
+      var bar_height = 30;
+    } else {
+      var bar_width = 80
+      var bar_height = 20
+    }
+    var egreso_width = dato.percentage * bar_width;
+    if (egreso_width < 1) {
+      egreso_width = 1;
+      if (dato.value == 0) {
+        egreso_width = 0;
       }
     }
-    var privado_width = (bar_width *  (dato.percentage / 100)) - publico_width;
-    if (privado_width < 1){
-      privado_width = 1;
-      if (dato.value_privado == 0) {
-        privado_width = 0;
-      }
+    console.log(dato)
+    console.log(egreso_width)
+    console.log(dato.text)
+
+    if(dato.text == "Gastos de adquisición de bienes y servicios o gastos corrientes"){
+      color = '#78EEE8';
+      console.log("DENTRO IF" + dato.text)
+    } else if (dato.text == "Otros gastos de administración"){
+      color = '#06B9BF'
+      console.log("DENTRO ELSE IF" + dato.text)
     }
 
-    var publico_bar = paper.rect(0, 0, publico_width, bar_height).attr({
-      "fill" : sky_light,
-      "stroke" : "none"
-    });
-
-    var privado_bar = paper.rect(publico_width, 0, privado_width, bar_height).attr({
-      "fill" : sky_dark,
+    var bar = paper.rect(0, 0, egreso_width, bar_height).attr({
+      "fill" : color,
       "stroke" : "none"
     });
 
@@ -300,8 +301,14 @@ $(document).ready(function(){
 
   Raphael.fn.egreso_ord_front_footer = function(dato){
     var paper = this;
-    var bar_width = 300;
-    var bar_height = 30;
+    if (screen.width > 760) {
+      var bar_width = 300;
+      var bar_height = 30;
+    }
+    else {
+      var bar_width = 80
+      var bar_height = 20
+    }
     var publico_width = (dato.publicos / (dato.publicos + dato.privados)) * bar_width;
     var privado_width = bar_width - publico_width;
 

@@ -515,7 +515,7 @@ class PartidosController < ApplicationController
 
       total_publicos = egresos_ordinarios.where(:partido_id => @partido.id).sum(:enero) rescue 0
 
-      total_privados = egresos_ordinarios.where(:partido => @partido.id).sum(:enero) rescue 0
+      total_privados = egresos_ordinarios.where(:partido => @partido.id).sum(:febrero) rescue 0
 
       max_value = total_publicos + total_privados
       @datos_egresos_ordinarios =[]

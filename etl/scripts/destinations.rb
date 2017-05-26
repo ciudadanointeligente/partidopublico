@@ -312,8 +312,10 @@ class EgresoCampanaDestination
     p @count_initial
     p EgresoCampana.count
     if @last_egresocampana
-      @trimestres.map{|ec| ec.egreso_campanas.where("id <= ?", @last_egresocampana.id).where(:partido_id => @partidos.compact).destroy_all}
-    end
+      if @last_egresocampana.id != nil
+        @trimestres.map{|ec| ec.egreso_campanas.where("id <= ?", @last_egresocampana.id).where(:partido_id => @partidos.compact).destroy_all}
+      end
+  end
     p EgresoCampana.count
 
   end
@@ -390,7 +392,9 @@ class EgresoOrdinarioDestination
     p @count_initial
     p EgresoOrdinario.count
     if @last_egresoordinario
-      @trimestres.map{|ec| ec.egreso_ordinarios.where("id <= ?", @last_egresoordinario.id).where(:partido_id => @partidos.compact).destroy_all}
+      if @last_egresoordinario.id != nil
+        @trimestres.map{|ec| ec.egreso_ordinarios.where("id <= ?", @last_egresoordinario.id).where(:partido_id => @partidos.compact).destroy_all}
+      end
     end
     p EgresoOrdinario.count
 
@@ -447,8 +451,10 @@ class IngresoCampanaDestination
     p @count_initial
     p IngresoCampana.count
     if @last_ingresocampana
-      @trimestres.map{|ic| ic.ingreso_campanas.where("id <= ?", @last_ingresocampana.id).where(:partido_id => @partidos.compact).destroy_all}
-    end
+      if @last_ingresocampana.id != nil
+        @trimestres.map{|ic| ic.ingreso_campanas.where("id <= ?", @last_ingresocampana.id).where(:partido_id => @partidos.compact).destroy_all}
+      end
+  end
     p IngresoCampana.count
 
   end
@@ -461,7 +467,7 @@ class TransferenciaDestination
     @new = 0
     @errors = 0
     @found = 0
-    @last_transferencia = Transferencia.last
+    @last_transferencia = Transferencia.last unless Transferencia.nil?
     @count_initial = Transferencia.count
     @trimestres = []
     @partidos = []
@@ -519,8 +525,10 @@ class TransferenciaDestination
     p @count_initial
     p Transferencia.count
     if @last_transferencia
-      @trimestres.map{|t| t.transferencias.where("id <= ?", @last_transferencia.id).where(:partido_id => @partidos.compact).destroy_all}
-    end
+      if @last_transferencia.id != nil
+        @trimestres.map{|t| t.transferencias.where("id <= ?", @last_transferencia.id).where(:partido_id => @partidos.compact).destroy_all}
+      end
+  end
     p Transferencia.count
 
   end
