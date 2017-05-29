@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'pages/twittea'
+  get 'pages/proyecto'
 
   #get 'compare', to: 'comparisons#index'
   resources :comparisons
@@ -153,4 +154,5 @@ Rails.application.routes.draw do
   root 'welcome#index'
   get 'manual', to: 'pages#manual'
   get 'exigeles', to: 'pages#twittea'
+  get 'proyecto', to: 'pages#proyecto'
 end
