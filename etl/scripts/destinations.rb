@@ -340,6 +340,7 @@ class EgresoOrdinarioDestination
 
     @partidos << row[:partido_id] unless row[:partido_id].in?(@partidos)
 
+    concepto = clean_phrase(row[:item_de_gastos])
     enero = clean_number(row[:enero])
     febrero = clean_number(row[:febrero])
     marzo = clean_number(row[:marzo])
@@ -354,7 +355,7 @@ class EgresoOrdinarioDestination
     diciembre = clean_number(row[:diciembre])
 
     egreso_ordinario = EgresoOrdinario.new(partido_id: row[:partido_id],
-                                         concepto: row[:item_de_gastos],
+                                         concepto: concepto,
                                          enero: enero,
                                          febrero: febrero,
                                          marzo: marzo,

@@ -186,15 +186,15 @@ $(document).ready(function(){
     console.log(dato.text)
 
     if(dato.text == "Aportes del Estado (Art. 33 Bis Ley N° 18603)" ||
-       dato.text ==  "Otras Transferencias Públicas"){
+       dato.text ==  "Otras transferencias públicas"){
       color = '#23DBB8';
       console.log("DENTRO IF" + dato.text)
     } else if (dato.text == "Cotizaciones" ||
                dato.text == "Donaciones" ||
-               dato.text == "Asignaciones Testamentarias" ||
-               dato.text == "Frutos Y Productos De Los Bienes Patrimoniales" ||
-               dato.text == "Otras Transferencias Privadas" ||
-               dato.text == "Ingresos Militantes") {
+               dato.text == "Asignaciones testamentarias" ||
+               dato.text == "Frutos y productos de los bienes patrimoniales" ||
+               dato.text == "Otras transferencias privadas" ||
+               dato.text == "Ingresos militantes") {
 
       color = '#19a58a';
       console.log("DENTRO ELSE IF" + dato.text)

@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-10">
-          <h1>Pidámosle a los partidos que entreguen su información de la manera correcta <mark>#QuieroMejorTransparencia</mark><h1>
+          <h1>¿Cómo funciona Partidos Públicos?<p><mark>#AbramosLaCancha</mark></p><h1>
         </div>
       </div>
     </div>
@@ -14,13 +14,12 @@
           <h2 style="margin-top:0px;">¿Qué es Partidos Públicos?</h2>
           <div class="col-md-12">
             Partidos Públicos es una plataforma desarrollada por Ciudadano Inteligente
-            para facilitar el acceso y la fiscalización ciudadana a la información
-            liberada por los partidos políticos chilenos a través de transparencia activa.
+            para facilitar el acceso y la fiscalización ciudadana a la información liberada
+            por los partidos políticos chilenos a través de transparencia activa.
 
-            Partidos Públicos ofrece una manera fácil e interactiva de acceder a la
-            información de los partidos políticos, estableciendo altos estándares de
-            visualización de datos (bellos y amigables) porque creemos que la
-            transparencia debe ser comprensible y útil a la ciudadanía. Si no, no sirve.
+            <p style="margin-top:12px;">Creemos que la transparencia debe ser comprensible y útil a la ciudadanía.
+            Si no, no sirve. Por eso ofrecemos un estándar de visualización interactivo y
+            amigable para acceder a esta importante -pero a veces engorrosa- información.</p>
           </div>
         </div>
       </div>
@@ -30,19 +29,11 @@
         <div class="col-md-12">
           <h2 style="margin-top:15px;">¿Qué información usa Partidos Públicos?</h2>
           <div class="col-md-12">
-            Partidos Públicos recoge la información que los partidos políticos
-            publican periódicamente en el
-            <a href="https://www.portaltransparencia.cl/PortalPdT/directorio-de-organismos-regulados">
-              Portal de Transparencia</a> del Consejo
-            para la Transparencia y la visualiza de manera amigable, creando gráficos
-            o mapas y permitiendo la navegación con filtros y la comparación entre
-            colectividades.
-
-            Dado que Partidos Públicos trabaja solo con la información disponible
-            en el Portal, existe un grupo de partidos -los que no han firmado convenio
-            con el Consejo- que no se encuentran habilitados en esta plataforma.
-            Así mismo, la información que los partidos no publican en el Portal o
-            aquella que publican de manera incorrecta, tampoco se visualiza aquí.
+            Partidos Públicos recoge la información que los partidos activos en
+            el <a href="https://www.portaltransparencia.cl/PortalPdT/directorio-de-organismos-regulados">
+              Portal de Transparencia</a> (hasta ahora 16 de los 24) publican periódicamente
+            en este sitio y la visualiza de manera amigable mediante gráficos y mapas,
+            permitiendo la navegación con filtros y la comparación entre colectividades.
           </div>
         </div>
       </div>
@@ -53,38 +44,18 @@
           <h2 style="margin-top:15px;">¿Cómo funciona la visualización de información
             en Partidos Públicos?</h2>
           <div class="col-md-12">
-            Partidos Públicos solo recoge lo que los partidos publican en el Portal:
-            nada más y nada menos. Esta información se encuentra en planillas, las
-            cuales el software de Partidos Públicos descarga periódicamente en formato
-            <a href="https://es.wikipedia.org/wiki/Valores_separados_por_comas">CSV</a>
-            para luego procesarla y visualizarla en los estándares antes mencionados.
+            Trimestralmente, los partidos políticos publican una serie de planillas
+            con la información que les exige la nueva norma. Partidos Públicos descarga
+            estas planillas desde el Portal de Transparencia, procesa la información
+            contenida en ellas y luego la visualiza.
 
-            Estas planillas contienen una serie de variables, como “año” o “trimestre
-            informado” y además otras varias relacionadas a cada ítem informado, como
-            por ejemplo: “organismos”, “cargos”, “monto en pesos”, “comuna”, “región”, etc.
+            <p style="margin-top:12px;">Dependiendo del ítem que corresponda, estas planillas contienen variables
+            como: “año”, “trimestre informado”, ”organismos”, “cargos”, “monto en pesos”,
+            “comuna”, “región”, etc. Si en algunos casos los partidos ingresan los valores
+            con errores, Partidos Públicos no visualizará dicha información, ya que el
+            software de la plataforma está desarrollado para validar la información antes
+            de publicarla.</p>
 
-            Si en algunos casos los partidos ingresan los valores con errores, Partidos
-            Públicos no visualizará dicha información ya que el software de la plataforma
-            está desarrollado para validar la información antes de publicarla.
-            <b>Algunos errores comunes que cometen los partidos en sus planillas son:</b>
-
-            <ul>
-            <li style="margin-top:15px;">Ingresar mal los nombres de regiones o comunas. Por ejemplo, ingresar
-              “Iquique” en vez de “Región de Tarapacá” en el campo región o “San Vicente”
-              en vez de “San Vicente de Taguatagua” en el campo comuna.</li>
-
-            <li style="margin-top:15px;">Ingresar mal el formato de las fechas. Algunos gastos están asociados
-              a boletas y esas boletas contienen una fecha específica. Sin embargo,
-              hemos recibido planillas en las que los partidos informan dos fechas
-              en un campo destinado a contener solo una fecha. Esta información no
-              se visualiza.</li>
-
-            <li style="margin-top:15px;">Informar un cargo y no el organismo asociado a dicho cargo. El software
-              de Partidos Públicos asocia los nombres de los miembros de la orgánica
-              partidista a cargos y organismos específicos. Si un partido no informa
-              ambas cosas (cargo y organismo), la información no es leída ni visualizada
-              debidamente.</li>
-            </ul>
             <p> Para evitar estos y muchos otros errores, Ciudadano Inteligente ha
                 creado un <%= link_to "Manual de Transparencia Activa para Partidos Políticos",
                                        manual_path,
@@ -93,9 +64,8 @@
                                                  'main-menu-descargar-manual',
                                                  'click');" %>,
                 el cual busca establecer estándares y buenas prácticas en la publicación
-                de información por parte de los partidos. Con esto esperamos contar
-                en el futuro con toda la información de los partidos desplegada
-                correctamente.</p>
+                de información. ¡Esperamos pronto contar con toda la información de los
+                partidos desplegada correctamente!</p>
             </div>
         </div>
       </div>
@@ -106,23 +76,32 @@
           <h2 style="margin-top:15px;">¿Por qué falta información en la plataforma?</h2>
           <div class="col-md-12">
             Puede ser por dos motivos:
-            <ul>
-            <li style="margin-top:15px;">Todavía estamos desarrollando algunas de las secciones de Partidos
-              Públicos. Las planillas que los partidos publican en el Portal de
-              Transparencia son complejas y requieren mucho esfuerzo de nuestros
-              desarrolladores de software para ser leídas, validadas y luego visualizadas.</li>
+            <ol>
+            <li style="margin-top:15px;">Todavía estamos desarrollando algunas de las
+              secciones de Partidos Públicos. Las planillas son complejas y requieren
+              mucho esfuerzo de nuestros desarrolladores para ser leídas, validadas y
+              visualizadas.</li>
 
-              <li style="margin-top:15px;">Como se indica en el punto anterior, no todos los partidos entregan
-              la totalidad de la información que debieran y otros la entregan en
-              formatos distintos o con errores, por lo que el software de Partidos
-              Públicos no la lee. ¡Es también deber de nosotros como ciudadanos
-              fiscalizar y exigirles mejores prácticas a los partidos!</li>
-            </ul>
+              <li style="margin-top:15px;">No todos los partidos entregan la totalidad
+                de la información que debieran y otros la entregan con errores (como escribir
+                 '31 de Abril' en algún campo de Fecha), por lo que Partidos Públicos no la
+                lee. ¡Es también nuestro deber como ciudadanos fiscalizar y exigirles
+                mejores prácticas a los partidos!</li>
+            </ol>
           </div>
-          <p>PartidosPúblicos.cl es posible gracias al financiamiento del Fondo
-            para la Democracia de las Naciones Unidas (UNDEF) y la colaboración
-            de Chile Transparente.</p>
         </div>
       </div>
+      <p style="margin-top:15px;">PartidosPublicos.cl es posible gracias al financiamiento del Fondo
+        para la Democracia de las Naciones Unidas (UNDEF) y la colaboración
+        de Chile Transparente.</p>
     </div>
+</section>
+<section class="aviso">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <p class="text-center">Todavía estamos cargando la información entregada por los partidos. Si quieres, puedes descargar las planillas enviadas <%= link_to "aquí", "http://datos.partidospublicos.cl", class: "btn btn-primary btn-xs", onclick: "ga('send','event','info-sin-editar','click')" %></p>
+      </div>
+    </div>
+  </div>
 </section>

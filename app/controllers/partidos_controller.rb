@@ -513,7 +513,7 @@ class PartidosController < ApplicationController
 
       egresos_ordinarios = @trimestre_informado.egreso_ordinarios.where(:partido_id => @partido.id)
 
-      total_publicos = egresos_ordinarios.where(:partido_id => @partido.id).sum(:enero) rescue 0
+      total_publicos = egresos_ordinarios.where(:partido_id => @partido.id).sum(:enero, :febrero, :marzo) rescue 0
 
       total_privados = egresos_ordinarios.where(:partido => @partido.id).sum(:febrero) rescue 0
 
