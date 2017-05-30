@@ -55,9 +55,8 @@
           <div class="col-md-12">
             Partidos Públicos solo recoge lo que los partidos publican en el Portal:
             nada más y nada menos. Esta información se encuentra en planillas, las
-            cuales el software de Partidos Públicos descarga periódicamente en
-            <a href="https://es.wikipedia.org/wiki/Valores_separados_por_comas">
-              formato.csv</a>
+            cuales el software de Partidos Públicos descarga periódicamente en formato
+            <a href="https://es.wikipedia.org/wiki/Valores_separados_por_comas">CSV</a>
             para luego procesarla y visualizarla en los estándares antes mencionados.
 
             Estas planillas contienen una serie de variables, como “año” o “trimestre
@@ -87,7 +86,12 @@
               debidamente.</li>
             </ul>
             <p> Para evitar estos y muchos otros errores, Ciudadano Inteligente ha
-                creado un *Manual de Transparencia Activa para Partidos Políticos*,
+                creado un <%= link_to "Manual de Transparencia Activa para Partidos Políticos",
+                                       manual_path,
+                                       onclick: "ga('send',
+                                                 'event',
+                                                 'main-menu-descargar-manual',
+                                                 'click');" %>,
                 el cual busca establecer estándares y buenas prácticas en la publicación
                 de información por parte de los partidos. Con esto esperamos contar
                 en el futuro con toda la información de los partidos desplegada
