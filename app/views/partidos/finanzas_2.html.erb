@@ -45,7 +45,7 @@
           <tr>
             <th class="total">Total</th>
             <th><span id='footer'></span></th>
-            <th class="total monto"><%= number_to_currency(@datos_egresos_ordinarios_totals['publicos'] + @datos_egresos_ordinarios_totals['privados'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %></th>
+            <th class="total monto"><%= number_to_currency(@datos_egresos_ordinarios_totals['gastos_administracion'] + @datos_egresos_ordinarios_totals['gastos_creditos_inversiones'] + @datos_egresos_ordinarios_totals['gastos_formacion'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %></th>
           </tr>
         </tfoot>
       </table>

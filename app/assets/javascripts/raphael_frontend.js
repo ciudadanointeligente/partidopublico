@@ -242,20 +242,33 @@ $(document).ready(function(){
       "stroke" : "none"
     });
 
-    paper.text(28, 17, "Egresos públicos")
+    paper.text(28, 17, "1")
     .attr({
       "font-family" : "Karla-Regular, Karla",
       "font-size" : 14,
       'text-anchor': 'start'
     });
 
-    paper.circle(190, 15, 9 )
+    paper.circle(46, 15, 9 )
     .attr({
       "fill" : sky_dark,
       "stroke" : "none"
     });
 
-    paper.text(208, 17, "Egresos privados")
+    paper.text(62, 17, "2")
+    .attr({
+      "font-family" : "Karla-Regular, Karla",
+      "font-size" : 14,
+      'text-anchor': 'start'
+    });
+
+    paper.circle(90, 15, 9 )
+    .attr({
+      "fill" : '#FF0000',
+      "stroke" : "none"
+    });
+
+    paper.text(106, 17, "3")
     .attr({
       "font-family" : "Karla-Regular, Karla",
       "font-size" : 14,
@@ -284,12 +297,25 @@ $(document).ready(function(){
     console.log(egreso_width)
     console.log(dato.text)
 
-    if(dato.text == "Gastos de adquisición de bienes y servicios o gastos corrientes"){
+    if(dato.text == "Gastos de personal" ||
+       dato.text == "Gastos de adquisición de bienes y servicios o gastos corrientes" ||
+       dato.text == "Otros gastos de administración"){
       color = '#78EEE8';
       console.log("DENTRO IF" + dato.text)
-    } else if (dato.text == "Otros gastos de administración"){
+    } else if (dato.text == "Gastos financieros por préstamos de corto plazo" ||
+               dato.text == "Gastos financieros por préstamos de largo plazo" ||
+               dato.text == "Créditos de corto plazo, inversiones y valores de operaciones de capital" ||
+               dato.text ==  "Créditos de largo plazo, inversiones y valores de operaciones de capital"){
       color = '#06B9BF'
-      console.log("DENTRO ELSE IF" + dato.text)
+      console.log("DENTRO ELSE IF 1" + dato.text)
+    } else if (dato.text == "Gastos de actividades de investigación" ||
+               dato.text == "Gastos de actividades de educación cívica" ||
+               dato.text == "Gastos de actividades de fomento a la particiación femeninaGastos de actividades de fomento a la particiación femenina" ||
+               dato.text == "Gastos de actividades de fomento a la participación de los jóvenes" ||
+               dato.text == "Gastos de las actividades de preparación de candidatos a cargos de elección popular" ||
+               dato.text == "Gastos de las actividades de formación de militantes"){
+      color = '#FF0000'
+      console.log("DENTRO ELSE IF 2" + dato.text)
     }
 
     var bar = paper.rect(0, 0, egreso_width, bar_height).attr({
@@ -309,16 +335,25 @@ $(document).ready(function(){
       var bar_width = 80
       var bar_height = 20
     }
-    var publico_width = (dato.publicos / (dato.publicos + dato.privados)) * bar_width;
-    var privado_width = bar_width - publico_width;
+    var administracion_width = (dato.gastos_administracion / (dato.gastos_administracion + dato.gastos_creditos_inversiones + dato.gastos_formacion)) * bar_width;
+    console.log("administracion_width: " + administracion_width);
+    var creditos_inversiones_width = (dato.gastos_creditos_inversiones / (dato.gastos_administracion + dato.gastos_creditos_inversiones + dato.gastos_formacion)) * bar_width;
+    console.log("creditos_inversiones_width: " + creditos_inversiones_width);
+    var formacion_width = bar_width - (administracion_width+creditos_inversiones_width);
+    console.log("formacion_width: " + formacion_width);
 
-    var publico_bar = paper.rect(0, 0, publico_width, bar_height).attr({
+    var administracion_bar = paper.rect(0, 0, administracion_width, bar_height).attr({
       "fill" : sky_light,
       "stroke" : "none"
     });
 
-    var privado_bar = paper.rect(publico_width, 0, privado_width, bar_height).attr({
+    var creditos_inversiones_bar = paper.rect(administracion_width, 0, creditos_inversiones_width, bar_height).attr({
       "fill" : sky_dark,
+      "stroke" : "none"
+    });
+
+    var formacion_bar = paper.rect((administracion_width + creditos_inversiones_width), 0, formacion_width, bar_height).attr({
+      "fill" : '#FF0000',
       "stroke" : "none"
     });
 

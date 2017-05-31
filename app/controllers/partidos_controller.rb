@@ -513,22 +513,39 @@ class PartidosController < ApplicationController
 
       egresos_ordinarios = @trimestre_informado.egreso_ordinarios.where(:partido_id => @partido.id)
 
-      total_publicos = egresos_ordinarios.where(:partido_id => @partido.id).sum(:enero, :febrero, :marzo) rescue 0
+      gastos_administracion = egresos_ordinarios.where(:partido_id => @partido.id,
+                                                       :concepto => (["Gastos de personal",
+                                                                      "Gastos de adquisición de bienes y servicios o gastos corrientes",
+                                                                      "Otros gastos de administración"])).sum(:enero) rescue 0
 
-      total_privados = egresos_ordinarios.where(:partido => @partido.id).sum(:febrero) rescue 0
+      gastos_creditos_inversiones = egresos_ordinarios.where(:partido => @partido.id,
+                                                             :concepto => (["Gastos financieros por préstamos de corto plazo",
+                                                                            "Gastos financieros por préstamos de largo plazo",
+                                                                            "Créditos de corto plazo, inversiones y valores de operaciones de capital",
+                                                                            "Créditos de largo plazo, inversiones y valores de operaciones de capital"])).sum(:enero) rescue 0
 
-      max_value = total_publicos + total_privados
+      gastos_formacion = egresos_ordinarios.where(:partido => @partido.id,
+                                                  :concepto => (["Gastos de actividades de investigación",
+                                                                 "Gastos de actividades de educación cívica",
+                                                                 "Gastos de actividades de fomento a la particiación femenina",
+                                                                 "Gastos de actividades de fomento a la participación de los jóvenes",
+                                                                 "Gastos de las actividades de preparación de candidatos a cargos de elección popular",
+                                                                 "Gastos de las actividades de formación de militantes"])).sum(:enero) rescue 0
+
+      max_value = gastos_administracion + gastos_creditos_inversiones + gastos_formacion
       @datos_egresos_ordinarios =[]
       egresos_ordinarios.each do |eo|
-        val = ((eo.enero.to_f / max_value.to_f).to_f rescue 0).to_s
+        val = (((eo.enero.to_f + eo.febrero.to_f + eo.marzo.to_f) / max_value.to_f).to_f rescue 0).to_s
         line = {'text' => eo.concepto,
-                'value' => ActiveSupport::NumberHelper::number_to_delimited(eo.enero,
+                'value' => ActiveSupport::NumberHelper::number_to_delimited((eo.enero + eo.febrero + eo.marzo),
                                                                             delimiter: ""),
                 'percentage' => val }
-        @datos_egresos_ordinarios << line unless eo.enero == 0
+        @datos_egresos_ordinarios << line unless (eo.enero + eo.febrero + eo.marzo) == 0
       end
 
-      @datos_egresos_ordinarios_totals = {'publicos' => total_publicos, 'privados' => total_privados}
+      @datos_egresos_ordinarios_totals = {'gastos_administracion' => gastos_administracion,
+                                          'gastos_creditos_inversiones' => gastos_creditos_inversiones,
+                                          'gastos_formacion' => gastos_formacion}
       @sin_datos = false
     end
   end
