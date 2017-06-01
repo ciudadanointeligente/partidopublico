@@ -513,34 +513,102 @@ class PartidosController < ApplicationController
 
       egresos_ordinarios = @trimestre_informado.egreso_ordinarios.where(:partido_id => @partido.id)
 
-      gastos_administracion = egresos_ordinarios.where(:partido_id => @partido.id,
-                                                       :concepto => (["Gastos de personal",
-                                                                      "Gastos de adquisición de bienes y servicios o gastos corrientes",
-                                                                      "Otros gastos de administración"])).sum(:enero) rescue 0
 
-      gastos_creditos_inversiones = egresos_ordinarios.where(:partido => @partido.id,
-                                                             :concepto => (["Gastos financieros por préstamos de corto plazo",
-                                                                            "Gastos financieros por préstamos de largo plazo",
-                                                                            "Créditos de corto plazo, inversiones y valores de operaciones de capital",
-                                                                            "Créditos de largo plazo, inversiones y valores de operaciones de capital"])).sum(:enero) rescue 0
+      ga = egresos_ordinarios.where(:partido_id => @partido.id,
+                                    :concepto => (["Gastos de personal",
+                                                   "Gastos de adquisición de bienes y servicios o gastos corrientes",
+                                                   "Otros gastos de administración"]))
 
-      gastos_formacion = egresos_ordinarios.where(:partido => @partido.id,
-                                                  :concepto => (["Gastos de actividades de investigación",
-                                                                 "Gastos de actividades de educación cívica",
-                                                                 "Gastos de actividades de fomento a la particiación femenina",
-                                                                 "Gastos de actividades de fomento a la participación de los jóvenes",
-                                                                 "Gastos de las actividades de preparación de candidatos a cargos de elección popular",
-                                                                 "Gastos de las actividades de formación de militantes"])).sum(:enero) rescue 0
+      if @trimestre_informado.ordinal == 0
+        gastos_administracion = (ga.sum(:enero) + ga.sum(:febrero) + ga.sum(:marzo)) rescue 0
+        p 'PRIMER TRIMESTRE ADMINISTRACION: ' + gastos_administracion.to_s
+      elsif @trimestre_informado.ordinal == 1
+        gastos_administracion = (ga.sum(:abril) + ga.sum(:mayo) + ga.sum(:junio)) rescue 0
+        p 'SEGUNDO TRIMESTRE ADMINISTRACION: ' + gastos_administracion.to_s
+      elsif @trimestre_informado.ordinal == 2
+        gastos_administracion = (ga.sum(:julio) + ga.sum(:agosto) + ga.sum(:septiembre)) rescue 0
+        p 'TERCER TRIMESTRE ADMINISTRACION: ' + gastos_administracion.to_s
+      elsif @trimestre_informado.ordinal == 3
+        gastos_administracion = (ga.sum(:octubre) + ga.sum(:noviembre) + ga.sum(:diciembre)) rescue 0
+        p 'CUARTO TRIMESTRE ADMINISTRACION: ' + gastos_administracion.to_s
+      end
+      p 'GASTOS DE ADMINISTRACION: ' + gastos_administracion.to_s
+
+      gci = egresos_ordinarios.where(:partido => @partido.id,
+                                     :concepto => (["Gastos financieros por préstamos de corto plazo",
+                                                    "Gastos financieros por préstamos de largo plazo",
+                                                    "Créditos de corto plazo, inversiones y valores de operaciones de capital",
+                                                    "Créditos de largo plazo, inversiones y valores de operaciones de capital"]))
+
+      if @trimestre_informado.ordinal == 0
+        gastos_creditos_inversiones = (gci.sum(:enero) + gci.sum(:febrero) + gci.sum(:marzo)) rescue 0
+        p 'PRIMER TRIMESTRE CREDITOS: ' + gastos_creditos_inversiones.to_s
+      elsif @trimestre_informado.ordinal == 1
+        gastos_creditos_inversiones = (gci.sum(:abril) + gci.sum(:mayo) + gci.sum(:junio)) rescue 0
+        p 'SEGUNDO TRIMESTRE CREDITOS: ' + gastos_creditos_inversiones.to_s
+      elsif @trimestre_informado.ordinal == 2
+        gastos_creditos_inversiones = (gci.sum(:julio) + gci.sum(:agosto) + gci.sum(:septiembre)) rescue 0
+        p 'TERCER TRIMESTRE CREDITOS: ' + gastos_creditos_inversiones.to_s
+      elsif @trimestre_informado.ordinal == 3
+        gastos_creditos_inversiones = (gci.sum(:octubre) + gci.sum(:noviembre) + gci.sum(:diciembre)) rescue 0
+        p 'CUARTO TRIMESTRE CREDITOS: ' + gastos_creditos_inversiones.to_s
+      end
+      p 'GASTOS DE CREDITOS: ' + gastos_creditos_inversiones.to_s
+
+      gf = egresos_ordinarios.where(:partido => @partido.id,
+                                    :concepto => (["Gastos de actividades de investigación",
+                                                   "Gastos de actividades de educación cívica",
+                                                   "Gastos de actividades de fomento a la particiación femenina",
+                                                   "Gastos de actividades de fomento a la participación de los jóvenes",
+                                                   "Gastos de las actividades de preparación de candidatos a cargos de elección popular",
+                                                   "Gastos de las actividades de formación de militantes"]))
+
+      if @trimestre_informado.ordinal == 0
+        gastos_formacion = (gf.sum(:enero) + gf.sum(:febrero) + gf.sum(:marzo)) rescue 0
+        p 'PRIMER TRIMESTRE FORMACION: ' + gastos_formacion.to_s
+      elsif @trimestre_informado.ordinal == 1
+        gastos_formacion = (gf.sum(:abril) + gf.sum(:mayo) + gf.sum(:junio)) rescue 0
+        p 'SEGUNDO TRIMESTRE FORMACION: ' + gastos_formacion.to_s
+      elsif @trimestre_informado.ordinal == 2
+        gastos_formacion = (gf.sum(:julio) + gf.sum(:agosto) + gf.sum(:septiembre)) rescue 0
+        p 'TERCER TRIMESTRE FORMACION: ' + gastos_formacion.to_s
+      elsif @trimestre_informado.ordinal == 3
+        gastos_formacion = (gf.sum(:octubre) + gf.sum(:noviembre) + gf.sum(:diciembre)) rescue 0
+        p 'CUARTO TRIMESTRE FORMACION: ' + gastos_formacion.to_s
+      end
+      p 'GASTOS DE FORMACION: ' + gastos_formacion.to_s
 
       max_value = gastos_administracion + gastos_creditos_inversiones + gastos_formacion
       @datos_egresos_ordinarios =[]
       egresos_ordinarios.each do |eo|
-        val = (((eo.enero.to_f + eo.febrero.to_f + eo.marzo.to_f) / max_value.to_f).to_f rescue 0).to_s
-        line = {'text' => eo.concepto,
-                'value' => ActiveSupport::NumberHelper::number_to_delimited((eo.enero + eo.febrero + eo.marzo),
-                                                                            delimiter: ""),
-                'percentage' => val }
-        @datos_egresos_ordinarios << line unless (eo.enero + eo.febrero + eo.marzo) == 0
+        if @trimestre_informado.ordinal == 0
+          val = (((eo.enero.to_f + eo.febrero.to_f + eo.marzo.to_f) / max_value.to_f).to_f rescue 0).to_s
+          line = {'text' => eo.concepto,
+                  'value' => ActiveSupport::NumberHelper::number_to_delimited((eo.enero + eo.febrero + eo.marzo), delimiter: ""),
+                  'percentage' => val }
+          @datos_egresos_ordinarios << line unless (eo.enero + eo.febrero + eo.marzo) == 0
+        elsif @trimestre_informado.ordinal == 1
+          val = (((eo.abril.to_f + eo.mayo.to_f + eo.junio.to_f) / max_value.to_f).to_f rescue 0).to_s
+          line = {'text' => eo.concepto,
+                  'value' => ActiveSupport::NumberHelper::number_to_delimited((eo.abril + eo.mayo + eo.junio), delimiter: ""),
+                  'percentage' => val }
+          @datos_egresos_ordinarios << line unless (eo.abril + eo.mayo + eo.junio) == 0
+
+        elsif @trimestre_informado.ordinal == 2
+          val = (((eo.julio.to_f + eo.agosto.to_f + eo.septiembre.to_f) / max_value.to_f).to_f rescue 0).to_s
+          line = {'text' => eo.concepto,
+                  'value' => ActiveSupport::NumberHelper::number_to_delimited((eo.julio + eo.agosto + eo.septiembre), delimiter: ""),
+                  'percentage' => val }
+          @datos_egresos_ordinarios << line unless (eo.julio + eo.agosto + eo.septiembre) == 0
+
+        elsif @trimestre_informado.ordinal == 3
+          val = (((eo.octubre.to_f + eo.noviembre.to_f + eo.diciembre.to_f) / max_value.to_f).to_f rescue 0).to_s
+          line = {'text' => eo.concepto,
+                  'value' => ActiveSupport::NumberHelper::number_to_delimited((eo.octubre + eo.noviembre + eo.diciembre), delimiter: ""),
+                  'percentage' => val }
+          @datos_egresos_ordinarios << line unless (eo.octubre + eo.noviembre + eo.diciembre) == 0
+        end
+
       end
 
       @datos_egresos_ordinarios_totals = {'gastos_administracion' => gastos_administracion,
