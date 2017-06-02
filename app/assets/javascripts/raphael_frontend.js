@@ -2,7 +2,8 @@ $(document).ready(function(){
   var green = "#1AC0A4";
   var green_light = "#23DBB8";
   var green_dark = "#19A58A";
-  var sky_light = "#78EEE8";
+  var sky_light = '#CDFFFC'
+  var sky_medium = "#78EEE8";
   var sky_dark = "#06B9BF";
 
     Raphael.fn.donutChart = function (cx, cy, r, rin, values, labels, stroke, legend, legendElement, colors) {
@@ -236,39 +237,39 @@ $(document).ready(function(){
 
     var paper = this;
 
-    paper.circle(12, 15, 9 )
+    paper.circle(12, 15, 9)
     .attr({
       "fill" : sky_light,
       "stroke" : "none"
     });
 
-    paper.text(28, 17, "1")
+    paper.text(28, 17, "Gastos\nAdministrativos")
     .attr({
       "font-family" : "Karla-Regular, Karla",
       "font-size" : 14,
       'text-anchor': 'start'
     });
 
-    paper.circle(46, 15, 9 )
+    paper.circle(160, 15, 9)
+    .attr({
+      "fill" : sky_medium,
+      "stroke" : "none"
+    });
+
+    paper.text(176, 20, "Préstamos, Créditos o\nInversiones")
+    .attr({
+      "font-family" : "Karla-Regular, Karla",
+      "font-size" : 14,
+      'text-anchor': 'start'
+    });
+
+    paper.circle(12, 45, 9 )
     .attr({
       "fill" : sky_dark,
       "stroke" : "none"
     });
 
-    paper.text(62, 17, "2")
-    .attr({
-      "font-family" : "Karla-Regular, Karla",
-      "font-size" : 14,
-      'text-anchor': 'start'
-    });
-
-    paper.circle(90, 15, 9 )
-    .attr({
-      "fill" : '#FF0000',
-      "stroke" : "none"
-    });
-
-    paper.text(106, 17, "3")
+    paper.text(300, 17, "Gastos de\nParticipación y \nFormación")
     .attr({
       "font-family" : "Karla-Regular, Karla",
       "font-size" : 14,
@@ -300,13 +301,13 @@ $(document).ready(function(){
     if(dato.text == "Gastos de personal" ||
        dato.text == "Gastos de adquisición de bienes y servicios o gastos corrientes" ||
        dato.text == "Otros gastos de administración"){
-      color = '#78EEE8';
+      color = sky_light;
       console.log("DENTRO IF" + dato.text)
     } else if (dato.text == "Gastos financieros por préstamos de corto plazo" ||
                dato.text == "Gastos financieros por préstamos de largo plazo" ||
                dato.text == "Créditos de corto plazo, inversiones y valores de operaciones de capital" ||
                dato.text ==  "Créditos de largo plazo, inversiones y valores de operaciones de capital"){
-      color = '#06B9BF'
+      color = sky_medium;
       console.log("DENTRO ELSE IF 1" + dato.text)
     } else if (dato.text == "Gastos de actividades de investigación" ||
                dato.text == "Gastos de actividades de educación cívica" ||
@@ -314,7 +315,7 @@ $(document).ready(function(){
                dato.text == "Gastos de actividades de fomento a la participación de los jóvenes" ||
                dato.text == "Gastos de las actividades de preparación de candidatos a cargos de elección popular" ||
                dato.text == "Gastos de las actividades de formación de militantes"){
-      color = '#FF0000'
+      color = sky_dark
       console.log("DENTRO ELSE IF 2" + dato.text)
     }
 
@@ -348,12 +349,12 @@ $(document).ready(function(){
     });
 
     var creditos_inversiones_bar = paper.rect(administracion_width, 0, creditos_inversiones_width, bar_height).attr({
-      "fill" : sky_dark,
+      "fill" : sky_medium,
       "stroke" : "none"
     });
 
     var formacion_bar = paper.rect((administracion_width + creditos_inversiones_width), 0, formacion_width, bar_height).attr({
-      "fill" : '#FF0000',
+      "fill" : sky_dark,
       "stroke" : "none"
     });
 
