@@ -258,20 +258,17 @@ section{
 }
 
 section#que-es-1{
-	background-color: white;
 	background: asset-url('images/que-es-1.svg') 70% 120% no-repeat white;
 }
 section#que-es-2{
-	background-color: $nude;
-	background: asset-url('images/que-es-2.svg') 70% 120% no-repeat white;
+	background: asset-url('images/que-es-2.svg') 70% 120% no-repeat $nude;
 }
 section#que-es-3{
 	background-color: white;
 	background: asset-url('images/que-es-3.svg') 70% 120% no-repeat white;
 }
 section#que-es-4{
-	background-color: $nude;
-	background: asset-url('images/que-es-4.svg') 70% 120% no-repeat white;
+	background: asset-url('images/que-es-4.svg') 70% 120% no-repeat $nude;
 }
 
 
