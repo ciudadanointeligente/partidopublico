@@ -580,6 +580,7 @@ class PartidosController < ApplicationController
 
       max_value = gastos_administracion + gastos_creditos_inversiones + gastos_formacion
       @datos_egresos_ordinarios =[]
+      @datos_texts = []
       egresos_ordinarios.each do |eo|
         if @trimestre_informado.ordinal == 0
           val = (((eo.enero.to_f + eo.febrero.to_f + eo.marzo.to_f) / max_value.to_f).to_f rescue 0).to_s
@@ -587,6 +588,8 @@ class PartidosController < ApplicationController
                   'value' => ActiveSupport::NumberHelper::number_to_delimited((eo.enero + eo.febrero + eo.marzo), delimiter: ""),
                   'percentage' => val }
           @datos_egresos_ordinarios << line unless (eo.enero + eo.febrero + eo.marzo) == 0
+          # @datos_egresos_ordinarios << line unless (eo.enero + eo.febrero + eo.marzo) == 0 || eo.concepto.in?(@datos_texts)
+          @datos_texts << eo.concepto
         elsif @trimestre_informado.ordinal == 1
           val = (((eo.abril.to_f + eo.mayo.to_f + eo.junio.to_f) / max_value.to_f).to_f rescue 0).to_s
           line = {'text' => eo.concepto,
