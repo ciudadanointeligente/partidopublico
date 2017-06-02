@@ -167,8 +167,13 @@ $(document).ready(function(){
 
   Raphael.fn.ingreso_ord_front_bar = function(dato){
     var paper = this;
-    var bar_width = 300;
-    var bar_height = 30;
+    if(screen.width > 760) {
+      var bar_width = 300;
+      var bar_height = 30;
+    } else {
+      var bar_width = 80
+      var bar_height = 20
+    }
     var ingreso_width = dato.percentage * bar_width;
     if (ingreso_width < 1) {
       ingreso_width = 1;
@@ -179,20 +184,18 @@ $(document).ready(function(){
     console.log(dato)
     console.log(ingreso_width)
     console.log(dato.text)
-    // var color = '#23DBB8';
 
-    if(dato.text == ("Aportes Del Estado (Art. 33 Bis Ley N°18603)" ||
-                    "Otras Transferencias Públicas" ||
-                    "Aportes Del Estado (Art. 33 Bis Ley N 18603)" ||
-                    "Aportes Del Estado (Art. 33 Bis Ley Nª18603)")){
+    if(dato.text == "Aportes del Estado (Art. 33 Bis Ley N° 18603)" ||
+       dato.text ==  "Otras transferencias públicas"){
       color = '#23DBB8';
       console.log("DENTRO IF" + dato.text)
-    } else if (dato.text == ("Cotizaciones" ||
-                           "Donaciones" ||
-                           "Asignaciones Testamentarias" ||
-                           "Frutos Y Productos De Los Bienes Patrimoniales" ||
-                           "Otras Transferencias Privadas" ||
-                           "Ingresos Militantes")) {
+    } else if (dato.text == "Cotizaciones" ||
+               dato.text == "Donaciones" ||
+               dato.text == "Asignaciones testamentarias" ||
+               dato.text == "Frutos y productos de los bienes patrimoniales" ||
+               dato.text == "Otras transferencias privadas" ||
+               dato.text == "Ingresos militantes") {
+
       color = '#19a58a';
       console.log("DENTRO ELSE IF" + dato.text)
     }
@@ -206,8 +209,14 @@ $(document).ready(function(){
 
   Raphael.fn.ingreso_ord_front_footer = function(dato){
     var paper = this;
-    var bar_width = 300;
-    var bar_height = 30;
+    if (screen.width > 760) {
+      var bar_width = 300;
+      var bar_height = 30;
+    }
+    else {
+      var bar_width = 80
+      var bar_height = 20
+    }
     var publico_width = (dato.publicos / (dato.publicos + dato.privados)) * bar_width;
     var privado_width = bar_width - publico_width;
 
@@ -233,20 +242,33 @@ $(document).ready(function(){
       "stroke" : "none"
     });
 
-    paper.text(28, 17, "Egresos públicos")
+    paper.text(28, 17, "1")
     .attr({
       "font-family" : "Karla-Regular, Karla",
       "font-size" : 14,
       'text-anchor': 'start'
     });
 
-    paper.circle(190, 15, 9 )
+    paper.circle(46, 15, 9 )
     .attr({
       "fill" : sky_dark,
       "stroke" : "none"
     });
 
-    paper.text(208, 17, "Egresos privados")
+    paper.text(62, 17, "2")
+    .attr({
+      "font-family" : "Karla-Regular, Karla",
+      "font-size" : 14,
+      'text-anchor': 'start'
+    });
+
+    paper.circle(90, 15, 9 )
+    .attr({
+      "fill" : '#FF0000',
+      "stroke" : "none"
+    });
+
+    paper.text(106, 17, "3")
     .attr({
       "font-family" : "Karla-Regular, Karla",
       "font-size" : 14,
@@ -257,32 +279,47 @@ $(document).ready(function(){
 
   Raphael.fn.egreso_ord_front_bar = function(dato){
     var paper = this;
-    var bar_width = 300;
-    var bar_height = 30;
-    var publico_percentage = dato.value_publico / dato.value;
-    var privado_percentage = dato.value_privado / dato.value;
-    var publico_width = bar_width * (dato.percentage / 100) * publico_percentage
-    if (publico_width < 1){
-      publico_width = 1;
-      if (dato.value_publico == 0) {
-        publico_width = 0;
+    if(screen.width > 760) {
+      var bar_width = 300;
+      var bar_height = 30;
+    } else {
+      var bar_width = 80
+      var bar_height = 20
+    }
+    var egreso_width = dato.percentage * bar_width;
+    if (egreso_width < 1) {
+      egreso_width = 1;
+      if (dato.value == 0) {
+        egreso_width = 0;
       }
     }
-    var privado_width = (bar_width *  (dato.percentage / 100)) - publico_width;
-    if (privado_width < 1){
-      privado_width = 1;
-      if (dato.value_privado == 0) {
-        privado_width = 0;
-      }
+    console.log(dato)
+    console.log(egreso_width)
+    console.log(dato.text)
+
+    if(dato.text == "Gastos de personal" ||
+       dato.text == "Gastos de adquisición de bienes y servicios o gastos corrientes" ||
+       dato.text == "Otros gastos de administración"){
+      color = '#78EEE8';
+      console.log("DENTRO IF" + dato.text)
+    } else if (dato.text == "Gastos financieros por préstamos de corto plazo" ||
+               dato.text == "Gastos financieros por préstamos de largo plazo" ||
+               dato.text == "Créditos de corto plazo, inversiones y valores de operaciones de capital" ||
+               dato.text ==  "Créditos de largo plazo, inversiones y valores de operaciones de capital"){
+      color = '#06B9BF'
+      console.log("DENTRO ELSE IF 1" + dato.text)
+    } else if (dato.text == "Gastos de actividades de investigación" ||
+               dato.text == "Gastos de actividades de educación cívica" ||
+               dato.text == "Gastos de actividades de fomento a la particiación femenina" ||
+               dato.text == "Gastos de actividades de fomento a la participación de los jóvenes" ||
+               dato.text == "Gastos de las actividades de preparación de candidatos a cargos de elección popular" ||
+               dato.text == "Gastos de las actividades de formación de militantes"){
+      color = '#FF0000'
+      console.log("DENTRO ELSE IF 2" + dato.text)
     }
 
-    var publico_bar = paper.rect(0, 0, publico_width, bar_height).attr({
-      "fill" : sky_light,
-      "stroke" : "none"
-    });
-
-    var privado_bar = paper.rect(publico_width, 0, privado_width, bar_height).attr({
-      "fill" : sky_dark,
+    var bar = paper.rect(0, 0, egreso_width, bar_height).attr({
+      "fill" : color,
       "stroke" : "none"
     });
 
@@ -290,18 +327,33 @@ $(document).ready(function(){
 
   Raphael.fn.egreso_ord_front_footer = function(dato){
     var paper = this;
-    var bar_width = 300;
-    var bar_height = 30;
-    var publico_width = (dato.publicos / (dato.publicos + dato.privados)) * bar_width;
-    var privado_width = bar_width - publico_width;
+    if (screen.width > 760) {
+      var bar_width = 300;
+      var bar_height = 30;
+    }
+    else {
+      var bar_width = 80
+      var bar_height = 20
+    }
+    var administracion_width = (dato.gastos_administracion / (dato.gastos_administracion + dato.gastos_creditos_inversiones + dato.gastos_formacion)) * bar_width;
+    console.log("administracion_width: " + administracion_width);
+    var creditos_inversiones_width = (dato.gastos_creditos_inversiones / (dato.gastos_administracion + dato.gastos_creditos_inversiones + dato.gastos_formacion)) * bar_width;
+    console.log("creditos_inversiones_width: " + creditos_inversiones_width);
+    var formacion_width = bar_width - (administracion_width+creditos_inversiones_width);
+    console.log("formacion_width: " + formacion_width);
 
-    var publico_bar = paper.rect(0, 0, publico_width, bar_height).attr({
+    var administracion_bar = paper.rect(0, 0, administracion_width, bar_height).attr({
       "fill" : sky_light,
       "stroke" : "none"
     });
 
-    var privado_bar = paper.rect(publico_width, 0, privado_width, bar_height).attr({
+    var creditos_inversiones_bar = paper.rect(administracion_width, 0, creditos_inversiones_width, bar_height).attr({
       "fill" : sky_dark,
+      "stroke" : "none"
+    });
+
+    var formacion_bar = paper.rect((administracion_width + creditos_inversiones_width), 0, formacion_width, bar_height).attr({
+      "fill" : '#FF0000',
       "stroke" : "none"
     });
 

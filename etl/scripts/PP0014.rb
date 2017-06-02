@@ -19,7 +19,7 @@ results[:end_time] = 0
 
 pre_process do
   results[:start_time] = Time.now
-  p "*** Start #{job_name} Ingresos de Campañas MIGRATION #{results[:start_time]}***"
+  p "*** Start #{job_name} Aportes de Campañas MIGRATION #{results[:start_time]}***"
 end
 
 files = Dir[input_path + "#{job_name}.csv"]
@@ -32,6 +32,8 @@ if encoding == 'unknown-8bit'
 elsif encoding == 'iso-8859-1'
   iconv(encoding: encoding)
 end
+
+remove_ctrl_m
 
 files.each_with_index do |file, index|
 

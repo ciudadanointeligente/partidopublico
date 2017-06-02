@@ -28,11 +28,15 @@ files = Dir[input_path + "#{job_name}.csv"]
 dos2unix
 encoding = find_encoding
 
+p "FOUND ENCODING: " + encoding
+
 if encoding == 'unknown-8bit'
   iconv(encoding: 'windows-1252')
 elsif encoding == 'iso-8859-1'
   iconv(encoding: encoding)
 end
+
+remove_ctrl_m
 
 files.each_with_index do |file, index|
 
@@ -42,6 +46,8 @@ end
 
 transform PartidoLookup, verbose: verbosing, results: results
 
+destination RegionPorPartidoDestination, results: results
+
 transform TrimestreInformadoLookup, verbose: verbosing,  results: results
 
 transform ComunaLookup, verbose: verbosing, results: results
@@ -49,8 +55,6 @@ transform ComunaLookup, verbose: verbosing, results: results
 transform AddressTransformation, verbose: verbosing
 
 transform ResultsTransformation, results: results
-
-destination RegionPorPartidoDestination, results: results
 
 destination SedesDestination, verbose: verbosing, results: results
 

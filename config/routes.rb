@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'pages/twittea'
+  get 'pages/proyecto'
 
   #get 'compare', to: 'comparisons#index'
   resources :comparisons
@@ -139,6 +140,9 @@ Rails.application.routes.draw do
     get 'export_personas', to: 'partido_steps#export_personas'
     resources :partido_steps
   end
+
+  get 'run_etl', to: 'partido_steps#run_etl'
+
   # resources :partido_steps
   get 'formulario/update_comunas', as: 'update_comunas'
   get 'formulario/update_distritos', as: 'update_distritos'
@@ -148,7 +152,7 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
-  get 'que-es', to: 'welcome#que_es'
   get 'manual', to: 'pages#manual'
   get 'exigeles', to: 'pages#twittea'
+  get 'proyecto', to: 'pages#proyecto'
 end

@@ -289,8 +289,9 @@ class PartidosController < ApplicationController
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
 
-    if @trimestres_informados.count == 0
+    if (@trimestres_informados.count == 0 || @partido.afiliacions.last == nil)
       @trimestres_informados = []
+      @cantidad_afiliados = []
       @sin_datos = true
     else
       params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
@@ -418,15 +419,14 @@ class PartidosController < ApplicationController
       end
     end
 
-
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
 
     if @trimestres_informados.count == 0
       @trimestres_informados = []
       @datos_ingresos_ordinarios = []
-      line ={ 'text'=> 'Sin información', 'value' => 0, 'percentage' => 0 }
-      @datos_ingresos_ordinarios << line
+      # line ={ 'text'=> 'Sin información', 'value' => 0, 'percentage' => 0 }
+      # @datos_ingresos_ordinarios << line
       @datos_ingresos_ordinarios_totals = {'publicos' => 0, 'privados' => 0}
       @sin_datos = true
     else
@@ -434,51 +434,186 @@ class PartidosController < ApplicationController
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
       ingresos_ordinarios = @trimestre_informado.ingreso_ordinarios.where(:partido_id => @partido.id)
-      max_value = IngresoOrdinario.maximum(:importe)
+
+      total_publicos = ingresos_ordinarios.where(:partido_id => @partido.id,
+                                                  :concepto => (["Aportes del Estado (Art. 33 Bis Ley N° 18603)",
+                                                                 "Otras Transferencias Públicas"])).sum(:importe) rescue 0
+      total_privados = ingresos_ordinarios.where(:partido_id => @partido.id,
+                                                  :concepto => (["Cotizaciones",
+                                                                 "Donaciones",
+                                                                 "Asignaciones Testamentarias",
+                                                                 "Frutos y Productos de los Bienes Patrimoniales",
+                                                                 "Otras Transferencias Privadas",
+                                                                 "Ingresos Militantes"])).sum(:importe) rescue 0
+      max_value = total_publicos + total_privados
       @datos_ingresos_ordinarios = []
       ingresos_ordinarios.each do |io|
-        val = (100 * (io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
-        line ={ 'text'=> io.concepto, 'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe, delimiter: ""), 'percentage' => val }
-        @datos_ingresos_ordinarios << line
+        val = ((io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
+        line ={ 'text'=> io.concepto,
+                'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe,
+                                                                            delimiter: ""),
+                'percentage' => val }
+        @datos_ingresos_ordinarios << line unless io.importe == 0
       end
-      total_publicos = ingresos_ordinarios.where(:concepto => "Aportes Del Estado (Art. 33 Bis Ley N°18603)" ||
-                                                              "Otras Transferencias Públicas" ||
-                                                              "Aportes Del Estado (Art. 33 Bis Ley N 18603)" ||
-                                                              "Aportes Del Estado (Art. 33 Bis Ley Nª18603)").first.importe rescue 0
-      total_privados = ingresos_ordinarios.where(:concepto => "Cotizaciones" ||
-                                                              "Donaciones" ||
-                                                              "Asignaciones Testamentarias" ||
-                                                              "Frutos Y Productos De Los Bienes Patrimoniales" ||
-                                                              "Otras Transferencias Privadas" ||
-                                                              "Ingresos Militantes").first.importe rescue 0
 
       @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
       @sin_datos = false
     end
   end
 
+  # MÉTODO ANTIGUO
+  # def finanzas_2
+  #   @fechas_datos = EgresoOrdinario.where(partido: @partido).uniq.pluck(:fecha_datos).sort
+  #   if params[:fecha_datos]
+  #     @fecha = Date.new(params[:fecha_datos].split("-")[0].to_i, params[:fecha_datos].split("-")[1].to_i, params[:fecha_datos].split("-")[2].to_i)
+  #   else
+  #     @fecha = @fechas_datos.last
+  #   end
+  #   egresos_ordinarios = EgresoOrdinario.where(:partido => @partido, :fecha_datos => @fecha )
+  #   if egresos_ordinarios.count == 0
+  #     @sin_datos = true
+  #   else
+  #     max_value = egresos_ordinarios.maximum("privado + publico")
+  #     @datos_egresos_ordinarios = []
+  #     egresos_ordinarios.each do |eo|
+  #       val = (100 * ((eo.publico.to_f + eo.privado.to_f)/ max_value.to_f).to_f rescue 0).to_s
+  #       line ={ 'text'=> eo.concepto, 'value_publico' => eo.publico, 'value_privado' => eo.privado,
+  #               'value' => ActiveSupport::NumberHelper::number_to_delimited(eo.privado + eo.publico, delimiter: ""), 'percentage' => val }
+  #       @datos_egresos_ordinarios << line
+  #     end
+  #     total_publicos = egresos_ordinarios.sum(:publico)
+  #     total_privados = egresos_ordinarios.sum(:privado)
+  #     @datos_egresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
+  #     @sin_datos = false
+  #   end
+  # end
+
   def finanzas_2
-    @fechas_datos = EgresoOrdinario.where(partido: @partido).uniq.pluck(:fecha_datos).sort
-    if params[:fecha_datos]
-      @fecha = Date.new(params[:fecha_datos].split("-")[0].to_i, params[:fecha_datos].split("-")[1].to_i, params[:fecha_datos].split("-")[2].to_i)
-    else
-      @fecha = @fechas_datos.last
+
+    temp_trimestres_informados = []
+    @partido.egreso_ordinarios.each do |eo|
+      eo.trimestre_informados.each do |t|
+
+        temp_trimestres_informados.push(t)
+
+      end
     end
-    egresos_ordinarios = EgresoOrdinario.where(:partido => @partido, :fecha_datos => @fecha )
-    if egresos_ordinarios.count == 0
+
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
+
+    if @trimestres_informados.count == 0
+      @trimestres_informados = []
+      @datos_egresos_ordinarios = []
+      @datos_egresos_ordinarios_totals = {'publicos' => 0, 'privados' => 0}
       @sin_datos = true
     else
-      max_value = egresos_ordinarios.maximum("privado + publico")
-      @datos_egresos_ordinarios = []
-      egresos_ordinarios.each do |eo|
-        val = (100 * ((eo.publico.to_f + eo.privado.to_f)/ max_value.to_f).to_f rescue 0).to_s
-        line ={ 'text'=> eo.concepto, 'value_publico' => eo.publico, 'value_privado' => eo.privado,
-          'value' => ActiveSupport::NumberHelper::number_to_delimited(eo.privado + eo.publico, delimiter: ""), 'percentage' => val }
-        @datos_egresos_ordinarios << line
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+      egresos_ordinarios = @trimestre_informado.egreso_ordinarios.where(:partido_id => @partido.id)
+
+
+      ga = egresos_ordinarios.where(:partido_id => @partido.id,
+                                    :concepto => (["Gastos de personal",
+                                                   "Gastos de adquisición de bienes y servicios o gastos corrientes",
+                                                   "Otros gastos de administración"]))
+
+      if @trimestre_informado.ordinal == 0
+        gastos_administracion = (ga.sum(:enero) + ga.sum(:febrero) + ga.sum(:marzo)) rescue 0
+        p 'PRIMER TRIMESTRE ADMINISTRACION: ' + gastos_administracion.to_s
+      elsif @trimestre_informado.ordinal == 1
+        gastos_administracion = (ga.sum(:abril) + ga.sum(:mayo) + ga.sum(:junio)) rescue 0
+        p 'SEGUNDO TRIMESTRE ADMINISTRACION: ' + gastos_administracion.to_s
+      elsif @trimestre_informado.ordinal == 2
+        gastos_administracion = (ga.sum(:julio) + ga.sum(:agosto) + ga.sum(:septiembre)) rescue 0
+        p 'TERCER TRIMESTRE ADMINISTRACION: ' + gastos_administracion.to_s
+      elsif @trimestre_informado.ordinal == 3
+        gastos_administracion = (ga.sum(:octubre) + ga.sum(:noviembre) + ga.sum(:diciembre)) rescue 0
+        p 'CUARTO TRIMESTRE ADMINISTRACION: ' + gastos_administracion.to_s
       end
-      total_publicos = egresos_ordinarios.sum(:publico)
-      total_privados = egresos_ordinarios.sum(:privado)
-      @datos_egresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
+      p 'GASTOS DE ADMINISTRACION: ' + gastos_administracion.to_s
+
+      gci = egresos_ordinarios.where(:partido => @partido.id,
+                                     :concepto => (["Gastos financieros por préstamos de corto plazo",
+                                                    "Gastos financieros por préstamos de largo plazo",
+                                                    "Créditos de corto plazo, inversiones y valores de operaciones de capital",
+                                                    "Créditos de largo plazo, inversiones y valores de operaciones de capital"]))
+
+      if @trimestre_informado.ordinal == 0
+        gastos_creditos_inversiones = (gci.sum(:enero) + gci.sum(:febrero) + gci.sum(:marzo)) rescue 0
+        p 'PRIMER TRIMESTRE CREDITOS: ' + gastos_creditos_inversiones.to_s
+      elsif @trimestre_informado.ordinal == 1
+        gastos_creditos_inversiones = (gci.sum(:abril) + gci.sum(:mayo) + gci.sum(:junio)) rescue 0
+        p 'SEGUNDO TRIMESTRE CREDITOS: ' + gastos_creditos_inversiones.to_s
+      elsif @trimestre_informado.ordinal == 2
+        gastos_creditos_inversiones = (gci.sum(:julio) + gci.sum(:agosto) + gci.sum(:septiembre)) rescue 0
+        p 'TERCER TRIMESTRE CREDITOS: ' + gastos_creditos_inversiones.to_s
+      elsif @trimestre_informado.ordinal == 3
+        gastos_creditos_inversiones = (gci.sum(:octubre) + gci.sum(:noviembre) + gci.sum(:diciembre)) rescue 0
+        p 'CUARTO TRIMESTRE CREDITOS: ' + gastos_creditos_inversiones.to_s
+      end
+      p 'GASTOS DE CREDITOS: ' + gastos_creditos_inversiones.to_s
+
+      gf = egresos_ordinarios.where(:partido => @partido.id,
+                                    :concepto => (["Gastos de actividades de investigación",
+                                                   "Gastos de actividades de educación cívica",
+                                                   "Gastos de actividades de fomento a la particiación femenina",
+                                                   "Gastos de actividades de fomento a la participación de los jóvenes",
+                                                   "Gastos de las actividades de preparación de candidatos a cargos de elección popular",
+                                                   "Gastos de las actividades de formación de militantes"]))
+
+      if @trimestre_informado.ordinal == 0
+        gastos_formacion = (gf.sum(:enero) + gf.sum(:febrero) + gf.sum(:marzo)) rescue 0
+        p 'PRIMER TRIMESTRE FORMACION: ' + gastos_formacion.to_s
+      elsif @trimestre_informado.ordinal == 1
+        gastos_formacion = (gf.sum(:abril) + gf.sum(:mayo) + gf.sum(:junio)) rescue 0
+        p 'SEGUNDO TRIMESTRE FORMACION: ' + gastos_formacion.to_s
+      elsif @trimestre_informado.ordinal == 2
+        gastos_formacion = (gf.sum(:julio) + gf.sum(:agosto) + gf.sum(:septiembre)) rescue 0
+        p 'TERCER TRIMESTRE FORMACION: ' + gastos_formacion.to_s
+      elsif @trimestre_informado.ordinal == 3
+        gastos_formacion = (gf.sum(:octubre) + gf.sum(:noviembre) + gf.sum(:diciembre)) rescue 0
+        p 'CUARTO TRIMESTRE FORMACION: ' + gastos_formacion.to_s
+      end
+      p 'GASTOS DE FORMACION: ' + gastos_formacion.to_s
+
+      max_value = gastos_administracion + gastos_creditos_inversiones + gastos_formacion
+      @datos_egresos_ordinarios =[]
+      egresos_ordinarios.each do |eo|
+        if @trimestre_informado.ordinal == 0
+          val = (((eo.enero.to_f + eo.febrero.to_f + eo.marzo.to_f) / max_value.to_f).to_f rescue 0).to_s
+          line = {'text' => eo.concepto,
+                  'value' => ActiveSupport::NumberHelper::number_to_delimited((eo.enero + eo.febrero + eo.marzo), delimiter: ""),
+                  'percentage' => val }
+          @datos_egresos_ordinarios << line unless (eo.enero + eo.febrero + eo.marzo) == 0
+        elsif @trimestre_informado.ordinal == 1
+          val = (((eo.abril.to_f + eo.mayo.to_f + eo.junio.to_f) / max_value.to_f).to_f rescue 0).to_s
+          line = {'text' => eo.concepto,
+                  'value' => ActiveSupport::NumberHelper::number_to_delimited((eo.abril + eo.mayo + eo.junio), delimiter: ""),
+                  'percentage' => val }
+          @datos_egresos_ordinarios << line unless (eo.abril + eo.mayo + eo.junio) == 0
+
+        elsif @trimestre_informado.ordinal == 2
+          val = (((eo.julio.to_f + eo.agosto.to_f + eo.septiembre.to_f) / max_value.to_f).to_f rescue 0).to_s
+          line = {'text' => eo.concepto,
+                  'value' => ActiveSupport::NumberHelper::number_to_delimited((eo.julio + eo.agosto + eo.septiembre), delimiter: ""),
+                  'percentage' => val }
+          @datos_egresos_ordinarios << line unless (eo.julio + eo.agosto + eo.septiembre) == 0
+
+        elsif @trimestre_informado.ordinal == 3
+          val = (((eo.octubre.to_f + eo.noviembre.to_f + eo.diciembre.to_f) / max_value.to_f).to_f rescue 0).to_s
+          line = {'text' => eo.concepto,
+                  'value' => ActiveSupport::NumberHelper::number_to_delimited((eo.octubre + eo.noviembre + eo.diciembre), delimiter: ""),
+                  'percentage' => val }
+          @datos_egresos_ordinarios << line unless (eo.octubre + eo.noviembre + eo.diciembre) == 0
+        end
+
+      end
+
+      @datos_egresos_ordinarios_totals = {'gastos_administracion' => gastos_administracion,
+                                          'gastos_creditos_inversiones' => gastos_creditos_inversiones,
+                                          'gastos_formacion' => gastos_formacion}
       @sin_datos = false
     end
   end
@@ -547,19 +682,33 @@ class PartidosController < ApplicationController
       total = 0
       @datos_temp_transferencias = []
       temp_transferencias.each do |tr|
+        if tr.sum < 0
+          tr.sum = tr.sum * -1
+        end
+
+        p 'mes afuera: ' + tr.month.to_s
+
         if tr.month.nil?
           line = {'text' => "Sin información", 'value' => tr.sum}
+          p 'mes nulo: ' + line.to_s
         else
-          mes = get_month(tr.month.round(0))
-          año = tr.year.round(0).to_s
-          val = (100 * ((t.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-          # val = 100.to_s    <- WIP
-          line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+          if tr.year == @trimestre_informado.ano
+            p 'mes dentro: ' + tr.month.to_s
+            mes = get_month(tr.month.round(0))
+            año = tr.year.round(0).to_s
+            val = (100 * ((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+            p 'bien = '+ mes + ' valor = ' + val.to_s
+            # val = 100.to_s    <- WIP
+            line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+          end
         end
-        @datos_temp_transferencias << line
         total += tr.sum
+        @datos_temp_transferencias << line
       end
       @datos_transferencias_totals = { :total => total }
+      if @datos_transferencias_totals[:total] < 0
+        @datos_transferencias_totals[:total] = @datos_transferencias_totals[:total] * -1
+      end
       @sin_datos = false
     end
   end
@@ -746,7 +895,7 @@ end
 
   def intereses_patrimonios
     @intereses_patrimonios = []
-    tc_candidatos = @partido.tipo_cargos#.where(candidato:true)
+    tc_candidatos = @partido.tipo_cargos.where(candidato:true)
     if tc_candidatos.count == 0
       @sin_datos = true
     else

@@ -13,24 +13,23 @@
   </div>
 
   <div>
-    <h4>Datos correspondientes al <%=  @fecha_datos %></h4>
     <span id="header"></span>
     <div class="table-responsive">
       <table class="table">
         <thead>
           <tr>
-            <th>Concepto</th>
+            <th class="concepto-th">Concepto</th>
             <th>&nbsp;</th>
-            <th>Monto Total</th>
+            <th class="monto-th">Monto Total</th>
           </tr>
         </thead>
         <tbody>
           <% @datos_temp_transferencias.each_with_index do |linea, i| %>
           <tr>
-            <td><%= linea['text'] %></td>
+            <td class="concepto"><%= linea['text'] unless linea.nil? %></td>
             <td><span id="barras_<%= i.to_s %>"></span></td>
             <td class="monto">
-              <%= number_to_currency(linea['value'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %>
+              <%= number_to_currency(linea['value'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") unless linea.nil? %>
             </td>
           </tr>
           <% end %>
@@ -48,7 +47,8 @@
 
   <div id="barras"></div>
 <% end %>
-
+<p class="mark-date"> Estos datos corresponden a lo publicado por este
+    Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
 <script>
 $(document).ready(function(){
   var data = <%=  @datos_transferencias.to_json.html_safe %>;

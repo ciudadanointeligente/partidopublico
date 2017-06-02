@@ -49,9 +49,11 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li class="hidden"><%= link_to "¿Qué es?",que_es_path, onclick: "ga('send', 'event', 'que-es', 'click');" %></li>
+              <li>
+                <%= link_to "¿Cómo funciona?", root_path + "proyecto", onclick: "ga('send', 'event', 'proyecto', 'click');"%>
+              </li>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Partidos activos <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Partidos<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <% @partidos.each do |p| %>
                   <li>
@@ -64,7 +66,7 @@
                 <%= link_to "Comparar partidos", comparisons_path, onclick: "ga('send', 'event', 'main-menu-comparar', 'click');" %>
               </li>
               <li>
-                <%= link_to "Manual de Transparencia", manual_path, onclick: "ga('send', 'event', 'main-menu-descargar-manual', 'click');" %>
+                <%= link_to "Descargar Manual", manual_path, onclick: "ga('send', 'event', 'main-menu-descargar-manual', 'click');" %>
               </li>
               <li class="redes">
               <a href="#" onclick="window.open(&quot;//twitter.com/share?url=http://partidospublicos.cl/;text=Partidos transparentes, participativos y abiertos para una sana democracia .&quot;,&quot;twitter&quot;,&quot;width=450, height=250&quot;)">
@@ -93,7 +95,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <p class="text-center">Todavía estamos cargando la información entregada por los partidos. Si quieres, puedes descargar las planillas enviadas <%= link_to "aquí", root_path(anchor: "fechas"), class: "btn btn-primary btn-xs", onclick: "ga('send','event','info-sin-editar','click')" %></p>
+        <p class="text-center">Todavía estamos cargando la información entregada por los partidos. Si quieres, puedes descargar las planillas enviadas <%= link_to "aquí", "http://datos.partidospublicos.cl", class: "btn btn-primary btn-xs", onclick: "ga('send','event','info-sin-editar','click')" %></p>
       </div>
     </div>
   </div>
@@ -137,12 +139,12 @@
           <li class="<% if current_page?(:controller => 'partidos', :action => 'sedes_partido') %>current<% end %>">
             <%= link_to "Domicilio y sedes de contacto", partido_sedes_partido_path(:menu => 1), onclick: "ga('send', 'event', 'mobile-partido-domicilio-sedes', 'click');" %>
           </li>
-          <li class="<% if current_page?(:controller => 'partidos', :action => 'representantes') %>current<% end %>">
+          <!-- <li class="<% if current_page?(:controller => 'partidos', :action => 'representantes') %>current<% end %>">
             <%= link_to "Representantes electos", partido_representantes_path(:menu => 1), onclick: "ga('send', 'event', 'mobile-partido-representantes-electos', 'click');" %>
           </li>
           <li class="<% if current_page?(:controller => 'partidos', :action => 'autoridades') %>current<% end %>">
             <%= link_to "Autoridades designadas", partido_autoridades_path(:menu => 1), onclick: "ga('send', 'event', 'mobile-partido-autoridades-designadas', 'click');" %>
-          </li>
+          </li> -->
         </ul>
       </li>
       <li role="separator" class="divider"></li>
@@ -152,12 +154,12 @@
           <li class="<% if current_page?(:controller => 'partidos', :action => 'afiliacion_desafiliacion') %>current<% end %>">
             <%= link_to "Afiliación y desafiliación", partido_afiliacion_desafiliacion_path(:menu => 2), onclick: "ga('send', 'event', 'mobile-partido-afiliacion-desafiliacion', 'click');" %>
           </li>
-          <li class="<% if current_page?(:controller => 'partidos', :action => 'eleccion_popular') %>current<% end %>">
+          <!-- <li class="<% if current_page?(:controller => 'partidos', :action => 'eleccion_popular') %>current<% end %>">
             <%= link_to "Postular a cargos de elección popular", partido_eleccion_popular_path(:menu => 2), onclick: "ga('send', 'event', 'mobile-partido-cargo-eleccion-pop', 'click');" %>
           </li>
           <li class="<% if current_page?(:controller => 'partidos', :action => 'elecciones_internas') %>current<% end %>">
             <%= link_to "Postular a cargos de dirección interna", partido_elecciones_internas_path(:menu => 2), onclick: "ga('send', 'event', 'mobile-partido-cargo-dir-interna', 'click');" %>
-          </li>
+          </li> -->
           <!-- <li class="hidden">
             <p>Actividades públicas</p>
           </li> -->
@@ -242,12 +244,12 @@
               <li class="<% if current_page?(:controller => 'partidos', :action => 'sedes_partido') %>current<% end %>">
                 <%= link_to "Domicilio y sedes de contacto", partido_sedes_partido_path(:menu => 1), onclick: "ga('send', 'event', 'desktop-partido-domicilio-sedes', 'click');" %>
               </li>
-              <li class="<% if current_page?(:controller => 'partidos', :action => 'representantes') %>current<% end %>">
+              <!-- <li class="<% if current_page?(:controller => 'partidos', :action => 'representantes') %>current<% end %>">
                 <%= link_to "Representantes electos", partido_representantes_path(:menu => 1), onclick: "ga('send', 'event', 'desktop-partido-representantes-electos', 'click');" %>
               </li>
               <li class="<% if current_page?(:controller => 'partidos', :action => 'autoridades') %>current<% end %>">
                 <%= link_to "Autoridades designadas", partido_autoridades_path(:menu => 1), onclick: "ga('send', 'event', 'desktop-partido-autoridades-designadas', 'click');" %>
-              </li>
+              </li> -->
             </ul>
           </li>
           <li class="principal">
@@ -256,12 +258,12 @@
               <li class="<% if current_page?(:controller => 'partidos', :action => 'afiliacion_desafiliacion') %>current<% end %>">
                 <%= link_to "Afiliación y desafiliación", partido_afiliacion_desafiliacion_path(:menu => 2), onclick: "ga('send', 'event', 'desktop-partido-afiliacion-desafiliacion', 'click');" %>
               </li>
-              <li class="<% if current_page?(:controller => 'partidos', :action => 'eleccion_popular') %>current<% end %>">
+              <!-- <li class="<% if current_page?(:controller => 'partidos', :action => 'eleccion_popular') %>current<% end %>">
                 <%= link_to "Postular a cargos de elección popular", partido_eleccion_popular_path(:menu => 2), onclick: "ga('send', 'event', 'desktop-partido-cargo-eleccion-pop', 'click');" %>
               </li>
               <li class="<% if current_page?(:controller => 'partidos', :action => 'elecciones_internas') %>current<% end %>">
                 <%= link_to "Postular a cargos de dirección interna", partido_elecciones_internas_path(:menu => 2), onclick: "ga('send', 'event', 'desktop-partido-cargo-dir-interna', 'click');" %>
-              </li>
+              </li> -->
             </ul>
           </li>
           <li class="principal">
@@ -315,8 +317,8 @@
       </aside>
       <main class="col-xs-12 col-sm-12 col-md-9 board">
         <%= yield %>
-        <p class="mark-date"> Los datos utilizados corresponden a los enviados por el Consejo
-          Por La Transparencia el día <%= @fecha_datos %> </p>
+        <!-- <p class="mark-date"> Estos datos corresponden a lo publicado por este
+          Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p> -->
       </main>
     </div>
 

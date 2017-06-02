@@ -6,8 +6,8 @@ class PartidoStepsController < ApplicationController
 
     respond_to :html, :json, :csv
 
-    before_action :set_partido
-    before_action :admin_allowed
+    before_action :set_partido, except: :run_etl
+    before_action :admin_allowed, except: :run_etl
 
     steps   :datos_basicos, :sedes, :personas, :tipo_cargos, :cargos, :administradores,
             :normas_internas,
@@ -121,6 +121,16 @@ class PartidoStepsController < ApplicationController
           render_wizard @partido
         end
     end
+
+    def run_etl
+      command = "RAILSENV=development bundle exec kiba etl/scripts/import_all.rb"
+      result = system command
+      p "ETL Running from Administrator"
+      p result
+      redirect_to('/admin')
+    end
+
+    # handle_asynchronously :run_etl
 
     private
         # Use callbacks to share common setup or constraints between actions.

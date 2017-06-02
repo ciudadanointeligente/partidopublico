@@ -33,6 +33,8 @@ elsif encoding == 'iso-8859-1'
   iconv(encoding: encoding)
 end
 
+remove_ctrl_m
+
 files.each_with_index do |file, index|
 
   source SymbolsCSVSource, filename: file, results: results, print_headers: true

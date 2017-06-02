@@ -30,8 +30,8 @@
       <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
         <div class="panel-body">
           <div class="table-responsive">
-            <table class="table">
-              <thead>
+            <table class="table rtable rtable--flip">
+              <thead class="rtable-head">
                 <tr>
                   <th>Nombre</th>
                   <th>Cargo</th>
@@ -42,10 +42,12 @@
               <tbody>
                 <% a[:miembros].each do |cargo| %>
                 <tr>
-                  <td><%= cargo[:persona].nombre + ' ' + cargo[:persona].apellidos  %></td>
-                  <td><%= cargo[:tipo_cargo].titulo  %></td>
-                  <td><%= !cargo[:persona].intereses.blank?  ? link_to(cargo[:persona].intereses, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %> </td>
-                  <td><%= !cargo[:persona].patrimonio.blank? ? link_to(cargo[:persona].patrimonio, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %> </td>
+                  <% unless cargo[:persona].nil? %>
+                    <td><%= cargo[:persona].nombre + ' ' + cargo[:persona].apellidos %></td>
+                    <td><%= cargo[:tipo_cargo].titulo  %></td>
+                    <td><%= !cargo[:persona].intereses.blank?  ? link_to(cargo[:persona].intereses, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %> </td>
+                    <td><%= !cargo[:persona].patrimonio.blank? ? link_to(cargo[:persona].patrimonio, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %> </td>
+                  <% end %>
                 </tr>
                 <% end %>
               </tbody>
@@ -75,6 +77,8 @@
   <%= paginate @organos_internos %>
   <%= page_entries_info @organos_internos %>
 <% end %>
+<p class="mark-date"> Estos datos corresponden a lo publicado por este
+    Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
 <% if cnt == 0 %>
 <p class="text-info"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> No se encontraron registros</p>
 <% end %>

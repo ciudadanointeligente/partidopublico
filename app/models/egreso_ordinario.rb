@@ -10,6 +10,18 @@
 #  publico     :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  enero       :integer
+#  febrero     :integer
+#  marzo       :integer
+#  abril       :integer
+#  mayo        :integer
+#  junio       :integer
+#  julio       :integer
+#  agosto      :integer
+#  septiembre  :integer
+#  octubre     :integer
+#  noviembre   :integer
+#  diciembre   :integer
 #
 # Indexes
 #
@@ -19,6 +31,7 @@
 class EgresoOrdinario < ActiveRecord::Base
   has_paper_trail
   belongs_to :partido
+  has_and_belongs_to_many :trimestre_informados
 
   def self.import(file, partido_id, email)
     partido = Partido.find partido_id

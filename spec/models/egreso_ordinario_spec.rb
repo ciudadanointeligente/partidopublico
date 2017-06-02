@@ -10,6 +10,18 @@
 #  publico     :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  enero       :integer
+#  febrero     :integer
+#  marzo       :integer
+#  abril       :integer
+#  mayo        :integer
+#  junio       :integer
+#  julio       :integer
+#  agosto      :integer
+#  septiembre  :integer
+#  octubre     :integer
+#  noviembre   :integer
+#  diciembre   :integer
 #
 # Indexes
 #

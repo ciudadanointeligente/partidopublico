@@ -1,39 +1,38 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Finanzas</li><li>Egresos ordinarios</li></ol>
 <h3>Egresos ordinarios</h3>
-<p class="no_data_big_message"> <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-  ¡Sección en Desarrollo!</p>
-  <p class="no_data_small_message">Los partidos ya han enviado esta
-  información y podrás encontrarla aquí dentro de los próximos días.</p>
-<!-- # <% if @sin_datos %>
-#   <%= render 'sin_datos' %>
-# <% else %> -->
+<% if @sin_datos %>
+  <%= render 'sin_datos' %>
+<% else %>
   <div class="row">
     <div class="col-md-12">
       <%= form_tag partido_finanzas_2_path, :method =>  :get, class: 'form-inline' do |f| %>
-        <%= select_tag :fecha_datos, options_for_select(@fechas_datos), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
+      <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
+      <%= submit_tag 'Filtrar', class: "btn" %>
       <% end %>
     </div>
   </div>
 
   <div>
-    <h4>Datos correspondientes al <%=  @fecha %></h4>
     <span id="header"></span>
     <div class="table-responsive">
       <table class="table">
         <thead>
           <tr>
-            <th>Concepto</th>
-            <th>&nbsp;</th>
-            <th>Monto Total</th>
+            <th class="concepto-th">Concepto</th>
+            <th>&nbsp;<div class="visible-xs">Porcentaje</div></th>
+            <th class="monto-th">Monto Total</th>
           </tr>
         </thead>
         <tbody>
           <% @datos_egresos_ordinarios.each_with_index do |linea, i| %>
           <tr>
-            <td>
+            <td class="concepto">
               <%= linea['text'] %>
             </td>
             <td>
+              <div class="porcentaje-movil"> <%=
+                (linea['percentage'].to_f*100).round(2).to_s + '%'
+              %></div>
               <div id="barras_<%= i.to_s %>"></div>
             </td>
             <td class="monto">
@@ -46,28 +45,34 @@
           <tr>
             <th class="total">Total</th>
             <th><span id='footer'></span></th>
-            <th class="total monto">
-              <%= number_to_currency(@datos_egresos_ordinarios_totals['publicos'] + @datos_egresos_ordinarios_totals['privados'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %>
-            </th>
+            <th class="total monto"><%= number_to_currency(@datos_egresos_ordinarios_totals['gastos_administracion'] + @datos_egresos_ordinarios_totals['gastos_creditos_inversiones'] + @datos_egresos_ordinarios_totals['gastos_formacion'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %></th>
           </tr>
         </tfoot>
       </table>
     </div>
   </div>
-<!-- # <% end %> -->
+<% end %>
+  <p class="mark-date"> Estos datos corresponden a lo publicado por este
+      Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
 <script>
 $(document).ready(function(){
   var data = <%=  @datos_egresos_ordinarios.to_json.html_safe %>;
   var data_totals = <%=  @datos_egresos_ordinarios_totals.to_json.html_safe %>;
   var fechas = <%=  @fechas_datos.to_json.html_safe %>;
   var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
-
   Raphael("header",340, 40 ).egreso_ord_front_header();
-
   for(var i=0; i < data.length; i++){
-    Raphael("barras_" + i,300, 30 ).egreso_ord_front_bar(data[i]);
+    console.log(data[i]);
+    if(screen.width > 767) {
+      Raphael("barras_" + i,300, 30 ).egreso_ord_front_bar(data[i]);
+    } else {
+      Raphael("barras_" + i,80, 40 ).egreso_ord_front_bar(data[i]);
+    }
   }
-
-  Raphael("footer",500, 40 ).egreso_ord_front_footer(data_totals);
+  if(screen.width > 767)
+    Raphael("footer",500, 40 ).egreso_ord_front_footer(data_totals);
+  else {
+    Raphael("footer",80, 40 ).egreso_ord_front_footer(data_totals);
+    }
 });
 </script>

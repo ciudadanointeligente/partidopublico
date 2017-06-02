@@ -96,6 +96,7 @@ span{
 
 li.redes{
 	margin-top: -5px;
+	float: left;
 }
 
 .dropdown-menu > li > a{
@@ -261,7 +262,7 @@ section{
 	text-transform: uppercase;
 	letter-spacing: 1.4px;
 	font-weight: 700;
-	font-size: 12px;
+	font-size: 11px;
 	height: 34px;
 	&.basic{
 		background-color: white;
@@ -503,14 +504,16 @@ a.btn.btn-xs.parties{
 	background-color: $green;
 	color: white;
 	border: 2px solid $green;
-	height: 24px;
+	display: inline-block;
+	word-wrap: break-word;
+	white-space: normal;
 	border-radius: 12px;
 	letter-spacing: 1.2px;
 	font-weight: 700;
 	font-size: 14px;
 	line-height: 17px;
 	margin-top: -12px;
-	padding: 1px 8px;
+	padding: 1px 5px;
 	font-family: 'Montserrat', sans-serif;
 	&:hover{
 		color: $green;
@@ -761,6 +764,12 @@ aside.col-sm-3.col-md-3{
 	margin-top: 20px;
 }
 
+.leyenda-colores-mapa{
+	text-align: left;
+	margin-top: 10px;
+	margin-left: 25px;
+}
+
 .circle-lg{
 	color: $green-light;
 	float: left;
@@ -775,12 +784,14 @@ aside.col-sm-3.col-md-3{
 
 .square-or {
   border: solid 10px #FAC5BE;
+	float: left;
   width: 10px;
   height: 10px;
 }
 
 .square-gr {
   border: solid 10px #E9DEDF;
+	float: left;
   width: 10px;
   height: 10px;
 }
@@ -1021,17 +1032,38 @@ th{
 	font-size: 10px;
 	letter-spacing: 1.2px;
 	text-transform: uppercase;
-	width: 200px;
+	width: auto;
+	text-align: left;
 }
 
 .table > thead > tr > th {
 	border-bottom: 1px solid $blue;
 }
 
+.table td{
+	width: 33.3%;
+}
+
+.link-intereses-patrimonio{
+	text-align: center;
+}
+
+.porcentaje-movil{
+	display: none;
+}
+
+.concepto-th{
+	text-align: left;
+}
+
 .total-max{
 	color: $blue;
 	font-size: 40px;
 	font-weight: 700;
+}
+
+.monto-th{
+	text-align: right;
 }
 
 .monto{
@@ -1045,6 +1077,7 @@ th{
 	color: $blue;
 	font-size: 22px;
 	font-weight: 700;
+	text-align: left;
 	&.monto{
 		text-align: right;
 	}
@@ -1194,6 +1227,194 @@ p.edades{
 		top: 24px;
 	}
 }
+
+@media only screen and (max-width: 767px) {
+
+	.rtable {
+	  display: inline-block;
+	  vertical-align: middle;;
+	  max-width: 100%;
+	  overflow-x: auto;
+	  white-space: nowrap;
+	  border-collapse: collapse;
+	  border-spacing: 0;
+	}
+
+	.rtable > thead > tr > th{
+		border-bottom: none;
+		border-right: 1px solid $blue;
+		font-size: 12px;
+		word-wrap: break-word !important;
+		white-space: normal !important;
+		width: auto;
+	}
+
+	.rtable, .rtable--flip tbody {
+	  -webkit-overflow-scrolling: touch;
+
+	  // scrolling shadows
+	  background: radial-gradient(left, ellipse, rgba(0,0,0, .2) 0%, rgba(0,0,0, 0) 75%) 0 center,
+	              radial-gradient(right, ellipse, rgba(0,0,0, .2) 0%, rgba(0,0,0, 0) 75%) 100% center;
+	  background-size: 10px 100%, 10px 100%;
+	  background-attachment: scroll, scroll;
+	  background-repeat: no-repeat;
+	}
+
+	.rtable td:first-child, .rtable--flip tbody tr:first-child {
+	  background-image: linear-gradient(to right, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%);
+	  background-repeat: no-repeat;
+	  background-size: 20px 100%;
+	}
+
+	// gradient on the last cells to hide the right shadow
+	.rtable td:last-child, .rtable--flip tbody tr:last-child {
+	  background-image: linear-gradient(to left, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%);
+	  background-repeat: no-repeat;
+	  background-position: 100% 0;
+	  background-size: 20px 100%;
+	}
+
+	.rtable--flip {
+	  display: flex;
+	  overflow: hidden;
+	  background: none;
+	}
+
+	.rtable--flip thead {
+	  display: flex;
+	  flex-shrink: 0;
+	  min-width: min-content;
+		max-width: 30% !important;
+		// width: 70% !important;
+	}
+
+	.rtable--flip tbody {
+	  display: flex;
+	  position: relative;
+	  overflow-x: auto;
+	  overflow-y: hidden;
+	}
+
+	.rtable--flip tr {
+	  display: flex;
+	  flex-direction: column;
+	  min-width: min-content;
+	  flex-shrink: 0;
+	}
+
+	.rtable--flip td, .rtable--flip th {
+	  display: block;
+		height: 100%;
+		width: 100%;
+		font-size: 12px;
+	}
+
+	.rtable td, .rtable--flip td {
+		font-size: 12px;
+		border-right: 1px solid #ddd !important;
+		border-top: none !important;
+	  background-image: none !important;
+	  border-left: 0;
+	}
+
+	// border-collapse is no longer active
+	.rtable--flip th:not(:last-child), .rtable--flip td:not(:last-child) {
+	  border-bottom: 0;
+	}
+
+	.porcentaje-movil{
+		display: inline;
+		text-transform: uppercase;
+		font-size: 13px;
+		font-weight: 700;
+		vertical-align: middle;
+	}
+
+	.table-responsive {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	.table-responsive th{
+		color: $blue;
+		font-size: 12px;
+		letter-spacing: 1.2px;
+		text-transform: uppercase;
+	}
+
+	td{
+		word-wrap: break-word;
+		width: 100px;
+		white-space: normal !important;
+		text-align: center;
+		vertical-align: middle !important;
+		margin-bottom: 5px;
+	}
+
+	.concepto-th{
+		text-align: left;
+	}
+
+	.monto-th{
+		text-align: right;
+	}
+
+	.concepto{
+		font-size: 13px;
+		text-align: left;
+	}
+
+	.monto{
+		color: $blue;
+		font-size: 13px;
+		font-weight: 700;
+		vertical-align: middle !important;
+		text-align: right;
+		width: inherit;
+	}
+
+	.total{
+		color: $blue;
+		font-size: 14px !important;
+		vertical-align: middle !important;
+		font-weight: 700;
+		&.monto{
+			text-align: right;
+			vertical-align: middle !important;
+		}
+	}
+
+	select#trimestre_informado_id{
+		text-transform: uppercase;
+		text-align: center;
+		font-size: 11px;
+		font-weight: 700;
+		color: $blue;
+		letter-spacing: 1.2px;
+		border: 2px solid $nude;
+		padding: 5px;
+		margin-bottom: 20px;
+		background-color: white;
+		height: 40px;
+		width: 100%;
+		-webkit-appearance: none;
+		background: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'><path fill='#012639' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>");
+		background-position: 98% 50%;
+		background-repeat: no-repeat;
+		vertical-align: top;
+		border-radius: 6px;
+		float: left;
+		margin-right: 6px;
+	}
+
+	svg{
+		vertical-align: middle !important;
+		text-align:center;
+		margin-top: 15px;
+	}
+
+}
+
 @media (max-width: 767px) {
 	.navbar-toggle{
 		margin-top: -1px;
@@ -1363,14 +1584,19 @@ p.edades{
 		font-size: 46px;
 	}
 	mark{
-		font-size: 24px;
+		font-size: 22px;
 	}
 	.btn-primary.basic a{
 		font-size: 11px;
 		letter-spacing: 0;
 	}
+	.dropdown-menu li {
+		margin-bottom: 5px;
+ }
+ .nav li {
+	 margin-bottom: 3px;
+ }
 }
-
 @media (max-width: 336px) {
 	section.aviso{
 		height: 98px;

@@ -63,7 +63,7 @@ class SymbolsCSVSource
     # ver_encode = system("file -i #{input_path}")
     @filename = filename
     @results = results
-    csv = CSV.read(@filename, headers: true, header_converters: :symbol, :quote_char => "|", :col_sep => ";")
+    csv = CSV.read(@filename, headers: true, :col_sep => ";", header_converters: :symbol, :quote_char => "|")
     @total = csv.length
     count
     p csv.headers if print_headers
@@ -75,8 +75,8 @@ class SymbolsCSVSource
 
   def each
     # :row_sep => "\n", header_converters: :symbol,, encoding: "#{@encoding.upcase}:utf-8"
-    csv = CSV.open(@filename, headers: true, :col_sep => ";", header_converters: :symbol, :quote_char => "|")
-    # csv = CSV.open(@filename, headers: true, header_converters: :symbol, :col_sep => ";",:row_sep => "\n")
+    csv = CSV.open(@filename, headers: true, :row_sep => :auto, :col_sep => ";", header_converters: :symbol, :quote_char => "|")
+    # csv = CSV.open(@filename, headers: true, :col_sep => ";", header_converters: :symbol)
     # p "each SymbolsCSVSource :" + @filename
     csv.each do |row|
       yield row.to_hash

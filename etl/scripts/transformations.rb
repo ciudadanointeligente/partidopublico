@@ -191,8 +191,17 @@ class PersonaLookupAndInsert
     #  rut = [:rut]
      input = row.clone if @verbose
 
-     persona = Persona.where(partido_id: row[:partido_id], nombre: row[:nombre],
-     apellidos: row[:apellidos]).first_or_initialize
+     if !row[:declaracin_de_intereses_y_patrimonio].nil?
+       persona = Persona.where(partido_id: row[:partido_id],
+                               nombre: row[:nombre],
+                               apellidos: row[:apellidos],
+                               intereses: row[:declaracin_de_intereses_y_patrimonio]).first_or_initialize
+     else
+       persona = Persona.where(partido_id: row[:partido_id],
+                               nombre: row[:nombre],
+                               apellidos: row[:apellidos]).first_or_initialize
+     end
+
      if persona.id.nil?
        persona.rut = SecureRandom.uuid
        persona.save

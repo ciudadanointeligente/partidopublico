@@ -59,12 +59,13 @@ class RegionPorPartidoDestination
     # p "ID REGION " + row[:region_id].to_s
     # p "ID PARTIDO " + row[:partido_id].to_s
     # p "ROW " + row.to_s
+    if !row[:partido_id].nil?
+      partido = Partido.find(row[:partido_id])
 
-    partido = Partido.find(row[:partido_id])
-
-    unless row[:region_id].nil?
-      region = Region.find(row[:region_id])
-      partido.regions << region unless region.in?(partido.regions)
+      unless row[:region_id].nil?
+        region = Region.find(row[:region_id])
+        partido.regions << region unless region.in?(partido.regions)
+      end
     end
   end
 
@@ -179,8 +180,9 @@ class IngresoOrdinarioDestination
 
   def write(row)
 
+    concepto = clean_phrase(row[:item])
     ingreso_ordinario = IngresoOrdinario.where(partido_id: row[:partido_id],
-                                               concepto: row[:item].titleize,
+                                               concepto: concepto,
                                                importe: clean_number(row[:monto])).first_or_initialize
 
     trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
@@ -218,8 +220,8 @@ class ContratacionDestination
 
   def write(row)
 
-    fecha_inicio, handler = vali_date(row[:fecha_de_inicio_del_contrato], handler)
-    fecha_termino, handler = vali_date(row[:fecha_de_trmino_del_contrato], handler)
+    fecha_inicio, handler = vali_date(row[:fecha_de_inicio_del_contrato], handler) unless row[:fecha_de_inicio_del_contrato].nil?
+    fecha_termino, handler = vali_date(row[:fecha_de_trmino_del_contrato], handler) unless row[:fecha_de_trmino_del_contrato].nil?
     if handler != nil
       row[:error_log] = row[:error_log].to_s + handler
       @results[:contratacions][:errors] += 1
@@ -267,18 +269,24 @@ class EgresoCampanaDestination
     @new = 0
     @errors = 0
     @found = 0
+    @last_egresocampana = EgresoCampana.last
+    @count_initial = EgresoCampana.count
+    @trimestres = []
+    @partidos = []
   end
 
   def write(row)
 
+    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+
+    @partidos << row[:partido_id] unless row[:partido_id].in?(@partidos)
+
     monto = clean_number(row[:monto])
-    egreso_campana = EgresoCampana.where(partido_id: row[:partido_id],
+    egreso_campana = EgresoCampana.new(partido_id: row[:partido_id],
                                          tipo_campana: row[:tipo_de_campaa],
                                          item: row[:item],
                                          monto: monto,
-                                         estado: row[:estado]).first_or_initialize
-
-    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+                                         estado: row[:estado])
 
     if egreso_campana.id.nil?
       egreso_campana.save
@@ -287,10 +295,12 @@ class EgresoCampanaDestination
         @results[:egreso_campanas][:errors] += 1
       else
         egreso_campana.trimestre_informados << trimestre_informado unless trimestre_informado.in?(egreso_campana.trimestre_informados)
+        @trimestres << trimestre_informado unless trimestre_informado.in?(@trimestres)
         @results[:egreso_campanas][:new] += 1
       end
     else
       egreso_campana.trimestre_informados << trimestre_informado unless trimestre_informado.in?(egreso_campana.trimestre_informados)
+      @trimestres << trimestre_informado unless trimestre_informado.in?(@trimestres)
       @results[:egreso_campanas][:found] += 1
     end
   end
@@ -299,6 +309,96 @@ class EgresoCampanaDestination
     @results[:egreso_campanas] = {new: @results[:egreso_campanas][:new],
                                  errors: @results[:egreso_campanas][:errors],
                                  found: @results[:egreso_campanas][:found]}
+    p @count_initial
+    p EgresoCampana.count
+    if @last_egresocampana
+      if @last_egresocampana.id != nil
+        @trimestres.map{|ec| ec.egreso_campanas.where("id <= ?", @last_egresocampana.id).where(:partido_id => @partidos.compact).destroy_all}
+      end
+  end
+    p EgresoCampana.count
+
+  end
+end
+
+class EgresoOrdinarioDestination
+  def initialize(results:, verbose:)
+    @verbose = verbose
+    @results = results
+    @new = 0
+    @errors = 0
+    @found = 0
+    @last_egresoordinario = EgresoOrdinario.last
+    @count_initial = EgresoOrdinario.count
+    @trimestres = []
+    @partidos = []
+  end
+
+  def write(row)
+
+    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+
+    @partidos << row[:partido_id] unless row[:partido_id].in?(@partidos)
+
+    concepto = clean_phrase(row[:item_de_gastos])
+    enero = clean_number(row[:enero])
+    febrero = clean_number(row[:febrero])
+    marzo = clean_number(row[:marzo])
+    abril = clean_number(row[:abril])
+    mayo = clean_number(row[:mayo])
+    junio = clean_number(row[:junio])
+    julio = clean_number(row[:julio])
+    agosto = clean_number(row[:agosto])
+    septiembre = clean_number(row[:septiembre])
+    octubre = clean_number(row[:octubre])
+    noviembre = clean_number(row[:noviembre])
+    diciembre = clean_number(row[:diciembre])
+
+    egreso_ordinario = EgresoOrdinario.new(partido_id: row[:partido_id],
+                                         concepto: concepto,
+                                         enero: enero,
+                                         febrero: febrero,
+                                         marzo: marzo,
+                                         abril: abril,
+                                         mayo: mayo,
+                                         junio: junio,
+                                         julio: julio,
+                                         agosto: agosto,
+                                         septiembre: septiembre,
+                                         octubre: octubre,
+                                         noviembre: noviembre,
+                                         diciembre: diciembre)
+
+    if egreso_ordinario.id.nil?
+      egreso_ordinario.save
+      if egreso_ordinario.errors.any?
+        row[:error_log] = row[:error_log].to_s + ', ' + egreso_ordinario.errors.messages.to_s
+        @results[:egreso_ordinarios][:errors] += 1
+      else
+        egreso_ordinario.trimestre_informados << trimestre_informado unless trimestre_informado.in?(egreso_ordinario.trimestre_informados)
+        @trimestres << trimestre_informado unless trimestre_informado.in?(@trimestres)
+        @results[:egreso_ordinarios][:new] += 1
+      end
+    else
+      egreso_ordinario.trimestre_informados << trimestre_informado unless trimestre_informado.in?(egreso_ordinario.trimestre_informados)
+      @trimestres << trimestre_informado unless trimestre_informado.in?(@trimestres)
+      @results[:egreso_ordinarios][:found] += 1
+    end
+  end
+
+  def close
+    @results[:egreso_ordinarios] = {new: @results[:egreso_ordinarios][:new],
+                                 errors: @results[:egreso_ordinarios][:errors],
+                                 found: @results[:egreso_ordinarios][:found]}
+    p @count_initial
+    p EgresoOrdinario.count
+    if @last_egresoordinario
+      if @last_egresoordinario.id != nil
+        @trimestres.map{|ec| ec.egreso_ordinarios.where("id <= ?", @last_egresoordinario.id).where(:partido_id => @partidos.compact).destroy_all}
+      end
+    end
+    p EgresoOrdinario.count
+
   end
 end
 
@@ -309,17 +409,24 @@ class IngresoCampanaDestination
     @new = 0
     @errors = 0
     @found = 0
+    @last_ingresocampana = IngresoCampana.last
+    @count_initial =IngresoCampana.count
+    @trimestres = []
+    @partidos = []
   end
 
   def write(row)
 
+    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+
+    @partidos << row[:partido_id] unless row[:partido_id].in?(@partidos)
+
     monto = clean_number(row[:valorizacin_en_pesos])
-    ingreso_campana = IngresoCampana.where(partido_id: row[:partido_id],
+    ingreso_campana = IngresoCampana.new(partido_id: row[:partido_id],
                                          nombre_donante: row[:persona_efecta_aporte].titleize,
                                          tipo_aporte: row[:tipo_de_aporte],
-                                         monto: monto).first_or_initialize
+                                         monto: monto)
 
-    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
 
     if ingreso_campana.id.nil?
       ingreso_campana.save
@@ -328,10 +435,12 @@ class IngresoCampanaDestination
         @results[:ingreso_campanas][:errors] += 1
       else
         ingreso_campana.trimestre_informados << trimestre_informado unless trimestre_informado.in?(ingreso_campana.trimestre_informados)
+        @trimestres << trimestre_informado unless trimestre_informado.in?(@trimestres)
         @results[:ingreso_campanas][:new] += 1
       end
     else
       ingreso_campana.trimestre_informados << trimestre_informado unless trimestre_informado.in?(ingreso_campana.trimestre_informados)
+      @trimestres << trimestre_informado unless trimestre_informado.in?(@trimestres)
       @results[:ingreso_campanas][:found] += 1
     end
   end
@@ -340,6 +449,15 @@ class IngresoCampanaDestination
     @results[:ingreso_campanas] = {new: @results[:ingreso_campanas][:new],
                                  errors: @results[:ingreso_campanas][:errors],
                                  found: @results[:ingreso_campanas][:found]}
+    p @count_initial
+    p IngresoCampana.count
+    if @last_ingresocampana
+      if @last_ingresocampana.id != nil
+        @trimestres.map{|ic| ic.ingreso_campanas.where("id <= ?", @last_ingresocampana.id).where(:partido_id => @partidos.compact).destroy_all}
+      end
+  end
+    p IngresoCampana.count
+
   end
 end
 
@@ -350,29 +468,39 @@ class TransferenciaDestination
     @new = 0
     @errors = 0
     @found = 0
+    @last_transferencia = Transferencia.last unless Transferencia.nil?
+    @count_initial = Transferencia.count
+    @trimestres = []
+    @partidos = []
   end
   #nombre_desde_el_modelo: row[:nombre_desde_headers]
   def write(row)
 
-    if !row[:fecha_transferencia].nil?
-    transferencia = Transferencia.where(partido_id: row[:partido_id],
-                                        fecha: row[:fecha_transferencia].to_date,
+    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+
+    @partidos << row[:partido_id] unless row[:partido_id].in?(@partidos)
+
+
+    # if !row[:fecha_transferencia].nil?
+    fecha = row[:fecha_transferencia].to_date unless row[:fecha_transferencia].nil?
+    transferencia = Transferencia.new(partido_id: row[:partido_id],
+                                        # fecha: row[:fecha_transferencia].to_date unless row[:fecha_transferencia].nil?,
+                                        fecha: fecha,
                                         monto: clean_number(row[:monto]),
-                                        categoria: 'Sin Categoría',
                                         descripcion: row[:objeto_de_la_transferencia],
                                         razon_social: row[:persona_jurdica_receptora],
                                         rut: row[:rut_persona_jurdica],
-                                        persona_natural: row[:persona_natural_receptora].downcase.titleize).first_or_initialize
-    else
-      transferencia = Transferencia.where(partido_id: row[:partido_id],
-                                          monto: clean_number(row[:monto]),
-                                          descripcion: row[:objeto_de_la_transferencia],
-                                          razon_social: row[:persona_jurdica_receptora],
-                                          rut: row[:rut_persona_jurdica],
-                                          persona_natural: row[:persona_natural_receptora].downcase.titleize).first_or_initialize
-    end
+                                        persona_natural: row[:persona_natural_receptora].downcase.titleize)
+    # else
+    #   transferencia = Transferencia.where(partido_id: row[:partido_id],
+    #                                       monto: clean_number(row[:monto]),
+    #                                       descripcion: row[:objeto_de_la_transferencia],
+    #                                       razon_social: row[:persona_jurdica_receptora],
+    #                                       rut: row[:rut_persona_jurdica],
+    #                                       persona_natural: row[:persona_natural_receptora].downcase.titleize).first_or_initialize
+    # end
 
-    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+    # trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
 
     if transferencia.id.nil?
       transferencia.save
@@ -381,10 +509,12 @@ class TransferenciaDestination
         @results[:transferencias][:errors] += 1
       else
         transferencia.trimestre_informados << trimestre_informado unless trimestre_informado.in?(transferencia.trimestre_informados)
+        @trimestres << trimestre_informado unless trimestre_informado.in?(@trimestres)
         @results[:transferencias][:new] += 1
       end
     else
       transferencia.trimestre_informados << trimestre_informado unless trimestre_informado.in?(transferencia.trimestre_informados)
+      @trimestres << trimestre_informado unless trimestre_informado.in?(@trimestres)
       @results[:transferencias][:found] += 1
     end
   end
@@ -393,6 +523,15 @@ class TransferenciaDestination
     @results[:transferencias] = {new: @results[:transferencias][:new],
                        errors: @results[:transferencias][:errors],
                        found: @results[:transferencias][:found]}
+    p @count_initial
+    p Transferencia.count
+    if @last_transferencia
+      if @last_transferencia.id != nil
+        @trimestres.map{|t| t.transferencias.where("id <= ?", @last_transferencia.id).where(:partido_id => @partidos.compact).destroy_all}
+      end
+  end
+    p Transferencia.count
+
   end
 end
 
