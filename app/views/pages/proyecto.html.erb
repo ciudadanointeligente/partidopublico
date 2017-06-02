@@ -10,15 +10,24 @@
           Si no, no sirve. Por eso ofrecemos un estándar de visualización interactivo y
           amigable para acceder a esta importante -pero a veces engorrosa- información.</p>
       </div>
+      <div class="col-md-4">
+        <div class="que-es-1-img"><%= image_tag("que-es-1.svg") %></div>
+      </div>
     </div>
   </div>
 </section>
 <section id="que-es-2">
   <div class="container">
     <div class="row">
-      <div class="col-md-8 col-md-offset-4">
+      <div class="col-md-4 visible-md visible-lg">
+        <div class="que-es-2-img"><%= image_tag("que-es-2.svg") %></div>
+      </div>
+      <div class="col-md-8">
         <h2>¿Qué información usa Partidos Públicos?</h2>
         <p>Partidos Públicos recoge la información que los partidos activos en el <a href="https://www.portaltransparencia.cl/PortalPdT/directorio-de-organismos-regulados">Portal de Transparencia</a> (hasta ahora 16 de los 24) publican periódicamente en este sitio y la visualiza de manera amigable mediante gráficos y mapas, permitiendo la navegación con filtros y la comparación entre colectividades.</p>
+      </div>
+      <div class="col-md-4 visible-xs visible-sm">
+        <div class="que-es-2-img"><%= image_tag("que-es-2.svg") %></div>
       </div>
     </div>
   </div>
@@ -32,6 +41,9 @@
         <p>Dependiendo del ítem que corresponda, estas planillas contienen variables como: “año”, “trimestre informado”, ”organismos”, “cargos”, “monto en pesos”, “comuna”, “región”, etc. Si en algunos casos los partidos ingresan los valores con errores, Partidos Públicos no visualizará dicha información, ya que el software de la plataforma está desarrollado para validar la información antes de publicarla.</p>
         <p> Para evitar estos y muchos otros errores, Ciudadano Inteligente ha creado un <%= link_to "Manual de Transparencia Activa para Partidos Políticos", manual_path, onclick: "ga('send','event','main-menu-descargar-manual','click');" %>, el cual busca establecer estándares y buenas prácticas en la publicación de información. ¡Esperamos pronto contar con toda la información de los partidos desplegada correctamente!</p>
       </div>
+      <div class="col-md-3">
+        <div class="que-es-3-img"><%= image_tag("que-es-3.svg") %></div>
+      </div>
     </div>
   </div>
 </section>
@@ -43,7 +55,7 @@
         <p>Puede ser por dos motivos:</p>
         <ol>
           <li>Todavía estamos desarrollando algunas de las secciones de Partidos Públicos. Las planillas son complejas y requieren mucho esfuerzo de nuestros desarrolladores para ser leídas, validadas y visualizadas.</li>
-          <li>No todos los partidos entregan la totalidad de la información que debieran y otros la entregan con errores (como escribir '31 de Abril' en algún campo de Fecha), por lo que Partidos Públicos no la lee. ¡Es también nuestro deber como ciudadanos fiscalizar y exigirles mejores prácticas a los partidos!</li>
+          <li>No todos los partidos entregan la totalidad de la información que debieran y otros la entregan con errores (como escribir '31 de Abril' en algún campo de Fecha), por lo que Partidos Públicos no la lee.<b> ¡Es también nuestro deber como ciudadanos fiscalizar y exigirles mejores prácticas a los partidos!</b></li>
         </ol>
       </div>
     </div>

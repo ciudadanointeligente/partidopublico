@@ -258,20 +258,35 @@ section{
 }
 
 section#que-es-1{
-	background: asset-url('images/que-es-1.svg') 70% 120% no-repeat white;
+	background-color: white;
+	padding-top: 100px;
 }
 section#que-es-2{
-	background: asset-url('images/que-es-2.svg') 70% 120% no-repeat $nude;
 }
 section#que-es-3{
 	background-color: white;
-	background: asset-url('images/que-es-3.svg') 70% 120% no-repeat white;
 }
 section#que-es-4{
-	background: asset-url('images/que-es-4.svg') 70% 120% no-repeat $nude;
+	background: asset-url('images/que-es-4.svg') 57% 233% no-repeat $nude;
+	min-height: 520px;
+	margin-bottom: -70px;
 }
 
-
+.que-es-1-img{
+	position: relative;
+	top: 80px;
+	left: 20%;
+}
+.que-es-2-img{
+	position: relative;
+	top: 80px;
+	left: 30%;
+}
+.que-es-3-img{
+	position: relative;
+	top: 80px;
+	left: 20%;
+}
 .btn-primary{
 	border-radius: 50px;
 	text-transform: uppercase;
@@ -1230,6 +1245,22 @@ p.edades{
 	.vistas{
 		min-height: 100px;
 	}
+
+	.que-es-1-img{
+		position: relative;
+		top: 50px;
+		left: 30%;
+	}
+	.que-es-2-img{
+		position: relative;
+		top: 50px;
+		left: 38%;
+	}
+	.que-es-3-img{
+		position: relative;
+		top: 50px;
+		left: 36%;
+	}
 }
 
 @media (max-width: 961px) {
@@ -1579,6 +1610,11 @@ p.edades{
 	.vistas{
 		min-height: 135px;
 	}
+	section#que-es-4{
+		background: none;
+		background-color: $nude;
+	}
+
 }
 
 @media screen and (max-width: 470px) {
