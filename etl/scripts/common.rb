@@ -26,7 +26,7 @@ def clean_phrase(frase)
   elsif frase.include? "donaciones"
     frase = frase.titleize
     # p "Donaciones-> " + frase
-  elsif frase.include? "testamentarias"
+  elsif frase.include? "estamentarias"
     frase = "Asignaciones testamentarias"
   elsif frase.include? "frutos y productos"
     frase = "Frutos y productos de los bienes patrimoniales"

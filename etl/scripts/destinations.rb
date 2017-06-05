@@ -481,7 +481,6 @@ class TransferenciaDestination
     @partidos << row[:partido_id] unless row[:partido_id].in?(@partidos)
 
 
-    # if !row[:fecha_transferencia].nil?
     fecha = row[:fecha_transferencia].to_date unless row[:fecha_transferencia].nil?
     transferencia = Transferencia.new(partido_id: row[:partido_id],
                                         # fecha: row[:fecha_transferencia].to_date unless row[:fecha_transferencia].nil?,
@@ -491,16 +490,6 @@ class TransferenciaDestination
                                         razon_social: row[:persona_jurdica_receptora],
                                         rut: row[:rut_persona_jurdica],
                                         persona_natural: row[:persona_natural_receptora].downcase.titleize)
-    # else
-    #   transferencia = Transferencia.where(partido_id: row[:partido_id],
-    #                                       monto: clean_number(row[:monto]),
-    #                                       descripcion: row[:objeto_de_la_transferencia],
-    #                                       razon_social: row[:persona_jurdica_receptora],
-    #                                       rut: row[:rut_persona_jurdica],
-    #                                       persona_natural: row[:persona_natural_receptora].downcase.titleize).first_or_initialize
-    # end
-
-    # trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
 
     if transferencia.id.nil?
       transferencia.save

@@ -437,14 +437,14 @@ class PartidosController < ApplicationController
 
       total_publicos = ingresos_ordinarios.where(:partido_id => @partido.id,
                                                   :concepto => (["Aportes del Estado (Art. 33 Bis Ley N° 18603)",
-                                                                 "Otras Transferencias Públicas"])).sum(:importe) rescue 0
+                                                                 "Otras transferencias públicas"])).sum(:importe) rescue 0
       total_privados = ingresos_ordinarios.where(:partido_id => @partido.id,
                                                   :concepto => (["Cotizaciones",
                                                                  "Donaciones",
-                                                                 "Asignaciones Testamentarias",
-                                                                 "Frutos y Productos de los Bienes Patrimoniales",
-                                                                 "Otras Transferencias Privadas",
-                                                                 "Ingresos Militantes"])).sum(:importe) rescue 0
+                                                                 "Asignaciones testamentarias",
+                                                                 "Frutos y productos de los bienes patrimoniales",
+                                                                 "Otras transferencias privadas",
+                                                                 "Ingresos militantes"])).sum(:importe) rescue 0
       max_value = total_publicos + total_privados
       @datos_ingresos_ordinarios = []
       ingresos_ordinarios.each do |io|
@@ -653,12 +653,11 @@ class PartidosController < ApplicationController
 
   def finanzas_5
 
-      temp_trimestres_informados = []
+    temp_trimestres_informados = []
     @partido.transferencias.each do |tr|
       tr.trimestre_informados.each do |t|
 
         temp_trimestres_informados.push(t)
-
       end
     end
 
@@ -667,7 +666,6 @@ class PartidosController < ApplicationController
 
     if @trimestres_informados.count == 0
       @trimestres_informados = []
-      # @datos_temp_transferencias = []
       @datos_transferencias_totals = []
       @sin_datos = true
     else
@@ -688,14 +686,14 @@ class PartidosController < ApplicationController
         if tr.sum < 0
           tr.sum = tr.sum * -1
         end
-
+        p tr.year.to_s + tr.month.to_s
         p 'mes afuera: ' + tr.month.to_s
 
-        if tr.month.nil?
-          line = {'text' => "Sin información", 'value' => tr.sum}
-          p 'mes nulo: ' + line.to_s
-        else
           if tr.year == @trimestre_informado.ano
+            if tr.month.nil?
+              line = {'text' => "Sin información", 'value' => tr.sum}
+              p 'mes nulo: ' + line.to_s
+            end
             p 'mes dentro: ' + tr.month.to_s
             mes = get_month(tr.month.round(0))
             año = tr.year.round(0).to_s
@@ -703,10 +701,11 @@ class PartidosController < ApplicationController
             p 'bien = '+ mes + ' valor = ' + val.to_s
             # val = 100.to_s    <- WIP
             line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+            total += tr.sum
           end
+        if !line.nil?
+          @datos_temp_transferencias << line
         end
-        total += tr.sum
-        @datos_temp_transferencias << line
       end
       @datos_transferencias_totals = { :total => total }
       if @datos_transferencias_totals[:total] < 0
