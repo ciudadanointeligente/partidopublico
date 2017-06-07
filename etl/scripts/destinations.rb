@@ -328,10 +328,13 @@ class EgresoOrdinarioDestination
     @new = 0
     @errors = 0
     @found = 0
-    @last_egresoordinario = EgresoOrdinario.last
+    @last_egresoordinario = EgresoOrdinario.last unless EgresoOrdinario.nil?
     @count_initial = EgresoOrdinario.count
     @trimestres = []
     @partidos = []
+    @conceptos = []
+    @partidos_id = []
+    @contador = 0
   end
 
   def write(row)
@@ -369,6 +372,12 @@ class EgresoOrdinarioDestination
                                          noviembre: noviembre,
                                          diciembre: diciembre)
 
+
+
+    # if (egreso_ordinario.partido_id.in?(@partidos_id) && egreso_ordinario.concepto.in?(@conceptos) && trimestre_informado.in?(@trimestres))
+    #   p 'IH' + @contador.to_s
+    #   @contador += 1
+    # end
     if egreso_ordinario.id.nil?
       egreso_ordinario.save
       if egreso_ordinario.errors.any?
@@ -384,6 +393,8 @@ class EgresoOrdinarioDestination
       @trimestres << trimestre_informado unless trimestre_informado.in?(@trimestres)
       @results[:egreso_ordinarios][:found] += 1
     end
+    @partidos_id << egreso_ordinario.partido_id
+    @conceptos << egreso_ordinario.concepto
   end
 
   def close

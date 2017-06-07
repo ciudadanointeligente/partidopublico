@@ -519,41 +519,11 @@ class PartidosController < ApplicationController
                                                    "Gastos de adquisición de bienes y servicios o gastos corrientes",
                                                    "Otros gastos de administración"]))
 
-      if @trimestre_informado.ordinal == 0
-        gastos_administracion = (ga.sum(:enero) + ga.sum(:febrero) + ga.sum(:marzo)) rescue 0
-        p 'PRIMER TRIMESTRE ADMINISTRACION: ' + gastos_administracion.to_s
-      elsif @trimestre_informado.ordinal == 1
-        gastos_administracion = (ga.sum(:abril) + ga.sum(:mayo) + ga.sum(:junio)) rescue 0
-        p 'SEGUNDO TRIMESTRE ADMINISTRACION: ' + gastos_administracion.to_s
-      elsif @trimestre_informado.ordinal == 2
-        gastos_administracion = (ga.sum(:julio) + ga.sum(:agosto) + ga.sum(:septiembre)) rescue 0
-        p 'TERCER TRIMESTRE ADMINISTRACION: ' + gastos_administracion.to_s
-      elsif @trimestre_informado.ordinal == 3
-        gastos_administracion = (ga.sum(:octubre) + ga.sum(:noviembre) + ga.sum(:diciembre)) rescue 0
-        p 'CUARTO TRIMESTRE ADMINISTRACION: ' + gastos_administracion.to_s
-      end
-      p 'GASTOS DE ADMINISTRACION: ' + gastos_administracion.to_s
-
       gci = egresos_ordinarios.where(:partido => @partido.id,
                                      :concepto => (["Gastos financieros por préstamos de corto plazo",
                                                     "Gastos financieros por préstamos de largo plazo",
                                                     "Créditos de corto plazo, inversiones y valores de operaciones de capital",
                                                     "Créditos de largo plazo, inversiones y valores de operaciones de capital"]))
-
-      if @trimestre_informado.ordinal == 0
-        gastos_creditos_inversiones = (gci.sum(:enero) + gci.sum(:febrero) + gci.sum(:marzo)) rescue 0
-        p 'PRIMER TRIMESTRE CREDITOS: ' + gastos_creditos_inversiones.to_s
-      elsif @trimestre_informado.ordinal == 1
-        gastos_creditos_inversiones = (gci.sum(:abril) + gci.sum(:mayo) + gci.sum(:junio)) rescue 0
-        p 'SEGUNDO TRIMESTRE CREDITOS: ' + gastos_creditos_inversiones.to_s
-      elsif @trimestre_informado.ordinal == 2
-        gastos_creditos_inversiones = (gci.sum(:julio) + gci.sum(:agosto) + gci.sum(:septiembre)) rescue 0
-        p 'TERCER TRIMESTRE CREDITOS: ' + gastos_creditos_inversiones.to_s
-      elsif @trimestre_informado.ordinal == 3
-        gastos_creditos_inversiones = (gci.sum(:octubre) + gci.sum(:noviembre) + gci.sum(:diciembre)) rescue 0
-        p 'CUARTO TRIMESTRE CREDITOS: ' + gastos_creditos_inversiones.to_s
-      end
-      p 'GASTOS DE CREDITOS: ' + gastos_creditos_inversiones.to_s
 
       gf = egresos_ordinarios.where(:partido => @partido.id,
                                     :concepto => (["Gastos de actividades de investigación",
@@ -563,55 +533,16 @@ class PartidosController < ApplicationController
                                                    "Gastos de las actividades de preparación de candidatos a cargos de elección popular",
                                                    "Gastos de las actividades de formación de militantes"]))
 
-      if @trimestre_informado.ordinal == 0
-        gastos_formacion = (gf.sum(:enero) + gf.sum(:febrero) + gf.sum(:marzo)) rescue 0
-        p 'PRIMER TRIMESTRE FORMACION: ' + gastos_formacion.to_s
-      elsif @trimestre_informado.ordinal == 1
-        gastos_formacion = (gf.sum(:abril) + gf.sum(:mayo) + gf.sum(:junio)) rescue 0
-        p 'SEGUNDO TRIMESTRE FORMACION: ' + gastos_formacion.to_s
-      elsif @trimestre_informado.ordinal == 2
-        gastos_formacion = (gf.sum(:julio) + gf.sum(:agosto) + gf.sum(:septiembre)) rescue 0
-        p 'TERCER TRIMESTRE FORMACION: ' + gastos_formacion.to_s
-      elsif @trimestre_informado.ordinal == 3
-        gastos_formacion = (gf.sum(:octubre) + gf.sum(:noviembre) + gf.sum(:diciembre)) rescue 0
-        p 'CUARTO TRIMESTRE FORMACION: ' + gastos_formacion.to_s
-      end
-      p 'GASTOS DE FORMACION: ' + gastos_formacion.to_s
 
+      gastos_administracion = gasto_por_trimeste(@trimestre_informado, ga)
+      gastos_creditos_inversiones = gasto_por_trimeste(@trimestre_informado, gci)
+      gastos_formacion = gasto_por_trimeste(@trimestre_informado, gf)
       max_value = gastos_administracion + gastos_creditos_inversiones + gastos_formacion
+
       @datos_egresos_ordinarios =[]
-      @datos_texts = []
       egresos_ordinarios.each do |eo|
-        if @trimestre_informado.ordinal == 0
-          val = (((eo.enero.to_f + eo.febrero.to_f + eo.marzo.to_f) / max_value.to_f).to_f rescue 0).to_s
-          line = {'text' => eo.concepto,
-                  'value' => ActiveSupport::NumberHelper::number_to_delimited((eo.enero + eo.febrero + eo.marzo), delimiter: ""),
-                  'percentage' => val }
-          @datos_egresos_ordinarios << line unless (eo.enero + eo.febrero + eo.marzo) == 0
-          # @datos_egresos_ordinarios << line unless (eo.enero + eo.febrero + eo.marzo) == 0 || eo.concepto.in?(@datos_texts)
-          @datos_texts << eo.concepto
-        elsif @trimestre_informado.ordinal == 1
-          val = (((eo.abril.to_f + eo.mayo.to_f + eo.junio.to_f) / max_value.to_f).to_f rescue 0).to_s
-          line = {'text' => eo.concepto,
-                  'value' => ActiveSupport::NumberHelper::number_to_delimited((eo.abril + eo.mayo + eo.junio), delimiter: ""),
-                  'percentage' => val }
-          @datos_egresos_ordinarios << line unless (eo.abril + eo.mayo + eo.junio) == 0
-
-        elsif @trimestre_informado.ordinal == 2
-          val = (((eo.julio.to_f + eo.agosto.to_f + eo.septiembre.to_f) / max_value.to_f).to_f rescue 0).to_s
-          line = {'text' => eo.concepto,
-                  'value' => ActiveSupport::NumberHelper::number_to_delimited((eo.julio + eo.agosto + eo.septiembre), delimiter: ""),
-                  'percentage' => val }
-          @datos_egresos_ordinarios << line unless (eo.julio + eo.agosto + eo.septiembre) == 0
-
-        elsif @trimestre_informado.ordinal == 3
-          val = (((eo.octubre.to_f + eo.noviembre.to_f + eo.diciembre.to_f) / max_value.to_f).to_f rescue 0).to_s
-          line = {'text' => eo.concepto,
-                  'value' => ActiveSupport::NumberHelper::number_to_delimited((eo.octubre + eo.noviembre + eo.diciembre), delimiter: ""),
-                  'percentage' => val }
-          @datos_egresos_ordinarios << line unless (eo.octubre + eo.noviembre + eo.diciembre) == 0
-        end
-
+        val = val_egresos_ordinarios(@trimestre_informado, eo, max_value)
+        line = line_egresos_ordinarios(@trimestre_informado,eo, val)
       end
 
       @datos_egresos_ordinarios_totals = {'gastos_administracion' => gastos_administracion,
@@ -978,6 +909,55 @@ end
       end
     end
 
+    def gasto_por_trimeste(trimestre, gasto)
+      if trimestre.ordinal == 0
+        gastos = (gasto.sum(:enero) + gasto.sum(:febrero) + gasto.sum(:marzo)) rescue 0
+      elsif trimestre.ordinal == 1
+        gastos = (gasto.sum(:abril) + gasto.sum(:mayo) + gasto.sum(:junio)) rescue 0
+      elsif trimestre.ordinal == 2
+        gastos = (gasto.sum(:julio) + gasto.sum(:agosto) + gasto.sum(:septiembre)) rescue 0
+      elsif trimestre.ordinal == 3
+        gastos = (gasto.sum(:octubre) + gasto.sum(:noviembre) + gasto.sum(:diciembre)) rescue 0
+      end
+      gastos
+    end
+
+    def val_egresos_ordinarios(trimestre, egreso_ordinario, max_value)
+      if trimestre.ordinal == 0
+        val = (((egreso_ordinario.enero.to_f + egreso_ordinario.febrero.to_f + egreso_ordinario.marzo.to_f) / max_value.to_f).to_f rescue 0).to_s
+      elsif trimestre.ordinal == 1
+        val = (((egreso_ordinario.abril.to_f + egreso_ordinario.mayo.to_f + egreso_ordinario.junio.to_f) / max_value.to_f).to_f rescue 0).to_s
+      elsif trimestre.ordinal == 2
+        val = (((egreso_ordinario.julio.to_f + egreso_ordinario.agosto.to_f + egreso_ordinario.septiembre.to_f) / max_value.to_f).to_f rescue 0).to_s
+      elsif trimestre.ordinal == 3
+        val = (((egreso_ordinario.octubre.to_f + egreso_ordinario.noviembre.to_f + egreso_ordinario.diciembre.to_f) / max_value.to_f).to_f rescue 0).to_s
+      end
+    end
+
+    def line_egresos_ordinarios(trimestre, egreso_ordinario, val)
+      if trimestre.ordinal == 0
+        line = {'text' => egreso_ordinario.concepto,
+                'value' => ActiveSupport::NumberHelper::number_to_delimited((egreso_ordinario.enero + egreso_ordinario.febrero + egreso_ordinario.marzo), delimiter: ""),
+                'percentage' => val }
+        @datos_egresos_ordinarios << line unless (egreso_ordinario.enero + egreso_ordinario.febrero + egreso_ordinario.marzo) == 0
+      elsif trimestre.ordinal == 1
+        line = {'text' => egreso_ordinario.concepto,
+                'value' => ActiveSupport::NumberHelper::number_to_delimited((egreso_ordinario.abril + egreso_ordinario.mayo + egreso_ordinario.junio), delimiter: ""),
+                'percentage' => val }
+        @datos_egresos_ordinarios << line unless (egreso_ordinario.abril + egreso_ordinario.mayo + egreso_ordinario.junio) == 0
+      elsif trimestre.ordinal == 2
+        line = {'text' => egreso_ordinario.concepto,
+                'value' => ActiveSupport::NumberHelper::number_to_delimited((egreso_ordinario.julio + egreso_ordinario.agosto + egreso_ordinario.septiembre), delimiter: ""),
+                'percentage' => val }
+        @datos_egresos_ordinarios << line unless (egreso_ordinario.julio + egreso_ordinario.agosto + egreso_ordinario.septiembre) == 0
+      elsif trimestre.ordinal == 3
+        line = {'text' => egreso_ordinario.concepto,
+                'value' => ActiveSupport::NumberHelper::number_to_delimited((egreso_ordinario.octubre + egreso_ordinario.noviembre + egreso_ordinario.diciembre), delimiter: ""),
+                'percentage' => val }
+        @datos_egresos_ordinarios << line unless (egreso_ordinario.octubre + egreso_ordinario.noviembre + egreso_ordinario.diciembre) == 0
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_partido
       partido_id = params[:id] || params[:partido_id]
@@ -993,7 +973,7 @@ end
     def set_fecha_datos
       ###puts params
         @fecha_datos = l(EtlRun.max_fecha_datos, format: '%A %d de %B del %Y')
-
+        p @fecha_datos
     end
 
     def get_partidos
