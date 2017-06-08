@@ -812,18 +812,58 @@ aside.col-sm-3.col-md-3{
 	margin-right: 5px;
 }
 
-.square-or {
+.circle-or {
   border: solid 10px #FAC5BE;
 	float: left;
   width: 10px;
   height: 10px;
+	border-radius: 100%;
 }
 
-.square-gr {
+.circle-gr {
   border: solid 10px #E9DEDF;
 	float: left;
   width: 10px;
   height: 10px;
+	border-radius: 100%;
+}
+
+.circle-sky_light {
+  border: solid 10px #CDFFFC;
+	display:inline-block;
+	padding: 0;
+	line-height: 10px;
+	width: 10px;
+	height: 10px;
+	border-radius: 100%
+}
+
+.circle-sky_medium {
+  border: solid 10px #78EEE8;
+	display:inline-block;
+	padding: 0;
+	line-height: 10px;
+  width: 10px;
+  height: 10px;
+	border-radius: 50%;
+	margin-left: 15px;
+}
+
+.circle-sky_dark {
+  border: solid 10px #06B9BF;
+	display:inline-block;
+	padding: 0;
+	line-height: 10px;
+  width: 10px;
+  height: 10px;
+	border-radius: 50%;
+	margin-left: 15px;
+}
+
+.leyenda-finanzas{
+	text-align: left;
+	// margin-left: 25px;
+	font-weight: 700;
 }
 
 /*SVG*/
@@ -1457,6 +1497,47 @@ p.edades{
 		vertical-align: middle !important;
 		text-align:center;
 		margin-top: 15px;
+	}
+
+	.leyenda-finanzas{
+		text-align: left;
+		margin-left: 25px;
+		font-weight: 700;
+	  display: inline-block;
+		padding-bottom: 10px;
+	}
+
+	.circle-sky_light {
+	  border: solid 10px #CDFFFC;
+		display:inline-block;
+		padding: 0;
+		line-height: 10px;
+		width: 10px;
+		height: 10px;
+		border-radius: 100%;
+		margin-left: -15px;
+	}
+
+	.circle-sky_medium {
+	  border: solid 10px #78EEE8;
+		display:inline-block;
+		padding: 0;
+		line-height: 10px;
+	  width: 10px;
+	  height: 10px;
+		border-radius: 50%;
+		margin-left: -15px;
+	}
+
+	.circle-sky_dark {
+	  border: solid 10px #06B9BF;
+		display:inline-block;
+		padding: 0;
+		line-height: 10px;
+	  width: 10px;
+	  height: 10px;
+		border-radius: 50%;
+		margin-left: -15px;
 	}
 
 }

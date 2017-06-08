@@ -237,44 +237,44 @@ $(document).ready(function(){
 
     var paper = this;
 
-    paper.circle(12, 15, 9)
-    .attr({
-      "fill" : sky_light,
-      "stroke" : "none"
-    });
-
-    paper.text(28, 17, "Gastos\nAdministrativos")
-    .attr({
-      "font-family" : "Karla-Regular, Karla",
-      "font-size" : 14,
-      'text-anchor': 'start'
-    });
-
-    paper.circle(160, 15, 9)
-    .attr({
-      "fill" : sky_medium,
-      "stroke" : "none"
-    });
-
-    paper.text(176, 20, "Préstamos, Créditos o\nInversiones")
-    .attr({
-      "font-family" : "Karla-Regular, Karla",
-      "font-size" : 14,
-      'text-anchor': 'start'
-    });
-
-    paper.circle(12, 45, 9 )
-    .attr({
-      "fill" : sky_dark,
-      "stroke" : "none"
-    });
-
-    paper.text(300, 17, "Gastos de\nParticipación y \nFormación")
-    .attr({
-      "font-family" : "Karla-Regular, Karla",
-      "font-size" : 14,
-      'text-anchor': 'start'
-    });
+    // paper.circle(12, 15, 9)
+    // .attr({
+    //   "fill" : sky_light,
+    //   "stroke" : "none"
+    // });
+    //
+    // paper.text(28, 17, "Gastos\nAdministrativos")
+    // .attr({
+    //   "font-family" : "Karla-Regular, Karla",
+    //   "font-size" : 14,
+    //   'text-anchor': 'start'
+    // });
+    //
+    // paper.circle(160, 15, 9)
+    // .attr({
+    //   "fill" : sky_medium,
+    //   "stroke" : "none"
+    // });
+    //
+    // paper.text(176, 20, "Préstamos, Créditos o\nInversiones")
+    // .attr({
+    //   "font-family" : "Karla-Regular, Karla",
+    //   "font-size" : 14,
+    //   'text-anchor': 'start'
+    // });
+    //
+    // paper.circle(12, 45, 9 )
+    // .attr({
+    //   "fill" : sky_dark,
+    //   "stroke" : "none"
+    // });
+    //
+    // paper.text(300, 17, "Gastos de\nParticipación y \nFormación")
+    // .attr({
+    //   "font-family" : "Karla-Regular, Karla",
+    //   "font-size" : 14,
+    //   'text-anchor': 'start'
+    // });
 
   };
 

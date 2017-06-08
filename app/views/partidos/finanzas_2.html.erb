@@ -11,9 +11,16 @@
       <% end %>
     </div>
   </div>
-
   <div>
+
     <span id="header"></span>
+    <div class="row">
+      <div class="col-md-12">
+        <span class="leyenda-finanzas"><img/ class="circle-sky_light"> Gastos Administrativos</span>
+        <span class="leyenda-finanzas"><img/ class="circle-sky_medium"> Préstamos, Créditos o Inversiones</span>
+        <span class="leyenda-finanzas"><img/ class="circle-sky_dark"> Gastos de Participación y Formación</span>
+      </div>
+    </div>
     <div class="table-responsive">
       <table class="table">
         <thead>
@@ -60,7 +67,6 @@ $(document).ready(function(){
   var data_totals = <%=  @datos_egresos_ordinarios_totals.to_json.html_safe %>;
   var fechas = <%=  @fechas_datos.to_json.html_safe %>;
   var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
-  Raphael("header",340, 40 ).egreso_ord_front_header();
   for(var i=0; i < data.length; i++){
     console.log(data[i]);
     if(screen.width > 767) {
