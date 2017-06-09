@@ -535,6 +535,56 @@ class TransferenciaDestination
   end
 end
 
+class SancionDestination
+  def initialize(results:, verbose:)
+    @verbose = verbose
+    @results = results
+    @new = 0
+    @errors = 0
+    @found = 0
+  end
+
+  def write(row)
+
+    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+
+    fecha_de_resolucin, handler = vali_date(row[:fecha_de_resolucin], handler) unless row[:fecha_de_resolucin].nil?
+    if handler != nil
+      row[:error_log] = row[:error_log].to_s + handler
+      @results[:sancions][:errors] += 1
+    end
+
+    sancion = Sancion.where(partido_id: row[:partido_id],
+                            fecha: fecha_de_resolucin,
+                            descripcion: row[:infraccin_cometida],
+                            tipo_sancion: row[:tipo_de_sancin],
+                            link_resolucion: row[:vnculo_a_la_resolucin]).first_or_initialize
+
+    if sancion.id.nil?
+      sancion.save
+      if sancion.errors.any?
+        row[:error_log] = row[:error_log].to_s + ', ' + sancion.errors.messages.to_s
+        @results[:sancions][:errors] += 1
+      else
+        sancion.trimestre_informados << trimestre_informado unless trimestre_informado.in?(sancion.trimestre_informados)
+        @results[:sancions][:new] += 1
+      end
+    else
+      sancion.trimestre_informados << trimestre_informado unless trimestre_informado.in?(sancion.trimestre_informados)
+      @results[:sancions][:found] += 1
+    end
+  end
+
+  def close
+    @results[:sancions] = {new: @results[:sancions][:new],
+                                 errors: @results[:sancions][:errors],
+                                 found: @results[:sancions][:found]}
+  end
+
+end
+
+
+
 class AfiliacionDestination
   def initialize(results:, verbose:)
     @verbose = verbose

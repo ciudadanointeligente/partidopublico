@@ -15,6 +15,7 @@
 #  partido_id             :integer
 #  tipo_sancion           :string
 #  tipo_infraccion        :string
+#  link_resolucion        :string
 #
 # Indexes
 #
@@ -23,6 +24,9 @@
 
 class Sancion < ActiveRecord::Base
     has_paper_trail
+
+    has_and_belongs_to_many :trimestre_informados
+
     has_attached_file :documento, styles: { large: "600x600>", medium: "300x300>", :thumb => ["40x40>", :png] }, default_url: "/system/resources/missing_32.png"
     validates_attachment :documento,
         content_type: { content_type: "application/pdf" },

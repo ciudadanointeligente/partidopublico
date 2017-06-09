@@ -15,6 +15,7 @@
 #  partido_id             :integer
 #  tipo_sancion           :string
 #  tipo_infraccion        :string
+#  link_resolucion        :string
 #
 # Indexes
 #

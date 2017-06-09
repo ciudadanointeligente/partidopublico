@@ -21,6 +21,7 @@ class TrimestreInformado < ActiveRecord::Base
   has_and_belongs_to_many :egreso_campanas
   has_and_belongs_to_many :ingreso_campanas
   has_and_belongs_to_many :afiliacions
+  has_and_belongs_to_many :sancions
   validates_presence_of :ordinal
 
   def to_s
