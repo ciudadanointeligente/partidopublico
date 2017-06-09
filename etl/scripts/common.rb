@@ -97,8 +97,6 @@ def vali_date(fecha, handler)
     fecha = nil
   elsif fecha.length < 10 && fecha.length > 5
     fecha.insert(6, '20')
-  else
-    fecha = nil
   end
   begin
       fecha.to_date
