@@ -14,39 +14,77 @@ def clean_number(numero)
   numero.to_i
 end
 
-CLEAN_PRHASES = {
-  :"estamentarias" => "Asignaciones testamentarias",
-  :"frutos y productos"=>"Frutos y productos de los bienes patrimoniales",
-  :"aportes del estado"=>"Aportes del Estado (Art. 33 Bis Ley N° 18603)",
-  :"blicas"=>"Otras transferencias públicas",
-  :"privadas"=>"Otras transferencias privadas",
-  :"gresos militantes"=>"Ingresos militantes",
-  :"personal"=>"Gastos de personal",
-  :"gastos corrientes"=>"Gastos de adquisición de bienes y servicios o gastos corrientes",
-  :"préstamos de corto plazo"=>"Gastos financieros por préstamos de corto plazo",
-  :"préstamos de largo plazo"=>"Gastos financieros por préstamos de largo plazo",
-  :"administraci"=>"Otros gastos de administración",
-  :"investigaci"=>"Gastos de actividades de investigación",
-  :"educación cívica"=>"Gastos de actividades de educación cívica",
-  :"femenina"=>"Gastos de actividades de fomento a la particiación femenina",
-  :"de los j"=> "Gastos de actividades de fomento a la participación de los jóvenes",
-  :"corto plazo, inversiones"=> "Créditos de corto plazo, inversiones y valores de operaciones de capital",
-  :"largo plazo, inversiones"=> "Créditos de largo plazo, inversiones y valores de operaciones de capital",
-  :"de candidatos a cargos de elecc"=> "Gastos de las actividades de preparación de candidatos a cargos de elección popular",
-  :"n de militantes"=> "Gastos de las actividades de formación de militantes",
-}
-
 def clean_phrase(frase)
   frase.downcase!
   # p "downcased phrase -> " + frase
   frase.gsub(/[^0-9a-z ]/i, '')
   # p "cleaned phrase -> " + frase
-  CLEAN_PRHASES.each do |key, value|
-    if frase.include? key.to_s
-      return value
-    end
-  end
-  return frase.titleize
+
+  if frase.include? "cotizaciones"
+    frase = frase.titleize
+    # p "Cotizaciones -> " + frase
+  elsif frase.include? "donaciones"
+    frase = frase.titleize
+    # p "Donaciones-> " + frase
+  elsif frase.include? "estamentarias"
+    frase = "Asignaciones testamentarias"
+  elsif frase.include? "frutos y productos"
+    frase = "Frutos y productos de los bienes patrimoniales"
+    # p "Frutos y Productos de los Bienes Patrimoniales -> " + frase
+  elsif frase.include? "aportes del estado"
+    frase = "Aportes del Estado (Art. 33 Bis Ley N° 18603)"
+    # p "Aportes del Estado (Art. 33 Bis Ley N° 18603) -> " + frase
+  elsif frase.include? "blicas"
+    frase = "Otras transferencias públicas"
+    # p "Otras Transferencias Públicas -> " + frase
+  elsif frase.include? "privadas"
+    frase = "Otras transferencias privadas"
+    # p "Otras Transferencias Privadas -> " + frase
+  elsif frase.include? "gresos militantes"
+    frase = "Ingresos militantes"
+    # p "Ingresos Militantes -> " + frase
+  elsif frase.include? "personal"
+    frase = "Gastos de personal"
+    # p " -> " + frase
+  elsif frase.include? "gastos corrientes"
+    frase = "Gastos de adquisición de bienes y servicios o gastos corrientes"
+    # p " -> " + frase
+  elsif frase.include? "préstamos de corto plazo"
+    frase = "Gastos financieros por préstamos de corto plazo"
+    # p " -> " + frase
+  elsif frase.include? "préstamos de largo plazo"
+    frase = "Gastos financieros por préstamos de largo plazo"
+    # p " -> " + frase
+  elsif frase.include? "administraci"
+    frase = "Otros gastos de administración"
+    # p " -> " + frase
+  elsif frase.include? "investigaci"
+    frase = "Gastos de actividades de investigación"
+    # p " -> " + frase
+  elsif frase.include? "educación cívica"
+    frase = "Gastos de actividades de educación cívica"
+    # p " -> " + frase
+  elsif frase.include? "femenina"
+    frase = "Gastos de actividades de fomento a la particiación femenina"
+    # p " -> " + frase
+  elsif frase.include? "de los j"
+     frase = "Gastos de actividades de fomento a la participación de los jóvenes"
+    #  p " -> " + frase
+   elsif frase.include? "corto plazo, inversiones"
+     frase = "Créditos de corto plazo, inversiones y valores de operaciones de capital"
+    #  p " -> " + frase
+   elsif frase.include? "largo plazo, inversiones"
+     frase = "Créditos de largo plazo, inversiones y valores de operaciones de capital"
+    #  p " -> " + frase
+   elsif frase.include? "de candidatos a cargos de elecc"
+     frase = "Gastos de las actividades de preparación de candidatos a cargos de elección popular"
+    #  p " -> " + frase
+   elsif frase.include? "n de militantes"
+     frase = "Gastos de las actividades de formación de militantes"
+    #  p " -> " + frase
+   end
+
+  frase
 end
 
 def today
