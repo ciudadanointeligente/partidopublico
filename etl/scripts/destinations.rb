@@ -554,11 +554,13 @@ class SancionDestination
       @results[:sancions][:errors] += 1
     end
 
+    link_resolucion = validate_url(row[:vnculo_a_la_resolucin])
+
     sancion = Sancion.where(partido_id: row[:partido_id],
                             fecha: fecha_de_resolucin,
                             descripcion: row[:infraccin_cometida],
                             tipo_sancion: row[:tipo_de_sancin],
-                            link_resolucion: row[:vnculo_a_la_resolucin]).first_or_initialize
+                            link_resolucion: link_resolucion).first_or_initialize
 
     if sancion.id.nil?
       sancion.save

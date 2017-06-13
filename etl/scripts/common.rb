@@ -6,6 +6,14 @@ require_relative 'sources'
 require_relative 'destinations'
 require_relative 'transformations'
 
+def validate_url(url)
+  if !(url =~ /\A#{URI::regexp(['http', 'https'])}\z/)
+    url = nil
+  end
+
+  url
+end
+
 def clean_number(numero)
   numero = numero.to_s
   numero.delete! ','

@@ -390,14 +390,50 @@ class PartidosController < ApplicationController
     end
   end
 
+  # MÉTODO ANTIGUO
+  # def sanciones
+  #   @sanciones = []
+  #   @partido.sancions.each do |s|
+  #     @sanciones.push s
+  #   end
+  #   if @sanciones.count == 0
+  #     @sin_datos = true
+  #   else
+  #     @sin_datos = false
+  #   end
+  # end
+
   def sanciones
-    @sanciones = []
+
+    temp_trimestres_informados = []
     @partido.sancions.each do |s|
-      @sanciones.push s
+      s.trimestre_informados.each do |t|
+
+        temp_trimestres_informados.push(t)
+
+      end
     end
-    if @sanciones.count == 0
+
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
+
+    if @trimestres_informados.count == 0
+      @trimestres_informados = []
+      @sanciones = []
       @sin_datos = true
     else
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+      p 'IIIH >>>> ' + @trimestre_informado.to_s
+
+      sanciones = @trimestre_informado.sancions.where(:partido_id => @partido.id)
+
+      @sanciones = []
+      sanciones.each do |s|
+        @sanciones.push(s)
+        p s
+      end
       @sin_datos = false
     end
   end
@@ -436,10 +472,10 @@ class PartidosController < ApplicationController
       ingresos_ordinarios = @trimestre_informado.ingreso_ordinarios.where(:partido_id => @partido.id)
 
       total_publicos = ingresos_ordinarios.where(:partido_id => @partido.id,
-                                                  :concepto => (["Aportes del Estado (Art. 33 Bis Ley N° 18603)",
-                                                                 "Otras transferencias públicas"])).sum(:importe) rescue 0
+                                                 :concepto => (["Aportes del Estado (Art. 33 Bis Ley N° 18603)",
+                                                                "Otras transferencias públicas"])).sum(:importe) rescue 0
       total_privados = ingresos_ordinarios.where(:partido_id => @partido.id,
-                                                  :concepto => (["Cotizaciones",
+                                                 :concepto => (["Cotizaciones",
                                                                  "Donaciones",
                                                                  "Asignaciones testamentarias",
                                                                  "Frutos y productos de los bienes patrimoniales",
