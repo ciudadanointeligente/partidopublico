@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170609203947) do
+ActiveRecord::Schema.define(version: 20170616185943) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,10 @@ ActiveRecord::Schema.define(version: 20170609203947) do
     t.integer  "ano_nacimiento"
     t.integer  "otros"
     t.string   "trimestre_informado"
+    t.integer  "total_afiliados"
+    t.string   "porcentaje_hombres"
+    t.string   "porcentaje_mujeres"
+    t.string   "rango_etareo"
   end
 
   add_index "afiliacions", ["partido_id"], name: "index_afiliacions_on_partido_id", using: :btree

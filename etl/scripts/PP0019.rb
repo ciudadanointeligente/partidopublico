@@ -19,7 +19,7 @@ results[:end_time] = 0
 
 pre_process do
   results[:start_time] = Time.now
-  p "*** Start #{job_name} Afiliados MIGRATION #{results[:start_time]}***"
+  p "*** Start #{job_name} Rangos Etarios y Total Militantes MIGRATION #{results[:start_time]}***"
 end
 
 files = Dir[input_path + "#{job_name}.csv"]
@@ -45,7 +45,7 @@ transform PartidoLookup, verbose: verbosing, results: results
 
 transform TrimestreInformadoLookup, verbose: verbosing,  results: results
 
-# destination AfiliacionDestination, verbose: verbosing, results: results
+destination AfiliacionDestination, verbose: verbosing, results: results
 
 destination ErrorCSVDestination, filename: log_path + job_name + '.log'
 

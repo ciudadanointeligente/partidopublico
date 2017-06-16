@@ -598,11 +598,30 @@ class AfiliacionDestination
 
   def write(row)
 
-    total_afiliados = clean_number(row[:nmero_total_de_afiliados])
-    afiliacion = Afiliacion.where(partido_id: row[:partido_id],
-                                  otros: total_afiliados).first_or_initialize
-
+    # total_afiliados = clean_number(row[:nmero_total_de_afiliados])
+    # afiliacion = Afiliacion.where(partido_id: row[:partido_id],
+    #                               otros: total_afiliados).first_or_initialize
     trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+    cantidad_mujeres = clean_number(row[:n_mujeres])
+    cantidad_hombres = clean_number(row[:n_hombres])
+    total_afiliados = clean_number(row[:total])
+
+    if row[:total_y_rango_etario] == 'Total Militantes'
+      afiliacion = Afiliacion.where(partido_id: row[:partido_id],
+                                    rango_etareo: row[:total_y_rango_etario],
+                                    mujeres: cantidad_mujeres,
+                                    porcentaje_mujeres: row[:_mujeres],
+                                    hombres: cantidad_hombres,
+                                    porcentaje_hombres: row[:_hombres],
+                                    total_afiliados: total_afiliados).first_or_initialize
+    else
+      afiliacion = Afiliacion.where(partido_id: row[:partido_id],
+                                    rango_etareo: row[:total_y_rango_etario],
+                                    mujeres: cantidad_mujeres,
+                                    porcentaje_mujeres: row[:_mujeres],
+                                    hombres: cantidad_hombres,
+                                    porcentaje_hombres: row[:_hombres]).first_or_initialize
+    end
 
     if afiliacion.id.nil?
       afiliacion.save
@@ -615,6 +634,9 @@ class AfiliacionDestination
       end
     else
       afiliacion.trimestre_informados << trimestre_informado unless trimestre_informado.in?(afiliacion.trimestre_informados)
+      # p afiliacion.partido_id.to_s
+      # p afiliacion.mujeres.to_s
+      # p afiliacion.hombres.to_s
       @results[:afiliacions][:found] += 1
     end
   end

@@ -8,9 +8,10 @@ class PartidosController < ApplicationController
   before_action :set_fecha_datos
   layout "frontend", only: [:normas_internas, :regiones_all, :sedes_partido, :autoridades,
                             :vinculos_intereses, :pactos, :sanciones,
-                            :finanzas_1, :finanzas_2, :finanzas_5,
-                            :afiliacion_desafiliacion, :eleccion_popular, :organos_internos, :elecciones_internas,
-                            :representantes, :acuerdos_organos, :estructura_organica, :actividades_publicas,
+                            :finanzas_1, :finanzas_2, :finanzas_5, :ingresos_campana, :egresos_campana,
+                            :contrataciones_20utm, :afiliacion_desafiliacion, :eleccion_popular,
+                            :organos_internos, :elecciones_internas, :representantes,
+                            :acuerdos_organos, :estructura_organica, :actividades_publicas,
                             :intereses_patrimonios, :publicacion_candidatos, :resultado_elecciones_internas
                           ]
 
@@ -297,8 +298,19 @@ class PartidosController < ApplicationController
       params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
-      @cantidad_afiliados = @partido.afiliacions.last.total
-      @sin_datos = false
+      p 'AAAAAAAA'
+
+      if @trimestre_informado.afiliacions.where(:partido_id => @partido.id,
+                                                :rango_etareo => "Total Militantes").first.nil?
+
+        @trimestres_no_calzan = true
+      else
+        # @cantidad_afiliados = @partido.afiliacions.last.total
+        @cantidad_afiliados = @trimestre_informado.afiliacions.where(:partido_id => @partido.id,
+                                             :rango_etareo => "Total Militantes").first.total_afiliados
+        @trimestres_no_calzan = false
+        @sin_datos = false
+      end
     end
   end
 
@@ -463,6 +475,108 @@ class PartidosController < ApplicationController
       @datos_ingresos_ordinarios = []
       # line ={ 'text'=> 'Sin información', 'value' => 0, 'percentage' => 0 }
       # @datos_ingresos_ordinarios << line
+      @datos_ingresos_ordinarios_totals = {'publicos' => 0, 'privados' => 0}
+      @sin_datos = true
+    else
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+      ingresos_ordinarios = @trimestre_informado.ingreso_ordinarios.where(:partido_id => @partido.id)
+
+      total_publicos = ingresos_ordinarios.where(:partido_id => @partido.id,
+                                                 :concepto => (["Aportes del Estado (Art. 33 Bis Ley N° 18603)",
+                                                                "Otras transferencias públicas"])).sum(:importe) rescue 0
+      total_privados = ingresos_ordinarios.where(:partido_id => @partido.id,
+                                                 :concepto => (["Cotizaciones",
+                                                                 "Donaciones",
+                                                                 "Asignaciones testamentarias",
+                                                                 "Frutos y productos de los bienes patrimoniales",
+                                                                 "Otras transferencias privadas",
+                                                                 "Ingresos militantes"])).sum(:importe) rescue 0
+      max_value = total_publicos + total_privados
+      @datos_ingresos_ordinarios = []
+      ingresos_ordinarios.each do |io|
+        val = ((io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
+        line ={ 'text'=> io.concepto,
+                'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe,
+                                                                            delimiter: ""),
+                'percentage' => val }
+        @datos_ingresos_ordinarios << line unless io.importe == 0
+      end
+
+      @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
+      @sin_datos = false
+    end
+  end
+
+  def ingresos_campana
+
+    temp_trimestres_informados = []
+    @partido.ingreso_ordinarios.each do |io|
+      io.trimestre_informados.each do |t|
+
+        temp_trimestres_informados.push(t)
+
+      end
+    end
+
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
+
+    if @trimestres_informados.count == 0
+      @trimestres_informados = []
+      @datos_ingresos_ordinarios = []
+      @datos_ingresos_ordinarios_totals = {'publicos' => 0, 'privados' => 0}
+      @sin_datos = true
+    else
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+      ingresos_ordinarios = @trimestre_informado.ingreso_ordinarios.where(:partido_id => @partido.id)
+
+      total_publicos = ingresos_ordinarios.where(:partido_id => @partido.id,
+                                                 :concepto => (["Aportes del Estado (Art. 33 Bis Ley N° 18603)",
+                                                                "Otras transferencias públicas"])).sum(:importe) rescue 0
+      total_privados = ingresos_ordinarios.where(:partido_id => @partido.id,
+                                                 :concepto => (["Cotizaciones",
+                                                                 "Donaciones",
+                                                                 "Asignaciones testamentarias",
+                                                                 "Frutos y productos de los bienes patrimoniales",
+                                                                 "Otras transferencias privadas",
+                                                                 "Ingresos militantes"])).sum(:importe) rescue 0
+      max_value = total_publicos + total_privados
+      @datos_ingresos_ordinarios = []
+      ingresos_ordinarios.each do |io|
+        val = ((io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
+        line ={ 'text'=> io.concepto,
+                'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe,
+                                                                            delimiter: ""),
+                'percentage' => val }
+        @datos_ingresos_ordinarios << line unless io.importe == 0
+      end
+
+      @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
+      @sin_datos = false
+    end
+  end
+
+  def egresos_campana
+
+    temp_trimestres_informados = []
+    @partido.ingreso_ordinarios.each do |io|
+      io.trimestre_informados.each do |t|
+
+        temp_trimestres_informados.push(t)
+
+      end
+    end
+
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
+
+    if @trimestres_informados.count == 0
+      @trimestres_informados = []
+      @datos_ingresos_ordinarios = []
       @datos_ingresos_ordinarios_totals = {'publicos' => 0, 'privados' => 0}
       @sin_datos = true
     else

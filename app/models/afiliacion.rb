@@ -13,6 +13,10 @@
 #  ano_nacimiento      :integer
 #  otros               :integer
 #  trimestre_informado :string
+#  total_afiliados     :integer
+#  porcentaje_hombres  :string
+#  porcentaje_mujeres  :string
+#  rango_etareo        :string
 #
 # Indexes
 #
