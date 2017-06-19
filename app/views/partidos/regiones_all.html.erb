@@ -28,7 +28,11 @@
         </p>
     <div>
       <h4>Cantidad afiliados:  </h4>
+      <% if @sin_info_afiliados %>
+      <span><%= @cantidad_afiliados%></span>
+      <% else %>
       <span class="total-max"><%= @cantidad_afiliados%></span>
+      <% end %>
     </div>
     <div class="col-md-6 col-md-offset-3 text-center">
           <%= render 'svg_map_all' %>

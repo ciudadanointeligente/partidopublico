@@ -298,18 +298,21 @@ class PartidosController < ApplicationController
       params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
-      p 'AAAAAAAA'
-
       if @trimestre_informado.afiliacions.where(:partido_id => @partido.id,
                                                 :rango_etareo => "Total Militantes").first.nil?
 
-        @trimestres_no_calzan = true
+        @sin_info_afiliados = true
       else
         # @cantidad_afiliados = @partido.afiliacions.last.total
         @cantidad_afiliados = @trimestre_informado.afiliacions.where(:partido_id => @partido.id,
                                              :rango_etareo => "Total Militantes").first.total_afiliados
-        @trimestres_no_calzan = false
-        @sin_datos = false
+        @sin_info_afiliados = false
+      end
+      @sin_datos = false
+      p 'CANTIDAD DE AFILIADOS >' + @cantidad_afiliados.to_s + '<'
+      if @cantidad_afiliados.nil?
+        @cantidad_afiliados = 'El partido no ha entregado
+         la información correspondiente al trimestre consultado'
       end
     end
   end
@@ -339,7 +342,8 @@ class PartidosController < ApplicationController
       @datos_sedes = []
       region_ids_with_sede = @partido.sedes.select(:region_id).uniq.map(&:region_id)
       region_ids_with_sede.each do |r|
-        sedes = @trimestre_informado.sedes.where(region_id: r)
+        # sedes = @trimestre_informado.sedes.where(region_id: r)
+        sedes = @trimestre_informado.sedes.where(region_id: r).where(partido_id: @partido.id)
         all_sedes = []
         sedes.each do |s|
           all_sedes.push( { 'direccion' => s.direccion, 'contacto' => s.contacto, 'comuna' => s.comuna.nombre } )
