@@ -14,12 +14,19 @@
 
   <div>
     <span id="header"></span>
+    <div class="row">
+      <div class="col-md-12">
+        <span class="leyenda-finanzas"><img/ class="circle-sky_light"> Primer</span>
+        <span class="leyenda-finanzas"><img/ class="circle-sky_medium"> Segundo</span>
+        <span class="leyenda-finanzas"><img/ class="circle-sky_dark"> Tercer mes</span>
+      </div>
+    </div>
     <div class="table-responsive">
       <table class="table">
         <thead>
           <tr>
             <th class="concepto-th">Concepto</th>
-            <th>&nbsp;</th>
+            <th>&nbsp;<div class="visible-xs">Porcentaje</div></th>
             <th class="monto-th">Monto Total</th>
           </tr>
         </thead>
@@ -27,7 +34,12 @@
           <% @datos_temp_transferencias.each_with_index do |linea, i| %>
           <tr>
             <td class="concepto"><%= linea['text'] unless linea.nil? %></td>
-            <td><span id="barras_<%= i.to_s %>"></span></td>
+            <td>
+              <div class="porcentaje-movil"> <%=
+                (linea['percentage'].to_f*100).round(2).to_s + '%'
+              %></div>
+              <div id="barras_<%= i.to_s %>"></div>
+            </td>
             <td class="monto">
               <%= number_to_currency(linea['value'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") unless linea.nil? %>
             </td>
@@ -55,11 +67,11 @@ $(document).ready(function(){
   var data_totals = <%=  @datos_transferencias_totals.to_json.html_safe %>;
   var fechas = <%=  @fechas_datos.to_json.html_safe %>;
   var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
-  // if (fechas.length > 0){
-  //   Raphael("barras",700, 1000 ).transferencias_chart(data, data_totals,fecha_seleccionada);
-  // } else {
-  //   Raphael("barras",700, 200 ).no_data_chart()
-  // }
+  if (fechas.length > 0){
+    Raphael("barras",700, 1000 ).transferencias_chart(data, data_totals,fecha_seleccionada);
+  } else {
+    Raphael("barras",700, 200 ).no_data_chart()
+  }
 
   //Raphael("header",500, 40 ).egreso_ord_front_header();
 
@@ -67,6 +79,6 @@ $(document).ready(function(){
     Raphael("barras_" + i,300, 30 ).transferencia_front_bar(data[i]);
   }
 
-  //Raphael("footer",500, 40 ).egreso_ord_front_footer(data_totals);
+  Raphael("footer",500, 40 ).egreso_ord_front_footer(data_totals);
 });
 </script>

@@ -762,9 +762,12 @@ class PartidosController < ApplicationController
       .group('extract(year from fecha),extract(month from fecha)')
       .order('extract(year from fecha),extract(month from fecha)')
 
-      max_value = 2
-
-      # p max_value.to_s
+      max_value = 0
+      temp_transferencias.sum(:monto).each do |key, monto|
+        puts 'mes -> ' + "#{key}" + ' monto ->' "#{monto}"
+        max_value += monto
+      end
+      p 'MAX VALUE >>>>' + max_value.to_s + '<<<'
       total = 0
       @datos_temp_transferencias = []
       temp_transferencias.each do |tr|
@@ -782,8 +785,8 @@ class PartidosController < ApplicationController
             p 'mes dentro: ' + tr.month.to_s
             mes = get_month(tr.month.round(0))
             año = tr.year.round(0).to_s
-            val = (100 * ((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-            p 'bien = '+ mes + ' valor = ' + val.to_s
+            val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+            p 'bien = '+ mes + ' porcentaje = ' + val.to_s
             # val = 100.to_s    <- WIP
             line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
             total += tr.sum
