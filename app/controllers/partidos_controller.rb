@@ -765,7 +765,7 @@ class PartidosController < ApplicationController
       max_value = 0
       temp_transferencias.sum(:monto).each do |key, monto|
         puts 'mes -> ' + "#{key}" + ' monto ->' "#{monto}"
-        max_value += monto
+        max_value += monto unless key.nil?
       end
       p 'MAX VALUE >>>>' + max_value.to_s + '<<<'
       total = 0

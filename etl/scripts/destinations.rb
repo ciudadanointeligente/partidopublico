@@ -288,7 +288,7 @@ class EgresoCampanaDestination
                                          monto: monto,
                                          estado: row[:estado])
 
-    if egreso_campana.id.nil?
+    if egreso_campana.id.nil? && !egreso_campana.partido_id.nil?
       egreso_campana.save
       if egreso_campana.errors.any?
         row[:error_log] = row[:error_log].to_s + ', ' + egreso_campana.errors.messages.to_s
@@ -298,6 +298,9 @@ class EgresoCampanaDestination
         @trimestres << trimestre_informado unless trimestre_informado.in?(@trimestres)
         @results[:egreso_campanas][:new] += 1
       end
+    elsif egreso_campana.partido_id.nil?
+      row[:error_log] = row[:error_log].to_s + ', ' + egreso_campana.errors.messages.to_s
+      @results[:egreso_campanas][:errors] += 1
     else
       egreso_campana.trimestre_informados << trimestre_informado unless trimestre_informado.in?(egreso_campana.trimestre_informados)
       @trimestres << trimestre_informado unless trimestre_informado.in?(@trimestres)
@@ -378,9 +381,9 @@ class EgresoOrdinarioDestination
     #   p 'IH' + @contador.to_s
     #   @contador += 1
     # end
-    if egreso_ordinario.id.nil?
+    if egreso_ordinario.id.nil? && !egreso_ordinario.partido_id.nil?
       egreso_ordinario.save
-      if egreso_ordinario.errors.any?
+      if egreso_ordinario.errors.any? || egreso_ordinario.partido_id.nil?
         row[:error_log] = row[:error_log].to_s + ', ' + egreso_ordinario.errors.messages.to_s
         @results[:egreso_ordinarios][:errors] += 1
       else
@@ -388,13 +391,16 @@ class EgresoOrdinarioDestination
         @trimestres << trimestre_informado unless trimestre_informado.in?(@trimestres)
         @results[:egreso_ordinarios][:new] += 1
       end
+    elsif egreso_ordinario.partido_id.nil?
+      row[:error_log] = row[:error_log].to_s + ', ' + egreso_ordinario.errors.messages.to_s
+      @results[:egreso_ordinarios][:errors] += 1
     else
       egreso_ordinario.trimestre_informados << trimestre_informado unless trimestre_informado.in?(egreso_ordinario.trimestre_informados)
       @trimestres << trimestre_informado unless trimestre_informado.in?(@trimestres)
       @results[:egreso_ordinarios][:found] += 1
     end
-    @partidos_id << egreso_ordinario.partido_id
-    @conceptos << egreso_ordinario.concepto
+    # @partidos_id << egreso_ordinario.partido_id
+    # @conceptos << egreso_ordinario.concepto
   end
 
   def close
@@ -439,7 +445,7 @@ class IngresoCampanaDestination
                                          monto: monto)
 
 
-    if ingreso_campana.id.nil?
+    if ingreso_campana.id.nil? && !ingreso_campana.partido_id.nil?
       ingreso_campana.save
       if ingreso_campana.errors.any?
         row[:error_log] = row[:error_log].to_s + ', ' + ingreso_campana.errors.messages.to_s
@@ -449,6 +455,9 @@ class IngresoCampanaDestination
         @trimestres << trimestre_informado unless trimestre_informado.in?(@trimestres)
         @results[:ingreso_campanas][:new] += 1
       end
+    elsif ingreso_campana.partido_id.nil?
+      row[:error_log] = row[:error_log].to_s + ', ' + ingreso_campana.errors.messages.to_s
+      @results[:ingreso_campanas][:errors] += 1
     else
       ingreso_campana.trimestre_informados << trimestre_informado unless trimestre_informado.in?(ingreso_campana.trimestre_informados)
       @trimestres << trimestre_informado unless trimestre_informado.in?(@trimestres)
@@ -494,7 +503,6 @@ class TransferenciaDestination
 
     fecha = row[:fecha_transferencia].to_date unless row[:fecha_transferencia].nil?
     transferencia = Transferencia.new(partido_id: row[:partido_id],
-                                        # fecha: row[:fecha_transferencia].to_date unless row[:fecha_transferencia].nil?,
                                         fecha: fecha,
                                         monto: clean_number(row[:monto]),
                                         descripcion: row[:objeto_de_la_transferencia],
@@ -502,7 +510,7 @@ class TransferenciaDestination
                                         rut: row[:rut_persona_jurdica],
                                         persona_natural: row[:persona_natural_receptora].downcase.titleize)
 
-    if transferencia.id.nil?
+    if transferencia.id.nil? && !transferencia.partido_id.nil?
       transferencia.save
       if transferencia.errors.any?
         row[:error_log] = row[:error_log].to_s + ', ' + transferencia.errors.messages.to_s
@@ -512,6 +520,9 @@ class TransferenciaDestination
         @trimestres << trimestre_informado unless trimestre_informado.in?(@trimestres)
         @results[:transferencias][:new] += 1
       end
+    elsif transferencia.partido_id.nil?
+      row[:error_log] = row[:error_log].to_s + ', ' + transferencia.errors.messages.to_s
+      @results[:transferencias][:errors] += 1
     else
       transferencia.trimestre_informados << trimestre_informado unless trimestre_informado.in?(transferencia.trimestre_informados)
       @trimestres << trimestre_informado unless trimestre_informado.in?(@trimestres)
