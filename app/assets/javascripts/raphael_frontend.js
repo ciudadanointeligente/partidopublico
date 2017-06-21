@@ -360,18 +360,89 @@ $(document).ready(function(){
 
   }
 
+  Raphael.fn.transferencia_front_header = function(){
+    var paper = this;
+  };
+
   Raphael.fn.transferencia_front_bar = function(dato){
     var paper = this;
-    var bar_width = 300;
-    var bar_height = 30;
-    var width = bar_width * (dato.percentage / 100);
+    if(screen.width > 760) {
+      var bar_width = 300;
+      var bar_height = 30;
+    } else {
+      var bar_width = 80
+      var bar_height = 20
+    }
+    var transferencia_width = dato.percentage * bar_width;
+    if (transferencia_width < 1) {
+      transferencia_width = 1;
+      if (dato.value == 0) {
+        transferencia_width = 0;
+      }
+    }
+    console.log(dato)
+    console.log(transferencia_width)
+    console.log(dato.text)
 
+    if(!dato.text.indexOf("Octubre")) {
+      color = sky_light;
+      console.log("DENTRO IF" + dato.text)
+    } else if (dato.text == "Gastos financieros por préstamos de corto plazo" ||
+               dato.text == "Gastos financieros por préstamos de largo plazo" ||
+               dato.text == "Créditos de corto plazo, inversiones y valores de operaciones de capital" ||
+               dato.text ==  "Créditos de largo plazo, inversiones y valores de operaciones de capital"){
+      color = sky_medium;
+      console.log("DENTRO ELSE IF 1" + dato.text)
+    } else if (dato.text == "Gastos de actividades de investigación" ||
+               dato.text == "Gastos de actividades de educación cívica" ||
+               dato.text == "Gastos de actividades de fomento a la particiación femenina" ||
+               dato.text == "Gastos de actividades de fomento a la participación de los jóvenes" ||
+               dato.text == "Gastos de las actividades de preparación de candidatos a cargos de elección popular" ||
+               dato.text == "Gastos de las actividades de formación de militantes"){
+      color = sky_dark
+      console.log("DENTRO ELSE IF 2" + dato.text)
+    }
 
-    var bar = paper.rect(0, 0, width, bar_height).attr({
-      "fill" : sky_light,
+    var bar = paper.rect(0, 0, transferencia_width, bar_height).attr({
+      "fill" : color,
       "stroke" : "none"
     });
 
   }
+
+  Raphael.fn.transferencia_front_footer = function(dato){
+    var paper = this;
+    if (screen.width > 760) {
+      var bar_width = 300;
+      var bar_height = 30;
+    }
+    else {
+      var bar_width = 80
+      var bar_height = 20
+    }
+    var administracion_width = (dato.gastos_administracion / (dato.gastos_administracion + dato.gastos_creditos_inversiones + dato.gastos_formacion)) * bar_width;
+    console.log("administracion_width: " + administracion_width);
+    var creditos_inversiones_width = (dato.gastos_creditos_inversiones / (dato.gastos_administracion + dato.gastos_creditos_inversiones + dato.gastos_formacion)) * bar_width;
+    console.log("creditos_inversiones_width: " + creditos_inversiones_width);
+    var formacion_width = bar_width - (administracion_width+creditos_inversiones_width);
+    console.log("formacion_width: " + formacion_width);
+
+    var administracion_bar = paper.rect(0, 0, administracion_width, bar_height).attr({
+      "fill" : sky_light,
+      "stroke" : "none"
+    });
+
+    var creditos_inversiones_bar = paper.rect(administracion_width, 0, creditos_inversiones_width, bar_height).attr({
+      "fill" : sky_medium,
+      "stroke" : "none"
+    });
+
+    var formacion_bar = paper.rect((administracion_width + creditos_inversiones_width), 0, formacion_width, bar_height).attr({
+      "fill" : sky_dark,
+      "stroke" : "none"
+    });
+
+  }
+
 
 })

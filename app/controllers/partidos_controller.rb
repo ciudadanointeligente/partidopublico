@@ -769,7 +769,7 @@ class PartidosController < ApplicationController
       end
       p 'MAX VALUE >>>>' + max_value.to_s + '<<<'
       total = 0
-      @datos_temp_transferencias = []
+      @datos_transferencias = []
       temp_transferencias.each do |tr|
         if tr.sum < 0
           tr.sum = tr.sum * -1
@@ -792,7 +792,7 @@ class PartidosController < ApplicationController
             total += tr.sum
           end
         if !line.nil?
-          @datos_temp_transferencias << line
+          @datos_transferencias << line
         end
       end
       @datos_transferencias_totals = { :total => total }
