@@ -14,13 +14,13 @@
 
   <div>
     <span id="header"></span>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-12">
         <span class="leyenda-finanzas"><img/ class="circle-sky_light"> Primer</span>
         <span class="leyenda-finanzas"><img/ class="circle-sky_medium"> Segundo</span>
         <span class="leyenda-finanzas"><img/ class="circle-sky_dark"> Tercer mes</span>
       </div>
-    </div>
+    </div> -->
     <div class="table-responsive">
       <table class="table">
         <thead>
@@ -49,7 +49,8 @@
         <tfoot>
           <tr>
             <th class="total">Total</th>
-            <th>&nbsp;</th>
+            <!-- <th>&nbsp;</th> -->
+            <th><span id='footer'></span></th>
             <th class="total monto"> <%=  number_to_currency(@datos_transferencias_totals[:total], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %> </th>
           </tr>
         </tfoot>
@@ -67,18 +68,6 @@ $(document).ready(function(){
   var data_totals = <%=  @datos_transferencias_totals.to_json.html_safe %>;
   var fechas = <%=  @fechas_datos.to_json.html_safe %>;
   var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
-  // if (fechas.length > 0){
-  //   Raphael("barras",700, 1000 ).transferencias_chart(data, data_totals,fecha_seleccionada);
-  // } else {
-  //   Raphael("barras",700, 200 ).no_data_chart()
-  // }
-  //Raphael("header",500, 40 ).egreso_ord_front_header();
-
-  // for(var i=0; i < data.length; i++){
-  //   Raphael("barras_" + i,300, 30 ).transferencia_front_bar(data[i]);
-  // }
-  //
-  // Raphael("footer",500, 40 ).egreso_ord_front_footer(data_totals);
 
   for(var i=0; i < data.length; i++){
     console.log(data[i]);
