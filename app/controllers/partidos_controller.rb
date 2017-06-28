@@ -765,31 +765,43 @@ class PartidosController < ApplicationController
       max_value = 0
       temp_transferencias.each do |tr|
         if tr.year == @trimestre_informado.ano
+
           mes = get_month(tr.month.round(0))
 
-          if (mes.include?("Enero") || mes.include?("Febrero") || mes.include?("Marzo"))
-            max_value += tr.sum
-            max_value = max_value * -1 unless max_value > 0
-          end
+          p '1. Año: ' + tr.year.to_s + ' Mes: ' + tr.month.to_s
 
-          if (mes.include?("Abril") || mes.include?("Mayo") || mes.include?("Junio"))
-            max_value += tr.sum
-            max_value = max_value * -1 unless max_value > 0
-          end
+          if @trimestre_informado.ordinal == 0
+            if (mes.include?("Enero") || mes.include?("Febrero") || mes.include?("Marzo"))
+              max_value += tr.sum unless mes.nil?
+            end
 
-          if (mes.include?("Julio") || mes.include?("Agosto") || mes.include?("Septiembre"))
-            max_value += tr.sum
-            max_value = max_value * -1 unless max_value > 0
-          end
+          elsif @trimestre_informado.ordinal == 1
+            if (mes.include?("Abril") || mes.include?("Mayo") || mes.include?("Junio"))
+              max_value += tr.sum
+              max_value = max_value * -1 unless max_value >= 0
+            end
 
-          if (mes.include?("Octubre") || mes.include?("Noviembre") || mes.include?("Diciembre"))
-            max_value += tr.sum
-            max_value = max_value * -1 unless max_value > 0
+          elsif @trimestre_informado.ordinal == 2
+            if (mes.include?("Julio") || mes.include?("Agosto") || mes.include?("Septiembre"))
+              max_value += tr.sum
+              max_value = max_value * -1 unless max_value >= 0
+            end
+
+          elsif @trimestre_informado.ordinal == 3
+            if (mes.include?("Octubre") || mes.include?("Noviembre") || mes.include?("Diciembre"))
+              max_value += tr.sum
+              max_value = max_value * -1 unless max_value >= 0
+            end
           end
         end
       end
 
-      # p 'MAX VALUE >>>>' + max_value.to_s + '<<<'
+      if max_value < 0
+        max_value = max_value * -1
+      end
+
+      p 'Max value: ' + max_value.to_s
+
       primer_mes = 0
       segundo_mes = 0
       tercer_mes = 0
@@ -801,126 +813,120 @@ class PartidosController < ApplicationController
           tr.sum = tr.sum * -1
         end
 
-        p tr.year.to_s + tr.month.to_s
-        p 'mes afuera: ' + tr.month.to_s
+        p '2. Año: ' + tr.year.to_s + ' Mes: ' + tr.month.to_s
 
           if tr.year == @trimestre_informado.ano
 
             if tr.month.nil?
               line = {'text' => "Sin información", 'value' => tr.sum}
-              p 'mes nulo: ' + line.to_s
+              p 'Mes nulo: ' + line.to_s
             end
 
-            p 'mes dentro: ' + tr.month.to_s
-            p 'ordinal trimestre informado: ' + @trimestre_informado.ordinal.to_s
+            p 'Mes dentro: ' + tr.month.to_s
+            p 'Ordinal trimestre informado: ' + @trimestre_informado.ordinal.to_s
 
             if @trimestre_informado.ordinal == 0
-              p 'MAX VALUE >>>>' + max_value.to_s + '<<<'
               mes = get_month(tr.month.round(0))
               if mes.include?("Enero")
                 primer_mes = tr.sum
-                p mes.to_s + primer_mes.to_s
                 año = tr.year.round(0).to_s
                 val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes = '+ mes + ' valor = ' + primer_mes.to_s + ' porcentaje = ' + val.to_s
+                p 'Mes: '+ mes + '| Valor: ' + primer_mes.to_s + '| Porcentaje: ' + val.to_s
                 line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += primer_mes
+                p 'Total primer mes: ' + total.to_s
               elsif mes.include?("Febrero")
                 segundo_mes = tr.sum
-                p mes.to_s + segundo_mes.to_s
                 año = tr.year.round(0).to_s
                 val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes = '+ mes + ' valor = ' + segundo_mes.to_s + ' porcentaje = ' + val.to_s
+                p 'Mes: '+ mes + '| Valor: ' + segundo_mes.to_s + '| Porcentaje: ' + val.to_s
                 line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += segundo_mes
+                p 'Total segundo mes: ' + total.to_s
               elsif mes.include?("Marzo")
                 tercer_mes = tr.sum
-                p mes.to_s+
                 año = tr.year.round(0).to_s
                 val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes = '+ mes + ' valor = ' + tercer_mes.to_s + ' porcentaje = ' + val.to_s
+                p 'Mes: '+ mes + '| Valor: ' + tercer_mes.to_s + '| Porcentaje: ' + val.to_s
                 line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += tercer_mes
+                p 'Total tercer mes: ' + total.to_s
               end
             elsif @trimestre_informado.ordinal == 1
               p 'MAX VALUE >>>>' + max_value.to_s + '<<<'
               mes = get_month(tr.month.round(0))
               if mes.include?("Abril")
                 primer_mes = tr.sum
-                p mes.to_s + primer_mes.to_s
                 año = tr.year.round(0).to_s
                 val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes = '+ mes + ' valor = ' + primer_mes.to_s + ' porcentaje = ' + val.to_s
+                p 'Mes: '+ mes + '| Valor: ' + primer_mes.to_s + '| Porcentaje: ' + val.to_s
                 line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-                total += primer_mes + segundo_mes + tercer_mes
+                total += primer_mes
               elsif mes.include?("Mayo")
                 segundo_mes = tr.sum
-                p mes.to_s + segundo_mes.to_s
                 año = tr.year.round(0).to_s
                 val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes = '+ mes + ' valor = ' + segundo_mes.to_s + ' porcentaje = ' + val.to_s
+                p 'Mes: '+ mes + '| Valor: ' + segundo_mes.to_s + '| Porcentaje: ' + val.to_s
                 line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-                total += primer_mes + segundo_mes + tercer_mes
+                total += segundo_mes
               elsif mes.include?("Junio")
                 tercer_mes = tr.sum
-                p mes.to_s+
                 año = tr.year.round(0).to_s
                 val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes = '+ mes + ' valor = ' + tercer_mes.to_s + ' porcentaje = ' + val.to_s
+                p 'Mes: '+ mes + '| Valor: ' + tercer_mes.to_s + '| Porcentaje: ' + val.to_s
                 line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-                total += primer_mes + segundo_mes + tercer_mes
+                total += tercer_mes
               end
 
             elsif @trimestre_informado.ordinal == 2
-              p 'MAX VALUE >>>>' + max_value.to_s + '<<<'
               mes = get_month(tr.month.round(0))
               if mes.include?("Julio")
                 primer_mes = tr.sum
-                p mes.to_s + primer_mes.to_s
                 año = tr.year.round(0).to_s
                 val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes = '+ mes + ' valor = ' + primer_mes.to_s + ' porcentaje = ' + val.to_s
+                p 'Mes: '+ mes + '| Valor: ' + primer_mes.to_s + '| Porcentaje: ' + val.to_s
                 line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += primer_mes
               elsif mes.include?("Agosto")
                 segundo_mes = tr.sum
-                p mes.to_s + segundo_mes.to_s
                 año = tr.year.round(0).to_s
                 val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes = '+ mes + ' valor = ' + segundo_mes.to_s + ' porcentaje = ' + val.to_s
+                p 'Mes: '+ mes + '| Valor: ' + segundo_mes.to_s + '| Porcentaje: ' + val.to_s
                 line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += segundo_mes
               elsif mes.include?("Septiembre")
                 tercer_mes = tr.sum
-                p mes.to_s+
                 año = tr.year.round(0).to_s
                 val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes = '+ mes + ' valor = ' + tercer_mes.to_s + ' porcentaje = ' + val.to_s
+                p 'Mes: '+ mes + '| Valor: ' + tercer_mes.to_s + '| Porcentaje: ' + val.to_s
                 line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-                total += primer_mes + segundo_mes + tercer_mes
+                total += tercer_mes
               end
 
             elsif @trimestre_informado.ordinal == 3
 
-              p 'MAX VALUE >>>>' + max_value.to_s + '<<<'
               mes = get_month(tr.month.round(0))
               if mes.include?("Octubre")
                 primer_mes = tr.sum
-                p mes.to_s + primer_mes.to_s
                 año = tr.year.round(0).to_s
                 val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes = '+ mes + ' valor = ' + primer_mes.to_s + ' porcentaje = ' + val.to_s
+                p 'Mes: '+ mes + '| Valor: ' + primer_mes.to_s + '| Porcentaje: ' + val.to_s
                 line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += primer_mes
               elsif mes.include?("Noviembre")
                 segundo_mes = tr.sum
-                p mes.to_s + segundo_mes.to_s
                 año = tr.year.round(0).to_s
                 val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes = '+ mes + ' valor = ' + segundo_mes.to_s + ' porcentaje = ' + val.to_s
+                p 'Mes: '+ mes + '| Valor: ' + segundo_mes.to_s + '| Porcentaje: ' + val.to_s
                 line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += segundo_mes
               elsif mes.include?("Diciembre")
                 tercer_mes = tr.sum
-                p mes.to_s+
                 año = tr.year.round(0).to_s
                 val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes = '+ mes + ' valor = ' + tercer_mes.to_s + ' porcentaje = ' + val.to_s
+                p 'Mes: '+ mes + '| Valor: ' + tercer_mes.to_s + '| Porcentaje: ' + val.to_s
                 line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-                total += primer_mes + segundo_mes + tercer_mes
+                total += tercer_mes
               end
             end
           end
@@ -930,7 +936,7 @@ class PartidosController < ApplicationController
         end
       end
 
-      @datos_transferencias_totals = { :total => max_value,
+      @datos_transferencias_totals = { :total => total,
                                        :primer_mes => primer_mes,
                                        :segundo_mes => segundo_mes,
                                        :tercer_mes => tercer_mes }
