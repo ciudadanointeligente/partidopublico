@@ -441,8 +441,6 @@ class PartidosController < ApplicationController
       params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
-      p 'IIIH >>>> ' + @trimestre_informado.to_s
-
       sanciones = @trimestre_informado.sancions.where(:partido_id => @partido.id)
 
       @sanciones = []
@@ -514,6 +512,57 @@ class PartidosController < ApplicationController
   end
 
   def ingresos_campana
+
+    temp_trimestres_informados = []
+    @partido.ingreso_ordinarios.each do |io|
+      io.trimestre_informados.each do |t|
+
+        temp_trimestres_informados.push(t)
+
+      end
+    end
+
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
+
+    if @trimestres_informados.count == 0
+      @trimestres_informados = []
+      @datos_ingresos_ordinarios = []
+      @datos_ingresos_ordinarios_totals = {'publicos' => 0, 'privados' => 0}
+      @sin_datos = true
+    else
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+      ingresos_ordinarios = @trimestre_informado.ingreso_ordinarios.where(:partido_id => @partido.id)
+
+      total_publicos = ingresos_ordinarios.where(:partido_id => @partido.id,
+                                                 :concepto => (["Aportes del Estado (Art. 33 Bis Ley N° 18603)",
+                                                                "Otras transferencias públicas"])).sum(:importe) rescue 0
+      total_privados = ingresos_ordinarios.where(:partido_id => @partido.id,
+                                                 :concepto => (["Cotizaciones",
+                                                                 "Donaciones",
+                                                                 "Asignaciones testamentarias",
+                                                                 "Frutos y productos de los bienes patrimoniales",
+                                                                 "Otras transferencias privadas",
+                                                                 "Ingresos militantes"])).sum(:importe) rescue 0
+      max_value = total_publicos + total_privados
+      @datos_ingresos_ordinarios = []
+      ingresos_ordinarios.each do |io|
+        val = ((io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
+        line ={ 'text'=> io.concepto,
+                'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe,
+                                                                            delimiter: ""),
+                'percentage' => val }
+        @datos_ingresos_ordinarios << line unless io.importe == 0
+      end
+
+      @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
+      @sin_datos = false
+    end
+  end
+
+  def contrataciones_20utm
 
     temp_trimestres_informados = []
     @partido.ingreso_ordinarios.each do |io|
@@ -767,32 +816,8 @@ class PartidosController < ApplicationController
         if tr.year == @trimestre_informado.ano
 
           mes = get_month(tr.month.round(0))
-
-          p '1. Año: ' + tr.year.to_s + ' Mes: ' + tr.month.to_s
-
-          if @trimestre_informado.ordinal == 0
-            if (mes.include?("Enero") || mes.include?("Febrero") || mes.include?("Marzo"))
-              max_value += tr.sum unless mes.nil?
-            end
-
-          elsif @trimestre_informado.ordinal == 1
-            if (mes.include?("Abril") || mes.include?("Mayo") || mes.include?("Junio"))
-              max_value += tr.sum
-              max_value = max_value * -1 unless max_value >= 0
-            end
-
-          elsif @trimestre_informado.ordinal == 2
-            if (mes.include?("Julio") || mes.include?("Agosto") || mes.include?("Septiembre"))
-              max_value += tr.sum
-              max_value = max_value * -1 unless max_value >= 0
-            end
-
-          elsif @trimestre_informado.ordinal == 3
-            if (mes.include?("Octubre") || mes.include?("Noviembre") || mes.include?("Diciembre"))
-              max_value += tr.sum
-              max_value = max_value * -1 unless max_value >= 0
-            end
-          end
+          max_value = max_value_transferencias_fondos_publicos(@trimestre_informado,
+                                                                mes, tr, max_value)
         end
       end
 
@@ -800,136 +825,101 @@ class PartidosController < ApplicationController
         max_value = max_value * -1
       end
 
-      p 'Max value: ' + max_value.to_s
-
       primer_mes = 0
       segundo_mes = 0
       tercer_mes = 0
       total = 0
       @datos_transferencias = []
+
       temp_transferencias.each do |tr|
 
         if tr.sum < 0
           tr.sum = tr.sum * -1
         end
 
-        p '2. Año: ' + tr.year.to_s + ' Mes: ' + tr.month.to_s
-
-          if tr.year == @trimestre_informado.ano
-
-            if tr.month.nil?
-              line = {'text' => "Sin información", 'value' => tr.sum}
-              p 'Mes nulo: ' + line.to_s
+        if tr.year == @trimestre_informado.ano
+          año = tr.year.round(0).to_s
+          if @trimestre_informado.ordinal == 0
+            mes = get_month(tr.month.round(0))
+            if mes.include?("Enero")
+              primer_mes = tr.sum
+              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+              total += primer_mes
+            elsif mes.include?("Febrero")
+              segundo_mes = tr.sum
+              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+              total += segundo_mes
+            elsif mes.include?("Marzo")
+              tercer_mes = tr.sum
+              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+              total += tercer_mes
             end
-
-            p 'Mes dentro: ' + tr.month.to_s
-            p 'Ordinal trimestre informado: ' + @trimestre_informado.ordinal.to_s
-
-            if @trimestre_informado.ordinal == 0
-              mes = get_month(tr.month.round(0))
-              if mes.include?("Enero")
-                primer_mes = tr.sum
-                año = tr.year.round(0).to_s
-                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes: '+ mes + '| Valor: ' + primer_mes.to_s + '| Porcentaje: ' + val.to_s
-                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-                total += primer_mes
-                p 'Total primer mes: ' + total.to_s
-              elsif mes.include?("Febrero")
-                segundo_mes = tr.sum
-                año = tr.year.round(0).to_s
-                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes: '+ mes + '| Valor: ' + segundo_mes.to_s + '| Porcentaje: ' + val.to_s
-                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-                total += segundo_mes
-                p 'Total segundo mes: ' + total.to_s
-              elsif mes.include?("Marzo")
-                tercer_mes = tr.sum
-                año = tr.year.round(0).to_s
-                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes: '+ mes + '| Valor: ' + tercer_mes.to_s + '| Porcentaje: ' + val.to_s
-                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-                total += tercer_mes
-                p 'Total tercer mes: ' + total.to_s
-              end
-            elsif @trimestre_informado.ordinal == 1
-              p 'MAX VALUE >>>>' + max_value.to_s + '<<<'
-              mes = get_month(tr.month.round(0))
-              if mes.include?("Abril")
-                primer_mes = tr.sum
-                año = tr.year.round(0).to_s
-                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes: '+ mes + '| Valor: ' + primer_mes.to_s + '| Porcentaje: ' + val.to_s
-                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-                total += primer_mes
-              elsif mes.include?("Mayo")
-                segundo_mes = tr.sum
-                año = tr.year.round(0).to_s
-                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes: '+ mes + '| Valor: ' + segundo_mes.to_s + '| Porcentaje: ' + val.to_s
-                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-                total += segundo_mes
-              elsif mes.include?("Junio")
-                tercer_mes = tr.sum
-                año = tr.year.round(0).to_s
-                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes: '+ mes + '| Valor: ' + tercer_mes.to_s + '| Porcentaje: ' + val.to_s
-                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-                total += tercer_mes
-              end
-
-            elsif @trimestre_informado.ordinal == 2
-              mes = get_month(tr.month.round(0))
-              if mes.include?("Julio")
-                primer_mes = tr.sum
-                año = tr.year.round(0).to_s
-                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes: '+ mes + '| Valor: ' + primer_mes.to_s + '| Porcentaje: ' + val.to_s
-                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-                total += primer_mes
-              elsif mes.include?("Agosto")
-                segundo_mes = tr.sum
-                año = tr.year.round(0).to_s
-                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes: '+ mes + '| Valor: ' + segundo_mes.to_s + '| Porcentaje: ' + val.to_s
-                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-                total += segundo_mes
-              elsif mes.include?("Septiembre")
-                tercer_mes = tr.sum
-                año = tr.year.round(0).to_s
-                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes: '+ mes + '| Valor: ' + tercer_mes.to_s + '| Porcentaje: ' + val.to_s
-                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-                total += tercer_mes
-              end
-
-            elsif @trimestre_informado.ordinal == 3
-
-              mes = get_month(tr.month.round(0))
-              if mes.include?("Octubre")
-                primer_mes = tr.sum
-                año = tr.year.round(0).to_s
-                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes: '+ mes + '| Valor: ' + primer_mes.to_s + '| Porcentaje: ' + val.to_s
-                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-                total += primer_mes
-              elsif mes.include?("Noviembre")
-                segundo_mes = tr.sum
-                año = tr.year.round(0).to_s
-                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes: '+ mes + '| Valor: ' + segundo_mes.to_s + '| Porcentaje: ' + val.to_s
-                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-                total += segundo_mes
-              elsif mes.include?("Diciembre")
-                tercer_mes = tr.sum
-                año = tr.year.round(0).to_s
-                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-                p 'Mes: '+ mes + '| Valor: ' + tercer_mes.to_s + '| Porcentaje: ' + val.to_s
-                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-                total += tercer_mes
-              end
+          elsif @trimestre_informado.ordinal == 1
+            mes = get_month(tr.month.round(0))
+            if mes.include?("Abril")
+              primer_mes = tr.sum
+              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+              total += primer_mes
+            elsif mes.include?("Mayo")
+              segundo_mes = tr.sum
+              año = tr.year.round(0).to_s
+              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+              total += segundo_mes
+            elsif mes.include?("Junio")
+              tercer_mes = tr.sum
+              año = tr.year.round(0).to_s
+              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+              total += tercer_mes
+            end
+          elsif @trimestre_informado.ordinal == 2
+            mes = get_month(tr.month.round(0))
+            if mes.include?("Julio")
+              primer_mes = tr.sum
+              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+              total += primer_mes
+            elsif mes.include?("Agosto")
+              segundo_mes = tr.sum
+              año = tr.year.round(0).to_s
+              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+              total += segundo_mes
+            elsif mes.include?("Septiembre")
+              tercer_mes = tr.sum
+              año = tr.year.round(0).to_s
+              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+              total += tercer_mes
+            end
+          elsif @trimestre_informado.ordinal == 3
+            mes = get_month(tr.month.round(0))
+            if mes.include?("Octubre")
+              primer_mes = tr.sum
+              año = tr.year.round(0).to_s
+              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+              total += primer_mes
+            elsif mes.include?("Noviembre")
+              segundo_mes = tr.sum
+              año = tr.year.round(0).to_s
+              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+              total += segundo_mes
+            elsif mes.include?("Diciembre")
+              tercer_mes = tr.sum
+              año = tr.year.round(0).to_s
+              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+              total += tercer_mes
             end
           end
+        end
 
         if !line.nil?
           @datos_transferencias << line
@@ -1066,7 +1056,6 @@ end
       end
       @sin_datos = false
     end
-    p 'AQUIIIIIII >>>>> ' + @sin_datos.to_s + ' <<<<<<'
   end
 
   def estructura_organica
@@ -1126,6 +1115,7 @@ end
     # @organos_internos = OrganoInterno.page(params[:page]).per(10)
     # @miembros = Persona.page(params[:page]).per(10)
   end
+
   def actividades_publicas
   end
 
@@ -1210,6 +1200,33 @@ end
       unless current_admin.is_superadmin?
         redirect_to admin_path
       end
+    end
+
+    def max_value_transferencias_fondos_publicos(trimestre, mes, transferencia, max_value)
+      if trimestre.ordinal == 0
+        if (mes.include?("Enero") || mes.include?("Febrero") || mes.include?("Marzo"))
+          max_value += transferencia.sum unless mes.nil?
+        end
+
+      elsif trimestre.ordinal == 1
+        if (mes.include?("Abril") || mes.include?("Mayo") || mes.include?("Junio"))
+          max_value += transferencia.sum
+          max_value = max_value * -1 unless max_value >= 0
+        end
+
+      elsif trimestre.ordinal == 2
+        if (mes.include?("Julio") || mes.include?("Agosto") || mes.include?("Septiembre"))
+          max_value += transferencia.sum
+          max_value = max_value * -1 unless max_value >= 0
+      end
+
+    elsif trimestre.ordinal == 3
+        if (mes.include?("Octubre") || mes.include?("Noviembre") || mes.include?("Diciembre"))
+          max_value += transferencia.sum
+          max_value = max_value * -1 unless max_value >= 0
+        end
+      end
+      max_value
     end
 
     def gasto_por_trimeste(trimestre, gasto)

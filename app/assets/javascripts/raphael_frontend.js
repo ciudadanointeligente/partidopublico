@@ -428,7 +428,7 @@ $(document).ready(function(){
       "fill" : sky_light,
       "stroke" : "none"
     });
-
+    
     var segundo_mes_bar = paper.rect(primer_mes_width, 0, segundo_mes_width, bar_height).attr({
       "fill" : sky_medium,
       "stroke" : "none"
