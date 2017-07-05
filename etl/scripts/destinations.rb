@@ -233,7 +233,7 @@ class ContratacionDestination
                                     rut: row[:rut],
                                     titulares: row[:socios_o_accionistas],
                                     descripcion: row[:objeto_de_la_contratacin],
-                                    monto: row[:monto],
+                                    monto: clean_number(row[:monto]),
                                     fecha_inicio: fecha_inicio,
                                     fecha_termino: fecha_termino,
                                     link: row[:link_al_contrato]).first_or_initialize
