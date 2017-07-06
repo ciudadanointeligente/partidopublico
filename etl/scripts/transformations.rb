@@ -70,19 +70,22 @@ class TrimestreInformadoLookup
   def process(row)
     p row if @verbose
     ano = row[:ao_informado].to_i;
+    if ano == 0
+      p ano
+    end
     trimestre = row[:trimestre_informado].downcase;
     trimestre.gsub!(/[^0-9a-z]/i, '')
     trimestre.insert(3, ' - ')
-    # p "TRIMESTRE >>> " + trimestre.to_s
     ordinal_trimestre = ordinal_trimestres.index(trimestre[0].downcase) unless trimestre.nil?
 
-    if ordinal_trimestre.nil?
+    if (ordinal_trimestre.nil? || ano == 0)
+      p ano
+    # if ordinal_trimestre.nil?
       row[:error_log] = row[:error_log].to_s + ', trimestre_informado no válido'
       @results[:trimestres_informados][:errors] += 1
     else
-      # p "AÑÑO>>>" + ano.to_s
-      # p "TRIMES3>>>>" + trimestre.to_s
-      # p "ORDINAL>>>>" + ordinal_trimestre.to_s
+      # p "Trimestre informado: " + ano.to_s + ' ' + trimestre.to_s + " | Ordinal: " + ordinal_trimestre.to_s
+
       trimestre_informado = TrimestreInformado.where(ano: ano, trimestre: trimestre,
                                                       ordinal: ordinal_trimestre).first_or_initialize
 

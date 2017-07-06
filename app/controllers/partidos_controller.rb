@@ -566,7 +566,9 @@ class PartidosController < ApplicationController
 
     temp_trimestres_informados = []
     @partido.contratacions.each do |c|
+      p c
       c.trimestre_informados.each do |t|
+        p t
 
         temp_trimestres_informados.push(t)
       end

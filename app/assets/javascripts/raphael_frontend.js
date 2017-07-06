@@ -360,11 +360,11 @@ $(document).ready(function(){
 
   }
 
-  Raphael.fn.transferencia_front_header = function(){
+  Raphael.fn.por_meses_front_header = function(){
     var paper = this;
   };
 
-  Raphael.fn.transferencia_front_bar = function(dato){
+  Raphael.fn.por_meses_front_bar = function(dato){
     var paper = this;
     if(screen.width > 760) {
       var bar_width = 300;
@@ -373,11 +373,11 @@ $(document).ready(function(){
       var bar_width = 80
       var bar_height = 20
     }
-    var transferencia_width = dato.percentage * bar_width;
-    if (transferencia_width < 1) {
-      transferencia_width = 1;
+    var por_meses_width = dato.percentage * bar_width;
+    if (por_meses_width < 1) {
+      por_meses_width = 1;
       if (dato.value == 0) {
-        transferencia_width = 0;
+        por_meses_width = 0;
       }
     }
 
@@ -400,14 +400,14 @@ $(document).ready(function(){
       color = sky_dark
     }
 
-    var bar = paper.rect(0, 0, transferencia_width, bar_height).attr({
+    var bar = paper.rect(0, 0, por_meses_width, bar_height).attr({
       "fill" : color,
       "stroke" : "none"
     });
 
   }
 
-  Raphael.fn.transferencia_front_footer = function(dato){
+  Raphael.fn.por_meses_front_footer = function(dato){
     var paper = this;
     if (screen.width > 760) {
       var bar_width = 300;
@@ -428,7 +428,7 @@ $(document).ready(function(){
       "fill" : sky_light,
       "stroke" : "none"
     });
-    
+
     var segundo_mes_bar = paper.rect(primer_mes_width, 0, segundo_mes_width, bar_height).attr({
       "fill" : sky_medium,
       "stroke" : "none"

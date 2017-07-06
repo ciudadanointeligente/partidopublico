@@ -226,32 +226,36 @@ class ContratacionDestination
       row[:error_log] = row[:error_log].to_s + handler
       @results[:contratacions][:errors] += 1
     end
+    
+    if row[:error_log].nil?
 
-    contratacion = Contratacion.where(partido_id: row[:partido_id],
-                                    individualizacion: row[:individualizacin_del_contrato],
-                                    razon_social: row[:contratista],
-                                    rut: row[:rut],
-                                    titulares: row[:socios_o_accionistas],
-                                    descripcion: row[:objeto_de_la_contratacin],
-                                    monto: clean_number(row[:monto]),
-                                    fecha_inicio: fecha_inicio,
-                                    fecha_termino: fecha_termino,
-                                    link: row[:link_al_contrato]).first_or_initialize
 
-    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+      contratacion = Contratacion.where(partido_id: row[:partido_id],
+                                      individualizacion: row[:individualizacin_del_contrato],
+                                      razon_social: row[:contratista],
+                                      rut: row[:rut],
+                                      titulares: row[:socios_o_accionistas],
+                                      descripcion: row[:objeto_de_la_contratacin],
+                                      monto: clean_number(row[:monto]),
+                                      fecha_inicio: fecha_inicio,
+                                      fecha_termino: fecha_termino,
+                                      link: row[:link_al_contrato]).first_or_initialize
 
-    if contratacion.id.nil?
-      contratacion.save
-      if contratacion.errors.any?
-        row[:error_log] = row[:error_log].to_s + ', ' + contratacion.errors.messages.to_s
-        @results[:contratacions][:errors] += 1
+      trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+
+      if contratacion.id.nil?
+        contratacion.save
+        if contratacion.errors.any?
+          row[:error_log] = row[:error_log].to_s + ', ' + contratacion.errors.messages.to_s
+          @results[:contratacions][:errors] += 1
+        else
+          contratacion.trimestre_informados << trimestre_informado unless trimestre_informado.in?(contratacion.trimestre_informados)
+          @results[:contratacions][:new] += 1
+        end
       else
         contratacion.trimestre_informados << trimestre_informado unless trimestre_informado.in?(contratacion.trimestre_informados)
-        @results[:contratacions][:new] += 1
+        @results[:contratacions][:found] += 1
       end
-    else
-      contratacion.trimestre_informados << trimestre_informado unless trimestre_informado.in?(contratacion.trimestre_informados)
-      @results[:contratacions][:found] += 1
     end
   end
 
