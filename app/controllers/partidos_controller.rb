@@ -514,8 +514,8 @@ class PartidosController < ApplicationController
   def ingresos_campana
 
     temp_trimestres_informados = []
-    @partido.ingreso_ordinarios.each do |io|
-      io.trimestre_informados.each do |t|
+    @partido.ingreso_campanas.each do |ic|
+      ic.trimestre_informados.each do |t|
 
         temp_trimestres_informados.push(t)
 
@@ -527,37 +527,39 @@ class PartidosController < ApplicationController
 
     if @trimestres_informados.count == 0
       @trimestres_informados = []
-      @datos_ingresos_ordinarios = []
-      @datos_ingresos_ordinarios_totals = {'publicos' => 0, 'privados' => 0}
+      @datos_ingresos_campanas = []
+      @datos_ingresos_campanas_totals = {'aportes en dinero' => 0, 'otros aportes' => 0}
       @sin_datos = true
     else
       params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
-      ingresos_ordinarios = @trimestre_informado.ingreso_ordinarios.where(:partido_id => @partido.id)
+      ingresos_campanas = @trimestre_informado.ingreso_campanas.where(:partido_id => @partido.id)
 
-      total_publicos = ingresos_ordinarios.where(:partido_id => @partido.id,
-                                                 :concepto => (["Aportes del Estado (Art. 33 Bis Ley N° 18603)",
-                                                                "Otras transferencias públicas"])).sum(:importe) rescue 0
-      total_privados = ingresos_ordinarios.where(:partido_id => @partido.id,
-                                                 :concepto => (["Cotizaciones",
-                                                                 "Donaciones",
-                                                                 "Asignaciones testamentarias",
-                                                                 "Frutos y productos de los bienes patrimoniales",
-                                                                 "Otras transferencias privadas",
-                                                                 "Ingresos militantes"])).sum(:importe) rescue 0
-      max_value = total_publicos + total_privados
-      @datos_ingresos_ordinarios = []
-      ingresos_ordinarios.each do |io|
-        val = ((io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
-        line ={ 'text'=> io.concepto,
-                'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe,
-                                                                            delimiter: ""),
-                'percentage' => val }
-        @datos_ingresos_ordinarios << line unless io.importe == 0
+      ingresos_campanas.each do |ic|
+        if ic.tipo_aporte != "Aportes en Dinero"
+          ic.tipo_aporte = ic.tipo_aporte.titleize
+        end
       end
 
-      @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
+      monto_aporte_dinero = ingresos_campanas.where(:partido_id => @partido.id,
+                                                    :tipo_aporte => (["Aportes en Dinero"])).sum(:monto) rescue 0
+
+      monto_otro_aporte = ingresos_campanas.where(:partido_id => @partido.id).where.not(:tipo_aporte => ["Aportes en Dinero"]).sum(:monto) rescue 0
+
+      max_value = monto_aporte_dinero + monto_otro_aporte
+      @datos_ingresos_campanas = []
+
+      ingresos_campanas.each do |ic|
+        val = ((ic.monto.to_f / max_value.to_f).to_f rescue 0).to_s
+        line ={ 'text'=> ic.tipo_aporte,
+                'value' => ActiveSupport::NumberHelper::number_to_delimited(ic.monto,
+                                                                            delimiter: ""),
+                'percentage' => val }
+        @datos_ingresos_campanas << line unless ic.monto == 0
+      end
+
+      @datos_ingresos_campanas_totals = { 'aportes en dinero'=> monto_aporte_dinero, 'otros aportes' => monto_otro_aporte}
       @sin_datos = false
     end
   end
@@ -566,9 +568,7 @@ class PartidosController < ApplicationController
 
     temp_trimestres_informados = []
     @partido.contratacions.each do |c|
-      p c
       c.trimestre_informados.each do |t|
-        p t
 
         temp_trimestres_informados.push(t)
       end
@@ -598,7 +598,7 @@ class PartidosController < ApplicationController
           mes = get_month(c.month.round(0))
           max_value = max_value_contrataciones_20utm(@trimestre_informado,
                                                      mes, c, max_value)
-          p max_value.to_s
+          # p max_value.to_s
         end
       end
 

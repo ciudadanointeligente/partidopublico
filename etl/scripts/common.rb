@@ -90,6 +90,8 @@ def clean_phrase(frase)
    elsif frase.include? "n de militantes"
      frase = "Gastos de las actividades de formación de militantes"
     #  p " -> " + frase
+  elsif frase.include? "dinero"
+    frase = "Aportes en Dinero"
    end
 
   frase

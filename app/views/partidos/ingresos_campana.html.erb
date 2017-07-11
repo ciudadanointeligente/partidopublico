@@ -5,7 +5,7 @@
 <% else %>
   <div class="row">
     <div class="col-md-12">
-    <%= form_tag partido_finanzas_1_path, :method =>  :get, class: 'form-inline' do |f| %>
+    <%= form_tag partido_ingresos_campana_path, :method =>  :get, class: 'form-inline' do |f| %>
     <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id] || ''), include_blank: false, class: "form-control" %>
     <%= submit_tag 'Filtrar', class: "btn" %>
     <% end %>
@@ -31,7 +31,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @datos_ingresos_ordinarios.each_with_index do |linea, i| %>
+          <% @datos_ingresos_campanas.each_with_index do |linea, i| %>
           <tr>
             <td class="concepto">
               <%= linea['text'] %>
@@ -52,7 +52,7 @@
           <tr>
             <th class="total">Total</th>
             <th><span id='footer'></span></th>
-            <th class="total monto"><%= number_to_currency(@datos_ingresos_ordinarios_totals['publicos'] + @datos_ingresos_ordinarios_totals['privados'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %></th>
+            <th class="total monto"><%= number_to_currency(@datos_ingresos_campanas_totals['aportes en dinero'] + @datos_ingresos_campanas_totals['otros aportes'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %></th>
           </tr>
         </tfoot>
       </table>
@@ -63,8 +63,8 @@
       Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
 <script>
 $(document).ready(function(){
-  var data = <%=  @datos_ingresos_ordinarios.to_json.html_safe %>;
-  var data_totals = <%=  @datos_ingresos_ordinarios_totals.to_json.html_safe %>;
+  var data = <%=  @datos_ingresos_campanas.to_json.html_safe %>;
+  var data_totals = <%=  @datos_ingresos_campanas_totals.to_json.html_safe %>;
   var fechas = <%=  @fechas_datos.to_json.html_safe %>;
   var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
   for(var i=0; i < data.length; i++){
