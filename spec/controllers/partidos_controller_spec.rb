@@ -12,6 +12,7 @@ RSpec.describe PartidosController, type: :controller do
     it "get an array of normas internas" do
       partido = create(:partido)
       new_document = create(:documento)
+      partido.marco_interno = create(:marco_interno)
       partido.marco_interno.documentos << new_document
       normas_internas = []
       partido.marco_interno.documentos.each do |d|
@@ -180,6 +181,7 @@ RSpec.describe PartidosController, type: :controller do
       region = create(:region)
       comuna = create(:comuna)
       sede_1 = create(:sede, :region_id => region.id, :comuna_id => comuna.id)
+      sede_1.trimestre_informados << create(:trimestre_informado, :ordinal => 1)
       partido.sedes << sede_1
       partido.regions << region
 
@@ -379,10 +381,7 @@ RSpec.describe PartidosController, type: :controller do
       org_interno = create(:organo_interno, :partido_id => partido.id)
       eleccion_interna = create(:eleccion_interna, :partido_id => partido.id, :organo_interno_id => org_interno.id)
 
-      elecciones = [{"organo"=>"Órgano ejecutivo", "elecciones_internas"=>[]},
-                    {"organo"=>"Órgano intermedio colegiado", "elecciones_internas"=>[]},
-                    {"organo"=>"Tribunal supremo", "elecciones_internas"=>[]},
-                    {"organo"=>org_interno.nombre, "elecciones_internas"=>[{"cargo"=>eleccion_interna.cargo, "fecha_eleccion"=>eleccion_interna.fecha_eleccion, "fecha_limite_inscripcion"=>eleccion_interna.fecha_limite_inscripcion, "procedimientos"=>[], "requisitos"=>[]}]}]
+      elecciones = [{"organo"=>org_interno.nombre, "elecciones_internas"=>[{"cargo"=>eleccion_interna.cargo, "fecha_eleccion"=>eleccion_interna.fecha_eleccion, "fecha_limite_inscripcion"=>eleccion_interna.fecha_limite_inscripcion, "procedimientos"=>[], "requisitos"=>[]}]}]
 
       get :elecciones_internas, {:partido_id => partido.to_param}, valid_session
 
@@ -393,8 +392,19 @@ RSpec.describe PartidosController, type: :controller do
   describe "GET #finanzas_1" do
     it "return publicos y privados" do
       partido = create(:partido)
-      ingreso_1 = create(:ingreso_ordinario, :partido_id => partido.id, :fecha_datos => "2016-01-01", :concepto => "concepto 01", :importe => 1000)
-      ingreso_2 = create(:ingreso_ordinario, :partido_id => partido.id, :fecha_datos => "2016-01-01", :concepto => "Aportes Estatales", :importe => 2000)
+      trimestre_informado = create(:trimestre_informado, :ordinal => 1)
+      ingreso_1 = create(:ingreso_ordinario,
+                         :partido_id => partido.id,
+                         :fecha_datos => "2016-01-01",
+                         :concepto => "concepto 01",
+                         :importe => 1000)
+      ingreso_1.trimestre_informados << trimestre_informado
+      ingreso_2 = create(:ingreso_ordinario,
+                         :partido_id => partido.id,
+                         :fecha_datos => "2016-01-01",
+                         :concepto => "Aportes Estatales",
+                         :importe => 2000)
+      ingreso_2.trimestre_informados << trimestre_informado
 
       ingresos_ordinarios = { 'publicos'=> ingreso_2.importe, 'privados' => ingreso_1.importe}
 
@@ -419,18 +429,21 @@ RSpec.describe PartidosController, type: :controller do
   describe "GET finanzas_5" do
     it "return finanzas_5" do
       partido = create(:partido)
-      transferencia_1 = create(:transferencia, :partido_id => partido.id)
+      trimestre_informado = create(:trimestre_informado, :ordinal => 1)
+      transferencia_1 = create(:transferencia, :partido_id => partido.id, :fecha_datos => "2016-01-01")
+      transferencia_1.trimestre_informados << trimestre_informado
 
       get :finanzas_5, {:partido_id => partido.to_param}, valid_session
-
-      expect(assigns(:fecha)).to eq(transferencia_1.fecha_datos)
+      
+      expect(assigns(:datos_transferencias_totals)).to eql({:total => 1})
+      expect(assigns(:sin_datos)).to be(false)
     end
   end
 
   describe "GET #acuerdos_organos" do
     it "return an array with acuerdos by tipo" do
       partido = create(:partido)
-      organo_interno = create(:organo_interno, :nombre => 'Un Organo Interno')
+      organo_interno = create(:organo_interno, :nombre => 'Un Organo Interno', :partido_id => partido.id)
       region_1 = create(:region)
       region_2 = create(:region)
       acuerdo_1 = create(:acuerdo, :tipo => 'Funcionamiento Interno', :organo_interno_id => organo_interno.id, :region => region_1.id.to_s)
@@ -460,10 +473,9 @@ RSpec.describe PartidosController, type: :controller do
       cargo_2 = create(:cargo, :partido_id => partido.id, :region_id => region.id, :comuna_id => comuna_2.id, :persona_id => persona_2.id, :tipo_cargo_id => cargo_senador.id)
 
       get :representantes, {:partido_id => partido.to_param}, valid_session
-
-      expect(assigns(:representantes)[6]['representatives'].count).to eq(1)
-      expect(assigns(:representantes)[6]['representatives']).to include(cargo_1)
-      expect(assigns(:representantes)[7]['representatives']).to include(cargo_2)
+      expect(assigns(:representantes)[0]['representatives'].count).to eq(1)
+      expect(assigns(:representantes)[0]['representatives']).to include(cargo_1)
+      expect(assigns(:representantes)[1]['representatives']).to include(cargo_2)
     end
 
     it "get an array of representantes searched by nombre or apellidos" do
@@ -481,8 +493,8 @@ RSpec.describe PartidosController, type: :controller do
 
       get :representantes, {:partido_id => partido.to_param, :q => "Juanito Connor"}, valid_session
 
-      expect(assigns(:representantes)[6]['representatives'].count).to eq(1)
-      expect(assigns(:representantes)[7]['representatives'].count).to eq(1)
+      expect(assigns(:representantes)[0]['representatives'].count).to eq(1)
+      expect(assigns(:representantes)[1]['representatives'].count).to eq(1)
     end
 
     it "request by gender" do
@@ -506,8 +518,8 @@ RSpec.describe PartidosController, type: :controller do
 
       get :representantes, {:partido_id => partido.to_param, :genero => 'Femenino'}, valid_session
 
-      expect(assigns(:representantes)[7]['representatives'].count).to eq(partido.personas.where(:genero => 'Femenino').count)
-      expect(assigns(:representantes)[7]['representatives']).to include(cargo_2)
+      expect(assigns(:representantes)[1]['representatives'].count).to eq(partido.personas.where(:genero => 'Femenino').count)
+      expect(assigns(:representantes)[1]['representatives']).to include(cargo_2)
     end
 
     it "request by region" do
@@ -531,8 +543,8 @@ RSpec.describe PartidosController, type: :controller do
 
       get :representantes, {:partido_id => partido.to_param, :region => region_1.id}, valid_session
 
-      expect(assigns(:representantes)[6]['representatives']).to include(cargo_1)
-      expect(assigns(:representantes)[7]['representatives']).to include(cargo_2)
+      expect(assigns(:representantes)[0]['representatives']).to include(cargo_1)
+      expect(assigns(:representantes)[1]['representatives']).to include(cargo_2)
     end
   end
 
@@ -676,7 +688,6 @@ RSpec.describe PartidosController, type: :controller do
       comuna_2 = create(:comuna)
 
       partido.regions << [region_1, region_2]
-
       tipo_cargo_senador = create(:tipo_cargo, partido_id: partido.id, titulo: "Senador", representante: true, candidato: true)
       tipo_cargo_diputado = create(:tipo_cargo, partido_id: partido.id, titulo: "Diputado", representante: true, candidato: true)
       tipo_cargo_ministro = create(:tipo_cargo, partido_id: partido.id, titulo: "Ministro", autoridad: true)
@@ -686,10 +697,14 @@ RSpec.describe PartidosController, type: :controller do
       persona_3 = create(:persona, :nombre => "Jean", :apellidos => "Connor", :rut => '4-4', :genero => 'Femenino', :partido_id => partido.id)
       persona_4 = create(:persona, :nombre => "Jin", :apellidos => "Connor", :rut => '4-5', :genero => 'Femenino', :partido_id => partido.id)
 
+      trimestre_informado = create(:trimestre_informado, :ordinal => 1)
       cargo_senador_1 = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna_1.id, :persona_id => persona_1.id, :tipo_cargo_id => tipo_cargo_senador.id)
+      cargo_senador_1.trimestre_informados << trimestre_informado
       cargo_senador_2 = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna_1.id, :persona_id => persona_2.id, :tipo_cargo_id => tipo_cargo_senador.id)
       cargo_diputado_1 = create(:cargo, :partido_id => partido.id, :region_id => region_2.id, :comuna_id => comuna_2.id, :persona_id => persona_3.id, :tipo_cargo_id => tipo_cargo_diputado.id)
+      cargo_diputado_1.trimestre_informados << trimestre_informado
       cargo_ministro_1 = create(:cargo, :partido_id => partido.id, :region_id => region_2.id, :comuna_id => comuna_2.id, :persona_id => persona_4.id, :tipo_cargo_id => tipo_cargo_ministro.id)
+      cargo_ministro_1.trimestre_informados << trimestre_informado
 
       get :publicacion_candidatos, {:partido_id => partido.to_param}, valid_session
 
@@ -697,7 +712,7 @@ RSpec.describe PartidosController, type: :controller do
       expect(assigns(:publicacion_candidatos).count).to eq(cargos_candidato.count)
 
       senador_id = cargos_candidato.where(titulo:"Senador")
-      expect(assigns(:publicacion_candidatos)[0]["cargos"].count).to eq(partido.cargos.where(tipo_cargo_id:senador_id).count)
+      expect(assigns(:publicacion_candidatos)[0]["cargos"].count).to eq(1)
 
       ministro_id = cargos_candidato.where(titulo:"Ministro")
       expect(assigns(:publicacion_candidatos)[0]["cargos"]).to_not include(cargo_ministro_1)
@@ -723,17 +738,19 @@ RSpec.describe PartidosController, type: :controller do
       persona_3 = create(:persona, :nombre => "Jean", :apellidos => "Connor", :rut => '4-4', :genero => 'Femenino', :partido_id => partido.id)
       persona_4 = create(:persona, :nombre => "Jin", :apellidos => "Connor", :rut => '4-5', :genero => 'Femenino', :partido_id => partido.id)
 
+      trimestre_informado = create(:trimestre_informado, :ordinal => 1)
       cargo_senador_1 = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna_1.id, :persona_id => persona_1.id, :tipo_cargo_id => tipo_cargo_senador.id)
+      cargo_senador_1.trimestre_informados << trimestre_informado
       cargo_senador_2 = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna_1.id, :persona_id => persona_2.id, :tipo_cargo_id => tipo_cargo_senador.id)
+      cargo_senador_2.trimestre_informados << trimestre_informado
       cargo_diputado_1 = create(:cargo, :partido_id => partido.id, :region_id => region_2.id, :comuna_id => comuna_2.id, :persona_id => persona_3.id, :tipo_cargo_id => tipo_cargo_diputado.id)
+      cargo_diputado_1.trimestre_informados << trimestre_informado
       cargo_ministro_1 = create(:cargo, :partido_id => partido.id, :region_id => region_2.id, :comuna_id => comuna_2.id, :persona_id => persona_4.id, :tipo_cargo_id => tipo_cargo_ministro.id)
+      cargo_ministro_1.trimestre_informados << trimestre_informado
 
       get :publicacion_candidatos, {:partido_id => partido.to_param, :q => "Juana"}, valid_session
 
-      tc = partido.tipo_cargos
-      personas = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", "Juana".downcase, "Juana".downcase)
-      result = partido.cargos.where(tipo_cargo_id: tc, persona_id: personas)
-      expect(assigns(:publicacion_candidatos)[0]["cargos"].count).to eq(result.count)
+      expect(assigns(:publicacion_candidatos)[0]["cargos"].count).to eq(1)
     end
     it "return by region" do
       partido = create(:partido)
@@ -755,10 +772,15 @@ RSpec.describe PartidosController, type: :controller do
       persona_3 = create(:persona, :nombre => "Jean", :apellidos => "Connor", :rut => '4-4', :genero => 'Femenino', :partido_id => partido.id)
       persona_4 = create(:persona, :nombre => "Jin", :apellidos => "Connor", :rut => '4-5', :genero => 'Femenino', :partido_id => partido.id)
 
+      trimestre_informado = create(:trimestre_informado, :ordinal => 1)
       cargo_senador_1 = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna_1.id, :persona_id => persona_1.id, :tipo_cargo_id => tipo_cargo_senador.id)
+      cargo_senador_1.trimestre_informados << trimestre_informado
       cargo_senador_2 = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna_1.id, :persona_id => persona_2.id, :tipo_cargo_id => tipo_cargo_senador.id)
+      cargo_senador_2.trimestre_informados << trimestre_informado
       cargo_diputado_1 = create(:cargo, :partido_id => partido.id, :region_id => region_2.id, :comuna_id => comuna_2.id, :persona_id => persona_3.id, :tipo_cargo_id => tipo_cargo_diputado.id)
+      cargo_diputado_1.trimestre_informados << trimestre_informado
       cargo_ministro_1 = create(:cargo, :partido_id => partido.id, :region_id => region_2.id, :comuna_id => comuna_2.id, :persona_id => persona_4.id, :tipo_cargo_id => tipo_cargo_ministro.id)
+      cargo_ministro_1.trimestre_informados << trimestre_informado
 
       get :publicacion_candidatos, {:partido_id => partido.to_param, :region => region_1.id}, valid_session
 
@@ -785,10 +807,15 @@ RSpec.describe PartidosController, type: :controller do
       persona_3 = create(:persona, :nombre => "Jean", :apellidos => "Connor", :rut => '4-4', :genero => 'Femenino', :partido_id => partido.id)
       persona_4 = create(:persona, :nombre => "Jin", :apellidos => "Connor", :rut => '4-5', :genero => 'Femenino', :partido_id => partido.id)
 
+      trimestre_informado = create(:trimestre_informado, :ordinal => 1)
       cargo_senador_1 = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna_1.id, :persona_id => persona_1.id, :tipo_cargo_id => tipo_cargo_senador.id)
+      cargo_senador_1.trimestre_informados << trimestre_informado
       cargo_senador_2 = create(:cargo, :partido_id => partido.id, :region_id => region_1.id, :comuna_id => comuna_1.id, :persona_id => persona_2.id, :tipo_cargo_id => tipo_cargo_senador.id)
+      cargo_senador_2.trimestre_informados << trimestre_informado
       cargo_diputado_1 = create(:cargo, :partido_id => partido.id, :region_id => region_2.id, :comuna_id => comuna_2.id, :persona_id => persona_3.id, :tipo_cargo_id => tipo_cargo_diputado.id)
+      cargo_diputado_1.trimestre_informados << trimestre_informado
       cargo_ministro_1 = create(:cargo, :partido_id => partido.id, :region_id => region_2.id, :comuna_id => comuna_2.id, :persona_id => persona_4.id, :tipo_cargo_id => tipo_cargo_ministro.id)
+      cargo_ministro_1.trimestre_informados << trimestre_informado
 
       get :publicacion_candidatos, {:partido_id => partido.to_param, :genero => "Femenino"}, valid_session
 

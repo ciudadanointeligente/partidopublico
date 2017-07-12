@@ -2,9 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "organo_internos/edit", type: :view do
   before(:each) do
+    partido = create(:partido)
     @organo_interno = assign(:organo_interno, OrganoInterno.create!(
       :nombre => "MyString",
-      :funciones => "MyString"
+      :funciones => "MyString",
+      :partido_id => partido.id
     ))
   end
 
