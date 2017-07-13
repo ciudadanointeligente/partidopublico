@@ -5,7 +5,7 @@
 <% else %>
   <div class="row">
     <div class="col-md-12">
-      <%= form_tag partido_finanzas_2_path, :method =>  :get, class: 'form-inline' do |f| %>
+      <%= form_tag partido_sanciones_path, :method =>  :get, class: 'form-inline' do |f| %>
       <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
       <%= submit_tag 'Filtrar', class: "btn" %>
       <% end %>
