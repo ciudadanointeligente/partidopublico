@@ -187,7 +187,8 @@ $(document).ready(function(){
     console.log(dato.text)
 
     if(dato.text == "Aportes del Estado (Art. 33 Bis Ley N° 18603)" ||
-       dato.text ==  "Otras transferencias públicas"){
+       dato.text ==  "Otras transferencias públicas" ||
+       dato.text == "Aportes en Dinero"){
       color = '#23DBB8';
       console.log("DENTRO IF" + dato.text)
     } else if (dato.text == "Cotizaciones" ||
@@ -199,6 +200,10 @@ $(document).ready(function(){
 
       color = '#19a58a';
       console.log("DENTRO ELSE IF" + dato.text)
+    } else {
+      color = '#19a58a';
+      console.log("DENTRO ELSE" + dato.text)
+
     }
 
     var bar = paper.rect(0, 0, ingreso_width, bar_height).attr({
@@ -227,6 +232,31 @@ $(document).ready(function(){
     });
 
     var privado_bar = paper.rect(publico_width, 0, privado_width, bar_height).attr({
+      "fill" : green_dark,
+      "stroke" : "none"
+    });
+
+  }
+
+  Raphael.fn.ingreso_camp_front_footer = function(dato){
+    var paper = this;
+    if (screen.width > 760) {
+      var bar_width = 300;
+      var bar_height = 30;
+    }
+    else {
+      var bar_width = 80
+      var bar_height = 20
+    }
+    var dinero_width = (dato.aportes_en_dinero / (dato.aportes_en_dinero + dato.otros_aportes)) * bar_width;
+    var otros_width = bar_width - dinero_width;
+
+    var dinero_bar = paper.rect(0, 0, dinero_width, bar_height).attr({
+      "fill" : green_light,
+      "stroke" : "none"
+    });
+
+    var otros_bar = paper.rect(dinero_width, 0, otros_width, bar_height).attr({
       "fill" : green_dark,
       "stroke" : "none"
     });

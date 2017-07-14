@@ -528,7 +528,7 @@ class PartidosController < ApplicationController
     if @trimestres_informados.count == 0
       @trimestres_informados = []
       @datos_ingresos_campanas = []
-      @datos_ingresos_campanas_totals = {'aportes en dinero' => 0, 'otros aportes' => 0}
+      @datos_ingresos_campanas_totals = {'aportes_en_dinero' => 0, 'otros_aportes' => 0}
       @sin_datos = true
     else
       params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
@@ -536,11 +536,11 @@ class PartidosController < ApplicationController
 
       ingresos_campanas = @trimestre_informado.ingreso_campanas.where(:partido_id => @partido.id)
 
-      ingresos_campanas.each do |ic|
-        if ic.tipo_aporte != "Aportes en Dinero"
-          ic.tipo_aporte = ic.tipo_aporte.titleize
-        end
-      end
+      # ingresos_campanas.each do |ic|
+      #   if ic.tipo_aporte != "Aportes en Dinero"
+      #     ic.tipo_aporte = ic.tipo_aporte.titleize
+      #   end
+      # end
 
       monto_aporte_dinero = ingresos_campanas.where(:partido_id => @partido.id,
                                                     :tipo_aporte => (["Aportes en Dinero"])).sum(:monto) rescue 0
@@ -549,17 +549,39 @@ class PartidosController < ApplicationController
 
       max_value = monto_aporte_dinero + monto_otro_aporte
       @datos_ingresos_campanas = []
+      line = {'text' => 0,
+              'value' => 0,
+              'percentage' => 0}
+      monto = 0
+
+      ingresos_campanas.each do |ic|
+        if ic.tipo_aporte == "Aportes en Dinero"
+          monto += ic.monto
+          val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
+          line ={ 'text'=> ic.tipo_aporte,
+                  'value' => ActiveSupport::NumberHelper::number_to_delimited(monto,
+                                                                              delimiter: ""),
+                  'percentage' => val } unless ic.monto == 0
+        end
+      end
+      # p line
+      @datos_ingresos_campanas << line
 
       ingresos_campanas.each do |ic|
         val = ((ic.monto.to_f / max_value.to_f).to_f rescue 0).to_s
-        line ={ 'text'=> ic.tipo_aporte,
-                'value' => ActiveSupport::NumberHelper::number_to_delimited(ic.monto,
-                                                                            delimiter: ""),
-                'percentage' => val }
-        @datos_ingresos_campanas << line unless ic.monto == 0
+        if ic.tipo_aporte != "Aportes en Dinero"
+          ic.tipo_aporte = ic.tipo_aporte.titleize
+          p ic.tipo_aporte
+          line = { 'text' => ic.tipo_aporte,
+                   'value' => ActiveSupport::NumberHelper::number_to_delimited(ic.monto,
+                                                                             delimiter: ""),
+                   'percentage' => val } unless ic.monto == 0
+          p line
+        end
+        @datos_ingresos_campanas << line
       end
 
-      @datos_ingresos_campanas_totals = { 'aportes en dinero'=> monto_aporte_dinero, 'otros aportes' => monto_otro_aporte}
+      @datos_ingresos_campanas_totals = { 'aportes_en_dinero'=> monto_aporte_dinero, 'otros_aportes' => monto_otro_aporte}
       @sin_datos = false
     end
   end
