@@ -92,6 +92,25 @@ def clean_phrase(frase)
     #  p " -> " + frase
   elsif frase.include? "dinero"
     frase = "Aportes en Dinero"
+    #  p " -> " + frase
+  elsif frase.include? "alcald"
+    frase = "Alcaldicia"
+    #  p " -> " + frase
+  elsif frase.include? "presiden"
+    frase = "Presidencial"
+    #  p " -> " + frase
+  elsif frase.include? "senatorial"
+    frase = "Senatorial"
+    #  p " -> " + frase
+  elsif frase.include? "diputados"
+    frase = "Diputados"
+    #  p " -> " + frase
+  elsif frase.include? "concejal"
+    frase = "Concejal"
+    #  p " -> " + frase
+  elsif frase.include? "regionales"
+    frase = "Consejeros Regionales"
+    #  p " -> " + frase
    end
 
   frase

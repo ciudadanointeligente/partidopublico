@@ -556,10 +556,7 @@ class PartidosController < ApplicationController
                    'value' => ActiveSupport::NumberHelper::number_to_delimited(ic.monto,
                                                                                delimiter: ""),
                    'percentage' => val }
-          p "Line otros aportes: " + line.to_s
-          # if val.is_a? Numeric
             @datos_ingresos_campanas << line
-          # end
         elsif ic.tipo_aporte == "Aportes en Dinero"
           monto += ic.monto
           val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
@@ -572,8 +569,6 @@ class PartidosController < ApplicationController
             p 'kakita'
             @datos_ingresos_campanas << line
           end
-          # unless monto < monto_aporte_dinero
-          # end
         end
       end
 
@@ -742,8 +737,8 @@ class PartidosController < ApplicationController
   def egresos_campana
 
     temp_trimestres_informados = []
-    @partido.ingreso_ordinarios.each do |io|
-      io.trimestre_informados.each do |t|
+    @partido.egreso_campanas.each do |ec|
+      ec.trimestre_informados.each do |t|
 
         temp_trimestres_informados.push(t)
 
@@ -755,37 +750,46 @@ class PartidosController < ApplicationController
 
     if @trimestres_informados.count == 0
       @trimestres_informados = []
-      @datos_ingresos_ordinarios = []
-      @datos_ingresos_ordinarios_totals = {'publicos' => 0, 'privados' => 0}
+      @datos_egresos_campanas = []
+      @datos_egresos_campanas_totals = {'alcaldicia' => 0, 'consejal' => 0}
       @sin_datos = true
     else
       params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
-      ingresos_ordinarios = @trimestre_informado.ingreso_ordinarios.where(:partido_id => @partido.id)
+      egresos_campanas = @trimestre_informado.egreso_campanas.where(:partido_id => @partido.id)
 
-      total_publicos = ingresos_ordinarios.where(:partido_id => @partido.id,
-                                                 :concepto => (["Aportes del Estado (Art. 33 Bis Ley N° 18603)",
-                                                                "Otras transferencias públicas"])).sum(:importe) rescue 0
-      total_privados = ingresos_ordinarios.where(:partido_id => @partido.id,
-                                                 :concepto => (["Cotizaciones",
-                                                                 "Donaciones",
-                                                                 "Asignaciones testamentarias",
-                                                                 "Frutos y productos de los bienes patrimoniales",
-                                                                 "Otras transferencias privadas",
-                                                                 "Ingresos militantes"])).sum(:importe) rescue 0
-      max_value = total_publicos + total_privados
-      @datos_ingresos_ordinarios = []
-      ingresos_ordinarios.each do |io|
-        val = ((io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
-        line ={ 'text'=> io.concepto,
-                'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe,
+      total_alcaldicia = egresos_campanas.where(:partido_id => @partido.id,
+                                                :tipo_campana => (["Alcaldicia"])).sum(:monto) rescue 0
+
+      total_concejal = egresos_campanas.where(:partido_id => @partido.id,
+                                              :tipo_campana => (["Concejal"])).sum(:monto) rescue 0
+
+      total_diputados = egresos_campanas.where(:partido_id => @partido.id,
+                                               :tipo_campana => (["Diputados"])).sum(:monto) rescue 0
+
+      total_presidencial = egresos_campanas.where(:partido_id => @partido.id,
+                                                  :tipo_campana => (["Presidencial"])).sum(:monto) rescue 0
+
+      total_senatorial = egresos_campanas.where(:partido_id => @partido.id,
+                                                :tipo_campana => (["Senatorial"])).sum(:monto) rescue 0
+
+      total_consejeros_regionales = egresos_campanas.where(:partido_id => @partido.id,
+                                                           :tipo_campana => (["Consejeros Regionales"])).sum(:monto) rescue 0
+
+
+      max_value = total_alcaldicia + total_concejal + total_diputados + total_presidencial + total_senatorial + total_consejeros_regionales
+      @datos_egresos_campanas = []
+      egresos_campanas.each do |ec|
+        val = ((ec.monto.to_f / max_value.to_f).to_f rescue 0).to_s
+        line ={ 'text'=> ec.concepto,
+                'value' => ActiveSupport::NumberHelper::number_to_delimited(ec.importe,
                                                                             delimiter: ""),
                 'percentage' => val }
-        @datos_ingresos_ordinarios << line unless io.importe == 0
+        @datos_egresos_campanas << line unless ec.importe == 0
       end
 
-      @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
+      @datos_egresos_campanas_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
       @sin_datos = false
     end
   end

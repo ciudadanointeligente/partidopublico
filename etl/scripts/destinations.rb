@@ -285,9 +285,10 @@ class EgresoCampanaDestination
 
     @partidos << row[:partido_id] unless row[:partido_id].in?(@partidos)
 
+    tipo_campana = clean_phrase(row[:tipo_de_campaa])
     monto = clean_number(row[:monto])
     egreso_campana = EgresoCampana.new(partido_id: row[:partido_id],
-                                         tipo_campana: row[:tipo_de_campaa],
+                                         tipo_campana: tipo_campana,
                                          item: row[:item],
                                          monto: monto,
                                          estado: row[:estado])
