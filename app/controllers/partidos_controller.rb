@@ -566,7 +566,6 @@ class PartidosController < ApplicationController
                   'percentage' => val }
           p "Line aportes en dinero: " + line.to_s
           unless (monto == 0 || monto < monto_aporte_dinero)
-            p 'kakita'
             @datos_ingresos_campanas << line
           end
         end
@@ -751,7 +750,12 @@ class PartidosController < ApplicationController
     if @trimestres_informados.count == 0
       @trimestres_informados = []
       @datos_egresos_campanas = []
-      @datos_egresos_campanas_totals = {'alcaldicia' => 0, 'consejal' => 0}
+      @datos_egresos_campanas_totals = {'alcaldicia' => 0,
+                                        'concejal' => 0,
+                                        'diputados' => 0,
+                                        'presidencial' => 0,
+                                        'senatorial' => 0,
+                                        'consejeros_regionales' => 0}
       @sin_datos = true
     else
       params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
@@ -762,34 +766,55 @@ class PartidosController < ApplicationController
       total_alcaldicia = egresos_campanas.where(:partido_id => @partido.id,
                                                 :tipo_campana => (["Alcaldicia"])).sum(:monto) rescue 0
 
+      p "Total alcaldicia -> " + total_alcaldicia.to_s
+
       total_concejal = egresos_campanas.where(:partido_id => @partido.id,
                                               :tipo_campana => (["Concejal"])).sum(:monto) rescue 0
+
+      p "Total concejal -> " + total_concejal.to_s
 
       total_diputados = egresos_campanas.where(:partido_id => @partido.id,
                                                :tipo_campana => (["Diputados"])).sum(:monto) rescue 0
 
+      p "Total diputados -> " + total_diputados.to_s
+
+
       total_presidencial = egresos_campanas.where(:partido_id => @partido.id,
                                                   :tipo_campana => (["Presidencial"])).sum(:monto) rescue 0
+
+      p "Total presidencial -> " + total_presidencial.to_s
+
 
       total_senatorial = egresos_campanas.where(:partido_id => @partido.id,
                                                 :tipo_campana => (["Senatorial"])).sum(:monto) rescue 0
 
+      p "Total senatorial -> " + total_senatorial.to_s
+
+
       total_consejeros_regionales = egresos_campanas.where(:partido_id => @partido.id,
                                                            :tipo_campana => (["Consejeros Regionales"])).sum(:monto) rescue 0
 
+      p "Total consejeros regionales -> " + total_consejeros_regionales.to_s
 
-      max_value = total_alcaldicia + total_concejal + total_diputados + total_presidencial + total_senatorial + total_consejeros_regionales
+      max_value = (total_alcaldicia + total_concejal + total_diputados + total_presidencial + total_senatorial + total_consejeros_regionales)
+      p "Max value -> " + max_value.to_s
+      array_totales = [total_alcaldicia, total_concejal, total_diputados, total_presidencial, total_senatorial, total_consejeros_regionales]
       @datos_egresos_campanas = []
+      monto = 0
+
       egresos_campanas.each do |ec|
-        val = ((ec.monto.to_f / max_value.to_f).to_f rescue 0).to_s
-        line ={ 'text'=> ec.concepto,
-                'value' => ActiveSupport::NumberHelper::number_to_delimited(ec.importe,
-                                                                            delimiter: ""),
-                'percentage' => val }
-        @datos_egresos_campanas << line unless ec.importe == 0
+        monto = monto + ec.monto
+        line_egresos_campanas(ec, monto, array_totales, max_value)
       end
 
-      @datos_egresos_campanas_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
+      @datos_egresos_campanas_totals = {'alcaldicia' => total_alcaldicia,
+                                        'concejal' => total_concejal,
+                                        'diputados' => total_diputados,
+                                        'presidencial' => total_presidencial,
+                                        'senatorial' => total_senatorial,
+                                        'consejeros_regionales' => total_consejeros_regionales}
+
+
       @sin_datos = false
     end
   end
@@ -1433,6 +1458,45 @@ end
                 'percentage' => val }
         @datos_egresos_ordinarios << line unless (egreso_ordinario.octubre + egreso_ordinario.noviembre + egreso_ordinario.diciembre) == 0
       end
+    end
+
+    def line_egresos_campanas(egreso_campana, monto, array_totales, max_value)
+      if egreso_campana.tipo_campana == "Alcaldicia"
+        monto = monto + egreso_campana.monto
+        p "MONTO: " + monto.to_s
+        monto_alcaldicia = array_totales[0]
+        p monto_alcaldicia
+        val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
+        line ={ 'text'=> egreso_campana.tipo_campana,
+                'value' => ActiveSupport::NumberHelper::number_to_delimited(monto,
+                                                                          delimiter: ""),
+                'percentage' => val }
+        # p 'linea: ' + line.to_s
+        unless (monto == 0 || monto < monto_alcaldicia)
+          @datos_egresos_campanas << line
+        end
+        p @datos_egresos_campanas
+      elsif egreso_campana.tipo_campana == "Concejal"
+
+        monto = monto + egreso_campana.monto
+        monto_concejal = array_totales[1]
+        val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
+        line ={ 'text'=> egreso_campana.tipo_campana,
+                'value' => ActiveSupport::NumberHelper::number_to_delimited(monto,
+                                                                        delimiter: ""),
+                'percentage' => val }
+
+        # p 'linea: ' + line.to_s
+        unless (monto == 0 || monto < monto_concejal)
+          @datos_egresos_campanas << line
+        end
+        # p @datos_egresos_campanas
+      end
+    end
+
+    def acumula_monto(monto, aumento)
+      monto += aumento
+      return monto
     end
 
     # Use callbacks to share common setup or constraints between actions.
