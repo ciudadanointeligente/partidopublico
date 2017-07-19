@@ -1,0 +1,41 @@
+require: rubocop-rspec
+
+# Remove these configuration records
+# one by one as the offenses are removed from the code base.
+
+Metrics/AbcSize:
+  Max: 22 # Goal: 15
+
+Metrics/CyclomaticComplexity:
+  Max: 8 # Goal: 6
+
+Metrics/PerceivedComplexity:
+  Max: 9 # Goal: 7
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+RSpec/BeforeAfterAll:
+  Enabled: false
+
+RSpec/FilePath:
+  Enabled: false
+
+RSpec/InstanceVariable:
+  Exclude:
+    - spec/paper_trail/associations_spec.rb
+    - spec/paper_trail/model_spec.rb
+
+RSpec/MessageSpies:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Exclude:
+    - spec/paper_trail/associations_spec.rb
+    - spec/paper_trail/model_spec.rb
+
+Security/YAMLLoad:
+  Enabled: false

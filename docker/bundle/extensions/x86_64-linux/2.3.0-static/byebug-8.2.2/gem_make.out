@@ -1,0 +1,19 @@
+current directory: /bundle/gems/byebug-8.2.2/ext/byebug
+/usr/local/bin/ruby -r ./siteconf20170719-8-5cxtin.rb extconf.rb
+creating Makefile
+
+current directory: /bundle/gems/byebug-8.2.2/ext/byebug
+make "DESTDIR=" clean
+
+current directory: /bundle/gems/byebug-8.2.2/ext/byebug
+make "DESTDIR="
+compiling locker.c
+compiling context.c
+compiling byebug.c
+compiling threads.c
+compiling breakpoint.c
+linking shared-object byebug/byebug.so
+
+current directory: /bundle/gems/byebug-8.2.2/ext/byebug
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 byebug.so ./.gem.20170719-8-1g6nbvi/byebug

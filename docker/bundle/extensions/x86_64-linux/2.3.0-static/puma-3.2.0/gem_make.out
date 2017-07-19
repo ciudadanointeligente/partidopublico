@@ -1,0 +1,35 @@
+current directory: /bundle/gems/puma-3.2.0/ext/puma_http11
+/usr/local/bin/ruby -r ./siteconf20170719-8-156s04a.rb extconf.rb
+checking for BIO_read() in -lcrypto... yes
+checking for SSL_CTX_new() in -lssl... yes
+checking for openssl/bio.h... yes
+creating Makefile
+
+To see why this extension failed to compile, please check the mkmf.log which can be found here:
+
+  /bundle/extensions/x86_64-linux/2.3.0-static/puma-3.2.0/mkmf.log
+
+current directory: /bundle/gems/puma-3.2.0/ext/puma_http11
+make "DESTDIR=" clean
+
+current directory: /bundle/gems/puma-3.2.0/ext/puma_http11
+make "DESTDIR="
+compiling http11_parser.c
+In file included from ext/http11/http11_parser.rl:7:0:
+ext/http11/http11_parser.rl: In function 'puma_parser_execute':
+ext/http11/http11_parser.rl:111:17: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+compiling puma_http11.c
+compiling mini_ssl.c
+mini_ssl.c: In function 'engine_init_server':
+mini_ssl.c:161:3: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   DH *dh = get_dh1024();
+   ^
+mini_ssl.c:165:3: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+   EC_KEY *ecdh = EC_KEY_new_by_curve_name(NID_secp521r1);
+   ^
+compiling io_buffer.c
+linking shared-object puma/puma_http11.so
+
+current directory: /bundle/gems/puma-3.2.0/ext/puma_http11
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 puma_http11.so ./.gem.20170719-8-1l6y720/puma

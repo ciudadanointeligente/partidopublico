@@ -1,0 +1,15 @@
+current directory: /bundle/gems/debug_inspector-0.0.3/ext/debug_inspector
+/usr/local/bin/ruby -r ./siteconf20170719-19-1p2mf5z.rb extconf.rb
+creating Makefile
+
+current directory: /bundle/gems/debug_inspector-0.0.3/ext/debug_inspector
+make "DESTDIR=" clean
+
+current directory: /bundle/gems/debug_inspector-0.0.3/ext/debug_inspector
+make "DESTDIR="
+compiling debug_inspector.c
+linking shared-object debug_inspector.so
+
+current directory: /bundle/gems/debug_inspector-0.0.3/ext/debug_inspector
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 debug_inspector.so ./.gem.20170719-19-8nopbm
