@@ -30,7 +30,8 @@ ENV BUNDLE_GEMFILE=$INSTALL_PATH/Gemfile \
 
 
 # The default command that gets ran will be to start the Unicorn server.
-RUN  bundle install \
-RUN  bundle exec rails db:create
+RUN  gem install bundler
+RUN  bundle install
+# RUN  rake db:create
 
 # CMD RAILS_ENV=$RAILS_ENV bundle exec rails server -b 0.0.0.0 -p 3000
