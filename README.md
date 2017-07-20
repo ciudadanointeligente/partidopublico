@@ -66,28 +66,26 @@ psql -c 'create database papu_test;' -U postgres --host=127.0.0.1 --password
 
 to start docker version of the app follow next steps:
 - populate env vars :
--- SECRET_KEY_BASE=xxxxx
--- POSTGRESQL_PORT=5432
--- POSTGRESQL_USER=db_user
--- POSTGRESQL_PASSWORD=db_pass
--- RAILS_ENV=production
--- RAILS_PORT=3000
+                      SECRET_KEY_BASE=xxxxx
+                      POSTGRESQL_PORT=5432
+                      POSTGRESQL_USER=db_user
+                      POSTGRESQL_PASSWORD=db_pass
+                      RAILS_ENV=production
+                      RAILS_PORT=3000
 
--- export SECRET_KEY_BASE
--- export POSTGRESQL_PORT
--- export POSTGRESQL_USER
--- export POSTGRESQL_PASSWORD
--- export RAILS_ENV
--- export RAILS_PORT
+                      export SECRET_KEY_BASE
+                      export POSTGRESQL_PORT
+                      export POSTGRESQL_USER
+                      export POSTGRESQL_PASSWORD
+                      export RAILS_ENV
+                      export RAILS_PORT
 
-- docker-compose run app bash --build
+- open a terminal into container with:
 
-<!-- inside the app container prompt:
-- bundle install
-- bundle exec rake db:create -->
+                      docker-compose run app bash
 
-from another shell session, load db dump into empty db from the host machine with command:
-- zcat docker_volumes/seeds/database_papu_dump.tar.gz | docker exec -i partidopublico_db_1 psql -U papu -d papu_prod
+- from another shell session, load db dump into empty db from the host machine with command:
+                      zcat docker_volumes/seeds/database_papu_dump.tar.gz | docker exec -i partidopublico_db_1 psql -U papu -d papu_prod
 
-and finally again within the container:
-- bundle exec rails console
+- and finally again within the container:
+                      bundle exec rails console
