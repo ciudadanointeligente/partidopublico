@@ -86,7 +86,7 @@ to start docker version of the app follow next steps:
 - bundle install
 - bundle exec rake db:create -->
 
-load db dump into empty db from the host machine with command:
+from another shell session, load db dump into empty db from the host machine with command:
 - zcat docker_volumes/seeds/database_papu_dump.tar.gz | docker exec -i partidopublico_db_1 psql -U papu -d papu_prod
 
 and finally again within the container:
