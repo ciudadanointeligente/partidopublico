@@ -61,8 +61,8 @@
       Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
 <script>
 $(document).ready(function(){
-  var data = <%=  @datos_ingresos_ordinarios.to_json.html_safe %>;
-  var data_totals = <%=  @datos_ingresos_ordinarios_totals.to_json.html_safe %>;
+  var data = <%=  @datos_egresos_campanas.to_json.html_safe %>;
+  var data_totals = <%=  @datos_egresos_campanas_totals.to_json.html_safe %>;
   var fechas = <%=  @fechas_datos.to_json.html_safe %>;
   var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
   for(var i=0; i < data.length; i++){

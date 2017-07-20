@@ -798,13 +798,77 @@ class PartidosController < ApplicationController
 
       max_value = (total_alcaldicia + total_concejal + total_diputados + total_presidencial + total_senatorial + total_consejeros_regionales)
       p "Max value -> " + max_value.to_s
-      array_totales = [total_alcaldicia, total_concejal, total_diputados, total_presidencial, total_senatorial, total_consejeros_regionales]
       @datos_egresos_campanas = []
       monto = 0
 
       egresos_campanas.each do |ec|
-        monto = monto + ec.monto
-        line_egresos_campanas(ec, monto, array_totales, max_value)
+        if ec.tipo_campana == "Alcaldicia"
+          monto = monto + ec.monto
+          val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
+          line ={ 'text'=> ec.tipo_campana,
+                  'value' => ActiveSupport::NumberHelper::number_to_delimited(monto,
+                                                                              delimiter: ""),
+                  'percentage' => val }
+          unless (monto == 0 || monto < total_alcaldicia)
+            @datos_egresos_campanas << line
+            monto = 0
+          end
+        elsif ec.tipo_campana == "Concejal"
+          monto = monto + ec.monto
+          val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
+          line ={ 'text'=> ec.tipo_campana,
+                  'value' => ActiveSupport::NumberHelper::number_to_delimited(monto,
+                                                                              delimiter: ""),
+                  'percentage' => val }
+          unless (monto == 0 || monto < total_concejal)
+            @datos_egresos_campanas << line
+            monto = 0
+          end
+        elsif ec.tipo_campana == "Diputados"
+          monto = monto + ec.monto
+          val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
+          line ={ 'text'=> ec.tipo_campana,
+                  'value' => ActiveSupport::NumberHelper::number_to_delimited(monto,
+                                                                              delimiter: ""),
+                  'percentage' => val }
+          unless (monto == 0 || monto < total_diputados)
+            @datos_egresos_campanas << line
+            monto = 0
+          end
+        elsif ec.tipo_campana == "Presidencial"
+          monto = monto + ec.monto
+          val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
+          line ={ 'text'=> ec.tipo_campana,
+                  'value' => ActiveSupport::NumberHelper::number_to_delimited(monto,
+                                                                              delimiter: ""),
+                  'percentage' => val }
+          unless (monto == 0 || monto < total_presidencial)
+            @datos_egresos_campanas << line
+            monto = 0
+          end
+        elsif ec.tipo_campana == "Senatorial"
+          monto = monto + ec.monto
+          val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
+          line ={ 'text'=> ec.tipo_campana,
+                  'value' => ActiveSupport::NumberHelper::number_to_delimited(monto,
+                                                                              delimiter: ""),
+                  'percentage' => val }
+          unless (monto == 0 || monto < total_senatorial)
+            @datos_egresos_campanas << line
+            monto = 0
+          end
+        elsif ec.tipo_campana == "Consejeros Regionales"
+          monto = monto + ec.monto
+          val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
+          line ={ 'text'=> ec.tipo_campana,
+                  'value' => ActiveSupport::NumberHelper::number_to_delimited(monto,
+                                                                              delimiter: ""),
+                  'percentage' => val }
+          unless (monto == 0 || monto < total_consejeros_regionales)
+            @datos_egresos_campanas << line
+            monto = 0
+          end
+        end
       end
 
       @datos_egresos_campanas_totals = {'alcaldicia' => total_alcaldicia,
@@ -1458,45 +1522,6 @@ end
                 'percentage' => val }
         @datos_egresos_ordinarios << line unless (egreso_ordinario.octubre + egreso_ordinario.noviembre + egreso_ordinario.diciembre) == 0
       end
-    end
-
-    def line_egresos_campanas(egreso_campana, monto, array_totales, max_value)
-      if egreso_campana.tipo_campana == "Alcaldicia"
-        monto = monto + egreso_campana.monto
-        p "MONTO: " + monto.to_s
-        monto_alcaldicia = array_totales[0]
-        p monto_alcaldicia
-        val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
-        line ={ 'text'=> egreso_campana.tipo_campana,
-                'value' => ActiveSupport::NumberHelper::number_to_delimited(monto,
-                                                                          delimiter: ""),
-                'percentage' => val }
-        # p 'linea: ' + line.to_s
-        unless (monto == 0 || monto < monto_alcaldicia)
-          @datos_egresos_campanas << line
-        end
-        p @datos_egresos_campanas
-      elsif egreso_campana.tipo_campana == "Concejal"
-
-        monto = monto + egreso_campana.monto
-        monto_concejal = array_totales[1]
-        val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
-        line ={ 'text'=> egreso_campana.tipo_campana,
-                'value' => ActiveSupport::NumberHelper::number_to_delimited(monto,
-                                                                        delimiter: ""),
-                'percentage' => val }
-
-        # p 'linea: ' + line.to_s
-        unless (monto == 0 || monto < monto_concejal)
-          @datos_egresos_campanas << line
-        end
-        # p @datos_egresos_campanas
-      end
-    end
-
-    def acumula_monto(monto, aumento)
-      monto += aumento
-      return monto
     end
 
     # Use callbacks to share common setup or constraints between actions.
