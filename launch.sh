@@ -1,4 +1,4 @@
-#!/bin/bash
+ch#!/bin/bash
 
 echo "setting env vars for papulaunch"
 echo "running as $(whoami)"

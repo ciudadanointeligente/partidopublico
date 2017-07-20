@@ -17,22 +17,22 @@ services:
 
   app:
     build: .
-    command: bundle exec rails s -p 3000 -b 0.0.0.0
+    command: bundle exec rails console
     environment:
-      - POSTGRESQL_PORT=${POSTGRESQL_PORT}
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
       - RAILS_PORT=${RAILS_PORT}
       - RAILS_ENV=${RAILS_ENV}
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
       - POSTGRESQL_USER=${POSTGRESQL_USER}
       - POSTGRESQL_PASSWORD=${POSTGRESQL_PASSWORD}
+      - POSTGRESQL_PORT=${POSTGRESQL_PORT}
     depends_on:
       - db
     ports:
       - "${RAILS_PORT}:3000"
     volumes:
       - ./docker/bundle:/bundle
-      - .:/app
-      - ./docker/lib/seeds:/document_verification_api/lib/seeds
+      - .:/papu
+      - ./docker/lib/seeds:/papu/lib/seeds
     deploy:
       resources:
         limits:

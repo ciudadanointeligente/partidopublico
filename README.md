@@ -17,7 +17,7 @@ To setup an environment for running the papu_rails app following steps are neede
 + postgresql:(instrucions for ubuntu systems)
     + connect to database: ( in a shell prompt: sudo su - postgresql, then: psql(first time without password))
         + \qset passwordwith sql command: alter role postgres with password 'a';
-    
+
         + default encoding must be UTF8, follow steps from [this gist](https://gist.github.com/ffmike/877447) if needed
 
     + udate database config file pg_hba.conf (to find its location type: sudo find / -name hb_pga.config)
@@ -61,3 +61,33 @@ database_name: papu_test
 ```
 psql -c 'create database papu_test;' -U postgres --host=127.0.0.1 --password
 ```
+
+## branch dockerized for datacampfire challenge
+
+to start docker version of the app follow next steps:
+- populate env vars :
+-- SECRET_KEY_BASE=xxxxx
+-- POSTGRESQL_PORT=5432
+-- POSTGRESQL_USER=db_user
+-- POSTGRESQL_PASSWORD=db_pass
+-- RAILS_ENV=production
+-- RAILS_PORT=3000
+
+-- export SECRET_KEY_BASE
+-- export POSTGRESQL_PORT
+-- export POSTGRESQL_USER
+-- export POSTGRESQL_PASSWORD
+-- export RAILS_ENV
+-- export RAILS_PORT
+
+- docker-compose run app bash --build
+
+<!-- inside the app container prompt:
+- bundle install
+- bundle exec rake db:create -->
+
+load db dump into empty db from the host machine with command:
+- zcat docker_volumes/seeds/database_papu_dump.tar.gz | docker exec -i partidopublico_db_1 psql -U papu -d papu_prod
+
+and finally again within the container:
+- bundle exec rails console
