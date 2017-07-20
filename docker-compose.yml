@@ -19,6 +19,7 @@ services:
     build: .
     command: bundle exec rails s -p 3000 -b 0.0.0.0
     environment:
+      - POSTGRESQL_PORT=${POSTGRESQL_PORT}
       - RAILS_PORT=${RAILS_PORT}
       - RAILS_ENV=${RAILS_ENV}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}

@@ -1,5 +1,0 @@
-#!/usr/bin/env ruby
-
-require_relative '../lib/kiba/cli'
-
-Kiba::Cli.run(ARGV)
