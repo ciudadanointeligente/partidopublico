@@ -801,6 +801,8 @@ class PartidosController < ApplicationController
       @datos_egresos_campanas = []
       monto = 0
 
+      # ORDENAR POR tipo_aporte
+
       egresos_campanas.each do |ec|
         if ec.tipo_campana == "Alcaldicia"
           monto = monto + ec.monto
@@ -811,6 +813,7 @@ class PartidosController < ApplicationController
                   'percentage' => val }
           unless (monto == 0 || monto < total_alcaldicia)
             @datos_egresos_campanas << line
+            p "Alcaldicia -> " + @datos_egresos_campanas.to_s
             monto = 0
           end
         elsif ec.tipo_campana == "Concejal"
@@ -821,7 +824,9 @@ class PartidosController < ApplicationController
                                                                               delimiter: ""),
                   'percentage' => val }
           unless (monto == 0 || monto < total_concejal)
+            p ec.item
             @datos_egresos_campanas << line
+            p "Concejal -> " + @datos_egresos_campanas.to_s
             monto = 0
           end
         elsif ec.tipo_campana == "Diputados"

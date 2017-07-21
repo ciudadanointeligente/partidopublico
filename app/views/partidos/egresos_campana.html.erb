@@ -68,15 +68,15 @@ $(document).ready(function(){
   for(var i=0; i < data.length; i++){
     console.log(data[i]);
     if(screen.width > 767) {
-      Raphael("barras_" + i,300, 30 ).ingreso_ord_front_bar(data[i]);
+      Raphael("barras_" + i,300, 30 ).egreso_ord_front_bar(data[i]);
     } else {
-      Raphael("barras_" + i,80, 40 ).ingreso_ord_front_bar(data[i]);
+      Raphael("barras_" + i,80, 40 ).egreso_ord_front_bar(data[i]);
     }
   }
   if(screen.width > 767)
-    Raphael("footer",500, 40 ).ingreso_ord_front_footer(data_totals);
+    Raphael("footer",500, 40 ).egreso_camp_front_footer(data_totals);
   else {
-    Raphael("footer",80, 40 ).ingreso_ord_front_footer(data_totals);
+    Raphael("footer",80, 40 ).egreso_camp_front_footer(data_totals);
     }
 });
 </script>

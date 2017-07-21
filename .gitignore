@@ -9,6 +9,7 @@
 /config/application_settings.yml
 /config/database.yml
 /config/secrets.yml
+/config/initializers/devise.rb
 
 # Ignore all logfiles and tempfiles.
 /log/*
