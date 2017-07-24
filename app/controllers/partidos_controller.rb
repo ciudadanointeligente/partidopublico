@@ -747,15 +747,16 @@ class PartidosController < ApplicationController
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
 
+    @datos_egresos_campanas = []
+    @datos_egresos_campanas_totals = {'alcaldicia' => 0,
+      'concejal' => 0,
+      'diputados' => 0,
+      'presidencial' => 0,
+      'senatorial' => 0,
+      'consejeros_regionales' => 0}
+
     if @trimestres_informados.count == 0
       @trimestres_informados = []
-      @datos_egresos_campanas = []
-      @datos_egresos_campanas_totals = {'alcaldicia' => 0,
-                                        'concejal' => 0,
-                                        'diputados' => 0,
-                                        'presidencial' => 0,
-                                        'senatorial' => 0,
-                                        'consejeros_regionales' => 0}
       @sin_datos = true
     else
       params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
@@ -763,132 +764,43 @@ class PartidosController < ApplicationController
 
       egresos_campanas = @trimestre_informado.egreso_campanas.where(:partido_id => @partido.id)
 
-      total_alcaldicia = egresos_campanas.where(:partido_id => @partido.id,
-                                                :tipo_campana => (["Alcaldicia"])).sum(:monto) rescue 0
 
-      p "Total alcaldicia -> " + total_alcaldicia.to_s
+      montos = {}
+      total = 0
+      max_value = 0
 
-      total_concejal = egresos_campanas.where(:partido_id => @partido.id,
-                                              :tipo_campana => (["Concejal"])).sum(:monto) rescue 0
+      tipos_campanas = egresos_campanas.all.map{|c| c.tipo_campana}.uniq
 
-      p "Total concejal -> " + total_concejal.to_s
+      tipos_campanas.each do |tipoc|
+        montos[:tipoc] = egresos_campanas.where(:tipo_campana => tipoc).sum(:monto)
+        @datos_egresos_campanas << {:text => tipoc,
+                                    :value => ActiveSupport::NumberHelper::number_to_delimited(montos[:tipoc],
+                                                                                            delimiter: ""),
+                                    :percentage => 0.2 }
+      end
 
-      total_diputados = egresos_campanas.where(:partido_id => @partido.id,
-                                               :tipo_campana => (["Diputados"])).sum(:monto) rescue 0
-
-      p "Total diputados -> " + total_diputados.to_s
-
-
-      total_presidencial = egresos_campanas.where(:partido_id => @partido.id,
-                                                  :tipo_campana => (["Presidencial"])).sum(:monto) rescue 0
-
-      p "Total presidencial -> " + total_presidencial.to_s
-
-
-      total_senatorial = egresos_campanas.where(:partido_id => @partido.id,
-                                                :tipo_campana => (["Senatorial"])).sum(:monto) rescue 0
-
-      p "Total senatorial -> " + total_senatorial.to_s
-
-
-      total_consejeros_regionales = egresos_campanas.where(:partido_id => @partido.id,
-                                                           :tipo_campana => (["Consejeros Regionales"])).sum(:monto) rescue 0
-
-      p "Total consejeros regionales -> " + total_consejeros_regionales.to_s
-
-      max_value = (total_alcaldicia + total_concejal + total_diputados + total_presidencial + total_senatorial + total_consejeros_regionales)
-      p "Max value -> " + max_value.to_s
-      @datos_egresos_campanas = []
-      monto = 0
-
-      # ORDENAR POR tipo_aporte
-
-      egresos_campanas.each do |ec|
-        if ec.tipo_campana == "Alcaldicia"
-          monto = monto + ec.monto
-          val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
-          line ={ 'text'=> ec.tipo_campana,
-                  'value' => ActiveSupport::NumberHelper::number_to_delimited(monto,
-                                                                              delimiter: ""),
-                  'percentage' => val }
-          unless (monto == 0 || monto < total_alcaldicia)
-            @datos_egresos_campanas << line
-            p "Alcaldicia -> " + @datos_egresos_campanas.to_s
-            monto = 0
-          end
-        elsif ec.tipo_campana == "Concejal"
-          monto = monto + ec.monto
-          val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
-          line ={ 'text'=> ec.tipo_campana,
-                  'value' => ActiveSupport::NumberHelper::number_to_delimited(monto,
-                                                                              delimiter: ""),
-                  'percentage' => val }
-          unless (monto == 0 || monto < total_concejal)
-            p ec.item
-            @datos_egresos_campanas << line
-            p "Concejal -> " + @datos_egresos_campanas.to_s
-            monto = 0
-          end
-        elsif ec.tipo_campana == "Diputados"
-          monto = monto + ec.monto
-          val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
-          line ={ 'text'=> ec.tipo_campana,
-                  'value' => ActiveSupport::NumberHelper::number_to_delimited(monto,
-                                                                              delimiter: ""),
-                  'percentage' => val }
-          unless (monto == 0 || monto < total_diputados)
-            @datos_egresos_campanas << line
-            monto = 0
-          end
-        elsif ec.tipo_campana == "Presidencial"
-          monto = monto + ec.monto
-          val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
-          line ={ 'text'=> ec.tipo_campana,
-                  'value' => ActiveSupport::NumberHelper::number_to_delimited(monto,
-                                                                              delimiter: ""),
-                  'percentage' => val }
-          unless (monto == 0 || monto < total_presidencial)
-            @datos_egresos_campanas << line
-            monto = 0
-          end
-        elsif ec.tipo_campana == "Senatorial"
-          monto = monto + ec.monto
-          val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
-          line ={ 'text'=> ec.tipo_campana,
-                  'value' => ActiveSupport::NumberHelper::number_to_delimited(monto,
-                                                                              delimiter: ""),
-                  'percentage' => val }
-          unless (monto == 0 || monto < total_senatorial)
-            @datos_egresos_campanas << line
-            monto = 0
-          end
-        elsif ec.tipo_campana == "Consejeros Regionales"
-          monto = monto + ec.monto
-          val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
-          line ={ 'text'=> ec.tipo_campana,
-                  'value' => ActiveSupport::NumberHelper::number_to_delimited(monto,
-                                                                              delimiter: ""),
-                  'percentage' => val }
-          unless (monto == 0 || monto < total_consejeros_regionales)
-            @datos_egresos_campanas << line
-            monto = 0
-          end
+      @datos_egresos_campanas.each do |dato_e_c|
+        total += dato_e_c[:value].to_f
+        if dato_e_c[:value].to_f > max_value
+          max_value = dato_e_c[:value].to_f
         end
       end
 
-      @datos_egresos_campanas_totals = {'alcaldicia' => total_alcaldicia,
-                                        'concejal' => total_concejal,
-                                        'diputados' => total_diputados,
-                                        'presidencial' => total_presidencial,
-                                        'senatorial' => total_senatorial,
-                                        'consejeros_regionales' => total_consejeros_regionales}
+      @datos_egresos_campanas.each do |dato_e_c|
+        val = ((dato_e_c[:value].to_f / total.to_f).to_f rescue 0).to_s
+        dato_e_c[:percentage] = val
+        @datos_egresos_campanas_totals[dato_e_c[:text].downcase.gsub(' ','_')] = dato_e_c[:value]
+      end
+
+      p @datos_egresos_campanas_totals
+
+
 
 
       @sin_datos = false
     end
   end
 
-  # MÉTODO ANTIGUO
   # def finanzas_2
   #   @fechas_datos = EgresoOrdinario.where(partido: @partido).uniq.pluck(:fecha_datos).sort
   #   if params[:fecha_datos]

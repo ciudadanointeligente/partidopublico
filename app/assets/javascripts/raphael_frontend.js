@@ -351,6 +351,9 @@ $(document).ready(function(){
       color = sky_dark
       console.log("DENTRO ELSE IF 2" + dato.text)
     }
+    else{
+      color = green_dark;
+    }
 
     var bar = paper.rect(0, 0, egreso_width, bar_height).attr({
       "fill" : color,
@@ -403,9 +406,11 @@ $(document).ready(function(){
       var bar_width = 80
       var bar_height = 20
     }
-    var diputados_width = (dato.diputados / (dato.diputados + dato.alcaldicia + dato.concejal)) * bar_width;
+    datos_sum = parseInt(dato.diputados, 10) + parseInt(dato.alcaldicia, 10) + parseInt(dato.concejal, 10)
+    console.log("datos_sum: " + datos_sum);
+    var diputados_width = (parseInt(dato.diputados, 10) / (datos_sum)) * bar_width;
     console.log("diputados_width: " + diputados_width);
-    var alcaldicia_width = (dato.alcaldicia / (dato.diputados + dato.alcaldicia + dato.concejal)) * bar_width;
+    var alcaldicia_width = (parseInt(dato.alcaldicia, 10) / (datos_sum)) * bar_width;
     console.log("alcaldicia_width: " + alcaldicia_width);
     var concejal_width = bar_width - (diputados_width + alcaldicia_width);
     console.log("concejal_width: " + concejal_width);
