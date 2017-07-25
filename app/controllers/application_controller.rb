@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include ActionController::Caching
   # before_action :authenticate_admin!
 
   # Prevent CSRF attacks by raising an exception.

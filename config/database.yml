@@ -4,8 +4,8 @@ default: &default
   pool: 5
   host: localhost
   port: <%= ENV['POSTGRESQL_PORT'] || 5432 %>
-  username: <%= ENV['POSTGRESQL_USER'] || papu %>
-  password: <%= ENV['POSTGRESQL_PASSWORD'] || papu %>
+  username: <%= ENV['POSTGRESQL_USER'] || 'papu' %>
+  password: <%= ENV['POSTGRESQL_PASSWORD'] || 'papu' %>
 
 development:
   <<: *default

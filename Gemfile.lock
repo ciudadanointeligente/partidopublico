@@ -14,6 +14,10 @@ GEM
       rack-test (~> 0.6.2)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
+    actionpack-action_caching (1.2.0)
+      actionpack (>= 4.0.0, < 6)
+    actionpack-page_caching (1.1.0)
+      actionpack (>= 4.0.0, < 6)
     actionview (4.2.6)
       activesupport (= 4.2.6)
       builder (~> 3.1)
@@ -181,10 +185,11 @@ GEM
     pry-rescue (1.4.2)
       interception (>= 0.5)
       pry
-    puma (3.2.0)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.4)
+    rack-mini-profiler (0.10.5)
+      rack (>= 1.2.0)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.6)
@@ -319,6 +324,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionpack-action_caching
+  actionpack-page_caching
   annotate
   arel
   autoprefixer-rails
@@ -348,8 +355,8 @@ DEPENDENCIES
   pg (~> 0.15)
   pry-rails
   pry-rescue
-  puma
   quiet_assets
+  rack-mini-profiler
   rails (= 4.2.6)
   rails-erd
   rails-i18n
@@ -375,4 +382,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.14.5
+   1.14.6

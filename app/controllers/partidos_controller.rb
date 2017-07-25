@@ -1,11 +1,11 @@
 class PartidosController < ApplicationController
   include PartidosHelper
-  before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy, :admin]
+  before_filter :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy, :admin]
   before_filter :authenticate_superadmin, only: [:new, :edit, :create, :update, :destroy]
-  before_action :set_partido, except: [:index, :new, :create, :admin]
-  before_action :get_partidos, except: [:index, :new, :create, :admin]
-  before_action :set_menu
-  before_action :set_fecha_datos
+  before_filter :set_partido, except: [:index, :new, :create, :admin]
+  before_filter :get_partidos, except: [:index, :new, :create, :admin]
+  before_filter :set_menu
+  before_filter :set_fecha_datos
   layout "frontend", only: [:normas_internas, :regiones_all, :sedes_partido, :autoridades,
                             :vinculos_intereses, :pactos, :sanciones,
                             :finanzas_1, :finanzas_2, :finanzas_5, :ingresos_campana, :egresos_campana,
@@ -14,6 +14,9 @@ class PartidosController < ApplicationController
                             :acuerdos_organos, :estructura_organica, :actividades_publicas,
                             :intereses_patrimonios, :publicacion_candidatos, :resultado_elecciones_internas
                           ]
+
+  # caches_page   :sedes
+  # caches_action :sedes, :cache_path => Proc.new {|c| c.request.url }
 
 
   # GET /partidos
@@ -318,7 +321,6 @@ class PartidosController < ApplicationController
   end
 
   def sedes_partido
-
     temp_trimestres_informados = []
     @partido.sedes.each do |s|
       s.trimestre_informados.each do |t|
@@ -331,28 +333,31 @@ class PartidosController < ApplicationController
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
 
-    if @trimestres_informados.count == 0
-      @trimestres_informados = []
-      @datos_sedes = []
-      @sin_datos = true
-    else
-      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
-      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+    @datos_sedes = []
+      if @trimestres_informados.count == 0
+        @trimestres_informados = []
+        # @datos_sedes = []
+        @sin_datos = true
+      else
+        params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+        @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
-      @datos_sedes = []
-      region_ids_with_sede = @partido.sedes.select(:region_id).uniq.map(&:region_id)
-      region_ids_with_sede.each do |r|
-        # sedes = @trimestre_informado.sedes.where(region_id: r)
-        sedes = @trimestre_informado.sedes.where(region_id: r).where(partido_id: @partido.id)
-        all_sedes = []
-        sedes.each do |s|
-          all_sedes.push( { 'direccion' => s.direccion, 'contacto' => s.contacto, 'comuna' => s.comuna.nombre } )
-        end
-        region = Region.find r
-        @datos_sedes.push( {'region' => region.nombre, 'sedes' => all_sedes} )
         @sin_datos = false
+        @datos_sedes=Rails.cache.fetch("#{request.url}", expires_in: 6.days) do
+          region_ids_with_sede = @partido.sedes.select(:region_id).uniq.map(&:region_id)
+          region_ids_with_sede.each do |r|
+            # sedes = @trimestre_informado.sedes.where(region_id: r)
+            sedes = @trimestre_informado.sedes.where(region_id: r).where(partido_id: @partido.id)
+            all_sedes = []
+            sedes.each do |s|
+              all_sedes.push( { 'direccion' => s.direccion, 'contacto' => s.contacto, 'comuna' => s.comuna.nombre } )
+            end
+            region = Region.find r
+            @datos_sedes.push( {'region' => region.nombre, 'sedes' => all_sedes} )
+          end
+          @datos_sedes.to_a
+        end
       end
-    end
   end
 
   def autoridades
@@ -472,9 +477,9 @@ class PartidosController < ApplicationController
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
 
+    @datos_ingresos_ordinarios = []
     if @trimestres_informados.count == 0
       @trimestres_informados = []
-      @datos_ingresos_ordinarios = []
       # line ={ 'text'=> 'Sin información', 'value' => 0, 'percentage' => 0 }
       # @datos_ingresos_ordinarios << line
       @datos_ingresos_ordinarios_totals = {'publicos' => 0, 'privados' => 0}
@@ -485,25 +490,28 @@ class PartidosController < ApplicationController
 
       ingresos_ordinarios = @trimestre_informado.ingreso_ordinarios.where(:partido_id => @partido.id)
 
-      total_publicos = ingresos_ordinarios.where(:partido_id => @partido.id,
-                                                 :concepto => (["Aportes del Estado (Art. 33 Bis Ley N° 18603)",
-                                                                "Otras transferencias públicas"])).sum(:importe) rescue 0
-      total_privados = ingresos_ordinarios.where(:partido_id => @partido.id,
+      total_publicos = Rails.cache.fetch("#{request.url}/total_publicos", expires_in: 6.days) {ingresos_ordinarios.where(:partido_id => @partido.id, :concepto => (["Aportes del Estado (Art. 33 Bis Ley N° 18603)", "Otras transferencias públicas"])).sum(:importe) rescue 0}
+      total_privados = Rails.cache.fetch("#{request.url}/total_privados", expires_in: 6.days) do
+                              ingresos_ordinarios.where(:partido_id => @partido.id,
                                                  :concepto => (["Cotizaciones",
                                                                  "Donaciones",
                                                                  "Asignaciones testamentarias",
                                                                  "Frutos y productos de los bienes patrimoniales",
                                                                  "Otras transferencias privadas",
                                                                  "Ingresos militantes"])).sum(:importe) rescue 0
+                      end
       max_value = total_publicos + total_privados
-      @datos_ingresos_ordinarios = []
-      ingresos_ordinarios.each do |io|
-        val = ((io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
-        line ={ 'text'=> io.concepto,
-                'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe,
-                                                                            delimiter: ""),
-                'percentage' => val }
-        @datos_ingresos_ordinarios << line unless io.importe == 0
+
+      @datos_ingresos_ordinarios =  Rails.cache.fetch("#{request.url}/datos_ingresos_ordinarios", expires_in: 6.days) do
+        ingresos_ordinarios.each do |io|
+          val = ((io.importe.to_f / max_value.to_f).to_f rescue 0).to_s
+          line ={ 'text'=> io.concepto,
+                  'value' => ActiveSupport::NumberHelper::number_to_delimited(io.importe,
+                                                                              delimiter: ""),
+                  'percentage' => val }
+          @datos_ingresos_ordinarios << line unless io.importe == 0
+        end
+        @datos_ingresos_ordinarios.to_a
       end
 
       @datos_ingresos_ordinarios_totals = { 'publicos'=> total_publicos, 'privados' => total_privados}
@@ -525,9 +533,9 @@ class PartidosController < ApplicationController
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
 
+    @datos_ingresos_campanas = []
     if @trimestres_informados.count == 0
       @trimestres_informados = []
-      @datos_ingresos_campanas = []
       @datos_ingresos_campanas_totals = {'aportes_en_dinero' => 0, 'otros_aportes' => 0}
       @sin_datos = true
     else
@@ -536,41 +544,40 @@ class PartidosController < ApplicationController
 
       ingresos_campanas = @trimestre_informado.ingreso_campanas.where(:partido_id => @partido.id)
 
-      monto_aporte_dinero = ingresos_campanas.where(:partido_id => @partido.id,
-                                                    :tipo_aporte => (["Aportes en Dinero"])).sum(:monto) rescue 0
+      monto_aporte_dinero = Rails.cache.fetch("#{request.url}/monto_aporte_dinero", expires_in: 6.days) {ingresos_campanas.where(:partido_id => @partido.id, :tipo_aporte => (["Aportes en Dinero"])).sum(:monto) rescue 0}
 
-      monto_otro_aporte = ingresos_campanas.where(:partido_id => @partido.id).where.not(:tipo_aporte => ["Aportes en Dinero"]).sum(:monto) rescue 0
+      monto_otro_aporte = Rails.cache.fetch("#{request.url}/monto_otro_aporte", expires_in: 6.days) {ingresos_campanas.where(:partido_id => @partido.id).where.not(:tipo_aporte => ["Aportes en Dinero"]).sum(:monto) rescue 0}
 
       max_value = monto_aporte_dinero + monto_otro_aporte
-      @datos_ingresos_campanas = []
-      line = {'text' => 0,
-              'value' => 0,
-              'percentage' => 0}
-      monto = 0
+      @datos_ingresos_campanas = Rails.cache.fetch("#{request.url}/datos_ingresos_campanas", expires_in: 6.days) do
+        line = {'text' => 0,
+                'value' => 0,
+                'percentage' => 0}
+        monto = 0
 
-      ingresos_campanas.each do |ic|
-        if ic.tipo_aporte != "Aportes en Dinero"
-          val = ((ic.monto.to_f / max_value.to_f).to_f rescue 0).to_s
-          ic.tipo_aporte = ic.tipo_aporte.titleize
-          line = { 'text' => ic.tipo_aporte,
-                   'value' => ActiveSupport::NumberHelper::number_to_delimited(ic.monto,
-                                                                               delimiter: ""),
-                   'percentage' => val }
-            @datos_ingresos_campanas << line
-        elsif ic.tipo_aporte == "Aportes en Dinero"
-          monto += ic.monto
-          val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
-          line ={ 'text'=> ic.tipo_aporte,
-                  'value' => ActiveSupport::NumberHelper::number_to_delimited(monto,
-                                                                              delimiter: ""),
-                  'percentage' => val }
-          p "Line aportes en dinero: " + line.to_s
-          unless (monto == 0 || monto < monto_aporte_dinero)
-            @datos_ingresos_campanas << line
+        ingresos_campanas.each do |ic|
+          if ic.tipo_aporte != "Aportes en Dinero"
+            val = ((ic.monto.to_f / max_value.to_f).to_f rescue 0).to_s
+            ic.tipo_aporte = ic.tipo_aporte.titleize
+            line = { 'text' => ic.tipo_aporte,
+                     'value' => ActiveSupport::NumberHelper::number_to_delimited(ic.monto,
+                                                                                 delimiter: ""),
+                     'percentage' => val }
+              @datos_ingresos_campanas << line
+          elsif ic.tipo_aporte == "Aportes en Dinero"
+            monto += ic.monto
+            val = ((monto.to_f / max_value.to_f).to_f rescue 0).to_s
+            line ={ 'text'=> ic.tipo_aporte,
+                    'value' => ActiveSupport::NumberHelper::number_to_delimited(monto,
+                                                                                delimiter: ""),
+                    'percentage' => val }
+            p "Line aportes en dinero: " + line.to_s
+            unless (monto == 0 || monto < monto_aporte_dinero)
+              @datos_ingresos_campanas << line
+            end
           end
         end
       end
-
 
       @datos_ingresos_campanas_totals = { 'aportes_en_dinero'=> monto_aporte_dinero, 'otros_aportes' => monto_otro_aporte}
       @sin_datos = false
@@ -580,11 +587,14 @@ class PartidosController < ApplicationController
   def contrataciones_20utm
 
     temp_trimestres_informados = []
-    @partido.contratacions.each do |c|
-      c.trimestre_informados.each do |t|
+    temp_trimestres_informados = Rails.cache.fetch("#{request.url}/temp_trimestres_informados", expires_in: 6.days) do
+      @partido.contratacions.each do |c|
+        c.trimestre_informados.each do |t|
 
-        temp_trimestres_informados.push(t)
+          temp_trimestres_informados.push(t)
+        end
       end
+      temp_trimestres_informados
     end
 
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
@@ -599,24 +609,26 @@ class PartidosController < ApplicationController
       params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
-      contrataciones = @trimestre_informado.contratacions.where(:partido_id => @partido.id)
-      .select('extract(year from fecha_inicio) as year, extract(month from fecha_inicio) as month, sum(monto)')
-      .group('extract(year from fecha_inicio), extract(month from fecha_inicio)')
-      .order('extract(year from fecha_inicio), extract(month from fecha_inicio)')
-
-      max_value = 0
-      contrataciones.each do |c|
-        if c.year == @trimestre_informado.ano
-
-          mes = get_month(c.month.round(0))
-          max_value = max_value_contrataciones_20utm(@trimestre_informado,
-                                                     mes, c, max_value)
-          # p max_value.to_s
-        end
+      contrataciones = Rails.cache.fetch("#{request.url}/contrataciones", expires_in: 6.days) do
+        @trimestre_informado.contratacions.where(:partido_id => @partido.id)
+        .select('extract(year from fecha_inicio) as year, extract(month from fecha_inicio) as month, sum(monto)')
+        .group('extract(year from fecha_inicio), extract(month from fecha_inicio)')
+        .order('extract(year from fecha_inicio), extract(month from fecha_inicio)')
       end
 
-      if max_value < 0
-        max_value = max_value * -1
+      max_value = 0
+      max_value = Rails.cache.fetch("#{request.url}/max_value", expires_in: 6.days) do
+        contrataciones.each do |c|
+          if c.year == @trimestre_informado.ano
+            mes = get_month(c.month.round(0))
+            max_value = max_value_contrataciones_20utm(@trimestre_informado,  mes, c, max_value)
+          end
+        end
+
+        if max_value < 0
+          max_value = max_value * -1
+        end
+        max_value
       end
 
       primer_mes = 0
@@ -624,111 +636,114 @@ class PartidosController < ApplicationController
       tercer_mes = 0
       total = 0
       @datos_contrataciones = []
+      @datos_contrataciones = Rails.cache.fetch("#{request.url}/datos_contrataciones", expires_in: 6.days) do
 
-      contrataciones.each do |tr|
+        contrataciones.each do |tr|
 
-        if tr.sum < 0
-          tr.sum = tr.sum * -1
-        end
+          if tr.sum < 0
+            tr.sum = tr.sum * -1
+          end
 
-        if tr.year == @trimestre_informado.ano
-          año = tr.year.round(0).to_s
-          if @trimestre_informado.ordinal == 0
-            mes = get_month(tr.month.round(0))
-            if mes.include?("Enero")
-              primer_mes = tr.sum
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += primer_mes
-            elsif mes.include?("Febrero")
-              segundo_mes = tr.sum
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += segundo_mes
-            elsif mes.include?("Marzo")
-              tercer_mes = tr.sum
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += tercer_mes
-            end
-          elsif @trimestre_informado.ordinal == 1
-            mes = get_month(tr.month.round(0))
-            if mes.include?("Abril")
-              primer_mes = tr.sum
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += primer_mes
-            elsif mes.include?("Mayo")
-              segundo_mes = tr.sum
-              año = tr.year.round(0).to_s
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += segundo_mes
-            elsif mes.include?("Junio")
-              tercer_mes = tr.sum
-              año = tr.year.round(0).to_s
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += tercer_mes
-            end
-          elsif @trimestre_informado.ordinal == 2
-            mes = get_month(tr.month.round(0))
-            if mes.include?("Julio")
-              primer_mes = tr.sum
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += primer_mes
-            elsif mes.include?("Agosto")
-              segundo_mes = tr.sum
-              año = tr.year.round(0).to_s
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += segundo_mes
-            elsif mes.include?("Septiembre")
-              tercer_mes = tr.sum
-              año = tr.year.round(0).to_s
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += tercer_mes
-            end
-          elsif @trimestre_informado.ordinal == 3
-            mes = get_month(tr.month.round(0))
-            if mes.include?("Octubre")
-              primer_mes = tr.sum
-              año = tr.year.round(0).to_s
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += primer_mes
-            elsif mes.include?("Noviembre")
-              segundo_mes = tr.sum
-              año = tr.year.round(0).to_s
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += segundo_mes
-            elsif mes.include?("Diciembre")
-              tercer_mes = tr.sum
-              año = tr.year.round(0).to_s
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += tercer_mes
+          if tr.year == @trimestre_informado.ano
+            año = tr.year.round(0).to_s
+            if @trimestre_informado.ordinal == 0
+              mes = get_month(tr.month.round(0))
+              if mes.include?("Enero")
+                primer_mes = tr.sum
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += primer_mes
+              elsif mes.include?("Febrero")
+                segundo_mes = tr.sum
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += segundo_mes
+              elsif mes.include?("Marzo")
+                tercer_mes = tr.sum
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += tercer_mes
+              end
+            elsif @trimestre_informado.ordinal == 1
+              mes = get_month(tr.month.round(0))
+              if mes.include?("Abril")
+                primer_mes = tr.sum
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += primer_mes
+              elsif mes.include?("Mayo")
+                segundo_mes = tr.sum
+                año = tr.year.round(0).to_s
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += segundo_mes
+              elsif mes.include?("Junio")
+                tercer_mes = tr.sum
+                año = tr.year.round(0).to_s
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += tercer_mes
+              end
+            elsif @trimestre_informado.ordinal == 2
+              mes = get_month(tr.month.round(0))
+              if mes.include?("Julio")
+                primer_mes = tr.sum
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += primer_mes
+              elsif mes.include?("Agosto")
+                segundo_mes = tr.sum
+                año = tr.year.round(0).to_s
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += segundo_mes
+              elsif mes.include?("Septiembre")
+                tercer_mes = tr.sum
+                año = tr.year.round(0).to_s
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += tercer_mes
+              end
+            elsif @trimestre_informado.ordinal == 3
+              mes = get_month(tr.month.round(0))
+              if mes.include?("Octubre")
+                primer_mes = tr.sum
+                año = tr.year.round(0).to_s
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += primer_mes
+              elsif mes.include?("Noviembre")
+                segundo_mes = tr.sum
+                año = tr.year.round(0).to_s
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += segundo_mes
+              elsif mes.include?("Diciembre")
+                tercer_mes = tr.sum
+                año = tr.year.round(0).to_s
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += tercer_mes
+              end
             end
           end
-        end
 
-        if !line.nil?
-          @datos_contrataciones << line
+          if !line.nil?
+            @datos_contrataciones << line
+          end
         end
+        @datos_contrataciones
       end
 
-      @datos_contrataciones_totals = { :total => total,
-                                       :primer_mes => primer_mes,
-                                       :segundo_mes => segundo_mes,
-                                       :tercer_mes => tercer_mes }
+      @datos_contrataciones_totals = []
+      @datos_contrataciones_totals = Rails.cache.fetch("#{request.url}/datos_contrataciones_totals", expires_in: 6.days) do
+        @datos_contrataciones_totals = { :total => total, :primer_mes => primer_mes, :segundo_mes => segundo_mes, :tercer_mes => tercer_mes }
 
-      if @datos_contrataciones_totals[:total] < 0
-        @datos_contrataciones_totals[:total] = @datos_contrataciones_totals[:total] * -1
+        if @datos_contrataciones_totals[:total] < 0
+          @datos_contrataciones_totals[:total] = @datos_contrataciones_totals[:total] * -1
+        end
+        @datos_contrataciones_totals
       end
-
       @sin_datos = false
     end
   end
@@ -762,41 +777,39 @@ class PartidosController < ApplicationController
       params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
-      egresos_campanas = @trimestre_informado.egreso_campanas.where(:partido_id => @partido.id)
-
-
       montos = {}
       total = 0
       max_value = 0
+      @datos_egresos_campanas = Rails.cache.fetch("#{request.url}/datos_egresos_campanas", expires_in: 6.days) do
+        egresos_campanas = @trimestre_informado.egreso_campanas.where(:partido_id => @partido.id)
 
-      tipos_campanas = egresos_campanas.all.map{|c| c.tipo_campana}.uniq
 
-      tipos_campanas.each do |tipoc|
-        montos[:tipoc] = egresos_campanas.where(:tipo_campana => tipoc).sum(:monto)
-        @datos_egresos_campanas << {:text => tipoc,
-                                    :value => ActiveSupport::NumberHelper::number_to_delimited(montos[:tipoc],
-                                                                                            delimiter: ""),
-                                    :percentage => 0.2 }
-      end
 
-      @datos_egresos_campanas.each do |dato_e_c|
-        total += dato_e_c[:value].to_f
-        if dato_e_c[:value].to_f > max_value
-          max_value = dato_e_c[:value].to_f
+        tipos_campanas = egresos_campanas.all.map{|c| c.tipo_campana}.uniq
+
+        tipos_campanas.each do |tipoc|
+          montos[:tipoc] = egresos_campanas.where(:tipo_campana => tipoc).sum(:monto)
+          @datos_egresos_campanas << {:text => tipoc,
+                                      :value => ActiveSupport::NumberHelper::number_to_delimited(montos[:tipoc], delimiter: ""),
+                                      :percentage => 0.2 }
         end
+        @datos_egresos_campanas
       end
-
-      @datos_egresos_campanas.each do |dato_e_c|
-        val = ((dato_e_c[:value].to_f / total.to_f).to_f rescue 0).to_s
-        dato_e_c[:percentage] = val
-        @datos_egresos_campanas_totals[dato_e_c[:text].downcase.gsub(' ','_')] = dato_e_c[:value]
+      @datos_egresos_campanas_totals = Rails.cache.fetch("#{request.url}/datos_egresos_campanas_totals", expires_in: 6.days) do
+        @datos_egresos_campanas.each do |dato_e_c|
+          p dato_e_c
+          total += dato_e_c[:value].to_f
+          if dato_e_c[:value].to_f > max_value
+            max_value = dato_e_c[:value].to_f
+          end
+        end
+        @datos_egresos_campanas.each do |dato_e_c|
+          val = ((dato_e_c[:value].to_f / total.to_f).to_f rescue 0).to_s
+          dato_e_c[:percentage] = val
+          @datos_egresos_campanas_totals[dato_e_c[:text].downcase.gsub(' ','_')] = dato_e_c[:value]
+        end
+        @datos_egresos_campanas_totals
       end
-
-      p @datos_egresos_campanas_totals
-
-
-
-
       @sin_datos = false
     end
   end
@@ -850,32 +863,37 @@ class PartidosController < ApplicationController
       params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
-      egresos_ordinarios = @trimestre_informado.egreso_ordinarios.where(:partido_id => @partido.id)
+      egresos_ordinarios = Rails.cache.fetch("#{request.url}/egresos_ordinarios", expires_in: 6.days) {@trimestre_informado.egreso_ordinarios.where(:partido_id => @partido.id)}
 
 
-      ga = egresos_ordinarios.where(:partido_id => @partido.id,
+      ga = Rails.cache.fetch("#{request.url}/ga", expires_in: 6.days) do
+        egresos_ordinarios.where(:partido_id => @partido.id,
                                     :concepto => (["Gastos de personal",
                                                    "Gastos de adquisición de bienes y servicios o gastos corrientes",
                                                    "Otros gastos de administración"]))
+      end
 
-      gci = egresos_ordinarios.where(:partido => @partido.id,
+      gci = Rails.cache.fetch("#{request.url}/gci", expires_in: 6.days) do
+        egresos_ordinarios.where(:partido => @partido.id,
                                      :concepto => (["Gastos financieros por préstamos de corto plazo",
                                                     "Gastos financieros por préstamos de largo plazo",
                                                     "Créditos de corto plazo, inversiones y valores de operaciones de capital",
                                                     "Créditos de largo plazo, inversiones y valores de operaciones de capital"]))
+      end
 
-      gf = egresos_ordinarios.where(:partido => @partido.id,
+      gf = Rails.cache.fetch("#{request.url}/gf", expires_in: 6.days) do
+        egresos_ordinarios.where(:partido => @partido.id,
                                     :concepto => (["Gastos de actividades de investigación",
                                                    "Gastos de actividades de educación cívica",
                                                    "Gastos de actividades de fomento a la particiación femenina",
                                                    "Gastos de actividades de fomento a la participación de los jóvenes",
                                                    "Gastos de las actividades de preparación de candidatos a cargos de elección popular",
                                                    "Gastos de las actividades de formación de militantes"]))
+      end
 
-
-      gastos_administracion = gasto_por_trimeste(@trimestre_informado, ga)
-      gastos_creditos_inversiones = gasto_por_trimeste(@trimestre_informado, gci)
-      gastos_formacion = gasto_por_trimeste(@trimestre_informado, gf)
+      gastos_administracion = Rails.cache.fetch("#{request.url}/gastos_administracion", expires_in: 6.days){gasto_por_trimeste(@trimestre_informado, ga)}
+      gastos_creditos_inversiones = Rails.cache.fetch("#{request.url}/gastos_creditos_inversiones", expires_in: 6.days){gasto_por_trimeste(@trimestre_informado, gci)}
+      gastos_formacion = Rails.cache.fetch("#{request.url}/gastos_formacion", expires_in: 6.days){gasto_por_trimeste(@trimestre_informado, gf)}
       max_value = gastos_administracion + gastos_creditos_inversiones + gastos_formacion
 
       @datos_egresos_ordinarios =[]
@@ -924,16 +942,18 @@ class PartidosController < ApplicationController
   def finanzas_5
 
     temp_trimestres_informados = []
-    @partido.transferencias.each do |tr|
-      tr.trimestre_informados.each do |t|
+    temp_trimestres_informados = Rails.cache.fetch("#{request.url}/temp_trimestres_informados", expires_in: 6.days) do
+      @partido.transferencias.each do |tr|
+        tr.trimestre_informados.each do |t|
 
-        temp_trimestres_informados.push(t)
+          temp_trimestres_informados.push(t)
+        end
       end
+      temp_trimestres_informados.to_a
     end
-
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
-
+    @datos_transferencias = []
     if @trimestres_informados.count == 0
       @trimestres_informados = []
       @datos_transferencias_totals = []
@@ -942,19 +962,22 @@ class PartidosController < ApplicationController
       params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
-      temp_transferencias = @trimestre_informado.transferencias.where(:partido_id => @partido.id)
-      .select('extract(year from fecha) as year, extract(month from fecha) as month, sum(monto)')
-      .group('extract(year from fecha),extract(month from fecha)')
-      .order('extract(year from fecha),extract(month from fecha)')
+      temp_transferencias = Rails.cache.fetch("#{request.url}/temp_transferencias", expires_in: 6.days) do
+        @trimestre_informado.transferencias.where(:partido_id => @partido.id)
+        .select('extract(year from fecha) as year, extract(month from fecha) as month, sum(monto)')
+        .group('extract(year from fecha),extract(month from fecha)')
+        .order('extract(year from fecha),extract(month from fecha)').to_a
+      end
 
       max_value = 0
-      temp_transferencias.each do |tr|
-        if tr.year == @trimestre_informado.ano
-
-          mes = get_month(tr.month.round(0))
-          max_value = max_value_transferencias_fondos_publicos(@trimestre_informado,
-                                                                mes, tr, max_value)
+      max_value = Rails.cache.fetch("#{request.url}/datos_transferencias/max_value", expires_in: 6.days) do
+        temp_transferencias.each do |tr|
+          if tr.year == @trimestre_informado.ano
+            mes = get_month(tr.month.round(0))
+            max_value = max_value_transferencias_fondos_publicos(@trimestre_informado, mes, tr, max_value)
+          end
         end
+        max_value
       end
 
       if max_value < 0
@@ -965,107 +988,108 @@ class PartidosController < ApplicationController
       segundo_mes = 0
       tercer_mes = 0
       total = 0
-      @datos_transferencias = []
+      @datos_transferencias = Rails.cache.fetch("#{request.url}/datos_transferencias", expires_in: 6.days) do
 
-      temp_transferencias.each do |tr|
+        temp_transferencias.each do |tr|
 
-        if tr.sum < 0
-          tr.sum = tr.sum * -1
-        end
+          if tr.sum < 0
+            tr.sum = tr.sum * -1
+          end
 
-        if tr.year == @trimestre_informado.ano
-          año = tr.year.round(0).to_s
-          if @trimestre_informado.ordinal == 0
-            mes = get_month(tr.month.round(0))
-            if mes.include?("Enero")
-              primer_mes = tr.sum
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += primer_mes
-            elsif mes.include?("Febrero")
-              segundo_mes = tr.sum
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += segundo_mes
-            elsif mes.include?("Marzo")
-              tercer_mes = tr.sum
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += tercer_mes
-            end
-          elsif @trimestre_informado.ordinal == 1
-            mes = get_month(tr.month.round(0))
-            if mes.include?("Abril")
-              primer_mes = tr.sum
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += primer_mes
-            elsif mes.include?("Mayo")
-              segundo_mes = tr.sum
-              año = tr.year.round(0).to_s
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += segundo_mes
-            elsif mes.include?("Junio")
-              tercer_mes = tr.sum
-              año = tr.year.round(0).to_s
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += tercer_mes
-            end
-          elsif @trimestre_informado.ordinal == 2
-            mes = get_month(tr.month.round(0))
-            if mes.include?("Julio")
-              primer_mes = tr.sum
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += primer_mes
-            elsif mes.include?("Agosto")
-              segundo_mes = tr.sum
-              año = tr.year.round(0).to_s
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += segundo_mes
-            elsif mes.include?("Septiembre")
-              tercer_mes = tr.sum
-              año = tr.year.round(0).to_s
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += tercer_mes
-            end
-          elsif @trimestre_informado.ordinal == 3
-            mes = get_month(tr.month.round(0))
-            if mes.include?("Octubre")
-              primer_mes = tr.sum
-              año = tr.year.round(0).to_s
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += primer_mes
-            elsif mes.include?("Noviembre")
-              segundo_mes = tr.sum
-              año = tr.year.round(0).to_s
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += segundo_mes
-            elsif mes.include?("Diciembre")
-              tercer_mes = tr.sum
-              año = tr.year.round(0).to_s
-              val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
-              line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
-              total += tercer_mes
+          if tr.year == @trimestre_informado.ano
+            año = tr.year.round(0).to_s
+            if @trimestre_informado.ordinal == 0
+              mes = get_month(tr.month.round(0))
+              if mes.include?("Enero")
+                primer_mes = tr.sum
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += primer_mes
+              elsif mes.include?("Febrero")
+                segundo_mes = tr.sum
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += segundo_mes
+              elsif mes.include?("Marzo")
+                tercer_mes = tr.sum
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += tercer_mes
+              end
+            elsif @trimestre_informado.ordinal == 1
+              mes = get_month(tr.month.round(0))
+              if mes.include?("Abril")
+                primer_mes = tr.sum
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += primer_mes
+              elsif mes.include?("Mayo")
+                segundo_mes = tr.sum
+                año = tr.year.round(0).to_s
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += segundo_mes
+              elsif mes.include?("Junio")
+                tercer_mes = tr.sum
+                año = tr.year.round(0).to_s
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += tercer_mes
+              end
+            elsif @trimestre_informado.ordinal == 2
+              mes = get_month(tr.month.round(0))
+              if mes.include?("Julio")
+                primer_mes = tr.sum
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += primer_mes
+              elsif mes.include?("Agosto")
+                segundo_mes = tr.sum
+                año = tr.year.round(0).to_s
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += segundo_mes
+              elsif mes.include?("Septiembre")
+                tercer_mes = tr.sum
+                año = tr.year.round(0).to_s
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += tercer_mes
+              end
+            elsif @trimestre_informado.ordinal == 3
+              mes = get_month(tr.month.round(0))
+              if mes.include?("Octubre")
+                primer_mes = tr.sum
+                año = tr.year.round(0).to_s
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += primer_mes
+              elsif mes.include?("Noviembre")
+                segundo_mes = tr.sum
+                año = tr.year.round(0).to_s
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += segundo_mes
+              elsif mes.include?("Diciembre")
+                tercer_mes = tr.sum
+                año = tr.year.round(0).to_s
+                val = (((tr.sum.to_f)/ max_value.to_f).to_f rescue 0).to_s
+                line = {'text'=> mes +' de ' + año, 'value' => tr.sum, 'percentage' => val}
+                total += tercer_mes
+              end
             end
           end
-        end
 
-        if !line.nil?
-          @datos_transferencias << line
+          if !line.nil?
+            @datos_transferencias << line
+          end
         end
+        @datos_transferencias.to_a
       end
 
-      @datos_transferencias_totals = { :total => total,
-                                       :primer_mes => primer_mes,
-                                       :segundo_mes => segundo_mes,
-                                       :tercer_mes => tercer_mes }
+      @datos_transferencias_totals = Rails.cache.fetch("#{request.url}/datos_transferencias_totals", expires_in: 6.days) do
+        { :total => total, :primer_mes => primer_mes, :segundo_mes => segundo_mes, :tercer_mes => tercer_mes }
+      end
 
       if @datos_transferencias_totals[:total] < 0
         @datos_transferencias_totals[:total] = @datos_transferencias_totals[:total] * -1
