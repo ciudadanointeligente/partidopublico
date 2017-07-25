@@ -301,6 +301,8 @@ class PartidosController < ApplicationController
       params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
+      p @trimestre_informado.to_s
+
       if @trimestre_informado.afiliacions.where(:partido_id => @partido.id,
                                                 :rango_etareo => "Total Militantes").first.nil?
 
@@ -311,12 +313,28 @@ class PartidosController < ApplicationController
                                              :rango_etareo => "Total Militantes").first.total_afiliados
         @sin_info_afiliados = false
       end
+
       @sin_datos = false
-      p 'CANTIDAD DE AFILIADOS >' + @cantidad_afiliados.to_s + '<'
+      p 'Afiliados totales: ' + @cantidad_afiliados.to_s
       if @cantidad_afiliados.nil?
         @cantidad_afiliados = 'El partido no ha entregado
          la información correspondiente al trimestre consultado'
       end
+
+      rangos_etareos = @trimestre_informado.afiliacions.where(:partido_id => @partido.id)
+      @datos_rangos_etareos = []
+      rangos_etareos.each do |re|
+        line  = {'rango_etareo' => re.rango_etareo,
+                 'cantidad_mujeres' => re.mujeres,
+                 'cantidad_hombres' => re.hombres,
+                 'total_mujeres_y_hombres' => (re.mujeres + re.hombres),
+                 'porcentaje_mujeres' => re.porcentaje_mujeres,
+                 'porcentaje_hombres' => re.porcentaje_hombres}
+
+        @datos_rangos_etareos << line
+      end
+      p @datos_rangos_etareos
+
     end
   end
 
@@ -764,11 +782,11 @@ class PartidosController < ApplicationController
 
     @datos_egresos_campanas = []
     @datos_egresos_campanas_totals = {'alcaldicia' => 0,
-      'concejal' => 0,
-      'diputados' => 0,
-      'presidencial' => 0,
-      'senatorial' => 0,
-      'consejeros_regionales' => 0}
+                                      'concejal' => 0,
+                                      'diputados' => 0,
+                                      'presidencial' => 0,
+                                      'senatorial' => 0,
+                                      'consejeros_regionales' => 0}
 
     if @trimestres_informados.count == 0
       @trimestres_informados = []
