@@ -330,13 +330,15 @@ $(document).ready(function(){
 
     if(dato.text == "Gastos de personal" ||
        dato.text == "Gastos de adquisición de bienes y servicios o gastos corrientes" ||
-       dato.text == "Otros gastos de administración"){
+       dato.text == "Otros gastos de administración" ||
+       dato.text == "Diputados"){
       color = sky_light;
       console.log("DENTRO IF" + dato.text)
     } else if (dato.text == "Gastos financieros por préstamos de corto plazo" ||
                dato.text == "Gastos financieros por préstamos de largo plazo" ||
                dato.text == "Créditos de corto plazo, inversiones y valores de operaciones de capital" ||
-               dato.text ==  "Créditos de largo plazo, inversiones y valores de operaciones de capital"){
+               dato.text == "Créditos de largo plazo, inversiones y valores de operaciones de capital" ||
+               dato.text == "Alcaldicia"){
       color = sky_medium;
       console.log("DENTRO ELSE IF 1" + dato.text)
     } else if (dato.text == "Gastos de actividades de investigación" ||
@@ -344,9 +346,13 @@ $(document).ready(function(){
                dato.text == "Gastos de actividades de fomento a la particiación femenina" ||
                dato.text == "Gastos de actividades de fomento a la participación de los jóvenes" ||
                dato.text == "Gastos de las actividades de preparación de candidatos a cargos de elección popular" ||
-               dato.text == "Gastos de las actividades de formación de militantes"){
+               dato.text == "Gastos de las actividades de formación de militantes" ||
+               dato.text == "Concejal"){
       color = sky_dark
       console.log("DENTRO ELSE IF 2" + dato.text)
+    }
+    else{
+      color = green_dark;
     }
 
     var bar = paper.rect(0, 0, egreso_width, bar_height).attr({
@@ -384,6 +390,42 @@ $(document).ready(function(){
     });
 
     var formacion_bar = paper.rect((administracion_width + creditos_inversiones_width), 0, formacion_width, bar_height).attr({
+      "fill" : sky_dark,
+      "stroke" : "none"
+    });
+
+  }
+
+  Raphael.fn.egreso_camp_front_footer = function(dato){
+    var paper = this;
+    if (screen.width > 760) {
+      var bar_width = 300;
+      var bar_height = 30;
+    }
+    else {
+      var bar_width = 80
+      var bar_height = 20
+    }
+    datos_sum = parseInt(dato.diputados, 10) + parseInt(dato.alcaldicia, 10) + parseInt(dato.concejal, 10)
+    console.log("datos_sum: " + datos_sum);
+    var diputados_width = (parseInt(dato.diputados, 10) / (datos_sum)) * bar_width;
+    console.log("diputados_width: " + diputados_width);
+    var alcaldicia_width = (parseInt(dato.alcaldicia, 10) / (datos_sum)) * bar_width;
+    console.log("alcaldicia_width: " + alcaldicia_width);
+    var concejal_width = bar_width - (diputados_width + alcaldicia_width);
+    console.log("concejal_width: " + concejal_width);
+
+    var diputados_bar = paper.rect(0, 0, diputados_width, bar_height).attr({
+      "fill" : sky_light,
+      "stroke" : "none"
+    });
+
+    var alcaldicia_bar = paper.rect(diputados_width, 0, alcaldicia_width, bar_height).attr({
+      "fill" : sky_medium,
+      "stroke" : "none"
+    });
+
+    var concejal_bar = paper.rect((diputados_width + alcaldicia_width), 0, concejal_width, bar_height).attr({
       "fill" : sky_dark,
       "stroke" : "none"
     });

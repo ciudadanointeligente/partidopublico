@@ -12,4 +12,8 @@ module PartidosHelper
              'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
     meses[month_number-1]
   end
+
+  def integer_or_zero(object)
+    object.nil? ? 0 : object.to_i
+  end
 end

@@ -1126,6 +1126,10 @@ th{
 	text-align: left;
 }
 
+.concepto{
+	text-transform: capitalize;
+}
+
 .total-max{
 	color: $blue;
 	font-size: 40px;
@@ -1448,6 +1452,7 @@ p.edades{
 	.concepto{
 		font-size: 13px;
 		text-align: left;
+		text-transform: capitalize;
 	}
 
 	.monto{

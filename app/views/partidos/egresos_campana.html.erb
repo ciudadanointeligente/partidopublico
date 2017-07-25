@@ -27,16 +27,16 @@
           <% @datos_egresos_campanas.each_with_index do |linea, i| %>
           <tr>
             <td class="concepto">
-              <%= linea['text'] %>
+              <%= linea[:text] %>
             </td>
             <td>
               <div class="porcentaje-movil"> <%=
-                (linea['percentage'].to_f*100).round(2).to_s + '%'
+                (linea[:percentage].to_f*100).round(2).to_s + '%'
               %></div>
               <div id="barras_<%= i.to_s %>"></div>
             </td>
             <td class="monto">
-              <%= number_to_currency(linea['value'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %>
+              <%= number_to_currency(linea[:value], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %>
             </td>
           </tr>
           <% end %>
@@ -45,12 +45,8 @@
           <tr>
             <th class="total">Total</th>
             <th><span id='footer'></span></th>
-            <th class="total monto"><%= number_to_currency(@datos_egresos_campanas_totals['alcaldicia'] +
-                                                           @datos_egresos_campanas_totals['concejal'] +
-                                                           @datos_egresos_campanas_totals['diputados'] +
-                                                           @datos_egresos_campanas_totals['presidencial'] +
-                                                           @datos_egresos_campanas_totals['senatorial'] +
-                                                           @datos_egresos_campanas_totals['consejeros_regionales'], delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %></th>
+            <% total = @datos_egresos_campanas_totals.values.map{|num| num.to_i}.sum %>
+            <th class="total monto"><%= number_to_currency(total, delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %></th>
           </tr>
         </tfoot>
       </table>
@@ -68,15 +64,15 @@ $(document).ready(function(){
   for(var i=0; i < data.length; i++){
     console.log(data[i]);
     if(screen.width > 767) {
-      Raphael("barras_" + i,300, 30 ).ingreso_ord_front_bar(data[i]);
+      Raphael("barras_" + i,300, 30 ).egreso_ord_front_bar(data[i]);
     } else {
-      Raphael("barras_" + i,80, 40 ).ingreso_ord_front_bar(data[i]);
+      Raphael("barras_" + i,80, 40 ).egreso_ord_front_bar(data[i]);
     }
   }
   if(screen.width > 767)
-    Raphael("footer",500, 40 ).ingreso_ord_front_footer(data_totals);
+    Raphael("footer",500, 40 ).egreso_camp_front_footer(data_totals);
   else {
-    Raphael("footer",80, 40 ).ingreso_ord_front_footer(data_totals);
+    Raphael("footer",80, 40 ).egreso_camp_front_footer(data_totals);
     }
 });
 </script>
