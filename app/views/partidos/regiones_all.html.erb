@@ -1,16 +1,17 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Presencia nacional</li><li>Regiones constituido y número de afiliados</li></ol>
 <h3>Regiones constituido y número de afiliados</h3>
-<div class="row">
-  <div class="col-md-12">
-    <% if @sin_datos %>
-    <%= render 'sin_datos' %>
-    <% else %>
-    <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
-    <%= submit_tag 'Filtrar' %>
+<% if @sin_datos %>
+  <%= render 'sin_datos' %>
+<% else %>
+  <div class="row">
+    <div class="col-md-12">
+    <%= form_tag partido_regiones_all_path, :method =>  :get, class: 'form-inline' do |f| %>
+    <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id] || ''), include_blank: false, class: "form-control" %>
+    <%= submit_tag 'Filtrar', class: "btn" %>
+    <% end %>
+    </div>
   </div>
 
-  <!-- <div class="hidden-xs hidden-sm col-md-4"> -->
-  <!-- </div> -->
   <div class="col-md-12 text-center">
   <style>
   .showData { display: '' }
@@ -26,7 +27,7 @@
         <p class="leyenda-colores-mapa">
           Región en la cual no se encuentra constituido
         </p>
-    <div>
+    <div class="col-md-4 col-md-offset-6">
       <h4>Cantidad afiliados:  </h4>
       <% if @sin_info_afiliados %>
       <span><%= @cantidad_afiliados%></span>
@@ -34,9 +35,9 @@
       <span class="total-max"><%= @cantidad_afiliados%></span>
       <% end %>
     </div>
-    <div class="col-md-6 col-md-offset-3 text-center">
+    <div class="col-md-6 text-center">
           <%= render 'svg_map_all' %>
-        </div>
+    </div>
     <br>
   </div>
   <div id="region-1" class="hideData">
@@ -535,7 +536,9 @@
     </div>
   </div>
 </div>
+<div class="col-xs-12">
+  <p class="mark-date"> Estos datos corresponden a lo publicado por este
+    Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
+  </div>
 </div>
-<p class="mark-date"> Estos datos corresponden a lo publicado por este
-  Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
 <% end %>
