@@ -605,7 +605,7 @@ end
 
 
 
-class AfiliacionDestination
+class EstadisticaCargosDestination
   def initialize(results:, verbose:)
     @verbose = verbose
     @results = results
@@ -624,45 +624,35 @@ class AfiliacionDestination
     cantidad_hombres = clean_number(row[:n_hombres])
     total_afiliados = clean_number(row[:total])
 
-    if row[:total_y_rango_etario] == 'Total Militantes'
-      afiliacion = Afiliacion.where(partido_id: row[:partido_id],
-                                    rango_etareo: row[:total_y_rango_etario],
-                                    mujeres: cantidad_mujeres,
-                                    porcentaje_mujeres: row[:_mujeres],
-                                    hombres: cantidad_hombres,
-                                    porcentaje_hombres: row[:_hombres],
-                                    total_afiliados: total_afiliados).first_or_initialize
-    else
-      afiliacion = Afiliacion.where(partido_id: row[:partido_id],
-                                    rango_etareo: row[:total_y_rango_etario],
-                                    mujeres: cantidad_mujeres,
-                                    porcentaje_mujeres: row[:_mujeres],
-                                    hombres: cantidad_hombres,
-                                    porcentaje_hombres: row[:_hombres]).first_or_initialize
-    end
+    afiliacion = EstadisticaCargo.where(partido_id: row[:partido_id],
+                            item: row[:item],
+                            cantidad_mujeres: cantidad_mujeres,
+                            porcentaje_mujeres: row[:_mujeres],
+                            cantidad_hombres: cantidad_hombres,
+                            porcentaje_hombres: row[:_hombres]).first_or_initialize
 
     if afiliacion.id.nil?
       afiliacion.save
       if afiliacion.errors.any?
         row[:error_log] = row[:error_log].to_s + ', ' + afiliacion.errors.messages.to_s
-        @results[:afiliacions][:errors] += 1
+        @results[:estadistica_cargos][:errors] += 1
       else
         afiliacion.trimestre_informados << trimestre_informado unless trimestre_informado.in?(afiliacion.trimestre_informados)
-        @results[:afiliacions][:new] += 1
+        @results[:estadistica_cargos][:new] += 1
       end
     else
       afiliacion.trimestre_informados << trimestre_informado unless trimestre_informado.in?(afiliacion.trimestre_informados)
       # p afiliacion.partido_id.to_s
       # p afiliacion.mujeres.to_s
       # p afiliacion.hombres.to_s
-      @results[:afiliacions][:found] += 1
+      @results[:estadistica_cargos][:found] += 1
     end
   end
 
   def close
-    @results[:afiliacions] = {new: @results[:afiliacions][:new],
-                                 errors: @results[:afiliacions][:errors],
-                                 found: @results[:afiliacions][:found]}
+    @results[:estadistica_cargos] = {new: @results[:estadistica_cargos][:new],
+                                 errors: @results[:estadistica_cargos][:errors],
+                                 found: @results[:estadistica_cargos][:found]}
   end
 end
 
@@ -774,6 +764,67 @@ class CandidatosDestination
     @results[:cargos] = {:new_cargos => @new_cargos ,
                          :cargos_errors => @cargos_errors,
                          :found_cargos => @found_cargos}
+  end
+end
+
+class AfiliacionDestination
+  def initialize(results:, verbose:)
+    @verbose = verbose
+    @results = results
+    @new = 0
+    @errors = 0
+    @found = 0
+  end
+
+  def write(row)
+
+    # total_afiliados = clean_number(row[:nmero_total_de_afiliados])
+    # afiliacion = Afiliacion.where(partido_id: row[:partido_id],
+    #                               otros: total_afiliados).first_or_initialize
+    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+    cantidad_mujeres = clean_number(row[:n_mujeres])
+    cantidad_hombres = clean_number(row[:n_hombres])
+    total_afiliados = clean_number(row[:total])
+
+    if row[:total_y_rango_etario] == 'Total Militantes'
+      afiliacion = Afiliacion.where(partido_id: row[:partido_id],
+                                    rango_etareo: row[:total_y_rango_etario],
+                                    mujeres: cantidad_mujeres,
+                                    porcentaje_mujeres: row[:_mujeres],
+                                    hombres: cantidad_hombres,
+                                    porcentaje_hombres: row[:_hombres],
+                                    total_afiliados: total_afiliados).first_or_initialize
+    else
+      afiliacion = Afiliacion.where(partido_id: row[:partido_id],
+                                    rango_etareo: row[:total_y_rango_etario],
+                                    mujeres: cantidad_mujeres,
+                                    porcentaje_mujeres: row[:_mujeres],
+                                    hombres: cantidad_hombres,
+                                    porcentaje_hombres: row[:_hombres]).first_or_initialize
+    end
+
+    if afiliacion.id.nil?
+      afiliacion.save
+      if afiliacion.errors.any?
+        row[:error_log] = row[:error_log].to_s + ', ' + afiliacion.errors.messages.to_s
+        @results[:afiliacions][:errors] += 1
+      else
+        afiliacion.trimestre_informados << trimestre_informado unless trimestre_informado.in?(afiliacion.trimestre_informados)
+        @results[:afiliacions][:new] += 1
+      end
+    else
+      afiliacion.trimestre_informados << trimestre_informado unless trimestre_informado.in?(afiliacion.trimestre_informados)
+      # p afiliacion.partido_id.to_s
+      # p afiliacion.mujeres.to_s
+      # p afiliacion.hombres.to_s
+      @results[:afiliacions][:found] += 1
+    end
+  end
+
+  def close
+    @results[:afiliacions] = {new: @results[:afiliacions][:new],
+                                 errors: @results[:afiliacions][:errors],
+                                 found: @results[:afiliacions][:found]}
   end
 end
 
