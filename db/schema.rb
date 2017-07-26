@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170616185943) do
+ActiveRecord::Schema.define(version: 20170726224506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -326,6 +326,27 @@ ActiveRecord::Schema.define(version: 20170616185943) do
   end
 
   add_index "eleccion_populars", ["partido_id"], name: "index_eleccion_populars_on_partido_id", using: :btree
+
+  create_table "estadistica_cargos", force: :cascade do |t|
+    t.integer  "partido_id"
+    t.string   "item"
+    t.integer  "cantidad_mujeres"
+    t.integer  "cantidad_hombres"
+    t.string   "porcentaje_mujeres"
+    t.string   "porcentaje_hombres"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "estadistica_cargos", ["partido_id"], name: "index_estadistica_cargos_on_partido_id", using: :btree
+
+  create_table "estadistica_cargos_trimestre_informados", id: false, force: :cascade do |t|
+    t.integer "estadistica_cargo_id",   null: false
+    t.integer "trimestre_informado_id", null: false
+  end
+
+  add_index "estadistica_cargos_trimestre_informados", ["estadistica_cargo_id"], name: "t_i_estadistica_cargo_id", using: :btree
+  add_index "estadistica_cargos_trimestre_informados", ["trimestre_informado_id"], name: "t_i_estadistica_cargo_trimestre_id", using: :btree
 
   create_table "etl_runs", force: :cascade do |t|
     t.datetime "start_time"
@@ -748,6 +769,7 @@ ActiveRecord::Schema.define(version: 20170616185943) do
   add_foreign_key "eleccion_internas", "organo_internos"
   add_foreign_key "eleccion_internas", "partidos"
   add_foreign_key "eleccion_populars", "partidos"
+  add_foreign_key "estadistica_cargos", "partidos"
   add_foreign_key "ingreso_campanas", "partidos"
   add_foreign_key "ingreso_ordinarios", "partidos"
   add_foreign_key "leys", "marco_generals"
