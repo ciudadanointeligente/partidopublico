@@ -1,20 +1,24 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: 5
   host: localhost
-  port: <%= ENV['POSTGRESQL_PORT'] || 5432 %>
-  username: <%= ENV['POSTGRESQL_USER'] || 'papu' %>
-  password: <%= ENV['POSTGRESQL_PASSWORD'] || 'papu' %>
+  pool: 5
+  username: papu
+  password: papu
 
 development:
-  <<: *default
-  database: db_development
+  adapter: postgresql
+  host: localhost
+  encoding: unicode
+  pool: 5
+  username: papu
+  password: papu
+  database: papu_dev
 
 test:
-  <<: *default
+  «: *default
   database: db_test
 
 production:
-  <<: *default
-  database: papu_prod
+  «: *default
+  database: db_name

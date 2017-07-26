@@ -7,6 +7,7 @@ $(document).ready(function(){
   var sky_dark = "#06B9BF";
 
     Raphael.fn.donutChart = function (cx, cy, r, rin, values, labels, stroke, legend, legendElement, colors) {
+      console.log("donut chart");
     var paper = this,
       rad = Math.PI / 180,
       chart = this.set();

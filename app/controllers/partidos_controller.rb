@@ -323,6 +323,7 @@ class PartidosController < ApplicationController
 
       rangos_etareos = @trimestre_informado.afiliacions.where(:partido_id => @partido.id)
       @datos_rangos_etareos = []
+      @datos_sexo = []
       rangos_etareos.each do |re|
         line  = {'rango_etareo' => re.rango_etareo,
                  'cantidad_mujeres' => re.mujeres,
@@ -333,7 +334,16 @@ class PartidosController < ApplicationController
 
         @datos_rangos_etareos << line
       end
-      p @datos_rangos_etareos
+
+
+      @datos_sexo = {'mujeres' => @datos_rangos_etareos.select{|d| d['rango_etareo'].
+                                                              downcase.include?('total')}.
+                                                              map{|d| d['cantidad_mujeres']}.sum,
+                     'hombres' => @datos_rangos_etareos.select{|d| d['rango_etareo'].
+                                                              downcase.include?('total')}.
+                                                              map{|d| d['cantidad_hombres']}.sum}
+
+      p @datos_sexo
 
     end
   end

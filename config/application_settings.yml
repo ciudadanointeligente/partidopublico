@@ -3,8 +3,8 @@ development:
   BASE_URL_PORT: '8080'
   SMTP_SETTING_ADDRESS: 'smtp.postmarkapp.com'
   SMTP_SETTING_PORT: '2525'
-  SMTP_SETTING_USERNAME: ''
-  SMTP_SETTING_PASSWORD: ''
+  SMTP_SETTING_USERNAME: 'b7cba938-3273-4cc7-98a2-b912ccc97d98'
+  SMTP_SETTING_PASSWORD: 'b7cba938-3273-4cc7-98a2-b912ccc97d98'
   MAILER_SENDER: 'lab@ciudadanointeligente.org'
 test:
   BASE_URL: ''

@@ -45,7 +45,8 @@
 <script>
 $(document).ready(function(){
   var presencia = <%= raw @partido.regions.map{|r| r.ordinal} %>,
-      colors = ["#23dbb8", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
+  colors = ["#23dbb8", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
+  colors_range = ["#FDD7D2","#FFBCAA","#F28269","#E85D34","#B74B2B","#9A553A","#2C1313","#5E3F3F","#756666","#C5C0C0","#E9DEDF","#F4F2F2"];
 
   $.each(presencia, function(k,v){
     if( v != '') {
@@ -53,6 +54,32 @@ $(document).ready(function(){
       el.addClass('presencia');
     }
   })
+
+  console.log("Regiones constituído: " + presencia)
+  console.log("presencia.length: " + presencia.length)
+  console.log("Keys: " + <%= raw @datos_rangos_etareos.to_json %>)
+  console.log("Values: " + <%= raw @datos_rangos_etareos.map{|d| d['total_mujeres_y_hombres']} %>)
+
+  Raphael("cargos", 170, 170).donutChart(85, 85, 70, 35,
+                                        <%= raw @datos_rangos_etareos.reject{|d| d['rango_etareo'].
+                                        downcase.include?('total')}.map{|d| d['total_mujeres_y_hombres']} %>,
+                                        <%= raw @datos_rangos_etareos.reject{|d| d['rango_etareo'].
+                                        downcase.include?('total')}.map{|d| d['rango_etareo']} %>,
+                                        colors_range, true, $('#charts'+' .leyenda-cargos'), colors_range);
+
+  Raphael("circulo", 170, 170).donutChart(85, 85, 70, 35,
+                                              <%= raw @datos_sexo.values %>,
+                                              <%= raw @datos_sexo.keys %>, colors, true,
+                                              $('#charts'+' .leyenda'), colors);
+
+
+  Raphael("desgloce", 170, 170).donutChart(85, 85, 70, 35,
+                                           <%= raw @datos_rangos_etareos.reject{|d| d['rango_etareo'].
+                                           downcase.include?('total')}.map{|d| d['total_mujeres_y_hombres']} %>,
+                                           <%= raw @datos_rangos_etareos.reject{|d| d['rango_etareo'].
+                                           downcase.include?('total')}.map{|d| d['rango_etareo']} %>,
+                                           colors_range, true, $('#charts'+' .leyenda-desgloce'), colors_range);
+
 
 });
 </script>
