@@ -321,10 +321,32 @@ class PartidosController < ApplicationController
          la información correspondiente al trimestre consultado'
       end
 
+      estadisticas_cargos = @trimestre_informado.estadistica_cargos.where(:partido_id => @partido.id)
       rangos_etareos = @trimestre_informado.afiliacions.where(:partido_id => @partido.id)
+      @datos_estadisticas_cargos = []
       @datos_rangos_etareos = []
       @datos_sexo = []
+      @sin_rangos_etareos = true
+
+      estadisticas_cargos.each do |ec|
+        line = {'item' => ec.item,
+                'cantidad_mujeres' => ec.cantidad_mujeres,
+                'cantidad_hombres' => ec.cantidad_hombres,
+                'total_mujeres_y_hombres' => (ec.cantidad_mujeres + ec.cantidad_hombres)}
+
+        @datos_estadisticas_cargos << line unless line['total_mujeres_y_hombres'] == 0
+      end
+
+      if @datos_estadisticas_cargos.blank?
+       @sin_datos_estadisticas_cargos = true
+      else
+       @sin_datos_estadisticas_cargos = false
+      end
+
       rangos_etareos.each do |re|
+        if (re.rango_etareo != 'Total Militantes' && (re.mujeres + re.hombres) != 0)
+          @sin_rangos_etareos = false
+        end
         line  = {'rango_etareo' => re.rango_etareo,
                  'cantidad_mujeres' => re.mujeres,
                  'cantidad_hombres' => re.hombres,
@@ -332,9 +354,12 @@ class PartidosController < ApplicationController
                  'porcentaje_mujeres' => re.porcentaje_mujeres,
                  'porcentaje_hombres' => re.porcentaje_hombres}
 
-        @datos_rangos_etareos << line
+        @datos_rangos_etareos << line unless line['total_mujeres_y_hombres'] == 0
       end
 
+      p 'SIN CARGOS: ' + @sin_datos_estadisticas_cargos.to_s
+      p 'SIN AFILIADOS: ' + @sin_info_afiliados.to_s
+      p 'SIN RANGOS DE EDADES: ' + @sin_rangos_etareos.to_s
 
       @datos_sexo = {'mujeres' => @datos_rangos_etareos.select{|d| d['rango_etareo'].
                                                               downcase.include?('total')}.
@@ -342,12 +367,6 @@ class PartidosController < ApplicationController
                      'hombres' => @datos_rangos_etareos.select{|d| d['rango_etareo'].
                                                               downcase.include?('total')}.
                                                               map{|d| d['cantidad_hombres']}.sum}
-
-      p @datos_sexo
-      @datos_estadisticas_cargos = @trimestre_informado.estadistica_cargos.where(:partido_id => @partido.id)
-                    .map{|e| {:item =>e.item, :cantidad_hombres => e.cantidad_hombres, :cantidad_mujeres => e.cantidad_mujeres}}
-
-
     end
   end
 

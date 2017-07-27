@@ -55,30 +55,29 @@ $(document).ready(function(){
     }
   })
 
-  console.log("Regiones constituído: " + presencia)
-  console.log("presencia.length: " + presencia.length)
-  console.log("Keys: " + <%= raw @datos_rangos_etareos.to_json %>)
-  console.log("Values: " + <%= raw @datos_rangos_etareos.map{|d| d['total_mujeres_y_hombres']} %>)
+  <% unless @sin_datos_estadisticas_cargos %>
+    Raphael("cargos", 170, 170).donutChart(85, 85, 70, 35,
+                                          <%= raw @datos_estadisticas_cargos.map{|d| d['total_mujeres_y_hombres']} %>,
+                                          <%= raw @datos_estadisticas_cargos.map{|d| d['item']} %>,
+                                          colors_range, true, $('#charts'+' .leyenda-cargos'), colors_range);
+  <% end %>
 
-  Raphael("cargos", 170, 170).donutChart(85, 85, 70, 35,
-                                        <%= raw @datos_rangos_etareos.reject{|d| d['rango_etareo'].
-                                        downcase.include?('total')}.map{|d| d['total_mujeres_y_hombres']} %>,
-                                        <%= raw @datos_rangos_etareos.reject{|d| d['rango_etareo'].
-                                        downcase.include?('total')}.map{|d| d['rango_etareo']} %>,
-                                        colors_range, true, $('#charts'+' .leyenda-cargos'), colors_range);
+  <% unless @sin_info_afiliados %>
+    Raphael("circulo", 170, 170).donutChart(85, 85, 70, 35,
+                                                <%= raw @datos_sexo.values %>,
+                                                <%= raw @datos_sexo.keys %>, colors, true,
+                                                $('#charts'+' .leyenda'), colors);
 
-  Raphael("circulo", 170, 170).donutChart(85, 85, 70, 35,
-                                              <%= raw @datos_sexo.values %>,
-                                              <%= raw @datos_sexo.keys %>, colors, true,
-                                              $('#charts'+' .leyenda'), colors);
+    <% unless @sin_info_afiliados %>
+      Raphael("desgloce", 170, 170).donutChart(85, 85, 70, 35,
+                                               <%= raw @datos_rangos_etareos.reject{|d| d['rango_etareo'].
+                                               downcase.include?('total')}.map{|d| d['total_mujeres_y_hombres']} %>,
+                                               <%= raw @datos_rangos_etareos.reject{|d| d['rango_etareo'].
+                                               downcase.include?('total')}.map{|d| d['rango_etareo']} %>,
+                                               colors_range, true, $('#charts'+' .leyenda-desgloce'), colors_range);
 
-
-  Raphael("desgloce", 170, 170).donutChart(85, 85, 70, 35,
-                                           <%= raw @datos_rangos_etareos.reject{|d| d['rango_etareo'].
-                                           downcase.include?('total')}.map{|d| d['total_mujeres_y_hombres']} %>,
-                                           <%= raw @datos_rangos_etareos.reject{|d| d['rango_etareo'].
-                                           downcase.include?('total')}.map{|d| d['rango_etareo']} %>,
-                                           colors_range, true, $('#charts'+' .leyenda-desgloce'), colors_range);
+    <% end %>
+  <% end %>
 
 
 });
