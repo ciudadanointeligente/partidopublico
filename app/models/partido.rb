@@ -51,7 +51,8 @@ class Partido < ActiveRecord::Base
     has_many :actividad_publicas, dependent: :destroy
     has_many :acuerdos, dependent: :destroy
     has_many :participacion_entidads, dependent: :destroy
-    has_and_belongs_to_many :pacto_electorals, :uniq => true
+    # has_and_belongs_to_many :pacto_electorals, :uniq => true
+    has_many :pacto_electorals, dependent: :destroy
     has_many :sancions, dependent: :destroy
     has_many :personas, dependent: :destroy
     has_many :cargos, dependent: :destroy

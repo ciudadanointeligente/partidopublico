@@ -603,8 +603,6 @@ class SancionDestination
 
 end
 
-
-
 class EstadisticaCargosDestination
   def initialize(results:, verbose:)
     @verbose = verbose
@@ -624,24 +622,24 @@ class EstadisticaCargosDestination
     cantidad_hombres = clean_number(row[:n_hombres])
     total_afiliados = clean_number(row[:total])
 
-    afiliacion = EstadisticaCargo.where(partido_id: row[:partido_id],
+    estadistica = EstadisticaCargo.where(partido_id: row[:partido_id],
                             item: row[:item],
                             cantidad_mujeres: cantidad_mujeres,
                             porcentaje_mujeres: row[:_mujeres],
                             cantidad_hombres: cantidad_hombres,
                             porcentaje_hombres: row[:_hombres]).first_or_initialize
 
-    if afiliacion.id.nil?
-      afiliacion.save
-      if afiliacion.errors.any?
-        row[:error_log] = row[:error_log].to_s + ', ' + afiliacion.errors.messages.to_s
+    if estadistica.id.nil?
+      estadistica.save
+      if estadistica.errors.any?
+        row[:error_log] = row[:error_log].to_s + ', ' + estadistica.errors.messages.to_s
         @results[:estadistica_cargos][:errors] += 1
       else
-        afiliacion.trimestre_informados << trimestre_informado unless trimestre_informado.in?(afiliacion.trimestre_informados)
+        estadistica.trimestre_informados << trimestre_informado unless trimestre_informado.in?(estadistica.trimestre_informados)
         @results[:estadistica_cargos][:new] += 1
       end
     else
-      afiliacion.trimestre_informados << trimestre_informado unless trimestre_informado.in?(afiliacion.trimestre_informados)
+      estadistica.trimestre_informados << trimestre_informado unless trimestre_informado.in?(estadistica.trimestre_informados)
       # p afiliacion.partido_id.to_s
       # p afiliacion.mujeres.to_s
       # p afiliacion.hombres.to_s
@@ -656,6 +654,53 @@ class EstadisticaCargosDestination
   end
 end
 
+class PactosDestination
+  def initialize(results:, verbose:)
+    @verbose = verbose
+    @results = results
+    @new = 0
+    @errors = 0
+    @found = 0
+  end
+
+  def write(row)
+    unless row[:trimestre_informado_id].nil?
+      trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+
+      # [:cdigo_del_organismo, :nombre_del_organismo, :ao_informado, :trimestre_informado,
+      # :nombre_del_pacto, :partidos_que_lo_conforman, :tipo_o_carcter_del_pacto, :ao_de_elecciones]
+
+      pacto = PactoElectoral.where(partido_id: row[:partido_id],
+                              nombre_pacto: row[:nombre_del_pacto],
+                              descripcion: row[:partidos_que_lo_conforman],
+                              tipo: row[:tipo_o_carcter_del_pacto],
+                              ano_eleccion: row[:ao_de_elecciones]).first_or_initialize
+
+      if pacto.id.nil?
+        pacto.save
+        if pacto.errors.any?
+          row[:error_log] = row[:error_log].to_s + ', ' + pacto.errors.messages.to_s
+          @results[:pactos][:errors] += 1
+        else
+          pacto.trimestre_informados << trimestre_informado unless trimestre_informado.in?(pacto.trimestre_informados)
+          @results[:pactos][:new] += 1
+        end
+      else
+        pacto.trimestre_informados << trimestre_informado unless trimestre_informado.in?(pacto.trimestre_informados)
+        # p afiliacion.partido_id.to_s
+        # p afiliacion.mujeres.to_s
+        # p afiliacion.hombres.to_s
+        @results[:pactos][:found] += 1
+      end
+    end
+  end
+
+  def close
+    @results[:pactos] = {new: @results[:pactos][:new],
+                                 errors: @results[:pactos][:errors],
+                                 found: @results[:pactos][:found]}
+  end
+end
 
 class NormasDestination
   def initialize(results:, verbose:)

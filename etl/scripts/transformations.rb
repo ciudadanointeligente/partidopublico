@@ -77,7 +77,8 @@ class TrimestreInformadoLookup
 
     if (ordinal_trimestre.nil? || ano == 0)
       # p ano
-    # if ordinal_trimestre.nil?
+      # if ordinal_trimestre.nil?
+      row[:trimestre_informado_id] = nil
       row[:error_log] = row[:error_log].to_s + ', trimestre_informado no válido'
       @results[:trimestres_informados][:errors] += 1
     else

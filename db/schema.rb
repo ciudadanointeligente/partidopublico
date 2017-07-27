@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170726224506) do
+ActiveRecord::Schema.define(version: 20170727224508) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -490,12 +490,24 @@ ActiveRecord::Schema.define(version: 20170726224506) do
     t.string   "descripcion"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.integer  "partido_id"
+    t.string   "tipo"
   end
+
+  add_index "pacto_electorals", ["partido_id"], name: "index_pacto_electorals_on_partido_id", using: :btree
 
   create_table "pacto_electorals_partidos", id: false, force: :cascade do |t|
     t.integer "pacto_electoral_id", null: false
     t.integer "partido_id",         null: false
   end
+
+  create_table "pacto_electorals_trimestre_informados", id: false, force: :cascade do |t|
+    t.integer "pacto_electoral_id",     null: false
+    t.integer "trimestre_informado_id", null: false
+  end
+
+  add_index "pacto_electorals_trimestre_informados", ["pacto_electoral_id"], name: "t_i_pacto_id", using: :btree
+  add_index "pacto_electorals_trimestre_informados", ["trimestre_informado_id"], name: "t_i_pacto_trimestre_id", using: :btree
 
   create_table "participacion_entidads", force: :cascade do |t|
     t.string   "entidad"
@@ -778,6 +790,7 @@ ActiveRecord::Schema.define(version: 20170726224506) do
   add_foreign_key "normas", "marco_internos"
   add_foreign_key "normas", "partidos"
   add_foreign_key "organo_internos", "partidos"
+  add_foreign_key "pacto_electorals", "partidos"
   add_foreign_key "participacion_entidads", "partidos"
   add_foreign_key "permissions", "admins"
   add_foreign_key "permissions", "partidos"
