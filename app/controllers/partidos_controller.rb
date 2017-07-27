@@ -344,6 +344,9 @@ class PartidosController < ApplicationController
                                                               map{|d| d['cantidad_hombres']}.sum}
 
       p @datos_sexo
+      @datos_estadisticas_cargos = @trimestre_informado.estadistica_cargos.where(:partido_id => @partido.id)
+                    .map{|e| {:item =>e.item, :cantidad_hombres => e.cantidad_hombres, :cantidad_mujeres => e.cantidad_mujeres}}
+
 
     end
   end
