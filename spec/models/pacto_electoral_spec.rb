@@ -8,6 +8,12 @@
 #  descripcion  :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  partido_id   :integer
+#  tipo         :string
+#
+# Indexes
+#
+#  index_pacto_electorals_on_partido_id  (partido_id)
 #
 
 require 'rails_helper'

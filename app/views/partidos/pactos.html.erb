@@ -1,34 +1,41 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Vínculos e intereses</li><li>Pactos electorales que integra</li></ol>
 <h3>Pactos electorales que integra</h3>
-<p class="no_data_big_message"> <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-  ¡Sección en Desarrollo!</p>
-  <p class="no_data_small_message">¡Disculpe las molestias!
-    Esta sección de Partidos Públicos aún no se encuentra activa. Estamos trabajando para su próxima publicación.</p>
-<!-- # <% if @sin_datos %>
-#   <%= render 'sin_datos' %>
-# <% else %> -->
+
+ <% if @sin_datos %>
+   <%= render 'sin_datos' %>
+ <% else %>
+ <div class="row">
+   <div class="col-md-12">
+   <%= form_tag partido_pactos_path, :method =>  :get, class: 'form-inline' do |f| %>
+   <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id] || ''), include_blank: false, class: "form-control" %>
+   <%= submit_tag 'Filtrar', class: "btn" %>
+   <% end %>
+   </div>
+ </div>
   <div class="table-responsive">
     <table class="table">
       <thead>
         <tr>
           <th>Nombre del pacto</th>
+          <th>Partidos que lo integran</th>
           <th>Descripción</th>
           <th>Elección</th>
-          <th>Partidos que lo integran</th>
         </tr>
       </thead>
       <tbody>
         <% @pactos.each do |p| %>
         <tr>
           <td><%= p.nombre_pacto %></td>
-          <td><%= p.descripcion %></td>
-          <td><%= p.ano_eleccion %></td>
           <td>
             <ul>
-              <% p.partidos.each do |partido| %>
-              <li><%= partido.nombre %></li>
-              <% end %>
+            <% p.descripcion.split(',').each do |papac| %>
+              <li> <%= papac %> </li>
+            <% end %>
             </ul>
+          </td>
+          <td><%= p.tipo %></td>
+          <td>
+            <%= p.ano_eleccion %>
           </td>
         </tr>
         <% end %>
@@ -42,4 +49,4 @@
       </tbody>
     </table>
   </div>
-<!-- # <% end %> -->
+ <% end %>
