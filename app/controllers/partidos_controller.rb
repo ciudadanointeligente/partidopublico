@@ -431,15 +431,31 @@ class PartidosController < ApplicationController
   end
 
   def pactos
-    @pactos = []
+    temp_trimestres_informados = []
     @partido.pacto_electorals.each do |p|
-      @pactos.push p
+      p.trimestre_informados.each do |t|
+
+        temp_trimestres_informados.push(t)
+
+      end
     end
-    if @pactos.count == 0
+
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
+    p @trimestres_informados
+
+    if @trimestres_informados.count == 0
+      @trimestres_informados = []
+      @sanciones = []
       @sin_datos = true
     else
-      @sin_datos = false
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+      @pactos = @trimestre_informado.pacto_electorals.where partido: @partido
+      @sin_datos = @pactos.count == 0
     end
+
   end
 
   # MÉTODO ANTIGUO
