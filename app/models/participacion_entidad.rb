@@ -13,8 +13,11 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  tipo_vinculo           :string
-#  fecha_inicio           :date
-#  fecha_fin              :date
+#  fecha_inicio           :string
+#  fecha_fin              :string
+#  rut                    :string
+#  indefinido             :string
+#  link                   :string
 #
 # Indexes
 #
@@ -29,6 +32,9 @@ class ParticipacionEntidad < ActiveRecord::Base
         size: { in: 0..5000.kilobytes }
 
     belongs_to :partido
+
+
+    has_and_belongs_to_many :trimestre_informados
 
 
     def self.tipos_vinculo

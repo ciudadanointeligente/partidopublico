@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170727234334) do
+ActiveRecord::Schema.define(version: 20170728205219) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -533,11 +533,22 @@ ActiveRecord::Schema.define(version: 20170727234334) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.string   "tipo_vinculo"
-    t.date     "fecha_inicio"
-    t.date     "fecha_fin"
+    t.string   "fecha_inicio"
+    t.string   "fecha_fin"
+    t.string   "rut"
+    t.string   "indefinido"
+    t.string   "link"
   end
 
   add_index "participacion_entidads", ["partido_id"], name: "index_participacion_entidads_on_partido_id", using: :btree
+
+  create_table "participacion_entidads_trimestre_informados", id: false, force: :cascade do |t|
+    t.integer "participacion_entidad_id", null: false
+    t.integer "trimestre_informado_id",   null: false
+  end
+
+  add_index "participacion_entidads_trimestre_informados", ["participacion_entidad_id"], name: "t_i_participacion_entidad_id", using: :btree
+  add_index "participacion_entidads_trimestre_informados", ["trimestre_informado_id"], name: "t_i_participacion_entidad_trimestre_id", using: :btree
 
   create_table "partidos", force: :cascade do |t|
     t.string   "nombre",                  null: false
