@@ -4,7 +4,7 @@
 #
 #  id                     :integer          not null, primary key
 #  numero                 :string
-#  fecha                  :date
+#  fecha                  :string
 #  tipo                   :string
 #  tema                   :string
 #  region                 :string
@@ -16,6 +16,11 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  partido_id             :integer
+#  materia                :string
+#  nombre_organo          :string
+#  denominacion           :string
+#  descripcion            :string
+#  link                   :string
 #
 # Indexes
 #
@@ -26,12 +31,15 @@
 class Acuerdo < ActiveRecord::Base
     has_paper_trail
     has_attached_file :documento, styles: { large: "600x600>", medium: "300x300>", thumb: "100x100>" }, default_url: "/resources/missing.png"
-    validates_attachment :documento, 
+    validates_attachment :documento,
         content_type: { content_type: "application/pdf" },
         size: { in: 0..5000.kilobytes }
-  
+
+    belongs_to :partido
     belongs_to :organo_interno
-    
+
+    has_and_belongs_to_many :trimestre_informados
+
     def self.tipos
       %w(Acta Programatico Electoral Funcionamiento\ Interno)
     end

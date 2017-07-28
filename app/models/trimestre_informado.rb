@@ -24,6 +24,7 @@ class TrimestreInformado < ActiveRecord::Base
   has_and_belongs_to_many :sancions
   has_and_belongs_to_many :estadistica_cargos
   has_and_belongs_to_many :pacto_electorals
+  has_and_belongs_to_many :acuerdos
   validates_presence_of :ordinal
 
   def to_s

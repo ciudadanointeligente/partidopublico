@@ -675,6 +675,56 @@ class PactosDestination
   end
 end
 
+class AcuerdosOrganosDestination
+  def initialize(results:, verbose:)
+    @verbose = verbose
+    @results = results
+    @new = 0
+    @errors = 0
+    @found = 0
+  end
+
+  def write(row)
+    unless row[:trimestre_informado_id].nil?
+      trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+
+      # [:cdigo_del_organismo, :nombre_del_organismo, :ao_informado, :trimestre_informado,
+      # :materia, :nombre_del_rgano, :tipo_de_acto, :denominacin_del_acto, :nmero_del_acto, :fecha_del_acto,
+      # :breve_descripcin_del_objeto_del_acto, :vnculo_al_texto_ntegro]
+
+      acuerdos_organo = Acuerdo.where(partido_id: row[:partido_id],
+                              materia: row[:materia],
+                              nombre_organo: row[:nombre_del_rgano],
+                              tipo: row[:tipo_de_acto],
+                              denominacion: row[:denominacin_del_acto],
+                              numero: row[:nmero_del_acto],
+                              fecha: row[:fecha_del_acto],
+                              descripcion: row[:breve_descripcin_del_objeto_del_acto],
+                              link: row[:vnculo_al_texto_ntegro]).first_or_initialize
+
+      if acuerdos_organo.id.nil?
+        acuerdos_organo.save
+        if acuerdos_organo.errors.any?
+          row[:error_log] = row[:error_log].to_s + ', ' + acuerdos_organo.errors.messages.to_s
+          @results[:acuerdos_organos][:errors] += 1
+        else
+          acuerdos_organo.trimestre_informados << trimestre_informado unless trimestre_informado.in?(acuerdos_organo.trimestre_informados)
+          @results[:acuerdos_organos][:new] += 1
+        end
+      else
+        acuerdos_organo.trimestre_informados << trimestre_informado unless trimestre_informado.in?(acuerdos_organo.trimestre_informados)
+        @results[:acuerdos_organos][:found] += 1
+      end
+    end
+  end
+
+  def close
+    @results[:acuerdos_organos] = {new: @results[:acuerdos_organos][:new],
+                                 errors: @results[:acuerdos_organos][:errors],
+                                 found: @results[:acuerdos_organos][:found]}
+  end
+end
+
 class NormasDestination
   def initialize(results:, verbose:)
     @verbose = verbose

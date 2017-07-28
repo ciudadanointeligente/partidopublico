@@ -4,7 +4,7 @@
 #
 #  id                     :integer          not null, primary key
 #  numero                 :string
-#  fecha                  :date
+#  fecha                  :string
 #  tipo                   :string
 #  tema                   :string
 #  region                 :string
@@ -16,6 +16,11 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  partido_id             :integer
+#  materia                :string
+#  nombre_organo          :string
+#  denominacion           :string
+#  descripcion            :string
+#  link                   :string
 #
 # Indexes
 #

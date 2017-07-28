@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170727224508) do
+ActiveRecord::Schema.define(version: 20170727234334) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20170727224508) do
 
   create_table "acuerdos", force: :cascade do |t|
     t.string   "numero"
-    t.date     "fecha"
+    t.string   "fecha"
     t.string   "tipo"
     t.string   "tema"
     t.string   "region"
@@ -42,10 +42,23 @@ ActiveRecord::Schema.define(version: 20170727224508) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "partido_id"
+    t.string   "materia"
+    t.string   "nombre_organo"
+    t.string   "denominacion"
+    t.string   "descripcion"
+    t.string   "link"
   end
 
   add_index "acuerdos", ["organo_interno_id"], name: "index_acuerdos_on_organo_interno_id", using: :btree
   add_index "acuerdos", ["partido_id"], name: "index_acuerdos_on_partido_id", using: :btree
+
+  create_table "acuerdos_trimestre_informados", id: false, force: :cascade do |t|
+    t.integer "acuerdo_id",             null: false
+    t.integer "trimestre_informado_id", null: false
+  end
+
+  add_index "acuerdos_trimestre_informados", ["acuerdo_id"], name: "t_i_acuerdo_id", using: :btree
+  add_index "acuerdos_trimestre_informados", ["trimestre_informado_id"], name: "t_i_acuerdo_trimestre_id", using: :btree
 
   create_table "admin_logins", force: :cascade do |t|
     t.datetime "fecha"

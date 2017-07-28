@@ -123,7 +123,10 @@ class PartidoStepsController < ApplicationController
     end
 
     def run_etl
-      command = "RAILSENV=development bundle exec kiba etl/scripts/import_all.rb"
+      system 'wget -r -np -nH –cut-dirs=1  https://datos.partidospublicos.cl/20170727/ -P etl/input_files/cplt'
+      system 'rm etl/input_files/cplt/20170727/*html*'
+      system 'sh etl/clean_input_files.sh'
+      command = "DATE=20170727 RAILSENV=development bundle exec kiba etl/scripts/import_all.rb"
       result = system command
       p "ETL Running from Administrator"
       p result

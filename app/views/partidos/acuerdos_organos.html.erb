@@ -1,47 +1,46 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Últimas decisiones</li><li>Acuerdos órganos intermedios colegiados</li></ol>
-<h3>Acuerdos órganos intermedios colegiados</h3>
-<p class="no_data_big_message"> <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-  ¡Sección en Desarrollo!</p>
-  <p class="no_data_small_message">¡Disculpe las molestias!
-    Esta sección de Partidos Públicos aún no se encuentra activa. Estamos trabajando para su próxima publicación.</p>
-<!-- # <% if @sin_datos %>
-#   <%= render 'sin_datos' %>
-# <% else %> -->
+<h3>Acuerdos órganos internos</h3>
+<% if @sin_datos %>
+ <%= render 'sin_datos' %>
+<% else %>
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    <% @acuerdos.each_with_index do |a, index| %>
-      <% if a['agreements'].count > 0 %>
+      <% if @acuerdos.count > 0 %>
+      <span class="sr-only"><p>Se han encontrado <%= @acuerdos.count %> acuerdos.</p></span>
       <div class="panel panel-default">
-        <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
+        <div class="panel-heading intern" role="tab" id="heading-<%= 0 %>">
           <h4 class="panel-title intern">
-            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
-              <%= a['type'] %>
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= 0 %>" aria-expanded="true" aria-controls="collapse-<%= 0 %>">
+              <%= @trimestre_informado %>
             </a>
           </h4>
         </div>
-        <div id="collapse-<%= index %>" class="panel-collapse collapse <%= index == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= index %>">
+        <div id="collapse-<%= 0 %>" class="panel-collapse collapse <%= 0 == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= 0 %>">
           <div class="panel-body">
-            <span class="sr-only"><p>Se han encontrado <%= a["agreements"].count %> acuerdos <%= a['type'] %></p></span>
             <div class="table-responsive">
               <table class="table">
                 <thead>
                   <tr>
-                    <th>Número</th>
-                    <th>Tema</th>
-                    <th>Fecha</th>
-                    <th>Región</th>
+                    <th>Materia</th>
                     <th>Órgano</th>
-                    <th>Documento</th>
+                    <th>Tipo</th>
+                    <th>Denominación</th>
+                    <th>Número</th>
+                    <th>Fecha</th>
+                    <th>Descripción</th>
+                    <th>Link</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <% a["agreements"].each do |acuerdo|%>
+                  <% @acuerdos.each_with_index do |a, index| %>
                   <tr>
-                    <td><%= acuerdo["numero"] %></td>
-                    <td><%= acuerdo["tema"] %></td>
-                    <td><%= acuerdo["fecha"] %></td>
-                    <td><%= acuerdo["region"] %></td>
-                    <td><%= acuerdo["organo_interno"] %></td>
-                    <td><%= !acuerdo["documento"].blank? ? link_to(acuerdo["documento_url"]) do '<i class="fa fa-download"></i> Descargar'.html_safe end : '' %></td>
+                    <td><%= a.materia %></td>
+                    <td><%= a.nombre_organo %></td>
+                    <td><%= a.tipo %></td>
+                    <td><%= a.denominacion %></td>
+                    <td><%= a.numero %></td>
+                    <td><%= a.fecha %></td>
+                    <td><%= a.descripcion %></td>
+                    <td><%= a.link %></td>
                   </tr>
                   <% end %>
                 </tbody>
@@ -50,7 +49,6 @@
           </div>
         </div>
       </div>
-      <% end %>
     <% end %>
   </div>
-<!-- # <% end %> -->
+<% end %>

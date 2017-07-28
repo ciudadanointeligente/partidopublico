@@ -1194,9 +1194,9 @@ class PartidosController < ApplicationController
         e_popular << { "type" => c, "dates" => tmp }
         @sin_datos = true
       end
-    @e_popular = e_popular
+      @e_popular = e_popular
+    end
   end
-end
 
   def organos_internos
     @organos = @partido.organo_internos
@@ -1262,25 +1262,26 @@ end
   end
 
   def acuerdos_organos
-    @acuerdos = []
-    acuerdo = @partido.acuerdos.where(tipo: t)
-    if acuerdo.count == 0
+
+    temp_trimestres_informados = []
+    @partido.acuerdos.each do |a|
+      a.trimestre_informados.each do |t|
+        temp_trimestres_informados.push(t)
+      end
+    end
+
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
+
+    if @trimestres_informados.count == 0
+      @datos = []
       @sin_datos = true
     else
-      tipos = %w(Acta Programatico Electoral Funcionamiento\ Interno)
-      tipos.each do |t|
-        acuerdos = []
-        @partido.acuerdos.where(tipo: t).each do |a|
-          ##puts a.region.to_i
-          region = a.region.to_i == 0 ? "" : Region.find(a.region.to_i).nombre
-          organo_interno  = a.organo_interno.nil? ? "" :  a.organo_interno.nombre
-          documento_file_name = a.documento_file_name.nil? ? "" : a.documento_file_name
-          documento_url = a.documento.url.nil? ? "" : a.documento.url
-          acuerdos << {"numero" => a.numero, "tema" => a.tema, "fecha" => a.fecha, "region" => region, "organo_interno" => organo_interno, "documento" => documento_file_name, "documento_url" => documento_url}
-          @acuerdos << { "type" => t, "agreements" => acuerdos }
-        end
-      end
-      @sin_datos = false
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+      @acuerdos = @partido.acuerdos
+      @sin_datos = @partido.acuerdos.count == 0
+      p @acuerdos
     end
   end
 
