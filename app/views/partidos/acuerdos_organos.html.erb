@@ -3,6 +3,11 @@
 <% if @sin_datos %>
  <%= render 'sin_datos' %>
 <% else %>
+  <%= form_tag partido_acuerdos_organos_path, :method =>  :get, class: 'form-inline' do |f| %>
+    <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
+    <%= submit_tag 'Filtrar' %>
+  <% end %>
+
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
       <% if @acuerdos.count > 0 %>
       <span class="sr-only"><p>Se han encontrado <%= @acuerdos.count %> acuerdos.</p></span>

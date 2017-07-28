@@ -891,8 +891,10 @@ class AfiliacionDestination
 end
 
 class ErrorCSVDestination
-  def initialize(filename:)
-    @csv = CSV.open(filename, 'w')
+  def initialize(log_path:, filename:)
+    directory_name = log_path
+    Dir.mkdir(directory_name) unless File.exists?(directory_name)
+    @csv = CSV.open(log_path+filename, 'w')
     @headers_written = false
   end
 
