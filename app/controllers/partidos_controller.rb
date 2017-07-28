@@ -286,6 +286,7 @@ class PartidosController < ApplicationController
       s.trimestre_informados.each do |t|
 
         temp_trimestres_informados.push(t)
+        p 'trimestre: ' + t.to_s
 
       end
     end
@@ -293,7 +294,7 @@ class PartidosController < ApplicationController
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
 
-    if (@trimestres_informados.count == 0 || @partido.afiliacions.last == nil)
+    if (@trimestres_informados.count == 0)
       @trimestres_informados = []
       @cantidad_afiliados = []
       @sin_datos = true
@@ -315,7 +316,6 @@ class PartidosController < ApplicationController
       end
 
       @sin_datos = false
-      p 'Afiliados totales: ' + @cantidad_afiliados.to_s
       if @cantidad_afiliados.nil?
         @cantidad_afiliados = 'El partido no ha entregado
          la información correspondiente al trimestre consultado'
@@ -327,15 +327,66 @@ class PartidosController < ApplicationController
       @datos_rangos_etareos = []
       @datos_sexo = []
       @sin_rangos_etareos = true
+      total_directivos = 0
+      total_eleccion = 0
+      total_aut_gobierno = 0
 
       estadisticas_cargos.each do |ec|
-        line = {'item' => ec.item,
-                'cantidad_mujeres' => ec.cantidad_mujeres,
-                'cantidad_hombres' => ec.cantidad_hombres,
-                'total_mujeres_y_hombres' => (ec.cantidad_mujeres + ec.cantidad_hombres)}
-
-        @datos_estadisticas_cargos << line unless line['total_mujeres_y_hombres'] == 0
+          cargo = cargos_estadistica_por_item(ec.item)
+          if cargo == "Cargos Directivos en el Partido"
+            total_directivos += (ec.cantidad_mujeres + ec.cantidad_hombres)
+          elsif cargo == "Cargos por elección popular"
+            total_eleccion += (ec.cantidad_mujeres + ec.cantidad_hombres)
+          elsif cargo == "Autoridades de Gobierno"
+            total_aut_gobierno += (ec.cantidad_mujeres + ec.cantidad_hombres)
+          end
       end
+
+      p total_directivos
+      p total_eleccion
+      p total_aut_gobierno
+
+      total_dir = 0
+      total_elec = 0
+      total_aut = 0
+
+      estadisticas_cargos.each do |ec|
+        if cargos_estadistica_por_item(ec.item) == "Cargos Directivos en el Partido"
+          total_dir += (ec.cantidad_mujeres + ec.cantidad_hombres)
+          line = {'item' => ec.item,
+                  'cargo' => cargos_estadistica_por_item(ec.item),
+                  'cantidad_mujeres' => ec.cantidad_mujeres,
+                  'cantidad_hombres' => ec.cantidad_hombres,
+                  'total_mujeres_y_hombres' => total_dir}
+          unless (total_dir == 0 || total_dir < total_directivos)
+            @datos_estadisticas_cargos << line
+          end
+        elsif cargos_estadistica_por_item(ec.item) == "Cargos por elección popular"
+          total_elec += (ec.cantidad_mujeres + ec.cantidad_hombres)
+          line = {'item' => ec.item,
+                  'cargo' => cargos_estadistica_por_item(ec.item),
+                  'cantidad_mujeres' => ec.cantidad_mujeres,
+                  'cantidad_hombres' => ec.cantidad_hombres,
+                  'total_mujeres_y_hombres' => total_elec}
+          unless (total_elec == 0 || total_elec < total_eleccion)
+            @datos_estadisticas_cargos << line
+          end
+        elsif cargos_estadistica_por_item(ec.item) == "Autoridades de Gobierno"
+          total_aut += (ec.cantidad_mujeres + ec.cantidad_hombres)
+          line = {'item' => ec.item,
+                  'cargo' => cargos_estadistica_por_item(ec.item),
+                  'cantidad_mujeres' => ec.cantidad_mujeres,
+                  'cantidad_hombres' => ec.cantidad_hombres,
+                  'total_mujeres_y_hombres' => total_aut}
+          unless (total_aut == 0 || total_aut < total_aut_gobierno)
+            @datos_estadisticas_cargos << line
+          end
+        end
+      end
+
+      p total_dir
+      p total_elec
+      p total_aut
 
       if @datos_estadisticas_cargos.blank?
        @sin_datos_estadisticas_cargos = true
@@ -356,10 +407,6 @@ class PartidosController < ApplicationController
 
         @datos_rangos_etareos << line unless line['total_mujeres_y_hombres'] == 0
       end
-
-      p 'SIN CARGOS: ' + @sin_datos_estadisticas_cargos.to_s
-      p 'SIN AFILIADOS: ' + @sin_info_afiliados.to_s
-      p 'SIN RANGOS DE EDADES: ' + @sin_rangos_etareos.to_s
 
       @datos_sexo = {'mujeres' => @datos_rangos_etareos.select{|d| d['rango_etareo'].
                                                               downcase.include?('total')}.
@@ -1427,6 +1474,70 @@ class PartidosController < ApplicationController
       unless current_admin.is_superadmin?
         redirect_to admin_path
       end
+    end
+
+    def cargos_estadistica_por_item(item)
+      item.downcase!
+      item.gsub(/[^0-9a-z ]/i, '')
+      if item.include? "embajador"
+        item = 'Autoridades de Gobierno'
+      elsif item.include? "gobernador"
+        item = 'Autoridades de Gobierno'
+      elsif item.include? "ministr"
+        item = 'Autoridades de Gobierno'
+      elsif item.include? "autoridades"
+        item = 'Autoridades de Gobierno'
+      elsif item.include? "director"
+        item = 'Autoridades de Gobierno'
+      elsif item.include? "intendent"
+        item = 'Autoridades de Gobierno'
+      elsif item.include? "jefe"
+        item = 'Autoridades de Gobierno'
+      elsif item.include? "seremi"
+        item = 'Autoridades de Gobierno'
+      elsif item.include? "subsecretari"
+        item = 'Autoridades de Gobierno'
+      elsif item.include? "directiv"
+        item = 'Cargos Directivos en el Partido'
+      elsif item.include? "comision pol"
+        item = 'Cargos Directivos en el Partido'
+      elsif item.include? "consejeros nacionales"
+        item = 'Cargos Directivos en el Partido'
+      elsif item.include? "asambleas comunales"
+        item = 'Cargos Directivos en el Partido'
+      elsif item.include? "consejos regionales"
+        item = 'Cargos Directivos en el Partido'
+      elsif item.include? "frentes partidarios"
+        item = 'Cargos Directivos en el Partido'
+      elsif item.include? "tribunales"
+        item = 'Cargos Directivos en el Partido'
+      elsif item.include? "alcald"
+        item = 'Cargos por elección popular'
+      elsif item.include? "consejal"
+        item = 'Cargos por elección popular'
+      elsif item.include? "core"
+        item = 'Cargos por elección popular'
+      elsif item.include? "diputad"
+        item = 'Cargos por elección popular'
+      elsif item.include? "regionales"
+        item = 'Cargos por elección popular'
+      elsif item.include? "presiden"
+        item = 'Cargos por elección popular'
+      elsif item.include? "senador"
+        item = 'Cargos por elección popular'
+      elsif item.include? "n popular"
+        item = 'Cargos por elección popular'
+      elsif item.include? "diputad"
+        item = 'Cargos por elección popular'
+      elsif item.include? "diputad"
+        item = 'Cargos por elección popular'
+      elsif item.include? "diputad"
+        item = 'Cargos por elección popular'
+      elsif item.include? "diputad"
+        item = 'Cargos por elección popular'
+      end
+
+      item
     end
 
     def max_value_transferencias_fondos_publicos(trimestre, mes, transferencia, max_value)
