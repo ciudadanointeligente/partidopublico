@@ -124,11 +124,13 @@ class PartidoStepsController < ApplicationController
 
     def run_etl
       p "ETL Running from Administrator"
-      system 'wget -r -np -nH –cut-dirs=1  https://datos.partidospublicos.cl/20170728/ -P etl/input_files/cplt'
-      system 'wget   https://datos.partidospublicos.cl/PP002_extra.csv -P etl/input_files/cplt/PP0002_extra.csv'
-      system 'rm etl/input_files/cplt/20170728/*html*'
-      system 'sh etl/clean_input_files.sh'
-      command = "DATE=20170728 RAILSENV=development bundle exec kiba etl/scripts/import_all.rb"
+      date = Time.now().strftime("%Y%m%d")
+      p date
+      system 'mkdir etl/log/' + date + '/'
+      system 'wget -r -np -nH –cut-dirs=1  https://datos.partidospublicos.cl/'+ date +' -P etl/input_files/cplt'
+      system 'wget   https://datos.partidospublicos.cl/PP0002_extra.csv -P etl/input_files/cplt/' + date +'/'
+      system 'rm etl/input_files/cplt/' + date + '/*html*'
+      command = 'DATE=' + date + ' RAILSENV=development bundle exec kiba etl/scripts/import_all.rb'
       result = system command
       redirect_to('/admin')
     end
