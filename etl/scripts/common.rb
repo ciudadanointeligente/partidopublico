@@ -185,7 +185,15 @@ def input_path
 end
 
 def log_path
-  etl_path + "/log/"
+  date = ENV['DATE']
+  if date == nil
+    date = Time.now().strftime("%Y%m%d")
+    etl_path + "/log/" + date + '/'
+    p etl_path + "/log/" + date + '/'
+  else
+    p etl_path + "/log/#{date}/"
+  end
+  p 'log_path called'
 end
 
 def job_name

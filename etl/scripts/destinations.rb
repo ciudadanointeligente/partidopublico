@@ -725,6 +725,52 @@ class AcuerdosOrganosDestination
   end
 end
 
+class EntidadesDestination
+  def initialize(results:, verbose:)
+    @verbose = verbose
+    @results = results
+    @new = 0
+    @errors = 0
+    @found = 0
+  end
+
+  def write(row)
+    unless row[:trimestre_informado_id].nil?
+      trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+
+      entidad = ParticipacionEntidad.where(partido_id: row[:partido_id],
+                              entidad: row[:entidad_con_la_que_existen_vnculos],
+                              descripcion: row[:descripcin_o_detalle_del_vnculo],
+                              tipo_vinculo: row[:tipo_de_vnculo],
+                              fecha_inicio: row[:fecha_de_inicio],
+                              fecha_fin: row[:fecha_de_termino],
+                              indefinido: row[:vnculo_indefinido],
+                              rut: row[:rut_de_la_entidad],
+                              link: row[:enlace_a_la_norma_jurdica_o_convenio_que_justifica_el_vnculo]).first_or_initialize
+
+      if entidad.id.nil?
+        entidad.save
+        if entidad.errors.any?
+          row[:error_log] = row[:error_log].to_s + ', ' + entidad.errors.messages.to_s
+          @results[:entidades][:errors] += 1
+        else
+          entidad.trimestre_informados << trimestre_informado unless trimestre_informado.in?(entidad.trimestre_informados)
+          @results[:entidades][:new] += 1
+        end
+      else
+        entidad.trimestre_informados << trimestre_informado unless trimestre_informado.in?(entidad.trimestre_informados)
+        @results[:entidades][:found] += 1
+      end
+    end
+  end
+
+  def close
+    @results[:entidades] = {new: @results[:entidades][:new],
+                                 errors: @results[:entidades][:errors],
+                                 found: @results[:entidades][:found]}
+  end
+end
+
 class NormasDestination
   def initialize(results:, verbose:)
     @verbose = verbose
@@ -891,8 +937,10 @@ class AfiliacionDestination
 end
 
 class ErrorCSVDestination
-  def initialize(filename:)
-    @csv = CSV.open(filename, 'w')
+  def initialize(log_path:, filename:)
+    directory_name = log_path
+    Dir.mkdir(directory_name) unless File.exists?(directory_name)
+    @csv = CSV.open(log_path+filename, 'w')
     @headers_written = false
   end
 

@@ -1319,6 +1319,7 @@ class PartidosController < ApplicationController
 
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
+    p @trimestres_informados
 
     if @trimestres_informados.count == 0
       @datos = []
@@ -1328,7 +1329,7 @@ class PartidosController < ApplicationController
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
       @acuerdos = @partido.acuerdos
       @sin_datos = @partido.acuerdos.count == 0
-      p @acuerdos
+      p @acuerdos.count
     end
   end
 
@@ -1657,7 +1658,8 @@ class PartidosController < ApplicationController
 
     def set_fecha_datos
       ###puts params
-        @fecha_datos = l(EtlRun.max_fecha_datos, format: '%A %d de %B del %Y')
+      date = EtlRun.max_fecha_datos.nil? ? Date.today : EtlRun.max_fecha_datos
+        @fecha_datos = l(date, format: '%A %d de %B del %Y')
         p @fecha_datos
     end
 

@@ -68,7 +68,7 @@ transform PersonaLookupAndInsert, verbose: verbosing, results: results
 
 destination CargosDestination, verbose: verbosing, results: results
 
-destination ErrorCSVDestination, filename: log_path + job_name + '.log'
+destination ErrorCSVDestination, log_path: log_path, filename: job_name + '.log'
 
 # show_me!
 
