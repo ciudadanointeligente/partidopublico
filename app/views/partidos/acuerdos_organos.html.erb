@@ -45,7 +45,7 @@
                     <td><%= a.numero %></td>
                     <td><%= a.fecha %></td>
                     <td><%= a.descripcion %></td>
-                    <td><%= a.link %></td>
+                    <td class="text-center"><%= !a.link.blank? ? link_to(a.link, target:"_blank") do "<span class='btn-view-detail btn btn-default btn-xs'>Ver Documento</span>".html_safe end : 'Sin Información' %></td>
                   </tr>
                   <% end %>
                 </tbody>

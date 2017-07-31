@@ -474,9 +474,11 @@ class PartidosController < ApplicationController
 
   def vinculos_intereses
     @entidades = []
-    @partido.participacion_entidads.each do |p|
-      @entidades.push p
+    @partido.participacion_entidads.each do |p_e|
+      p "Entidades: " + @entidades.to_s
+      @entidades.push p_e
     end
+    p @entidades.count
     if @entidades.count == 0
       @sin_datos = true
     else

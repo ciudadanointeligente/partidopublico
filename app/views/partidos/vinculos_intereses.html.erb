@@ -23,7 +23,7 @@
         <td><%= e.descripcion %></td>
         <td>
           <% if !e.documento_file_name.nil? %>
-            <%= link_to e.documento.url do %>
+            <%= link_to p_e.documento.url do %>
               <i class="fa fa-download"></i> Descargar
             <% end %>
           <% end %>
