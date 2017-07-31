@@ -58,7 +58,7 @@ $(document).ready(function(){
   <% unless @sin_datos_estadisticas_cargos %>
     Raphael("cargos", 170, 170).donutChart(85, 85, 70, 35,
                                           <%= raw @datos_estadisticas_cargos.map{|d| d['total_mujeres_y_hombres']} %>,
-                                          <%= raw @datos_estadisticas_cargos.map{|d| d['item']} %>,
+                                          <%= raw @datos_estadisticas_cargos.map{|d| d['cargo']} %>,
                                           colors_range, true, $('#charts'+' .leyenda-cargos'), colors_range);
   <% end %>
 
