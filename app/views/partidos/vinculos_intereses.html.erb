@@ -1,43 +1,39 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Vínculos e intereses</li><li>Entidades en las que tenga participación</li></ol>
 <h3>Entidades en que tenga participación</h3>
-<p class="no_data_big_message"> <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-  ¡Sección en Desarrollo!</p>
-  <p class="no_data_small_message">¡Disculpe las molestias!
-    Esta sección de Partidos Públicos aún no se encuentra activa. Estamos trabajando para su próxima publicación.</p>
-<!-- # <% if @sin_datos %>
-#   <%= render 'sin_datos' %>
-# <% else %> -->
-<div class="table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Entidad</th>
-        <th>Descripción</th>
-        <th>Documento</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @entidades.each do |e| %>
-      <tr>
-        <td><%= e.entidad %></td>
-        <td><%= e.descripcion %></td>
-        <td>
-          <% if !e.documento_file_name.nil? %>
-            <%= link_to p_e.documento.url do %>
-              <i class="fa fa-download"></i> Descargar
-            <% end %>
-          <% end %>
-        </td>
-      </tr>
-      <% end %>
-      <% if !@entidades.any? %>
-      <tr>
-        <td colspan="3">
-          <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i> No se han encontrado registros</p>
-        </td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-<!-- # <% end %> -->
+<% if @sin_datos %>
+ <%= render 'sin_datos' %>
+<% else %>
+<%= form_tag partido_vinculos_e_intereses_path, :method =>  :get, class: 'form-inline' do |f| %>
+  <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
+  <%= submit_tag 'Filtrar' %>
+<% end %>
+  <div class="table-responsive">
+    <table class="table rtable rtable--flip">
+      <thead class="rtable-head">
+        <tr>
+          <th>Entidad</th>
+          <th>Descripción</th>
+          <th>Documento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @entidades.each do |e| %>
+        <tr>
+          <td><%= e.entidad %></td>
+          <td><%= e.descripcion %></td>
+          <td><%= !e.link.blank? ? link_to(e.link, target:"_blank") do "<span class='btn-view-detail btn btn-default btn-xs'>Link</span>".html_safe end : 'Sin Información' %></td>
+        </tr>
+        <% end %>
+        <% if !@entidades.any? %>
+        <tr>
+          <td colspan="3">
+            <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i> No se han encontrado registros</p>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <p class="mark-date"> Estos datos corresponden a lo publicado por este
+      Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
+<% end %>

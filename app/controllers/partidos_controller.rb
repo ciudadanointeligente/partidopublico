@@ -474,14 +474,29 @@ class PartidosController < ApplicationController
 
   def vinculos_intereses
     @entidades = []
-    @partido.participacion_entidads.each do |p_e|
-      p "Entidades: " + @entidades.to_s
-      @entidades.push p_e
+
+    temp_trimestres_informados = []
+    @partido.participacion_entidads.each do |pe|
+      pe.trimestre_informados.each do |t|
+
+        temp_trimestres_informados.push(t)
+
+      end
     end
-    p @entidades.count
-    if @entidades.count == 0
+
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
+
+    if @trimestres_informados.count == 0
       @sin_datos = true
     else
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+      entidades_donde_participa = @trimestre_informado.participacion_entidads.where(:partido_id => @partido.id)
+      entidades_donde_participa.each do |e_p|
+        @entidades.push e_p
+      end
       @sin_datos = false
     end
   end
