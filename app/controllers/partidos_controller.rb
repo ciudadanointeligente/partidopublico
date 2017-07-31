@@ -286,7 +286,6 @@ class PartidosController < ApplicationController
       s.trimestre_informados.each do |t|
 
         temp_trimestres_informados.push(t)
-        p 'trimestre: ' + t.to_s
 
       end
     end
@@ -302,14 +301,11 @@ class PartidosController < ApplicationController
       params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
-      p @trimestre_informado.to_s
-
       if @trimestre_informado.afiliacions.where(:partido_id => @partido.id,
                                                 :rango_etareo => "Total Militantes").first.nil?
 
         @sin_info_afiliados = true
       else
-        # @cantidad_afiliados = @partido.afiliacions.last.total
         @cantidad_afiliados = @trimestre_informado.afiliacions.where(:partido_id => @partido.id,
                                              :rango_etareo => "Total Militantes").first.total_afiliados
         @sin_info_afiliados = false
@@ -341,10 +337,6 @@ class PartidosController < ApplicationController
             total_aut_gobierno += (ec.cantidad_mujeres + ec.cantidad_hombres)
           end
       end
-
-      p total_directivos
-      p total_eleccion
-      p total_aut_gobierno
 
       total_dir = 0
       total_elec = 0
@@ -383,10 +375,6 @@ class PartidosController < ApplicationController
           end
         end
       end
-
-      p total_dir
-      p total_elec
-      p total_aut
 
       if @datos_estadisticas_cargos.blank?
        @sin_datos_estadisticas_cargos = true
