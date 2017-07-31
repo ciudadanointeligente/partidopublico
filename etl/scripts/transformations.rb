@@ -70,10 +70,12 @@ class TrimestreInformadoLookup
   def process(row)
     p row if @verbose
     ano = row[:ao_informado].to_i;
-    trimestre = row[:trimestre_informado].downcase;
-    trimestre.gsub!(/[^0-9a-z]/i, '')
-    trimestre.insert(3, ' - ')
-    ordinal_trimestre = ordinal_trimestres.index(trimestre[0].downcase) unless trimestre.nil?
+    unless row[:trimestre_informado].nil?
+      trimestre = row[:trimestre_informado].downcase
+      trimestre.gsub!(/[^0-9a-z]/i, '')
+      trimestre.insert(3, ' - ')
+      ordinal_trimestre = ordinal_trimestres.index(trimestre[0].downcase) unless trimestre.nil?
+    end
 
     if (ordinal_trimestre.nil? || ano == 0)
       # p ano
@@ -280,6 +282,11 @@ class ComunaLookup
 
   def process(row)
     # comuna = Comuna.find_by_nombre(row['Comuna'])
+    unless row[:nombre_distrito].nil?
+      p "in comunaLookup with nombre_distrito:" + row[:nombre_distrito]
+      return
+    end
+
     if !row[:nombre_comuna].nil?
       string = row[:nombre_comuna] || ''
       comuna = Comuna.where('lower(nombre) = ?', string.downcase).first
@@ -297,6 +304,37 @@ class ComunaLookup
     else
       row[:comuna_id] = comuna.id
       @results[:comunas][:found_comunas] += 1
+    end
+
+    p row if @verbose
+    row
+  end
+end
+class DistritoLookup
+  def initialize(verbose:, results:)
+    p 'init distrito lookup'
+    @verbose = verbose
+    @results = results
+  end
+
+  def process(row)
+    p row
+    unless row[:nombre_distrito].nil?
+      p "in distritoLookup with nombre_distrito: " + row[:nombre_distrito]
+    end
+    unless row[:nombre_distrito].nil?
+      p row
+      string = row[:nombre_distrito].gsub(/[a-z]/i, '').gsub(' ', '') || ''
+      p string
+      distrito = Distrito.where('lower(nombre) = ?', string.downcase).first
+    end
+
+    if distrito.nil?
+      row[:distrito_id] = nil
+      @results[:distritos][:distritos_errors] += 1
+    else
+      row[:distrito_id] = distrito.id
+      @results[:distritos][:found_distritos] += 1
     end
 
     p row if @verbose
@@ -381,6 +419,8 @@ class TerritorioElectoralTransformation
 
     when 'alcaldicia'
       row[:nombre_comuna] = row[:territorio_electoral].downcase
+    when 'diputados'
+      row[:nombre_distrito] = row[:territorio_electoral].downcase
     else
       row[:nombre_comuna] = nil
     end

@@ -23,6 +23,10 @@ def clean_number(numero)
 end
 
 def clean_phrase(frase)
+  if frase.nil?
+    return ""
+  end
+  
   frase.downcase!
   # p "downcased phrase -> " + frase
   frase.gsub(/[^0-9a-z ]/i, '')

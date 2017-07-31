@@ -24,6 +24,8 @@ results[:personas] = {:new_personas => 0,
 
 results[:comunas] = {:comunas_errors => 0,
                      :found_comunas => 0}
+results[:distritos] = {:distritos_errors => 0,
+                     :found_distritos => 0}
 
 results[:trimestres_informados] = {:new => 0,
                                   :errors => 0,
@@ -63,6 +65,8 @@ transform PartidoLookup, verbose: verbosing, results: results
 transform TerritorioElectoralTransformation, verbose: verbosing, results: results
 
 transform ComunaLookup, verbose: verbosing, results: results
+
+transform DistritoLookup, verbose: verbosing, results: results
 
 transform TrimestreInformadoLookup, verbose: verbosing,  results: results
 

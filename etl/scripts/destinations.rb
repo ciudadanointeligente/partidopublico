@@ -131,10 +131,17 @@ class CargosDestination
                           organo_interno_id: row[:organo_interno_id],
                           tipo_cargo_id: row[:tipo_cargo_id]).first_or_initialize
     else
-      cargo = Cargo.where(partido_id: row[:partido_id],
+      unless row[:comuna_id]
+        cargo = Cargo.where(partido_id: row[:partido_id],
                           persona_id: row[:persona_id],
                           comuna_id: row[:comuna_id],
                           tipo_cargo_id: row[:tipo_cargo_id]).first_or_initialize
+      else
+        cargo = Cargo.where(partido_id: row[:partido_id],
+                          persona_id: row[:persona_id],
+                          distrito_id: row[:distrito_id],
+                          tipo_cargo_id: row[:tipo_cargo_id]).first_or_initialize
+      end
     end
     trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
 
