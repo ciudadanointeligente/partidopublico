@@ -281,26 +281,20 @@ class ComunaLookup
   end
 
   def process(row)
-    # comuna = Comuna.find_by_nombre(row['Comuna'])
-    unless row[:nombre_distrito].nil?
-      p "in comunaLookup with nombre_distrito:" + row[:nombre_distrito]
-      return
-    end
 
     if !row[:nombre_comuna].nil?
       string = row[:nombre_comuna] || ''
       comuna = Comuna.where('lower(nombre) = ?', string.downcase).first
-    else
+    else !row[:comuna].nil?
       string = row[:comuna]
       comuna = Comuna.where('lower(nombre) = ?', string.downcase).first
     end
 
-    region_id = comuna.nil? ? nil : comuna.provincia.region.id
-    row[:region_id] = region_id
+    row[:region_id] = comuna.nil? ? nil : comuna.provincia.region.id
 
     if comuna.nil?
       row[:comuna_id] = nil
-      @results[:comunas][:comunas_errors] += 1
+      @results[:comunas][:comunas_errors] += 1 if row[:nombre_distrito].nil?
     else
       row[:comuna_id] = comuna.id
       @results[:comunas][:found_comunas] += 1
@@ -312,32 +306,26 @@ class ComunaLookup
 end
 class DistritoLookup
   def initialize(verbose:, results:)
-    p 'init distrito lookup'
     @verbose = verbose
     @results = results
   end
 
   def process(row)
-    p row
+
     unless row[:nombre_distrito].nil?
-      p "in distritoLookup with nombre_distrito: " + row[:nombre_distrito]
-    end
-    unless row[:nombre_distrito].nil?
-      p row
       string = row[:nombre_distrito].gsub(/[a-z]/i, '').gsub(' ', '') || ''
-      p string
       distrito = Distrito.where('lower(nombre) = ?', string.downcase).first
-    end
 
-    if distrito.nil?
-      row[:distrito_id] = nil
-      @results[:distritos][:distritos_errors] += 1
-    else
-      row[:distrito_id] = distrito.id
-      @results[:distritos][:found_distritos] += 1
-    end
+      if distrito.nil?
+        row[:distrito_id] = nil
+        @results[:distritos][:distritos_errors] += 1
+      else
+        row[:distrito_id] = distrito.id
+        @results[:distritos][:found_distritos] += 1
+      end
 
-    p row if @verbose
+      p row if @verbose
+    end
     row
   end
 end

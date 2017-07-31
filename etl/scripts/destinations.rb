@@ -130,18 +130,16 @@ class CargosDestination
                           persona_id: row[:persona_id],
                           organo_interno_id: row[:organo_interno_id],
                           tipo_cargo_id: row[:tipo_cargo_id]).first_or_initialize
-    else
-      unless row[:comuna_id]
-        cargo = Cargo.where(partido_id: row[:partido_id],
-                          persona_id: row[:persona_id],
-                          comuna_id: row[:comuna_id],
-                          tipo_cargo_id: row[:tipo_cargo_id]).first_or_initialize
-      else
+    elsif !row[:distrito_id].nil?
         cargo = Cargo.where(partido_id: row[:partido_id],
                           persona_id: row[:persona_id],
                           distrito_id: row[:distrito_id],
                           tipo_cargo_id: row[:tipo_cargo_id]).first_or_initialize
-      end
+    else
+      cargo = Cargo.where(partido_id: row[:partido_id],
+                          persona_id: row[:persona_id],
+                          comuna_id: row[:comuna_id],
+                          tipo_cargo_id: row[:tipo_cargo_id]).first_or_initialize
     end
     trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
 
@@ -945,8 +943,6 @@ end
 
 class ErrorCSVDestination
   def initialize(log_path:, filename:)
-    directory_name = log_path
-    Dir.mkdir(directory_name) unless File.exists?(directory_name)
     @csv = CSV.open(log_path+filename, 'w')
     @headers_written = false
   end

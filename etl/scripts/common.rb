@@ -26,7 +26,7 @@ def clean_phrase(frase)
   if frase.nil?
     return ""
   end
-  
+
   frase.downcase!
   # p "downcased phrase -> " + frase
   frase.gsub(/[^0-9a-z ]/i, '')
@@ -190,14 +190,14 @@ end
 
 def log_path
   date = ENV['DATE']
+  path = ''
   if date == nil
     date = Time.now().strftime("%Y%m%d")
-    etl_path + "/log/" + date + '/'
-    p etl_path + "/log/" + date + '/'
+    path ="etl/log/" + date + '/'
   else
-    p etl_path + "/log/#{date}/"
+    path = "etl/log/#{date}/"
   end
-  p 'log_path called'
+  path
 end
 
 def job_name
