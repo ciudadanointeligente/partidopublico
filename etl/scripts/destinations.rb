@@ -943,6 +943,46 @@ class AfiliacionDestination
   end
 end
 
+class TramiteDestination
+  def initialize(results:, verbose:)
+    @verbose = verbose
+    @results = results
+    @new = 0
+    @errors = 0
+    @found = 0
+  end
+
+  def write(row)
+
+    trimestre_informado = TrimestreInformado.find(row[:trimestre_informado_id])
+
+    tramite = Tramite.where(partido_id: row[:partido_id],
+                            requisito: row[:requisitos_de_afiliacin],
+                            procedimiento: row[:procedimientos_de_afiliacin],
+                            link_informacion: row[:link_mayor_informacin]).first_or_initialize
+
+    if tramite.id.nil?
+      tramite.save
+      if tramite.errors.any?
+        row[:error_log] = row[:error_log].to_s + ', ' + tramite.errors.messages.to_s
+        @results[:tramites][:errors] += 1
+      else
+        tramite.trimestre_informados << trimestre_informado unless trimestre_informado.in?(tramite.trimestre_informados)
+        @results[:tramites][:new] += 1
+      end
+    else
+      tramite.trimestre_informados << trimestre_informado unless trimestre_informado.in?(tramite.trimestre_informados)
+      @results[:tramites][:found] += 1
+    end
+  end
+
+  def close
+    @results[:tramites] = {new: @results[:tramites][:new],
+                                 errors: @results[:tramites][:errors],
+                                 found: @results[:tramites][:found]}
+  end
+end
+
 class ErrorCSVDestination
   def initialize(log_path:, filename:)
     @csv = CSV.open(log_path+filename, 'w')

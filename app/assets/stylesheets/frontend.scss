@@ -1245,6 +1245,39 @@ p.edades{
 	}
 }
 
+.btn-view-detail-lg{
+	border-radius: 24px;
+	text-transform: uppercase;
+	font-size: 10px;
+	letter-spacing: 1.2px;
+	height: 32px;
+	border: 2px solid $green;
+	font-weight: 700;
+	padding: 7px 10px;
+	color: $green;
+	a{
+		color: $green;
+	}
+	&:hover{
+		border: 2px solid $green;
+		background-color: $green;
+		color: white;
+		a{
+			color: white;
+			text-decoration: none;
+		}
+	}
+	&:focus{
+			border: 2px solid $green;
+			background-color: $green;
+			color: white;
+			a{
+				color: white;
+				text-decoration: none;
+			}
+	}
+}
+
 /*FOOTER*/
 .site-footer{
   background-color: $blue;

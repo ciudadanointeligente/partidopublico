@@ -474,12 +474,29 @@ class PartidosController < ApplicationController
 
   def vinculos_intereses
     @entidades = []
-    @partido.participacion_entidads.each do |p|
-      @entidades.push p
+
+    temp_trimestres_informados = []
+    @partido.participacion_entidads.each do |pe|
+      pe.trimestre_informados.each do |t|
+
+        temp_trimestres_informados.push(t)
+
+      end
     end
-    if @entidades.count == 0
+
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
+
+    if @trimestres_informados.count == 0
       @sin_datos = true
     else
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+      entidades_donde_participa = @trimestre_informado.participacion_entidads.where(:partido_id => @partido.id)
+      entidades_donde_participa.each do |e_p|
+        @entidades.push e_p
+      end
       @sin_datos = false
     end
   end
@@ -1201,8 +1218,34 @@ class PartidosController < ApplicationController
   end
 
   def afiliacion_desafiliacion
-    @tramites = @partido.tramites
-    @sin_datos = true
+    temp_trimestres_informados = []
+    @partido.tramites.each do |t|
+      t.trimestre_informados.each do |ti|
+
+        temp_trimestres_informados.push(ti)
+
+      end
+    end
+
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
+
+    @datos_tramites_afiliacion = []
+    if @trimestres_informados.count == 0
+      @trimestres_informados = []
+      # @datos_sedes = []
+      @sin_datos = true
+    else
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+      tramites_afiliacion = @trimestre_informado.tramites.where(:partido_id => @partido.id)
+      tramites_afiliacion.each do |ta|
+
+        @datos_tramites_afiliacion.push ta
+      end
+      @sin_datos = false
+    end
   end
 
   def eleccion_popular

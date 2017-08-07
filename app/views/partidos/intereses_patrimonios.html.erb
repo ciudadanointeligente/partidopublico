@@ -32,8 +32,8 @@
               <thead>
                 <tr>
                   <th>Nombre</th>
-                  <th>Organismo o Lugar</th>
-                  <th>URL Intereses y Patrimonio</th>
+                  <th class="text-center">Organismo o Lugar</th>
+                  <th class="text-center">URL Intereses y Patrimonio</th>
                   <!-- <th>URL Patrimonios</th> -->
                 </tr>
               </thead>
@@ -42,9 +42,8 @@
                 <tr>
                   <% unless c.persona.nil? %>
                     <td><%= c.persona.nombre + " " +c.persona.apellidos %></td>
-                    <td><%= c.lugar.chomp(" - ") %></td>
-                    <td class="link-intereses-patrimonio"><%= !c.persona.intereses.blank? ? link_to(c.persona.intereses, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %></td>
-                    <!-- <td><%= !c.persona.patrimonio.blank? ? link_to(c.persona.patrimonio, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %></td> -->
+                    <td class="text-center"><%= c.lugar.chomp(" - ") %></td>
+                    <td class="text-center"><%= !c.persona.intereses.blank? ? link_to(c.persona.intereses, target:"_blank") do "<span class='btn-view-detail btn btn-default btn-xs'>Ver Documento</span>".html_safe end : 'Sin Información' %></td>
                   <% end %>
                 </tr>
                 <% end %>

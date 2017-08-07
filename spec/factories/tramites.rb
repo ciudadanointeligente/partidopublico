@@ -13,6 +13,9 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  partido_id             :integer
+#  procedimiento          :string
+#  requisito              :string
+#  link_informacion       :string
 #
 # Indexes
 #
