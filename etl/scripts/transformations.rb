@@ -48,7 +48,8 @@ class PartidoLookup
   end
 
   def process(row)
-    partido = Partido.where(cplt_code: row[:cdigo_del_organismo]).first_or_initialize
+    code = row[:cdigo_del_organismo].nil? ? row[:organismo_codigo] : row[:cdigo_del_organismo]
+    partido = Partido.where(cplt_code: code ).first_or_initialize
     if partido.id.nil?
       @results[:partido_errors] += 1
       row[:error_log] = "Partido NOT FOUND IN DB"
@@ -56,6 +57,50 @@ class PartidoLookup
       @results[:partido_success] += 1
       row[:partido_id] = partido.id
     end
+    row
+  end
+end
+
+class HeadersForMarcoNormativo
+
+  def initialize(verbose:, results:)
+    @verbose = verbose
+    @results = results
+  end
+
+  def process(row)
+    # row[:] = row[:organismo_nombre]
+    row[:cdigo_del_organismo] = row[:organismo_codigo]
+    # row[:] = row[:fecha_publicacion_ta]
+    row[:ao_informado] = row[:anyo]
+    p row[:anyo]
+    row[:trimestre_informado] = row[:mes]
+    p row[:mes]
+    row[:trimestre_informado] = "Ene - Mar"
+
+    row[:tipo_marco_normativo] = row[:tipo_de_marco_normativo]
+    row[:tipo] = row[:tipo_norma]
+    # row[:] = row[:numero_norma]
+    # row[:] = row[:denominacion]
+    # row[:] = row[:fecha_publicacion]
+    row[:link] = row[:enlace_publicacion]
+    # row[:] = row[:fecha_modificacion]
+    # row[:] = row[:enlace_modificacion]]
+
+    #  id                   :integer          not null, primary key
+    #  fecha_datos          :date
+    #  tipo_marco_normativo :string
+    #  tipo                 :string
+    #  numero               :string
+    #  denominacion         :string
+    #  fecha_publicacion    :date
+    #  link                 :string
+    #  fecha_modificacion   :date
+    #  created_at           :datetime         not null
+    #  updated_at           :datetime         not null
+    #  partido_id           :integer
+    #  marco_interno_id     :integer
+    p row
     row
   end
 end
@@ -69,7 +114,7 @@ class TrimestreInformadoLookup
 
   def process(row)
     p row if @verbose
-    ano = row[:ao_informado].to_i;
+    ano = row[:ao_informado].nil? ? row[:anyo].to_i : row[:ao_informado].to_i
     unless row[:trimestre_informado].nil?
       trimestre = row[:trimestre_informado].downcase
       trimestre.gsub!(/[^0-9a-z]/i, '')

@@ -139,6 +139,16 @@ def vali_date(fecha, handler)
   end
 end
 
+def sort_date_fields(str)
+    a = str.gsub('-','/').split('/')
+    Date.new(a[2].to_i, a[1].to_i, a[0].to_i)
+end
+
+def clean_normas_link(str)
+  return str unless 'href='.in?(str)
+  str[str.index('=') + 1 ..-1].split(' ')[0]
+end
+
 def save_etl_run(job_name, results, date)
   EtlRun.create(start_time: results[:start_time],
                 end_time: results[:end_time],

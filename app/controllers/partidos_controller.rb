@@ -153,14 +153,14 @@ class PartidosController < ApplicationController
   end
 
   def normas_internas
-    @normas_internas = []
-    unless @partido.marco_interno.nil?
-      @partido.marco_interno.documentos.each do |d|
-        if !d.archivo_file_name.nil?
-          @normas_internas.push d
-        end
-      end
-    end
+    @normas_internas = @partido.normas
+    # unless @partido.marco_interno.nil?
+    #   @partido.marco_interno.documentos.each do |d|
+    #     if !d.archivo_file_name.nil?
+    #       @normas_internas.push d
+    #     end
+    #   end
+    # end
   end
 
   # def regiones

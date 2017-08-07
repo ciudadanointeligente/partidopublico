@@ -787,15 +787,17 @@ class NormasDestination
 
   def write(row)
     norma = Norma.where(partido_id: row[:partido_id],
-    denominacion: row['Denominación norma'],
-    tipo: row['Tipo de norma'],
-    numero: row['Número norma']).first_or_initialize
+    tipo_marco_normativo: row[:tipo_marco_normativo],
+    denominacion: row[:denominacion],
+    tipo: row[:tipo_norma],
+    fecha_publicacion: sort_date_fields(row[:fecha_publicacion_ta]),
+    link: clean_normas_link(row[:enlace_publicacion]),
+    numero: row[:numero_norma]).first_or_initialize
 
-    norma.tipo_marco_normativo = row['Tipo Marco normativo']
-    norma.fecha_publicacion = row['Fecha de publicación en el diario oficial o fecha de dictación (dd/mm/aaaa)']
-    norma.link = row['Enlace a la publicación o archivo correspondiente']
-    norma.fecha_modificacion = row['Fecha de última modificación o derogación (dd/mm/aaaa)']
-    norma.fecha_datos = row[:fecha_datos]
+
+
+    norma.fecha_modificacion = row[:fecha_modificacion]
+
     norma.marco_interno = MarcoInterno.where(partido_id: row[:partido_id]).first
 
     if norma.id.nil?
