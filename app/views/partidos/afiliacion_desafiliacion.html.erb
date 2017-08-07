@@ -7,33 +7,20 @@
   <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
   <%= submit_tag 'Filtrar' %>
 <% end %>
-  <div class="table-responsive">
-    <table class="table rtable rtable--flip">
-      <thead class="rtable-head">
-        <tr>
-          <th>Procedimientos</th>
-          <th>Requisitos</th>
-          <th>Link</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @datos_tramites_afiliacion.each do |ta| %>
-        <tr>
-          <td><%= ta.procedimiento %></td>
-          <td><%= ta.requisito %></td>
-          <td><%= !ta.link_informacion.blank? ? link_to(ta.link_informacion, target:"_blank") do "<span class='btn-view-detail btn btn-default btn-xs'>Link</span>".html_safe end : 'Sin Información' %></td>
-        </tr>
-        <% end %>
-        <% if !@datos_tramites_afiliacion.any? %>
-        <tr>
-          <td colspan="3">
-            <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i> No se han encontrado registros</p>
-          </td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
+<% @datos_tramites_afiliacion.each do |ta| %>
+<h4>Procedimientos</h4>
+  <div class="row">
+    <div class="col-md-10">
+      <p><%= ta.procedimiento %></p>
+    </div>
+    <div class="col-md-2">
+      <span><%= !ta.link_informacion.blank? ? link_to(ta.link_informacion, target:"_blank") do "<span class='btn-view-detail-lg btn btn-default btn-lg'>Ir al sitio</span>".html_safe end : 'Sin Información' %></span>
+    </div>
   </div>
+
+<h4>Requisitos</h4>
+<p><%= ta.requisito %></p>
+<% end %>
   <p class="mark-date"> Estos datos corresponden a lo publicado por este
       Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
 <% end %>

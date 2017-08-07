@@ -11,14 +11,14 @@
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
       <% if @acuerdos.count > 0 %>
       <span class="sr-only"><p>Se han encontrado <%= @acuerdos.count %> acuerdos.</p></span>
-      <div class="panel panel-default">
+      <!-- <div class="panel panel-default">
         <div class="panel-heading intern" role="tab" id="heading-<%= 0 %>">
           <h4 class="panel-title intern">
             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= 0 %>" aria-expanded="true" aria-controls="collapse-<%= 0 %>">
               <%= @trimestre_informado %>
             </a>
           </h4>
-        </div>
+        </div> -->
         <div id="collapse-<%= 0 %>" class="panel-collapse collapse <%= 0 == 0 ? 'in' : '' %>" role="tabpanel" aria-labelledby="heading-<%= 0 %>">
           <div class="panel-body">
             <div class="table-responsive">
