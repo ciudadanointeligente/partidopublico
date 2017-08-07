@@ -1,49 +1,39 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Cómo participar</li><li>Afiliación y desafiliación</li></ol>
 <h3>Afiliación y desafiliación</h3>
-<p class="no_data_big_message"> <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-  ¡Sección en Desarrollo!</p>
-  <p class="no_data_small_message">¡Disculpe las molestias!
-    Esta sección de Partidos Públicos aún no se encuentra activa. Estamos trabajando para su próxima publicación.</p>
-<!-- # <% if @sin_datos %>
-#   <%= render 'sin_datos' %>
-# <% else %> -->
-  <h4 style="float:left;margin:16px 10px 0 0;">Total de afiliados:</h4> <p class="total-max"><%=@partido.afiliados%></p>
-  <hr>
-  <% @tramites.each do |t| %>
-    <h4><%= t.nombre %></h4>
-    <p><%= t.descripcion %></p>
-    <% if t.documento_file_name %>
-      <%= link_to t.documento.url, class: "btn btn-default" do %>
-        <i class="fa fa-download"></i> <%= t.documento_file_name %>
-      <% end %>
-    <% end %>
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Procedimientos</th>
-            <th>Requisitos</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <ul>
-              <% t.procedimientos.each do |p| %>
-                <li><%= p.descripcion %></li>
-              <% end %>
-              </ul>
-            </td>
-            <td>
-              <ul>
-              <% t.requisitos.each do |r| %>
-                <li><%= r.descripcion %></li>
-              <% end %>
-              </ul>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  <% end %>
-<!-- # <% end %> -->
+<% if @sin_datos %>
+ <%= render 'sin_datos' %>
+<% else %>
+<%= form_tag partido_afiliacion_desafiliacion_path, :method =>  :get, class: 'form-inline' do |f| %>
+  <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
+  <%= submit_tag 'Filtrar' %>
+<% end %>
+  <div class="table-responsive">
+    <table class="table rtable rtable--flip">
+      <thead class="rtable-head">
+        <tr>
+          <th>Procedimientos</th>
+          <th>Requisitos</th>
+          <th>Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @datos_tramites_afiliacion.each do |ta| %>
+        <tr>
+          <td><%= ta.procedimiento %></td>
+          <td><%= ta.requisito %></td>
+          <td><%= !ta.link_informacion.blank? ? link_to(ta.link_informacion, target:"_blank") do "<span class='btn-view-detail btn btn-default btn-xs'>Link</span>".html_safe end : 'Sin Información' %></td>
+        </tr>
+        <% end %>
+        <% if !@datos_tramites_afiliacion.any? %>
+        <tr>
+          <td colspan="3">
+            <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i> No se han encontrado registros</p>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <p class="mark-date"> Estos datos corresponden a lo publicado por este
+      Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
+<% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170728205219) do
+ActiveRecord::Schema.define(version: 20170807160047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -731,10 +731,21 @@ ActiveRecord::Schema.define(version: 20170728205219) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "partido_id"
+    t.string   "procedimiento"
+    t.string   "requisito"
+    t.string   "link_informacion"
   end
 
   add_index "tramites", ["partido_id"], name: "index_tramites_on_partido_id", using: :btree
   add_index "tramites", ["persona_id"], name: "index_tramites_on_persona_id", using: :btree
+
+  create_table "tramites_trimestre_informados", id: false, force: :cascade do |t|
+    t.integer "tramite_id",             null: false
+    t.integer "trimestre_informado_id", null: false
+  end
+
+  add_index "tramites_trimestre_informados", ["tramite_id"], name: "t_i_tramite_id", using: :btree
+  add_index "tramites_trimestre_informados", ["trimestre_informado_id"], name: "t_i_tramite_trimestre_id", using: :btree
 
   create_table "transferencias", force: :cascade do |t|
     t.integer  "partido_id"
