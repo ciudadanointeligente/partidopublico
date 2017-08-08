@@ -39,20 +39,20 @@
 </div>
 
 <h3>Normas</h3>
-<% @normas_internas.map{|n| n.tipo_marco_normativo}.uniq.each do |tipo| %>
-<div class="row">
-  <h3><%= tipo %></h3>
-  <ul class="list-inline list-unstyled nospace">
-    <%@normas_internas.where(tipo_marco_normativo: tipo).each do |n| %>
-      <li class="col-xs-12 col-sm-6 col-md-4 documents">
-        <i class="fa fa-file-o fa-3x" style="color: #F28269"></i>
-        <h5>
-          <%= link_to n.link, target: "_blank", onclick: "ga('send','event','click','"+n.link+"')" do %>
-            <%= n.denominacion %>
-          <% end %>
-        </h5>
-      </li>
-    <% end %>
-  </ul>
-</div>
+<% @normas_internas.map{|n| n.tipo_marco_normativo}.uniq.sort.each do |tipo| %>
+  <div class="row">
+    <h4><%= tipo %></h4>
+    <ul class="list-inline list-unstyled nospace">
+      <%@normas_internas.where(tipo_marco_normativo: tipo).each do |n| %>
+        <li class="col-xs-12 col-sm-6 col-md-4 documents">
+          <i class="fa fa-file-o fa-3x" style="color: #F28269"></i>
+          <h5>
+            <%= link_to n.link, target: "_blank", onclick: "ga('send','event','click','"+n.link+"')" do %>
+              <%= n.denominacion %>
+            <% end %>
+          </h5>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>

@@ -69,38 +69,14 @@ class HeadersForMarcoNormativo
   end
 
   def process(row)
-    # row[:] = row[:organismo_nombre]
     row[:cdigo_del_organismo] = row[:organismo_codigo]
-    # row[:] = row[:fecha_publicacion_ta]
     row[:ao_informado] = row[:anyo]
-    p row[:anyo]
     row[:trimestre_informado] = row[:mes]
-    p row[:mes]
     row[:trimestre_informado] = "Ene - Mar"
-
     row[:tipo_marco_normativo] = row[:tipo_de_marco_normativo]
     row[:tipo] = row[:tipo_norma]
-    # row[:] = row[:numero_norma]
-    # row[:] = row[:denominacion]
-    # row[:] = row[:fecha_publicacion]
     row[:link] = row[:enlace_publicacion]
-    # row[:] = row[:fecha_modificacion]
-    # row[:] = row[:enlace_modificacion]]
 
-    #  id                   :integer          not null, primary key
-    #  fecha_datos          :date
-    #  tipo_marco_normativo :string
-    #  tipo                 :string
-    #  numero               :string
-    #  denominacion         :string
-    #  fecha_publicacion    :date
-    #  link                 :string
-    #  fecha_modificacion   :date
-    #  created_at           :datetime         not null
-    #  updated_at           :datetime         not null
-    #  partido_id           :integer
-    #  marco_interno_id     :integer
-    p row
     row
   end
 end
