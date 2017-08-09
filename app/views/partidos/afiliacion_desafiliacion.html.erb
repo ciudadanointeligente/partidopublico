@@ -11,15 +11,15 @@
 <h4>Procedimientos</h4>
   <div class="row">
     <div class="col-md-10">
-      <p><%= ta.procedimiento %></p>
+      <p><%= simple_format(ta.procedimiento) %></p>
     </div>
     <div class="col-md-2">
-      <span><%= !ta.link_informacion.blank? ? link_to(ta.link_informacion, target:"_blank") do "<span class='btn-view-detail-lg btn btn-default btn-lg'>Ir al sitio</span>".html_safe end : 'Sin Información' %></span>
+      <span><%= !ta.link_informacion.blank? ? link_to(ta.link_informacion, target:"_blank") do "<span class='btn-view-detail-lg btn btn-default btn-lg text-left'>Ir al sitio</span>".html_safe end : 'Sin Información' %></span>
     </div>
   </div>
 
 <h4>Requisitos</h4>
-<p><%= ta.requisito %></p>
+<p><%= simple_format(ta.requisito) %></p>
 <% end %>
   <p class="mark-date"> Estos datos corresponden a lo publicado por este
       Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
