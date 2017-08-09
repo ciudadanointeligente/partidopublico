@@ -92,9 +92,7 @@ class TrimestreInformadoLookup
     p row if @verbose
     ano = row[:ao_informado].nil? ? row[:anyo].to_i : row[:ao_informado].to_i
     unless row[:trimestre_informado].nil?
-      trimestre = row[:trimestre_informado].downcase
-      trimestre.gsub!(/[^0-9a-z]/i, '')
-      trimestre.insert(3, ' - ')
+      trimestre = clean_trimestre_informado(row[:trimestre_informado])
       ordinal_trimestre = ordinal_trimestres.index(trimestre[0].downcase) unless trimestre.nil?
     end
 
