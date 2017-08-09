@@ -787,14 +787,12 @@ class NormasDestination
 
   def write(row)
     norma = Norma.where(partido_id: row[:partido_id],
-    tipo_marco_normativo: row[:tipo_marco_normativo],
-    denominacion: row[:denominacion],
-    tipo: row[:tipo_norma],
-    fecha_publicacion: sort_date_fields(row[:fecha_publicacion_ta]),
-    link: clean_normas_link(row[:enlace_publicacion]),
-    numero: row[:numero_norma]).first_or_initialize
-
-
+                        tipo_marco_normativo: row[:tipo_marco_normativo],
+                        denominacion: row[:denominacion],
+                        tipo: row[:tipo_norma],
+                        fecha_publicacion: sort_date_fields(row[:fecha_publicacion_ta]),
+                        link: clean_normas_link(row[:enlace_publicacion]),
+                        numero: row[:numero_norma]).first_or_initialize
 
     norma.fecha_modificacion = row[:fecha_modificacion]
 
@@ -813,9 +811,9 @@ class NormasDestination
 
   def close
     @results[:normas] = {:new_normas => @new_normas ,
-      :normas_errors => @normas_errors,
-      :found_normas => @found_normas}
-    end
+                         :normas_errors => @normas_errors,
+                         :found_normas => @found_normas}
+  end
 end
 
 class CandidatosDestination
