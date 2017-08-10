@@ -121,6 +121,23 @@ def clean_phrase(frase)
   frase
 end
 
+def clean_phrase_aportes_campanas(frase)
+  if frase.nil?
+    return ""
+  end
+
+  frase.downcase!
+  frase.gsub(/[^0-9a-z ]/i, '')
+
+  if frase.include? "dinero"
+    frase = "Aportes en Dinero"
+  else
+    frase = 'Otros aportes'
+  end
+
+  frase
+end
+
 def clean_trimestre_informado(trimestre_informado)
   trimestre_informado = trimestre_informado.downcase
   trimestre_informado.gsub!(/[^0-9a-z]/i, '')

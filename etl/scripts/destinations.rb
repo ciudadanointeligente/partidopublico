@@ -434,7 +434,7 @@ class IngresoCampanaDestination
     @partidos << row[:partido_id] unless row[:partido_id].in?(@partidos)
 
     monto = clean_number(row[:valorizacin_en_pesos])
-    tipo_aporte = clean_phrase(row[:tipo_de_aporte])
+    tipo_aporte = clean_phrase_aportes_campanas(row[:tipo_de_aporte])
     ingreso_campana = IngresoCampana.new(partido_id: row[:partido_id],
                                          nombre_donante: row[:persona_efecta_aporte].titleize,
                                          tipo_aporte: tipo_aporte,
