@@ -43,7 +43,7 @@
 class Persona < ActiveRecord::Base
     require 'csv'
 
-    has_paper_trail
+    # has_paper_trail
     has_attached_file :foto, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/resources/missing.png"
     validates_attachment :foto,
         content_type: { content_type:  /\Aimage\/.*\Z/ },

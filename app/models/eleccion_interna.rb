@@ -18,7 +18,7 @@
 #
 
 class EleccionInterna < ActiveRecord::Base
-    has_paper_trail
+    # has_paper_trail
     belongs_to :organo_interno 
     belongs_to :partido
     has_many :requisitos, as: :requisitable, dependent: :destroy

@@ -17,7 +17,7 @@
 #
 
 class OrganoInterno < ActiveRecord::Base
-    has_paper_trail
+    # has_paper_trail
     belongs_to :partido, required: true
     has_many :personas, as: :personable
     has_many :eleccion_interna, dependent: :destroy

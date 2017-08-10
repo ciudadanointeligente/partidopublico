@@ -16,7 +16,7 @@
 #
 
 class EleccionPopular < ActiveRecord::Base
-    has_paper_trail
+    # has_paper_trail
     belongs_to :partido
     has_many :requisitos, as: :requisitable
     has_many :procedimientos, as: :procedimentable

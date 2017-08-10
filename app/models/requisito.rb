@@ -15,6 +15,6 @@
 #
 
 class Requisito < ActiveRecord::Base
-    has_paper_trail
+    # has_paper_trail
     belongs_to :requisitable, polymorphic: true
 end

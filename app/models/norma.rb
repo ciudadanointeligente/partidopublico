@@ -23,7 +23,7 @@
 #
 
 class Norma < ActiveRecord::Base
-  has_paper_trail
+  # has_paper_trail
   belongs_to :partido
   belongs_to :marco_interno
 end

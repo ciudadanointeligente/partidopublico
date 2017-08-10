@@ -306,7 +306,7 @@ class ComunaLookup
     if !row[:nombre_comuna].nil?
       string = row[:nombre_comuna] || ''
       comuna = Comuna.where('lower(nombre) = ?', string.downcase).first
-    else !row[:comuna].nil?
+    elsif !row[:comuna].nil?
       string = row[:comuna]
       comuna = Comuna.where('lower(nombre) = ?', string.downcase).first
     end

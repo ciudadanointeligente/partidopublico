@@ -29,7 +29,7 @@
 #
 
 class Cargo < ActiveRecord::Base
-  has_paper_trail
+  # has_paper_trail
   belongs_to :persona
   belongs_to :tipo_cargo
   belongs_to :partido

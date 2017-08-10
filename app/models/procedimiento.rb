@@ -15,6 +15,6 @@
 #
 
 class Procedimiento < ActiveRecord::Base
-    has_paper_trail
+    # has_paper_trail
     belongs_to :procedimentable, polymorphic: true
 end

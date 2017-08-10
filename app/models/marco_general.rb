@@ -13,7 +13,7 @@
 #
 
 class MarcoGeneral < ActiveRecord::Base
-  has_paper_trail
+  # has_paper_trail
   belongs_to :partido
   has_many :leys, dependent: :destroy
   

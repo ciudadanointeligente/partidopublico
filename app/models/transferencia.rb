@@ -24,7 +24,7 @@
 #
 
 class Transferencia < ActiveRecord::Base
-  has_paper_trail
+  # has_paper_trail
   belongs_to :partido
   belongs_to :region
 

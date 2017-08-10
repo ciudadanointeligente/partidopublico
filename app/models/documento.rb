@@ -21,7 +21,7 @@
 #
 
 class Documento < ActiveRecord::Base
-    has_paper_trail
+    # has_paper_trail
     has_attached_file :archivo, default_url: "/system/resources/missing_32.png"
     validates_attachment :archivo,
         content_type: { content_type: ["application/pdf", "application/vnd.oasis.opendocument.spreadsheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","application/msword",

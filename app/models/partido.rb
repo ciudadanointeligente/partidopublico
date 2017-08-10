@@ -23,7 +23,7 @@
 #
 
 class Partido < ActiveRecord::Base
-    has_paper_trail
+    # has_paper_trail
     has_attached_file :logo, styles: { large: "600x600>", medium: "300x300>", thumb: "220x110>" }, default_url: "/resources/missing.png"
     validates_attachment :logo,
         content_type: { content_type:  /\Aimage\/.*\Z/ },

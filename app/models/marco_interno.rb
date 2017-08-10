@@ -13,7 +13,7 @@
 #
 
 class MarcoInterno < ActiveRecord::Base
-    has_paper_trail
+    # has_paper_trail
     belongs_to :partido
     has_many :documentos, as: :documentable
     has_many :normas
