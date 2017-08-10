@@ -38,21 +38,25 @@
   </div>
 </div>
 
-<h3>Normas</h3>
-<% @normas_internas.map{|n| n.tipo_marco_normativo}.uniq.sort.each do |tipo| %>
-  <div class="row">
+<% if !@normas_internas.blank? %>
+  <h3>Normas</h3>
+  <% @normas_internas.map{|n| n.tipo_marco_normativo}.uniq.sort.each do |tipo| %>
     <h4><%= tipo %></h4>
-    <ul class="list-inline list-unstyled nospace">
-      <%@normas_internas.where(tipo_marco_normativo: tipo).each do |n| %>
-        <li class="col-xs-12 col-sm-6 col-md-4 documents">
-          <i class="fa fa-file-o fa-3x" style="color: #F28269"></i>
-          <h5>
-            <%= link_to n.link, target: "_blank", onclick: "ga('send','event','click','"+n.link+"')" do %>
-              <%= n.denominacion %>
-            <% end %>
-          </h5>
+    <%@normas_internas.where(tipo_marco_normativo: tipo).each do |n| %>
+      <ul>
+        <li>
+          <%= link_to n.link, target: "_blank", onclick: "ga('send','event','click','"+n.link+"')" do %>
+            <%= n.denominacion[0] = n.denominacion[0].capitalize
+                n.denominacion %>
+          <% end %>
         </li>
-      <% end %>
-    </ul>
+      </ul>
+    <% end %>
+  <% end %>
+<%end %>
+<div class="row">
+  <div class="col-xs-12">
+    <p class="mark-date"> Estos datos corresponden a lo publicado por este
+      Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
   </div>
-<% end %>
+</div>

@@ -343,7 +343,7 @@ $(document).ready(function(){
       console.log("DENTRO ELSE IF 1" + dato.text)
     } else if (dato.text == "Gastos de actividades de investigación" ||
                dato.text == "Gastos de actividades de educación cívica" ||
-               dato.text == "Gastos de actividades de fomento a la particiación femenina" ||
+               dato.text == "Gastos de actividades de fomento a la participación femenina" ||
                dato.text == "Gastos de actividades de fomento a la participación de los jóvenes" ||
                dato.text == "Gastos de las actividades de preparación de candidatos a cargos de elección popular" ||
                dato.text == "Gastos de las actividades de formación de militantes" ||

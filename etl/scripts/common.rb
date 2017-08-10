@@ -3,6 +3,7 @@ require 'awesome_print'
 require 'facets/kernel/deep_copy'
 require_relative '../../config/environment'
 require_relative 'sources'
+require_relative 'common'
 require_relative 'destinations'
 require_relative 'transformations'
 
@@ -77,7 +78,7 @@ def clean_phrase(frase)
     frase = "Gastos de actividades de educación cívica"
     # p " -> " + frase
   elsif frase.include? "femenina"
-    frase = "Gastos de actividades de fomento a la particiación femenina"
+    frase = "Gastos de actividades de fomento a la participación femenina"
     # p " -> " + frase
   elsif frase.include? "de los j"
      frase = "Gastos de actividades de fomento a la participación de los jóvenes"
@@ -118,6 +119,40 @@ def clean_phrase(frase)
    end
 
   frase
+end
+
+def clean_phrase_aportes_campanas(frase)
+  if frase.nil?
+    return ""
+  end
+
+  frase.downcase!
+  frase.gsub(/[^0-9a-z ]/i, '')
+
+  if frase.include? "dinero"
+    frase = "Aportes en Dinero"
+  else
+    frase = 'Otros aportes'
+  end
+
+  frase
+end
+
+def clean_trimestre_informado(trimestre_informado)
+  trimestre_informado = trimestre_informado.downcase
+  trimestre_informado.gsub!(/[^0-9a-z]/i, '')
+
+  if trimestre_informado.include?("ene") || trimestre_informado.include?("feb") || trimestre_informado.include?("mar")
+    trimestre_informado = 'Ene - Mar'
+  elsif trimestre_informado.include?("abr") || trimestre_informado.include?("may") || trimestre_informado.include?("jun")
+    trimestre_informado = 'Abr - Jun'
+  elsif trimestre_informado.include?("jul") || trimestre_informado.include?("ago") || trimestre_informado.include?("sep")
+    trimestre_informado = 'Jul - Sep'
+  elsif trimestre_informado.include?("oct") || trimestre_informado.include?("nov") || trimestre_informado.include?("dic")
+    trimestre_informado = 'Oct - Dic'
+  end
+
+  trimestre_informado
 end
 
 def today
