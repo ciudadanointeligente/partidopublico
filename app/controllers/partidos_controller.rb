@@ -662,16 +662,13 @@ class PartidosController < ApplicationController
 
       ingresos_campanas = @trimestre_informado.ingreso_campanas.where(:partido_id => @partido.id)
 
-      monto_aporte_dinero = ingresos_campanas.where(:partido_id => @partido.id,
-                                                    :tipo_aporte => (["Aportes en Dinero"])).sum(:monto) rescue 0
+      monto_aporte_dinero = Rails.cache.fetch("#{request.url}/monto_aporte_dinero", expires_in: 6.days) {ingresos_campanas.where(:partido_id => @partido.id,
+                                                    :tipo_aporte => (["Aportes en Dinero"])).sum(:monto) rescue 0}
 
-      monto_otro_aporte = ingresos_campanas.where(:partido_id => @partido.id).where.not(:tipo_aporte => ["Aportes en Dinero"]).sum(:monto) rescue 0
+      monto_otro_aporte = Rails.cache.fetch("#{request.url}/monto_otro_aporte", expires_in: 6.days) {ingresos_campanas.where(:partido_id => @partido.id).where.not(:tipo_aporte => ["Aportes en Dinero"]).sum(:monto) rescue 0}
 
       max_value = monto_aporte_dinero + monto_otro_aporte
-      @datos_ingresos_campanas = []
-      line = {'text' => 0,
-              'value' => 0,
-              'percentage' => 0}
+      @datos_ingresos_campanas = Rails.cache.fetch("#{request.url}/datos_ingresos_campanas", expires_in: 6.days) do
 
       monto_dinero = 0
       monto_otros = 0
@@ -700,6 +697,8 @@ class PartidosController < ApplicationController
           end
         end
       end
+      @datos_ingresos_campanas
+    end
 
       @datos_ingresos_campanas_totals = { 'aportes_en_dinero'=> monto_aporte_dinero, 'otros_aportes' => monto_otro_aporte}
       @sin_datos = false
