@@ -1003,7 +1003,7 @@ class PartidosController < ApplicationController
         egresos_ordinarios.where(:partido => @partido.id,
                                     :concepto => (["Gastos de actividades de investigación",
                                                    "Gastos de actividades de educación cívica",
-                                                   "Gastos de actividades de fomento a la particiación femenina",
+                                                   "Gastos de actividades de fomento a la participación femenina",
                                                    "Gastos de actividades de fomento a la participación de los jóvenes",
                                                    "Gastos de las actividades de preparación de candidatos a cargos de elección popular",
                                                    "Gastos de las actividades de formación de militantes"]))

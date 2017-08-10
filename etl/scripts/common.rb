@@ -78,7 +78,7 @@ def clean_phrase(frase)
     frase = "Gastos de actividades de educación cívica"
     # p " -> " + frase
   elsif frase.include? "femenina"
-    frase = "Gastos de actividades de fomento a la particiación femenina"
+    frase = "Gastos de actividades de fomento a la participación femenina"
     # p " -> " + frase
   elsif frase.include? "de los j"
      frase = "Gastos de actividades de fomento a la participación de los jóvenes"
