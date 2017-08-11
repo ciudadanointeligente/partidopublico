@@ -2,21 +2,20 @@
 #
 # Table name: afiliacions
 #
-#  id                  :integer          not null, primary key
-#  hombres             :integer
-#  mujeres             :integer
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  partido_id          :integer
-#  region_id           :integer
-#  fecha_datos         :date
-#  ano_nacimiento      :integer
-#  otros               :integer
-#  trimestre_informado :string
-#  total_afiliados     :integer
-#  porcentaje_hombres  :string
-#  porcentaje_mujeres  :string
-#  rango_etareo        :string
+#  id                 :integer          not null, primary key
+#  hombres            :integer
+#  mujeres            :integer
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  partido_id         :integer
+#  region_id          :integer
+#  fecha_datos        :date
+#  ano_nacimiento     :integer
+#  otros              :integer
+#  total_afiliados    :integer
+#  porcentaje_hombres :string
+#  porcentaje_mujeres :string
+#  rango_etareo       :string
 #
 # Indexes
 #

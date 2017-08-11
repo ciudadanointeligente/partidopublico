@@ -92,14 +92,13 @@ ActiveRecord::Schema.define(version: 20170807160047) do
   create_table "afiliacions", force: :cascade do |t|
     t.integer  "hombres"
     t.integer  "mujeres"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.integer  "partido_id"
     t.integer  "region_id"
     t.date     "fecha_datos"
     t.integer  "ano_nacimiento"
     t.integer  "otros"
-    t.string   "trimestre_informado"
     t.integer  "total_afiliados"
     t.string   "porcentaje_hombres"
     t.string   "porcentaje_mujeres"
@@ -658,7 +657,7 @@ ActiveRecord::Schema.define(version: 20170807160047) do
     t.string   "requisitable_type"
   end
 
-  add_index "requisitos", ["requisitable_type", "requisitable_id"], name: "index_requisitos_on_requisitable_type_and_requisitable_id", using: :btree
+  add_index "requisitos", ["requisitable_type", "requisitable_id"], name: "index_requisitable_type_and_id", using: :btree
 
   create_table "sancions", force: :cascade do |t|
     t.string   "descripcion"
@@ -810,7 +809,7 @@ ActiveRecord::Schema.define(version: 20170807160047) do
   add_foreign_key "cargos", "tipo_cargos"
   add_foreign_key "comunas", "provincias"
   add_foreign_key "contratacions", "partidos"
-  add_foreign_key "distritos", "circunscripcions"
+  add_foreign_key "distritos", "regions", column: "circunscripcion_id"
   add_foreign_key "egreso_campanas", "partidos"
   add_foreign_key "egreso_ordinarios", "partidos"
   add_foreign_key "eleccion_internas", "organo_internos"
