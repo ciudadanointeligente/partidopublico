@@ -91,15 +91,14 @@ class ComparisonsController < ApplicationController
       params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
-      p @trimestre_informado
+      @filtro_genero = params[:genero].to_s
 
       @datos = []
       @partido_ids.each do |p_id|
         partido = Partido.find p_id
       end
 
-      @afiliados = @trimestre_informado.afiliacions.where(:partido_id => @partido_ids)
-
+        @afiliados = @trimestre_informado.afiliacions.where(:partido_id => @partido_ids)
         #last_date = Afiliacion.where(partido: partido).uniq.pluck(:fecha_datos).sort.last
 
       #   if @fecha_param.nil?
@@ -159,8 +158,9 @@ class ComparisonsController < ApplicationController
 
       @regiones = Region.all
 
+      p @filtro_genero
+
       render "afiliados_x_edad"
-      p 'TRIMES3 INFORMA2: ' + temp_trimestres_informados.to_s
     end
 
     def regions

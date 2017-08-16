@@ -14,7 +14,7 @@
       <tr>
         <th>Partido</th>
         <% @afiliados.where(partido_id: @partido_ids.first).where.not(rango_etareo: 'Total Militantes').sort.each do |r| %>
-          <th class="text-center"><%= r.rango_etareo %></th>
+          <th class="text-center">% <%= r.rango_etareo %></th>
         <% end %>
         <th class="text-center">Total</th>
         <th class="text-center">Detalle</i></th>
@@ -28,14 +28,22 @@
         <% afiliados_por_partido = @afiliados.where(partido_id: pid).where.not(rango_etareo: 'Total Militantes') %>
         <% if afiliados_por_partido.empty? %>
           <% 15.times do |i| %>
-          <td>0</td>
-          <%end%>
-        <%end%>
-        <% afiliados_por_partido.each do |a| %>
-        <% color = (((a.hombres + a.mujeres).to_f/total_afiliados.to_f)*100.0) %>
-          <td><p class="edades" style="background-color:rgba(232,93,52,<%= color * 0.05 %>);"><%= (((a.hombres + a.mujeres).to_f/total_afiliados.to_f)*100.0).round(2).to_s rescue 0 %>%</p></td>
+          <td  class="text-center">0</td>
+          <% end %>
         <% end %>
-        <td><%= total_afiliados %></td>
+        <% afiliados_por_partido.each do |a| %>
+          <% if @filtro_genero == "hombres" %>
+          <% color = (((a.hombres).to_f/total_afiliados.to_f)*100.0) %>
+          <td><p class="edades" style="background-color:rgba(232,93,52,<%= color * 0.05 %>);"><%= (((a.hombres).to_f/total_afiliados.to_f)*100.0).round(1).to_s rescue 0 %></p></td>
+          <% elsif @filtro_genero == "mujeres" %>
+          <% color = (((a.mujeres).to_f/total_afiliados.to_f)*100.0) %>
+          <td><p class="edades" style="background-color:rgba(232,93,52,<%= color * 0.05 %>);"><%= (((a.mujeres).to_f/total_afiliados.to_f)*100.0).round(1).to_s rescue 0 %></p></td>
+          <% else %>
+          <% color = (((a.hombres + a.mujeres).to_f/total_afiliados.to_f)*100.0) %>
+          <td><p class="edades" style="background-color:rgba(232,93,52,<%= color * 0.05 %>);"><%= (((a.hombres + a.mujeres).to_f/total_afiliados.to_f)*100.0).round(1).to_s rescue 0 %></p></td>
+          <% end %>
+        <% end %>
+        <td class="text-center"><%= total_afiliado %></td>
         <td class="text-center">
           <button class="btn-view-detail btn btn-default btn-xs" type="submit"><%= link_to "Ver", partido_regiones_all_path(:partido_id => pid, :menu => 1) %></button>
         </td>
@@ -51,10 +59,6 @@ $(document).ready(function(){
   var data_totals = <%=  @datos_totals.to_json.html_safe %>;
   var fechas = <%=  @fechas_datos.to_json.html_safe %>;
   var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
-    //  Raphael("header",800, 40 ).edades_compare_header(data[0]);
-    //  for(var i=0; i < data.length; i++){
-    //    Raphael("barra_" + i,300, 30 ).edades_compare_bar(<%= @max_total %>, data[i]);
-    //  }
 
 });
 </script>
