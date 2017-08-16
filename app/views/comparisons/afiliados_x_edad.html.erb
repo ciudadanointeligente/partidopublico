@@ -2,8 +2,7 @@
 <p id="notice"><%= notice %></p>
 <h3>Afiliados según rango etario</h3>
   <%= form_tag comparisons_path, :method => :get do |f| %>
-    <%= select_tag :fecha_datos, options_for_select(@fechas_datos.reverse, params[:fecha_datos] || ""), prompt: "Seleccionar fecha" %>
-    <%= select_tag :region, options_from_collection_for_select(@regiones, "id", "nombre", params[:region] || ""), include_blank: "Seleccionar región", class: "form-control" %>
+    <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id] || ''), include_blank: false, class: "form-control" %>
     <%= select_tag :genero, options_for_select([:hombres, :mujeres], params[:genero] || ""), prompt: "Seleccionar género"  %>
     <%= submit_tag 'Filtrar', class: "btn" %>
     <%= hidden_field_tag 'category', "Afiliados según rango etario" %>
@@ -14,53 +13,35 @@
     <thead>
       <tr>
         <th>Partido</th>
-        <% rangos_etarios.each do |r| %>
-        <th class="text-center"><%= r[0] %> a <%= r[1] %></th>
+        <% @afiliados.where(partido_id: @partido_ids.first).where.not(rango_etareo: 'Total Militantes').sort.each do |r| %>
+          <th class="text-center"><%= r.rango_etareo %></th>
         <% end %>
         <th class="text-center">Total</th>
         <th class="text-center">Detalle</i></th>
       </tr>
     </thead>
     <tbody>
-      <% @datos.each_with_index do |linea, i| %>
+      <% @partido_ids.each do |pid| %>
+      <% total_afiliados = @afiliados.where(partido_id: pid, rango_etareo: 'Total Militantes').first.total_afiliados rescue 0 %>
       <tr>
-        <td>
-          <%= linea[:partido] %>
-        </td>
-        <% if !linea[:tramos].any? %>
-        <td><p class="edades">0%</p></td>
-        <td><p class="edades">0%</p></td>
-        <td><p class="edades">0%</p></td>
-        <td><p class="edades">0%</p></td>
-        <td><p class="edades">0%</p></td>
-        <td><p class="edades">0%</p></td>
-        <td><p class="edades">0%</p></td>
-        <td><p class="edades">0%</p></td>
-        <td><p class="edades">0%</p></td>
-        <td><p class="edades">0%</p></td>
-        <td><p class="edades">0%</p></td>
-        <td><p class="edades">0%</p></td>
+        <td><%= Partido.find(pid).nombre %></td>
+        <% afiliados_por_partido = @afiliados.where(partido_id: pid).where.not(rango_etareo: 'Total Militantes') %>
+        <% if afiliados_por_partido.empty? %>
+          <% 15.times do |i| %>
+          <td>0</td>
+          <%end%>
+        <%end%>
+        <% afiliados_por_partido.each do |a| %>
+        <% color = (((a.hombres + a.mujeres).to_f/total_afiliados.to_f)*100.0) %>
+          <td><p class="edades" style="background-color:rgba(232,93,52,<%= color * 0.05 %>);"><%= (((a.hombres + a.mujeres).to_f/total_afiliados.to_f)*100.0).round(2).to_s rescue 0 %>%</p></td>
         <% end %>
-        <% linea[:tramos].each do |t| %>
-        <% color = t[:count].to_f / linea[:total].to_f %>
-          <td class="text-center">
-            <p class="edades" style="background-color:rgba(232,93,52,<%= color * 2.5 %>);">
-              <%= number_to_percentage(100 * color, precision: 0) %>
-            </p>
-          </td>
-        <% end %>
-        <!-- <td>
-          <div id="_barra_<%= i.to_s %>"></div>
-        </td> -->
-        <td class="total text-center">
-          <%= (linea[:total].nil? ? 'NA' : linea[:total]).to_s %>
-        </td>
+        <td><%= total_afiliados %></td>
         <td class="text-center">
-          <button class="btn-view-detail btn btn-default btn-xs" type="submit"><%= link_to "Ver", partido_regiones_path(:partido_id => linea[:partido_id], :menu => 1) %></button>
+          <button class="btn-view-detail btn btn-default btn-xs" type="submit"><%= link_to "Ver", partido_regiones_all_path(:partido_id => pid, :menu => 1) %></button>
         </td>
       </tr>
-      <% end %>
-    </tbody>
+    <% end %>
+  </tbody>
   </table>
 </div>
 
