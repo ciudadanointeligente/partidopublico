@@ -121,6 +121,70 @@ def clean_phrase(frase)
   frase
 end
 
+def cargos_estadistica_por_item(item)
+  item.downcase!
+  item.gsub(/[^0-9a-z ]/i, '')
+  if item.include? "embajador"
+    item = 'Autoridades de Gobierno'
+  elsif item.include? "gobernador"
+    item = 'Autoridades de Gobierno'
+  elsif item.include? "ministr"
+    item = 'Autoridades de Gobierno'
+  elsif item.include? "autoridades"
+    item = 'Autoridades de Gobierno'
+  elsif item.include? "director"
+    item = 'Autoridades de Gobierno'
+  elsif item.include? "intendent"
+    item = 'Autoridades de Gobierno'
+  elsif item.include? "jefe"
+    item = 'Autoridades de Gobierno'
+  elsif item.include? "seremi"
+    item = 'Autoridades de Gobierno'
+  elsif item.include? "subsecretari"
+    item = 'Autoridades de Gobierno'
+  elsif item.include? "directiv"
+    item = 'Cargos Directivos en el Partido'
+  elsif item.include? "comision pol"
+    item = 'Cargos Directivos en el Partido'
+  elsif item.include? "consejeros nacionales"
+    item = 'Cargos Directivos en el Partido'
+  elsif item.include? "asambleas comunales"
+    item = 'Cargos Directivos en el Partido'
+  elsif item.include? "consejos regionales"
+    item = 'Cargos Directivos en el Partido'
+  elsif item.include? "frentes partidarios"
+    item = 'Cargos Directivos en el Partido'
+  elsif item.include? "tribunales"
+    item = 'Cargos Directivos en el Partido'
+  elsif item.include? "alcald"
+    item = 'Cargos por elección popular'
+  elsif item.include? "consejal"
+    item = 'Cargos por elección popular'
+  elsif item.include? "core"
+    item = 'Cargos por elección popular'
+  elsif item.include? "diputad"
+    item = 'Cargos por elección popular'
+  elsif item.include? "regionales"
+    item = 'Cargos por elección popular'
+  elsif item.include? "presiden"
+    item = 'Cargos por elección popular'
+  elsif item.include? "senador"
+    item = 'Cargos por elección popular'
+  elsif item.include? "n popular"
+    item = 'Cargos por elección popular'
+  elsif item.include? "diputad"
+    item = 'Cargos por elección popular'
+  elsif item.include? "diputad"
+    item = 'Cargos por elección popular'
+  elsif item.include? "diputad"
+    item = 'Cargos por elección popular'
+  elsif item.include? "diputad"
+    item = 'Cargos por elección popular'
+  end
+
+  item
+end
+
 def clean_phrase_aportes_campanas(frase)
   if frase.nil?
     return ""
