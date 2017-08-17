@@ -11,5 +11,7 @@ class RunEtlJob < ActiveJob::Base
     system 'rm etl/input_files/cplt/' + date + '/*html*'
     command = 'DATE=' + date + ' RAILSENV=development bundle exec kiba etl/scripts/import_all.rb'
     result = system command
+
+    Rake::Task["tmp:clear"].invoke
   end
 end
