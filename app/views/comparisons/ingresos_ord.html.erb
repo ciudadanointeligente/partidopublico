@@ -1,8 +1,10 @@
 <ol class="breadcrumb"><li>Comparativas</li></ol>
 <h3>Ingresos ordinarios</h3>
 <%= form_tag comparisons_path, :method => :get do |f| %>
-  <%= select_tag :fecha_datos, options_for_select(@fechas_datos.reverse, params[:fecha_datos] || ""), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
-  <%= hidden_field_tag 'category', "Ingresos ordinarios" %>
+<%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id] || ''), include_blank: false, class: "form-control" %>
+<%= select_tag :genero, options_for_select([:hombres, :mujeres], params[:genero] || ""), prompt: "Seleccionar género"  %>
+<%= submit_tag 'Filtrar', class: "btn" %>
+<%= hidden_field_tag 'category', "Ingresos ordinarios" %>
 <% end %>
 <br>
 <br>
@@ -19,15 +21,20 @@
       </tr>
     </thead>
     <tbody>
-      <% @datos.each_with_index do |linea, i| %>
+      <% @partido_ids.each do |pid| %>
       <tr>
-        <td><%= linea[:nombre] %></td>
-        <td><span id="barras_<%= i.to_s %>"></span></td>
+        <td><%= Partido.find(pid).nombre %></td>
+        <!-- <td><%= total_partido = @ingresos_ordinarios.where(partido_id: pid).sum(:importe) %></td> -->
+
+        <td><span id="barras_<%= pid.to_s %>"></span></td>
+      <% @ingresos_ordinarios.where(partido_id: pid).order(:concepto).each_with_index do |linea, i| %>
+      <td><%= linea.concepto %> <%= linea.importe %></td>
         <td class="monto">
-          <%= number_to_currency(((linea[:total_privado].nil? ? 0 : linea[:total_privado]) + (linea[:total_publico].nil? ? 0 : linea[:total_publico])), delimiter: ".", separator: ',', unit: "$", precision: 0 , format: "%u%n").to_s %>
+          <%= number_to_currency(((linea.importe.nil? ? 0 : linea.importe) ), delimiter: ".", separator: ',', unit: "$", precision: 0 , format: "%u%n").to_s %>
         </td>
         <td class="text-center">
         </td>
+        <% end %>
       </tr>
       <% end %>
     </tbody>
@@ -39,9 +46,12 @@ $(document).ready(function(){
   var data = <%=  @datos.to_json.html_safe %>;
   var fechas = <%=  @fechas_datos.to_json.html_safe %>;
   var fecha_seleccionada =  <%=  @fecha.to_json.html_safe %>;
+  var partido_ids =  <%=  @partido_ids %>;
   Raphael("header",400, 40 ).ingreso_ord_header();
-  for(var i=0; i < data.length; i++){
-    Raphael("barras_" + i,300, 30 ).ingreso_ord_compare_bar(data[i]);
-  }
+  <%  @partido_ids.each do |pid| %>
+  // for(var i=0; i < partido_ids.length; i++){
+    Raphael("barras_" + <%= pid %>,300, 30 ).ingreso_ord_compare_bar(<%=@ingresos_ordinarios.where(partido_id: pid).order(:concepto).to_json.html_safe%>);
+  // }
+  <% end %>
 });
 </script>

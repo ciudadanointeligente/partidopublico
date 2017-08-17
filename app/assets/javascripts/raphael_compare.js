@@ -170,7 +170,9 @@ $(document).ready(function(){
   }
 
   Raphael.fn.ingreso_ord_compare_bar = function(dato){
+    console.log("ingreso_ord_compare_bar");
     var paper = this;
+    console.log(dato);
     if(!dato.missing_data){
       var publico_width = (dato.total_publico / (dato.total_publico + dato.total_privado)) * bar_width;
       var privado_width = bar_width - publico_width;
