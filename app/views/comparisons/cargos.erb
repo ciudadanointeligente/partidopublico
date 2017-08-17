@@ -13,47 +13,22 @@
     <thead>
       <tr>
         <th>Partido</th>
-        <% @afiliados.where(partido_id: @partido_ids.first).where.not('lower(rango_etareo) = ?', 'total militantes' ).order(:rango_etareo).each do |r| %>
-          <th class="text-center">% <%= r.rango_etareo %></th>
+        <% @cargos.where(partido_id: @partido_ids.first).order(:tipo_cargo).each do |tc| %>
+          <th class="text-center"><%= tc.tipo_cargo %></th>
         <% end %>
         <th class="text-center">Total</th>
         <th class="text-center">Detalle</i></th>
       </tr>
     </thead>
     <tbody>
-      <% @partido_ids.each do |pid| %>
-      <% total_afiliados = @afiliados.where(partido_id: pid).where('lower(rango_etareo) = ?', 'total militantes' ).first.total_afiliados rescue 0 %>
+    <% @partido_ids.each do |pid| %>
+      <% total_cargos = (@cargos.where(partido_id: pid).first.cantidad_mujeres + @cargos.where(partido_id: pid).first.cantidad_hombres) rescue 0 %>
       <tr>
         <td><%= Partido.find(pid).nombre %></td>
-        <% afiliados_por_partido = @afiliados.where(partido_id: pid).where.not('lower(rango_etareo) = ?', 'total militantes' ).order(:rango_etareo) %>
-        <% if afiliados_por_partido.empty? %>
-          <td colspan="15" class="text-center">Sin datos</td>
-        <% else %>
-          <% (15 -afiliados_por_partido.count).times do |i| %>
-            <td class="text-center">Sin datos</td>
-          <% end %>
-        <% end %>
-        <% afiliados_por_partido.each do |a| %>
-          <% if @filtro_genero == "hombres" %>
-          <% color = (((a.hombres).to_f/total_afiliados.to_f)*100.0) %>
-          <td><p class="edades" style="background-color:rgba(232,93,52,<%= color * 0.05 %>);"><%= (((a.hombres).to_f/total_afiliados.to_f)*100.0).round(1).to_s rescue 0 %></p></td>
-          <% elsif @filtro_genero == "mujeres" %>
-          <% color = (((a.mujeres).to_f/total_afiliados.to_f)*100.0) %>
-          <td><p class="edades" style="background-color:rgba(232,93,52,<%= color * 0.05 %>);"><%= (((a.mujeres).to_f/total_afiliados.to_f)*100.0).round(1).to_s rescue 0 %></p></td>
-          <% else %>
-          <% color = (((a.hombres + a.mujeres).to_f/total_afiliados.to_f)*100.0) %>
-          <td><p class="edades" style="background-color:rgba(232,93,52,<%= color * 0.05 %>);"><%= (((a.hombres + a.mujeres).to_f/total_afiliados.to_f)*100.0).round(1).to_s rescue 0 %></p></td>
-          <% end %>
-        <% end %>
-        <td class="text-center"><%= total_afiliados %></td>
-        <td class="text-center">
-          <%= link_to  partido_regiones_all_path(:partido_id => pid, :menu => 1) do %>
-            <button class="btn-view-detail btn btn-default btn-xs" > Ver</button>
-          <% end %>
-        </td>
+        <% cargos_por_partido = @cargos.where(partido_id: pid).order(:tipo_cargo) %>
       </tr>
     <% end %>
-  </tbody>
+    </tbody>
   </table>
 </div>
 
