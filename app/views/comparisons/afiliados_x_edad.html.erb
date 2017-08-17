@@ -43,7 +43,7 @@
           <td><p class="edades" style="background-color:rgba(232,93,52,<%= color * 0.05 %>);"><%= (((a.hombres + a.mujeres).to_f/total_afiliados.to_f)*100.0).round(1).to_s rescue 0 %></p></td>
           <% end %>
         <% end %>
-        <td class="text-center"><%= total_afiliado %></td>
+        <td class="text-center"><%= total_afiliados %></td>
         <td class="text-center">
           <button class="btn-view-detail btn btn-default btn-xs" type="submit"><%= link_to "Ver", partido_regiones_all_path(:partido_id => pid, :menu => 1) %></button>
         </td>

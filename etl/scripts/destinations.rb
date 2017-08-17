@@ -902,9 +902,9 @@ class AfiliacionDestination
     cantidad_hombres = clean_number(row[:n_hombres])
     total_afiliados = clean_number(row[:total])
 
-    if row[:total_y_rango_etario] == 'Total Militantes'
+    if row[:total_y_rango_etario].downcase == 'total militantes'
       afiliacion = Afiliacion.where(partido_id: row[:partido_id],
-                                    rango_etareo: row[:total_y_rango_etario],
+                                    rango_etareo: row[:total_y_rango_etario].downcase,
                                     mujeres: cantidad_mujeres,
                                     porcentaje_mujeres: row[:_mujeres],
                                     hombres: cantidad_hombres,
