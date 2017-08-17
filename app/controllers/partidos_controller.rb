@@ -523,10 +523,11 @@ class PartidosController < ApplicationController
       params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
-      @pactos = @trimestre_informado.pacto_electorals.where partido: @partido
-      @sin_datos = @pactos.count == 0
-    end
+      pactos = @trimestre_informado.pacto_electorals.where partido: @partido
 
+      @sin_datos = false
+      @pactos = pactos
+    end
   end
 
   # MÉTODO ANTIGUO
