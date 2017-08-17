@@ -14,11 +14,8 @@ class ComparisonsController < ApplicationController
       when 1
         afiliados_x_edad
 
-      when 4
-        ingresos_ordianrios
-
       when 3
-        representantes
+        cargos
 
       when 2
         regions
@@ -165,6 +162,92 @@ class ComparisonsController < ApplicationController
       p @filtro_genero
 
       render "afiliados_x_edad"
+    end
+
+    def cargos
+
+      temp_trimestres_informados = []
+      Afiliacion.where(partido_id: @partido_ids).all.map{|a| temp_trimestres_informados.concat(a.trimestre_informado_ids)}
+      @trimestres_informados = TrimestreInformado.find(temp_trimestres_informados.uniq.sort!)
+      @trimestres_informados = @trimestres_informados.sort_by {|t| t.ano.to_s + t.ordinal.to_s}.reverse!
+
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+      @filtro_genero = params[:genero].to_s
+
+      @datos = []
+      # @partido_ids.each do |p_id|
+      #   partido = Partido.find p_id
+      # end
+      # p "partido_ids " + @partido_ids.to_s
+      @partido_ids = @partido_ids.each.sort{|p| @trimestre_informado.afiliacions.where(partido_id: p).count}.reverse
+      # p @partido_ids
+
+
+        @afiliados = @trimestre_informado.afiliacions.where(:partido_id => @partido_ids)
+        #last_date = Afiliacion.where(partido: partido).uniq.pluck(:fecha_datos).sort.last
+
+      #   if @fecha_param.nil?
+      #     @fecha = @fechas_datos.last
+      #   else
+      #     @fecha = @fecha_param
+      #   end
+      #
+      #   afiliados = Afiliacion.where(partido: partido, fecha_datos: @fecha)
+      #   if !params["region"].blank?
+      #     afiliados = afiliados.where(region_id: params["region"])
+      #   end
+      #   h = 0 #hombres
+      #   m = 0 #mujeres
+      #   afiliados.each do |a|
+      #     h = h + a.hombres
+      #     m = m + a.mujeres
+      #   end
+      #   tramos = []
+      #   if (h > 0 || m > 0)
+      #     rangos.each do |rango|
+      #       participantes = afiliados.where(:ano_nacimiento => Date.today.year-rango[1]..Date.today.year-rango[0])
+      #       ph = 0 #participantes hombres
+      #       pm = 0 #participantes mujeres
+      #       participantes.each do |np|
+      #         ph = ph + np.hombres
+      #         pm = pm + np.mujeres
+      #       end
+      #       num_generos = ph + pm
+      #       if !params[:genero].blank?
+      #         case params[:genero]
+      #           when 'hombres'
+      #             num_generos = ph
+      #
+      #           when 'mujeres'
+      #             num_generos = pm
+      #
+      #         end
+      #       end
+      #       tramos << {:tramo => rango, :count => num_generos}
+      #     end
+      #   end
+      #
+      #   total_generos = h + m
+      #   if !params[:genero].blank?
+      #     case params[:genero]
+      #       when 'hombres'
+      #         total_generos = h
+      #       when 'mujeres'
+      #         total_generos = m
+      #     end
+      #   end
+      #   @datos << {:partido => partido.nombre, :partido_id => partido.id, :tramos => tramos, :total => total_generos}
+      # end
+      #
+      # @max_total = @datos.map{|p| p[:total]}.max
+
+      @regiones = Region.all
+
+      p @filtro_genero
+
+      render "cargos"
     end
 
     def regions
