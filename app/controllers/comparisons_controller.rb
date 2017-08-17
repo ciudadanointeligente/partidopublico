@@ -94,9 +94,13 @@ class ComparisonsController < ApplicationController
       @filtro_genero = params[:genero].to_s
 
       @datos = []
-      @partido_ids.each do |p_id|
-        partido = Partido.find p_id
-      end
+      # @partido_ids.each do |p_id|
+      #   partido = Partido.find p_id
+      # end
+      # p "partido_ids " + @partido_ids.to_s
+      @partido_ids = @partido_ids.each.sort{|p| @trimestre_informado.afiliacions.where(partido_id: p).count}.reverse
+      # p @partido_ids
+
 
         @afiliados = @trimestre_informado.afiliacions.where(:partido_id => @partido_ids)
         #last_date = Afiliacion.where(partido: partido).uniq.pluck(:fecha_datos).sort.last

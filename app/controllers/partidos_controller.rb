@@ -302,12 +302,12 @@ class PartidosController < ApplicationController
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
       if @trimestre_informado.afiliacions.where(:partido_id => @partido.id,
-                                                :rango_etareo => "Total Militantes").first.nil?
+                                                :rango_etareo => 'total militantes').first.nil?
 
         @sin_info_afiliados = true
       else
         @cantidad_afiliados = @trimestre_informado.afiliacions.where(:partido_id => @partido.id,
-                                             :rango_etareo => "Total Militantes").first.total_afiliados
+                                             :rango_etareo => 'total militantes').first.total_afiliados
         @sin_info_afiliados = false
       end
 
