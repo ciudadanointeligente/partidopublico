@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170807160047) do
+ActiveRecord::Schema.define(version: 20170817202417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -348,6 +348,7 @@ ActiveRecord::Schema.define(version: 20170807160047) do
     t.string   "porcentaje_hombres"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.string   "tipo_cargo"
   end
 
   add_index "estadistica_cargos", ["partido_id"], name: "index_estadistica_cargos_on_partido_id", using: :btree

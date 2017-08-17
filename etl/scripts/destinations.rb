@@ -610,6 +610,7 @@ class EstadisticaCargosDestination
 
     estadistica = EstadisticaCargo.where(partido_id: row[:partido_id],
                             item: row[:item],
+                            tipo_cargo: cargos_estadistica_por_item(row[:item]),
                             cantidad_mujeres: cantidad_mujeres,
                             porcentaje_mujeres: row[:_mujeres],
                             cantidad_hombres: cantidad_hombres,

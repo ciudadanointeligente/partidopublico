@@ -11,6 +11,7 @@
 #  porcentaje_hombres :string
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  tipo_cargo         :string
 #
 # Indexes
 #
