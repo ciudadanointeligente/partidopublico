@@ -161,6 +161,9 @@ class ComparisonsController < ApplicationController
 
       @filtro_genero = params[:genero].to_s
       @datos = []
+
+      @ingresos_ordinarios = @trimestre_informado.ingreso_ordinarios.where(partido_id: @partido_ids)
+
       render "ingresos_ord"
     end
 
