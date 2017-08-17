@@ -22,16 +22,17 @@
     </thead>
     <tbody>
       <% @partido_ids.each do |pid| %>
-      <% total_afiliados = @afiliados.where(partido_id: pid, rango_etareo: 'Total Militantes').first.total_afiliados rescue 0 %>
+      <% total_afiliados = @afiliados.where(partido_id: pid).where('lower(rango_etareo) = ?', 'total militantes' ).first.total_afiliados rescue 0 %>
       <tr>
-        <td><%= Partido.find(pid).nombre %></td>
-        <% afiliados_por_partido = @afiliados.where(partido_id: pid).where.not(rango_etareo: 'Total Militantes') %>
+        <td><%= Partido.find(pid).nombre + ' ' + total_afiliados.to_s %></td>
+        <% afiliados_por_partido = @afiliados.where(partido_id: pid).where.not('lower(rango_etareo) = ?', 'total militantes' ) %>
         <% if afiliados_por_partido.empty? %>
           <% 15.times do |i| %>
           <td  class="text-center">0</td>
           <% end %>
         <% end %>
         <% afiliados_por_partido.each do |a| %>
+        <td><%= a.rango_etareo %></td>
           <% if @filtro_genero == "hombres" %>
           <% color = (((a.hombres).to_f/total_afiliados.to_f)*100.0) %>
           <td><p class="edades" style="background-color:rgba(232,93,52,<%= color * 0.05 %>);"><%= (((a.hombres).to_f/total_afiliados.to_f)*100.0).round(1).to_s rescue 0 %></p></td>
@@ -43,7 +44,7 @@
           <td><p class="edades" style="background-color:rgba(232,93,52,<%= color * 0.05 %>);"><%= (((a.hombres + a.mujeres).to_f/total_afiliados.to_f)*100.0).round(1).to_s rescue 0 %></p></td>
           <% end %>
         <% end %>
-        <td class="text-center"><%= total_afiliado %></td>
+        <td class="text-center"><%= total_afiliados %></td>
         <td class="text-center">
           <button class="btn-view-detail btn btn-default btn-xs" type="submit"><%= link_to "Ver", partido_regiones_all_path(:partido_id => pid, :menu => 1) %></button>
         </td>
