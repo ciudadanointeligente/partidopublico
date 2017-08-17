@@ -13,7 +13,7 @@
     <thead>
       <tr>
         <th>Partido</th>
-        <% @afiliados.where(partido_id: @partido_ids.first).where.not(rango_etareo: 'Total Militantes').sort.each do |r| %>
+        <% @afiliados.where(partido_id: @partido_ids.first).where.not('lower(rango_etareo) = ?', 'total militantes' ).sort.each do |r| %>
           <th class="text-center">% <%= r.rango_etareo %></th>
         <% end %>
         <th class="text-center">Total</th>
