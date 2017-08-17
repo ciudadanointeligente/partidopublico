@@ -1,8 +1,10 @@
 <ol class="breadcrumb"><li>Comparativas</li></ol>
 <h3>Ingresos ordinarios</h3>
 <%= form_tag comparisons_path, :method => :get do |f| %>
-  <%= select_tag :fecha_datos, options_for_select(@fechas_datos.reverse, params[:fecha_datos] || ""), prompt: "Seleccionar Fecha", onchange: "this.form.submit();"  %>
-  <%= hidden_field_tag 'category', "Ingresos ordinarios" %>
+<%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id] || ''), include_blank: false, class: "form-control" %>
+<%= select_tag :genero, options_for_select([:hombres, :mujeres], params[:genero] || ""), prompt: "Seleccionar género"  %>
+<%= submit_tag 'Filtrar', class: "btn" %>
+<%= hidden_field_tag 'category', "Ingresos ordinarios" %>
 <% end %>
 <br>
 <br>

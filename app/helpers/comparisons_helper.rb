@@ -4,7 +4,8 @@ module ComparisonsHelper
                   "Afiliados según género",
                   "Afiliados según rango etario",
                   "Regiones constituidos",
-                  "Cargos"
+                  "Cargos",
+                  "Ingresos ordinarios"
                 ]
   end
 

@@ -17,6 +17,9 @@ class ComparisonsController < ApplicationController
       when 3
         cargos
 
+      when 4
+        ingresos_ord
+
       when 2
         regions
 
@@ -100,66 +103,6 @@ class ComparisonsController < ApplicationController
 
 
         @afiliados = @trimestre_informado.afiliacions.where(:partido_id => @partido_ids)
-        #last_date = Afiliacion.where(partido: partido).uniq.pluck(:fecha_datos).sort.last
-
-      #   if @fecha_param.nil?
-      #     @fecha = @fechas_datos.last
-      #   else
-      #     @fecha = @fecha_param
-      #   end
-      #
-      #   afiliados = Afiliacion.where(partido: partido, fecha_datos: @fecha)
-      #   if !params["region"].blank?
-      #     afiliados = afiliados.where(region_id: params["region"])
-      #   end
-      #   h = 0 #hombres
-      #   m = 0 #mujeres
-      #   afiliados.each do |a|
-      #     h = h + a.hombres
-      #     m = m + a.mujeres
-      #   end
-      #   tramos = []
-      #   if (h > 0 || m > 0)
-      #     rangos.each do |rango|
-      #       participantes = afiliados.where(:ano_nacimiento => Date.today.year-rango[1]..Date.today.year-rango[0])
-      #       ph = 0 #participantes hombres
-      #       pm = 0 #participantes mujeres
-      #       participantes.each do |np|
-      #         ph = ph + np.hombres
-      #         pm = pm + np.mujeres
-      #       end
-      #       num_generos = ph + pm
-      #       if !params[:genero].blank?
-      #         case params[:genero]
-      #           when 'hombres'
-      #             num_generos = ph
-      #
-      #           when 'mujeres'
-      #             num_generos = pm
-      #
-      #         end
-      #       end
-      #       tramos << {:tramo => rango, :count => num_generos}
-      #     end
-      #   end
-      #
-      #   total_generos = h + m
-      #   if !params[:genero].blank?
-      #     case params[:genero]
-      #       when 'hombres'
-      #         total_generos = h
-      #       when 'mujeres'
-      #         total_generos = m
-      #     end
-      #   end
-      #   @datos << {:partido => partido.nombre, :partido_id => partido.id, :tramos => tramos, :total => total_generos}
-      # end
-      #
-      # @max_total = @datos.map{|p| p[:total]}.max
-
-      @regiones = Region.all
-
-      p @filtro_genero
 
       render "afiliados_x_edad"
     end
@@ -186,68 +129,8 @@ class ComparisonsController < ApplicationController
 
 
         @afiliados = @trimestre_informado.afiliacions.where(:partido_id => @partido_ids)
-        #last_date = Afiliacion.where(partido: partido).uniq.pluck(:fecha_datos).sort.last
 
-      #   if @fecha_param.nil?
-      #     @fecha = @fechas_datos.last
-      #   else
-      #     @fecha = @fecha_param
-      #   end
-      #
-      #   afiliados = Afiliacion.where(partido: partido, fecha_datos: @fecha)
-      #   if !params["region"].blank?
-      #     afiliados = afiliados.where(region_id: params["region"])
-      #   end
-      #   h = 0 #hombres
-      #   m = 0 #mujeres
-      #   afiliados.each do |a|
-      #     h = h + a.hombres
-      #     m = m + a.mujeres
-      #   end
-      #   tramos = []
-      #   if (h > 0 || m > 0)
-      #     rangos.each do |rango|
-      #       participantes = afiliados.where(:ano_nacimiento => Date.today.year-rango[1]..Date.today.year-rango[0])
-      #       ph = 0 #participantes hombres
-      #       pm = 0 #participantes mujeres
-      #       participantes.each do |np|
-      #         ph = ph + np.hombres
-      #         pm = pm + np.mujeres
-      #       end
-      #       num_generos = ph + pm
-      #       if !params[:genero].blank?
-      #         case params[:genero]
-      #           when 'hombres'
-      #             num_generos = ph
-      #
-      #           when 'mujeres'
-      #             num_generos = pm
-      #
-      #         end
-      #       end
-      #       tramos << {:tramo => rango, :count => num_generos}
-      #     end
-      #   end
-      #
-      #   total_generos = h + m
-      #   if !params[:genero].blank?
-      #     case params[:genero]
-      #       when 'hombres'
-      #         total_generos = h
-      #       when 'mujeres'
-      #         total_generos = m
-      #     end
-      #   end
-      #   @datos << {:partido => partido.nombre, :partido_id => partido.id, :tramos => tramos, :total => total_generos}
-      # end
-      #
-      # @max_total = @datos.map{|p| p[:total]}.max
-
-      @regiones = Region.all
-
-      p @filtro_genero
-
-      render "cargos"
+        render "cargos"
     end
 
     def regions
@@ -267,40 +150,17 @@ class ComparisonsController < ApplicationController
       render "regions"
     end
 
-    def ingresos_ordianrios
+    def ingresos_ord
+      temp_trimestres_informados = []
+      IngresoOrdinario.where(partido_id: @partido_ids).all.map{|a| temp_trimestres_informados.concat(a.trimestre_informado_ids)}
+      @trimestres_informados = TrimestreInformado.find(temp_trimestres_informados.uniq.sort!)
+      @trimestres_informados = @trimestres_informados.sort_by {|t| t.ano.to_s + t.ordinal.to_s}.reverse!
+
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+      @filtro_genero = params[:genero].to_s
       @datos = []
-
-      @fechas_datos = IngresoOrdinario.where(IngresoOrdinario.arel_table[:partido_id].in(@partido_ids)).uniq.pluck(:fecha_datos).sort
-
-      if @fecha_param.nil?
-        @fecha = @fechas_datos.last
-      else
-        @fecha = @fecha_param
-      end
-
-
-      @datos_publicos = Partido.joins('left join ingreso_ordinarios on ingreso_ordinarios.partido_id = partidos.id and ingreso_ordinarios.fecha_datos in (\'' + @fecha.to_s + '\')')
-      .where(Partido.arel_table[:id].in(@partido_ids))
-      .where(IngresoOrdinario.arel_table[:concepto].eq('Aportes Estatales').or(IngresoOrdinario.arel_table[:concepto].eq(nil)))
-      .where(IngresoOrdinario.arel_table[:fecha_datos].in(@fecha).or(IngresoOrdinario.arel_table[:fecha_datos].eq(nil)))
-      .select(Partido.arel_table[:sigla],Partido.arel_table[:nombre], "fecha_datos, partido_id, sum(importe) as total_publico")
-      .group(IngresoOrdinario.arel_table[:fecha_datos], Partido.arel_table[:id], IngresoOrdinario.arel_table[:partido_id])
-      .order(Partido.arel_table[:id])
-
-      @datos_privados = Partido.joins('left join ingreso_ordinarios on ingreso_ordinarios.partido_id = partidos.id and ingreso_ordinarios.fecha_datos in (\'' + @fecha.to_s + '\')')
-      .where(Partido.arel_table[:id].in(@partido_ids))
-      .where(IngresoOrdinario.arel_table[:concepto].not_eq('Aportes Estatales').or(IngresoOrdinario.arel_table[:concepto].eq(nil)))
-      .where(IngresoOrdinario.arel_table[:fecha_datos].in(@fecha).or(IngresoOrdinario.arel_table[:fecha_datos].eq(nil)))
-      .select(Partido.arel_table[:sigla],Partido.arel_table[:nombre], "fecha_datos, partido_id, sum(importe) as total_privado")
-      .group(IngresoOrdinario.arel_table[:fecha_datos], Partido.arel_table[:id], IngresoOrdinario.arel_table[:partido_id])
-      .order(Partido.arel_table[:id])
-
-      @datos_privados.each_with_index do |d, i|
-        missing_data = @datos_privados[i].total_privado.nil? or @datos_publicos[i].total_publico.nil?
-        @datos << {:nombre => @datos_privados[i].nombre.to_s, :partido_id => @datos_privados[i].partido_id.to_s, :sigla => @datos_privados[i].sigla.to_s,
-           :total_privado => @datos_privados[i].total_privado, :total_publico => @datos_publicos[i].total_publico, :missing_data => missing_data }
-      end
-
       render "ingresos_ord"
     end
 
