@@ -169,28 +169,37 @@ $(document).ready(function(){
 
   }
 
-  Raphael.fn.ingreso_ord_compare_bar = function(dato){
-    console.log("ingreso_ord_compare_bar");
+  Raphael.fn.ingreso_ord_compare_bar = function(dato, max_v){
+    colors = ["#23dbb8", "#5a052a", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
     var paper = this;
-    console.log(dato);
-    if(!dato.missing_data){
-      var publico_width = (dato.total_publico / (dato.total_publico + dato.total_privado)) * bar_width;
-      var privado_width = bar_width - publico_width;
+    tmp = [];
+    total = 0;
+    adj = 1;
+    if(dato.length > 0){
+      for(var i=0; i<dato.length; i++){
+        // tmp[i]/ ={"concepto": dato[i].concepto, "importe": dato[i].importe)};
+        total += dato[i].importe;
+      };
+      if(max_v == total){
+        adj = 1
 
-      var publico_bar = paper.rect(0, 0, publico_width, bar_height).attr({
-        "fill" : "#23DBB8",
-        "stroke" : "none"
-      });
+      }else{
+        adj = total / max_v
+      }
+      prev = 0;
+      for(var i=0; i<dato.length; i++){
+        this_w = (dato[i].importe/total) * bar_width * adj
+        paper.rect(prev, 0, this_w, bar_height).attr({
+          "title": dato[i].concepto + " : " + dato[i].importe,
+          "fill" : colors[i],
+          "stroke" : "none"
+        });
+        prev += this_w
+      };
 
-      var privado_bar = paper.rect(publico_width, 0, privado_width, bar_height).attr({
-        "fill" : "#19a58a",
-        "stroke" : "none"
-      });
     } else {
       paper.text(50, 15, "Faltan datos.")
     }
-
-
   }
 
   Raphael.fn.ingreso_ord_header = function(){

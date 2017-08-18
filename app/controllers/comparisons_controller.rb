@@ -163,6 +163,7 @@ class ComparisonsController < ApplicationController
       @datos = []
 
       @ingresos_ordinarios = @trimestre_informado.ingreso_ordinarios.where(partido_id: @partido_ids)
+      @partido_ids = @partido_ids.sort{|pid| @ingresos_ordinarios.where(partido_id: pid).sum(:importe) }.reverse
 
       render "ingresos_ord"
     end
