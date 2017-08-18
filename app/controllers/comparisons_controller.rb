@@ -110,7 +110,7 @@ class ComparisonsController < ApplicationController
     def cargos
 
       temp_trimestres_informados = []
-      Afiliacion.where(partido_id: @partido_ids).all.map{|a| temp_trimestres_informados.concat(a.trimestre_informado_ids)}
+      EstadisticaCargo.where(partido_id: @partido_ids).all.map{|a| temp_trimestres_informados.concat(a.trimestre_informado_ids)}
       @trimestres_informados = TrimestreInformado.find(temp_trimestres_informados.uniq.sort!)
       @trimestres_informados = @trimestres_informados.sort_by {|t| t.ano.to_s + t.ordinal.to_s}.reverse!
 
@@ -120,17 +120,21 @@ class ComparisonsController < ApplicationController
       @filtro_genero = params[:genero].to_s
 
       @datos = []
-      # @partido_ids.each do |p_id|
-      #   partido = Partido.find p_id
-      # end
-      # p "partido_ids " + @partido_ids.to_s
-      @partido_ids = @partido_ids.each.sort{|p| @trimestre_informado.afiliacions.where(partido_id: p).count}.reverse
-      # p @partido_ids
 
+      @partido_ids = @partido_ids.each.sort{|p| @trimestre_informado.estadistica_cargos.where(partido_id: p).count}.reverse
 
-        @afiliados = @trimestre_informado.afiliacions.where(:partido_id => @partido_ids)
+      @cargos = @trimestre_informado.estadistica_cargos.where(:partido_id => @partido_ids)
 
-        render "cargos"
+      @cargos.each do |c|
+        p c
+      end
+
+      @regiones = Region.all
+
+      p @filtro_genero
+
+      render "cargos"
+      
     end
 
     def regions

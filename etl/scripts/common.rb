@@ -158,7 +158,7 @@ def cargos_estadistica_por_item(item)
     item = 'Cargos Directivos en el Partido'
   elsif item.include? "alcald"
     item = 'Cargos por elección popular'
-  elsif item.include? "consejal"
+  elsif item.include? "concejal"
     item = 'Cargos por elección popular'
   elsif item.include? "core"
     item = 'Cargos por elección popular'
@@ -180,6 +180,8 @@ def cargos_estadistica_por_item(item)
     item = 'Cargos por elección popular'
   elsif item.include? "diputad"
     item = 'Cargos por elección popular'
+  else
+    item = ""
   end
 
   item
