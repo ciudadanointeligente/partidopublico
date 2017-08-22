@@ -20,6 +20,9 @@ class ComparisonsController < ApplicationController
       when 4
         ingresos_ord
 
+      when 5
+        egresos_ord
+
       when 2
         regions
 
@@ -134,7 +137,7 @@ class ComparisonsController < ApplicationController
       p @filtro_genero
 
       render "cargos"
-      
+
     end
 
     def regions
@@ -154,7 +157,7 @@ class ComparisonsController < ApplicationController
       render "regions"
     end
 
-    def ingresos_ord
+    def egresos_ord
       temp_trimestres_informados = []
       IngresoOrdinario.where(partido_id: @partido_ids).all.map{|a| temp_trimestres_informados.concat(a.trimestre_informado_ids)}
       @trimestres_informados = TrimestreInformado.find(temp_trimestres_informados.uniq.sort!)
@@ -166,10 +169,10 @@ class ComparisonsController < ApplicationController
       @filtro_genero = params[:genero].to_s
       @datos = []
 
-      @ingresos_ordinarios = @trimestre_informado.ingreso_ordinarios.where(partido_id: @partido_ids)
-      @partido_ids = @partido_ids.sort{|pid| @ingresos_ordinarios.where(partido_id: pid).sum(:importe) }.reverse
+      @egresos_ordinarios = @trimestre_informado.egreso_ordinarios.where(partido_id: @partido_ids)
+      @partido_ids = @partido_ids.sort{|pid| @egresos_ordinarios.where(partido_id: pid).sum(:publico) }.reverse
 
-      render "ingresos_ord"
+      render "egresos_ord"
     end
 
     def representantes

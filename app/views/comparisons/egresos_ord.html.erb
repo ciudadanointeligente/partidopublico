@@ -1,0 +1,49 @@
+<ol class="breadcrumb"><li>Comparativas</li></ol>
+<h3>Egresos ordinarios</h3>
+<%= form_tag comparisons_path, :method => :get do |f| %>
+<%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id] || ''), include_blank: false, class: "form-control" %>
+<%= select_tag :genero, options_for_select([:hombres, :mujeres], params[:genero] || ""), prompt: "Seleccionar género"  %>
+<%= submit_tag 'Filtrar', class: "btn" %>
+<%= hidden_field_tag 'category', "Egresos ordinarios" %>
+<% end %>
+<br>
+<br>
+<br>
+<div id='header'></div>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Partido</th>
+        <th>&nbsp;</th>
+        <th>Monto Total</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <% @partido_ids.each do |pid| %>
+      <tr>
+        <td><%= Partido.find(pid).nombre %></td>
+
+        <td><span id="barras_<%= pid.to_s %>"></span></td>
+
+        <td class="monto"><%= number_to_currency @egresos_ordinarios.where(partido_id: pid).sum(:publico), delimiter: ".", separator: ',', unit: "$", precision: 0 , format: "%u%n" %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  var partido_ids =  <%=  @partido_ids.to_json.html_safe %>;
+  var datos = [];
+  <% @partido_ids.each_with_index do |p, i| %>
+    datos[<%= i %>] = <%= @egresos_ordinarios.where(partido_id: p).order(:concepto).to_json.html_safe %>;
+  <% end %>
+  Raphael("header",400, 40 ).egreso_ord_header();
+  for(var i=0; i < partido_ids.length; i++){
+    Raphael("barras_" + partido_ids[i],300, 30 ).egreso_ord_compare_bar(datos[i],<%= @partido_ids.map{|pid| @egresos_ordinarios.where(partido_id: pid).sum(:publico) }.max %>);
+  }
+});
+</script>
