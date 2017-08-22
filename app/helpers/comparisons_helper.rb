@@ -6,7 +6,9 @@ module ComparisonsHelper
                   "Regiones constituidos",
                   "Cargos",
                   "Ingresos ordinarios",
-                  "Egresos ordinarios"
+                  "Egresos ordinarios",
+                  "Ingresos de campaña",
+                  "Egresos de campaña"
                 ]
   end
 

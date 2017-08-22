@@ -231,6 +231,68 @@ $(document).ready(function(){
     });
   }
 
+    Raphael.fn.ingreso_ord_compare_bar = function(dato, max_v){
+      colors = ["#23dbb8", "#5a052a", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
+      var paper = this;
+      tmp = [];
+      total = 0;
+      adj = 1;
+      if(dato.length > 0){
+        for(var i=0; i<dato.length; i++){
+          // tmp[i]/ ={"concepto": dato[i].concepto, "importe": dato[i].importe)};
+          total += dato[i].monto;
+        };
+        if(max_v == total){
+          adj = 1
+
+        }else{
+          adj = total / max_v
+        }
+        prev = 0;
+        for(var i=0; i<dato.length; i++){
+          this_w = (dato[i].monto/total) * bar_width * adj
+          paper.rect(prev, 0, this_w, bar_height).attr({
+            "title": dato[i].tipo_aporte + " : " + dato[i].monto,
+            "fill" : colors[i],
+            "stroke" : "none"
+          });
+          prev += this_w
+        };
+
+      } else {
+        paper.text(50, 15, "Faltan datos.")
+      }
+    }
+
+  Raphael.fn.ingreso_cam_header = function(){
+    var paper = this;
+    paper.circle(12, 15, 9 )
+    .attr({
+      "fill" : "#23DBB8",
+      "stroke" : "none"
+    });
+
+    paper.text(28, 17, "Aportes 1")
+    .attr({
+      "font-family" : "Karla-Regular, Karla",
+      "font-size" : 14,
+      'text-anchor': 'start'
+    });
+
+    paper.circle(191, 15, 9 )
+    .attr({
+      "fill" : "#19A58A",
+      "stroke" : "none"
+    });
+
+    paper.text(207, 17, "Aportes 2")
+    .attr({
+      "font-family" : "Karla-Regular, Karla",
+      "font-size" : 14,
+      'text-anchor': 'start'
+    });
+  }
+
   Raphael.fn.representantes_compare_header = function(){
     var paper = this;
     paper.circle(12, 15, 9 )
