@@ -26,6 +26,9 @@ class ComparisonsController < ApplicationController
       when 6
         ingresos_cam
 
+      when 7
+        egresos_cam
+
       when 2
         regions
 
@@ -213,6 +216,24 @@ class ComparisonsController < ApplicationController
       @partido_ids = @partido_ids.sort{|pid| @ingresos_campana.where(partido_id: pid).sum(:monto) }.reverse
 
       render "ingresos_cam"
+    end
+
+    def egresos_cam
+      temp_trimestres_informados = []
+      IngresoCampana.where(partido_id: @partido_ids).all.map{|a| temp_trimestres_informados.concat(a.trimestre_informado_ids)}
+      @trimestres_informados = TrimestreInformado.find(temp_trimestres_informados.uniq.sort!)
+      @trimestres_informados = @trimestres_informados.sort_by {|t| t.ano.to_s + t.ordinal.to_s}.reverse!
+
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+      @filtro_genero = params[:genero].to_s
+      @datos = []
+
+      @egresos_campana = @trimestre_informado.egreso_campanas.where(partido_id: @partido_ids)
+      @partido_ids = @partido_ids.sort{|pid| @egresos_campana.where(partido_id: pid).sum(:monto) }.reverse
+
+      render "egresos_cam"
     end
 
     def representantes

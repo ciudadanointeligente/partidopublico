@@ -1,9 +1,9 @@
 <ol class="breadcrumb"><li>Comparativas</li></ol>
-<h3>Ingresos Campaña</h3>
+<h3>Egresos Campaña</h3>
 <%= form_tag comparisons_path, :method => :get do |f| %>
 <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id] || ''), include_blank: false, class: "form-control" %>
 <%= submit_tag 'Filtrar', class: "btn" %>
-<%= hidden_field_tag 'category', "Ingresos de campaña" %>
+<%= hidden_field_tag 'category', "Egresos de campaña" %>
 <% end %>
 <br>
 <br>
@@ -26,7 +26,7 @@
 
         <td><span id="barras_<%= pid.to_s %>"></span></td>
 
-        <td class="monto"><%= number_to_currency @ingresos_campana.where(partido_id: pid).sum(:monto), delimiter: ".", separator: ',', unit: "$", precision: 0 , format: "%u%n" %></td>
+        <td class="monto"><%= number_to_currency @egresos_campana.where(partido_id: pid).sum(:monto), delimiter: ".", separator: ',', unit: "$", precision: 0 , format: "%u%n" %></td>
       </tr>
       <% end %>
     </tbody>
@@ -38,11 +38,12 @@ $(document).ready(function(){
   var partido_ids =  <%=  @partido_ids.to_json.html_safe %>;
   var datos = [];
   <% @partido_ids.each_with_index do |p, i| %>
-    datos[<%= i %>] = <%= @ingresos_campana.where(partido_id: p).order(:tipo_aporte).to_json.html_safe %>;
+    <% tipos_campana= @trimestre_informado.egreso_campanas.where(partido_id: p).map{|e| e.tipo_campana}.uniq %>;
+    datos[<%= i %>] = <%= tipos_campana.map{|tipo| {:tipo_campana => tipo.to_s, :monto => @trimestre_informado.egreso_campanas.where(partido_id: p).where(tipo_campana: tipo).sum(:monto)}}.to_json.html_safe %>;
   <% end %>
-  Raphael("header",400, 40 ).ingreso_cam_header();
+  Raphael("header",400, 40 ).egreso_cam_header();
   for(var i=0; i < partido_ids.length; i++){
-    Raphael("barras_" + partido_ids[i],300, 30 ).ingreso_cam_compare_bar(datos[i],<%= @partido_ids.map{|pid| @ingresos_campana.where(partido_id: pid).sum(:monto) }.max %>);
+    Raphael("barras_" + partido_ids[i],300, 30 ).egreso_cam_compare_bar(datos[i],<%= @partido_ids.map{|pid| @egresos_campana.where(partido_id: pid).sum(:monto) }.max %>);
   }
 });
 </script>
