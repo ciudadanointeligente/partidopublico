@@ -1,0 +1,48 @@
+<ol class="breadcrumb"><li>Comparativas</li></ol>
+<h3>Transferencias</h3>
+<%= form_tag comparisons_path, :method => :get do |f| %>
+<%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id] || ''), include_blank: false, class: "form-control" %>
+<%= submit_tag 'Filtrar', class: "btn" %>
+<%= hidden_field_tag 'category', "Transferencias" %>
+<% end %>
+<br>
+<br>
+<br>
+<div id='header'></div>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Partido</th>
+        <th>&nbsp;</th>
+        <th>Monto Total</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <% @partido_ids.each do |pid| %>
+      <tr>
+        <td><%= Partido.find(pid).nombre %></td>
+
+        <td><span id="barras_<%= pid.to_s %>"></span></td>
+
+        <td class="monto"><%= number_to_currency @transferencias.where(partido_id: pid).sum(:monto), delimiter: ".", separator: ',', unit: "$", precision: 0 , format: "%u%n" %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  var partido_ids =  <%=  @partido_ids.to_json.html_safe %>;
+  var datos = [];
+  <% @partido_ids.each_with_index do |p, i| %>
+    datos[<%= i %>] = <%= @transferencias.where(partido_id: p).to_json.html_safe %>;
+  <% end %>
+  // Raphael("header",400, 40 ).transferencias_compare_header();
+  for(var i=0; i < partido_ids.length; i++){
+    Raphael("barras_" + partido_ids[i],300, 30 ).transferencias_compare_bar(datos[i],<%= @partido_ids.map{|pid| @transferencias.where(partido_id: pid).sum(:monto) }.max %>);
+  }
+});
+</script>

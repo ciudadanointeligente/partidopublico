@@ -8,7 +8,8 @@ module ComparisonsHelper
                   "Ingresos ordinarios",
                   "Egresos ordinarios",
                   "Ingresos de campaña",
-                  "Egresos de campaña"
+                  "Egresos de campaña",
+                  "Transferencias"
                 ]
   end
 
