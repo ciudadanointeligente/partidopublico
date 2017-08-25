@@ -32,6 +32,9 @@ class ComparisonsController < ApplicationController
       when 8
         transferencias
 
+      when 9
+        contratacions
+
       when 2
         regions
 
@@ -255,6 +258,24 @@ class ComparisonsController < ApplicationController
       @partido_ids = @partido_ids.sort{|pid| @transferencias.where(partido_id: pid).sum(:monto) }.reverse
 
       render "transferencias"
+    end
+
+    def contratacions
+      temp_trimestres_informados = []
+      Contratacion.where(partido_id: @partido_ids).all.map{|a| temp_trimestres_informados.concat(a.trimestre_informado_ids)}
+      @trimestres_informados = TrimestreInformado.find(temp_trimestres_informados.uniq.sort!)
+      @trimestres_informados = @trimestres_informados.sort_by {|t| t.ano.to_s + t.ordinal.to_s}.reverse!
+
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+      @filtro_genero = params[:genero].to_s
+      @datos = []
+
+      @contratacions = @trimestre_informado.contratacions.where(partido_id: @partido_ids)
+      @partido_ids = @partido_ids.sort{|pid| @contratacions.where(partido_id: pid).sum(:monto) }.reverse
+
+      render "contrataciones"
     end
 
     def representantes

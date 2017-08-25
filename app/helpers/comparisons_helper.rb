@@ -9,7 +9,8 @@ module ComparisonsHelper
                   "Egresos ordinarios",
                   "Ingresos de campaña",
                   "Egresos de campaña",
-                  "Transferencias"
+                  "Transferencias",
+                  "Contrataciones"
                 ]
   end
 
