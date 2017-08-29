@@ -616,19 +616,25 @@ class EstadisticaCargosDestination
                             cantidad_hombres: cantidad_hombres,
                             porcentaje_hombres: row[:_hombres]).first_or_initialize
 
-    if estadistica.id.nil?
-      estadistica.save
-      if estadistica.errors.any?
-        row[:error_log] = row[:error_log].to_s + ', ' + estadistica.errors.messages.to_s
+    if estadistica.tipo_cargo.blank?
+        row[:error_log] = row[:error_log].to_s + ', item no tipificado'
         @results[:estadistica_cargos][:errors] += 1
+    else
+      if estadistica.id.nil?
+        estadistica.save
+        if estadistica.errors.any?
+          row[:error_log] = row[:error_log].to_s + ', ' + estadistica.errors.messages.to_s
+          @results[:estadistica_cargos][:errors] += 1
+        else
+          estadistica.trimestre_informados << trimestre_informado unless trimestre_informado.in?(estadistica.trimestre_informados)
+          @results[:estadistica_cargos][:new] += 1
+        end
       else
         estadistica.trimestre_informados << trimestre_informado unless trimestre_informado.in?(estadistica.trimestre_informados)
-        @results[:estadistica_cargos][:new] += 1
+        @results[:estadistica_cargos][:found] += 1
       end
-    else
-      estadistica.trimestre_informados << trimestre_informado unless trimestre_informado.in?(estadistica.trimestre_informados)
-      @results[:estadistica_cargos][:found] += 1
     end
+
   end
 
   def close

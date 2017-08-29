@@ -265,6 +265,40 @@ $(document).ready(function(){
       }
     }
 
+  Raphael.fn.cargos_compare_bar = function(dato, max_v){
+      console.log(dato)
+      colors = ["#23dbb8", "#5a052a", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
+      var paper = this;
+      tmp = [];
+      total = 0;
+      adj = 1;
+      if(dato.length > 0){
+        for(var i=0; i<dato.length; i++){
+          // tmp[i]/ ={"concepto": dato[i].concepto, "importe": dato[i].importe)};
+          total += dato[i].cantidad;
+        };
+        if(max_v == total){
+          adj = 1
+
+        }else{
+          adj = total / max_v
+        }
+        prev = 0;
+        for(var i=0; i<dato.length; i++){
+          this_w = (dato[i].cantidad/total) * bar_width * adj
+          paper.rect(prev, 0, this_w, bar_height).attr({
+            "title": dato[i].tipo_cargo + " : " + dato[i].cantidad,
+            "fill" : colors[i],
+            "stroke" : "none"
+          });
+          prev += this_w
+        };
+
+      } else {
+        paper.text(50, 15, "Faltan datos.")
+      }
+    }
+
   Raphael.fn.ingreso_cam_header = function(){
     var paper = this;
     paper.circle(12, 15, 9 )

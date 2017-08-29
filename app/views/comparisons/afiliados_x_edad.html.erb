@@ -28,8 +28,8 @@
             <% afiliados_por_partido = @afiliados.where(partido_id: pid).where.not('lower(rango_etareo) = ?', 'total militantes' ).order(:rango_etareo) %>
             <% if afiliados_por_partido.empty? %>
               <td colspan="15" class="text-center">Sin datos</td>
-              <% else %>
-                <% (15 -afiliados_por_partido.count).times do |i| %>
+            <% else %>
+              <% (15 -afiliados_por_partido.count).times do |i| %>
                 <td class="text-center">Sin datos</td>
               <% end %>
             <% end %>
@@ -47,7 +47,7 @@
             <% end %>
             <td class="text-center"><%= total_afiliados %></td>
             <td class="text-center">
-            <%= link_to  partido_regiones_all_path(:partido_id => pid, :menu => 1) do %>
+            <%= link_to partido_regiones_all_path(:partido_id => pid, :menu => 1) do %>
               <button class="btn-view-detail btn btn-default btn-xs" > Ver</button>
           <% end %>
             </td>
