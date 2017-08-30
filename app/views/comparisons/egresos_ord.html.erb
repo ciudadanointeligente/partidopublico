@@ -27,7 +27,7 @@
 
         <td><span id="barras_<%= pid.to_s %>"></span></td>
 
-        <td class="monto"><%= number_to_currency @egresos_ordinarios.where(partido_id: pid).sum(:publico), delimiter: ".", separator: ',', unit: "$", precision: 0 , format: "%u%n" %></td>
+        <td class="monto"><%= number_to_currency @egresos_ordinarios.where(partido_id: pid).sum(meses @trimestre_informado), delimiter: ".", separator: ',', unit: "$", precision: 0 , format: "%u%n" %></td>
       </tr>
       <% end %>
     </tbody>
@@ -39,11 +39,11 @@ $(document).ready(function(){
   var partido_ids =  <%=  @partido_ids.to_json.html_safe %>;
   var datos = [];
   <% @partido_ids.each_with_index do |p, i| %>
-    datos[<%= i %>] = <%= @egresos_ordinarios.where(partido_id: p).order(:concepto).to_json.html_safe %>;
+    datos[<%= i %>] = <%= tipos_egresos_ordinarios.map{|te| {:tipo => te[:categoria], :monto => @egresos_ordinarios.where(partido_id: p, concepto: te[:tipos]).sum(meses @trimestre_informado)}}.to_json.html_safe %>;
   <% end %>
-  Raphael("header",400, 40 ).egreso_ord_header();
+  // Raphael("header",400, 40 ).egreso_ord_header();
   for(var i=0; i < partido_ids.length; i++){
-    Raphael("barras_" + partido_ids[i],300, 30 ).egreso_ord_compare_bar(datos[i],<%= @partido_ids.map{|pid| @egresos_ordinarios.where(partido_id: pid).sum(:publico) }.max %>);
+    Raphael("barras_" + partido_ids[i],300, 30 ).egreso_ord_compare_bar(datos[i], <%= @partido_ids.map{ |pid| @egresos_ordinarios.where(partido_id: pid).sum(meses @trimestre_informado)}.max %>);
   }
 });
 </script>

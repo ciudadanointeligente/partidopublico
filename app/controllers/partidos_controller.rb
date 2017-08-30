@@ -1,5 +1,6 @@
 class PartidosController < ApplicationController
   include PartidosHelper
+  include ApplicationHelper
   before_filter :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy, :admin]
   before_filter :authenticate_superadmin, only: [:new, :edit, :create, :update, :destroy]
   before_filter :set_partido, except: [:index, :new, :create, :admin]
@@ -1569,54 +1570,54 @@ class PartidosController < ApplicationController
       max_value
     end
 
-    def gasto_por_trimeste(trimestre, gasto)
-      if trimestre.ordinal == 0
-        gastos = (gasto.sum(:enero) + gasto.sum(:febrero) + gasto.sum(:marzo)) rescue 0
-      elsif trimestre.ordinal == 1
-        gastos = (gasto.sum(:abril) + gasto.sum(:mayo) + gasto.sum(:junio)) rescue 0
-      elsif trimestre.ordinal == 2
-        gastos = (gasto.sum(:julio) + gasto.sum(:agosto) + gasto.sum(:septiembre)) rescue 0
-      elsif trimestre.ordinal == 3
-        gastos = (gasto.sum(:octubre) + gasto.sum(:noviembre) + gasto.sum(:diciembre)) rescue 0
-      end
-      gastos
-    end
+    # def gasto_por_trimeste(trimestre, gasto)
+    #   if trimestre.ordinal == 0
+    #     gastos = (gasto.sum(:enero) + gasto.sum(:febrero) + gasto.sum(:marzo)) rescue 0
+    #   elsif trimestre.ordinal == 1
+    #     gastos = (gasto.sum(:abril) + gasto.sum(:mayo) + gasto.sum(:junio)) rescue 0
+    #   elsif trimestre.ordinal == 2
+    #     gastos = (gasto.sum(:julio) + gasto.sum(:agosto) + gasto.sum(:septiembre)) rescue 0
+    #   elsif trimestre.ordinal == 3
+    #     gastos = (gasto.sum(:octubre) + gasto.sum(:noviembre) + gasto.sum(:diciembre)) rescue 0
+    #   end
+    #   gastos
+    # end
 
-    def val_egresos_ordinarios(trimestre, egreso_ordinario, max_value)
-      if trimestre.ordinal == 0
-        val = (((egreso_ordinario.enero.to_f + egreso_ordinario.febrero.to_f + egreso_ordinario.marzo.to_f) / max_value.to_f).to_f rescue 0).to_s
-      elsif trimestre.ordinal == 1
-        val = (((egreso_ordinario.abril.to_f + egreso_ordinario.mayo.to_f + egreso_ordinario.junio.to_f) / max_value.to_f).to_f rescue 0).to_s
-      elsif trimestre.ordinal == 2
-        val = (((egreso_ordinario.julio.to_f + egreso_ordinario.agosto.to_f + egreso_ordinario.septiembre.to_f) / max_value.to_f).to_f rescue 0).to_s
-      elsif trimestre.ordinal == 3
-        val = (((egreso_ordinario.octubre.to_f + egreso_ordinario.noviembre.to_f + egreso_ordinario.diciembre.to_f) / max_value.to_f).to_f rescue 0).to_s
-      end
-    end
-
-    def line_egresos_ordinarios(trimestre, egreso_ordinario, val)
-      if trimestre.ordinal == 0
-        line = {'text' => egreso_ordinario.concepto,
-                'value' => ActiveSupport::NumberHelper::number_to_delimited((egreso_ordinario.enero + egreso_ordinario.febrero + egreso_ordinario.marzo), delimiter: ""),
-                'percentage' => val }
-        @datos_egresos_ordinarios << line unless (egreso_ordinario.enero + egreso_ordinario.febrero + egreso_ordinario.marzo) == 0
-      elsif trimestre.ordinal == 1
-        line = {'text' => egreso_ordinario.concepto,
-                'value' => ActiveSupport::NumberHelper::number_to_delimited((egreso_ordinario.abril + egreso_ordinario.mayo + egreso_ordinario.junio), delimiter: ""),
-                'percentage' => val }
-        @datos_egresos_ordinarios << line unless (egreso_ordinario.abril + egreso_ordinario.mayo + egreso_ordinario.junio) == 0
-      elsif trimestre.ordinal == 2
-        line = {'text' => egreso_ordinario.concepto,
-                'value' => ActiveSupport::NumberHelper::number_to_delimited((egreso_ordinario.julio + egreso_ordinario.agosto + egreso_ordinario.septiembre), delimiter: ""),
-                'percentage' => val }
-        @datos_egresos_ordinarios << line unless (egreso_ordinario.julio + egreso_ordinario.agosto + egreso_ordinario.septiembre) == 0
-      elsif trimestre.ordinal == 3
-        line = {'text' => egreso_ordinario.concepto,
-                'value' => ActiveSupport::NumberHelper::number_to_delimited((egreso_ordinario.octubre + egreso_ordinario.noviembre + egreso_ordinario.diciembre), delimiter: ""),
-                'percentage' => val }
-        @datos_egresos_ordinarios << line unless (egreso_ordinario.octubre + egreso_ordinario.noviembre + egreso_ordinario.diciembre) == 0
-      end
-    end
+    # def val_egresos_ordinarios(trimestre, egreso_ordinario, max_value)
+    #   if trimestre.ordinal == 0
+    #     val = (((egreso_ordinario.enero.to_f + egreso_ordinario.febrero.to_f + egreso_ordinario.marzo.to_f) / max_value.to_f).to_f rescue 0).to_s
+    #   elsif trimestre.ordinal == 1
+    #     val = (((egreso_ordinario.abril.to_f + egreso_ordinario.mayo.to_f + egreso_ordinario.junio.to_f) / max_value.to_f).to_f rescue 0).to_s
+    #   elsif trimestre.ordinal == 2
+    #     val = (((egreso_ordinario.julio.to_f + egreso_ordinario.agosto.to_f + egreso_ordinario.septiembre.to_f) / max_value.to_f).to_f rescue 0).to_s
+    #   elsif trimestre.ordinal == 3
+    #     val = (((egreso_ordinario.octubre.to_f + egreso_ordinario.noviembre.to_f + egreso_ordinario.diciembre.to_f) / max_value.to_f).to_f rescue 0).to_s
+    #   end
+    # end
+    #
+    # def line_egresos_ordinarios(trimestre, egreso_ordinario, val)
+    #   if trimestre.ordinal == 0
+    #     line = {'text' => egreso_ordinario.concepto,
+    #             'value' => ActiveSupport::NumberHelper::number_to_delimited((egreso_ordinario.enero + egreso_ordinario.febrero + egreso_ordinario.marzo), delimiter: ""),
+    #             'percentage' => val }
+    #     @datos_egresos_ordinarios << line unless (egreso_ordinario.enero + egreso_ordinario.febrero + egreso_ordinario.marzo) == 0
+    #   elsif trimestre.ordinal == 1
+    #     line = {'text' => egreso_ordinario.concepto,
+    #             'value' => ActiveSupport::NumberHelper::number_to_delimited((egreso_ordinario.abril + egreso_ordinario.mayo + egreso_ordinario.junio), delimiter: ""),
+    #             'percentage' => val }
+    #     @datos_egresos_ordinarios << line unless (egreso_ordinario.abril + egreso_ordinario.mayo + egreso_ordinario.junio) == 0
+    #   elsif trimestre.ordinal == 2
+    #     line = {'text' => egreso_ordinario.concepto,
+    #             'value' => ActiveSupport::NumberHelper::number_to_delimited((egreso_ordinario.julio + egreso_ordinario.agosto + egreso_ordinario.septiembre), delimiter: ""),
+    #             'percentage' => val }
+    #     @datos_egresos_ordinarios << line unless (egreso_ordinario.julio + egreso_ordinario.agosto + egreso_ordinario.septiembre) == 0
+    #   elsif trimestre.ordinal == 3
+    #     line = {'text' => egreso_ordinario.concepto,
+    #             'value' => ActiveSupport::NumberHelper::number_to_delimited((egreso_ordinario.octubre + egreso_ordinario.noviembre + egreso_ordinario.diciembre), delimiter: ""),
+    #             'percentage' => val }
+    #     @datos_egresos_ordinarios << line unless (egreso_ordinario.octubre + egreso_ordinario.noviembre + egreso_ordinario.diciembre) == 0
+    #   end
+    # end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_partido

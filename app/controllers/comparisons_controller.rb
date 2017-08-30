@@ -1,4 +1,6 @@
 class ComparisonsController < ApplicationController
+
+  include ApplicationHelper
   #before_action :set_comparison, only: [:show, :edit, :update, :destroy]
   before_action :set_comparison_params
   layout "comparison"
@@ -219,7 +221,7 @@ class ComparisonsController < ApplicationController
       @datos = []
 
       @ingresos_campana = @trimestre_informado.ingreso_campanas.where(partido_id: @partido_ids)
-      @partido_ids = @partido_ids.sort{|pid| @ingresos_campana.where(partido_id: pid).sum(:monto) }.reverse
+      @partido_ids = @partido_ids.sort{|pid| @ingresos_campana.where(partido_id: pid).sum(meses @trimestre_informado) }.reverse
 
       render "ingresos_cam"
     end
