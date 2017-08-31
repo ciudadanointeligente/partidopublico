@@ -13,32 +13,33 @@ class ComparisonsController < ApplicationController
     i = categories.index @category
 
     case i
-      when 1
+      when 0
         afiliados_x_edad
 
-      when 3
-        cargos
-
-      when 4
-        ingresos_ord
-
-      when 5
-        egresos_ord
-
-      when 6
-        ingresos_cam
-
-      when 7
-        egresos_cam
-
-      when 8
-        transferencias
-
-      when 9
-        contratacions
+      when 1
+        regions
 
       when 2
-        regions
+        cargos
+
+      when 3
+        ingresos_ord
+
+      when 4
+        egresos_ord
+
+      when 5
+        ingresos_cam
+
+      when 6
+        egresos_cam
+
+      when 7
+        transferencias
+
+      when 8
+        contratacions
+
 
       else
         regions
@@ -221,7 +222,7 @@ class ComparisonsController < ApplicationController
       @datos = []
 
       @ingresos_campana = @trimestre_informado.ingreso_campanas.where(partido_id: @partido_ids)
-      @partido_ids = @partido_ids.sort{|pid| @ingresos_campana.where(partido_id: pid).sum(meses @trimestre_informado) }.reverse
+      @partido_ids = @partido_ids.sort{|pid| @ingresos_campana.where(partido_id: pid).sum(:monto) }.reverse
 
       render "ingresos_cam"
     end

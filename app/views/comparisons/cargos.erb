@@ -10,9 +10,9 @@
 <div id='_header'></div>
 <div class="row" style="margin-bottom:10px">
   <div class="col-md-12">
-    <span class="leyenda-finanzas"><img/ class="circle-green_light"> Autoridades de Gobierno</span>
-    <span class="leyenda-finanzas"><img/ class="circle-alpi_purple"> Cargos Directivos en el Partido</span>
-    <span class="leyenda-finanzas"><img/ class="circle-green_dark"> Cargos por elección popular</span>
+    <span class="leyenda-finanzas"><img/ class="circle-sky_light"> Autoridades de Gobierno</span>
+    <span class="leyenda-finanzas"><img/ class="circle-sky_medium"> Cargos Directivos en el Partido</span>
+    <span class="leyenda-finanzas"><img/ class="circle-sky_dark"> Cargos por elección popular</span>
   </div>
 </div>
 <div class="table-responsive">
@@ -29,9 +29,19 @@
       <% total_cargos = (@cargos.where(partido_id: pid).first.cantidad_mujeres + @cargos.where(partido_id: pid).first.cantidad_hombres) rescue 0 %>
       <tr>
         <td><%= Partido.find(pid).nombre %></td>
+        <% if @filtro_genero == 'hombres' %>
+          <% cargos_por_partido = @cargos.where(partido_id: pid).map{|e| e.tipo_cargo}.uniq.sort.
+             map{|tc| @cargos.where(partido_id: pid, tipo_cargo: tc).
+             sum('cantidad_hombres')} %>
+        <% elsif @filtro_genero == 'mujeres' %>
+          <% cargos_por_partido = @cargos.where(partido_id: pid).map{|e| e.tipo_cargo}.uniq.sort.
+             map{|tc| @cargos.where(partido_id: pid, tipo_cargo: tc).
+             sum('cantidad_mujeres')} %>
+        <% else %>
         <% cargos_por_partido = @cargos.where(partido_id: pid).map{|e| e.tipo_cargo}.uniq.sort.
-        map{|tc| @cargos.where(partido_id: pid, tipo_cargo: tc).
-          sum('cantidad_hombres + cantidad_mujeres')} %>
+           map{|tc| @cargos.where(partido_id: pid, tipo_cargo: tc).
+           sum('cantidad_hombres + cantidad_mujeres')} %>
+        <% end %>
         <td> <span id="barras_<%= pid.to_s %>"></span> </td>
         <td class="text-center">
           <%= link_to partido_regiones_all_path(:partido_id => pid, :menu => 1) do %>
@@ -49,13 +59,29 @@ $(document).ready(function(){
   var partido_ids =  <%=  @partido_ids.to_json.html_safe %>;
   var datos = [];
   <% @partido_ids.each_with_index do |p, i| %>
-    datos[<%= i %>] = <%= @cargos.where(partido_id: p).order(:tipo_cargo).map{|tc| tc.tipo_cargo}.uniq.
-    map{|tc| {:tipo_cargo => tc, :cantidad => (@cargos.where(partido_id: p, tipo_cargo: tc).
-      sum('cantidad_hombres + cantidad_mujeres'))} }.to_json.html_safe %>;
+    <% if @filtro_genero == 'hombres' %>
+         datos[<%= i %>] = <%= @cargos.where(partido_id: p).order(:tipo_cargo).map{|tc| tc.tipo_cargo}.uniq.
+         map{|tc| {:tipo_cargo => tc, :cantidad => (@cargos.where(partido_id: p, tipo_cargo: tc).
+         sum('cantidad_hombres'))} }.to_json.html_safe %>;
+    <% elsif @filtro_genero == 'mujeres' %>
+         datos[<%= i %>] = <%= @cargos.where(partido_id: p).order(:tipo_cargo).map{|tc| tc.tipo_cargo}.uniq.
+         map{|tc| {:tipo_cargo => tc, :cantidad => (@cargos.where(partido_id: p, tipo_cargo: tc).
+         sum('cantidad_mujeres'))} }.to_json.html_safe %>;
+    <% else %>
+         datos[<%= i %>] = <%= @cargos.where(partido_id: p).order(:tipo_cargo).map{|tc| tc.tipo_cargo}.uniq.
+         map{|tc| {:tipo_cargo => tc, :cantidad => (@cargos.where(partido_id: p, tipo_cargo: tc).
+         sum('cantidad_hombres + cantidad_mujeres'))} }.to_json.html_safe %>;
+    <% end %>
   <% end %>
   console.log('1' + datos[1])
   for(var i=0; i < partido_ids.length; i++){
-    Raphael("barras_" + partido_ids[i],300, 30 ).cargos_compare_bar(datos[i], <%= @partido_ids.map{|pid| @cargos.where(partido_id: pid).sum('cantidad_mujeres + cantidad_hombres')}.max %>);
+    <% if @filtro_genero == 'hombres' %>
+         Raphael("barras_" + partido_ids[i],300, 30 ).cargos_compare_bar(datos[i], <%= @partido_ids.map{|pid| @cargos.where(partido_id: pid).sum('cantidad_hombres')}.max %>);
+    <% elsif @filtro_genero == 'mujeres' %>
+         Raphael("barras_" + partido_ids[i],300, 30 ).cargos_compare_bar(datos[i], <%= @partido_ids.map{|pid| @cargos.where(partido_id: pid).sum('cantidad_mujeres')}.max %>);
+    <% else %>
+         Raphael("barras_" + partido_ids[i],300, 30 ).cargos_compare_bar(datos[i], <%= @partido_ids.map{|pid| @cargos.where(partido_id: pid).sum('cantidad_mujeres + cantidad_hombres')}.max %>);
+    <% end %>
   }
 });
 </script>

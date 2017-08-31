@@ -36,10 +36,10 @@
             <% afiliados_por_partido.each do |a| %>
               <% if @filtro_genero == "hombres" %>
                 <% color = (((a.hombres).to_f/total_afiliados.to_f)*100.0) %>
-                <td><p class="edades" style="background-color:rgba(232,93,52,<%= color * 0.05 %>);"><%= (((a.hombres).to_f/total_afiliados.to_f)*100.0).round(1).to_s rescue 0 %></p></td>
+                <td><p class="edades" style="background-color:rgba(25, 165, 138,<%= color * 0.05 %>);"><%= (((a.hombres).to_f/total_afiliados.to_f)*100.0).round(1).to_s rescue 0 %></p></td>
               <% elsif @filtro_genero == "mujeres" %>
                 <% color = (((a.mujeres).to_f/total_afiliados.to_f)*100.0) %>
-                  <td><p class="edades" style="background-color:rgba(232,93,52,<%= color * 0.05 %>);"><%= (((a.mujeres).to_f/total_afiliados.to_f)*100.0).round(1).to_s rescue 0 %></p></td>
+                  <td><p class="edades" style="background-color:rgba(6, 185, 191,<%= color * 0.05 %>);"><%= (((a.mujeres).to_f/total_afiliados.to_f)*100.0).round(1).to_s rescue 0 %></p></td>
               <% else %>
                 <% color = (((a.hombres + a.mujeres).to_f/total_afiliados.to_f)*100.0) %>
                 <td><p class="edades" style="background-color:rgba(232,93,52,<%= color * 0.05 %>);"><%= (((a.hombres + a.mujeres).to_f/total_afiliados.to_f)*100.0).round(1).to_s rescue 0 %></p></td>

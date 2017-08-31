@@ -5,10 +5,13 @@
 <%= submit_tag 'Filtrar', class: "btn" %>
 <%= hidden_field_tag 'category', "Ingresos de campaña" %>
 <% end %>
-<br>
-<br>
-<br>
 <div id='header'></div>
+<div class="row" style="margin-bottom:10px">
+  <div class="col-md-12">
+    <span class="leyenda-finanzas"><img/ class="circle-green_light"> Aportes en Dinero</span>
+    <span class="leyenda-finanzas"><img/ class="circle-green_dark"> Otros Aportes</span>
+  </div>
+</div>
 <div class="table-responsive">
   <table class="table">
     <thead>
@@ -40,7 +43,6 @@ $(document).ready(function(){
   <% @partido_ids.each_with_index do |p, i| %>
     datos[<%= i %>] = <%= @ingresos_campana.where(partido_id: p).order(:tipo_aporte).to_json.html_safe %>;
   <% end %>
-  Raphael("header",400, 40 ).ingreso_cam_header();
   for(var i=0; i < partido_ids.length; i++){
     Raphael("barras_" + partido_ids[i],300, 30 ).ingreso_cam_compare_bar(datos[i],<%= @partido_ids.map{|pid| @ingresos_campana.where(partido_id: pid).sum(:monto) }.max %>);
   }

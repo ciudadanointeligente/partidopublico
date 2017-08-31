@@ -233,7 +233,7 @@ $(document).ready(function(){
   }
 
   Raphael.fn.egreso_ord_compare_bar = function(dato, max_v){
-    colors = ["#23dbb8", "#5a052a", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
+    colors = ["#CDFFFC", "#78EEE8", "#06B9BF", "#245d72", "#1ed6d6", "#17a5a5"];
     var paper = this;
     tmp = [];
     total = 0;
@@ -295,7 +295,7 @@ $(document).ready(function(){
   }
 
   Raphael.fn.ingreso_cam_compare_bar = function(dato, max_v){
-      colors = ["#23dbb8", "#5a052a", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
+      colors = ["#23dbb8", "#19A58A", "#5a052a", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
       var paper = this;
       tmp = [];
       total = 0;
@@ -329,7 +329,7 @@ $(document).ready(function(){
 
   Raphael.fn.cargos_compare_bar = function(dato, max_v){
       console.log(dato)
-      colors = ["#23dbb8", "#5a052a", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
+      colors = ["#CDFFFC", "#78EEE8", "#06B9BF", "#245d72", "#1ed6d6", "#17a5a5"];
       var paper = this;
       tmp = [];
       total = 0;
@@ -391,7 +391,7 @@ $(document).ready(function(){
   }
 
   Raphael.fn.egreso_cam_compare_bar = function(dato, max_v){
-      colors = ["#23dbb8", "#5a052a", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
+      colors = ["#CDFFFC", "#78EEE8", "#06B9BF", "#5a052a", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
       var paper = this;
       tmp = [];
       total = 0;
@@ -499,7 +499,7 @@ $(document).ready(function(){
     var paper = this;
     paper.circle(12, 15, 9 )
     .attr({
-      "fill" : "#23DBB8",
+      "fill" : "#CDFFFC",
       "stroke" : "none"
     });
 
@@ -512,7 +512,7 @@ $(document).ready(function(){
 
     paper.circle(191, 15, 9 )
     .attr({
-      "fill" : "#19A58A",
+      "fill" : "#78EEE8",
       "stroke" : "none"
     });
 

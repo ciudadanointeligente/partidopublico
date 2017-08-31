@@ -7,11 +7,11 @@ module ApplicationHelper
         :tipos => ["Gastos de personal", "Gastos de adquisición de bienes y servicios o gastos corrientes", "Otros gastos de administración"]
       },
       {
-        :categoria => 'Gastos Cérditos e Inversiones',
+        :categoria => 'Préstamos, Créditos o Inversiones',
         :tipos => ["Gastos financieros por préstamos de corto plazo", "Gastos financieros por préstamos de largo plazo", "Créditos de corto plazo, inversiones y valores de operaciones de capital", "Créditos de largo plazo, inversiones y valores de operaciones de capital"]
       },
       {
-        :categoria => 'Gastos Fomento',
+        :categoria => 'Gastos de Participación y Formación',
         :tipos => ["Gastos de actividades de investigación",
                   "Gastos de actividades de educación cívica",
                   "Gastos de actividades de fomento a la participación femenina",
