@@ -1435,26 +1435,48 @@ class PartidosController < ApplicationController
 
   def intereses_patrimonios
     @intereses_patrimonios = []
-    tc_candidatos = @partido.tipo_cargos.where(candidato:true)
-    if tc_candidatos.count == 0
+
+    temp_trimestres_informados = []
+    @partido.cargos.each do |tc|
+      tc.trimestre_informados.each do |t|
+
+        temp_trimestres_informados.push(t)
+
+      end
+    end
+
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
+
+    if @trimestres_informados.count == 0
+      @trimestres_informados = []
       @sin_datos = true
     else
-      tc_candidatos.each do |tc|
-        filter_by = @partido.cargos.where(tipo_cargo_id:tc)
-        if !params[:q].blank?
-          n = params[:q].split(" ")[0]
-          a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
-          personas = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", n.downcase, a.downcase)
-          filter_by = filter_by.where(:persona_id => personas)
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+
+      tc_candidatos = @partido.tipo_cargos.where(:partido_id => @partido.id, candidato:true)
+      if tc_candidatos.count == 0 || (@trimestre_informado.cargos.where(:partido_id => @partido.id)).nil?
+        @sin_datos = true
+      else
+        tc_candidatos.each do |tc|
+          @cargos_intereses_patrimonios = @trimestre_informado.cargos.where(:partido_id => @partido.id, tipo_cargo_id:tc)
+          p @cargos_intereses_patrimonios
+          if !params[:q].blank?
+            n = params[:q].split(" ")[0]
+            a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
+            personas = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", n.downcase, a.downcase)
+            @cargos_intereses_patrimonios = @cargos_intereses_patrimonios.where(:persona_id => personas)
+          end
+          if !params[:region].blank?
+            @cargos_intereses_patrimonios = @cargos_intereses_patrimonios.where(:region_id => params["region"])
+          end
+          if !params[:genero].blank?
+            by_gender = @partido.personas.where(:genero => params[:genero])
+            @cargos_intereses_patrimonios = @cargos_intereses_patrimonios.where(:persona_id => by_gender)
+          end
+          @intereses_patrimonios << {"type" => tc.titulo, "cargos" => @cargos_intereses_patrimonios} unless @cargos_intereses_patrimonios.empty?
         end
-        if !params[:region].blank?
-          filter_by = filter_by.where(:region_id => params["region"])
-        end
-        if !params[:genero].blank?
-          by_gender = @partido.personas.where(:genero => params[:genero])
-          filter_by = filter_by.where(:persona_id => by_gender)
-        end
-        @intereses_patrimonios << {"type" => tc.titulo, "cargos" => filter_by} unless filter_by.empty?
       end
       @sin_datos = false
     end
