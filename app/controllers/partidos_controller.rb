@@ -1516,9 +1516,17 @@ class PartidosController < ApplicationController
       tc_candidatos.each do |tc|
         filter_by = @trimestre_informado.cargos.where(tipo_cargo_id:tc)
         if !params[:q].blank?
-          n = params[:q].split(" ")[0]
-          a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
-          personas = Persona.where("lower(personas.nombre) like ? OR lower(personas.apellidos) like ?", n.downcase, a.downcase)
+          nombre_a_buscar = params[:q].split(' ')
+          n = nombre_a_buscar[0].to_s
+          a1 = nombre_a_buscar[1].to_s
+          a2 = nombre_a_buscar[2].to_s
+          if nombre_a_buscar.length >=2
+            personas = (Persona.where("lower(personas.nombre) like ? OR
+            lower(personas.apellidos) like ? OR lower(personas.apellidos) like ?", '%' + n.downcase + '%', '%' + n.downcase + '%', '%' + a1.downcase + '%'))
+          elsif nombre_a_buscar.length == 1
+            personas = (Persona.where("lower(personas.nombre) like ? OR
+            trim(lower(personas.apellidos)) like ? ", '%' + n.downcase + '%', '%' + n.downcase + '%'))
+          end
           filter_by = filter_by.where(:persona_id => personas)
         end
         if !params[:region].blank?
