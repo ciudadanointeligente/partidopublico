@@ -1463,18 +1463,16 @@ class PartidosController < ApplicationController
           @cargos_intereses_patrimonios = @trimestre_informado.cargos.where(:partido_id => @partido.id, tipo_cargo_id:tc)
           if !params[:q].blank?
             nombre_a_buscar = params[:q].split(' ')
-            p nombre_a_buscar
             n = nombre_a_buscar[0].to_s
-            p 'v'
-            p 'nombre: ' + n.to_s
-            p '＾'
-            a = nombre_a_buscar[1].to_s
-            p 'v'
-            p 'apellido: ' + a.to_s
-            p '＾'
-
-            personas = (Persona.where("lower(personas.nombre) like ? ", n.downcase) || Persona.where("lower(personas.apellidos) like ?", a.downcase))
-            p personas
+            a1 = nombre_a_buscar[1].to_s
+            a2 = nombre_a_buscar[2].to_s
+            if nombre_a_buscar.length >=2
+              personas = (Persona.where("lower(personas.nombre) like ? OR
+              lower(personas.apellidos) like ? OR lower(personas.apellidos) like ?", '%' + n.downcase + '%', '%' + n.downcase + '%', '%' + a1.downcase + '%'))
+            elsif nombre_a_buscar.length == 1
+              personas = (Persona.where("lower(personas.nombre) like ? OR
+              trim(lower(personas.apellidos)) like ? ", '%' + n.downcase + '%', '%' + n.downcase + '%'))
+            end
             @cargos_intereses_patrimonios = @cargos_intereses_patrimonios.where(:persona_id => personas)
           end
           if !params[:region].blank?
