@@ -10,21 +10,46 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Partido</th>
-        <th>&nbsp;</th>
-        <th>Monto Total</th>
+        <th class="concepto-th">Partido</th>
+        <th>&nbsp;<div class="visible-xs">Porcentaje</div></th>
+        <th class="monto-th">Monto Total</th>
       </tr>
     </thead>
     <tbody>
+      <% max_value = 0 %>
+      <% @partido_ids.each do |pid| %>
+        <% if @transferencias.where(partido_id: pid).sum(:monto) < 0 %>
+          <% max_value += (@transferencias.where(partido_id: pid).sum(:monto) * -1) unless @transferencias.where(partido_id: pid).sum(:monto).nil? %>
+        <% else %>
+          <% max_value += @transferencias.where(partido_id: pid).sum(:monto) unless @transferencias.where(partido_id: pid).sum(:monto).nil? %>
+        <% end %>
+      <% end %>
 
       <% @partido_ids.each do |pid| %>
-      <tr>
-        <td><%= Partido.find(pid).nombre %></td>
-
-        <td><span id="barras_<%= pid.to_s %>"></span></td>
-
-        <td class="monto"><%= number_to_currency @transferencias.where(partido_id: pid).sum(:monto), delimiter: ".", separator: ',', unit: "$", precision: 0 , format: "%u%n" %></td>
-      </tr>
+        <tr>
+          <td class="concepto"><%= Partido.find(pid).nombre %></td>
+          <% if @transferencias.where(partido_id: pid).sum(:monto) < 0 %>
+              <td>
+                <div class="porcentaje-movil">
+                <% if @transferencias.where(partido_id: pid).sum(:monto) != 0 %>
+                  <%= (((@transferencias.where(partido_id: pid).sum(:monto) * -1) * 100).to_f / max_value.to_f).round(2).to_s + '%' %>
+                <% end %>
+                </div>
+                <div id="barras_<%= pid.to_s %>"></div>
+              </td>
+              <td class="monto"><%= number_to_currency (@transferencias.where(partido_id: pid).sum(:monto) * -1), delimiter: ".", separator: ',', unit: "$", precision: 0 , format: "%u%n" %></td>
+            <% else %>
+              <td>
+                <div class="porcentaje-movil">
+                <% if @transferencias.where(partido_id: pid).sum(:monto) != 0 %>
+                  <%= ((@transferencias.where(partido_id: pid).sum(:monto) * 100).to_f / max_value.to_f).round(2).to_s + '%' %>
+                <% end %>
+                </div>
+                <div id="barras_<%= pid.to_s %>"></div>
+              </td>
+              <td class="monto"><%= number_to_currency @transferencias.where(partido_id: pid).sum(:monto), delimiter: ".", separator: ',', unit: "$", precision: 0 , format: "%u%n" %></td>
+            <% end %>
+        </tr>
       <% end %>
     </tbody>
   </table>
@@ -37,9 +62,12 @@ $(document).ready(function(){
   <% @partido_ids.each_with_index do |p, i| %>
     datos[<%= i %>] = <%= @transferencias.where(partido_id: p).to_json.html_safe %>;
   <% end %>
-  // Raphael("header",400, 40 ).transferencias_compare_header();
   for(var i=0; i < partido_ids.length; i++){
-    Raphael("barras_" + partido_ids[i],300, 30 ).transferencias_compare_bar(datos[i],<%= @partido_ids.map{|pid| @transferencias.where(partido_id: pid).sum(:monto) }.max %>);
+    if(screen.width > 767) {
+      Raphael("barras_" + partido_ids[i],300, 30 ).transferencias_compare_bar(datos[i],<%= @partido_ids.map{|pid| @transferencias.where(partido_id: pid).sum(:monto) }.max %>);
+    } else {
+      Raphael("barras_" + partido_ids[i], 80, 40 ).transferencias_compare_bar(datos[i],<%= @partido_ids.map{|pid| @transferencias.where(partido_id: pid).sum(:monto) }.max %>);
+    }
   }
 });
 </script>
