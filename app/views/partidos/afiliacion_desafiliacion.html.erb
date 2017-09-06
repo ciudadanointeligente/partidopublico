@@ -5,7 +5,9 @@
 <% else %>
 <%= form_tag partido_afiliacion_desafiliacion_path, :method =>  :get, class: 'form-inline' do |f| %>
   <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
-  <%= submit_tag 'Filtrar' %>
+  <%= submit_tag 'Filtrar', class: "btn" %>
+  <%= hidden_field_tag 'menu', params[:menu] %>
+
 <% end %>
 <% @datos_tramites_afiliacion.each do |ta| %>
 <h4>Procedimientos</h4>

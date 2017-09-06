@@ -22,18 +22,18 @@ module ApplicationHelper
     ]
   end
 
-  def gasto_por_trimeste(trimestre, gasto)
-    if trimestre.ordinal == 0
-      gastos = (gasto.enero + gasto.febrero + gasto.marzo) rescue 0
-    elsif trimestre.ordinal == 1
-      gastos = (gasto.abril + gasto.mayo + gasto.junio) rescue 0
-    elsif trimestre.ordinal == 2
-      gastos = (gasto.julio + gasto.agosto + gasto.septiembre) rescue 0
-    elsif trimestre.ordinal == 3
-      gastos = (gasto.octubre + gasto.noviembre + gasto.diciembre) rescue 0
-    end
-    gastos
-  end
+  # def gasto_por_trimeste(trimestre, gasto)
+  #   if trimestre.ordinal == 0
+  #     gastos = (gasto.enero + gasto.febrero + gasto.marzo) rescue 0
+  #   elsif trimestre.ordinal == 1
+  #     gastos = (gasto.abril + gasto.mayo + gasto.junio) rescue 0
+  #   elsif trimestre.ordinal == 2
+  #     gastos = (gasto.julio + gasto.agosto + gasto.septiembre) rescue 0
+  #   elsif trimestre.ordinal == 3
+  #     gastos = (gasto.octubre + gasto.noviembre + gasto.diciembre) rescue 0
+  #   end
+  #   gastos
+  # end
 
   def meses(trimestre)
     meses = ''
