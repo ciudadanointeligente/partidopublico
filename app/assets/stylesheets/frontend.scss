@@ -1383,6 +1383,11 @@ p.edades{
 
 @media only screen and (max-width: 767px) {
 
+	input[type="checkbox"] {
+  	transform:scale(1.5, 1.5);
+		margin-right: 5px;
+	}
+
 	.rtable {
 	  display: inline-block;
 	  vertical-align: middle;;
