@@ -436,16 +436,22 @@ $(document).ready(function(){
         };
 
         if(max_v == total){
-          adj = 1
 
-        }else{
-          adj = total / max_v
+          adj = 1;
+
+        } else {
+
+          adj = (total / max_v);
         }
+
+        console.log('bar_width: ' + bar_width);
+        console.log('adj: ' + adj);
         prev = 0;
         // for(var i=0; i<dato.length; i++){
           // this_w = (dato[i].monto/total) * bar_width * adj
-          this_w = 1 * bar_width * adj
-          paper.rect(prev, 0, this_w, bar_height).attr({
+          this_w = 100 * adj
+          console.log('barra: ' + this_w);
+          paper.rect(0, 0, this_w, bar_height).attr({
             // "title": dato[i].descripcion + " : " + dato[i].monto,
             // "title": "total",
             "fill" : colors[0],
@@ -477,10 +483,14 @@ $(document).ready(function(){
         }else{
           adj = total / max_v
         }
+
+        console.log('bar_width: ' + bar_width);
+        console.log('adj: ' + adj);
         prev = 0;
         // for(var i=0; i<dato.length; i++){
           // this_w = (dato[i].monto/total) * bar_width * adj
-          this_w = 1 * bar_width * adj
+          this_w = 100 * adj;
+          console.log('barra: ' + this_w);
           paper.rect(prev, 0, this_w, bar_height).attr({
             // "title": dato[i].descripcion + " : " + dato[i].monto,
             // "title": "total",

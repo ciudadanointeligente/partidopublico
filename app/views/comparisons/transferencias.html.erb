@@ -64,9 +64,9 @@ $(document).ready(function(){
   <% end %>
   for(var i=0; i < partido_ids.length; i++){
     if(screen.width > 767) {
-      Raphael("barras_" + partido_ids[i],300, 30 ).transferencias_compare_bar(datos[i],<%= @partido_ids.map{|pid| @transferencias.where(partido_id: pid).sum(:monto) }.max %>);
+      Raphael("barras_" + partido_ids[i],300, 30 ).transferencias_compare_bar(datos[i],<%= max_value %>);
     } else {
-      Raphael("barras_" + partido_ids[i], 80, 40 ).transferencias_compare_bar(datos[i],<%= @partido_ids.map{|pid| @transferencias.where(partido_id: pid).sum(:monto) }.max %>);
+      Raphael("barras_" + partido_ids[i],80, 40 ).transferencias_compare_bar(datos[i],<%= max_value %>);
     }
   }
 });
