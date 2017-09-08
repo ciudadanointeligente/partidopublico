@@ -171,8 +171,15 @@ $(document).ready(function(){
   }
 
   Raphael.fn.ingreso_ord_compare_bar = function(dato, max_v){
-    colors = ["#23dbb8", "#5a052a", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
+    colors = ["#23DBB8", "#19A58A", "#19A58A", "#19A58A", "#19A58A", "#19A58A"];
     var paper = this;
+    if(screen.width > 760) {
+      var bar_width = 300;
+      var bar_height = 30;
+    } else {
+      var bar_width = 80
+      var bar_height = 20
+    }
     tmp = [];
     total = 0;
     adj = 1;
@@ -190,11 +197,20 @@ $(document).ready(function(){
       prev = 0;
       for(var i=0; i<dato.length; i++){
         this_w = (dato[i].importe/total) * bar_width * adj
-        paper.rect(prev, 0, this_w, bar_height).attr({
-          "title": dato[i].concepto + " : " + dato[i].importe,
-          "fill" : colors[i],
-          "stroke" : "none"
-        });
+        if(dato[i].concepto == "Aportes del Estado (Art. 33 Bis Ley N° 18603)" ||
+           dato[i].concepto == "Otras transferencias públicas"){
+             paper.rect(prev, 0, this_w, bar_height).attr({
+               "title": dato[i].concepto + " : " + dato[i].importe,
+               "fill" : colors[0],
+               "stroke" : "none"
+             });
+           } else{
+             paper.rect(prev, 0, this_w, bar_height).attr({
+               "title": dato[i].concepto + " : " + dato[i].importe,
+               "fill" : colors[1],
+               "stroke" : "none"
+             });
+           }
         prev += this_w
       };
 
