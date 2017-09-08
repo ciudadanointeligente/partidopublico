@@ -442,6 +442,13 @@ $(document).ready(function(){
   Raphael.fn.transferencias_compare_bar = function(dato, max_v){
       colors = ["#23dbb8", "#5a052a", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
       var paper = this;
+      if(screen.width > 760) {
+        var bar_width = 300;
+        var bar_height = 30;
+      } else {
+        var bar_width = 100
+        var bar_height = 30
+      }
       tmp = [];
       total = 0;
       adj = 1;
@@ -465,7 +472,7 @@ $(document).ready(function(){
         prev = 0;
         // for(var i=0; i<dato.length; i++){
           // this_w = (dato[i].monto/total) * bar_width * adj
-          this_w = 100 * adj
+          this_w = adj * bar_width;
           console.log('barra: ' + this_w);
           paper.rect(0, 0, this_w, bar_height).attr({
             // "title": dato[i].descripcion + " : " + dato[i].monto,
@@ -484,6 +491,13 @@ $(document).ready(function(){
   Raphael.fn.contratacions_compare_bar = function(dato, max_v){
       colors = ["#23dbb8", "#5a052a", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
       var paper = this;
+      if(screen.width > 760) {
+        var bar_width = 300;
+        var bar_height = 30;
+      } else {
+        var bar_width = 100
+        var bar_height = 30
+      }
       tmp = [];
       total = 0;
       adj = 1;
@@ -505,7 +519,7 @@ $(document).ready(function(){
         prev = 0;
         // for(var i=0; i<dato.length; i++){
           // this_w = (dato[i].monto/total) * bar_width * adj
-          this_w = 100 * adj;
+          this_w = adj * bar_width;
           console.log('barra: ' + this_w);
           paper.rect(prev, 0, this_w, bar_height).attr({
             // "title": dato[i].descripcion + " : " + dato[i].monto,
