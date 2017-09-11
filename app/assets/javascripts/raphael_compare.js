@@ -171,14 +171,14 @@ $(document).ready(function(){
   }
 
   Raphael.fn.ingreso_ord_compare_bar = function(dato, max_v){
-    colors = ["#23DBB8", "#19A58A", "#19A58A", "#19A58A", "#19A58A", "#19A58A"];
+    colors = ["#23DBB8", "#19A58A", "#5a052a", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
     var paper = this;
     if(screen.width > 760) {
       var bar_width = 300;
       var bar_height = 30;
     } else {
       var bar_width = 80
-      var bar_height = 20
+      var bar_height = 30
     }
     tmp = [];
     total = 0;
@@ -251,6 +251,13 @@ $(document).ready(function(){
   Raphael.fn.egreso_ord_compare_bar = function(dato, max_v){
     colors = ["#CDFFFC", "#78EEE8", "#06B9BF", "#245d72", "#1ed6d6", "#17a5a5"];
     var paper = this;
+    if(screen.width > 760) {
+      var bar_width = 300;
+      var bar_height = 30;
+    } else {
+      var bar_width = 80
+      var bar_height = 30
+    }
     tmp = [];
     total = 0;
     adj = 1;
@@ -311,8 +318,15 @@ $(document).ready(function(){
   }
 
   Raphael.fn.ingreso_cam_compare_bar = function(dato, max_v){
-      colors = ["#23dbb8", "#19A58A", "#5a052a", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
+      colors = ["#23DBB8", "#19A58A", "#5a052a", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
       var paper = this;
+      if(screen.width > 760) {
+        var bar_width = 300;
+        var bar_height = 30;
+      } else {
+        var bar_width = 80
+        var bar_height = 30
+      }
       tmp = [];
       total = 0;
       adj = 1;
@@ -330,11 +344,19 @@ $(document).ready(function(){
         prev = 0;
         for(var i=0; i<dato.length; i++){
           this_w = (dato[i].monto/total) * bar_width * adj
-          paper.rect(prev, 0, this_w, bar_height).attr({
-            "title": dato[i].tipo_aporte + " : " + dato[i].monto,
-            "fill" : colors[i],
-            "stroke" : "none"
-          });
+          if(dato[i].tipo_aporte == "Aportes en Dinero"){
+            paper.rect(prev, 0, this_w, bar_height).attr({
+              "title": dato[i].tipo_aporte + " : " + dato[i].monto,
+              "fill" : colors[0],
+              "stroke" : "none"
+            });
+          } else{
+            paper.rect(prev, 0, this_w, bar_height).attr({
+              "title": dato[i].tipo_aporte + " : " + dato[i].monto,
+              "fill" : colors[1],
+              "stroke" : "none"
+            });
+          }
           prev += this_w
         };
 
@@ -407,8 +429,15 @@ $(document).ready(function(){
   }
 
   Raphael.fn.egreso_cam_compare_bar = function(dato, max_v){
-      colors = ["#CDFFFC", "#78EEE8", "#06B9BF", "#5a052a", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
+      colors = ["#CDFFFC", "#54CBD1", "#2CBFC6", "#06B7BF", "#018F95", "#016E73"];
       var paper = this;
+      if(screen.width > 760) {
+        var bar_width = 300;
+        var bar_height = 30;
+      } else {
+        var bar_width = 80
+        var bar_height = 30
+      }
       tmp = [];
       total = 0;
       adj = 1;
@@ -423,6 +452,7 @@ $(document).ready(function(){
         }else{
           adj = total / max_v
         }
+        var tipos_campanas = [];
         prev = 0;
         for(var i=0; i<dato.length; i++){
           this_w = (dato[i].monto/total) * bar_width * adj

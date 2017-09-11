@@ -17,18 +17,29 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Partido</th>
-        <th>&nbsp;</th>
-        <th>Monto Total</th>
+        <th class="concepto-th">Partido</th>
+        <th>&nbsp;<div class="visible-xs">Porcentaje</div></th>
+        <th class="monto-th">Monto Total</th>
       </tr>
     </thead>
     <tbody>
+      <% max_value = 0 %>
+      <% @partido_ids.each do |pid| %>
+          <% max_value += @egresos_ordinarios.where(partido_id: pid).sum(meses @trimestre_informado) unless @egresos_ordinarios.where(partido_id: pid).sum(meses @trimestre_informado).nil? %>
+      <% end %>
 
       <% @partido_ids.each do |pid| %>
       <tr>
-        <td><%= Partido.find(pid).nombre %></td>
+        <td class="concepto"><%= Partido.find(pid).nombre %></td>
 
-        <td><span id="barras_<%= pid.to_s %>"></span></td>
+        <td>
+          <div class="porcentaje-movil">
+            <% if @egresos_ordinarios.where(partido_id: pid).sum(meses @trimestre_informado) != 0 %>
+              <%= ((@egresos_ordinarios.where(partido_id: pid).sum(meses @trimestre_informado) * 100).to_f / max_value.to_f).round(2).to_s + '%' %>
+            <% end %>
+          </div>
+          <span id="barras_<%= pid.to_s %>"></span>
+        </td>
 
         <td class="monto"><%= number_to_currency @egresos_ordinarios.where(partido_id: pid).sum(meses @trimestre_informado), delimiter: ".", separator: ',', unit: "$", precision: 0 , format: "%u%n" %></td>
       </tr>
@@ -46,7 +57,11 @@ $(document).ready(function(){
   <% end %>
   // Raphael("header",400, 40 ).egreso_ord_header();
   for(var i=0; i < partido_ids.length; i++){
-    Raphael("barras_" + partido_ids[i],300, 30 ).egreso_ord_compare_bar(datos[i], <%= @partido_ids.map{ |pid| @egresos_ordinarios.where(partido_id: pid).sum(meses @trimestre_informado)}.max %>);
+    if(screen.width > 767) {
+      Raphael("barras_" + partido_ids[i],300, 30 ).egreso_ord_compare_bar(datos[i], <%= @partido_ids.map{ |pid| @egresos_ordinarios.where(partido_id: pid).sum(meses @trimestre_informado)}.max %>);
+    } else {
+      Raphael("barras_" + partido_ids[i],80, 40 ).egreso_ord_compare_bar(datos[i], <%= @partido_ids.map{ |pid| @egresos_ordinarios.where(partido_id: pid).sum(meses @trimestre_informado)}.max %>);
+    }
   }
 });
 </script>
