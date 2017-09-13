@@ -213,7 +213,7 @@ $(document).ready(function(){
 
   }
 
-  Raphael.fn.ingreso_ord_front_footer = function(dato){
+  Raphael.fn.ingreso_ord_front_footer = function(data_total){
     var paper = this;
     if (screen.width > 760) {
       var bar_width = 300;
@@ -223,7 +223,8 @@ $(document).ready(function(){
       var bar_width = 80
       var bar_height = 20
     }
-    var publico_width = (dato.publicos / (dato.publicos + dato.privados)) * bar_width;
+
+    var publico_width = (data_total.publicos / (data_total.publicos + data_total.privados)) * bar_width;
     var privado_width = bar_width - publico_width;
 
     var publico_bar = paper.rect(0, 0, publico_width, bar_height).attr({
