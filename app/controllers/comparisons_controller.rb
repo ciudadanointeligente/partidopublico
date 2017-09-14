@@ -47,6 +47,10 @@ class ComparisonsController < ApplicationController
     end
   end
 
+  # jordi, manu, hermanos, les amo, gracias por todo.
+  # CHAO PAPUS
+  # <3
+
   private
 
     def afiliados
