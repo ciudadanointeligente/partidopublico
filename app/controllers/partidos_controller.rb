@@ -290,9 +290,17 @@ class PartidosController < ApplicationController
 
       end
     end
+    @partido.afiliacions.each do |s|
+      s.trimestre_informados.each do |t|
+
+        temp_trimestres_informados.push(t)
+
+      end
+    end
 
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
+    p @trimestres_informados
 
     if (@trimestres_informados.count == 0)
       @trimestres_informados = []
