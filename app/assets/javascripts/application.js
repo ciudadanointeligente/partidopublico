@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require chosen-jquery
+//= require chosen
 //= require angular/angular
 //= require bootstrap-sprockets
 //= require ng-rails-csrf

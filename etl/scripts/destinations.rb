@@ -50,6 +50,13 @@ class RegionPorPartidoDestination
 
   def write(row)
 
+    if row[:region_id].nil?
+      row[:region_id] = region_mapping(row[:regin])
+      p row
+      p row[:region_id]
+    end
+
+
     sede = Sede.where(partido_id: row[:partido_id],
                       region_id: row[:region_id],
                       comuna_id: row[:comuna_id],

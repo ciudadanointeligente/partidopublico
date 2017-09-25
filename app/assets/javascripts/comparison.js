@@ -3,3 +3,5 @@
 //= require bootstrap-sprockets
 //= require raphael/raphael
 //= require raphael_compare
+//= require chosen-jquery
+//= require chosen

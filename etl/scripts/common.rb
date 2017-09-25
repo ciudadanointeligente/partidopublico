@@ -377,3 +377,55 @@ def limit(x)
     row
   end
 end
+
+def region_mapping(text)
+  if text.starts_with? "I "
+    return 1
+  end
+  if text.starts_with? "II "
+    return 2
+  end
+  if text.starts_with? "III "
+    return 3
+  end
+  if text.starts_with? "IV "
+    return 4
+  end
+  if text.starts_with? "V "
+    return 5
+  end
+  if text.starts_with? "VI "
+    return 6
+  end
+  if text.starts_with? "VII "
+    return 7
+  end
+  if text.starts_with? "VIII "
+    return 8
+  end
+  if text.starts_with? "IX "
+    return 9
+  end
+  if text.starts_with? "X "
+    return 10
+  end
+  if text.starts_with? "XI "
+    return 11
+  end
+  if text.starts_with? "XII "
+    return 12
+  end
+  if text.starts_with? "XIII "
+    return 13
+  end
+  if text.starts_with? "XIV "
+    return 14
+  end
+  if text.starts_with? "XV "
+    return 15
+  end
+  if text.starts_with? "XVI "
+    return 16
+  end
+
+end

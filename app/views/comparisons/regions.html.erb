@@ -2,7 +2,11 @@
 <p id="notice"><%= notice %></p>
 
 <h3>Regiones en las que se encuentran constituidos</h3>
-
+<%= form_tag comparisons_path, :method => :get do |f| %>
+  <%= select_tag :partido_ids, options_from_collection_for_select(Partido.all, :id, "to_s", params[:partido_ids] || ""), :multiple => true, :size => 2, prompt: "Seleccionar Partidos", class: "form-control"  %>
+  <%= submit_tag 'Filtrar', class: "btn" %>
+  <%= hidden_field_tag 'category', "Regiones Constituido" %>
+<% end %>
 <div class="table-responsive">
   <table class="table table-bordered">
     <thead>
