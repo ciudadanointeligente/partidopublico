@@ -2,7 +2,7 @@
 <p id="notice"><%= notice %></p>
 <h3>Afiliados según rango etario</h3>
   <%= form_tag comparisons_path, :method => :get do |f| %>
-    <%= select_tag :partido_ids, options_from_collection_for_select(Partido.all, :id, "to_s", params[:partido_ids] || ""), :multiple => true, :size => 10, prompt: "Seleccionar Partidos", class: "form-control"  %>
+    <%= select_tag :partido_ids, options_from_collection_for_select(Partido.all, :id, "to_s", params[:partido_ids] || ""), :multiple => true, :size => 10, prompt: "Seleccionar Partidos", class: "form-control chosen-select", "data-placeholder": "Todos los Partidos"  %>
     <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id] || ''), include_blank: false, class: "form-control" %>
     <%= select_tag :genero, options_for_select([:hombres, :mujeres], params[:genero] || ""), prompt: "Seleccionar género"  %>
     <%= submit_tag 'Filtrar', class: "btn" %>

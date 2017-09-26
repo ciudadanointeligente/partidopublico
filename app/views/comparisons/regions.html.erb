@@ -3,7 +3,7 @@
 
 <h3>Regiones en las que se encuentran constituidos</h3>
 <%= form_tag comparisons_path, :method => :get do |f| %>
-  <%= select_tag :partido_ids, options_from_collection_for_select(Partido.all, :id, "to_s", params[:partido_ids] || ""), :multiple => true, :size => 2, prompt: "Seleccionar Partidos", class: "form-control"  %>
+  <%= select_tag :partido_ids, options_from_collection_for_select(Partido.all, :id, "to_s", params[:partido_ids] || ""), :multiple => true, :size => 2, prompt: "Seleccionar Partidos", class: "form-control chosen-select", "data-placeholder": "Todos los Partidos"  %>
   <%= submit_tag 'Filtrar', class: "btn" %>
   <%= hidden_field_tag 'category', "Regiones Constituido" %>
 <% end %>

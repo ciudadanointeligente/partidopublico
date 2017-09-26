@@ -1,6 +1,8 @@
 <ol class="breadcrumb"><li>Comparativas</li></ol>
 <h3>Ingresos ordinarios</h3>
 <%= form_tag comparisons_path, :method => :get do |f| %>
+  <%= select_tag :partido_ids, options_from_collection_for_select(Partido.all, :id, "to_s", params[:partido_ids] || ""), :multiple => true, :size => 10, prompt: "Seleccionar Partidos", class: "form-control chosen-select", "data-placeholder": "Todos los Partidos"  %>
+  
 <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id] || ''), include_blank: false, class: "form-control" %>
 <%= submit_tag 'Filtrar', class: "btn" %>
 <%= hidden_field_tag 'category', "Ingresos ordinarios" %>

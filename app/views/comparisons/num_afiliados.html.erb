@@ -3,6 +3,8 @@
 
 <h3>Afiliados según género</h3>
 <%= form_tag comparisons_path, :method => :get do |f| %>
+  <%= select_tag :partido_ids, options_from_collection_for_select(Partido.all, :id, "to_s", params[:partido_ids] || ""), :multiple => true, :size => 10, prompt: "Seleccionar Partidos", class: "form-control chosen-select", "data-placeholder": "Todos los Partidos"  %>
+  
   <%= select_tag :fecha_datos, options_for_select(@fechas_datos.reverse, params[:fecha_datos] || ""), prompt: "Seleccionar fecha" %>
   <%= select_tag :region, options_for_select(@regiones_datos, params[:region] || ""), prompt: "Seleccionar región"  %>
   <%= select_tag :genero, options_for_select([:hombres, :mujeres], params[:genero] || ""), prompt: "Seleccionar género"  %>
