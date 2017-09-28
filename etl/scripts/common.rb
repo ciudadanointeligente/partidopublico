@@ -379,52 +379,52 @@ def limit(x)
 end
 
 def region_mapping(text)
-  if text.starts_with? "I "
+  if text.starts_with? "I " || text.downcase.include? 'tarap'
     return 1
   end
-  if text.starts_with? "II "
+  if text.starts_with? "II "|| text.downcase.include? 'antofa'
     return 2
   end
-  if text.starts_with? "III "
+  if text.starts_with? "III "|| text.downcase.include? 'atacama'
     return 3
   end
-  if text.starts_with? "IV "
+  if text.starts_with? "IV "|| text.downcase.include? 'coquim'
     return 4
   end
-  if text.starts_with? "V "
+  if text.starts_with? "V "|| text.downcase.include? 'valpa'
     return 5
   end
-  if text.starts_with? "VI "
+  if text.starts_with? "VI "|| text.downcase.include? 'higgin'
     return 6
   end
-  if text.starts_with? "VII "
+  if text.starts_with? "VII "|| text.downcase.include? 'maule'
     return 7
   end
-  if text.starts_with? "VIII "
+  if text.starts_with? "VIII "|| text.downcase.include? 'biob'
     return 8
   end
-  if text.starts_with? "IX "
+  if text.starts_with? "IX "|| text.downcase.include? 'arauc'
     return 9
   end
-  if text.starts_with? "X "
+  if text.starts_with? "X "|| text.downcase.include? 'lagos'
     return 10
   end
-  if text.starts_with? "XI "
+  if text.starts_with? "XI "|| text.downcase.include? 'ays'
     return 11
   end
-  if text.starts_with? "XII "
+  if text.starts_with? "XII "|| text.downcase.include? 'magall'
     return 12
   end
-  if text.starts_with? "XIII "
+  if text.starts_with? "XIII "|| text.starts_with? "RM "|| text.downcase.include? 'metrop'
     return 13
   end
-  if text.starts_with? "XIV "
+  if text.starts_with? "XIV "|| text.downcase.include? 'rios'|| text.downcase.include? 'ríos'
     return 14
   end
-  if text.starts_with? "XV "
+  if text.starts_with? "XV "|| text.downcase.include? 'arica'
     return 15
   end
-  if text.starts_with? "XVI "
+  if text.starts_with? "XVI "|| text.downcase.include? 'tarap'
     return 16
   end
 

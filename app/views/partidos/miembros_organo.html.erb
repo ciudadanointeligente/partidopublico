@@ -1,0 +1,48 @@
+<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Normas internas y pensamiento</li><li>Estructura orgánica</li></ol>
+<%= link_to "Volver a Estructura orgánica", partido_organos_internos_path(:menu => 0) %>
+<h3>Detalles Órgano Interno : <%= @organo_interno.nombre %></h3>
+
+<% if @sin_datos %>
+  <%= render 'sin_datos' %>
+<% else %>
+  <%= form_tag partido_miembros_organo_path, :method =>  :get, class: 'form-inline' do |f| %>
+    <%= text_field_tag :q, nil, placeholder: "Ingresar nombre o apellido" %>
+    <!-- <%= select_tag :region, options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Seleccionar región", class: "form-control" %> -->
+    <!-- <%= select_tag :genero, options_for_select(["Masculino", "Femenino"], params[:genero] || ""), include_blank: "Seleccionar género", class: "form-control" %> -->
+    <%= hidden_field_tag :organo_interno_id,  @organo_interno.id %>
+    <%= hidden_field_tag :trimestre_informado_id,  @trimestre_informado.id %>
+    <%= submit_tag 'Filtrar' %>
+  <% end %>
+  <h5><%= @organo_interno.funciones %></h5>
+
+  <% cnt = 0 %>
+  <div class="table-responsive">
+    <table class="table rtable rtable--flip">
+      <thead class="rtable-head">
+        <tr>
+          <th>Nombre</th>
+          <th>Cargo</th>
+          <th>Intereses</th>
+          <th>Patrimonio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @cargos.each_with_index do |cargo, index| %>
+        <tr>
+          <% unless cargo.persona.nil? %>
+            <td><%= cargo.persona.nombre + ' ' + cargo.persona.apellidos %></td>
+            <td><%= cargo.tipo_cargo.titulo  %></td>
+            <td><%= !cargo.persona.intereses.blank?  ? link_to(cargo.persona.intereses, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %> </td>
+            <td><%= !cargo.persona.patrimonio.blank? ? link_to(cargo.persona.patrimonio, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %> </td>
+          <% end %>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @cargos %>
+    <%= page_entries_info @cargos %>
+  </div>
+<% end %>
+<p class="mark-date"> Estos datos corresponden a lo publicado por este
+    Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>

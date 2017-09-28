@@ -1,21 +1,55 @@
-<h3>Órganos Internos</h3>
+<ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Normas internas y pensamiento</li><li>Estructura orgánica</li></ol>
+<h3>Estructura orgánica</h3>
 
-<% @organos.each do |o| %>
-<h4><%= o.nombre %></h4>
-<table class="table">
-  <thead>
-    <tr>
-      <th>Funciones</th>
-      <th>Contacto</th>
-      <th>Nro Integrantes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><%= simple_format o.funciones %></td>
-      <td><%= o.contacto %></td>
-      <td><%= o.num_integrantes %></td>
-    </tr>
-  </tbody>
-</table>
+<% if @sin_datos %>
+  <%= render 'sin_datos' %>
+<% else %>
+  <%= form_tag partido_organos_internos_path, :method =>  :get, class: 'form-inline' do |f| %>
+  <!-- <%= text_field_tag :q, nil, placeholder: "Ingresar nombre o apellido" %> -->
+  <!-- <%= select_tag :region, options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Seleccionar región", class: "form-control" %> -->
+  <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
+  <!-- <%= select_tag :genero, options_for_select(["Masculino", "Femenino"], params[:genero] || ""), include_blank: "Seleccionar género", class: "form-control" %> -->
+  <%= submit_tag 'Filtrar' %>
+  <% end %>
+
+  <% cnt = 0 %>
+  <% @organos_internos.each_with_index do |a, index| %>
+  <div class="panel-group" id="accordion" role="tablist">
+    <div class="panel panel-default">
+      <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
+        <h4 class="panel-title intern">
+          <%= link_to a.nombre, partido_miembros_organo_path(organo_interno_id: a.id, trimestre_informado_id: @trimestre_informado.id)%>
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
+             <span class="badge"><%= @trimestre_informado.cargos.where(partido: @partido).where(organo_interno: a).count %></span><span class="sr-only"><p>Se han encontrado <%= @trimestre_informado.cargos.where(partido: @partido).where(organo_interno: a).count %> miembros.</p></span>
+          </a>
+          <a class="pull-right "data-toggle="modal" data-target="#myModal-<%= index %>">
+            <i class="fa fa-info-circle" aria-hidden="true"></i>
+          </a>
+        </h4>
+      </div>
+    </div>
+
+    <div class="modal fade" id="myModal-<%= index %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-<%= index %>">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel-<%= index %>"><h4>Funciones del <%= a.nombre %></h4></h4>
+          </div>
+          <div class="modal-body">
+            <%= a.funciones %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% cnt = cnt + 1 %>
+  <% end %>
+  <%= paginate @organos_internos %>
+  <%= page_entries_info @organos_internos %>
+<% end %>
+<p class="mark-date"> Estos datos corresponden a lo publicado por este
+    Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
+<% if cnt == 0 %>
+<p class="text-info"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> No se encontraron registros</p>
 <% end %>

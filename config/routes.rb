@@ -90,6 +90,8 @@ Rails.application.routes.draw do
     get "/elecciones_internas", to: 'partidos#elecciones_internas'
     get "/acuerdos_organos", to: "partidos#acuerdos_organos"
     get "/estructura_organica", to: "partidos#estructura_organica"
+    get "/organos_internos", to: "partidos#organos_internos"
+    get "/miembros_organo", to: "partidos#miembros_organo"
     get "/actividades_publicas", to: "partidos#actividades_publicas"
     get "/intereses_patrimonios", to: "partidos#intereses_patrimonios"
     get "/publicacion_candidatos", to: "partidos#publicacion_candidatos"

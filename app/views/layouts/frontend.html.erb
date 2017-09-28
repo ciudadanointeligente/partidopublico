@@ -125,7 +125,7 @@
             <%= link_to "Datos básicos del partido", partido_normas_internas_path(:menu => 0), onclick: "ga('send', 'event', 'mobile-partido-datos-basicos', 'click');" %>
           </li>
           <li class="<% if current_page?(:controller => 'partidos', :action => 'estructura_organica') %>current<% end %>">
-            <%= link_to "Estructura orgánica", partido_estructura_organica_path(:menu => 0), onclick: "ga('send', 'event', 'mobile-partido-estructura-organica', 'click');" %>
+            <%= link_to "Estructura orgánica", partido_organos_internos_path(:menu => 0), onclick: "ga('send', 'event', 'mobile-partido-estructura-organica', 'click');" %>
           </li>
         </ul>
       </li>
@@ -240,7 +240,7 @@
                 <%= link_to "Datos básicos del partido", partido_normas_internas_path(:menu => 0), onclick: "ga('send', 'event', 'desktop-partido-datos-basicos', 'click');" %>
               </li>
               <li class="<% if current_page?(:controller => 'partidos', :action => 'estructura_organica') %>current<% end %>">
-                <%= link_to "Estructura orgánica", partido_estructura_organica_path(:menu => 0), onclick: "ga('send', 'event', 'desktop-partido-estructura-organica', 'click');" %>
+                <%= link_to "Estructura orgánica", partido_organos_internos_path(:menu => 0), onclick: "ga('send', 'event', 'desktop-partido-estructura-organica', 'click');" %>
               </li>
             </ul>
           </li>

@@ -13,7 +13,8 @@ class PartidosController < ApplicationController
                             :contrataciones_20utm, :afiliacion_desafiliacion, :eleccion_popular,
                             :organos_internos, :elecciones_internas, :representantes,
                             :acuerdos_organos, :estructura_organica, :actividades_publicas,
-                            :intereses_patrimonios, :publicacion_candidatos, :resultado_elecciones_internas
+                            :intereses_patrimonios, :publicacion_candidatos, :resultado_elecciones_internas,
+                            :miembros_organo
                           ]
 
   # caches_page   :sedes
@@ -300,7 +301,7 @@ class PartidosController < ApplicationController
 
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
-    p @trimestres_informados
+    # p @trimestres_informados
 
     if (@trimestres_informados.count == 0)
       @trimestres_informados = []
@@ -438,20 +439,21 @@ class PartidosController < ApplicationController
         @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
         @sin_datos = false
-        @datos_sedes=Rails.cache.fetch("#{request.url}", expires_in: 6.days) do
-          region_ids_with_sede = @partido.sedes.select(:region_id).uniq.map(&:region_id)
-          region_ids_with_sede.each do |r|
-            # sedes = @trimestre_informado.sedes.where(region_id: r)
-            sedes = @trimestre_informado.sedes.where(region_id: r).where(partido_id: @partido.id)
-            all_sedes = []
-            sedes.each do |s|
-              all_sedes.push( { 'direccion' => s.direccion, 'contacto' => s.contacto, 'comuna' => s.comuna.nombre } )
-            end
-            region = Region.find r
-            @datos_sedes.push( {'region' => region.nombre, 'sedes' => all_sedes} )
-          end
-          @datos_sedes.to_a
-        end
+        # @datos_sedes=Rails.cache.fetch("#{request.url}", expires_in: 6.days) do
+        #   region_ids_with_sede = @partido.sedes.select(:region_id).uniq.map(&:region_id)
+        #   region_ids_with_sede.each do |r|
+        #     # sedes = @trimestre_informado.sedes.where(region_id: r)
+        #     sedes = @trimestre_informado.sedes.where(region_id: r).where(partido_id: @partido.id)
+        #     all_sedes = []
+        #     sedes.each do |s|
+        #       all_sedes.push( { 'direccion' => s.direccion, 'contacto' => s.contacto, 'comuna' => s.comuna.nombre } )
+        #     end
+        #     region = Region.find r
+        #     @datos_sedes.push( {'region' => region.nombre, 'sedes' => all_sedes} )
+        #   end
+        #   @datos_sedes.to_a
+        @sedes = @trimestre_informado.sedes.where(partido_id: @partido.id).order(:region_id).page(params[:page]).per(10)
+        # end
       end
   end
 
@@ -523,7 +525,7 @@ class PartidosController < ApplicationController
 
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
-    p @trimestres_informados
+    # p @trimestres_informados
 
     if @trimestres_informados.count == 0
       @trimestres_informados = []
@@ -580,7 +582,7 @@ class PartidosController < ApplicationController
       @sanciones = []
       sanciones.each do |s|
         @sanciones.push(s)
-        p s
+        # p s
       end
       @sin_datos = false
     end
@@ -929,7 +931,7 @@ class PartidosController < ApplicationController
       end
       @datos_egresos_campanas_totals = Rails.cache.fetch("#{request.url}/datos_egresos_campanas_totals", expires_in: 6.days) do
         @datos_egresos_campanas.each do |dato_e_c|
-          p dato_e_c
+          # p dato_e_c
           total += dato_e_c[:value].to_f
           if dato_e_c[:value].to_f > max_value
             max_value = dato_e_c[:value].to_f
@@ -1273,7 +1275,7 @@ class PartidosController < ApplicationController
       if query.count == 0
         @sin_datos = true
       else
-        tmp = []
+        # tmp = []
         query.each do |q|
           procedimiento = []
           q.procedimientos.each do |p|
@@ -1283,18 +1285,18 @@ class PartidosController < ApplicationController
           q.requisitos.each do |r|
             requisito << {"descripcion" => r.descripcion}
           end
-          tmp <<  {"fecha_eleccion" => q.fecha_eleccion, "dias" => q.dias, "procedimientos" => procedimiento, "requisitos" => requisito}
+          # tmp <<  {"fecha_eleccion" => q.fecha_eleccion, "dias" => q.dias, "procedimientos" => procedimiento, "requisitos" => requisito}
         end
-        e_popular << { "type" => c, "dates" => tmp }
+        # e_popular << { "type" => c, "dates" => tmp }
         @sin_datos = true
       end
       @e_popular = e_popular
     end
   end
 
-  def organos_internos
-    @organos = @partido.organo_internos
-  end
+  # def organos_internos
+  #   @organos = @partido.organo_internos
+  # end
 
   def elecciones_internas
     @elecciones = []
@@ -1366,7 +1368,7 @@ class PartidosController < ApplicationController
 
     @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
     @trimestres_informados.reverse!
-    p @trimestres_informados
+    # p @trimestres_informados
 
     if @trimestres_informados.count == 0
       @datos = []
@@ -1376,7 +1378,7 @@ class PartidosController < ApplicationController
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
       @acuerdos = @partido.acuerdos
       @sin_datos = @partido.acuerdos.count == 0
-      p @acuerdos.count
+      # p @acuerdos.count
     end
   end
 
@@ -1436,6 +1438,96 @@ class PartidosController < ApplicationController
     end
     # @organos_internos = OrganoInterno.page(params[:page]).per(10)
     # @miembros = Persona.page(params[:page]).per(10)
+  end
+
+  def organos_internos
+
+    temp_trimestres_informados = []
+    @partido.organo_internos.each do |o|
+      o.trimestre_informados.each do |t|
+
+        temp_trimestres_informados.push(t)
+
+      end
+    end
+
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
+
+    if @trimestres_informados.count == 0
+      @trimestres_informados = []
+      @organos_internos = []
+      @datos = []
+      @sin_datos = true
+    else
+      @sin_datos = false
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+      @organos_internos = @trimestre_informado.organo_internos.where(:partido_id => @partido.id).page(params[:page]).per(3)
+      # @datos = []
+      #
+      #
+      # @organos_internos.each_with_index do |o, i|
+      #   members = []
+      #   data = @trimestre_informado.cargos.where(partido: @partido, organo_interno: o)
+      #   if !params[:region].blank?
+      #     data = data.where(region_id: params[:region])
+      #   end
+      #
+      #   if !params[:genero].blank?
+      #     by_gender = @partido.personas.where(:genero => params[:genero])
+      #     data = data.where(persona_id: by_gender)
+      #   end
+      #
+      #   data.each do |m|
+      #     if !params[:q].blank?
+      #       n = params[:q].split(" ")[0]
+      #       a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
+      #       if m.persona.nombre.downcase.include?(n.downcase) || m.persona.apellidos.downcase.include?(a.downcase)
+      #         members << {:cargo => m, :persona => m.persona, :tipo_cargo => m.tipo_cargo}
+      #       end
+      #     else
+      #       members << {:cargo => m, :persona => m.persona, :tipo_cargo => m.tipo_cargo}
+      #     end
+      #
+      #   end
+      #   @datos << {:organo_interno => o, :miembros => members}
+      end
+    # end
+    # @organos_internos = OrganoInterno.page(params[:page]).per(10)
+    # @miembros = Persona.page(params[:page]).per(10)
+  end
+
+  def miembros_organo
+
+    @organo_interno = OrganoInterno.find params[:organo_interno_id]
+    @trimestre_informado = TrimestreInformado.find params[:trimestre_informado_id]
+    @datos = []
+    @cargos = @trimestre_informado.cargos.where(partido: @partido).where(organo_interno: @organo_interno)
+
+    members = []
+
+    tmp_cargos = []
+    @cargos.each do |m|
+      p params[:organo_interno_id]
+      p params[:trimestre_informado_id]
+      p m
+      p m.class
+      p m.persona
+      p m.persona.class
+      if !params[:q].blank?
+        n = params[:q].split(" ")[0]
+        a = params[:q].split(" ")[1] || params[:q].split(" ")[0]
+        unless m.persona.nil?
+          if m.persona.nombre.downcase.include?(n.downcase) || m.persona.apellidos.downcase.include?(a.downcase)
+            tmp_cargos << m
+          end
+        end
+      else
+        tmp_cargos << m
+      end
+    end
+    @cargos = Kaminari.paginate_array(tmp_cargos).page(params[:page]).per(10)
   end
 
   def actividades_publicas
@@ -1680,7 +1772,7 @@ class PartidosController < ApplicationController
       ###puts params
       date = EtlRun.max_fecha_datos.nil? ? Date.today : EtlRun.max_fecha_datos
         @fecha_datos = l(date, format: '%A %d de %B del %Y')
-        p @fecha_datos
+        # p @fecha_datos
     end
 
     def get_partidos
