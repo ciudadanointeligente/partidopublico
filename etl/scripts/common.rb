@@ -379,52 +379,52 @@ def limit(x)
 end
 
 def region_mapping(text)
-  if text.starts_with? "I " || text.downcase.include? 'tarap'
+  if (text.starts_with? "I " || text.downcase.include?('tarap') )
     return 1
   end
-  if text.starts_with? "II "|| text.downcase.include? 'antofa'
+  if (text.starts_with? "II "|| text.downcase.include?('antofa') )
     return 2
   end
-  if text.starts_with? "III "|| text.downcase.include? 'atacama'
+  if (text.starts_with? "III "|| text.downcase.include?('atacama') )
     return 3
   end
-  if text.starts_with? "IV "|| text.downcase.include? 'coquim'
+  if (text.starts_with? "IV "|| text.downcase.include?('coquim') )
     return 4
   end
-  if text.starts_with? "V "|| text.downcase.include? 'valpa'
+  if (text.starts_with? "V "|| text.downcase.include?('valpa') )
     return 5
   end
-  if text.starts_with? "VI "|| text.downcase.include? 'higgin'
+  if (text.starts_with? "VI "|| text.downcase.include?('higgin') )
     return 6
   end
-  if text.starts_with? "VII "|| text.downcase.include? 'maule'
+  if (text.starts_with? "VII "|| text.downcase.include?('maule') )
     return 7
   end
-  if text.starts_with? "VIII "|| text.downcase.include? 'biob'
+  if (text.starts_with? "VIII "|| text.downcase.include?('biob') )
     return 8
   end
-  if text.starts_with? "IX "|| text.downcase.include? 'arauc'
+  if (text.starts_with? "IX "|| text.downcase.include?('arauc') )
     return 9
   end
-  if text.starts_with? "X "|| text.downcase.include? 'lagos'
+  if (text.starts_with? "X "|| text.downcase.include?('lagos') )
     return 10
   end
-  if text.starts_with? "XI "|| text.downcase.include? 'ays'
+  if (text.starts_with? "XI "|| text.downcase.include?('ays') )
     return 11
   end
-  if text.starts_with? "XII "|| text.downcase.include? 'magall'
+  if (text.starts_with? "XII "|| text.downcase.include?('magall') )
     return 12
   end
-  if text.starts_with? "XIII "|| text.starts_with? "RM "|| text.downcase.include? 'metrop'
+  if (text.starts_with? "XIII "|| text.starts_with?("RM ")|| text.downcase.include?('metrop') )
     return 13
   end
-  if text.starts_with? "XIV "|| text.downcase.include? 'rios'|| text.downcase.include? 'ríos'
+  if (text.starts_with? "XIV "|| text.downcase.include?('rios') || text.downcase.include?('ríos') )
     return 14
   end
-  if text.starts_with? "XV "|| text.downcase.include? 'arica'
+  if (text.starts_with? "XV "|| text.downcase.include?('arica') )
     return 15
   end
-  if text.starts_with? "XVI "|| text.downcase.include? 'tarap'
+  if (text.starts_with? "XVI "|| text.downcase.include?('tarap') )
     return 16
   end
 

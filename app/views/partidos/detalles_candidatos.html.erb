@@ -1,10 +1,12 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Últimas decisiones</li><li>Publicación de los candidatos</li></ol>
 <h3>Publicación de los candidatos</h3>
+<%= link_to "Volver a Publicación Candidatos", partido_publicacion_candidatos_path(:menu => 0) %>
+<h3> : <%= @tipo_cargo.titulo %></h3>
 <% if @sin_datos %>
   <%= render 'sin_datos' %>
 <% else %>
   <%= form_tag partido_publicacion_candidatos_path, :method =>  :get, class: 'form-inline' do |f| %>
-    <!-- <%= text_field_tag :q, params[:q] || "", class: "form-control", placeholder: "Ingresar nombre o apellido" %> -->
+    <%= text_field_tag :q, params[:q] || "", class: "form-control", placeholder: "Ingresar nombre o apellido" %>
     <!-- <%= select_tag "region", options_from_collection_for_select(@partido.regions, "id", "nombre", params[:region] || ""), include_blank: "Seleccionar región", class: "form-control" %> -->
     <%= select_tag :trimestre_informado_id, options_from_collection_for_select(@trimestres_informados, "id", "to_s", params[:trimestre_informado_id]), include_blank: false, class: "form-control" %>
     <!-- <%= select_tag "genero", options_for_select(["Masculino", "Femenino"], params[:genero] || ""), include_blank: "Seleccionar género", class: "form-control" %> -->
@@ -13,20 +15,32 @@
   <% end %>
 
   <% cnt = 0 %>
-  <% @tipos_cargo.each_with_index do |ip, index| %>
-    <% cnt = cnt + 1 %>
-    <div class="panel panel-default">
-      <div class="panel-heading intern" role="tab" id="heading-<%= index %>">
-        <h4 class="panel-title intern">
-          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
-            <%= link_to ip.titulo, partido_detalles_candidatos_path(tipo_cargo_id: ip.id, trimestre_informado_id: @trimestre_informado.id)%>
-          </a>
-          <span class="badge"><%= ip %></span>
-        </h4>
-        <span class="sr-only"><p>Se han encontrado <%= ip %> candidatos para <%= ip %></p></span>
-      </div>
+    <br>
+    <div class="table-responsive">
+      <table class="table rtable rtable--flip">
+        <thead class="rtable-head">
+          <tr>
+            <th>Nombre</th>
+            <th>Región</th>
+            <th>Comuna</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @candidatos.each_with_index do |ip, index| %>
+          <tr>
+            <% unless ip.persona.nil? %>
+              <td><%= ip.persona.nombre + ' ' + ip.persona.apellidos %></td>
+              <td><%= ip.region.nombre unless ip.region.nil? %> </td>
+              <td><%= ip.comuna.nombre unless ip.comuna.nil? %> </td>
+            <% end %>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <%= paginate @candidatos %>
+      <%= page_entries_info @candidatos %>
     </div>
-  <% end %>
 <% end %>
 <p class="mark-date"> Estos datos corresponden a lo publicado por este
     Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>

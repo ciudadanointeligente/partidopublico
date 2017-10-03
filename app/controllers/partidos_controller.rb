@@ -14,7 +14,7 @@ class PartidosController < ApplicationController
                             :organos_internos, :elecciones_internas, :representantes,
                             :acuerdos_organos, :estructura_organica, :actividades_publicas,
                             :intereses_patrimonios, :publicacion_candidatos, :resultado_elecciones_internas,
-                            :miembros_organo
+                            :miembros_organo, :detalles_candidatos
                           ]
 
   # caches_page   :sedes
@@ -1594,9 +1594,7 @@ class PartidosController < ApplicationController
     temp_trimestres_informados = []
     @partido.candidatos.each do |c|
       c.trimestre_informados.each do |t|
-
         temp_trimestres_informados.push(t)
-
       end
     end
 
@@ -1612,36 +1610,151 @@ class PartidosController < ApplicationController
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
 
       @publicacion_candidatos = []
-      tc_candidatos = @partido.tipo_cargos.where(candidato:true)
-      tc_candidatos.each do |tc|
-        filter_by = @trimestre_informado.cargos.where(tipo_cargo_id:tc)
-        if !params[:q].blank?
-          nombre_a_buscar = params[:q].split(' ')
-          n = nombre_a_buscar[0].to_s
-          a1 = nombre_a_buscar[1].to_s
-          a2 = nombre_a_buscar[2].to_s
-          if nombre_a_buscar.length >=2
-            personas = (Persona.where("lower(personas.nombre) like ? OR
-            lower(personas.apellidos) like ? OR lower(personas.apellidos) like ?", '%' + n.downcase + '%', '%' + n.downcase + '%', '%' + a1.downcase + '%'))
-          elsif nombre_a_buscar.length == 1
-            personas = (Persona.where("lower(personas.nombre) like ? OR
-            trim(lower(personas.apellidos)) like ? ", '%' + n.downcase + '%', '%' + n.downcase + '%'))
-          end
-          filter_by = filter_by.where(:persona_id => personas)
-        end
-        if !params[:region].blank?
-          filter_by = filter_by.where(:region_id => params["region"])
-        end
-        if !params[:genero].blank?
-          by_gender = @partido.personas.where(:genero => params[:genero])
-          filter_by = filter_by.where(:persona_id => by_gender)
-        end
-        @publicacion_candidatos << {"type" => tc.titulo, "cargos" => filter_by}
-      end
-      @sin_datos = false
+      # tc_candidatos = @partido.tipo_cargos.where(candidato:true)
+      # tc_candidatos.each do |tc|
+      #   filter_by = @trimestre_informado.cargos.where(tipo_cargo_id:tc)
+      #   if !params[:q].blank?
+      #     nombre_a_buscar = params[:q].split(' ')
+      #     n = nombre_a_buscar[0].to_s
+      #     a1 = nombre_a_buscar[1].to_s
+      #     a2 = nombre_a_buscar[2].to_s
+      #     if nombre_a_buscar.length >=2
+      #       personas = (Persona.where("lower(personas.nombre) like ? OR
+      #       lower(personas.apellidos) like ? OR lower(personas.apellidos) like ?", '%' + n.downcase + '%', '%' + n.downcase + '%', '%' + a1.downcase + '%'))
+      #     elsif nombre_a_buscar.length == 1
+      #       personas = (Persona.where("lower(personas.nombre) like ? OR
+      #       trim(lower(personas.apellidos)) like ? ", '%' + n.downcase + '%', '%' + n.downcase + '%'))
+      #     end
+      #     filter_by = filter_by.where(:persona_id => personas)
+      #   end
+      #   if !params[:region].blank?
+      #     filter_by = filter_by.where(:region_id => params["region"])
+      #   end
+      #   if !params[:genero].blank?
+      #     by_gender = @partido.personas.where(:genero => params[:genero])
+      #     filter_by = filter_by.where(:persona_id => by_gender)
+      #   end
+      #   @publicacion_candidatos << {"type" => tc.titulo, "cargos" => filter_by}
+      #   @sin_datos = false
+      # end
+      tmp_tipos_c = @partido.tipo_cargos.where(candidato:true)
+      @candidatos = @trimestre_informado.cargos.where(tipo_cargo_id: tmp_tipos_c)
+      @tipos_cargo = TipoCargo.where(id: @candidatos.map{|c| c.tipo_cargo_id}.uniq)
+      # p @candidatos.count
     end
   end
 
+  def detalles_candidatos
+
+    temp_trimestres_informados = []
+    @partido.candidatos.each do |c|
+      c.trimestre_informados.each do |t|
+        temp_trimestres_informados.push(t)
+      end
+    end
+
+    @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+    @trimestres_informados.reverse!
+
+    if @trimestres_informados.count == 0
+      @trimestres_informados = []
+      @publicacion_candidatos = []
+      @sin_datos = true
+    else
+      params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+      @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+      @tipo_cargo = TipoCargo.find params[:tipo_cargo_id]
+
+
+      @publicacion_candidatos = []
+      # tc_candidatos = @partido.tipo_cargos.where(candidato:true)
+      # tc_candidatos.each do |tc|
+      #   filter_by = @trimestre_informado.cargos.where(tipo_cargo_id:tc)
+      #   if !params[:q].blank?
+      #     nombre_a_buscar = params[:q].split(' ')
+      #     n = nombre_a_buscar[0].to_s
+      #     a1 = nombre_a_buscar[1].to_s
+      #     a2 = nombre_a_buscar[2].to_s
+      #     if nombre_a_buscar.length >=2
+      #       personas = (Persona.where("lower(personas.nombre) like ? OR
+      #       lower(personas.apellidos) like ? OR lower(personas.apellidos) like ?", '%' + n.downcase + '%', '%' + n.downcase + '%', '%' + a1.downcase + '%'))
+      #     elsif nombre_a_buscar.length == 1
+      #       personas = (Persona.where("lower(personas.nombre) like ? OR
+      #       trim(lower(personas.apellidos)) like ? ", '%' + n.downcase + '%', '%' + n.downcase + '%'))
+      #     end
+      #     filter_by = filter_by.where(:persona_id => personas)
+      #   end
+      #   if !params[:region].blank?
+      #     filter_by = filter_by.where(:region_id => params["region"])
+      #   end
+      #   if !params[:genero].blank?
+      #     by_gender = @partido.personas.where(:genero => params[:genero])
+      #     filter_by = filter_by.where(:persona_id => by_gender)
+      #   end
+      #   @publicacion_candidatos << {"type" => tc.titulo, "cargos" => filter_by}
+      #   @sin_datos = false
+      # end
+      # tmp_tipos_c = @partido.tipo_cargos.where(candidato:true)
+      tmp_tipos_c = TipoCargo.find params[:tipo_cargo_id]
+      @candidatos = @trimestre_informado.cargos.where(tipo_cargo: tmp_tipos_c).page(params[:page]).per(20)
+      p @candidatos
+      @tipos_cargo = TipoCargo.where(id: @candidatos.map{|c| c.tipo_cargo_id }.uniq)
+      # p @candidatos.count
+    end
+  end
+
+  # ANTIGUO
+  # def publicacion_candidatos
+  #
+  #   temp_trimestres_informados = []
+  #   @partido.candidatos.each do |c|
+  #     c.trimestre_informados.each do |t|
+  #       temp_trimestres_informados.push(t)
+  #     end
+  #   end
+  #
+  #   @trimestres_informados = temp_trimestres_informados.uniq.sort_by {|t| t.ano.to_s + t.ordinal.to_s}
+  #   @trimestres_informados.reverse!
+  #
+  #   if @trimestres_informados.count == 0
+  #     @trimestres_informados = []
+  #     @publicacion_candidatos = []
+  #     @sin_datos = true
+  #   else
+  #     params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
+  #     @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
+  #
+  #     @publicacion_candidatos = []
+  #     tc_candidatos = @partido.tipo_cargos.where(candidato:true)
+  #     tc_candidatos.each do |tc|
+  #       filter_by = @trimestre_informado.cargos.where(tipo_cargo_id:tc)
+  #       if !params[:q].blank?
+  #         nombre_a_buscar = params[:q].split(' ')
+  #         n = nombre_a_buscar[0].to_s
+  #         a1 = nombre_a_buscar[1].to_s
+  #         a2 = nombre_a_buscar[2].to_s
+  #         if nombre_a_buscar.length >=2
+  #           personas = (Persona.where("lower(personas.nombre) like ? OR
+  #           lower(personas.apellidos) like ? OR lower(personas.apellidos) like ?", '%' + n.downcase + '%', '%' + n.downcase + '%', '%' + a1.downcase + '%'))
+  #         elsif nombre_a_buscar.length == 1
+  #           personas = (Persona.where("lower(personas.nombre) like ? OR
+  #           trim(lower(personas.apellidos)) like ? ", '%' + n.downcase + '%', '%' + n.downcase + '%'))
+  #         end
+  #         filter_by = filter_by.where(:persona_id => personas)
+  #       end
+  #       if !params[:region].blank?
+  #         filter_by = filter_by.where(:region_id => params["region"])
+  #       end
+  #       if !params[:genero].blank?
+  #         by_gender = @partido.personas.where(:genero => params[:genero])
+  #         filter_by = filter_by.where(:persona_id => by_gender)
+  #       end
+  #       @publicacion_candidatos << {"type" => tc.titulo, "cargos" => filter_by}
+  #     end
+  #     @sin_datos = false
+  #   end
+  # end
+  #
   def resultado_elecciones_internas
   end
 

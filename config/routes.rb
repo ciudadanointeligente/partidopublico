@@ -95,6 +95,7 @@ Rails.application.routes.draw do
     get "/actividades_publicas", to: "partidos#actividades_publicas"
     get "/intereses_patrimonios", to: "partidos#intereses_patrimonios"
     get "/publicacion_candidatos", to: "partidos#publicacion_candidatos"
+    get "/detalles_candidatos", to: "partidos#detalles_candidatos"
     get "/resultado_elecciones_internas", to: "partidos#resultado_elecciones_internas"
     resources :cargos
     resources :personas
