@@ -15,10 +15,10 @@
 !/log/.keep
 /tmp
 !/public/system/resources/*
-/public/assets/*
-!/public/assets/css/report.css
-!/public/assets/main.css
 /public/system/*
+!/public/assets/css/*
+!/public/assets/main.css
+/public/assets/*
 
 *.swp
 
