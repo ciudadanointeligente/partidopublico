@@ -49,9 +49,6 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li>
-                <%= link_to "¿Cómo funciona?", root_path + "proyecto", onclick: "ga('send', 'event', 'proyecto', 'click');"%>
-              </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Partidos<span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -63,10 +60,24 @@
                 </ul>
               </li>
               <li>
-                <%= link_to "Comparar partidos", comparisons_path, onclick: "ga('send', 'event', 'main-menu-comparar', 'click');" %>
+                <%= link_to "Comparar partidos",comparisons_path, onclick: "ga('send', 'event', 'main-menu-comparar', 'click');" %>
               </li>
               <li>
-                <%= link_to "Descargar Manual", manual_path, onclick: "ga('send', 'event', 'main-menu-descargar-manual', 'click');" %>
+                <%= link_to "¿Cómo funciona?", root_path + "proyecto", onclick: "ga('send', 'event', 'proyecto', 'click');"%>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Màs<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <%= link_to "Reporte", '/reporte', onclick: "ga('send', 'event', 'main-menu-reporte', 'click');"%>
+                  </li>
+                  <li>
+                    <%= link_to "Descargar Manual", manual_path, onclick: "ga('send', 'event', 'main-menu-descargar-manual', 'click');"%>
+                  </li>
+                  <li>
+                    <%= link_to "Acceso a los datos", 'https://datos.partidospublicos.cl', onclick: "ga('send', 'event', 'main-menu-datos', 'click');"%>
+                  </li>
+                </ul>
               </li>
               <li class="redes">
               <a href="#" onclick="window.open(&quot;//twitter.com/share?url=http://partidospublicos.cl/;text=Partidos transparentes, participativos y abiertos para una sana democracia .&quot;,&quot;twitter&quot;,&quot;width=450, height=250&quot;)">
