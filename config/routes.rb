@@ -161,4 +161,6 @@ Rails.application.routes.draw do
   get 'manual', to: 'pages#manual'
   get 'exigeles', to: 'pages#twittea'
   get 'proyecto', to: 'pages#proyecto'
+
+  get '/:page', to: 'static#show'
 end
