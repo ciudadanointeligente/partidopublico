@@ -16,6 +16,8 @@
 /tmp
 !/public/system/resources/*
 /public/assets/*
+!/public/assets/css/report.css
+!/public/assets/main.css
 /public/system/*
 
 *.swp
