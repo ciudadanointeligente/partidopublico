@@ -17,7 +17,7 @@
 /public/system/*
 !/public/system/resources/*
 /public/assets/*
-!/public/assets/css/*
+!/public/assets/css/report.css
 !/public/assets/main.css
 
 *.swp

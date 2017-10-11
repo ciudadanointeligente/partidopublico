@@ -1,0 +1,126 @@
+body{
+  font-family: 'Karla', sans-serif;
+  color: #012639;
+}
+a{
+  color: #E85D34;
+  font-weight: 700;
+}
+a:hover{
+  color: #06B9BF;
+  font-weight: 700;
+  text-decoration: none;
+}
+h1{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 50px;
+  margin: 70px 0 -60px;
+}
+h2{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 20px;
+  letter-spacing: 2px;
+  margin: 70px 0 10px 0;
+}
+h4{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: white;
+}
+#report-title{
+  background-color: white;
+  padding: 0 0 60px;
+}
+#report-intro{
+  background-color: #FCEDF0;
+  padding: 0 0 60px;
+}
+#report-diagnostic{
+  background-color: white;
+  padding: 0 0 60px;
+}
+#report-results{
+  background-color: #FCEDF0;
+  padding: 0 0 60px;
+}
+
+.panel-default>.panel-heading{
+  background-color: #F28269;
+  border: 3px solid #F28269;
+  border-radius: 10px;
+  padding: 6px 15px 0px 15px;
+}
+.panel{
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+.panel-default>.panel-heading+.panel-collapse>.panel-body{
+  border-top-color:transparent;
+}
+.panel-body{
+  background-color: white;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+.panel-heading.legend-heading{
+  background-color: #012639;
+  font-family: 'Montserrat', sans-serif;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  font-size: 9px;
+  color: white;
+  border: 3px solid #012639;
+  margin-bottom: -15px;
+  padding: 10px 15px 10px 15px;
+}
+.panel-heading.category-heading{
+  background-color: #06B9BF;
+  border: 3px solid #06B9BF;
+  border-radius: 10px;
+  padding: 10px 15px 0px 15px;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  font-size: 9px;
+  color: white;
+}
+.category-body{
+  font-size: 12px;
+}
+.badge{
+  background-color: #F28269;
+}
+.progress{
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: none;
+  position: relative;
+  top: 5px;
+}
+.progress-bar{
+  background-color: #06B9BF;
+  box-shadow: none;
+}
+.big-number{
+  font-size: 22px;
+  font-weight: 700;
+  color: #012639;
+}
+.panel-body.legend-body{
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  font-size: 10px;
+  padding: 0px 15px 0px;
+}
