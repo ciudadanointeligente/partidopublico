@@ -45,7 +45,7 @@ $(document).ready(function(){
           delta = 25,
           bcolor = Raphael.hsb(start,1,1) ;
           bcolor = colors[j%colors.length];
-          draw_params = {fill: "90-" + bcolor + "-" + bcolor, stroke: stroke, "stroke-width": 3}
+          draw_params = {fill: "90-" + bcolor + "-" + bcolor, stroke: stroke, "stroke-width": 3, title: labels[j] + ": " + values[j]}
           var p = sector(cx, cy, r, angle, angle + angleplus, draw_params);
 
           if (legend == true && legendElement) {
