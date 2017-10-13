@@ -1,5 +1,9 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Presencia nacional</li><li>Regiones constituido y número de afiliados</li></ol>
 <h3>Regiones constituido y número de afiliados</h3>
+<p>
+En esta sección se visualizan las regiones en las que el partido está constituido y el número total de afiliados a nivel nacional. Además, en los gráficos circulares se muestra la composición de los afiliados del partido por cargos, rangos etarios y sexo.
+</p>
+<hr>
 <% if @sin_datos %>
   <%= render 'sin_datos' %>
 <% else %>
@@ -34,10 +38,10 @@
   <% unless @sin_datos_estadisticas_cargos %>
     <div class="row">
       <h4>Cargos</h4>
-      <div class="col-sm-6">
+      <div class="col-sm-12">
         <div id="cargos"></div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-12">
         <ul class="list-unstyled leyenda-cargos"></ul>
       </div>
     </div>
@@ -45,20 +49,20 @@
   <% unless @sin_info_afiliados %>
     <div class="row">
       <h4>Género</h4>
-      <div class="col-sm-6">
+      <div class="col-sm-12">
         <div id="circulo"></div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-12">
         <ul class="list-unstyled leyenda"></ul>
       </div>
     </div>
     <% unless @sin_rangos_etareos %>
       <div class="row">
         <h4>Rango etario</h4>
-        <div class="col-sm-6">
+        <div class="col-sm-12">
           <div id="desgloce"></div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-12">
           <ul class="list-unstyled leyenda-desgloce"></ul>
         </div>
       </div>
@@ -79,8 +83,7 @@
   </div>
 </div>
 <div class="col-xs-12">
-  <p class="mark-date"> Estos datos corresponden a lo publicado por este
-    Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
+<%= render 'mark_date' %>
   </div>
 </div>
 <% end %>

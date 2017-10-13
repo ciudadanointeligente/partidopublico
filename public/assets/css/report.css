@@ -11,6 +11,14 @@ a:hover{
   font-weight: 700;
   text-decoration: none;
 }
+.navbar-default{
+  background-color: #012639;
+  border: none;
+  height: 70px;
+  border-radius: 0px;
+  border: none;
+  margin-bottom: -30px;
+}
 h1{
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
@@ -33,26 +41,29 @@ h4{
   letter-spacing: 2px;
   color: white;
 }
-#report-title{
-  background-color: white;
-  padding: 0 0 60px;
+.small-note{
+  font-size: 12px;
+  font-weight: 700;
+  color: #F28269;
 }
-#report-intro{
+#report-title{
   background-color: #FCEDF0;
   padding: 0 0 60px;
+  margin-top: 70px;
 }
-#report-diagnostic{
+#report-intro{
   background-color: white;
   padding: 0 0 60px;
 }
 #report-results{
   background-color: #FCEDF0;
   padding: 0 0 60px;
+  margin-bottom: -70px;
 }
 
 .panel-default>.panel-heading{
-  background-color: #F28269;
-  border: 3px solid #F28269;
+  background-color: #E85D34;
+  border: 3px solid #E85D34;
   border-radius: 10px;
   padding: 6px 15px 0px 15px;
 }
@@ -87,11 +98,9 @@ h4{
   border: 3px solid #06B9BF;
   border-radius: 10px;
   padding: 10px 15px 0px 15px;
-  font-family: 'Montserrat', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+  font-family: 'Karla', sans-serif;
   font-weight: 700;
-  font-size: 9px;
+  font-size: 12px;
   color: white;
 }
 .category-body{
@@ -105,7 +114,10 @@ h4{
   border-radius: 20px;
   box-shadow: none;
   position: relative;
-  top: 5px;
+  top: 6px;
+  float: left;
+  width: 70%;
+  margin-left: 30px;
 }
 .progress-bar{
   background-color: #06B9BF;
@@ -115,6 +127,8 @@ h4{
   font-size: 22px;
   font-weight: 700;
   color: #012639;
+  position: relative;
+  top: 1px;
 }
 .panel-body.legend-body{
   font-family: 'Montserrat', sans-serif;
@@ -123,4 +137,56 @@ h4{
   font-weight: 700;
   font-size: 10px;
   padding: 0px 15px 0px;
+}
+.site-footer{
+  background-color: #012639;
+  color: white;
+  padding: 40px 0;
+  margin-top: 30px;
+  position: relative;
+  bottom: -40px;
+  width: 100%;
+}
+.logo-footer{
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 11px;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+}
+.site-footer a{
+  color: white;
+  font-weight: 400;
+}
+.logo-footer img{
+  margin-top: 10px;
+}
+.brand img{
+  position: absolute;
+  top: 13px;
+}
+
+@media (max-width: 767px) {
+  h4{
+    font-size: 10px;
+  }
+  .big-number{
+    font-size: 17px;
+    position: relative;
+    top: 3px;
+  }
+}
+
+@media (max-width: 538px) {
+  .progress{
+    width: 50%;
+    margin-left: 25px;
+    margin-right: 10px;
+    top: 10px;
+  }
+  .big-number{
+    position: relative;
+    top: 7px;
+  }
 }

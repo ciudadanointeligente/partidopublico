@@ -46,7 +46,7 @@
 $(document).ready(function(){
   var presencia = <%= raw @partido.regions.map{|r| r.ordinal} %>,
   colors = ["#23dbb8", "#19a58a", "#245d72", "#1ed6d6", "#17a5a5"];
-  colors_cargos = ["#CDFFFC", "#78EEE8", "#06B9BF"];
+  colors_cargos = ["#06B9BF", "#78EEE8", "#CDFFFC"];
   colors_range = ["#FDD7D2","#FFBCAA","#F28269","#E85D34","#B74B2B","#9A553A","#2C1313","#5E3F3F","#756666","#C5C0C0","#E9DEDF","#F4F2F2"];
 
   $.each(presencia, function(k,v){

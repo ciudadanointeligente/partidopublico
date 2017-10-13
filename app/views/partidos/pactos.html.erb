@@ -1,6 +1,9 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Vínculos e intereses</li><li>Pactos electorales que integra</li></ol>
 <h3>Pactos electorales que integra</h3>
-
+<p>
+En esta sección se presentan todos los pactos que integra el partido y se detalla la lista completa de partidos que lo componen, el propósito del pacto (tipo de elección) y el año de la elección.
+</p>
+<hr>
  <% if @sin_datos %>
    <%= render 'sin_datos' %>
  <% else %>
@@ -50,6 +53,5 @@
       </tbody>
     </table>
   </div>
-  <p class="mark-date"> Estos datos corresponden a lo publicado por este
-      Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
+  <%= render 'mark_date' %>
  <% end %>

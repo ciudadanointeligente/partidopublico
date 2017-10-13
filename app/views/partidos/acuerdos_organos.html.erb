@@ -1,5 +1,9 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Últimas decisiones</li><li>Acuerdos órganos intermedios colegiados</li></ol>
 <h3>Acuerdos órganos internos</h3>
+<p>
+Los partidos están compuestos por órganos intermedios como directivas, comités, tribunales y comisiones. En esta sección se encuentran publicados los documentos (actas, convenios, estatutos, informes u otros) registrados por estos órganos intermedios durante el trimestre informado. Haz clic en “ver documento” para descargarlo.
+</p>
+<hr>
 <% if @sin_datos %>
  <%= render 'sin_datos' %>
 <% else %>
@@ -51,12 +55,13 @@
                   <% end %>
                 </tbody>
               </table>
+              <%= paginate @acuerdos %>
+              <%= page_entries_info @acuerdos %>
             </div>
           </div>
         </div>
       </div>
     <% end %>
-    <p class="mark-date"> Estos datos corresponden a lo publicado por este
-      Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
-      <% end %>
+    <%= render 'mark_date' %>
+    <% end %>
   </div>

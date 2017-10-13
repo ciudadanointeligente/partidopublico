@@ -1,5 +1,9 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Finanzas</li><li>Egresos ordinarios</li></ol>
 <h3>Egresos ordinarios</h3>
+<p>
+En esta sección se presentan el total gastado por el partido durante el trimestre informado en concepto de egresos ordinarios, desagregados en los 17 ítems que la Ley establece como tales. Los ítems han sido coloreados según las categorías: a) Gastos administrativos; b) Préstamos, créditos o inversiones; y c) Gastos de participación y formación.
+</p>
+<hr>
 <% if @sin_datos %>
   <%= render 'sin_datos' %>
 <% else %>
@@ -60,8 +64,7 @@
     </div>
   </div>
 <% end %>
-  <p class="mark-date"> Estos datos corresponden a lo publicado por este
-      Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
+<%= render 'mark_date' %>
 <script>
 $(document).ready(function(){
   var data = <%=  @datos_egresos_ordinarios.to_json.html_safe %>;

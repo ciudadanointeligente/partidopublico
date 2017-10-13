@@ -1,5 +1,9 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Finanzas</li><li>Egresos de Campaña</li></ol>
 <h3>Egresos de Campaña</h3>
+<p>
+En esta sección el partido informa el total gastado en campañas durante el trimestre informado, desagregado por el tipo de la campaña (tipo de elección). Para conocer el detalle de cada aporte, descarga la planilla fuente.
+</p>
+<hr>
 <% if @sin_datos %>
   <%= render 'sin_datos' %>
 <% else %>
@@ -54,8 +58,7 @@
     </div>
   </div>
   <% end %>
-  <p class="mark-date"> Estos datos corresponden a lo publicado por este
-      Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
+  <%= render 'mark_date' %>
 <script>
 $(document).ready(function(){
   var data = <%=  @datos_egresos_campanas.to_json.html_safe %>;

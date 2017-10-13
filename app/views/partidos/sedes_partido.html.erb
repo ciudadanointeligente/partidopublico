@@ -1,5 +1,9 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Presencia nacional</li><li>Domicilio y sedes de contacto</li></ol>
 <h3>Domicilio y sedes de contacto</h3>
+<p>
+  En esta sección se presenta el listado de sedes -incluido el domicilio- del partido a lo largo del país, según lo informado cada trimestre.
+</p>
+<hr>
 <% if @sin_datos %>
   <%= render 'sin_datos' %>
 <% else %>
@@ -34,6 +38,5 @@
     <%= page_entries_info @sedes %> <br>
     <%= paginate @sedes %>
   </div>
-  <p class="mark-date"> Estos datos corresponden a lo publicado por este
-    Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
+  <%= render 'mark_date' %>
 </div>

@@ -1,5 +1,9 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Finanzas</li><li>Contrataciones Sobre 20 UTM</li></ol>
 <h3>Contrataciones Sobre 20 UTM</h3>
+<p>
+  La Ley establece que los partidos deben informar el detalle de todos los gastos y contrataciones que excedan las 20 UTM ($935.720 a octubre de 2017 ) en los que hayan incurrido.  En esta sección se informa el monto total gastado mensualmente por el partido en gastos sobre este monto. Para conocer el detalle de cada gasto, descarga la planilla fuente.
+</p>
+<hr>
 <% if @sin_datos %>
   <%= render 'sin_datos' %>
 <% else %>
@@ -53,8 +57,7 @@
     </div>
   </div>
   <% end %>
-  <p class="mark-date"> Estos datos corresponden a lo publicado por este
-      Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
+  <%= render 'mark_date' %>
 <script>
 $(document).ready(function(){
   var data = <%=  @datos_contrataciones.to_json.html_safe %>;

@@ -1,5 +1,9 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Vínculos e intereses</li><li>Declaraciones de intereses y patrimonio</li></ol>
 <h3>Declaraciones de intereses y patrimonio</h3>
+<p>
+  En esta sección se encuentran los links directos a las declaraciones de patrimonio e intereses de los candidatos del partido. Para conocer las declaraciones de miembros del partido en cargos de representación popular u otra autoridad nacional, visita: infoprobidad.cl
+</p>
+<hr>
 <% if @sin_datos %>
   <%= render 'sin_datos' %>
 <% else %>
@@ -56,8 +60,7 @@
     <% end %>
   <% end %>
 <% end %>
-<p class="mark-date"> Estos datos corresponden a lo publicado por este
-    Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
+<%= render 'mark_date' %>
 <% if cnt == 0 %>
 <p class="text-info"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> No se encontraron registros</p>
 <% end %>

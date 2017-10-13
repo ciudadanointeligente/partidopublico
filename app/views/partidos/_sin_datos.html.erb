@@ -1,7 +1,9 @@
-<p class="no_data_big_message"> <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-  El <%= @partido.nombre %> no ha entregado la planilla correspondiente a la
-  información solicitada. Esto puede ser una omisión o porque este ítem no
-  aplica al <%= @partido.nombre %>.</p>
-  <p class="no_data_small_message">Pregúntale al <%= @partido.nombre %>
-  por qué no ha entregado esta planilla o exígele que lo haga contactándolo
-  mediante su  <a href= "<%= @partido.url %>" >sitio oficial</a>.</p>
+<div class="no_data_big_message">
+  <p class=""> <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+    El <%= @partido.nombre %> no ha entregado la planilla correspondiente a la
+    información solicitada. Esto puede ser una omisión o porque este ítem no
+    aplica al <%= @partido.nombre %>.</p>
+    <p class="no_data_small_message">Pregúntale al <%= @partido.nombre %>
+      por qué no ha entregado esta planilla o exígele que lo haga contactándolo
+      mediante su  <a href= "<%= @partido.url %>" >sitio oficial</a>.</p>
+</div>

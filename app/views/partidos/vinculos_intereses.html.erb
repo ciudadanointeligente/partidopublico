@@ -1,5 +1,9 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Vínculos e intereses</li><li>Entidades en las que tenga participación</li></ol>
 <h3>Entidades en que tenga participación</h3>
+<p>
+En esta sección se enlistan las organizaciones o entidades en las que el partido tiene algún tipo de participación. Los partidos pueden vincularse con otras organizaciones en calidad de participante, representante o interviniente.
+</p>
+<hr>
 <% if @sin_datos %>
  <%= render 'sin_datos' %>
 <% else %>
@@ -34,6 +38,5 @@
       </tbody>
     </table>
   </div>
-  <p class="mark-date"> Estos datos corresponden a lo publicado por este
-      Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
+  <%= render 'mark_date' %>
 <% end %>

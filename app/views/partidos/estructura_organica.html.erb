@@ -1,5 +1,8 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Normas internas y pensamiento</li><li>Estructura orgánica</li></ol>
 <h3>Estructura orgánica</h3>
+<p>
+  En esta sección se presentan los monto percibidos por el partido durante el trimestre informado en concepto de ingresos ordinarios, desagregados en los ítems que la Ley establece como tales. Estos ingresos pueden ser públicos (los aportes del Estado) o privados (el rendimiento de su patrimonio, el rendimiento de las actividades del partido,  el total recibido por cuotas y aportes de sus afiliados y los aportes de personas naturales).
+</p>
 
 <% if @sin_datos %>
   <%= render 'sin_datos' %>
@@ -77,8 +80,7 @@
   <%= paginate @organos_internos %>
   <%= page_entries_info @organos_internos %>
 <% end %>
-<p class="mark-date"> Estos datos corresponden a lo publicado por este
-    Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
+<%= render 'mark_date' %>
 <% if cnt == 0 %>
 <p class="text-info"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> No se encontraron registros</p>
 <% end %>

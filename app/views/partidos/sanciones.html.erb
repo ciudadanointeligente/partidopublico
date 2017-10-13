@@ -1,5 +1,9 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Transparencia</li><li>Sanciones</li></ol>
 <h3>Sanciones aplicadas al partido</h3>
+<p>
+En esta sección se dan a conocer todas las sanciones recibidas por el partido durante el trimestre informado, con fecha, descripción y tipo de sanción recibida. Haz clic en “ver sanción” para ir al sitio o descargar el documento que la detalla.
+</p>
+<hr>
 <% if @sin_datos %>
   <%= render 'sin_datos' %>
 <% else %>
@@ -29,7 +33,7 @@
           <td><%= l(s.fecha, format: '%d ' + 'de ') + l(s.fecha, format: '%B ').titleize +  l(s.fecha, format: 'del %Y') unless s.fecha.nil? %></td>
           <td><%= s.descripcion %></td>
           <td><%= s.tipo_sancion %></td>
-          <td class="link-intereses-patrimonio"><%= !s.link_resolucion.nil? ? link_to(s.link_resolucion, target:"_blank") do "<i class='fa fa-external-link'></i>".html_safe end : 'Sin Información' %></td>
+          <td class="link-intereses-patrimonio"><%= !s.link_resolucion.nil? ? link_to(s.link_resolucion, target:"_blank") do "<span class='btn-view-detail-lg btn btn-default btn-lg text-left'>Ver Documento</span>".html_safe end : 'Sin Información' %></td>
           <!-- <td>
             <% if !s.documento_file_name.nil? %>
               <li><%= link_to s.documento_file_name, s.documento.url %></li>
@@ -39,6 +43,5 @@
         <% end %>
       </tbody>
     </table>
-  </div><p class="mark-date"> Estos datos corresponden a lo publicado por este
-      Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
+    <%= render 'mark_date' %>
 <% end %>

@@ -1,5 +1,9 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Últimas decisiones</li><li>Publicación de los candidatos</li></ol>
 <h3>Publicación de los candidatos</h3>
+<p>
+En esta sección el partido informa el listado completo de candidatos -con nombre, región y comuna- inscritos durante el trimestre informado, agrupados por tipo de elección.
+</p>
+<hr>
 <% if @sin_datos %>
   <%= render 'sin_datos' %>
 <% else %>
@@ -28,8 +32,7 @@
     </div>
   <% end %>
 <% end %>
-<p class="mark-date"> Estos datos corresponden a lo publicado por este
-    Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
+<%= render 'mark_date' %>
 
 <% if cnt == 0 %>
 <p class="text-info"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> No se encontraron registros</p>

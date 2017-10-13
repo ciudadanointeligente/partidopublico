@@ -1,5 +1,9 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Finanzas</li><li>Aportes a Campañas</li></ol>
 <h3>Aportes a Campañas</h3>
+<p>
+En esta sección el partido informa el total de los aportes a campañas recibidos durante el trimestre informado. Los aportes a campañas pueden ser aportes en dinero o de otro tipo (especies, recintos, traslados y otros). Para conocer el detalle de cada aporte, descarga la planilla fuente.
+</p>
+<hr>
 <% if @sin_datos %>
   <%= render 'sin_datos' %>
 <% else %>
@@ -53,8 +57,7 @@
     </div>
   </div>
   <% end %>
-  <p class="mark-date"> Estos datos corresponden a lo publicado por este
-      Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
+  <%= render 'mark_date' %>
 <script>
 $(document).ready(function(){
   var data = <%=  @datos_ingresos_campanas.to_json.html_safe %>;

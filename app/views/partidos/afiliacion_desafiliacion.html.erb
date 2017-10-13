@@ -1,5 +1,8 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Cómo participar</li><li>Afiliación y desafiliación</li></ol>
 <h3>Afiliación y desafiliación</h3>
+<p>En esta sección se informan los requisitos y procedimientos para  incorporarse o salir del partido, según lo informado por el partido cada trimestre.
+</p>
+<hr>
 <% if @sin_datos %>
  <%= render 'sin_datos' %>
 <% else %>
@@ -23,6 +26,5 @@
 <h4>Requisitos</h4>
 <p><%= simple_format(ta.requisito) %></p>
 <% end %>
-  <p class="mark-date"> Estos datos corresponden a lo publicado por este
-      Partido Político en el Portal de Transparencia del Estado al día <%= @fecha_datos %> </p>
+<%= render 'mark_date' %>
 <% end %>
