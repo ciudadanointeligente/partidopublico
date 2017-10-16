@@ -25,9 +25,9 @@ En esta sección el partido informa el listado completo de candidatos -con nombr
           <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= index %>" aria-expanded="true" aria-controls="collapse-<%= index %>">
             <%= link_to ip.titulo, partido_detalles_candidatos_path(tipo_cargo_id: ip.id, trimestre_informado_id: @trimestre_informado.id)%>
           </a>
-          <span class="badge"><%= ip %></span>
+          <span class="badge"><%= @trimestre_informado.cargos.where(tipo_cargo_id: ip).count %></span>
         </h4>
-        <span class="sr-only"><p>Se han encontrado <%= ip %> candidatos para <%= ip %></p></span>
+        <span class="sr-only"><p>Se han encontrado candidatos</p></span>
       </div>
     </div>
   <% end %>

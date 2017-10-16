@@ -1,5 +1,9 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Normas internas y pensamiento</li><li>Estructura orgánica</li></ol>
-<%= link_to "Volver a Estructura orgánica", partido_organos_internos_path(:menu => 0) %>
+<%= link_to  partido_organos_internos_path(:menu => 0)  do %>
+  <button class="btn-view-detail btn btn-default btn-xs" type="submit">
+    <i class="fa fa-arrow-left" aria-hidden="true"> Volver </i>
+  </button>
+<% end %>
 <h3>Detalles Órgano Interno : <%= @organo_interno.nombre %></h3>
 
 <% if @sin_datos %>

@@ -189,8 +189,6 @@ GEM
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.4)
-    rack-mini-profiler (0.10.5)
-      rack (>= 1.2.0)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.6)
@@ -358,7 +356,6 @@ DEPENDENCIES
   pry-rails
   pry-rescue
   quiet_assets
-  rack-mini-profiler
   rails (= 4.2.6)
   rails-erd
   rails-i18n

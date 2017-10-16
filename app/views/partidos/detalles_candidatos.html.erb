@@ -1,6 +1,10 @@
 <ol class="breadcrumb"><li><%= @partido.nombre %></li><li>Últimas decisiones</li><li>Publicación de los candidatos</li></ol>
 <h3>Publicación de los candidatos</h3>
-<%= link_to "Volver a Publicación Candidatos", partido_publicacion_candidatos_path(:menu => 0) %>
+<%= link_to  partido_publicacion_candidatos_path(:menu => 0)  do %>
+  <button class="btn-view-detail btn btn-default btn-xs" type="submit">
+    <i class="fa fa-arrow-left" aria-hidden="true"> Volver </i>
+  </button>
+<% end %>
 <h3> : <%= @tipo_cargo.titulo %></h3>
 <% if @sin_datos %>
   <%= render 'sin_datos' %>
