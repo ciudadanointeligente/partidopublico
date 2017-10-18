@@ -1376,7 +1376,7 @@ class PartidosController < ApplicationController
     else
       params[:trimestre_informado_id] = @trimestres_informados.first.id if params[:trimestre_informado_id].nil?
       @trimestre_informado = TrimestreInformado.find(params[:trimestre_informado_id])
-      @acuerdos = @trimestre_informado.acuerdos.page(params[:page]).per(10)
+      @acuerdos = @trimestre_informado.acuerdos.where(partido_id: @partido.id).page(params[:page]).per(10)
       @sin_datos = @trimestre_informado.acuerdos.count == 0
       # p @acuerdos.count
     end
