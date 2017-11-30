@@ -7,20 +7,24 @@
 @import 'partidos';
 @import "chosen";
 
-$red : #87e0fd; 	/* Here's how you assign the values to a variable */
-$darkblue : #2cafe3;
 $cpad: 20px;		/* Variables are not limited to colors, you can use it to store values too*/
 $nude: #FCEDF0;
 $nude-light: #FFF9FA;
-$orange-dark: #E85D34;
 $orange: #F28269;
 $orange-light: #FAC5BE;
+$orange-dark: #E85D34;
+$red: #CB4848;
+$red-light: #F77A7A;
+$red-dark: #B50909;
 $blue: #012639;
-$green: #1AC0A4;
-$green-light: #23DBB8;
-$green-dark: #19A58A;
-$sky-dark: #06B9BF;
-$sky-light: #78EEE8;
+$blue-medium: #164963;
+$blue-light: #477E9A;
+$green: #1ED0AC;
+$green-light: #90EFDA;
+$green-dark: #089B7E;
+$sky: #35DBD2;
+$sky-light: #7BF8F1;
+$sky-dark: #04ADB2;
 
 /*GENERAL*/
 html{position:relative;min-height:100%}
@@ -511,6 +515,81 @@ section#que-es-4{
 
 .vistas > img{
 	width: 100%;
+}
+
+/*CAROUSEL 2*/
+.carousel-box{
+	background-color: white;
+	padding: 20px;
+	margin: 20px;
+	box-shadow: -5px 5px 0px $orange;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-radius: 5px;
+	width: 96%;
+	.progress{
+		margin-bottom: 8px;
+		background-color: white;
+		border-radius: 0;
+		box-shadow: none;
+	}
+	h4{
+		font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: $blue;
+		line-height: 0.5;
+	}
+	.progress-bar{
+		box-shadow: none;
+	}
+	.bar-green-1{
+		background-color: $green-dark;
+	}
+	.bar-green-2{
+		background-color: $green;
+	}
+	.bar-green-3{
+		background-color: $green-light;
+	}
+	.bar-sky-1{
+		background-color: $sky-dark;
+	}
+	.bar-sky-2{
+		background-color: $sky;
+	}
+	.bar-sky-3{
+		background-color: $sky-light;
+	}
+	.bar-orange-1{
+		background-color: $orange-dark;
+	}
+	.bar-orange-2{
+		background-color: $orange;
+	}
+	.bar-orange-3{
+		background-color: $orange-light;
+	}
+	.bar-red-1{
+		background-color: $red-dark;
+	}
+	.bar-red-2{
+		background-color: $red;
+	}
+	.bar-red-3{
+		background-color: $red-light;
+	}
+	.bar-blue-1{
+		background-color: $blue;
+	}
+	.bar-blue-2{
+		background-color: $blue-medium;
+	}
+	.bar-blue-3{
+		background-color: $blue-light;
+	}
 }
 
 /*PARTIES SECTION*/
@@ -1446,6 +1525,9 @@ font-weight: 700;
 		position: relative;
 		top: 50px;
 		left: 36%;
+	}
+	.carousel-box{
+		width: 91%;
 	}
 }
 
