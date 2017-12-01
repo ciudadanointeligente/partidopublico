@@ -304,6 +304,30 @@ section#informado-ultimo-trimestre{
 		font-weight: 700;
 		font-family: 'Montserrat', sans-serif;
 	}
+	h4{
+		font-family: 'Montserrat', sans-serif;
+		font-weight: 700;
+		text-transform: uppercase;
+		font-size: 9px;
+		letter-spacing: 1px;
+		color: $blue;
+		line-height: 0.5;
+	}
+	.progress{
+		margin-bottom: 8px;
+		background-color: white;
+		border-radius: 0;
+		box-shadow: none;
+	}
+	.progress-bar{
+		box-shadow: none;
+		background-color: $sky;
+	}
+	.porcentaje-total{
+		font-weight: 700;
+		font-size: 24px;
+		line-height: 0.9;
+	}
 }
 
 .que-es-1-img{
