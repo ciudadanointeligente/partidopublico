@@ -1,53 +1,33 @@
-<!-- Welcome -->
-<!-- Modal -->
-<!-- <div class="modal fade popup" id="memberModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <%= image_tag("logo-blanco.svg")%>
-        <p><br>Partidos Públicos es la <span>única cancha</span> que ofrece a los partidos políticos la posibilidad de entregar a la ciudadanía su información a través de visualizaciones ordenadas, comprensibles y comparables, basada en los más altos estándares internacionales.</p>
-        <p><span>La cancha está disponible, sólo falta que los partidos entreguen su información de la manera correcta.<br> ¡Exijamos la verdadera transparencia!</span></p>
-      </div>
-      <div class="modal-body text-center">
-        <p>¿Te gustaría que la información estuviera completa en Partidos Públicos?<br><span>Envíale el manual de transparencia a los partidos políticos<span></p>
-        <%= link_to "Enviar manual", root_path + "exigeles", class: 'btn btn-default popup', onclick: "ga('send', 'event', 'enviar-manual', 'click');", target:'_blank' %>
+<section id="new-welcome" class="text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Partidos Políticos<h1>
+        <h2>accesibles a la ciudadanía</h2>
+        <p>Partidos Públicos es una plataforma que busca facilitar el acceso y la fiscalización ciudadana a la información que publican los partidos políticos chilenos en transparencia activa, a través de visualizaciones, filtros y comparativas amigables. ¡Queremos que la transparencia sea útil y entendible!</p>
       </div>
     </div>
   </div>
-</div> -->
-<!--
-<script type="text/javascript">
-<!--
-$('#memberModal').modal('show');
-//-->
-</script> -->
+</section>
 <section id="funciones">
   <div class="container">
     <div class="row">
-      <div class="col-md-10 col-md-offset-1">
+      <div class="col-md-12">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
           <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
           <li data-target="#carousel-example-generic" data-slide-to="1"></li>
           <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-          <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-          <li data-target="#carousel-example-generic" data-slide-to="4"></li>
-          <li data-target="#carousel-example-generic" data-slide-to="5"></li>
         </ol>
 
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
+          <h3 class="text-center">Datos relevantes</h3>
           <div class="item active">
-              <div class="col-md-12">
-                <h1>Porque la ciudadanía exige más
-                <mark>#QuieroMejorTransparencia</mark></h1>
-              </div>
-          </div>
-          <div class="item">
-            <div class="col-md-12 carousel-box">
-              <h3>Visualizaciones</h3>
-              <p><span>A través de herramientas de visualización podrás acceder de manera sencilla y comprensible a los puntos más importantes de la información que se transparenta.</span></p>
+            <div class="col-md-10 col-md-offset-1">
+              <div class="carousel-box">
+              <h3>Ingresos por partido, últimos 3 trimestres</h3>
+              <p><span>Estas barras muestran los ingresos totales -públicos y privados- percibidos por cada partido en cada uno de los últimos tres trimestres, según lo informado por el partido al Consejo para la Transparencia.</span></p>
               <div class="row">
                 <div class="col-md-12">
                   <p class="small"><i class="fa fa-circle" aria-hidden="true" style="color: #089B7E;"></i> Primer trimestre
@@ -349,10 +329,12 @@ $('#memberModal').modal('show');
               </div>
             </div>
           </div>
+          </div>
           <div class="item">
-            <div class="col-md-12 carousel-box">
-              <h3>Visualizaciones</h3>
-              <p><span>A través de herramientas de visualización podrás acceder de manera sencilla y comprensible a los puntos más importantes de la información que se transparenta.</span></p>
+            <div class="col-md-10 col-md-offset-1">
+              <div class="carousel-box">
+              <h3>Gasto por partido, últimos 3 trimestres</h3>
+              <p><span>Estas barras muestran el gasto total efectuado por cada partido en los últimos tres trimestres, según lo que cada partido ha informado al Consejo para la Transparencia.</span></p>
               <div class="row">
                 <div class="col-md-12">
                   <p class="small"><i class="fa fa-circle" aria-hidden="true" style="color: #04ADB2;"></i> Primer trimestre
@@ -384,15 +366,16 @@ $('#memberModal').modal('show');
               </div>
             </div>
           </div>
+          </div>
           <div class="item">
-            <div class="col-md-12 carousel-box">
-              <h3>Visualizaciones</h3>
-              <p><span>A través de herramientas de visualización podrás acceder de manera sencilla y comprensible a los puntos más importantes de la información que se transparenta.</span></p>
+            <div class="col-md-10 col-md-offset-1">
+              <div class="carousel-box">
+              <h3>Total de afiliados por partido según género</h3>
+              <p><span>En este gráfico se muestra el total de afiliados (militantes) del partido desagregado por género, según lo informado por cada partido al Consejo para la Transparencia.</span></p>
               <div class="row">
                 <div class="col-md-12">
-                  <p class="small"><i class="fa fa-circle" aria-hidden="true" style="color: #E85D34;"></i> Primer trimestre
-                  <i class="fa fa-circle" aria-hidden="true" style="color: #F28269;"></i> Segundo trimestre
-                  <i class="fa fa-circle" aria-hidden="true" style="color: #FAC5BE;"></i> Tercer trimestre</p>
+                  <p class="small"><i class="fa fa-circle" aria-hidden="true" style="color: #E85D34;"></i> Mujeres
+                  <i class="fa fa-circle" aria-hidden="true" style="color: #F28269;"></i> Hombres
                   <hr>
                 </div>
               </div>
@@ -408,9 +391,6 @@ $('#memberModal').modal('show');
                     <div class="progress-bar bar-orange-2" style="width: 20%">
                       <span class="sr-only">20% Complete (warning)</span>
                     </div>
-                    <div class="progress-bar bar-orange-3" style="width: 10%">
-                      <span class="sr-only">10% Complete (danger)</span>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -419,95 +399,31 @@ $('#memberModal').modal('show');
               </div>
             </div>
           </div>
-          <div class="item">
-            <div class="col-md-12 carousel-box">
-              <h3>Visualizaciones</h3>
-              <p><span>A través de herramientas de visualización podrás acceder de manera sencilla y comprensible a los puntos más importantes de la información que se transparenta.</span></p>
-              <div class="row">
-                <div class="col-md-12">
-                  <p class="small"><i class="fa fa-circle" aria-hidden="true" style="color: #B50909;"></i> Primer trimestre
-                  <i class="fa fa-circle" aria-hidden="true" style="color: #CB4848;"></i> Segundo trimestre
-                  <i class="fa fa-circle" aria-hidden="true" style="color: #F77A7A;"></i> Tercer trimestre</p>
-                  <hr>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <h4>Partido Unión Demócrata Independiente</h4>
-                </div>
-                <div class="col-md-8">
-                  <div class="progress">
-                    <div class="progress-bar bar-red-1" style="width: 35%">
-                      <span class="sr-only">35% Complete (success)</span>
-                    </div>
-                    <div class="progress-bar bar-red-2" style="width: 20%">
-                      <span class="sr-only">20% Complete (warning)</span>
-                    </div>
-                    <div class="progress-bar bar-red-3" style="width: 10%">
-                      <span class="sr-only">10% Complete (danger)</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 col-md-offset-4">
-                <%= link_to "Ver comparativas", asset_path("como-funciona.pdf"), class: 'btn btn-view-detail-lg center-block', onclick: "ga('send', 'event', 'welcome-folleto', 'click');" %>
-              </div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="col-md-12 carousel-box">
-              <h3>Visualizaciones</h3>
-              <p><span>A través de herramientas de visualización podrás acceder de manera sencilla y comprensible a los puntos más importantes de la información que se transparenta.</span></p>
-              <div class="row">
-                <div class="col-md-12">
-                  <p class="small"><i class="fa fa-circle" aria-hidden="true" style="color: #164963;"></i> Mujeres
-                  <i class="fa fa-circle" aria-hidden="true" style="color: #477E9A;"></i> Hombres
-                  <hr>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <h4>Partido Unión Demócrata Independiente</h4>
-                </div>
-                <div class="col-md-8">
-                  <div class="progress">
-                    <div class="progress-bar bar-blue-2" style="width: 20%">
-                      <span class="sr-only">20% Complete (warning)</span>
-                    </div>
-                    <div class="progress-bar bar-blue-3" style="width: 10%">
-                      <span class="sr-only">10% Complete (danger)</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 col-md-offset-4">
-                <%= link_to "Ver comparativas", asset_path("como-funciona.pdf"), class: 'btn btn-view-detail-lg center-block', onclick: "ga('send', 'event', 'welcome-folleto', 'click');" %>
-              </div>
-            </div>
           </div>
         </div>
       </div>
 
         <!-- Controls -->
         <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-          <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+          <i class="fa fa-angle-left fa-4x" aria-hidden="true"></i>
           <span class="sr-only">Anterior</span>
         </a>
         <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-          <i class="fa fa-arrow-right fa-lg" aria-hidden="true"></i>
+          <i class="fa fa-angle-right fa-4x" aria-hidden="true"></i>
           <span class="sr-only">Siguiente</span>
         </a>
       </div>
       </div>
     </div>
 </section>
-<!-- Title -->
 <section id="informado-ultimo-trimestre">
   <div class="container">
     <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-            <h2 class="text-center">¿Qué es?</h2>
-            <p>Partidos Públicos es una plataforma inédita de transparencia de partidos políticos, que te permite visualizar y comparar fácilmente información financiera, de afiliados y presencia nacional, entre otros. Esta plataforma empuja al cumplimiento de la nueva Ley de Partidos Políticos y de estándares internacionales de apertura de datos.</p>
+      <div class="col-md-10 col-md-offset-1">
+        <h3 class="text-center">Estado de actualización de los datos</h3>
+        <h4 class="text-center">Trimestre Jul - Sep 2017*</h4>
+        <p><span>Esta sección muestra el porcentaje de actualización de los datos correspondientes al último trimestre finalizado. Este cálculo se efectúa sobre las secciones de información relevante que Partidos Públicos elabora a partir de las planillas que los partidos entregan trimestralmente al Estado. Haz clic en el nombre de un partido para explorar su información en detalle.</span></p>
+        <p class="small">* Según la Ley, los partidos tienen hasta el décimo día hábil de cada trimestre para actualizar los datos correspondientes al trimestre anterior (p.e: en enero deben actualizar los datos del trimestre oct-dic).</p>
       </div>
     </div>
     <div class="row">
@@ -531,18 +447,6 @@ $('#memberModal').modal('show');
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-<section id="partidos">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        <h2 class="text-center">¿Qué es?</h2>
-        <p><span>Partidos Públicos es una plataforma inédita de transparencia de partidos políticos, que te permite visualizar y comparar fácilmente información financiera, de afiliados y presencia nacional, entre otros. Esta plataforma empuja al cumplimiento de la nueva Ley de Partidos Políticos y de estándares internacionales de apertura de datos.</span></p>
-      </div>
-    </div>
-    <div class="row">
     </div>
   </div>
 </section>

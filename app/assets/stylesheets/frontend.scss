@@ -235,6 +235,23 @@ h6{
 }
 
 /*HOME*/
+section#new-welcome{
+	background-color: $orange-dark;
+	color: white;
+	font-weight: 700;
+	font-size: 18px;
+	padding: 200px 0 160px;
+	h1{
+		font-size: 54px;
+		margin-bottom: -72px;
+	}
+	h2{
+		text-transform: none;
+		letter-spacing: 0;
+		color: $blue;
+		font-size: 54px;
+	}
+}
 section#que-es{
 	margin-top: -110px;
 	background: asset-url('images/ciudadanos.svg') 70% 120% no-repeat white;
@@ -277,7 +294,16 @@ section#que-es-4{
 	margin-bottom: -70px;
 }
 section#informado-ultimo-trimestre{
-	background-color: $orange-dark;
+	background-color: white;
+	padding: 90px 0 90px;
+	h3{
+		font-size: 28px;
+		letter-spacing: 0;
+		text-transform: none;
+		color: $blue;
+		font-weight: 700;
+		font-family: 'Montserrat', sans-serif;
+	}
 }
 
 .que-es-1-img{
@@ -520,6 +546,17 @@ section#informado-ultimo-trimestre{
 	width: 100%;
 }
 
+.carousel-inner{
+	h3{
+		font-size: 28px;
+		letter-spacing: 0;
+		text-transform: none;
+		color: $blue;
+		font-weight: 700;
+		font-family: 'Montserrat', sans-serif;
+	}
+}
+
 /*CAROUSEL 2*/
 .carousel-box{
 	background-color: white;
@@ -544,6 +581,12 @@ section#informado-ultimo-trimestre{
     letter-spacing: 1px;
     color: $blue;
 		line-height: 0.5;
+	}
+	h3{
+		font-weight: 700;
+		color: $orange-dark;
+		margin: 5px 0 10px 0;
+		font-family: 'Karla', sans-serif;
 	}
 	.progress-bar{
 		box-shadow: none;
