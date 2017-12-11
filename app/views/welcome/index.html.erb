@@ -134,10 +134,10 @@
                 </div>
                 <div class="col-md-8">
                   <div class="progress">
-                    <div class="progress-bar bar-orange-1" style="width: 35%">
+                    <div class="progress-bar bar-orange-1" style="width: <%= (p.hombres.to_f / p.total.to_f).to_f * 100 %>%">
                       <span class="sr-only">35% Complete (success)</span>
                     </div>
-                    <div class="progress-bar bar-orange-2" style="width: 20%">
+                    <div class="progress-bar bar-orange-2" style="width: <%= (p.mujeres.to_f / p.total.to_f).to_f * 100 %>%">
                       <span class="sr-only">20% Complete (warning)</span>
                     </div>
                   </div>
