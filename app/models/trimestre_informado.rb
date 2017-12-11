@@ -55,7 +55,7 @@ class TrimestreInformado < ActiveRecord::Base
       tramites = t.tramites.where(partido: p).any? ? 1 : 0
       tmp = sedes + organos + cargos + egreso_ordinarios + ingreso_ordinarios + transferencias + contratacions + egreso_campanas + ingreso_campanas + afiliacions + sancions + estadistica_cargos + pacto_electorals + acuerdos + participacion_entidads + tramites
 
-      nota_partidos << { "partido_id" => p.id, "suma" => tmp, "total" => 16, "nota" => (tmp.to_f / 16.0) }
+      nota_partidos << { "partido_id" => p.id, "suma" => tmp, "total" => 16, "nota" => (tmp.to_f / 16.0), "ano" => t.ano, "ordinal" => t.ordinal }
     end
     nota_partidos
   end
@@ -69,7 +69,7 @@ class TrimestreInformado < ActiveRecord::Base
     tmp_ordinal = ((month - 1) / 3)
     tmp_mod = ((month - 1) % 3)
     if tmp_mod == 0
-      if day < 10
+      if day < 14
         if tmp_ordinal > 0
           tmp_ordinal = tmp_ordinal -1
         else
@@ -109,7 +109,7 @@ class TrimestreInformado < ActiveRecord::Base
     p t.to_s
     Partido.all.each do |p|
       ingreso_ordinarios = t.ingreso_ordinarios.where(partido: p).sum(:importe)
-      ingresos_partidos << { "partido_id" => p.id, "suma_ingresos" => ingreso_ordinarios }
+      ingresos_partidos << { "partido_id" => p.id, "suma_ingresos" => ingreso_ordinarios, "ano" => t.ano, "ordinal" => t.ordinal, "trimestre" => t.trimestre }
     end
     ingresos_partidos
   end
@@ -130,9 +130,47 @@ class TrimestreInformado < ActiveRecord::Base
           val = (g.sum(:octubre) + g.sum(:noviembre) + g.sum(:diciembre) rescue 0)
         end
 
-      gastos_partidos << { "partido_id" => p.id, "suma_gastos" => val }
+      gastos_partidos << { "partido_id" => p.id, "suma_gastos" => val, "ano" => trimestre.ano, "ordinal" => trimestre.ordinal, "trimestre" => trimestre.trimestre}
     end
     gastos_partidos
   end
 
+  def self.gastos_3_ultimos
+    trimestre = TrimestreInformado.current_trimestre
+    gastos = []
+    # gastos << trimestre.prev.total_gastos
+    # gastos << trimestre.prev.prev.total_gastos
+    # gastos << trimestre.prev.prev.prev.total_gastos
+    # gastos.map { |h| h['partido_id'] }.uniq.map{|p| {'partido_id' => p, 'gastos' => gastos.select{|v| v['partido_id']==p} }}
+
+    # gastos
+    gastos = trimestre.prev.total_gastos.concat(trimestre.prev.prev.total_gastos).concat( trimestre.prev.prev.prev.total_gastos)
+    gastos.map { |h| h['partido_id'] }.uniq.map{|p| {
+                            'partido_id' => p,
+                            'gastos' => gastos.select{|v| v['partido_id']==p},
+                            'suma' => gastos.select{|v| v['partido_id']==p}.inject(0){ |sum,x| sum + x["suma_gastos"] } } }.sort_by{|h| - h["suma"]}
+
+  end
+
+  def self.ingresos_3_ultimos
+    trimestre = TrimestreInformado.current_trimestre
+    ingresos = []
+    # ingresos << trimestre.prev.total_ingresos
+    # ingresos << trimestre.prev.prev.total_ingresos
+    # ingresos << trimestre.prev.prev.prev.total_ingresos
+    # ingresos.map { |h| h['partido_id'] }.uniq.map{|p| {'partido_id' => p, 'ingresos' => ingresos.select{|v| v['partido_id']==p} }}
+
+    # ingresos
+    ingresos = trimestre.prev.total_ingresos.concat(trimestre.prev.prev.total_ingresos).concat( trimestre.prev.prev.prev.total_ingresos)
+    ingresos.map { |h| h['partido_id'] }.uniq.map{|p| {
+                            'partido_id' => p,
+                            'ingresos' => ingresos.select{|v| v['partido_id']==p},
+                            'suma' => ingresos.select{|v| v['partido_id']==p}.inject(0){ |sum,x| sum + x["suma_ingresos"] } } }.sort_by{|h| - h["suma"]}
+
+  end
+
+  def self.proporcion_sexos
+    trimestre = TrimestreInformado.current_trimestre
+    trimestre.prev.afiliacions.where(rango_etareo: 'total militantes').sort_by{|a| -(a.hombres + a.mujeres)}
+  end
 end
