@@ -57,7 +57,7 @@ class TrimestreInformado < ActiveRecord::Base
 
       nota_partidos << { "partido_id" => p.id, "suma" => tmp, "total" => 16, "nota" => (tmp.to_f / 16.0), "ano" => t.ano, "ordinal" => t.ordinal }
     end
-    nota_partidos
+    nota_partidos.sort_by{|i| - i['nota']}
   end
 
   def self.current_trimestre(date=nil)

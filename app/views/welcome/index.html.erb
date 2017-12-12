@@ -127,20 +127,27 @@
                   <hr>
                 </div>
               </div>
+              <%  max = 0 %>
               <% TrimestreInformado.proporcion_sexos.each_with_index do |p, j| %>
+                <%  if max <  p.total%>
+              <% max =  p.total%>
+              <% end %>
+              <% factor = p.total.to_f / max.to_f %>
               <div class="row">
                 <div class="col-md-4">
                   <h4><%= p.partido.nombre %></h4>
                 </div>
                 <div class="col-md-8">
+                  <a href="#" data-toggle="tooltip" title="Total : <%= p.total %> ( <%= number_to_percentage((p.hombres.to_f / p.total.to_f).to_f * 100, precision: 0) %> hombres, <%= number_to_percentage((p.mujeres.to_f / p.total.to_f).to_f * 100, precision: 0) %> mujeres ) ">
                   <div class="progress">
-                    <div class="progress-bar bar-orange-1" style="width: <%= (p.hombres.to_f / p.total.to_f).to_f * 100 %>%">
-                      <span class="sr-only">35% Complete (success)</span>
+                    <div class="progress-bar bar-orange-1" style="width: <%= factor *  (p.mujeres.to_f / p.total.to_f).to_f * 100 %>%">
+                      <span class="sr-only"><%= factor *  (p.mujeres.to_f / p.total.to_f).to_f * 100 %>% Complete (success)</span>
                     </div>
-                    <div class="progress-bar bar-orange-2" style="width: <%= (p.mujeres.to_f / p.total.to_f).to_f * 100 %>%">
-                      <span class="sr-only">20% Complete (warning)</span>
+                    <div class="progress-bar bar-orange-2" style="width: <%= factor *  (p.hombres.to_f / p.total.to_f).to_f * 100 %>%">
+                      <span class="sr-only"><%= factor *  (p.hombres.to_f / p.total.to_f).to_f * 100 %>% Complete (warning)</span>
                     </div>
                   </div>
+                  </a>
                 </div>
               </div>
               <% end %>
@@ -180,21 +187,23 @@
     </div>
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
+        <% TrimestreInformado.current_trimestre.prev.porcentaje_completado.each_with_index do |p, i| %>
         <div class="row">
           <div class="col-md-4">
-            <h4>Partido Unión Demócrata Independiente</h4>
+            <h4><%= Partido.find(p['partido_id']).nombre %></h4>
           </div>
           <div class="col-md-6 col-sm-8 col-xs-8 text-center">
             <div class="progress">
-              <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+              <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= number_to_percentage(p['nota'] * 100, precision: 0) %>;">
                 <span class="sr-only">60% Complete</span>
               </div>
             </div>
           </div>
           <div class="col-md-2 col-sm-4 col-xs-4 text-center">
-            <p class="porcentaje-total">20%</p>
+            <p class="porcentaje-total"><%= number_to_percentage(p['nota'] * 100, precision: 1) %></p>
           </div>
         </div>
+        <% end %>
       </div>
     </div>
   </div>
