@@ -30,9 +30,11 @@
               <p><span>Estas barras muestran los ingresos totales -públicos y privados- percibidos por cada partido en cada uno de los últimos tres trimestres, según lo informado por el partido al Consejo para la Transparencia.</span></p>
               <div class="row">
                 <div class="col-md-12">
-                  <p class="small"><i class="fa fa-circle" aria-hidden="true" style="color: #089B7E;"></i> Primer trimestre
-                  <i class="fa fa-circle" aria-hidden="true" style="color: #1ED0AC;"></i> Segundo trimestre
-                  <i class="fa fa-circle" aria-hidden="true" style="color: #90EFDA;"></i> Tercer trimestre</p>
+                  <p class="small">
+                    <i class="fa fa-circle" aria-hidden="true" style="color: #089B7E;"></i>  <%= TrimestreInformado.current_trimestre.prev.prev.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.prev.prev.ano %>
+                    <i class="fa fa-circle" aria-hidden="true" style="color: #1ED0AC;"></i>  <%= TrimestreInformado.current_trimestre.prev.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.prev.ano %>
+                    <i class="fa fa-circle" aria-hidden="true" style="color: #90EFDA;"></i> <%= TrimestreInformado.current_trimestre.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.ano %>
+                  </p>
                   <hr>
                 </div>
                 <%  max = 0 %>
@@ -79,9 +81,11 @@
               <p><span>Estas barras muestran el gasto total efectuado por cada partido en los últimos tres trimestres, según lo que cada partido ha informado al Consejo para la Transparencia.</span></p>
               <div class="row">
                 <div class="col-md-12">
-                  <p class="small"><i class="fa fa-circle" aria-hidden="true" style="color: #04ADB2;"></i> Primer trimestre
-                  <i class="fa fa-circle" aria-hidden="true" style="color: #35DBD2;"></i> Segundo trimestre
-                  <i class="fa fa-circle" aria-hidden="true" style="color: #7BF8F1;"></i> Tercer trimestre</p>
+                  <p class="small">
+                    <i class="fa fa-circle" aria-hidden="true" style="color: #04ADB2;"></i>  <%= TrimestreInformado.current_trimestre.prev.prev.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.prev.prev.ano %>
+                    <i class="fa fa-circle" aria-hidden="true" style="color: #35DBD2;"></i>  <%= TrimestreInformado.current_trimestre.prev.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.prev.ano %>
+                    <i class="fa fa-circle" aria-hidden="true" style="color: #7BF8F1;"></i> <%= TrimestreInformado.current_trimestre.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.ano %>
+                </p>
                   <hr>
                 </div>
               </div>
@@ -148,7 +152,7 @@
                 <div class="col-md-4">
                   <h4><%= p.partido.nombre %></h4>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-6">
                   <a href="#" data-toggle="tooltip" title="Total : <%= p.total %> ( <%= number_to_percentage((p.hombres.to_f / p.total.to_f).to_f * 100, precision: 0) %> hombres, <%= number_to_percentage((p.mujeres.to_f / p.total.to_f).to_f * 100, precision: 0) %> mujeres ) ">
                   <div class="progress">
                     <div class="progress-bar bar-orange-1" style="width: <%= factor *  (p.mujeres.to_f / p.total.to_f).to_f * 100 %>%">
@@ -159,6 +163,9 @@
                     </div>
                   </div>
                   </a>
+                </div>
+                <div class="col-md-2">
+                  <h4><%= p.total %></h4>
                 </div>
               </div>
               <% end %>
