@@ -545,7 +545,8 @@ section#informado-ultimo-trimestre{
 	color: $blue;
 	font-size: 14px;
 	width: initial;
-	top: 45%;
+	top: 37%;
+	padding: 0 20px;
 	&:hover{
 		color: $orange;
 	}
@@ -582,6 +583,12 @@ section#informado-ultimo-trimestre{
 }
 
 /*CAROUSEL 2*/
+.item.next.left{
+	margin-top: 45px;
+}
+.item.prev.right{
+	margin-top: 45px;
+}
 .carousel-box{
 	background-color: white;
 	padding: 20px;
@@ -591,6 +598,7 @@ section#informado-ultimo-trimestre{
 	padding-bottom: 20px;
 	border-radius: 5px;
 	width: 96%;
+	min-height: 680px;
 	.progress{
 		margin-bottom: 8px;
 		background-color: white;

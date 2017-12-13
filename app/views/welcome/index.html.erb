@@ -44,10 +44,10 @@
                       <%  if max <  p["suma"] %>
                       <% max =  p["suma"] %>
                       <% end %>
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <h4><%= Partido.find(p["partido_id"]).nombre %> </h4>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="progress">
                           <% total = p["suma"] %>
                           <% p["ingresos"].each_with_index do |g, i| %>
@@ -55,7 +55,7 @@
                             <% percent = (g["suma_ingresos"].to_f / total.to_f).to_f * 100  %>
                             <% factor =  (g["suma_ingresos"].to_f / max.to_f).to_f  %>
                             <a href="#" data-toggle="tooltip" title="<%= number_to_percentage((percent).to_f, precision: 0) %> ">
-                            <div class="progress-bar bar-sky-<%= i + 1  %>" style="width: <%= factor * percent  %>%">
+                            <div class="progress-bar bar-green-<%= i + 1  %>" style="width: <%= factor * percent  %>%">
                               <span class="sr-only"><%=  percent  %> % Complete (success)</span>
                             </div>
                           </a>
@@ -95,11 +95,11 @@
                       <%  if max <  p["suma"] %>
                       <% max =  p["suma"] %>
                       <% end %>
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <!-- <h4><%= p["suma"]%>/<%=  max %>=<%=  (max.to_f / p["suma"].to_f).to_f %></h4> -->
                         <h4><%= Partido.find(p["partido_id"]).nombre  %> </h4>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="progress">
                           <% total = p["suma"] %>
                           <% p["gastos"].each_with_index do |g, i| %>
@@ -146,10 +146,10 @@
                       <% max =  p.total%>
                       <% end %>
                       <% factor = p.total.to_f / max.to_f %>
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <h4><%= p.partido.nombre %></h4>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <a href="#" data-toggle="tooltip" title="Total : <%= p.total %> ( <%= number_to_percentage((p.hombres.to_f / p.total.to_f).to_f * 100, precision: 0) %> hombres, <%= number_to_percentage((p.mujeres.to_f / p.total.to_f).to_f * 100, precision: 0) %> mujeres ) ">
                         <div class="progress">
                           <div class="progress-bar bar-orange-1" style="width: <%= factor *  (p.mujeres.to_f / p.total.to_f).to_f * 100 %>%">
