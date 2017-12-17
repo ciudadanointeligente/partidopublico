@@ -54,7 +54,7 @@
                             <% g["suma_ingresos"] %>
                             <% percent = (g["suma_ingresos"].to_f / total.to_f).to_f * 100  %>
                             <% factor =  (g["suma_ingresos"].to_f / max.to_f).to_f  %>
-                            <a href="#" data-toggle="tooltip" title="<%= number_to_percentage((percent).to_f, precision: 0) %> ">
+                            <a data-toggle="tooltip" title="<%= number_to_percentage((percent).to_f, precision: 0) %> ">
                             <div class="progress-bar bar-green-<%= i + 1  %>" style="width: <%= factor * percent  %>%">
                               <span class="sr-only"><%=  percent  %> % Complete (success)</span>
                             </div>
@@ -107,7 +107,7 @@
                             <% percent = (g["suma_gastos"].to_f / total.to_f).to_f * 100  %>
                             <% factor = 2 * (g["suma_gastos"].to_f / max.to_f).to_f  %>
                             <!-- <%= percent  %> -->
-                            <a href="#" data-toggle="tooltip" title="<%= number_to_percentage((percent).to_f, precision: 0) %> ">
+                            <a data-toggle="tooltip" title="<%= number_to_percentage((percent).to_f, precision: 0) %> ">
                             <div class="progress-bar bar-sky-<%= i + 1  %>" style="width: <%= factor * percent  %>%">
                               <span class="sr-only"><%= percent  %> % Complete (success)</span>
                             </div>
@@ -150,7 +150,7 @@
                         <h4><%= p.partido.nombre %></h4>
                       </div>
                       <div class="col-md-4">
-                        <a href="#" data-toggle="tooltip" title="Total : <%= p.total %> ( <%= number_to_percentage((p.hombres.to_f / p.total.to_f).to_f * 100, precision: 0) %> hombres, <%= number_to_percentage((p.mujeres.to_f / p.total.to_f).to_f * 100, precision: 0) %> mujeres ) ">
+                        <a data-toggle="tooltip" title="Total : <%= p.total %> ( <%= number_to_percentage((p.hombres.to_f / p.total.to_f).to_f * 100, precision: 0) %> hombres, <%= number_to_percentage((p.mujeres.to_f / p.total.to_f).to_f * 100, precision: 0) %> mujeres ) ">
                         <div class="progress">
                           <div class="progress-bar bar-orange-1" style="width: <%= factor *  (p.mujeres.to_f / p.total.to_f).to_f * 100 %>%">
                             <span class="sr-only"><%= factor *  (p.mujeres.to_f / p.total.to_f).to_f * 100 %>% Complete (success)</span>
