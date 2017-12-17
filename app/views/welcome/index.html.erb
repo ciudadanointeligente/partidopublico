@@ -7,6 +7,11 @@
         <p>Partidos Públicos es una plataforma que busca facilitar el acceso y la fiscalización ciudadana a la información que publican los partidos políticos chilenos en transparencia activa, a través de visualizaciones, filtros y comparativas amigables. ¡Queremos que la transparencia sea útil y entendible!</p>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <a href="#funciones"><i class="fa fa-angle-down fa-3x" aria-hidden="true"></i></a>
+      </div>
+    </div>
   </div>
 </section>
 <section id="funciones">
@@ -31,8 +36,8 @@
                     <div class="row">
                       <div class="col-md-12">
                         <p class="small">
-                          <i class="fa fa-circle" aria-hidden="true" style="color: #089B7E;"></i>  <%= TrimestreInformado.current_trimestre.prev.prev.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.prev.prev.ano %>
-                          <i class="fa fa-circle" aria-hidden="true" style="color: #1ED0AC;"></i>  <%= TrimestreInformado.current_trimestre.prev.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.prev.ano %>
+                          <i class="fa fa-circle" aria-hidden="true" style="color: #089B7E;"></i>  <%= TrimestreInformado.current_trimestre.prev.prev.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.prev.prev.ano %><br>
+                          <i class="fa fa-circle" aria-hidden="true" style="color: #1ED0AC;"></i>  <%= TrimestreInformado.current_trimestre.prev.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.prev.ano %><br>
                           <i class="fa fa-circle" aria-hidden="true" style="color: #90EFDA;"></i> <%= TrimestreInformado.current_trimestre.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.ano %>
                         </p>
                         <hr>
@@ -64,13 +69,13 @@
                       </div><!-- col-md-6 -->
                       <div class="col-md-2">
                         <!-- <h4><%= p["suma"]%>/<%=  max %>=<%=  (max.to_f / p["suma"].to_f).to_f %></h4> -->
-                        <p><%= number_to_currency(total, delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %></p>
+                        <p class="progress-total"><%= number_to_currency(total, delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %></p>
                       </div><!-- col-md-2 -->
                     </div><!-- row -->
                     <% end %>
                   </div> <!-- carousel-box -->
                   <div class="col-md-4 col-md-offset-4">
-                    <%= link_to "Ver comparativas", asset_path("como-funciona.pdf"), class: 'btn btn-view-detail-lg center-block', onclick: "ga('send', 'event', 'welcome-folleto', 'click');" %>
+                    <%= link_to "Ver comparativas", asset_path("como-funciona.pdf"), class: 'btn btn-comparative-lg center-block', onclick: "ga('send', 'event', 'welcome-folleto', 'click');" %>
                   </div><!-- col-md-4 -->
                 </div> <!-- col-md-10 -->
               </div> <!-- item active -->
@@ -82,8 +87,8 @@
                     <div class="row">
                       <div class="col-md-12">
                         <p class="small">
-                          <i class="fa fa-circle" aria-hidden="true" style="color: #04ADB2;"></i>  <%= TrimestreInformado.current_trimestre.prev.prev.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.prev.prev.ano %>
-                          <i class="fa fa-circle" aria-hidden="true" style="color: #35DBD2;"></i>  <%= TrimestreInformado.current_trimestre.prev.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.prev.ano %>
+                          <i class="fa fa-circle" aria-hidden="true" style="color: #04ADB2;"></i>  <%= TrimestreInformado.current_trimestre.prev.prev.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.prev.prev.ano %><br>
+                          <i class="fa fa-circle" aria-hidden="true" style="color: #35DBD2;"></i>  <%= TrimestreInformado.current_trimestre.prev.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.prev.ano %><br>
                           <i class="fa fa-circle" aria-hidden="true" style="color: #7BF8F1;"></i> <%= TrimestreInformado.current_trimestre.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.ano %>
                         </p>
                         <hr>
@@ -117,13 +122,13 @@
                       </div><!-- col-md-6 -->
                       <div class="col-md-2">
                         <!-- <h4><%= p["suma"]%>/<%=  max %>=<%=  (max.to_f / p["suma"].to_f).to_f %></h4> -->
-                        <p><%= number_to_currency(total, delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %></p>
+                        <p class="progress-total"><%= number_to_currency(total, delimiter: ".", separator: ',', precision: 0, unit: "$", format: "%u%n") %></p>
                       </div><!-- col-md-2 -->
                     </div><!-- row -->
                     <% end %>
                   </div><!-- carousel -->
                   <div class="col-md-4 col-md-offset-4">
-                    <%= link_to "Ver comparativas", asset_path("como-funciona.pdf"), class: 'btn btn-view-detail-lg center-block', onclick: "ga('send', 'event', 'welcome-folleto', 'click');" %>
+                    <%= link_to "Ver comparativas", asset_path("como-funciona.pdf"), class: 'btn btn-comparative-lg center-block', onclick: "ga('send', 'event', 'welcome-folleto', 'click');" %>
                   </div><!-- col-md-4 -->
                 </div><!-- col-md-10 -->
               </div><!-- item2 -->
@@ -134,7 +139,7 @@
                     <p><span>En este gráfico se muestra el total de afiliados (militantes) del partido desagregado por género, según lo informado por cada partido al Consejo para la Transparencia.</span></p>
                     <div class="row">
                       <div class="col-md-12">
-                        <p class="small"><i class="fa fa-circle" aria-hidden="true" style="color: #E85D34;"></i> Mujeres
+                        <p class="small"><i class="fa fa-circle" aria-hidden="true" style="color: #E85D34;"></i> Mujeres<br>
                         <i class="fa fa-circle" aria-hidden="true" style="color: #F28269;"></i> Hombres
                         <hr>
                       </div>
@@ -162,13 +167,13 @@
                         </a>
                       </div><!-- col-md-6 -->
                       <div class="col-md-2">
-                        <h4><%= p.total %></h4>
+                        <p class="progress-total"><%= p.total %></p>
                       </div><!-- col-md-2 -->
                     </div><!-- row -->
                     <% end %>
                   </div><!-- carousel -->
                   <div class="col-md-4 col-md-offset-4">
-                    <%= link_to "Ver comparativas", asset_path("como-funciona.pdf"), class: 'btn btn-view-detail-lg center-block', onclick: "ga('send', 'event', 'welcome-folleto', 'click');" %>
+                    <%= link_to "Ver comparativas", asset_path("como-funciona.pdf"), class: 'btn btn-comparative-lg center-block', onclick: "ga('send', 'event', 'welcome-folleto', 'click');" %>
                   </div><!-- col-md-4 -->
                 </div> <!-- col-md-10 -->
               </div><!-- item 3 -->
@@ -195,8 +200,10 @@
       <div class="col-md-10 col-md-offset-1">
         <h3 class="text-center">Estado de actualización de los datos</h3>
         <h4 class="text-center">Trimestre : <%= TrimestreInformado.current_trimestre.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.ano %>*</h4>
+        <br>
         <p><span>Esta sección muestra el porcentaje de actualización de los datos correspondientes al último trimestre finalizado. Este cálculo se efectúa sobre las secciones de información relevante que Partidos Públicos elabora a partir de las planillas que los partidos entregan trimestralmente al Estado. Haz clic en el nombre de un partido para explorar su información en detalle.</span></p>
         <p class="small">* Según la Ley, los partidos tienen hasta el décimo día hábil de cada trimestre para actualizar los datos correspondientes al trimestre anterior (p.e: en enero deben actualizar los datos del trimestre oct-dic).</p>
+        <br>
       </div>
     </div>
     <div class="row">

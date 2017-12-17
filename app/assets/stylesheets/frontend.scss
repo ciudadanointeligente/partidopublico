@@ -237,10 +237,19 @@ h6{
 /*HOME*/
 section#new-welcome{
 	background-color: $orange-dark;
+	background-image: url('/images/mano-home.svg');
+	background-repeat: no-repeat;
+	background-position: 100% 60%;
 	color: white;
 	font-weight: 700;
 	font-size: 18px;
 	padding: 200px 0 160px;
+	a{
+		color: white;
+		&:hover{
+			color: $blue;
+		}
+	}
 	h1{
 		font-size: 54px;
 		margin-bottom: -72px;
@@ -598,7 +607,7 @@ section#informado-ultimo-trimestre{
 	padding-bottom: 20px;
 	border-radius: 5px;
 	width: 96%;
-	min-height: 680px;
+	min-height: 700px;
 	.progress{
 		margin-bottom: 8px;
 		background-color: white;
@@ -622,6 +631,11 @@ section#informado-ultimo-trimestre{
 	}
 	.progress-bar{
 		box-shadow: none;
+	}
+	.progress-total{
+		font-weight: 700;
+		font-size: 14px;
+		text-align: right;
 	}
 	.bar-green-1{
 		background-color: $green-dark;
@@ -1466,6 +1480,39 @@ p.edades{
 			}
 	}
 }
+.btn-comparative-lg{
+	border-radius: 24px;
+	text-transform: uppercase;
+	font-size: 10px;
+	letter-spacing: 1.2px;
+	height: 32px;
+	background-color: $green;
+	border: 2px solid $green;
+	font-weight: 700;
+	padding: 7px 10px;
+	color: white;
+	a{
+		color: white;
+	}
+	&:hover{
+		border: 2px solid $green;
+		background-color: transparent;
+		color: $green;
+		a{
+			color: $green;
+			text-decoration: none;
+		}
+	}
+	&:focus{
+			border: 2px solid $green;
+			background-color: transparent;
+			color: $green;
+			a{
+				color: $green;
+				text-decoration: none;
+			}
+	}
+}
 
 /*FOOTER*/
 .site-footer{
@@ -1575,6 +1622,12 @@ font-weight: 700;
 }
 
 /*MEDIA-QUERIS*/
+@media (max-width: 1125px) {
+	section#new-welcome{
+		background-image: none;
+	}
+}
+
 @media (max-width: 990px) {
 		section.aviso{
 			padding: 14px;
