@@ -58,9 +58,9 @@
                           <% p["ingresos"].each_with_index do |g, i| %>
                             <% g["suma_ingresos"] %>
                             <% percent = (g["suma_ingresos"].to_f / total.to_f).to_f * 100  %>
-                            <% factor =  (g["suma_ingresos"].to_f / max.to_f).to_f  %>
+                            <% factor =  (g["suma_ingresos"].to_f / max.to_f).to_f * 100  %>
                             <a data-toggle="tooltip" title="<%= number_to_percentage((percent).to_f, precision: 0) %> ">
-                            <div class="progress-bar bar-green-<%= i + 1  %>" style="width: <%= factor * percent  %>%">
+                            <div class="progress-bar bar-green-<%= i + 1  %>" style="width: <%= factor  %>%">
                               <span class="sr-only"><%=  percent  %> % Complete (success)</span>
                             </div>
                           </a>
@@ -110,10 +110,10 @@
                           <% p["gastos"].each_with_index do |g, i| %>
                             <% g["suma_gastos"] %>
                             <% percent = (g["suma_gastos"].to_f / total.to_f).to_f * 100  %>
-                            <% factor = 2 * (g["suma_gastos"].to_f / max.to_f).to_f  %>
+                            <% factor =  (g["suma_gastos"].to_f / max.to_f).to_f * 100 %>
                             <!-- <%= percent  %> -->
                             <a data-toggle="tooltip" title="<%= number_to_percentage((percent).to_f, precision: 0) %> ">
-                            <div class="progress-bar bar-sky-<%= i + 1  %>" style="width: <%= factor * percent  %>%">
+                            <div class="progress-bar bar-sky-<%= i + 1  %>" style="width: <%= factor  %>%">
                               <span class="sr-only"><%= percent  %> % Complete (success)</span>
                             </div>
                             </a>
