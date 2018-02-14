@@ -68,6 +68,8 @@ class TrimestreInformado < ActiveRecord::Base
     day = today.day
     tmp_ordinal = ((month - 1) / 3)
     tmp_mod = ((month - 1) % 3)  - 1
+    # p "y: " + year.to_s + " m: " + month.to_s + " d:" + day.to_s
+    # p "tmp_ordinal : " + tmp_ordinal.to_s + ", tmp_mod : " + tmp_mod.to_s
     if tmp_mod <= 0
       if day < 14
         if tmp_ordinal > 0
@@ -78,7 +80,7 @@ class TrimestreInformado < ActiveRecord::Base
         end
       else
         year = year -1
-        tmp_ordinal = 4 + tmp_mod
+        tmp_ordinal = 3 + tmp_mod
       end
 
     end
