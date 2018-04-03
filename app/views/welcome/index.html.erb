@@ -208,7 +208,7 @@
     </div>
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
-        <% TrimestreInformado.current_trimestre.porcentaje_completado.each_with_index do |p, i| %>
+        <% TrimestreInformado.current_trimestre.prev.porcentaje_completado.each_with_index do |p, i| %>
         <div class="row">
           <div class="col-md-4">
             <h4><%= Partido.find(p['partido_id']).nombre %></h4>
