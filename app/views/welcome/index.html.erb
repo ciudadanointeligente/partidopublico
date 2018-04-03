@@ -36,9 +36,9 @@
                     <div class="row">
                       <div class="col-md-12">
                         <p class="small">
-                          <i class="fa fa-circle" aria-hidden="true" style="color: #089B7E;"></i>  <%= TrimestreInformado.current_trimestre.prev.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.prev.ano %><br>
-                          <i class="fa fa-circle" aria-hidden="true" style="color: #1ED0AC;"></i>  <%= TrimestreInformado.current_trimestre.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.ano %><br>
-                          <i class="fa fa-circle" aria-hidden="true" style="color: #90EFDA;"></i> <%= TrimestreInformado.current_trimestre.trimestre %> <%= TrimestreInformado.current_trimestre.ano %>
+                          <i class="fa fa-circle" aria-hidden="true" style="color: #089B7E;"></i>  <%= TrimestreInformado.current_trimestre.prev.prev.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.prev.prev.ano %><br>
+                          <i class="fa fa-circle" aria-hidden="true" style="color: #1ED0AC;"></i>  <%= TrimestreInformado.current_trimestre.prev.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.prev.ano %><br>
+                          <i class="fa fa-circle" aria-hidden="true" style="color: #90EFDA;"></i> <%= TrimestreInformado.current_trimestre.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.ano %>
                         </p>
                         <hr>
                       </div>
@@ -87,9 +87,9 @@
                     <div class="row">
                       <div class="col-md-12">
                         <p class="small">
-                          <i class="fa fa-circle" aria-hidden="true" style="color: #04ADB2;"></i>  <%= TrimestreInformado.current_trimestre.prev.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.prev.ano %><br>
-                          <i class="fa fa-circle" aria-hidden="true" style="color: #35DBD2;"></i>  <%= TrimestreInformado.current_trimestre.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.ano %><br>
-                          <i class="fa fa-circle" aria-hidden="true" style="color: #7BF8F1;"></i> <%= TrimestreInformado.current_trimestre.trimestre %> <%= TrimestreInformado.current_trimestre.ano %>
+                          <i class="fa fa-circle" aria-hidden="true" style="color: #04ADB2;"></i>  <%= TrimestreInformado.current_trimestre.prev.prev.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.prev.prev.ano %><br>
+                          <i class="fa fa-circle" aria-hidden="true" style="color: #35DBD2;"></i>  <%= TrimestreInformado.current_trimestre.prev.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.prev.ano %><br>
+                          <i class="fa fa-circle" aria-hidden="true" style="color: #7BF8F1;"></i> <%= TrimestreInformado.current_trimestre.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.ano %>
                         </p>
                         <hr>
                       </div>
@@ -199,7 +199,7 @@
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
         <h3 class="text-center">Estado de actualización de los datos</h3>
-        <h4 class="text-center">Trimestre : <%= TrimestreInformado.current_trimestre.trimestre %> <%= TrimestreInformado.current_trimestre.ano %>*</h4>
+        <h4 class="text-center">Trimestre : <%= TrimestreInformado.current_trimestre.prev.trimestre %> <%= TrimestreInformado.current_trimestre.prev.ano %>*</h4>
         <br>
         <p><span>Esta sección muestra el porcentaje de actualización de los datos correspondientes al último trimestre finalizado. Este cálculo se efectúa sobre las secciones de información relevante que Partidos Públicos elabora a partir de las planillas que los partidos entregan trimestralmente al Estado. Haz clic en el nombre de un partido para explorar su información en detalle.</span></p>
         <p class="small">* Según la Ley, los partidos tienen hasta el décimo día hábil de cada trimestre para actualizar los datos correspondientes al trimestre anterior (p.e: en enero deben actualizar los datos del trimestre oct-dic).</p>
