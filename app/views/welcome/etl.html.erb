@@ -1,0 +1,34 @@
+
+
+<table border="1px">
+  <thead>
+    <tr>
+      <td> Date </td>
+      <% @job_names.each do |job| %>
+        <td><%= job %> </td>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @lines.each do |l| %>
+    <tr>
+    </tr>
+    <tr>
+      <td>      <%= l.keys.first %>  </td>
+      <% l.values.first[:counts].each do |j| %>
+        <td>
+          <div class="">
+          <%= j[j.keys.first] %><br>
+          <%= "f" if l.values.first[:files] %>
+          <%= " l" if l.values.first[:logs] %> <br>
+          <!-- <% l.values.first[:results] %> -->
+
+        </div>
+
+        </td>
+      <% end %>
+    </tr>
+
+    <% end %>
+  </tbody>
+</table>

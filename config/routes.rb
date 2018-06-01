@@ -162,5 +162,6 @@ Rails.application.routes.draw do
   get 'exigeles', to: 'pages#twittea'
   get 'proyecto', to: 'pages#proyecto'
 
+  get 'etl', to: 'welcome#etl'
   get '/:page', to: 'static#show'
 end
